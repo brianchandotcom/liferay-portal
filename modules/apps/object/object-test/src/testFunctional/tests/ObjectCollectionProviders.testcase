@@ -1,0 +1,43 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-135388 - Verify it is possible to search for an object's entry with the search experience in collection providers"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForObjectEntryOnSearchExperience {
+
+		// TODO LPS-145750 CanSearchForObjectEntryOnSearchExperience pending implementation
+
+	}
+
+	@description = "LPS-135388 - Verify that the search result will only bring the results based on the fixed pre-filters"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ResultWillOnlyBringBasedOnFixedPreFilters {
+
+		// TODO LPS-145766 ResultWillOnlyBringBasedOnFixedPreFilters pending implementation
+
+	}
+
+}

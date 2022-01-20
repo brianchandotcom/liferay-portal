@@ -1,0 +1,43 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-142659 - Verify it is possible to display a specific entry of Clob type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryClob {
+
+		// TODO LPS-145765 DisplaySpecificEntryClob pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryPicklist {
+
+		// TODO LPS-145749 DisplaySpecificEntryPicklist pending implementation
+
+	}
+
+}

@@ -1,0 +1,61 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-136741 - Verify that Commerce notification works for creating an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CreateEntryNotification {
+
+		// TODO LPS-145736 CreateEntryNotification pending implementation
+
+	}
+
+	@description = "LPS-136741 - Verify that Commerce notification works for deleting an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DeleteEntryNotification {
+
+		// TODO LPS-145738 DeleteEntryNotification pending implementation
+
+	}
+
+	@description = "LPS-136741 - Verify that Object scoped by Company is not displayed on the Commerce notification type for Site type Channel"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectScopedCompanyNotDisplayedSiteChannel {
+
+		// TODO LPS-145735 ObjectScopedCompanyNotDisplayedSiteChannel pending implementation
+
+	}
+
+	@description = "LPS-136741 - Verify that Commerce notification works for updating an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UpdateEntryNotification {
+
+		// TODO LPS-145737 UpdateEntryNotification pending implementation
+
+	}
+
+}

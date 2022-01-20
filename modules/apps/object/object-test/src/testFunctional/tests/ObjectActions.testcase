@@ -1,0 +1,163 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-139008 - Verify it is possible to cancel the creation of an Action"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelAction {
+
+		// TODO LPS-145715 CanCancelAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is possible to cancel the update of an Action"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelActionUpdate {
+
+		// TODO LPS-145719 CanCancelActionUpdate pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is possible to create an Action"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateAction {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145716 CanCreateAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is possible to delete an Action"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteAction {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145718 CanDeleteAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify that Actions will stop to work when inactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanInactivateAction {
+
+		// TODO LPS-145723 CanInactivateAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is not possible to leave the Action Name field blank"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotLeaveActionNameBlank {
+
+		// TODO LPS-145711 CannotLeaveActionNameBlank pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotLeaveActionThenBlank {
+
+		// TODO LPS-145713 CannotLeaveActionThenBlank pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotLeaveActionWhenBlank {
+
+		// TODO LPS-145712 CannotLeaveActionWhenBlank pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotLeaveURLBlank {
+
+		// TODO LPS-145714 CannotLeaveURLBlank pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify that Actions will work again after reactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanReactivateAction {
+
+		// TODO LPS-145747 CanReactivateAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is possible to search for an Action"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchAction {
+
+		// TODO LPS-145710 CanSearchAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify it is possible to update an Action"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateAction {
+
+		// TODO LPS-145717 CanUpdateAction pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify that Webhook action works with On After Add"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test WebhookOnAfterAdd {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145720 WebhookOnAfterAdd pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify that Webhook action works with On After Delete"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WebhookOnAfterDelete {
+
+		// TODO LPS-145721 WebhookOnAfterDelete pending implementation
+
+	}
+
+	@description = "LPS-139008 - Verify that Webhook action works with On After Update"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WebhookOnAfterUpdate {
+
+		// TODO LPS-145722 WebhookOnAfterUpdate pending implementation
+
+	}
+
+}

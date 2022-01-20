@@ -185,6 +185,24 @@ definition {
 		Picklist.assertRequiredKeyItem();
 	}
 
+	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for a Picklist item"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeavePicklistItemNameFieldEmpty {
+
+		// TODO LPS-145706 CannotLeavePicklistItemNameFieldEmpty pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for Picklist"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeavePicklistNameFieldEmpty {
+
+		// TODO LPS-145703 CannotLeavePicklistNameFieldEmpty pending implementation
+
+	}
+
 	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"
 	@priority = "4"
 	test CannotUpdatePicklistItemKey {
@@ -265,12 +283,41 @@ definition {
 
 	}
 
+	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name when updating it"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetDifferentPicklistItemNameLanguageWhenUpdating {
+
+		// TODO LPS-145709 CanSetDifferentPicklistItemNameLanguageWhenUpdating pending implementation
+
+	}
+
 	@description = "LPS-136595 - Verify it is possible to set a different language for a Picklist name"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSetDifferentPicklistNameLanguage {
 
 		// TODO LPS-139768 CanSetDifferentPicklistNameLanguage pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to update a Picklist item's name"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdatePicklistItemName {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145708 CanUpdatePicklistItemName pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to update a Picklist name"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdatePicklistName {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145705 CanUpdatePicklistName pending implementation
 
 	}
 
@@ -331,6 +378,15 @@ definition {
 		Picklist.selectPickilistModalFrame();
 
 		Picklist.assertEmptyStateMessageDisplayed();
+	}
+
+	@description = "LPS-140407 - Verify that the Key field is autofilled when the Name field is filled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test KeyFieldIsAutofilled {
+
+		// TODO LPS-145707 KeyFieldIsAutofilled pending implementation
+
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object layout"

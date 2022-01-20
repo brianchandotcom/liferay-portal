@@ -1,0 +1,124 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-139472 - Verify that 'Allow Multiple Selections' option is not available for Select From List field when a form is mapped to an object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AllowMultipleSelectionsNotAvailable {
+
+		// TODO LPS-145730 AllowMultipleSelectionsNotAvailable pending implementation
+
+	}
+
+	@description = "LPS-139464 - Verify that it is possible to delete a form mapped to an object after adding entries on it"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteFormMappedToObject {
+
+		// TODO LPS-145732 CanDeleteFormMappedToObject pending implementation
+
+	}
+
+	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Multiple Lines)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapClobTypeAndViewEntriesMultipleLines {
+
+		// TODO LPS-145734 CanMapClobTypeAndViewEntriesMultipleLines pending implementation
+
+	}
+
+	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Single Line)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapClobTypeAndViewEntriesSingleLine {
+
+		// TODO LPS-145733 CanMapClobTypeAndViewEntriesSingleLine pending implementation
+
+	}
+
+	@description = "LPS-136456 - Verify that workflows cannot be added to forms that are mapped to an object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotAddWorkflow {
+
+		// TODO LPS-145724 CannotAddWorkflow pending implementation
+
+	}
+
+	@description = "LPS-138495 - Verify that Picklist entries cannot be edited in the Forms Sidebar"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotEditPicklistEntries {
+
+		// TODO LPS-145725 CannotEditPicklistEntries pending implementation
+
+	}
+
+	@description = "LPS-137316 - Verify it is not possible to select an unpublished Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSelectUnpublishedObject {
+
+		// TODO LPS-145729 CannotSelectUnpublishedObject pending implementation
+
+	}
+
+	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanRetrieveDataProvidersOnSelectFromListField {
+
+		// TODO LPS-145726 CanRetrieveDataProvidersOnSelectFromListField pending implementation
+
+	}
+
+	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanRetrieveDataProvidersOnTextField {
+
+		// TODO LPS-145727 CanRetrieveDataProvidersOnTextField pending implementation
+
+	}
+
+	@description = "LPS-139348 - Verify that a form with an inactivated Object is not available to be used"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FormWithInactivatedObjectCannotBeUsed {
+
+		// TODO LPS-145731 FormWithInactivatedObjectCannotBeUsed pending implementation
+
+	}
+
+	@description = "LPS-139692 - Verify that 'Select Object' field is required"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SelectObjectFieldRequired {
+
+		// TODO LPS-145728 SelectObjectFieldRequired pending implementation
+
+	}
+
+}

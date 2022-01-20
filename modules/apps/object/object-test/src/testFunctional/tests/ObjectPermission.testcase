@@ -1,0 +1,146 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-135390 - Verify it is possible to view and access the Picklist portlet with the Access in Control Panel permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAccessPicklistWithAccessPermission {
+
+		// TODO LPS-145753 CanAccessPicklistWithAccessPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to add a Picklist with the Add permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddPicklistWithAddPermission {
+
+		// TODO LPS-145755 CanAddPicklistWithAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to delete a Picklist with the Delete permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeletePicklistWithDeletePermission {
+
+		// TODO LPS-145757 CanDeletePicklistWithDeletePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to edit its own Object entry with only the Add Object Entry permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanEditItsOwnEntryWithOnlyAddPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145764 CanEditItsOwnEntryWithOnlyAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to view and access the Picklist portlet without the Access in Control Panel permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotAccessPicklistWithoutAccessPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145748 CannotAccessPicklistWithoutAccessPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to add a Picklist without the Add permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotAddPicklistWithoutAddPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145754 CannotAddPicklistWithoutAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to delete a Picklist without the Delete permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeletePicklistWithoutDeletePermission {
+
+		// TODO LPS-145756 CannotDeletePicklistWithoutDeletePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to update a Picklist without the Update permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotUpdatePicklistWithoutUpdatePermission {
+
+		// TODO LPS-145758 CannotUpdatePicklistWithoutUpdatePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to view a Picklist without the View permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotViewPicklistWithoutViewPermission {
+
+		// TODO LPS-145760 CannotViewPicklistWithoutViewPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to update a Picklist with the Update permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdatePicklistWithUpdatePermission {
+
+		// TODO LPS-145759 CanUpdatePicklistWithUpdatePermission pending implementation
+
+	}
+
+	@description = "LPS-140342 - Verify it is possible view and edit its own Picklist with only the Add Picklist permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAndEditPicklistWithAddPicklistPermission {
+
+		// TODO LPS-145762 CanViewAndEditPicklistWithAddPicklistPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to view its own Object entry with only the Add Object Entry permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewItsOwnEntryWithOnlyAddPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145763 CanViewItsOwnEntryWithOnlyAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to view a Picklist with the View permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewPicklistWithViewPermission {
+
+		// TODO LPS-145761 CanViewPicklistWithViewPermission pending implementation
+
+	}
+
+}

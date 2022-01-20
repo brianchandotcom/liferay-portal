@@ -21,9 +21,7 @@ boolean settingsMapPrivateLayout = MapUtil.getBoolean(exportImportConfigurationS
 
 LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(MapUtil.getLong(parameterMap, "layoutSetBranchId"));
 
-long[] selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
-
-List<String> pageNames = processSummaryDisplayContext.getPageNames(groupId, settingsMapPrivateLayout, selectedLayoutIds, themeDisplay.getLanguageId());
+List<String> pageNames = processSummaryDisplayContext.getPageNames(groupId, settingsMapPrivateLayout, processSummaryDisplayContext.getSelectedLayoutIds(exportImportConfigurationSettingsMap), themeDisplay.getLanguageId());
 
 boolean deleteMissingLayouts = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS);
 boolean layoutSetSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);

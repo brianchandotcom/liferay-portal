@@ -4615,40 +4615,6 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectLayoutViaAPI(
-			layoutName = "Layout Name",
-			objectName = "CustomObjectA");
-
-		ObjectAdmin.goToLayoutsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
-
-		ObjectAdmin.markLayoutAsDefault();
-
-		ObjectAdmin.goToLayoutTabOnLayouts();
-
-		ObjectAdmin.addTabFieldsOnLayout(
-			blockName = "Block 1",
-			columnsNumber = "1",
-			fieldLabelName = "Custom Field A",
-			tabName = "Field Tab");
-
-		ObjectAdmin.addTabRelationshipsOnLayout(
-			relationshipsLabelName = "Relationship",
-			tabName = "Relationship Tab");
-
-		Button.clickSave();
-
-		Navigator.openURL();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
-
-		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
-
-		Button.clickSave();
-
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
@@ -4668,21 +4634,21 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
+		Button.clickSave();
+
+		WaitForSPARefresh();
+
 		Navigator.openURL();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
-
-		ObjectPortlet.deleteEntry(entry = "Entry B");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+		ObjectPortlet.deleteEntry(entry = "Entry A");
 
-		ObjectPortlet.gotoRelationshipTab();
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry A");
 
-		ObjectPortlet.assertEntryOnRelationshipFieldNotPresent(customObject = "Entry B");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"

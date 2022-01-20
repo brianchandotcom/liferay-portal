@@ -1,17 +1,6 @@
-.dialog-bd {
-	min-height: 30px;
-}
-
-.dialog-content {
-	border: 1px solid #c8c9ca;
-	padding: 5px;
-}
-
 .portal-popup {
-	.sheet {
-		> .lfr-nav {
-			margin-top: -24px;
-		}
+	.sheet > .lfr-nav {
+		margin-top: -24px;
 	}
 
 	.contacts-portlet .portlet-configuration-container .form {

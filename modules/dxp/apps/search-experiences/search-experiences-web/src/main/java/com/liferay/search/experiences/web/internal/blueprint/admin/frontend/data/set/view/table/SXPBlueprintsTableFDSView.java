@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "frontend.data.set.name=" + SXPBlueprintAdminFDSNames.SXP_BLUEPRINTS,
+	property = "fds.name=" + SXPBlueprintAdminFDSNames.SXP_BLUEPRINTS,
 	service = FDSView.class
 )
 public class SXPBlueprintsTableFDSView extends BaseTableFDSView {

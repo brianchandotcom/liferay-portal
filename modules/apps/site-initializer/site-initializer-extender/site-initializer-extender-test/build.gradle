@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")
 	testIntegrationCompile project(":apps:object:object-api")
+	testIntegrationCompile project(":apps:portal-security:portal-security-service-access-policy-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:remote-app:remote-app-api")
 	testIntegrationCompile project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle")

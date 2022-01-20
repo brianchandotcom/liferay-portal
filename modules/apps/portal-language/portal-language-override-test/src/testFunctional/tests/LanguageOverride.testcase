@@ -117,4 +117,35 @@ definition {
 		}
 	}
 
+	@description = "This test clears all overrides for an overridden language key via the Edit page. Doing so will delete the language key."
+	@priority = "5"
+	test ClearingAllOverridesInEditPageWillDeleteCreatedKey {
+		task ("Given that a user has created a new language key") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,es-ES",
+				translationOverrideValueList = "Text contains error,El texto contiene error");
+		}
+
+		task ("and the user is in the Edit language key page") {
+			Search.searchCP(searchTerm = "text-contains-error");
+
+			LanguageOverride.goToLanguageKey(languageKey = "text-contains-error");
+		}
+
+		task ("When the user clicks on Clear All Overrides") {
+			LanguageOverride.clearAllOverridesViaEditPage();
+		}
+
+		task ("Then all the overrides are cleared and the language key no longer exists") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			Search.searchCP(searchTerm = "text-contains-error");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found");
+		}
+	}
+
 }

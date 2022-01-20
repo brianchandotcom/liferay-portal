@@ -130,6 +130,16 @@
 		<td>//input[@class='field disabled form-control lfr-input-text']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>EDIT_ITEM_NAME</td>
+		<td>//input[@class='form-control language-value field form-control lfr-input-text']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_FIELD_RELATIONSHIP_OBJECT</td>
+		<td>//div[(@class='form-builder-select-field input-group-container')and contains(.,'${key_selectField}')]/div[@class='form-control results-chosen select-field-trigger']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

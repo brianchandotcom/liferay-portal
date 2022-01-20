@@ -56,6 +56,16 @@ definition {
 			value1 = "No items were found.");
 	}
 
+	macro assertEntryRelationshipFieldPicklist {
+		Click(
+			key_selectField = "${selectField}",
+			locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
+
+		AssertElementPresent(
+			key_entry = "${newEntry}",
+			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
+	}
+
 	macro assertPicklist {
 		var key_picklistName = "${picklistName}";
 
@@ -128,6 +138,20 @@ definition {
 
 	macro cancelUpdatePicklist {
 		Click.javaScriptClick(locator1 = "Picklist#CANCEL_UPDATE_PICKLIST");
+	}
+
+	macro chooseLanguagePicklistItem {
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		PortletEntry.changeLocale(locale = "${newlanguage}");
+
+		Type(
+			locator1 = "Picklist#EDIT_ITEM_NAME",
+			value1 = "${itemName}");
+
+		WaitForSPARefresh();
 	}
 
 	macro clickSaveButton {

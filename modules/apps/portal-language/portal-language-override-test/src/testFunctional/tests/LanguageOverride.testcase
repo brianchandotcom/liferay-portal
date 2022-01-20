@@ -148,4 +148,69 @@ definition {
 		}
 	}
 
+	@description = "This test updates an existing key's translation override values. It then clears all overrides for the existing language key via the Edit page. Doing so will reset all values. It will not delete the key."
+	@priority = "5"
+	test ClearingAllOverridesInEditPageWillResetValuesForExistingKeys {
+		task ("Given that a user is in the edit page of a language key that is OOTB") {
+			Search.searchCP(searchTerm = "a-configuration-with-this-name-already-exists");
+		}
+
+		task ("and the translation values are updated") {
+			LanguageOverride.updateTranslationOverrideValues(
+				languageKey = "a-configuration-with-this-name-already-exists",
+				translationOverrideList = "nl-NL,de-DE,sv-SE",
+				translationOverrideValueList = "edit1,edit2,edit3");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Override");
+
+			LanguageOverride.goToLanguageKey(languageKey = "a-configuration-with-this-name-already-exists");
+
+			AssertTextEquals(
+				key_fieldLabel = "nl-NL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "edit1");
+
+			AssertTextEquals(
+				key_fieldLabel = "de-DE",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "edit2");
+
+			AssertTextEquals(
+				key_fieldLabel = "sv-SE",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "edit3");
+		}
+
+		task ("When the user clicks on Clear All Overrides") {
+			LanguageOverride.clearAllOverridesViaEditPage();
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found");
+		}
+
+		task ("Then all the overrides are reset. The existing language key does not get deleted.") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			Search.searchCP(searchTerm = "a-configuration-with-this-name-already-exists");
+
+			LanguageOverride.goToLanguageKey(languageKey = "a-configuration-with-this-name-already-exists");
+
+			AssertTextEquals(
+				key_fieldLabel = "nl-NL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+
+			AssertTextEquals(
+				key_fieldLabel = "de-DE",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+
+			AssertTextEquals(
+				key_fieldLabel = "sv-SE",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+		}
+	}
+
 }

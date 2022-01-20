@@ -20,6 +20,7 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotDashboardApplicationNavigationCard;
@@ -142,6 +143,8 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 	private static final Map<String, String> _panelAppIcons =
 		HashMapBuilder.put(
 			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN, "categories"
+		).put(
+			AssetListPortletKeys.ASSET_LIST, "closed-book"
 		).put(
 			AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, "tag"
 		).put(

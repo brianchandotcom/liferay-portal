@@ -73,18 +73,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_CONTENT_IMAGE</td>
-	<td>//div[contains(@class,'journal-content-article')]//img[contains(@src,'${key_image}')] | //img[contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WEB_CONTENT_LINK</td>
-	<td>//div[contains(@class,'journal-content-article')]//p/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_TEXT_LINK_URL</td>
-	<td>//div[contains(@class,'journal-content-article')]//a[contains(.,'${key_contentText}')]</td>
+	<td>//div[contains(@class,'portlet-content')][*//*[contains(@class,'portlet-title')][normalize-space(text())='${key_webContentTitle}']]//div[contains(@class,'journal-content-article')]//a[contains(.,'${key_displayText}')]</td>
 	<td></td>
 </tr>
 <tr>

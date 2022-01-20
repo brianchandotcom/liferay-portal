@@ -81,4 +81,40 @@ definition {
 				value1 = "No language entries were found");
 		}
 	}
+
+	@description = "This test asserts that a user can remove translation override for a selected language for language keys that are overridden via the menu item"
+	@priority = "3"
+	test CanRemoveTranslationOverrideForSelectedLanguageViaMenuItem {
+		task ("Given that a user has created a new language key") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©m erro,El texto contiene error");
+		}
+
+		task ("and the user sets the navigation filter to Override") {
+			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		}
+
+		task ("When the user selects a language and removes translation override for the selected language") {
+			LanguageOverride.removeTranslationOverrideForSelectedLanguage(
+				currentLanguage = "en-US",
+				languageKey = "text-contains-error",
+				newLanguage = "pt-BR");
+		}
+
+		task ("Then only the selected translation override will be removed") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			Search.searchCP(searchTerm = "text-contains-error");
+
+			LanguageOverride.goToLanguageKey(languageKey = "text-contains-error");
+
+			AssertTextEquals(
+				key_fieldLabel = "pt-BR",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+		}
+	}
+
 }

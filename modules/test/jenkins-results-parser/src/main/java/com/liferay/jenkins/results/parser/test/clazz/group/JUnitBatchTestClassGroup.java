@@ -86,6 +86,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return excludesJobProperties;
 	}
 
+	public List<JobProperty> getFilterJobProperties() {
+		List<JobProperty> includesJobProperties = new ArrayList<>();
+
+		includesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.filter", JobProperty.Type.FILTER_GLOB));
+
+		return includesJobProperties;
+	}
+
 	public List<JobProperty> getIncludesJobProperties() {
 		List<JobProperty> includesJobProperties = new ArrayList<>();
 
@@ -525,14 +535,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
-		final List<PathMatcher> includesPathMatcher = getPathMatchers(
+		final List<PathMatcher> includesPathMatchers = getPathMatchers(
 			getIncludesJobProperties());
 
-		if (includesPathMatcher.isEmpty()) {
+		if (includesPathMatchers.isEmpty()) {
 			return;
 		}
 
-		final List<PathMatcher> excludesPathMatcher = getPathMatchers(
+		final List<PathMatcher> filterPathMatchers = getPathMatchers(
+			getFilterJobProperties());
+		final List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
 
 		final BatchTestClassGroup batchTestClassGroup = this;
@@ -549,7 +561,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						throws IOException {
 
 						if (JenkinsResultsParserUtil.isFileExcluded(
-								excludesPathMatcher, filePath.toFile())) {
+								excludesPathMatchers, filePath.toFile())) {
 
 							return FileVisitResult.SKIP_SUBTREE;
 						}
@@ -563,19 +575,20 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (JenkinsResultsParserUtil.isFileIncluded(
-								excludesPathMatcher, includesPathMatcher,
-								filePath.toFile())) {
+						if (!JenkinsResultsParserUtil.isFileIncluded(
+								excludesPathMatchers, includesPathMatchers,
+								filePath) ||
+							!JenkinsResultsParserUtil.isFileIncluded(
+								null, filterPathMatchers, filePath)) {
 
-							TestClass testClass = TestClassFactory.newTestClass(
-								batchTestClassGroup, filePath.toFile());
+							return FileVisitResult.CONTINUE;
+						}
 
-							if (testClass.isIgnored() ||
-								!testClass.hasTestClassMethods() ||
-								!isValidTestClass(testClass)) {
+						TestClass testClass = TestClassFactory.newTestClass(
+							batchTestClassGroup, filePath.toFile());
 
-								return FileVisitResult.CONTINUE;
-							}
+						if ((testClass != null) && !testClass.isIgnored() &&
+							testClass.hasTestClassMethods()) {
 
 							testClasses.add(testClass);
 						}

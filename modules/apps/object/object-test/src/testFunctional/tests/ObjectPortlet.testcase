@@ -1059,38 +1059,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Update test");
 	}
 
-	@description = "LPS-135390 - Verify it is not possible to view and access the Custom Object portlet without the Access in Control Panel permission"
-	@priority = "5"
-	test CannotAccessCustomObjectWithoutAccessPermission {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ApplicationsMenu.assertMenuButtonIsNotPresent();
-	}
-
 	@description = "LPS-135390 - Verify it is not possible to add an Object entry without the Add Object Entry permission"
 	@priority = "5"
 	test CannotAddObjectEntryWithoutAddPermission {

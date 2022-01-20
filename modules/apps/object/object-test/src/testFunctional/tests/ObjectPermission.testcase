@@ -59,16 +59,6 @@ definition {
 
 	}
 
-	@description = "LPS-135390 - Verify it is not possible to view and access the Picklist portlet without the Access in Control Panel permission"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CannotAccessPicklistWithoutAccessPermission {
-		property portal.acceptance = "true";
-
-		// TODO LPS-145748 CannotAccessPicklistWithoutAccessPermission pending implementation
-
-	}
-
 	@description = "LPS-135390 - Verify it is not possible to add a Picklist without the Add permission"
 	@ignore = "Test Stub"
 	@priority = "5"

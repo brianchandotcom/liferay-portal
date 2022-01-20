@@ -62,6 +62,26 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	@Override
+	protected List<JobProperty> getReleaseIncludesJobProperties() {
+		List<JobProperty> includesJobProperties = new ArrayList<>();
+
+		Set<File> releaseModuleAppDirs = _getReleaseModuleAppDirs();
+
+		if (releaseModuleAppDirs == null) {
+			return includesJobProperties;
+		}
+
+		for (File releaseModuleAppDir : releaseModuleAppDirs) {
+			includesJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.includes.modules",
+					releaseModuleAppDir, JobProperty.Type.INCLUDE_GLOB));
+		}
+
+		return includesJobProperties;
+	}
+
+	@Override
 	protected List<String> getReleaseTestClassNamesRelativeIncludesGlobs(
 		List<String> testClassNamesRelativeIncludesGlobs) {
 
@@ -130,6 +150,73 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		return excludesJobProperties;
+	}
+
+	@Override
+	protected List<JobProperty> getRelevantIncludesJobProperties() {
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			return super.getRelevantIncludesJobProperties();
+		}
+
+		Set<File> modifiedModuleDirsList = new HashSet<>();
+
+		try {
+			modifiedModuleDirsList.addAll(
+				portalGitWorkingDirectory.getModifiedModuleDirsList());
+		}
+		catch (IOException ioException) {
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get relevant module group directories in ",
+					workingDirectory.getPath()),
+				ioException);
+		}
+
+		if (testRelevantChanges) {
+			modifiedModuleDirsList.addAll(
+				getRequiredModuleDirs(
+					Lists.newArrayList(modifiedModuleDirsList)));
+		}
+
+		List<JobProperty> includesJobProperties = new ArrayList<>();
+
+		Matcher matcher = _singleModuleBatchNamePattern.matcher(batchName);
+
+		String moduleName = null;
+
+		if (matcher.find()) {
+			moduleName = matcher.group("moduleName");
+		}
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
+			String modifiedModuleAbsolutePath =
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
+
+			String modifiedModuleRelativePath =
+				modifiedModuleAbsolutePath.substring(
+					modifiedModuleAbsolutePath.indexOf("modules/"));
+
+			if ((moduleName != null) &&
+				!modifiedModuleRelativePath.contains("/" + moduleName)) {
+
+				continue;
+			}
+
+			includesJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.includes.modules",
+					modifiedModuleDir, JobProperty.Type.INCLUDE_GLOB));
+
+			includesJobProperties.add(
+				getJobProperty(
+					"modules.includes.required.test.batch.class.names.includes",
+					modifiedModuleDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+		}
+
+		return includesJobProperties;
 	}
 
 	@Override

@@ -1,0 +1,16 @@
+.object-custom-view-builder-item {
+	&.dragging {
+		background: transparent;
+		background-color: #f7f8f9;
+		border-radius: 0;
+		box-shadow: none;
+		cursor: grabbing;
+		opacity: 0.5;
+		padding-top: 20px;
+	}
+
+	&.isActive {
+		border: 2px solid #80acff;
+		padding-top: 20px;
+	}
+}

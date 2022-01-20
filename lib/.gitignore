@@ -250,6 +250,7 @@
 /portal/xercesImpl.jar
 /portal/xml-apis.jar
 /portal/xmlsec.jar
+/portal/xmpcore.jar
 /portal/xpp3.jar
 /portal/xstream.jar
 /portal/xz.jar

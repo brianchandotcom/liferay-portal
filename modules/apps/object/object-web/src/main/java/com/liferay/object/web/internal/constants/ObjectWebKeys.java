@@ -39,4 +39,6 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_RELATIONSHIP = "OBJECT_RELATIONSHIP";
 
+	public static final String OBJECT_VIEW = "OBJECT_VIEW";
+
 }

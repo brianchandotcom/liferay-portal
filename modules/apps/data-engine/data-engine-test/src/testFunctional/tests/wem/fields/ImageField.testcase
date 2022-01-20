@@ -427,12 +427,9 @@ definition {
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Image",
-			key_image = "Document_1.jpg",
-			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
+		WebContent.viewWithStructureCP(
+			webContentImage = "Document_1.jpg",
+			webContentTitle = "${webTitle}");
 	}
 
 }

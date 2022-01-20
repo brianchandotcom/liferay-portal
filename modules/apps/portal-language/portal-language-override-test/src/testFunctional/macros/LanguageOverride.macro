@@ -78,4 +78,32 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro updateTranslationOverrideValues {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Edit",
+			rowEntry = "${languageKey}");
+
+		var j = "0";
+
+		for (var translationOverride : list "${translationOverrideList}") {
+			var k = "0";
+
+			for (var translationOverrideValue : list "${translationOverrideValueList}") {
+				if ("${j}" == "${k}") {
+					PortletEntry.inputText(
+						fieldLabel = "${translationOverride}",
+						text = "${translationOverrideValue}");
+				}
+
+				var k = ${k} + 1;
+			}
+
+			var j = ${j} + 1;
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 }

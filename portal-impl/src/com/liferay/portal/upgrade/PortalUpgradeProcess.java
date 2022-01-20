@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.version.Version;
@@ -125,6 +126,21 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void upgrade() throws UpgradeException {
+		try (Connection connection = getConnection()) {
+			this.connection = connection;
+
+			doUpgrade();
+		}
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
+		}
+		finally {
+			this.connection = null;
+		}
 	}
 
 	@Override

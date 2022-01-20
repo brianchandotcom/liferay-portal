@@ -1,0 +1,216 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property app.server.bundles.size = "1";
+	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+	property databases.size = "1";
+	property minimum.slave.ram = "24";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Friendly URL Service";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging Blogs Page",
+			widgetName = "Blogs");
+
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This ensures that the friendlyURL in Blogs can be published when remote staging is enabled."
+	@priority = "5"
+	test CanPublishFriendlyURL {
+		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishFriendlyURL";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.viewActiveURL(activeURL = "custom-url");
+
+		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+
+		Navigator.openSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/custom-url");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This ensures that the old friendlyURL in Blogs can be removed and published when remote staging is enabled."
+	@priority = "4"
+	test CanPublishRemovedOldFriendlyURL {
+		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishRemovedOldFriendlyURL";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.removeOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+
+		PortletEntry.publish();
+
+		Navigator.openSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/blogs-entry-title");
+
+		Alert.viewErrorMessage(errorMessage = "The entry could not be found.");
+
+		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/custom-url");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This ensures that the old friendlyURL in Blogs can be restored and published when remote staging is enabled."
+	@priority = "4"
+	test CanPublishRestoredOldFriendlyURL {
+		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishRestoredOldFriendlyURL";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.restoreOldFriendlyURL(
+			activeURL = "custom-url",
+			oldFriendlyURL = "blogs-entry-title",
+			restoredURL = "blogs-entry-title");
+
+		PortletEntry.publish();
+
+		Navigator.openSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/blogs-entry-title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+}

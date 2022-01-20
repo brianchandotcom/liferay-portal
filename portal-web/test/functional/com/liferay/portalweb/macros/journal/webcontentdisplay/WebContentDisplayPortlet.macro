@@ -246,10 +246,9 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			for (var webContentTitle : list "${webContentTitleList}") {
-				AssertTextEquals(
+				AssertVisible(
 					key_listEntry = "${webContentTitle}",
-					locator1 = "LexiconList#LIST_ENTRY_TITLE",
-					value1 = "${webContentTitle}");
+					locator1 = "LexiconList#LIST_ENTRY_TITLE");
 			}
 		}
 	}
@@ -279,15 +278,13 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
-			AssertClick(
+			Click(
 				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			AssertClick(
+			Click(
 				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
 
 			Click(
 				key_card = "${depotName}",
@@ -301,10 +298,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
+			AssertVisible(
 				key_card = "${webContentTitle} (${depotName})",
-				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle} (${depotName})");
+				locator1 = "Card#CARD_TITLE");
 		}
 		else {
 			if (isSet(searchTerm)) {
@@ -321,10 +317,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
+			AssertVisible(
 				key_card = "${webContentTitle}",
-				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle}");
+				locator1 = "Card#CARD_TITLE");
 		}
 
 		PortletEntry.save();

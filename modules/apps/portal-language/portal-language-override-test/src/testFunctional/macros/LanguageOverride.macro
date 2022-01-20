@@ -44,4 +44,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeTranslationOverrideForSelectedLanguage {
+		PageEditor.changeLocale(
+			currentLocale = "${currentLanguage}",
+			locale = "${newLanguage}");
+
+		var newLanguage = StringUtil.replace("${newLanguage}", "-", "_");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Remove translation override for ${newLanguage}",
+			rowEntry = "${languageKey}");
+
+		AssertConfirm(value1 = "Do you want to reset the translation override for ${newLanguage}?");
+
+		Alert.viewSuccessMessage();
+	}
+
 }

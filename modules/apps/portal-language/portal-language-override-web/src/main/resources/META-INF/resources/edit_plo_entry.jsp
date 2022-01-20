@@ -179,17 +179,21 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 		function <portlet:namespace />validateForm(event) {
 			const form = document.getElementById('<portlet:namespace />editPLOEntryFm');
 
-			const inputs = form.querySelectorAll("input[name^='<portlet:namespace />value']");
+			const inputs = form.querySelectorAll(
+				"input[name^='<portlet:namespace />value']"
+			);
 
 			for (const input of inputs) {
-				if (!!input.value) {
+				if (input.value) {
 					submitForm(form);
 
 					return;
 				}
 			}
 
-			const keyField = form.querySelector("input[name='<portlet:namespace />key']");
+			const keyField = form.querySelector(
+				"input[name='<portlet:namespace />key']"
+			);
 
 			keyField.focus();
 

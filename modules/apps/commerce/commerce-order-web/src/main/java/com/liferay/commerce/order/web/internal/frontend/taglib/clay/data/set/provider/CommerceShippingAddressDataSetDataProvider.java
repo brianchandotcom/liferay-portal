@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -66,7 +67,7 @@ public class CommerceShippingAddressDataSetDataProvider
 
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getShippingCommerceAddresses(
-				commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
+				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 				commerceOrder.getCommerceAccountId(), filter.getKeywords(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				sort);

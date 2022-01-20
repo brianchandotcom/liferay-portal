@@ -258,22 +258,26 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONObject _getUserJSONObject(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		String authorProfileImage = null;
-
-		WebImage webImage = (WebImage)contentDashboardItem.getDisplayFieldValue(
-			"authorProfileImage", locale);
-
-		long portraitId = GetterUtil.getLong(
-			_http.getParameter(HtmlUtil.escape(webImage.getUrl()), "img_id"));
-
-		if (portraitId > 0) {
-			authorProfileImage = webImage.getUrl();
-		}
-
 		return JSONUtil.put(
-			"name", webImage.getAlt()
+			"name", contentDashboardItem.getUserName()
 		).put(
-			"url", authorProfileImage
+			"url",
+			Optional.ofNullable(
+				(WebImage)contentDashboardItem.getDisplayFieldValue(
+					"authorProfileImage", locale)
+			).filter(
+				webImage -> {
+					long portraitURL = GetterUtil.getLong(
+						_http.getParameter(
+							HtmlUtil.escape(webImage.getUrl()), "img_id"));
+
+					return portraitURL > 0;
+				}
+			).map(
+				WebImage::getUrl
+			).orElse(
+				null
+			)
 		).put(
 			"userId", contentDashboardItem.getUserId()
 		);

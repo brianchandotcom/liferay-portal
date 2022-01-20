@@ -1019,42 +1019,40 @@ public class PoshiValidation {
 	protected static void validateMethodElement(
 		Element element, String filePath) {
 
-		String attributeName = element.attributeValue("method");
+		String methodValue = element.attributeValue("method");
 
-		if ((attributeName != null) && attributeName.contains("selenium")) {
-			Matcher matcher = _seleniumPattern.matcher(attributeName);
+		if ((methodValue != null) && methodValue.contains("selenium")) {
+			Matcher matcher = _seleniumPattern.matcher(methodValue);
 
 			while (matcher.find()) {
-				String seleniumMethod = matcher.group(1);
+				String seleniumMethodName = matcher.group(1);
 
-				String methodName = seleniumMethod.substring(
-					seleniumMethod.indexOf("#") + 1);
+				if (seleniumMethodName.equals("getCurrentUrl")) {
+					continue;
+				}
 
-				if (!methodName.equals("getCurrentUrl")) {
-					String parameters = matcher.group(2);
-					int parameterCount = PoshiContext.getSeleniumParameterCount(
-						methodName);
+				int parameterCount = PoshiContext.getSeleniumParameterCount(
+					seleniumMethodName);
 
-					List<String> parameterList =
-						PoshiScriptParserUtil.getMethodParameters(parameters);
+				List<String> parameters =
+					PoshiScriptParserUtil.getMethodParameters(matcher.group(2));
 
-					if (parameterList.size() != parameterCount) {
+				if (parameters.size() != parameterCount) {
+					_exceptions.add(
+						new ValidationException(
+							element, "Incorrect parameter count", "\n",
+							filePath));
+				}
+
+				for (String parameter : parameters) {
+					Matcher exceptionMatcher = _seleniumErrorPattern.matcher(
+						parameter);
+
+					if (exceptionMatcher.find()) {
 						_exceptions.add(
 							new ValidationException(
-								element, "Incorrect parameter count", "\n",
+								element, "Remove locator|value 1-3", "\n",
 								filePath));
-					}
-
-					for (String parameter : parameterList) {
-						Matcher exceptionMatcher =
-							_seleniumErrorPattern.matcher(parameter);
-
-						if (exceptionMatcher.find()) {
-							_exceptions.add(
-								new ValidationException(
-									element, "Remove locator|value 1-3", "\n",
-									filePath));
-						}
 					}
 				}
 			}
@@ -1838,7 +1836,7 @@ public class PoshiValidation {
 	private static final Pattern _seleniumErrorPattern = Pattern.compile(
 		"^(locator|value)");
 	private static final Pattern _seleniumPattern = Pattern.compile(
-		"^(selenium#get[A-z]+)(?:\\((.*|)\\))?$");
+		"^selenium#(get[A-z]+)(?:\\((.*|)\\))?$");
 
 	private static class ValidationException extends Exception {
 

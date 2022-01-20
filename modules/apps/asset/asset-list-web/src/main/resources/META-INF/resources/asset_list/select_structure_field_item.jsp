@@ -38,3 +38,15 @@ if (name.equals(ddmStructureFieldName)) {
 	classPK="<%= classTypeId %>"
 	field="<%= ddmField %>"
 />
+
+<aui:script>
+	Liferay.componentReady('<portlet:namespace />ddmForm').then(() => {
+		const initialDDMForm = Liferay.component('<portlet:namespace />ddmForm');
+
+		initialDDMForm.get('fields').forEach((field) => {
+			if (field.get('name') === '<%=ddmStructureFieldName %>') {
+				field.setValue('<%=ddmStructureFieldValue %>');
+			}
+		});
+	});
+</aui:script>

@@ -137,24 +137,31 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertClick.assertTextClickAtAndPause(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
+		if (IsElementPresent(key_text = "Change", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Change",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+		}
+
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
-			var key_rowEntry = "${webContentTitle}";
-
-			AssertClick(
+			Click(
 				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			AssertClick(
+			Click(
 				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
 
 			Click(
 				key_card = "${depotName}",
@@ -187,37 +194,10 @@ definition {
 	}
 
 	macro searchWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			buttonId = "webContentSelector",
-			locator1 = "Button#BUTTON_ID",
-			value1 = "Select");
-
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		WebContentDisplayPortlet.gotoSelectWebContent(depotName = "${depotName}");
 
 		if (isSet(webContentTitleNotPresentList)) {
 			if (isSet(depotName)) {
-				Click(
-					key_breadcrumbName = "Sites and Libraries",
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
-
-				Click(
-					key_groupTab = "Asset Library",
-					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
-
-				Click(
-					key_card = "${depotName}",
-					locator1 = "Card#CARD_TITLE");
-
 				for (var webContentTitleNotPresent : list "${webContentTitleNotPresentList}") {
 					AssertElementNotPresent(
 						key_contentName = "${webContentTitleNotPresent}",
@@ -254,42 +234,9 @@ definition {
 	}
 
 	macro selectWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (IsElementPresent(key_text = "Change", locator1 = "Button#ANY")) {
-			Click(
-				key_text = "Change",
-				locator1 = "Button#ANY");
-		}
-		else {
-			Click(
-				key_text = "Select",
-				locator1 = "Button#ANY");
-		}
-
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		WebContentDisplayPortlet.gotoSelectWebContent(depotName = "${depotName}");
 
 		if (isSet(depotName)) {
-			Click(
-				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
-
-			Click(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
-
-			Click(
-				key_card = "${depotName}",
-				locator1 = "Card#CARD_TITLE");
-
 			Click(
 				key_rowEntry = "${webContentTitle}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");

@@ -1836,6 +1836,7 @@ public class VerifyProperties extends VerifyProcess {
 		"portal.resiliency.enabled", "portal.resiliency.portlet.show.footer",
 		"portal.resiliency.spi.agent.client.pool.max.size",
 		"portal.security.manager.enable",
+		"portlet.url.generate.by.path.enabled",
 		"permissions.inline.sql.resource.block.query.threshold",
 		"permissions.list.filter", "permissions.thread.local.cache.max.size",
 		"permissions.user.check.algorithm", "persistence.provider",

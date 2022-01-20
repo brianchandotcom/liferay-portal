@@ -2521,9 +2521,6 @@ public interface PropsKeys {
 	public static final String PORTLET_URL_ESCAPE_XML =
 		"portlet.url.escape.xml";
 
-	public static final String PORTLET_URL_GENERATE_BY_PATH_ENABLED =
-		"portlet.url.generate.by.path.enabled";
-
 	public static final String PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS =
 		"portlet.url.refresh.url.reserved.parameters";
 

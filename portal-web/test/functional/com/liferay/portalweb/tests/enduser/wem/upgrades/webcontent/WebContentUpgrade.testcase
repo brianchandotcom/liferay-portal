@@ -193,8 +193,9 @@ definition {
 
 			for (var contentText : list "Link Pagina Origem,Link Pagina Atual") {
 				AssertElementPresent(
-					key_contentText = "${contentText}",
-					locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+					key_contentText = "${key_displayText}",
+					key_webContentTitle = "Web Content Complex Title 1",
+					locator1 = "WCD#WEB_CONTENT_LINK");
 			}
 
 			for (var i : list "1,2,3,4") {

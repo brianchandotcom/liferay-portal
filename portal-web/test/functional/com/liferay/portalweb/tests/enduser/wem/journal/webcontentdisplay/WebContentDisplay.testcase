@@ -435,9 +435,10 @@ definition {
 
 		IFrame.closeFrame();
 
-		Click(
-			key_contentText = "text",
-			locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "text",
+			pageName = "Site Page Name",
+			webContentTitle = "Web Content Title");
 
 		Portlet.viewTitle(portletName = "testportlet");
 	}

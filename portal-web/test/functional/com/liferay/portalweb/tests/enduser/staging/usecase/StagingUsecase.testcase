@@ -183,9 +183,10 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		WebContentDisplayPortlet.viewLinkedPage(
-			linkedPageName = "Second Test Page",
-			linkName = "Link to Page");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "Link to Page",
+			pageName = "Second Test Page",
+			webContentTitle = "WC WebContent Title 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

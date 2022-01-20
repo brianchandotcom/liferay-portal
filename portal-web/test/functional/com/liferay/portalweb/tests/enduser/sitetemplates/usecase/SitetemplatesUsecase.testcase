@@ -536,11 +536,10 @@ definition {
 			pageName = "Page1 Name",
 			siteName = "Site Name");
 
-		Click(locator1 = "WCD#WEB_CONTENT_LINK");
-
-		Pause(locator1 = "1000");
-
-		AssertLocation(value1 = "${portalURL}/web/site-name/page2-name");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "${page2URL}",
+			URL = "${portalURL}/web/site-name/page2-name",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a use case for LPS-74081."

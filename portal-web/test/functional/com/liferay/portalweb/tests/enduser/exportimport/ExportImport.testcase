@@ -783,13 +783,15 @@ definition {
 			pageName = "Page A",
 			siteName = "Site B");
 
-		WebContentDisplayPortlet.viewLinkedPage(
-			linkedPageName = "Page B",
-			linkName = "Link to Page");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "Link to Page",
+			pageName = "Page B",
+			webContentTitle = "Web Content Title A");
 
-		WebContentDisplayPortlet.viewLinkedPage(
-			linkedPageName = "Page C",
-			linkName = "Link to Page");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "Link to Page",
+			pageName = "Page C",
+			webContentTitle = "Web Content Title B");
 	}
 
 	@description = "This is a use case for LPS-88378."
@@ -872,9 +874,10 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		WebContentDisplayPortlet.viewLinkedPage(
-			linkedPageName = "Site Child Child Page",
-			linkName = "Link to Page");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "Link to Page",
+			pageName = "Site Child Child Page",
+			webContentTitle = "WC WebContent Title 2");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 
@@ -1939,13 +1942,10 @@ definition {
 			pageName = "Page A",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewLinkedPage(
-			linkedPageName = "Page B",
-			linkName = "Link to Page");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WCD#WEB_CONTENT_TITLE",
-			value1 = "WC WebContent Title 2");
+		WebContentDisplayPortlet.viewContent(
+			displayText = "Link to Page",
+			pageName = "Page B",
+			webContentTitle = "WC WebContent Title 2");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 

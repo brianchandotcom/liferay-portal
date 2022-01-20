@@ -519,15 +519,18 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
-		else if (isSet(draftWebContentTitle)) {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_3",
-				value1 = "${draftWebContentTitle} is not approved.");
-		}
-		else if (isSet(expiredWebContentTitle)) {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_3",
-				value1 = "${expiredWebContentTitle} is expired.");
+		else if (isSet(displayText)) {
+			Click(
+				key_displayText = "${displayText}",
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#WEB_CONTENT_LINK");
+
+			if (isSet(pageName)) {
+				ControlMenu.viewHeaderTitle(headerTitle = "${pageName}");
+			}
+			else {
+				AssertLocation.assertPartialLocation(value1 = "${URL}");
+			}
 		}
 		else {
 			AssertTextEquals(
@@ -562,20 +565,6 @@ definition {
 				locator1 = "WCD#DOCUMENT_CONVERSION_TYPE",
 				value1 = "${fileType}");
 		}
-	}
-
-	macro viewLinkedPage {
-		var key_contentText = "${linkName}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL",
-			value1 = "${linkName}");
-
-		AssertClick(
-			locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL",
-			value1 = "${linkName}");
-
-		ControlMenu.viewHeaderTitle(headerTitle = "${linkedPageName}");
 	}
 
 	macro viewMessage {

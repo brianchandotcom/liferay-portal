@@ -746,7 +746,8 @@ definition {
 				filterName = "${filterName}",
 				inputValue = "25",
 				month = "November",
-				optionValue = "is");
+				optionValue = "is",
+				year = "2021");
 		}
 
 		task ("Change the time filter to 24 hours") {
@@ -768,7 +769,8 @@ definition {
 				filterName = "${filterName}",
 				inputValue = "24",
 				month = "November",
-				optionValue = "before");
+				optionValue = "before",
+				year = "2021");
 		}
 
 		task ("Check that the analysis result does not appear") {
@@ -784,7 +786,8 @@ definition {
 				filterName = "${filterName}",
 				inputValue = "24",
 				month = "November",
-				optionValue = "after");
+				optionValue = "after",
+				year = "2021");
 		}
 
 		task ("Check that the analysis result appears") {
@@ -801,7 +804,8 @@ definition {
 				inputEndValue = "26",
 				inputValue = "23",
 				month = "November",
-				optionValue = "is between");
+				optionValue = "is between",
+				year = "2021");
 		}
 
 		task ("Check that the analysis result appears") {

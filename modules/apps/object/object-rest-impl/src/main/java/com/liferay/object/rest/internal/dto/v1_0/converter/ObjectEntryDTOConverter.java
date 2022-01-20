@@ -209,10 +209,8 @@ public class ObjectEntryDTOConverter
 			else if (Objects.equals(
 						objectField.getRelationshipType(), "oneToMany")) {
 
-				String[] objectFieldNameParts = objectFieldName.split(
-					StringPool.UNDERLINE);
-
-				String relationshipIdName = objectFieldNameParts[3];
+				String relationshipIdName = objectFieldName.substring(
+					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
 
 				long objectEntryId = 0;
 

@@ -79,13 +79,13 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 				String objectFieldName = objectField.getName();
 
-				String[] objectFieldNameParts = objectFieldName.split(
-					StringPool.UNDERLINE);
+				String relationshipIdName = objectFieldName.substring(
+					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
 
 				_entityFieldsMap.put(
-					objectFieldNameParts[3],
+					relationshipIdName,
 					new IntegerEntityField(
-						objectFieldNameParts[3],
+						relationshipIdName,
 						locale ->
 							"nestedFieldArray.value_long#" + objectFieldName));
 			}

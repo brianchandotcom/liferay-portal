@@ -53,4 +53,32 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can remove all translation overrides on the main view page for language keys that are overridden and doing so will delete the language key"
+	@priority = "5"
+	test CanRemoveAllTranslationOverridesViaMenuItem {
+		task ("Given that a user has created a new language key") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÂ©m erro,El texto contiene error");
+		}
+
+		task ("and the user sets the navigation filter to Override") {
+			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		}
+
+		task ("When the user removes all translation overrides via the Menu Item option") {
+			LanguageOverride.removeAllTranslationOverrides(languageKey = "text-contains-error");
+		}
+
+		task ("Then all the translations will be removed and thus deleting the Overridden key") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			Search.searchCP(searchTerm = "text-contains-error");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found");
+		}
+	}
 }

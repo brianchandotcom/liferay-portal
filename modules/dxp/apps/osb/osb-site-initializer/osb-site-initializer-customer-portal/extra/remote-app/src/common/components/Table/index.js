@@ -49,14 +49,14 @@ const Table = ({
 
 				{!isLoading ? (
 					<ClayTable.Body>
-						{rows.map((row, index) => (
-							<ClayTable.Row key={index}>
-								{columns.map((column) => (
+						{rows.map((row, rowIndex) => (
+							<ClayTable.Row key={rowIndex}>
+								{columns.map((column, columnIndex) => (
 									<ClayTable.Cell
 										align={column.align}
 										className={column.bodyClass}
 										headingTitle={column.headingTitle}
-										key={row[column.accessor]}
+										key={`${rowIndex}-${columnIndex}`}
 									>
 										{row[column.accessor]}
 									</ClayTable.Cell>

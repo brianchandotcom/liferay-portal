@@ -63,38 +63,32 @@ const CardSubscription = ({
 				/>
 			)}
 			<div
-				className="align-items-center card-subscription d-flex flex-column justify-content-center mr-4"
+				className="border border-light card-subscription p-4 rounded"
 				onClick={() => setVisible(true)}
 			>
-				<img
-					className="mb-4 mt-5 w-25"
-					src={`${assetsPath}/assets/navigation-menu/${
-						SUBSCRIPTION_IMAGE_FILE[selectedSubscriptionGroup] ||
-						'portal_icon.svg'
-					}`}
-				/>
+				<div className="text-center">
+					<img
+						className="w-25"
+						src={`${assetsPath}/assets/navigation-menu/${
+							SUBSCRIPTION_IMAGE_FILE[
+								selectedSubscriptionGroup
+							] || 'portal_icon.svg'
+						}`}
+					/>
+				</div>
 
-				<div className="align-self-center d-flex flex-column mx-auto pb-4 pt-3 px-4">
-					<div
-						className="d-flex head-text justify-content-center mb-4 text-center"
-						type="text"
-					>
+				<div className="mt-4">
+					<h5 className="mb-1 text-center title">
 						{cardSubscriptionData?.name || ' - '}
-					</div>
+					</h5>
 
-					<div
-						className="d-flex head-text-2 justify-content-center mb-1 row"
-						type="text"
-					>
+					<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
 						{`Instance size: ${
 							cardSubscriptionData?.instanceSize || ' - '
 						}`}
-					</div>
+					</p>
 
-					<div
-						className="card-date d-flex justify-content-center mb-3 row"
-						type="text"
-					>
+					<p className="mb-3 text-center">
 						{`${getDateCustomFormat(
 							cardSubscriptionData?.startDate,
 							dateFormat
@@ -102,9 +96,9 @@ const CardSubscription = ({
 							cardSubscriptionData?.endDate,
 							dateFormat
 						)}`}
-					</div>
+					</p>
 
-					<div className="d-flex justify-content-center mb-3">
+					<div className="d-flex justify-content-center">
 						<StatusTag
 							currentStatus={statusCard[subscriptionStatus]}
 						/>

@@ -124,14 +124,10 @@ const QuickLinksPanel = ({accountKey}) => {
 						>
 							<ClayIcon
 								className="mr-1"
-								symbol={
-									isQuickLinksExpanded
-										? 'hr'
-										: 'order-arrow-left'
-								}
+								symbol={isQuickLinksExpanded ? 'hr' : 'plus'}
 							/>
 
-							{isQuickLinksExpanded ? 'Hide' : 'Show'}
+							{isQuickLinksExpanded ? 'Hide' : ''}
 						</a>
 					</div>
 

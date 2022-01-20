@@ -114,7 +114,7 @@ const Overview = ({project, subscriptionGroups}) => {
 	}, [dispatch, project, subscriptionGroups]);
 
 	return (
-		<div className="d-flex flex-column">
+		<div className="d-flex flex-column mr-4">
 			<h3>Subscriptions</h3>
 
 			<div
@@ -135,7 +135,7 @@ const Overview = ({project, subscriptionGroups}) => {
 				/>
 			</div>
 
-			<div className="d-flex flex-wrap mt-4">
+			<div className="d-flex flex-wrap mt-4 overview-cards-subscription">
 				{accountSubscriptions.length ? (
 					accountSubscriptions.map((accountSubscription, index) => (
 						<CardSubscription

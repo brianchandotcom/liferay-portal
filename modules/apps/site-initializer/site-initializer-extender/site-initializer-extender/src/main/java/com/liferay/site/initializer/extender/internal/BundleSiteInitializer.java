@@ -2371,6 +2371,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				typeSettingsUnicodeProperties.setProperty(
 					"name", menuItemJSONObject.getString("name"));
+
+				typeSettings = typeSettingsUnicodeProperties.toString();
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
 				UnicodeProperties typeSettingsUnicodeProperties =

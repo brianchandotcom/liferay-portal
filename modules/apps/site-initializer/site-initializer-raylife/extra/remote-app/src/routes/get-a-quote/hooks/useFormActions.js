@@ -70,7 +70,8 @@ const useFormActions = ({
 			Storage.setItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE, phraseAgentPage);
 			redirectTo(RAYLIFE_PAGES.GET_IN_TOUCH);
 			validated = false;
-		} else {
+		}
+		else {
 			Storage.removeItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE);
 		}
 
@@ -90,7 +91,8 @@ const useFormActions = ({
 			setApplicationId(response.data.id);
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			setError('continueButton', {
 				message:
 					errorMessage ||

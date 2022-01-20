@@ -16,6 +16,7 @@ package com.liferay.portal.db.partition;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -52,6 +54,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.sql.DataSource;
 
@@ -117,6 +122,12 @@ public class DBPartitionUtil {
 
 		if (CompanyThreadLocal.isLocked()) {
 			unsafeConsumer.accept(CompanyThreadLocal.getCompanyId());
+
+			return;
+		}
+
+		if (_DATABASE_PARTITION_THREAD_POOL_ENABLED) {
+			_forEachCompanyIdConcurrently(unsafeConsumer);
 
 			return;
 		}
@@ -259,6 +270,59 @@ public class DBPartitionUtil {
 		}
 
 		return true;
+	}
+
+	private static void _forEachCompanyIdConcurrently(
+			UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		if (_executorService == null) {
+			_executorService = Executors.newWorkStealingPool();
+		}
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		try {
+			for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+				if (companyId == _defaultCompanyId) {
+					try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+							companyId)) {
+
+						unsafeConsumer.accept(companyId);
+					}
+				}
+				else {
+					Future<Void> future = _executorService.submit(
+						() -> {
+							try (SafeCloseable safeCloseable =
+									CompanyThreadLocal.lock(companyId)) {
+
+								unsafeConsumer.accept(companyId);
+							}
+							catch (Exception exception) {
+								throwableCollector.collect(exception);
+							}
+
+							return null;
+						});
+
+					futures.add(future);
+				}
+			}
+		}
+		finally {
+			for (Future<Void> future : futures) {
+				future.get();
+			}
+		}
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	private static Connection _getConnectionWrapper(Connection connection) {
@@ -670,7 +734,7 @@ public class DBPartitionUtil {
 
 	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
 		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.thread.pool.enabled"));
+			PropsUtil.get("database.partition.thread.pool.enabled"), true);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
@@ -679,5 +743,6 @@ public class DBPartitionUtil {
 		Arrays.asList("Company", "VirtualHost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
+	private static ExecutorService _executorService;
 
 }

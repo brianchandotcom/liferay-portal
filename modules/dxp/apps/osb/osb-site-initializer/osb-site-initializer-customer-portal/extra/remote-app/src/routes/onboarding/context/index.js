@@ -54,7 +54,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 				const {data: accountRolesData} = await client.query({
 					query: getAccountRoles,
 					variables: {
-						filter: data.userAccount.id,
+						accountId: data.userAccount.id,
 					},
 				});
 

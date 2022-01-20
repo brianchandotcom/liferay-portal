@@ -13,7 +13,7 @@ import DeveloperKeysLayouts from '../../components/DeveloperKeysLayout';
 
 const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	return (
-		<div>
+		<div className="mr-4">
 			<ActivationStatus
 				project={project}
 				subscriptionGroups={subscriptionGroups}
@@ -23,6 +23,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
+					downloadTextHelper="To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version."
 					dxpVersion={project.dxpVersion}
 					productTitle="DXP Cloud"
 					sessionId={sessionId}

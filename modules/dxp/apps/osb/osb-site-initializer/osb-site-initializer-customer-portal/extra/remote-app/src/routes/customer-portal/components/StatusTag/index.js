@@ -41,7 +41,7 @@ const StatusTag = ({currentStatus}) => {
 
 		return (
 			<ClayLabel
-				className={`font-weight-normal label-tonal-${labelProp.displayType} text-paragraph-sm`}
+				className={`px-2 m-0 font-weight-normal label-tonal-${labelProp.displayType} text-paragraph-sm`}
 			>
 				{labelProp.label}
 			</ClayLabel>

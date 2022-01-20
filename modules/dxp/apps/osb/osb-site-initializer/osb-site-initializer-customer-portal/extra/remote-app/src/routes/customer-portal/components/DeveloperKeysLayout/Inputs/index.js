@@ -24,15 +24,9 @@ import {
 	STATUS_CODE,
 } from '../../../utils/constants';
 
-const DEVELOPER_KEYS_HELPER = {
-	'DXP':
-		'Select the Liferay DXP version for which you want to download a developer key.',
-	'DXP Cloud':
-		'To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version.',
-};
-
 const DevelopersKeysInputs = ({
 	accountKey,
+	downloadTextHelper,
 	dxpVersion,
 	productTitle,
 	sessionId,
@@ -43,7 +37,6 @@ const DevelopersKeysInputs = ({
 	} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion);
-	const downloadTextHelper = DEVELOPER_KEYS_HELPER[productTitle];
 
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
@@ -94,11 +87,8 @@ const DevelopersKeysInputs = ({
 				{downloadTextHelper}
 			</p>
 
-			<div className="align-items-start d-flex">
-				<label
-					className="developer-keys-label mb-3 mr-3"
-					id="subscription-select"
-				>
+			<div className="align-items-baseline d-flex">
+				<label className="developer-keys-label mb-3 mr-3">
 					<div className="position-relative">
 						<ClayIcon
 							className="select-icon"
@@ -107,7 +97,7 @@ const DevelopersKeysInputs = ({
 
 						{selectedVersion && (
 							<ClaySelect
-								className="developer-keys-select font-weight-bold"
+								className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
 								onChange={({target}) => {
 									setSelectedVersion(target.value);
 								}}
@@ -127,7 +117,7 @@ const DevelopersKeysInputs = ({
 				</label>
 
 				<BaseButton
-					className="btn btn-outline-primary developer-keys-button"
+					className="btn btn-outline-primary developer-keys-button py-1"
 					onClick={handleClick}
 					prependIcon="download"
 					type="button"

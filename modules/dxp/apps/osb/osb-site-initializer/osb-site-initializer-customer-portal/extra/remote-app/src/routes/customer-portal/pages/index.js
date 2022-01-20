@@ -13,6 +13,7 @@ import Layout from '../components/Layout';
 import {useCustomerPortal} from '../context';
 import {pages} from '../utils/constants';
 import ActivationKeys from './ActivationKeys';
+import DXP from './DXP';
 import DXPCloud from './DXPCloud';
 import Home from './Home';
 import Overview from './Overview';
@@ -33,10 +34,15 @@ const Pages = () => {
 			),
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
+		[pages.DXP]: {
+			Component: <DXP project={project} sessionId={sessionId} />,
+			Skeleton: <ActivationKeys.Skeleton />,
+		},
 		[pages.DXP_CLOUD]: {
 			Component: (
 				<DXPCloud
 					project={project}
+					sessionId={sessionId}
 					subscriptionGroups={subscriptionGroups}
 					userAccount={userAccount}
 				/>

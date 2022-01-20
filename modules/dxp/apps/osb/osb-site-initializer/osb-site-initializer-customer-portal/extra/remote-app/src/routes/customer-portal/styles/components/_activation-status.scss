@@ -14,14 +14,10 @@
 }
 
 .activation-status-container {
-	border: 2px solid;
-	border-color: var(--color-neutral-2);
 	max-width: 496px;
 	transition: all 200ms ease-in-out;
 
 	&:hover {
-		border: none;
 		box-shadow: $elevation-fluffy-3 !important;
-		transform: scale(1.02);
 	}
 }

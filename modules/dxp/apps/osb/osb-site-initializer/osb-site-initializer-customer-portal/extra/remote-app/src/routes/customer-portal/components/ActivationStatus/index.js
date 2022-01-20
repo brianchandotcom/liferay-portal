@@ -120,13 +120,15 @@ const ActivationStatus = ({project, subscriptionGroups, userAccount}) => {
 	}, [project]);
 
 	return (
-		<>
+		<div className="mb-5">
 			<h2>Activation Status</h2>
+
 			<p className="font-weight-normal text-neutral-7 text-paragraph">
 				{activationStatus.subtitle}
 			</p>
+
 			<div>
-				<ClayCard className="activation-status-container m-0 rounded shadow-none">
+				<ClayCard className="activation-status-container border border-light m-0 rounded shadow-none">
 					<ClayCard.Body className="px-4 py-3">
 						<div className="align-items-center d-flex position-relative">
 							<img
@@ -180,7 +182,7 @@ const ActivationStatus = ({project, subscriptionGroups, userAccount}) => {
 					</ClayCard.Body>
 				</ClayCard>
 			</div>
-		</>
+		</div>
 	);
 };
 

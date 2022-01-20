@@ -1,7 +1,6 @@
 [
 	{
 		"cpDefinitionExternalReferenceCode": "RAY004",
-		"optionName": "Raylife Option",
 		"cpInstanceProperties": [
 			{
 				"cpInstanceSKu": "PAY IN FULL",
@@ -26,6 +25,7 @@
 					"monthlyMode": "0"
 				}
 			}
-		]
+		],
+		"optionName": "Raylife Option"
 	}
 ]

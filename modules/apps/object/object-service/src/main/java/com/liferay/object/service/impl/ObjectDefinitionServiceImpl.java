@@ -142,6 +142,18 @@ public class ObjectDefinitionServiceImpl
 			pluralLabelMap, scope);
 	}
 
+	@Override
+	public ObjectDefinition updateTitleObjectFieldId(
+			Long objectDefinitionId, long titleObjectFieldId)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return _objectDefinitionLocalService.updateTitleObjectFieldId(
+			objectDefinitionId, titleObjectFieldId);
+	}
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 

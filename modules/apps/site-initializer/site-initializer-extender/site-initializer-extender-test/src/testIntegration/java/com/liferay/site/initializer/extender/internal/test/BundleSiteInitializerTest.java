@@ -94,6 +94,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
@@ -176,6 +178,7 @@ public class BundleSiteInitializerTest {
 			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
+			_assertRemoteApp(group);
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 		}
@@ -795,6 +798,22 @@ public class BundleSiteInitializerTest {
 		_assertResourcePermission(group);
 	}
 
+	private void _assertRemoteApp(Group group) throws Exception {
+		RemoteAppEntry remoteAppEntry =
+			_remoteAppEntryLocalService.
+				fetchRemoteAppEntryByExternalReferenceCode(
+					group.getCompanyId(), "TEST001");
+
+		Assert.assertNotNull(remoteAppEntry);
+
+		Assert.assertEquals(
+			"category.remote-apps", remoteAppEntry.getPortletCategoryName());
+
+		Assert.assertEquals(
+			"liferay-remote-app-test",
+			remoteAppEntry.getCustomElementHTMLElementName());
+	}
+
 	private void _assertResourcePermission(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
@@ -1010,6 +1029,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

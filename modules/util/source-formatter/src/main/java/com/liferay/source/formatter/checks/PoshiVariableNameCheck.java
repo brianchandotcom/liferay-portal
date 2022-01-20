@@ -376,7 +376,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 	private static final String _CAMEL_CASE_PATTERN = "([a-z0-9]+([A-Z])?)+";
 
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
-		"((?:<var name|<isset var|for param)=\")(.+?)(\"([ >])|/>)");
+		"((?:<var name|<isset var|for param)=\")(.+?)(\"[ >/])");
 	private static final Pattern _variableReferencePattern = Pattern.compile(
 		"(\\$\\{)([a-zA-Z0-9_]+?)(\\})");
 

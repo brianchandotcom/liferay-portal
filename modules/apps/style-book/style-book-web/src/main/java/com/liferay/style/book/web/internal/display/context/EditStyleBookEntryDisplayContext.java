@@ -311,6 +311,11 @@ public class EditStyleBookEntryDisplayContext {
 					new LayoutItemSelectorReturnType());
 				layoutItemSelectorCriterion.setShowHiddenPages(true);
 
+				Group group = _themeDisplay.getScopeGroup();
+
+				layoutItemSelectorCriterion.setShowPrivatePages(
+					group.isPrivateLayoutsEnabled());
+
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(
 						_httpServletRequest),

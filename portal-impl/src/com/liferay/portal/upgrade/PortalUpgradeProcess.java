@@ -14,10 +14,14 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -130,16 +134,35 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws UpgradeException {
+		long start = System.currentTimeMillis();
+
+		String message = "Completed upgrade process ";
+
 		try (Connection connection = getConnection()) {
 			this.connection = connection;
+
+			if (_log.isInfoEnabled()) {
+				String info = "Upgrading " + ClassUtil.getClassName(this);
+
+				_log.info(info);
+			}
 
 			doUpgrade();
 		}
 		catch (Exception exception) {
+			message = "Failed upgrade process ";
+
 			throw new UpgradeException(exception);
 		}
 		finally {
 			this.connection = null;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						message, ClassUtil.getClassName(this), " in ",
+						System.currentTimeMillis() - start, " ms"));
+			}
 		}
 	}
 
@@ -203,6 +226,9 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			class,
 		com.liferay.portal.upgrade.v7_4_x.PortalUpgradeProcessRegistryImpl.class
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalUpgradeProcess.class);
 
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
 	private static final TreeMap<Version, UpgradeProcess> _upgradeProcesses =

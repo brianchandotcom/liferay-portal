@@ -184,6 +184,21 @@
 		<td>ASSERT_SELECTED_VALUE</td>
 		<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
 		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_ENTRY_DISPLAY_DISABLED</td>
+		<td>//label[contains(text(),'${key_nameDisabled}')]/..//select[@class='form-control disabled']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_DATA_DISABLED</td>
+		<td>//label[contains(text(),'${key_nameDisabled}')]/..//*[contains(@class,'disabled form-control')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_BUTTON_DISABLED</td>
+		<td>//button[contains(@id,'save') and @disabled]</td>
+		<td></td>
 </tr>
 </tbody>
 </table>

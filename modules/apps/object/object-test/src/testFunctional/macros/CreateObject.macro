@@ -64,6 +64,24 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
+	macro assertDisabledAllFields {
+		CreateObject.assertDisabledObjectName();
+
+		for (var fieldsDisabled : list "Object ID,Name,Label") {
+			AssertElementPresent(
+				key_nameDisabled = "${fieldsDisabled}",
+				locator1 = "CreateObject#VIEW_OBJECT_DATA_DISABLED");
+		}
+
+		for (var fieldsDisabled : list "Title Field,Scope,Panel Category Key") {
+			AssertElementPresent(
+				key_nameDisabled = "${fieldsDisabled}",
+				locator1 = "CreateObject#VIEW_OBJECT_ENTRY_DISPLAY_DISABLED");
+		}
+
+		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
+	}
+
 	macro assertDisabledFieldName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_NAME");
 	}

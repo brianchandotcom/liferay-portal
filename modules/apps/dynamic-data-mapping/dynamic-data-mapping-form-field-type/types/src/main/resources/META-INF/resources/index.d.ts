@@ -59,13 +59,4 @@ declare global {
 	type LocalizedValue<T> = {
 		[key in Locale]?: T;
 	};
-	const Liferay: {
-		Language: {
-			direction: LocalizedValue<Direction>;
-			get: (key: LocalizedTextKey) => string;
-		};
-		Util: {
-			sub: (string: string, data: any, ...others: string[]) => string;
-		};
-	};
 }

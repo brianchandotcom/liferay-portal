@@ -1,0 +1,20 @@
+[
+	{
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
+		],
+		"externalReferenceCode": "TESTRAY001",
+		"htmlElementName": "liferay-remote-app-testray",
+		"name_i18n": {
+			"en_US": "Testray"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"remoteAppEntryKey": "TESTRAY",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:TESTRAY$]"
+	}
+]

@@ -238,8 +238,8 @@ public class DLFolderServiceTest {
 			actualFoldersAndFileEntriesAndFileShortcuts.toString(), 2,
 			actualFoldersAndFileEntriesAndFileShortcuts.size());
 
-		List<DLFileEntry> actualFileEntries = new ArrayList<>();
-		int actualFolders = 0;
+		List<DLFileEntry> actualDLFileEntries = new ArrayList<>();
+		int actualDLFoldersCount = 0;
 
 		for (Object actualFoldersAndFileEntriesAndFileShortcut :
 				actualFoldersAndFileEntriesAndFileShortcuts) {
@@ -247,31 +247,31 @@ public class DLFolderServiceTest {
 			if (actualFoldersAndFileEntriesAndFileShortcut instanceof
 					DLFileEntry) {
 
-				actualFileEntries.add(
+				actualDLFileEntries.add(
 					(DLFileEntry)actualFoldersAndFileEntriesAndFileShortcut);
 			}
 			else if (actualFoldersAndFileEntriesAndFileShortcut instanceof
 						DLFolder) {
 
-				actualFolders++;
+				actualDLFoldersCount++;
 			}
 		}
 
-		Assert.assertEquals(actualFolders, 1, actualFolders);
+		Assert.assertEquals(actualDLFoldersCount, 1, actualDLFoldersCount);
 
 		Assert.assertEquals(
-			actualFileEntries.size(), 1, actualFileEntries.size());
+			actualDLFileEntries.size(), 1, actualDLFileEntries.size());
 
 		Assert.assertEquals(
 			expectedFileEntries.toString(), expectedFileEntries.size(),
-			actualFileEntries.size());
+			actualDLFileEntries.size());
 
 		FileEntry expectedFileEntry = expectedFileEntries.get(0);
-		DLFileEntry actualFileEntry = actualFileEntries.get(0);
+		DLFileEntry actualDLFileEntry = actualDLFileEntries.get(0);
 
 		Assert.assertEquals(
 			expectedFileEntry.getFileEntryId(),
-			actualFileEntry.getFileEntryId());
+			actualDLFileEntry.getFileEntryId());
 	}
 
 	@Test
@@ -379,16 +379,16 @@ public class DLFolderServiceTest {
 				FileEntry expectedFileEntry =
 					(FileEntry)
 						expectedFoldersAndFileEntriesAndFileShortcuts.get(i);
-				DLFileEntry actualFileEntry =
+				DLFileEntry actualDLFileEntry =
 					(DLFileEntry)
 						actualFoldersAndFileEntriesAndFileShortcuts.get(i);
 
 				Assert.assertEquals(
 					expectedFileEntry.getFileEntryId(),
-					actualFileEntry.getFileEntryId());
+					actualDLFileEntry.getFileEntryId());
 			}
 			else {
-				DLFileShortcut actualFileShortcut =
+				DLFileShortcut actualDLFileShortcut =
 					(DLFileShortcut)
 						actualFoldersAndFileEntriesAndFileShortcuts.get(i);
 				FileShortcut expectedFileShortcut =
@@ -397,7 +397,7 @@ public class DLFolderServiceTest {
 
 				Assert.assertEquals(
 					expectedFileShortcut.getFileShortcutId(),
-					actualFileShortcut.getFileShortcutId());
+					actualDLFileShortcut.getFileShortcutId());
 			}
 		}
 	}
@@ -448,12 +448,12 @@ public class DLFolderServiceTest {
 
 		for (int i = 0; i < 3; i++) {
 			FileEntry expectedFileEntry = expectedFileEntries.get(i);
-			DLFileEntry actualFileEntry =
+			DLFileEntry actualDLFileEntry =
 				(DLFileEntry)actualFoldersAndFileEntriesAndFileShortcuts.get(i);
 
 			Assert.assertEquals(
 				expectedFileEntry.getFileEntryId(),
-				actualFileEntry.getFileEntryId());
+				actualDLFileEntry.getFileEntryId());
 		}
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
@@ -66,7 +66,7 @@ public class CommerceBillingAddressDataSetDataProvider
 
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getBillingCommerceAddresses(
-				commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
+				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 				commerceOrder.getCommerceAccountId(), filter.getKeywords(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				sort);
@@ -94,7 +94,7 @@ public class CommerceBillingAddressDataSetDataProvider
 			commerceOrderId);
 
 		return _commerceAddressService.getBillingCommerceAddressesCount(
-			commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
+			commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			commerceOrder.getCommerceAccountId(), filter.getKeywords());
 	}
 

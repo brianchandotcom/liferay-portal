@@ -523,6 +523,15 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition updateTitleObjectFieldId(
+			Long objectDefinitionId, long titleObjectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.updateTitleObjectFieldId(
+			objectDefinitionId, titleObjectFieldId);
+	}
+
+	@Override
 	public ObjectDefinitionLocalService getWrappedService() {
 		return _objectDefinitionLocalService;
 	}

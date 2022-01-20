@@ -259,6 +259,26 @@ public class ObjectDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			updateTitleObjectFieldId(
+				Long objectDefinitionId, long titleObjectFieldId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.updateTitleObjectFieldId(
+					objectDefinitionId, titleObjectFieldId);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionServiceSoap.class);
 

@@ -417,6 +417,48 @@ public class ObjectDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectDefinition
+			updateTitleObjectFieldId(
+				HttpPrincipal httpPrincipal, Long objectDefinitionId,
+				long titleObjectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectDefinitionServiceUtil.class, "updateTitleObjectFieldId",
+				_updateTitleObjectFieldIdParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectDefinitionId, titleObjectFieldId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionServiceHttp.class);
 
@@ -447,5 +489,7 @@ public class ObjectDefinitionServiceHttp {
 			java.util.Map.class, String.class, String.class, String.class,
 			boolean.class, java.util.Map.class, String.class
 		};
+	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes9 =
+		new Class[] {Long.class, long.class};
 
 }

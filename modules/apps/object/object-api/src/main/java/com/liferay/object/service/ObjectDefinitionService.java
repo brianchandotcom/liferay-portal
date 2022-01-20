@@ -99,4 +99,8 @@ public interface ObjectDefinitionService extends BaseService {
 			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException;
 
+	public ObjectDefinition updateTitleObjectFieldId(
+			Long objectDefinitionId, long titleObjectFieldId)
+		throws PortalException;
+
 }

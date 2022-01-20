@@ -372,4 +372,9 @@ public interface ObjectDefinitionLocalService
 	public ObjectDefinition updateObjectDefinition(
 		ObjectDefinition objectDefinition);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectDefinition updateTitleObjectFieldId(
+			Long objectDefinitionId, long titleObjectFieldId)
+		throws PortalException;
+
 }

@@ -116,6 +116,14 @@ public class ObjectDefinitionServiceUtil {
 			pluralLabelMap, scope);
 	}
 
+	public static ObjectDefinition updateTitleObjectFieldId(
+			Long objectDefinitionId, long titleObjectFieldId)
+		throws PortalException {
+
+		return getService().updateTitleObjectFieldId(
+			objectDefinitionId, titleObjectFieldId);
+	}
+
 	public static ObjectDefinitionService getService() {
 		return _service;
 	}

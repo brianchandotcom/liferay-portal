@@ -36,6 +36,21 @@
 			width: 100%;
 		}
 
+		.section-buttons-area {
+			align-items: center;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			.delete-button {
+				align-items: flex-end;
+
+				& svg {
+					fill: #6b6c7e;
+				}
+			}
+		}
+
 		span .lexicon-icon-exclamation-full:hover {
 			color: #da1414 !important;
 		}

@@ -184,6 +184,16 @@
 		<td>ASSERT_SELECTED_VALUE</td>
 		<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
 		<td></td>
+	</tr>
+	<tr>
+		<td>ASSERT_TWO_COLUMN_FIELD_ENTRY</td>
+		<td>//div[contains(@class,'col-md-6')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ASSERT_ONE_COLUMN_FIELD_ENTRY</td>
+		<td>//div[contains(@class,'col-md-12')]</td>
+		<td></td>
 </tr>
 </tbody>
 </table>

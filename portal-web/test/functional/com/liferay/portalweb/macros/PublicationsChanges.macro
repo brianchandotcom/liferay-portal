@@ -27,6 +27,12 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 	}
 
+	macro changeDisplayItem {
+		Click(locator1 = "PublicationsChanges#CURRENT_DISPLAY_ICON");
+
+		MenuItem.click(menuItem = "${displayItem}");
+	}
+
 	macro deleteComment {
 		Click.mouseOverClick(
 			key_commentValue = "${commentValue}",
@@ -185,7 +191,7 @@ definition {
 				value1 = "${diffRemovedValue}");
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Production");
+		PublicationsChanges.changeDisplayItem(displayItem = "Production");
 
 		if ("${entryDeletedInProduction}" == "true") {
 			Alert.viewErrorMessage(errorMessage = "This item is missing or is deleted.");
@@ -205,7 +211,7 @@ definition {
 			}
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Publication");
+		PublicationsChanges.changeDisplayItem(displayItem = "Publication");
 
 		if (isSet(columnValueInPublication)) {
 			var key_columnValueInPublication = "${columnValueInPublication}";
@@ -292,7 +298,7 @@ definition {
 
 	macro viewDDLRecordChangeDiff {
 		if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM")) {
-			Publications.changeDiffDisplayItem(displayItem = "Unified View");
+			PublicationsChanges.changeDisplayItem(displayItem = "Unified View");
 		}
 
 		var key_fieldName = "${fieldName}";
@@ -305,7 +311,7 @@ definition {
 				value1 = "${diffAddedValue}");
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Production");
+		PublicationsChanges.changeDisplayItem(displayItem = "Production");
 
 		AssertTextEquals(
 			key_displayItem = "Production",
@@ -320,7 +326,7 @@ definition {
 				value1 = "${fieldValueInProduction}");
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Publication");
+		PublicationsChanges.changeDisplayItem(displayItem = "Publication");
 
 		AssertTextEquals.assertPartialText(
 			key_displayItem = "${publicationName}",

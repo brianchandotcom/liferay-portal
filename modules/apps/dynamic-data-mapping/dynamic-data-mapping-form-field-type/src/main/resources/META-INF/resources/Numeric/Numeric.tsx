@@ -34,6 +34,8 @@ import withConfirmationField from '../util/withConfirmationField.es';
 
 import './Numeric.scss';
 
+import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
+
 const NON_NUMERIC_REGEX = /[\D]/g;
 
 const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {

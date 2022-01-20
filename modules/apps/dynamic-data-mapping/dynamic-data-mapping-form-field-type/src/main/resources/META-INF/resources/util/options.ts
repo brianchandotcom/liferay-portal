@@ -12,6 +12,8 @@
  * details.
  */
 
+import type {Locale, LocalizedValue} from '../types';
+
 function assertOptionParameters<T>({
 	editingLanguageId,
 	multiple,

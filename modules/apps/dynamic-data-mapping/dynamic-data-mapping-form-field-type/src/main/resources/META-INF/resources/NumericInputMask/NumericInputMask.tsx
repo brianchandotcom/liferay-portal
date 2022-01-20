@@ -28,6 +28,8 @@ import Select from '../Select/Select.es';
 import Text from '../Text/Text.es';
 import {limitValue} from '../util/numericalOperations';
 
+import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
+
 type DecimalSymbol = ',' | '.';
 type ThousandsSeparator = DecimalSymbol | ' ' | "'" | 'none';
 

@@ -19,52 +19,9 @@ export {FieldBase as ReactFieldBase} from './FieldBase/ReactFieldBase.es';
 
 export {default as FieldBase} from './FieldBase/FieldBase.es';
 
-declare global {
-
-	// Global Types
-
-	type Direction = 'ltr' | 'rtl';
-
-	type FieldChangeEventHandler<T = any> = (event: {
-		target: {value: T};
-	}) => void;
-
-	type Locale =
-		| 'ar_SA'
-		| 'ca_ES'
-		| 'de_DE'
-		| 'en_US'
-		| 'es_ES'
-		| 'fi_FI'
-		| 'fr_FR'
-		| 'hu_HU'
-		| 'nl_NL'
-		| 'ja_JP'
-		| 'pt_BR'
-		| 'sv_SE'
-		| 'zh_CN';
-
-	type LocalizedTextKey =
-		| 'choose-an-option'
-		| 'days'
-		| 'date'
-		| 'date-fields'
-		| 'decimal-places'
-		| 'decimal-separator'
-		| 'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x'
-		| 'input-mask-append-placeholder'
-		| 'minus'
-		| 'months'
-		| 'operation'
-		| 'plus'
-		| 'prefix'
-		| 'prefix-or-suffix'
-		| 'quantity'
-		| 'suffix'
-		| 'the-maximum-length-is-10-characters'
-		| 'thousands-separator'
-		| 'unit'
-		| 'years';
-
-	type LocalizedValue<T> = {[key in Locale]?: T};
-}
+export type {
+	Direction,
+	FieldChangeEventHandler,
+	Locale,
+	LocalizedValue,
+} from './types';

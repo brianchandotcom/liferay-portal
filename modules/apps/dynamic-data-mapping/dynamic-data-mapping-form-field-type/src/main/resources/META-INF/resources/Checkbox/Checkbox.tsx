@@ -20,6 +20,8 @@ import React from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
+import type {FieldChangeEventHandler} from '../types';
+
 const Switcher: React.FC<ISwitcherProps> = ({
 	checked,
 	disabled,

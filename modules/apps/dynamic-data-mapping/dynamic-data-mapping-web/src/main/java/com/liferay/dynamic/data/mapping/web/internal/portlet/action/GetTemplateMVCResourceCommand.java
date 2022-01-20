@@ -21,9 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ResourceRequest;
@@ -56,21 +54,12 @@ public class GetTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String script = template.getScript();
 
-		String contentType = null;
+		String contentType = ContentTypes.TEXT_PLAIN_UTF8;
 
 		String type = template.getType();
 
-		String language = GetterUtil.getString(
-			template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
-
 		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 			contentType = ContentTypes.APPLICATION_JSON;
-		}
-		else if (language.equals(TemplateConstants.LANG_TYPE_XSL)) {
-			contentType = ContentTypes.TEXT_XML_UTF8;
-		}
-		else {
-			contentType = ContentTypes.TEXT_PLAIN_UTF8;
 		}
 
 		PortletResponseUtil.sendFile(

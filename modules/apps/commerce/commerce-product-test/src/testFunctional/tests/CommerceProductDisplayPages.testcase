@@ -57,6 +57,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7950. Verify user selects, changes and removes a Default Product Display page by navigating to channels page"
+	@priority = "5"
+	test CanSelectChangeAndRemoveDefaultProductDisplayPage {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given the Minium site has two pages with a Product Details widget") {
+			for (var pageNum : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${pageNum}");
+			}
+
+			for (var widgetNum : list "1,2") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${widgetNum}",
+					widgetName = "Product Details");
+			}
+		}
+
+		task ("And given the user set a widget page as Default Product Display Page by navigating to Channels page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceChannels.addProductDisplayPage(
+				pageName = "Test Public Widget Page 1",
+				pageType = "Public");
+		}
+
+		task ("And given the user changes the Default Product Display Page") {
+			CommerceChannels.addProductDisplayPage(
+				pageName = "Test Public Widget Page 2",
+				pageType = "Public");
+		}
+
+		task ("When the user removes the Product Display Page") {
+			CommerceChannels.removeProductDisplayPage();
+		}
+
+		task ("Then it should show Product Display Page as 'None'") {
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceEntry.assertDefaultProductDisplayPage(pageName = "None");
+		}
+	}
+
 	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {

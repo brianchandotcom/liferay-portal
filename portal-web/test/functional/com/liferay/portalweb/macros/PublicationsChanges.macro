@@ -61,7 +61,7 @@ definition {
 		if ("${conflictingChanges}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
-				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+				locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Discard Change");
 		}
@@ -76,7 +76,7 @@ definition {
 			MenuItem.click(menuItem = "Discard");
 		}
 
-		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
+		AssertElementPresent(locator1 = "PublicationsChanges#DISCARDED_CHANGES_TITLE");
 
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";
@@ -125,7 +125,7 @@ definition {
 		if ("${conflictingChanges}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
-				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+				locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit Item");
 		}
@@ -167,13 +167,13 @@ definition {
 		if ("${entryDeletedInProduction}" == "true") {
 			AssertTextEquals(
 				key_displayItem = "Split View",
-				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM",
 				value1 = "Split View");
 		}
 		else {
 			AssertTextEquals(
 				key_displayItem = "Unified View",
-				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM",
 				value1 = "Unified View");
 		}
 
@@ -181,13 +181,13 @@ definition {
 
 		if (isSet(diffAddedValue)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Publications#DIFF_ADDED_VALUE",
+				locator1 = "PublicationsChanges#DIFF_ADDED_VALUE",
 				value1 = "${diffAddedValue}");
 		}
 
 		if (isSet(diffRemovedValue)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Publications#DIFF_REMOVED_VALUE",
+				locator1 = "PublicationsChanges#DIFF_REMOVED_VALUE",
 				value1 = "${diffRemovedValue}");
 		}
 
@@ -199,14 +199,14 @@ definition {
 		else {
 			AssertTextEquals(
 				key_displayItem = "Production",
-				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM",
 				value1 = "Production");
 
 			if (isSet(columnValueInProduction)) {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 			}
 		}
@@ -217,7 +217,7 @@ definition {
 			var key_columnValueInPublication = "${columnValueInPublication}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "Publications#COLUMN_VALUE_IN_PUBLICATION",
+				locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
 				value1 = "${columnValueInPublication}");
 		}
 	}
@@ -297,7 +297,7 @@ definition {
 	}
 
 	macro viewDDLRecordChangeDiff {
-		if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM")) {
+		if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM")) {
 			PublicationsChanges.changeDisplayItem(displayItem = "Unified View");
 		}
 
@@ -315,7 +315,7 @@ definition {
 
 		AssertTextEquals(
 			key_displayItem = "Production",
-			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM",
 			value1 = "Production");
 
 		if (isSet(fieldValueInProduction)) {
@@ -330,7 +330,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_displayItem = "${publicationName}",
-			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM",
 			value1 = "${publicationName}");
 
 		if (isSet(fieldValueInPublication)) {

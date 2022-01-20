@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLUMN_VALUE_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLUMN_VALUE_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_ACTIONS</td>
 	<td>//div[contains(@class,'autofit-row') and contains(.,'${key_commentValue}')]/preceding-sibling::div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
@@ -56,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFLICTING_CHANGES_DISCARD_ELLIPSIS</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTEXT_CHANGE_TITLE</td>
 	<td>//div[contains(@class,'publication-name') and contains(.,'${key_changeTitle}')]</td>
 	<td></td>
@@ -68,6 +83,21 @@
 <tr>
 	<td>DDL_RECORD_DIFF_ADDED_VALUE</td>
 	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIFF_ADDED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIFF_REMOVED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCARDED_CHANGES_TITLE</td>
+	<td>//h2[contains(.,'Discarded Changes')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>NUMBER_VIEWS</td>
-	<td>xpath=(//span[contains(@class, 'font-weight-bold') and contains(text(),'0')])[${key_number}]</td>
+	<td>//*[contains(@class, 'recharts-legend-item-text')] //span[contains(@class, 'font-weight-bold')]</td>
 	<td></td>
 </tr>
 <tr>

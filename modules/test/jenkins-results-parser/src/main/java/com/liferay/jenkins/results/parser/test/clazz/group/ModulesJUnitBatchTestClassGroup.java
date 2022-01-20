@@ -19,6 +19,7 @@ import com.google.common.collect.Lists;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +41,24 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+	}
+
+	@Override
+	protected List<JobProperty> getDefaultExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.addAll(super.getDefaultExcludesJobProperties());
+
+		for (File modulePullSubrepoDir :
+				portalGitWorkingDirectory.getModulePullSubrepoDirs()) {
+
+			excludesJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.excludes.subrepo",
+					modulePullSubrepoDir, JobProperty.Type.EXCLUDE_GLOB));
+		}
+
+		return excludesJobProperties;
 	}
 
 	@Override
@@ -80,6 +99,37 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		return testClassNameRelativeIncludesGlobs;
+	}
+
+	@Override
+	protected List<JobProperty> getRelevantExcludesJobProperties() {
+		Set<File> modifiedModuleDirsList = new HashSet<>();
+
+		try {
+			modifiedModuleDirsList.addAll(
+				portalGitWorkingDirectory.getModifiedModuleDirsList());
+		}
+		catch (IOException ioException) {
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get relevant module group directories in ",
+					workingDirectory.getPath()),
+				ioException);
+		}
+
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
+			excludesJobProperties.add(
+				getJobProperty(
+					"modules.includes.required.test.batch.class.names.excludes",
+					modifiedModuleDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
+		}
+
+		return excludesJobProperties;
 	}
 
 	@Override

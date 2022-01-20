@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.CentralMergePullRequestJob;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
@@ -56,6 +57,33 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return axisCount;
+	}
+
+	public List<JobProperty> getExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.addAll(getRequiredExcludesJobProperties());
+
+		if (testReleaseBundle) {
+			excludesJobProperties.addAll(getReleaseExcludesJobProperties());
+		}
+		else if (testRelevantChanges) {
+			excludesJobProperties.addAll(getRelevantExcludesJobProperties());
+		}
+		else {
+			excludesJobProperties.addAll(getDefaultExcludesJobProperties());
+		}
+
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			excludesJobProperties.addAll(
+				getStableDefaultExcludesJobProperties());
+			excludesJobProperties.addAll(
+				getStableRequiredExcludesJobProperties());
+		}
+
+		excludesJobProperties.removeAll(Collections.singleton(null));
+
+		return excludesJobProperties;
 	}
 
 	public List<JUnitTestClass> getJUnitTestClasses() {
@@ -154,10 +182,47 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		setSegmentTestClassGroups();
 	}
 
+	protected List<JobProperty> getDefaultExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes",
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
+	}
+
+	protected List<JobProperty> getReleaseExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.addAll(getDefaultExcludesJobProperties());
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes.release",
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
+	}
+
 	protected List<String> getReleaseTestClassNamesRelativeIncludesGlobs(
 		List<String> testClassNamesRelativeIncludesGlobs) {
 
 		return testClassNamesRelativeIncludesGlobs;
+	}
+
+	protected List<JobProperty> getRelevantExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.addAll(getDefaultExcludesJobProperties());
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes.relevant",
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
 	}
 
 	protected List<String> getRelevantTestClassNamesRelativeExcludesGlobs() {
@@ -213,6 +278,52 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return relevantTestClassNameRelativeIncludesGlobs;
+	}
+
+	protected List<JobProperty> getRequiredExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes.required",
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
+	}
+
+	protected List<JobProperty> getStableDefaultExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		String batchName = getBatchName();
+
+		if (!batchName.endsWith("_stable")) {
+			batchName += "_stable";
+		}
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes", NAME_STABLE_TEST_SUITE,
+				batchName, JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
+	}
+
+	protected List<JobProperty> getStableRequiredExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		String batchName = getBatchName();
+
+		if (!batchName.endsWith("_stable")) {
+			batchName += "_stable";
+		}
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes.required",
+				NAME_STABLE_TEST_SUITE, batchName,
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		return excludesJobProperties;
 	}
 
 	protected boolean isValidTestClass(TestClass testClass) {
@@ -283,6 +394,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
+		final List<PathMatcher> excludesPathMatcher = getPathMatchers(
+			getExcludesJobProperties());
+
 		final BatchTestClassGroup batchTestClassGroup = this;
 
 		try {
@@ -297,8 +411,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						throws IOException {
 
 						if (JenkinsResultsParserUtil.isFileExcluded(
-								testClassNamesExcludesPathMatchers,
-								filePath.toFile())) {
+								excludesPathMatcher, filePath.toFile())) {
 
 							return FileVisitResult.SKIP_SUBTREE;
 						}
@@ -313,7 +426,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						throws IOException {
 
 						if (JenkinsResultsParserUtil.isFileIncluded(
-								testClassNamesExcludesPathMatchers,
+								excludesPathMatcher,
 								testClassNamesIncludesPathMatchers,
 								filePath.toFile())) {
 

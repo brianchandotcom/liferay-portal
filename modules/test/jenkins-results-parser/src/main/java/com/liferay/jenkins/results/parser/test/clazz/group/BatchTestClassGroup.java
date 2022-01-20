@@ -22,6 +22,7 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
+import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -407,10 +408,57 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected JobProperty getJobProperty(
+		String basePropertyName, JobProperty.Type type) {
+
+		return _getJobProperty(basePropertyName, null, null, null, type, true);
+	}
+
+	protected JobProperty getJobProperty(
 		String basePropertyName, String testSuiteName, String testBatchName) {
 
 		return _getJobProperty(
 			basePropertyName, testSuiteName, testBatchName, null, null, true);
+	}
+
+	protected JobProperty getJobProperty(
+		String basePropertyName, String testSuiteName, String testBatchName,
+		JobProperty.Type type) {
+
+		return _getJobProperty(
+			basePropertyName, testSuiteName, testBatchName, null, type, true);
+	}
+
+	protected List<PathMatcher> getPathMatchers(
+		List<JobProperty> jobProperties) {
+
+		List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		for (JobProperty jobProperty : jobProperties) {
+			if (!(jobProperty instanceof GlobJobProperty)) {
+				continue;
+			}
+
+			GlobJobProperty globJobProperty = (GlobJobProperty)jobProperty;
+
+			List<PathMatcher> globPathMatchers =
+				globJobProperty.getPathMatchers();
+
+			if (globPathMatchers == null) {
+				continue;
+			}
+
+			for (PathMatcher globPathMatcher : globPathMatchers) {
+				if ((globPathMatcher == null) ||
+					pathMatchers.contains(globPathMatcher)) {
+
+					continue;
+				}
+
+				pathMatchers.add(globPathMatcher);
+			}
+		}
+
+		return pathMatchers;
 	}
 
 	protected List<PathMatcher> getPathMatchers(

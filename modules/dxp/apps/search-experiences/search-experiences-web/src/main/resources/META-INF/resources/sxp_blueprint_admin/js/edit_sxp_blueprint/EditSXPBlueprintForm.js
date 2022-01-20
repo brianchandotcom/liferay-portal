@@ -661,9 +661,10 @@ function EditSXPBlueprintForm({
 							includeResponseString: true,
 							languageId: Liferay.ThemeDisplay.getLanguageId(),
 						},
-						searchContextAttributes: transformToSearchContextAttributes(
-							attributes
-						),
+						searchContextAttributes: {
+							...transformToSearchContextAttributes(attributes),
+							'search.experiences.scope.group.id': Liferay.ThemeDisplay.getScopeGroupId(),
+						},
 					},
 					elementInstances,
 				}),

@@ -400,13 +400,9 @@ definition {
 
 		Navigator.gotoBack();
 
-		Click(
-			key_rowIndexNumber = "1",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+		LexiconEntry.openEntryMenu(rowEntry = "Form 1");
 
-		AssertElementNotPresent(
-			key_itemName = "Entries",
-			locator1 = "FormsAdmin#FORMS_DROPDOWN_MENU_ITEM");
+		MenuItem.viewNotPresent(menuItem = "View Entries");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"

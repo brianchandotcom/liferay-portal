@@ -2212,7 +2212,7 @@ definition {
 
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#ALERT_ICON_MESSAGE");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		FormsAdminNavigator.openPublishURL();
 

@@ -379,6 +379,7 @@ export default function ({classTypes, namespace}) {
 		Liferay.Util.openSelectionModal({
 			customSelectEvent: true,
 			id: `${namespace}selectDDMStructure${delegateTarget.id}`,
+			iframeBodyCssClass: '',
 			onSelect: (selectedItem) => {
 				setDDMFields({
 					className: selectedItem.className,

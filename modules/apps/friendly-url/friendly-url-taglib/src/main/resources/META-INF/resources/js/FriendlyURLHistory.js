@@ -16,17 +16,21 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 
 export default function FriendlyURLHistory({
+	disabled: initialDisabled = false,
 	elementId,
 	localizable = false,
 	...restProps
 }) {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState();
+	const [disabled, setDisabled] = useState(initialDisabled);
+
+	const inputRef = useRef(document.getElementById(elementId));
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -36,6 +40,32 @@ export default function FriendlyURLHistory({
 		onClose: handleOnClose,
 	});
 
+	useEffect(() => {
+		const input = inputRef.current;
+
+		if (input) {
+			const mutationObserver = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (
+						mutation.type === 'attributes' &&
+						mutation.attributeName === 'disabled'
+					) {
+						setDisabled(mutation.target.disabled);
+					}
+				});
+			});
+
+			mutationObserver.observe(input, {
+				attributeFilter: ['disabled'],
+				attributes: true,
+			});
+
+			return () => {
+				mutationObserver.disconnect(input);
+			};
+		}
+	}, []);
+
 	return (
 		<>
 			<ClayButtonWithIcon
@@ -43,6 +73,7 @@ export default function FriendlyURLHistory({
 				className={classNames('btn-url-history', {
 					['btn-url-history-localizable']: localizable,
 				})}
+				disabled={disabled}
 				displayType="secondary"
 				onClick={() => {
 					if (localizable) {
@@ -71,5 +102,7 @@ export default function FriendlyURLHistory({
 }
 
 FriendlyURLHistory.propTypes = {
+	disabled: PropTypes.bool,
 	elementId: PropTypes.string.isRequired,
+	localizable: PropTypes.bool,
 };

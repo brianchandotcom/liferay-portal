@@ -27,6 +27,9 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanExportMultipleWCsWithMultipleLanguages {
+		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content${i}",
@@ -142,6 +145,9 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanImportMultipleWCs {
+		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WebContent${i}",
@@ -421,6 +427,9 @@ definition {
 	@description = "This is a test for LPS-136979. It checks that a user can import translation with long inputs."
 	@priority = "4"
 	test CanImportWithLongInputs {
+		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+
 		JSONWebcontent.addWebContent(
 			content = "WebContentContent",
 			description = "Description",
@@ -513,6 +522,9 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPartiallyImportMultipleWCs {
+		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WebContent${i}",

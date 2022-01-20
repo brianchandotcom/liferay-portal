@@ -37,11 +37,11 @@ public interface FragmentEntryProcessorHelper {
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
 	public long getFileEntryId(
-			long classNameId, long classPK, String fieldId, Locale locale)
+			long classNameId, long classPK, String fieldName, Locale locale)
 		throws PortalException;
 
 	public long getFileEntryId(
-		Object displayObject, String fieldId, Locale locale);
+		Object displayObject, String fieldName, Locale locale);
 
 	public long getFileEntryId(String className, long classPK);
 
@@ -66,8 +66,9 @@ public interface FragmentEntryProcessorHelper {
 		throws PortalException;
 
 	public Object getMappedInfoItemFieldValue(
-		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
-		Locale locale, Object object);
+		String fieldName,
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
+		Object object);
 
 	public Object getMappedLayoutValue(
 			JSONObject jsonObject,

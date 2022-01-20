@@ -146,7 +146,7 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public long getFileEntryId(
-			long classNameId, long classPK, String fieldId, Locale locale)
+			long classNameId, long classPK, String fieldName, Locale locale)
 		throws PortalException {
 
 		if (classNameId == 0) {
@@ -172,14 +172,14 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return _getFileEntryId(
-			_portal.getClassName(classNameId), object, fieldId, locale);
+			_portal.getClassName(classNameId), object, fieldName, locale);
 	}
 
 	@Override
 	public long getFileEntryId(
-		Object displayObject, String fieldId, Locale locale) {
+		Object displayObject, String fieldName, Locale locale) {
 
-		if (Validator.isNull(fieldId) ||
+		if (Validator.isNull(fieldName) ||
 			!(displayObject instanceof ClassedModel)) {
 
 			return 0;
@@ -188,7 +188,7 @@ public class FragmentEntryProcessorHelperImpl
 		ClassedModel classedModel = (ClassedModel)displayObject;
 
 		return _getFileEntryId(
-			classedModel.getModelClassName(), displayObject, fieldId, locale);
+			classedModel.getModelClassName(), displayObject, fieldName, locale);
 	}
 
 	@Override
@@ -390,11 +390,12 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public Object getMappedInfoItemFieldValue(
-		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
-		Locale locale, Object object) {
+		String fieldName,
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
+		Object object) {
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldId);
+			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldName);
 
 		if (infoFieldValue == null) {
 			return null;
@@ -562,7 +563,8 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private long _getFileEntryId(
-		String className, Object displayObject, String fieldId, Locale locale) {
+		String className, Object displayObject, String fieldName,
+		Locale locale) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -574,7 +576,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(
-				displayObject, fieldId);
+				displayObject, fieldName);
 
 		Object value = StringPool.BLANK;
 

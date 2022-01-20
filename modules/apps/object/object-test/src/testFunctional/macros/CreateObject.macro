@@ -202,6 +202,12 @@ definition {
 			value1 = "${pluralLabelName}");
 	}
 
+	macro assertOneColumnOnFieldEntry {
+		AssertElementPresent(locator1 = "CreateObject#ASSERT_ONE_COLUMN_FIELD_ENTRY");
+
+		AssertElementNotPresent(locator1 = "CreateObject#ASSERT_TWO_COLUMN_FIELD_ENTRY");
+	}
+
 	macro assertPanelCategoryKey {
 		AssertElementPresent(
 			key_panelCategoryKey = "${panelCategoryKey}",

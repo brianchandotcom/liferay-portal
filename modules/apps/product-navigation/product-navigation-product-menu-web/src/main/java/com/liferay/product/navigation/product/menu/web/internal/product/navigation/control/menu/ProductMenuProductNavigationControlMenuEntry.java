@@ -125,7 +125,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 					LiferayWindowState.EXCLUSIVE
 				).buildPortletURL();
 
-				return "data-url='" + portletURL.toString() + "'";
+				return "data-url='" + portletURL + "'";
 			}
 		).put(
 			"portletNamespace",

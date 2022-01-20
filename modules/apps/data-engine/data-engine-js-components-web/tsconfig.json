@@ -1,5 +1,5 @@
 {
-	"@generated": "50e99584db39677009fc3f6157fc398e0f8144c0",
+	"@generated": "0352eebcea8943fb70090d8182ff86a222cd4206",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -14,7 +14,7 @@
 		"outDir": "./types",
 		"paths": {
 			"frontend-js-web": [
-				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.es.ts"
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,

@@ -1,5 +1,5 @@
 {
-	"@generated": "b9ca3d676d26d860075e12f384fcf293e0a7685c",
+	"@generated": "0e43a7c4ecd47c1066dd4ff744461cf5cac3ebe6",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -17,10 +17,10 @@
 				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"data-engine-js-components-web": [
-				"../data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.es.ts"
+				"../data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"frontend-js-web": [
-				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.es.ts"
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,

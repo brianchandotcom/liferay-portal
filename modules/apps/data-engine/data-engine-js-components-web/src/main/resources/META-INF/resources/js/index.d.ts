@@ -12,11 +12,4 @@
  * details.
  */
 
-export {FieldBase as ReactFieldBase} from './FieldBase/ReactFieldBase.es';
-export {default as FieldBase} from './FieldBase/FieldBase.es';
-export type {
-	Direction,
-	FieldChangeEventHandler,
-	Locale,
-	LocalizedValue,
-} from './types';
+// Placeholder definition file

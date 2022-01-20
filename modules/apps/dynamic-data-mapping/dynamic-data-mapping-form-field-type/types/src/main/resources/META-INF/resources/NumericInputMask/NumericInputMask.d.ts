@@ -13,6 +13,7 @@
  */
 
 import React, {FocusEventHandler} from 'react';
+import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
 declare type DecimalSymbol = ',' | '.';
 declare type ThousandsSeparator = DecimalSymbol | ' ' | "'" | 'none';
 interface INumericInputMaskValue {

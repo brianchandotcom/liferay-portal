@@ -12,6 +12,7 @@
  * details.
  */
 
+import type {Locale, LocalizedValue} from '../types';
 export declare function normalizeOptions({
 	editingLanguageId,
 	fixedOptions,

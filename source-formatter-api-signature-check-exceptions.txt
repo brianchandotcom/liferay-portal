@@ -408,6 +408,7 @@ com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#ge
 com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#getLinkCssClass(HttpServletRequest)
 com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#getMarkupView(HttpServletRequest)
 com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#getURL(HttpServletRequest)
+com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#isRelevant(HttpServletRequest)
 com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#isShow(HttpServletRequest)
 com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry#getProductNavigationControlMenuCategories(String,HttpServletRequest)
 com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry#getProductNavigationControlMenuEntries(ProductNavigationControlMenuCategory,HttpServletRequest)

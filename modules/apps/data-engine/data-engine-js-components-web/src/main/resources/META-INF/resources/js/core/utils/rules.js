@@ -12,8 +12,8 @@
  * details.
  */
 
-import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
-
+import {Token} from '../../utils/Token';
+import {Tokenizer} from '../../utils/Tokenizer';
 import {RulesVisitor} from '../../utils/visitors.es';
 
 const isEqualLengthOptions = (options1, options2) => {

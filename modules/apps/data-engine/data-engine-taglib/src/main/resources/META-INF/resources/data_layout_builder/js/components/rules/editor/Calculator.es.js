@@ -12,17 +12,19 @@
  * details.
  */
 
-import './Calculator.scss';
-
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {FieldStateless, RulesSupport} from 'data-engine-js-components-web';
-import Token from 'dynamic-data-mapping-form-builder/js/expressions/Token.es';
-import Tokenizer from 'dynamic-data-mapping-form-builder/js/expressions/Tokenizer.es';
+import {
+	FieldStateless,
+	RulesSupport,
+	Token,
+	Tokenizer,
+} from 'data-engine-js-components-web';
 import React, {forwardRef, useMemo, useState} from 'react';
 
+import './Calculator.scss';
 import CalculatorButtonArea from './CalculatorButtonArea.es';
 
 function getRepeatableFields(fields) {

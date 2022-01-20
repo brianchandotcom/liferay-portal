@@ -37,6 +37,8 @@ export * as RulesSupport from './utils/rulesSupport';
 export {default as setDataRecord} from './utils/setDataRecord.es';
 export * as SettingsContext from './utils/settingsContext';
 export * as StringUtils from './utils/strings';
+export {Token} from './utils/Token';
+export {Tokenizer} from './utils/Tokenizer';
 export {PagesVisitor} from './utils/visitors.es';
 
 // Form/Data Engine Core

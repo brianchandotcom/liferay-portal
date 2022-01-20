@@ -12,9 +12,8 @@
  * details.
  */
 
-import {Tokenizer} from 'dynamic-data-mapping-form-builder';
-
 import {getFieldProperty} from '../core/utils/fields';
+import {Tokenizer} from './Tokenizer';
 import {PagesVisitor} from './visitors.es';
 
 const DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION = /[a-zA-Z]+\d{8}/g;

@@ -29,5 +29,3 @@ Token.LITERAL = 'Literal';
 Token.OPERATOR = 'Operator';
 Token.RIGHT_PARENTHESIS = 'Right Parenthesis';
 Token.VARIABLE = 'Variable';
-
-export default Token;

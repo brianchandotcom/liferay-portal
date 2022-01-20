@@ -12,7 +12,7 @@
  * details.
  */
 
-import Token from './Token.es';
+import {Token} from './Token';
 
 const OPERATORS = ['*', '/', '+', '-'];
 
@@ -209,5 +209,3 @@ export class Tokenizer {
 		);
 	}
 }
-
-export default Tokenizer;

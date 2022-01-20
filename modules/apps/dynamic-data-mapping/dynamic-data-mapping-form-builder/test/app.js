@@ -12,5 +12,7 @@
  * details.
  */
 
-export {Token} from './expressions/Token.es';
-export {Tokenizer} from './expressions/Tokenizer.es';
+/* TODO: remove it along with other frontend configuration files*/
+it('test created to avoid build issue', () => {
+	expect(true).toBe(true);
+});

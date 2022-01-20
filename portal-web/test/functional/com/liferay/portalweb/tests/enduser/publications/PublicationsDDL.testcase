@@ -389,7 +389,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsNavigator.gotoViewChangeDiff(
+		PublicationsNavigator.gotoViewChangeDetails(
 			changeCategory = "Dynamic Data Lists Record",
 			changeTitle = "${changeTitle}");
 

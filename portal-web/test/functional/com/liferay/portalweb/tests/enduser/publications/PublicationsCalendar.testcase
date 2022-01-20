@@ -173,7 +173,7 @@ definition {
 			entryTitle = "Publication Calendar Event Title Edit",
 			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
-		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "Publication Calendar Event Title Edit");
+		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Publication Calendar Event Title Edit");
 
 		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",

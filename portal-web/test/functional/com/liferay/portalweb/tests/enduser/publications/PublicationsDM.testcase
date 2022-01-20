@@ -368,7 +368,7 @@ definition {
 			entryTitle = "DM Document Title Edit",
 			warningMessage = "The conflict cannot be automatically resolved.");
 
-		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
+		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "DM Document Title Edit");
 
 		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",

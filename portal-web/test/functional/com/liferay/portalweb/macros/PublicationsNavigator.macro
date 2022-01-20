@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	macro gotoViewChangeDiff {
+	macro gotoViewChangeDetails {
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";
 
@@ -56,16 +56,16 @@ definition {
 			value1 = "${changeTitle}");
 	}
 
-	macro gotoViewChangeDiffInConflictingPublications {
+	macro gotoViewConflictingChangeDetails {
 		Click(
 			key_entryTitle = "${entryTitle}",
-			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
+			locator1 = "PublicationsChanges#CONFLICTING_CHANGE_CONTENT_LINK");
 
 		SelectFrameTop(value1 = "relative=top");
 
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
-			locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME_TITLE");
+			locator1 = "Publications#CONFLICTING_CHANGES_DETAILS_IFRAME_TITLE");
 	}
 
 	macro openPublicationsAdmin {

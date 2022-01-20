@@ -26,16 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFLICTING_CHANGES_CONTENT_LINK</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFLICTING_CHANGES_DIFF_IFRAME_TITLE</td>
-	<td>//div[contains(@class,'modal-header')]/div[@class='modal-title' and contains(.,'${key_iframeTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFLICTING_CHANGES_DISCARD_ELLIPSIS</td>
 	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
 	<td></td>
@@ -48,16 +38,6 @@
 <tr>
 	<td>CONFLICTING_CHANGES_WARNING_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_warningMessage}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_DIFF_DISPLAY_ICON</td>
-	<td>//span[contains(@class, 'inline-item inline-item-after')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_DIFF_DISPLAY_ITEM</td>
-	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_displayItem}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -360,7 +360,7 @@ definition {
 			entryTitle = "WC WebContent Title 2 Edit",
 			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
-		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
+		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
 		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",

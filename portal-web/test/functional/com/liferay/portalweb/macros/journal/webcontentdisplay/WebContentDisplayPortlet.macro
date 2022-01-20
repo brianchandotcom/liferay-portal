@@ -554,18 +554,6 @@ definition {
 			value1 = "Previous");
 	}
 
-	macro viewDefaultMessage {
-		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
-
-		Alert.viewInfoMessageSpecific(infoMessage = "Select web content to make it visible");
-	}
-
-	macro viewDeletedArticle {
-		Alert.viewWarningSpecific(warningMessage = "The selected web content no longer exists.");
-
-		Alert.viewWarningSpecific(warningMessage = "Do you want to Select Another web content?");
-	}
-
 	macro viewEnabledFileTypesPGViaWCD {
 		for (var fileType : list "${fileTypes}") {
 			var key_fileType = "${fileType}";
@@ -590,12 +578,32 @@ definition {
 		ControlMenu.viewHeaderTitle(headerTitle = "${linkedPageName}");
 	}
 
-	macro viewRecycleBinMessage {
-		var key_webContentTitle = "${webContentTitle}";
+	macro viewMessage {
+		if (isSet(recycleBinWebContentTitle)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "The web content article ${recycleBinWebContentTitle} was moved to the Recycle Bin");
+		}
+		else if (isSet(draftWebContentTitle)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "${draftWebContentTitle} is not approved.");
+		}
+		else if (isSet(expiredWebContentTitle)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "${expiredWebContentTitle} is expired.");
+		}
+		else if (isSet(deletedWebContentTitle)) {
+			Alert.viewWarningSpecific(warningMessage = "The selected web content no longer exists.");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_3",
-			value1 = "The web content article ${webContentTitle} was moved to the Recycle Bin");
+			Alert.viewWarningSpecific(warningMessage = "Do you want to Select Another web content?");
+		}
+		else {
+			Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "Select web content to make it visible");
+		}
 	}
 
 }

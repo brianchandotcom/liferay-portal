@@ -1600,7 +1600,7 @@ definition {
 
 			MastersPageTemplates.propagateChange();
 
-			WebContentDisplayPortlet.viewDefaultMessage();
+			WebContentDisplayPortlet.viewMessage();
 		}
 
 		task ("Assert the user is in the content page editor page") {

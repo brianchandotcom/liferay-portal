@@ -89,7 +89,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.viewContent(expiredWebContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewMessage(expiredWebContentTitle = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 

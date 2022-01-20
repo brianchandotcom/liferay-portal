@@ -116,7 +116,7 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.viewContent(draftWebContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewMessage(draftWebContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "5"
@@ -362,7 +362,7 @@ definition {
 			pageName = "Web Content Display Page2",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.viewDefaultMessage();
+		WebContentDisplayPortlet.viewMessage();
 
 		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
@@ -549,7 +549,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.viewContent(expiredWebContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewMessage(expiredWebContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
@@ -794,7 +794,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 			Portlet.viewTitle(portletName = "Web Content Display");
 
-			WebContentDisplayPortlet.viewDefaultMessage();
+			WebContentDisplayPortlet.viewMessage();
 		}
 	}
 
@@ -1447,7 +1447,7 @@ ${runtimeInstance}
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewDefaultMessage();
+			WebContentDisplayPortlet.viewMessage();
 		}
 
 		task ("Select the web content in Web Content Display") {
@@ -1471,7 +1471,7 @@ ${runtimeInstance}
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewDefaultMessage();
+			WebContentDisplayPortlet.viewMessage();
 		}
 
 		task ("Select the web content in Web Content Display") {
@@ -1493,7 +1493,7 @@ ${runtimeInstance}
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewRecycleBinMessage(webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.viewMessage(recycleBinWebContentTitle = "WC WebContent Title");
 		}
 
 		task ("Undo move to Recycle Bin in Web Content Display") {
@@ -1519,7 +1519,7 @@ ${runtimeInstance}
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewDeletedArticle();
+			WebContentDisplayPortlet.viewMessage(deletedWebContentTitle = "WC WebContent Title");
 		}
 
 		task ("View the no longer exists message as Guest") {

@@ -1,0 +1,33 @@
+.object-web__modal-add-columns {
+	&--list {
+		height: 300px;
+		margin-bottom: 0;
+		margin-top: 12px;
+		overflow: hidden;
+		overflow-y: scroll;
+		width: 100%;
+
+		.custom-control-label {
+			font-weight: 600;
+			margin-left: 5px;
+		}
+		.list-group-item {
+			background-color: #f7f8f9;
+			border: 0;
+			padding-left: 16px;
+		}
+	}
+
+	&--selection-title {
+		font-size: 18px;
+		font-weight: 600;
+	}
+	.container-fluid,
+	.management-bar.navbar-expand-md .navbar-form {
+		padding: 0;
+	}
+
+	.management-bar.navbar-expand-md .nav-item > .custom-control {
+		margin: 0 16px 0 0;
+	}
+}

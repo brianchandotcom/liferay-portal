@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"indexer.class.name=com.liferay.blogs.model.BlogsEntry",
 		"indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"indexer.class.name=com.liferay.journal.model.JournalArticle",
 		"indexer.class.name=com.liferay.knowledge.base.model.KBArticle",

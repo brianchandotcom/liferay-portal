@@ -21,13 +21,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_START_FREE_TRIAL</td>
-	<td>//span[contains(@class,'taglib-text') and contains(.,'Start Free Trial')]</td>
+	<td>CONTENT_PERFORMANCE_PANEL</td>
+	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_PANEL</td>
-	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]</td>
+	<td>CONTENT_PERFORMANCE_START_FREE_TRIAL</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Start Free Trial')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,11 +41,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_URL</td>
-	<td>//*[contains(@class, 'text-truncate text-truncate-reverse')]//bdi[contains(@class,'text-secondary')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_PERFORMANCE_TOTAL_VIEWS</td>
 	<td>//*[contains(@class, 'mb-2')]//span[contains(text(),'Total Views')]</td>
 	<td></td>
@@ -53,6 +48,26 @@
 <tr>
 	<td>CONTENT_PERFORMANCE_TRAFFIC</td>
 	<td>//h5[contains(@class,'mt-3 sheet-subtitle') and contains(text(),'Traffic Channels')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERFORMANCE_URL</td>
+	<td>//*[contains(@class, 'text-truncate text-truncate-reverse')]//bdi[contains(@class,'text-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_VIEW_METRICS</td>
+	<td>//button[contains(@label,'View Metrics')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTRUCTIONS_SYNC_AC</td>
+	<td>//*[contains(@class,'font-weight') and contains(text(),'Sync to Liferay Analytics Cloud')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALE_BUTTON</td>
+	<td>//div[contains(@class,'sidebar-body')] //button[*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
 </tr>
 <tr>

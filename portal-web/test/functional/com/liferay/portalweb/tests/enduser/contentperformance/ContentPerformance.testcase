@@ -356,9 +356,12 @@ definition {
 	@description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
 	@priority = "3"
 	test GraphicLineNoViewsReads {
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
 		task ("Assert line equal 0") {
 			AssertElementPresent(
-				key_number = "2",
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}
@@ -397,6 +400,23 @@ definition {
 	@description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
 	@priority = "5"
 	test LanguageSelector {
+		property test.name.skip.portal.instance = "ContentPerformance#LanguageSelector";
+
+		task ("Set portal to use Localized URL") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "SEO",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.selectOptionSetting(
+				fieldName = "Canonical URL",
+				selectOption = "Use Localized URL");
+
+			SystemSettings.saveConfiguration();
+		}
+
 		task ("Add a translation for that page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -410,33 +430,26 @@ definition {
 				localizedNameList = "Pagina principal");
 		}
 
-		task ("Set a custom page as canonical URL and go to Content Performance") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay.com.br");
-		}
-
 		task ("Open Content Performance and Assert if element is not present") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			ContentPerformance.openContentPerformance();
 		}
 
-		task ("Change language and assert") {
-			PageAudit.changeLocale(locale = "Portuguese");
+		task ("Change language") {
+			ContentPerformance.changeLocale(locale = "Portuguese");
+		}
 
+		task ("Check if date is from respective language") {
 			AssertTextPresent(
 				locator1 = "PageAudit#PANEL_PAGE_TITLE",
 				value1 = "Pagina principal");
 
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_PAGE_URL",
-				value1 = "https://liferay.com.br");
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "/pt/web/test-site-name");
 
 			AssertElementPresent(
-				key_number = "2",
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}
@@ -445,30 +458,49 @@ definition {
 	@description = "LPS-110920: When the user selects a language in the switcher, it doesn't affect the user's language"
 	@priority = "3"
 	test LanguageSelectorUserLanguage {
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay.com.br");
-		}
-
-		task ("Open Content Performance and Assert if element is not present") {
+		task ("Go to Edit page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
+			ContentPages.gotoPageEditor();
+		}
 
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		task ("Add a heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Text in English");
+		}
+
+		task ("Change locale to es-ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("Edit the localized inline text of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Texto en Español");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Open Content Performance") {
+			ContentPerformance.openContentPerformance();
 		}
 
 		task ("Change language and assert") {
-			PageAudit.changeLocale(locale = "Portuguese");
+			ContentPerformance.changeLocale(locale = "Spanish");
 
-			AssertTextPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE_PANEL",
-				value1 = "Content Performance");
-
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_PAGE_URL",
-				value1 = "https://liferay.com.br");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Text in English");
 		}
 	}
 

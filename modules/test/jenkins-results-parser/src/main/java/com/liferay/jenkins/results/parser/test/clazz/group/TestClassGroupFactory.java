@@ -111,8 +111,14 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new FunctionalBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("integration-")) {
-				batchTestClassGroup = new IntegrationJUnitBatchTestClassGroup(
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("junit-test-") ||
+					 batchName.startsWith(
+						 "modules-integration-project-templates-") ||
+					 batchName.startsWith("modules-unit-project-templates-") ||
+					 batchName.startsWith("unit-")) {
+
+				batchTestClassGroup = new JUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("js-test-") ||
@@ -125,14 +131,6 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("junit-test-") ||
-					 batchName.startsWith(
-						 "modules-integration-project-templates-") ||
-					 batchName.startsWith("modules-unit-project-templates-")) {
-
-				batchTestClassGroup = new JUnitBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
 			else if (batchName.startsWith("modules-compile-")) {
 				batchTestClassGroup = new CompileModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
@@ -140,18 +138,13 @@ public class TestClassGroupFactory {
 			else if ((batchName.startsWith("modules-integration-") &&
 					  !batchName.startsWith(
 						  "modules-integration-project-templates-")) ||
-					 batchName.startsWith("subrepository-integration-")) {
-
-				batchTestClassGroup =
-					new ModulesIntegrationJUnitBatchTestClassGroup(
-						batchName, portalTestClassJob);
-			}
-			else if ((batchName.startsWith("modules-unit-") &&
+					 (batchName.startsWith("modules-unit-") &&
 					  !batchName.startsWith(
 						  "modules-unit-project-templates-")) ||
+					 batchName.startsWith("subrepository-integration-") ||
 					 batchName.startsWith("subrepository-unit-")) {
 
-				batchTestClassGroup = new ModulesUnitJUnitBatchTestClassGroup(
+				batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-semantic-versioning-")) {
@@ -188,10 +181,6 @@ public class TestClassGroupFactory {
 			}
 			else if (batchName.startsWith("tck-")) {
 				batchTestClassGroup = new TCKJunitBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("unit-")) {
-				batchTestClassGroup = new UnitJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else {

@@ -191,10 +191,16 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	public List<File> getModulePullSubrepoDirs() {
+		File modulesDir = new File(getWorkingDirectory(), "modules");
+
+		if (!modulesDir.exists()) {
+			return new ArrayList<>();
+		}
+
 		List<File> moduleSubrepoDirs = new ArrayList<>();
 
 		List<File> gitrepoFiles = JenkinsResultsParserUtil.findFiles(
-			new File(getWorkingDirectory(), "modules"), "\\.gitrepo");
+			modulesDir, "\\.gitrepo");
 
 		for (File gitrepoFile : gitrepoFiles) {
 			Properties gitrepoProperties =
@@ -255,8 +261,15 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			return _testProperties;
 		}
 
+		File testPropertiesFile = new File(
+			getWorkingDirectory(), "test.properties");
+
+		if (!testPropertiesFile.exists()) {
+			return _testProperties;
+		}
+
 		_testProperties = JenkinsResultsParserUtil.getProperties(
-			new File(getWorkingDirectory(), "test.properties"));
+			testPropertiesFile);
 
 		return _testProperties;
 	}

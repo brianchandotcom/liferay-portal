@@ -158,7 +158,7 @@
 
 		<propertycopy from="browser.${browser.type[tck]}.version" name="tck.browser.version" silent="true" />
 
-		<propertycopy from="browser.${browser.type[tck]}.bin.file[${tck.browser.version}]" name="tck.browser.bin.file" silent="true" />
+		<propertycopy from="browser.${browser.type[tck]}.bin.file" name="tck.browser.bin.file" silent="true" />
 
 		<propertycopy from="selenium.${browser.type[tck]}.driver.executable" name="tck.selenium.browser.driver.executable" silent="true" />
 

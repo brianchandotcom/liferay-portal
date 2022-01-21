@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 /**
  * @author Iván Zaera Avellón
  */
-public interface JsImportmapsContributor {
+public interface JSImportmapsContributor {
 
 	/**
 	 * Contribute a chunk of the whole importmaps JSON object. The returned
@@ -31,7 +31,7 @@ public interface JsImportmapsContributor {
 	 * @return a pure JSON object
 	 * @review
 	 */
-	public JSONObject getImportmaps();
+	public JSONObject getImportmapsJSONObject();
 
 	/**
 	 * Get the scope for the contributed chunks of importmaps.

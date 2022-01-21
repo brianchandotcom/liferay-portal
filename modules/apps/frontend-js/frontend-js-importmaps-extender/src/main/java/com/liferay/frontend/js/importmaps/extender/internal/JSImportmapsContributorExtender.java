@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.js.importmaps.extender.internal;
 
-import com.liferay.frontend.js.importmaps.extender.JsImportmapsContributor;
-import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JsImportmapsExtenderTopHeadDynamicInclude;
-import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JsImportmapsRegistration;
+import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
+import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JSImportmapsExtenderTopHeadDynamicInclude;
+import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JSImportmapsRegistration;
 import com.liferay.portal.kernel.json.JSONFactory;
 
 import org.osgi.framework.BundleContext;
@@ -32,14 +32,14 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Iván Zaera Avellón
  */
 @Component(immediate = true, service = {})
-public class JsImportmapsContributorExtender {
+public class JSImportmapsContributorExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, JsImportmapsContributor.class,
+			bundleContext, JSImportmapsContributor.class,
 			_serviceTrackerCustomizer);
 
 		_serviceTracker.open();
@@ -57,45 +57,46 @@ public class JsImportmapsContributorExtender {
 	private BundleContext _bundleContext;
 
 	@Reference
-	private JsImportmapsExtenderTopHeadDynamicInclude
+	private JSImportmapsExtenderTopHeadDynamicInclude
 		_jsImportmapsExtenderTopHeadDynamicInclude;
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private ServiceTracker<JsImportmapsContributor, JsImportmapsRegistration>
+	private ServiceTracker<JSImportmapsContributor, JSImportmapsRegistration>
 		_serviceTracker;
 
 	private final ServiceTrackerCustomizer
-		<JsImportmapsContributor, JsImportmapsRegistration>
+		<JSImportmapsContributor, JSImportmapsRegistration>
 			_serviceTrackerCustomizer =
 				new ServiceTrackerCustomizer
-					<JsImportmapsContributor, JsImportmapsRegistration>() {
+					<JSImportmapsContributor, JSImportmapsRegistration>() {
 
 					@Override
-					public JsImportmapsRegistration addingService(
-						ServiceReference<JsImportmapsContributor>
+					public JSImportmapsRegistration addingService(
+						ServiceReference<JSImportmapsContributor>
 							serviceReference) {
 
-						JsImportmapsContributor jsImportmapsContributor =
+						JSImportmapsContributor jsImportmapsContributor =
 							_bundleContext.getService(serviceReference);
 
 						return _jsImportmapsExtenderTopHeadDynamicInclude.
 							register(
 								jsImportmapsContributor.getScope(),
-								jsImportmapsContributor.getImportmaps());
+								jsImportmapsContributor.
+									getImportmapsJSONObject());
 					}
 
 					@Override
 					public void modifiedService(
 						ServiceReference serviceReference,
-						JsImportmapsRegistration jsImportmapsRegistration) {
+						JSImportmapsRegistration jsImportmapsRegistration) {
 					}
 
 					@Override
 					public void removedService(
 						ServiceReference serviceReference,
-						JsImportmapsRegistration jsImportmapsRegistration) {
+						JSImportmapsRegistration jsImportmapsRegistration) {
 
 						jsImportmapsRegistration.unregister();
 					}

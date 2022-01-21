@@ -17,7 +17,7 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 /**
  * @author Iván Zaera Avellón
  */
-public interface JsImportmapsRegistration {
+public interface JSImportmapsRegistration {
 
 	public void unregister();
 

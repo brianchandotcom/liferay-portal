@@ -44,10 +44,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	service = {
-		DynamicInclude.class, JsImportmapsExtenderTopHeadDynamicInclude.class
+		DynamicInclude.class, JSImportmapsExtenderTopHeadDynamicInclude.class
 	}
 )
-public class JsImportmapsExtenderTopHeadDynamicInclude
+public class JSImportmapsExtenderTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
 	@Override
@@ -88,7 +88,7 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
-	public JsImportmapsRegistration register(
+	public JSImportmapsRegistration register(
 		String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
@@ -98,7 +98,7 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 
 			_rebuildImportmaps();
 
-			return new JsImportmapsRegistration() {
+			return new JSImportmapsRegistration() {
 
 				@Override
 				public void unregister() {
@@ -112,7 +112,7 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 
 		_getScopesJSONObject();
 
-		return new JsImportmapsRegistration() {
+		return new JSImportmapsRegistration() {
 
 			@Override
 			public void unregister() {

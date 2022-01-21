@@ -37,6 +37,7 @@ const FormLayout = ({form}) => {
 							<Forms
 								currentStepIndex={currentStepIndex}
 								form={form}
+								formActionContext={formActionContext}
 							/>
 
 							<FormFooterDesktop

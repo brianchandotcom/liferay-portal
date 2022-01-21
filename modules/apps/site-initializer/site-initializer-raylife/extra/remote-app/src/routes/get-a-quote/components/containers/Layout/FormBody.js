@@ -15,11 +15,11 @@
 import React, {useEffect, useState} from 'react';
 
 import {useStepWizard} from '../../../hooks/useStepWizard';
-import {AVAILABLE_STEPS, STEP_ORDERED} from '../../../utils/constants';
+import {AVAILABLE_STEPS} from '../../../utils/constants';
 import {getLoadedContentFlag} from '../../../utils/util';
 
-export function Forms({currentStepIndex, form}) {
-	const {setSection} = useStepWizard();
+export function Forms({form, formActionContext: {isMobileDevice}}) {
+	const {selectedStep, setSection} = useStepWizard();
 	const [loaded, setLoaded] = useState(false);
 	const [loadedSections, setLoadedSections] = useState(false);
 	const {backToEdit} = getLoadedContentFlag();
@@ -34,8 +34,7 @@ export function Forms({currentStepIndex, form}) {
 	useEffect(() => {
 		if (backToEdit) {
 			loadSections();
-		}
-		else {
+		} else {
 			setLoadedSections(true);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,11 +55,9 @@ export function Forms({currentStepIndex, form}) {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				}
-				else if (stepBasicName === 'business-type') {
+				} else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				}
-				else {
+				} else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;
@@ -83,8 +80,7 @@ export function Forms({currentStepIndex, form}) {
 		return null;
 	}
 
-	const Component =
-		STEP_ORDERED[currentStepIndex]?.Component || (() => <></>);
+	const Component = selectedStep?.Component || (() => <></>);
 
-	return <Component form={form} />;
+	return <Component form={form} isMobile={isMobileDevice} />;
 }

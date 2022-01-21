@@ -31,15 +31,9 @@ export function useStepWizard() {
 	const {dispatch, state} = useContext(AppContext);
 	const {applicationId, backToEdit} = getLoadedContentFlag();
 	const currentPercentage = state.percentage;
+	const selectedStep = state.steps.find(({active}) => active);
 
 	const loadInitialData = applicationId || backToEdit;
-
-	const dispatchSelectedStep = (payload) => {
-		dispatch({
-			payload,
-			type: ActionTypes.SET_SELECTED_STEP,
-		});
-	};
 
 	const dispatchPercentage = (payload) => {
 		dispatch({
@@ -62,7 +56,7 @@ export function useStepWizard() {
 			hide: true,
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [state.selectedStep.section]);
+	}, [selectedStep.section]);
 
 	useEffect(() => {
 		if (loadInitialData) {
@@ -104,11 +98,11 @@ export function useStepWizard() {
 	};
 
 	const _updateStepPercentage = () => {
-		switch (state.selectedStep.section) {
+		switch (selectedStep.section) {
 			case AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section:
 				if (loadInitialData) {
 					if (
-						state.selectedStep.subsection ===
+						selectedStep.subsection ===
 						AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.subsection
 					) {
 						return setPercentage(
@@ -129,8 +123,7 @@ export function useStepWizard() {
 							currentPercentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
-					}
-					else {
+					} else {
 						if (form?.basics?.businessCategoryId) {
 							return setPercentage(
 								100,
@@ -194,11 +187,12 @@ export function useStepWizard() {
 		}
 	};
 
-	const setSection = (step) =>
-		dispatchSelectedStep({
-			...state.selectedStep,
-			...step,
+	const setSection = (step) => {
+		dispatch({
+			payload: step,
+			type: ActionTypes.SET_STEP_ACTIVE,
 		});
+	};
 
 	const setPercentage = (
 		percentage = 0,
@@ -220,7 +214,7 @@ export function useStepWizard() {
 	};
 
 	return {
-		selectedStep: state.selectedStep,
+		selectedStep,
 		setPercentage,
 		setSection,
 	};

@@ -69,6 +69,17 @@ public class BatchPlannerMappingServiceImpl
 	}
 
 	@Override
+	public void deleteBatchPlannerMappings(long batchPlannerPlanId)
+		throws PortalException {
+
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
+
+		batchPlannerMappingLocalService.deleteBatchPlannerMappings(
+			batchPlannerPlanId);
+	}
+
+	@Override
 	public List<BatchPlannerMapping> getBatchPlannerMappings(
 			long batchPlannerPlanId)
 		throws PortalException {

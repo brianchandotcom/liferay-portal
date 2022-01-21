@@ -158,14 +158,16 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public BatchPlannerPlan updateBatchPlannerPlan(
-			long batchPlannerPlanId, String name)
+			long batchPlannerPlanId, String externalType,
+			String internalClassName, String name)
 		throws PortalException {
 
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
 
 		return batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			getUserId(), batchPlannerPlanId, name);
+			getUserId(), batchPlannerPlanId, externalType, internalClassName,
+			name);
 	}
 
 	private static volatile ModelResourcePermission<BatchPlannerPlan>

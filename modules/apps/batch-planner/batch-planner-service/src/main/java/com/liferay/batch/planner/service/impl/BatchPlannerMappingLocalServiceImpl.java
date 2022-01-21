@@ -98,6 +98,12 @@ public class BatchPlannerMappingLocalServiceImpl
 	}
 
 	@Override
+	public void deleteBatchPlannerMappings(long batchPlannerPlanId) {
+		batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
+	@Override
 	public List<BatchPlannerMapping> getBatchPlannerMappings(
 		long batchPlannerPlanId) {
 

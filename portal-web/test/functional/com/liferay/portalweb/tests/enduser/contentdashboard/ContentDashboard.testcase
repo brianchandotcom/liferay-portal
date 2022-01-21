@@ -1324,7 +1324,6 @@ definition {
 	@description = "LPS-136512 Given The Content Performance panel of a document is opened
 	When the user clicks on the times icon ( X )
 	Then the Content Performance panel is closed"
-	@ignore = "false"
 	@priority = "3"
 	test CloseMetricsPanel {
 		task ("Connect to AC") {
@@ -3824,7 +3823,6 @@ definition {
 	@description = "LPS-136512 Given A document associated with a Display Page
 	When the user clicks on the option "View metrics" in the kebab menu
 	Then the Content Performance panel is displayed"
-	@ignore = "false"
 	@priority = "4"
 	test ViewMetricsButtonKebabWhenDocumentHasDPT {
 		task ("Connect to AC") {
@@ -3887,7 +3885,6 @@ definition {
 	@description = "LPS-136512 Given A document associated with a Display Page
 	When the user clicks on the "Metrics" button in the hover action
 	Then the Content Performance panel is displayed"
-	@ignore = "false"
 	@priority = "4"
 	test ViewMetricsButtonWhenDocumentHasDPT {
 		task ("Connect to AC") {

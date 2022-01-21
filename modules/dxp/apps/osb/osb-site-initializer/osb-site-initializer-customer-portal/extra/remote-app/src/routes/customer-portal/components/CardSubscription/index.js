@@ -25,7 +25,7 @@ const dateFormat = {
 
 const SUBSCRIPTION_IMAGE_FILE = {
 	'Analytics': 'analytics_icon.svg',
-	'Commerce': 'commerce.icon.svg',
+	'Commerce': 'commerce_icon.svg',
 	'DXP': 'dxp_icon.svg',
 	'DXP Cloud': 'dxp_icon.svg',
 	'Enterprise Search': 'enterprise_icon.svg',

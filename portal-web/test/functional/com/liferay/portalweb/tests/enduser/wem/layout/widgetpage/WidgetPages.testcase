@@ -32,29 +32,6 @@ definition {
 		}
 	}
 
-	@description = "The user can add a page based in global blog template."
-	@priority = "4"
-	@uitest
-	test AddPageBasedOnGlobalBlogTemplate {
-		task ("Add a page based in global blog template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.addPublicPage(
-				pageName = "Test Page Name",
-				pageTemplateName = "Blog");
-		}
-
-		task ("View portlets are shown in blog template page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			for (var portletName : list "Blogs,Tag Cloud,Recent Bloggers") {
-				Portlet.viewSpecificPG(portletName = "${portletName}");
-			}
-		}
-	}
-
 	@description = "The user can add a page based in global wiki template."
 	@priority = "5"
 	@uitest

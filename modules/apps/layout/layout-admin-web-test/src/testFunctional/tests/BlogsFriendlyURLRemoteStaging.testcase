@@ -47,7 +47,7 @@ definition {
 	@description = "This ensures that the friendlyURL in Blogs can be published when remote staging is enabled."
 	@priority = "5"
 	test CanPublishFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishFriendlyURL";
+		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishFriendlyURL";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -101,7 +101,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be removed and published when remote staging is enabled."
 	@priority = "4"
 	test CanPublishRemovedOldFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishRemovedOldFriendlyURL";
+		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishRemovedOldFriendlyURL";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -159,7 +159,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be restored and published when remote staging is enabled."
 	@priority = "4"
 	test CanPublishRestoredOldFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLServiceRemoteStaging#CanPublishRestoredOldFriendlyURL";
+		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishRestoredOldFriendlyURL";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

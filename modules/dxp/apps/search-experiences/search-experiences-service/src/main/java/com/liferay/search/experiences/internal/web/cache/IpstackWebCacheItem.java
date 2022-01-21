@@ -41,6 +41,19 @@ public class IpstackWebCacheItem implements WebCacheItem {
 		ExceptionListener exceptionListener, String ipAddress,
 		IpstackConfiguration ipstackConfiguration) {
 
+		try {
+			if (!ipstackConfiguration.enabled() ||
+				_isPrivateIPAddress(exceptionListener, ipAddress)) {
+
+				return JSONFactoryUtil.createJSONObject();
+			}
+		}
+		catch (Exception exception) {
+			exceptionListener.exceptionThrown(exception);
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		return (JSONObject)WebCachePoolUtil.get(
 			IpstackWebCacheItem.class.getName() + StringPool.POUND + ipAddress,
 			new IpstackWebCacheItem(
@@ -59,10 +72,6 @@ public class IpstackWebCacheItem implements WebCacheItem {
 	@Override
 	public JSONObject convert(String key) {
 		try {
-			if (!_ipstackConfiguration.enabled() || _isPrivateIPAddress()) {
-				return JSONFactoryUtil.createJSONObject();
-			}
-
 			String apiURL = _ipstackConfiguration.apiURL();
 
 			if (!apiURL.endsWith("/")) {
@@ -104,9 +113,12 @@ public class IpstackWebCacheItem implements WebCacheItem {
 		return 0;
 	}
 
-	private boolean _isPrivateIPAddress() throws Exception {
+	private static boolean _isPrivateIPAddress(
+			ExceptionListener exceptionListener, String ipAddress)
+		throws Exception {
+
 		Inet4Address inet4Address = (Inet4Address)InetAddress.getByName(
-			_ipAddress);
+			ipAddress);
 
 		if (inet4Address.isAnyLocalAddress() ||
 			inet4Address.isLinkLocalAddress() ||
@@ -114,9 +126,9 @@ public class IpstackWebCacheItem implements WebCacheItem {
 			inet4Address.isMulticastAddress() ||
 			inet4Address.isSiteLocalAddress()) {
 
-			_exceptionListener.exceptionThrown(
+			exceptionListener.exceptionThrown(
 				new PrivateIPAddressException(
-					"Unable to resolve private IP address " + _ipAddress));
+					"Unable to resolve private IP address " + ipAddress));
 
 			return true;
 		}

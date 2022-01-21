@@ -17,6 +17,38 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "Upgrade to 7.4.13 and assert custom remote app can be viewed in portlet"
+	@priority = "4"
+	test CanViewRemoteAppCustomElementPortletAfterUpgrade7413 {
+		property portal.acceptance = "true";
+		property data.archive.type = "data-archive-remote-app";
+		property portal.version = "7.4.13";
+
+		task ("Assert custom remote app is present after upgrade") {
+			RemoteAppsUpgrade.assertRemoteAppEntry(
+				upgradeName = "Vanilla Counter",
+				upgradeType = "Custom Element");
+		}
+
+		task ("Assert custom remote app fields are saved after upgrade") {
+			RemoteAppsUpgrade.assertCustomRemoteAppEntryFields(
+				upgradeCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				upgradeHTMLName = "vanilla-counter",
+				upgradeName = "Vanilla Counter",
+				upgradeURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+
+		task ("Navigate to content page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Test Page");
+		}
+
+		task ("Assert Vanilla Counter is present on page") {
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+		}
+	}
+
 	@description = "Upgrade to 7.3.10.1 and assert remote app fields were saved properly"
 	@priority = "5"
 	test CanViewRemoteAppFieldsAfterUpgrade73101 {

@@ -188,15 +188,12 @@
 	<classpathentry kind="lib" path="lib/portal/jhighlight.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jmatio.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jodconverter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-json.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-proxetta.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-util.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jsr107cache.jar"/>
-	<classpathentry kind="lib" path="lib/portal/juh.jar"/>
 	<classpathentry kind="lib" path="lib/portal/juniversalchardet.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jurt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jws-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/kxml2.jar"/>
 	<classpathentry kind="lib" path="lib/portal/liferay-icu4j.jar"/>
@@ -227,7 +224,6 @@
 	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portletmvc4spring-framework.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rhino.jar"/>
-	<classpathentry kind="lib" path="lib/portal/ridl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rmi-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rometools-utils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rometools.jar"/>
@@ -263,7 +259,6 @@
 	<classpathentry kind="lib" path="lib/portal/tomcat-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>
-	<classpathentry kind="lib" path="lib/portal/unoil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-tika.jar"/>
 	<classpathentry kind="lib" path="lib/portal/wsdl4j.jar"/>

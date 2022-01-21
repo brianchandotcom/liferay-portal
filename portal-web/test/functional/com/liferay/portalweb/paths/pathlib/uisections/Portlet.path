@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_DEFAULT_TITLE</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet-title-default')][normalize-space()='${key_portletName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_TITLE</td>
 	<td>//div[@id='main-content']//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')]</td>
 	<td></td>

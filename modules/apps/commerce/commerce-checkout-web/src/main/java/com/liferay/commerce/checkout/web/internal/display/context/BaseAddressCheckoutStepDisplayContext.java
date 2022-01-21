@@ -16,6 +16,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
@@ -85,7 +86,9 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 			CommerceAccount commerceAccount, String actionId)
 		throws PortalException {
 
-		if (commerceAccount.isPersonalAccount() ||
+		if ((commerceAccount.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
+			commerceAccount.isPersonalAccount() ||
 			accountEntryModelResourcePermission.contains(
 				permissionChecker, commerceAccount.getCommerceAccountId(),
 				actionId)) {

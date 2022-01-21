@@ -41,6 +41,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
@@ -49,6 +51,29 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	@Override
 	public int getAxisCount() {
 		return axisTestClassGroups.size();
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("(");
+		sb.append(getTestBatchRunPropertyQuery());
+		sb.append(") AND (ignored == null)");
+
+		String testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testRunEnvironment)) {
+			sb.append(" AND (test.run.environment == \"");
+			sb.append(testRunEnvironment);
+			sb.append("\" OR test.run.environment == null)");
+		}
+
+		jsonObject.put("pql_query", sb.toString());
+
+		return jsonObject;
 	}
 
 	public List<File> getTestBaseDirs() {

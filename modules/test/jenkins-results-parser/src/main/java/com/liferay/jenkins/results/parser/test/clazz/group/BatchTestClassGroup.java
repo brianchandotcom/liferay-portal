@@ -36,8 +36,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,10 +131,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return portalTestClassJob;
 	}
 
-	public Properties getJobProperties() {
-		return jobProperties;
-	}
-
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -200,7 +194,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		String jobPropertyValue = jobProperty.getValue();
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+		if (jobPropertyValue != null) {
 			return jobPropertyValue;
 		}
 
@@ -245,10 +239,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			testSuiteName = null;
 		}
 
-		jobProperties = portalTestClassJob.getJobProperties();
-
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
+
 		_setTestRelevantIntegrationUnitOnly();
 
 		_setIncludeStableTestSuite();
@@ -264,123 +257,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return _AXES_SIZE_MAX_DEFAULT;
-	}
-
-	protected String getFirstMatchingPropertyName(
-		String basePropertyName, Properties properties, String testSuiteName) {
-
-		return getFirstMatchingPropertyName(
-			basePropertyName, null, properties, testSuiteName);
-	}
-
-	protected String getFirstMatchingPropertyName(
-		String basePropertyName, String batchName, Properties properties,
-		String testSuiteName) {
-
-		if (batchName == null) {
-			batchName = this.batchName;
-		}
-
-		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
-			throw new RuntimeException(
-				"Invalid base property name " + basePropertyName);
-		}
-
-		Pattern pattern = Pattern.compile(
-			JenkinsResultsParserUtil.combine(
-				basePropertyName, "\\[(?<batchName>[^\\]]+)\\]",
-				"(\\[(?<testSuiteName>[^\\]]+)\\])?"));
-
-		for (String propertyName : properties.stringPropertyNames()) {
-			if (!propertyName.startsWith(basePropertyName)) {
-				continue;
-			}
-
-			Matcher matcher = pattern.matcher(propertyName);
-
-			if (matcher.find()) {
-				String batchNameRegex = matcher.group("batchName");
-
-				batchNameRegex = batchNameRegex.replace("*", ".+");
-
-				if (!batchName.matches(batchNameRegex)) {
-					continue;
-				}
-
-				String targetTestSuiteName = matcher.group("testSuiteName");
-
-				if (Objects.equals(testSuiteName, targetTestSuiteName)) {
-					return propertyName;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	protected String getFirstPropertyValue(String basePropertyName) {
-		return getFirstPropertyValue(
-			basePropertyName, batchName, testSuiteName);
-	}
-
-	protected String getFirstPropertyValue(
-		String basePropertyName, String batchName) {
-
-		return getFirstPropertyValue(
-			basePropertyName, batchName, testSuiteName);
-	}
-
-	protected String getFirstPropertyValue(
-		String basePropertyName, String batchName, String testSuiteName) {
-
-		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
-			throw new RuntimeException(
-				"Invalid base property name " + basePropertyName);
-		}
-
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", batchName, "][", testSuiteName,
-					"]"));
-
-			propertyNames.add(
-				getFirstMatchingPropertyName(
-					basePropertyName, batchName, jobProperties, testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				basePropertyName, "[", batchName, "]"));
-
-		propertyNames.add(
-			getFirstMatchingPropertyName(
-				basePropertyName, batchName, jobProperties, null));
-
-		propertyNames.add(basePropertyName);
-
-		for (String propertyName : propertyNames) {
-			if (propertyName == null) {
-				continue;
-			}
-
-			if (jobProperties.containsKey(propertyName)) {
-				String propertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					return propertyValue;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	protected List<String> getGlobs(List<JobProperty> jobProperties) {
@@ -405,10 +281,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		Collections.sort(globs);
 
 		return globs;
-	}
-
-	protected String getJobName() {
-		return portalTestClassJob.getJobName();
 	}
 
 	protected JobProperty getJobProperty(String basePropertyName) {
@@ -506,11 +378,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			JenkinsResultsParserUtil.getGlobsFromProperty(relativeGlobs));
 	}
 
-	protected List<String> getRelevantIntegrationUnitBatchList() {
-		List<String> relevantIntegrationUnitBatchList = new ArrayList<>();
+	protected List<String> getRelevantIntegrationUnitBatchNames() {
+		List<String> relevantIntegrationUnitBatchNames = new ArrayList<>();
 
 		if (!testSuiteName.equals("relevant")) {
-			return relevantIntegrationUnitBatchList;
+			return relevantIntegrationUnitBatchNames;
 		}
 
 		JobProperty jobProperty = getJobProperty("test.batch.names");
@@ -518,7 +390,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return relevantIntegrationUnitBatchList;
+			return relevantIntegrationUnitBatchNames;
 		}
 
 		for (String relevantTestBatchName : jobPropertyValue.split(",")) {
@@ -527,11 +399,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				relevantTestBatchName.startsWith("modules-unit") ||
 				relevantTestBatchName.startsWith("unit-")) {
 
-				relevantIntegrationUnitBatchList.add(relevantTestBatchName);
+				relevantIntegrationUnitBatchNames.add(relevantTestBatchName);
 			}
 		}
 
-		return relevantIntegrationUnitBatchList;
+		return relevantIntegrationUnitBatchNames;
 	}
 
 	protected List<PathMatcher>
@@ -540,25 +412,28 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
 			new ArrayList<>();
 
-		List<String> relevantIntegrationUnitBatchList =
-			getRelevantIntegrationUnitBatchList();
+		for (String relevantIntegrationUnitBatchName :
+				getRelevantIntegrationUnitBatchNames()) {
 
-		if (!relevantIntegrationUnitBatchList.isEmpty()) {
-			for (String relevantIntegrationUnitBatch :
-					relevantIntegrationUnitBatchList) {
+			JobProperty jobProperty = getJobProperty(
+				"test.batch.class.names.includes", getTestSuiteName(),
+				relevantIntegrationUnitBatchName,
+				JobProperty.Type.INCLUDE_GLOB);
 
-				String integrationUnitIncludesPropertyValue =
-					getFirstPropertyValue(
-						"test.batch.class.names.includes",
-						relevantIntegrationUnitBatch);
-
-				if (integrationUnitIncludesPropertyValue != null) {
-					relevantIntegrationUnitIncludePathMatchers.addAll(
-						getPathMatchers(
-							integrationUnitIncludesPropertyValue,
-							portalGitWorkingDirectory.getWorkingDirectory()));
-				}
+			if (!(jobProperty instanceof GlobJobProperty)) {
+				continue;
 			}
+
+			String jobPropertyValue = jobProperty.getValue();
+
+			if (jobPropertyValue == null) {
+				continue;
+			}
+
+			GlobJobProperty globJobProperty = (GlobJobProperty)jobProperty;
+
+			relevantIntegrationUnitIncludePathMatchers.addAll(
+				globJobProperty.getPathMatchers());
 		}
 
 		return relevantIntegrationUnitIncludePathMatchers;
@@ -701,7 +576,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		new ArrayList<>();
 	protected final String batchName;
 	protected boolean includeStableTestSuite;
-	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final PortalTestClassJob portalTestClassJob;
 	protected boolean testPrivatePortalBranch;
@@ -791,20 +665,17 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
 		for (File moduleDir : moduleDirs) {
-			Properties moduleDirTestProperties =
-				JenkinsResultsParserUtil.getProperties(
-					new File(moduleDir, "test.properties"));
+			JobProperty jobProperty = getJobProperty(
+				"modules.includes.required[" + getTestSuiteName() + "]",
+				moduleDir, JobProperty.Type.MODULE_TEST_DIR);
 
-			String requiredModuleDirPaths = moduleDirTestProperties.getProperty(
-				"modules.includes.required[" + testSuiteName + "]");
+			String jobPropertyValue = jobProperty.getValue();
 
-			if (requiredModuleDirPaths == null) {
+			if (jobPropertyValue == null) {
 				continue;
 			}
 
-			for (String requiredModuleDirPath :
-					requiredModuleDirPaths.split(",")) {
-
+			for (String requiredModuleDirPath : jobPropertyValue.split(",")) {
 				File requiredModuleDir = new File(
 					modulesBaseDir, requiredModuleDirPath);
 

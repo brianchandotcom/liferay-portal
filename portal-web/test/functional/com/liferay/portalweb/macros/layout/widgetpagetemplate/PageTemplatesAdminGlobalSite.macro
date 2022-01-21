@@ -129,24 +129,6 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "${portletTitle}");
 	}
 
-	macro viewDefaultPortletPG {
-		if ("${pageTemplateName}" == "Blog") {
-			AssertElementPresent(locator1 = "Home#PORTLET_1");
-
-			AssertElementPresent(locator1 = "Home#PORTLET_2");
-
-			AssertElementPresent(locator1 = "Home#PORTLET_3");
-
-			for (var portletName : list "${portletTitleList}") {
-				var key_portletName = "${portletName}";
-
-				AssertTextEquals(
-					locator1 = "Portlet#TITLE",
-					value1 = "${portletName}");
-			}
-		}
-	}
-
 	macro viewDescription {
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 

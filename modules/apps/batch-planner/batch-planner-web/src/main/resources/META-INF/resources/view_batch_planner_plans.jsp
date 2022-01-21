@@ -34,9 +34,10 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 />
 
 <clay:container-fluid>
-	<form id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
-		<input id="<portlet:namespace />batchPlannerPlanIds" name="<portlet:namespace />batchPlannerPlanIds" type="hidden" />
-		<input id="<portlet:namespace />redirect" name="<portlet:namespace />redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:form method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="batchPlannerPlanIds" type="hidden" />
+		<aui:input name="editable" type="hidden" value="true" />
 
 		<liferay-ui:search-container
 			searchContainer="<%= batchPlannerPlanSearchContainer %>"
@@ -102,5 +103,5 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-	<form>
+	</aui:form>
 </clay:container-fluid>

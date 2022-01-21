@@ -79,7 +79,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TITLE</td>
-	<td>//section[contains(@id,'journal_content_web')]//h2[contains(@class,'title')]</td>
+	<td>//div[contains(@class,'portlet-column-content')]//div[2]//section[contains(@id,'journal_content_web')]//h2[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>

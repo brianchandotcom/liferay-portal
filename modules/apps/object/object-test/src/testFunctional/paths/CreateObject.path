@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td>PANEL_CATEGORY_KEY_SELECTED</td>
-		<td>//select[contains(@id,'_panelCategoryKey')]//option[contains(@selected,'') and contains(text(),'${key_panelCategoryKey}')]</td>
+		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_panelCategoryKey']</td>
 		<td></td>
 	</tr>
 	<tr>

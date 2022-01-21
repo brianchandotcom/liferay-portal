@@ -203,9 +203,9 @@ definition {
 	}
 
 	macro assertPanelCategoryKey {
-		AssertElementPresent(
-			key_panelCategoryKey = "${panelCategoryKey}",
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY_SELECTED");
+		AssertSelectedLabel(
+			locator1 = "CreateObject#PANEL_CATEGORY_KEY_SELECTED",
+			value1 = "${panelCategoryKey}");
 	}
 
 	macro assertRelatedObject {
@@ -216,6 +216,12 @@ definition {
 
 	macro assertRequiredPicklistOnField {
 		AssertElementPresent(locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP_REQUIRED");
+	}
+
+	macro assertScopeFieldSelected {
+		AssertSelectedLabel(
+			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
+			value1 = "${fieldScope}");
 	}
 
 	macro assertSearchableSectionOptionsAppears {
@@ -236,7 +242,7 @@ definition {
 	}
 
 	macro assertTitleFieldIsSelected {
-		AssertElementPresent(
+		AssertSelectedLabel(
 			locator1 = "CreateObject#TITLE_FIELD",
 			value1 = "${fieldLabel}");
 	}

@@ -51,7 +51,7 @@
 	{
 		"actionId": "VIEW",
 		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SetupDXPCloud$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
 		"roleName": "Customer Portal Member",
 		"scope": "1"
 	},

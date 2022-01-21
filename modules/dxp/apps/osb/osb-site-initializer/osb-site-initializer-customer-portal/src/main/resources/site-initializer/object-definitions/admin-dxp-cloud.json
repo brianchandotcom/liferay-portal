@@ -1,17 +1,17 @@
 {
 	"label": {
-		"en-US": "Setup DXP Cloud"
+		"en-US": "Admin DXP Cloud"
 	},
-	"name": "SetupDXPCloud",
+	"name": "AdminDXPCloud",
 	"objectFields": [
 		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Admins"
+				"en-US": "First Name"
 			},
-			"name": "admins",
+			"name": "firstName",
 			"required": true
 		},
 		{
@@ -19,9 +19,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Data Center Region"
+				"en-US": "Last Name"
 			},
-			"name": "dataCenterRegion",
+			"name": "lastName",
 			"required": true
 		},
 		{
@@ -29,9 +29,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Project Id"
+				"en-US": "Github Username"
 			},
-			"name": "projectId",
+			"name": "githubUsername",
 			"required": true
 		},
 		{
@@ -39,14 +39,24 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Disaster Data Center Region"
+				"en-US": "Email Address"
 			},
-			"name": "disasterDataCenterRegion",
-			"required": false
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "DXP Cloud Environment"
+			},
+			"name": "dxpCloudEnvironmentId",
+			"required": true
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Setups DXP Cloud"
+		"en_US": "Admins DXP Cloud"
 	},
 	"scope": "site",
 	"system": false

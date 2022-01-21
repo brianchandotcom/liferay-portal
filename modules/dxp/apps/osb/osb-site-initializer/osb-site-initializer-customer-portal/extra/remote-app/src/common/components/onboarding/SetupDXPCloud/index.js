@@ -9,19 +9,25 @@
  * distribution rights of the Software.
  */
 
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
+import client from '../../../../apolloClient';
 import {
-	addSetupDXPCloud,
-	getSetupDXPCloudInfo,
+	addAdminDXPCloud,
+	addDXPCloudEnvironment,
+	getDXPCloudPageInfo,
+	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
-import {getInitialDxpAdmin} from '../../../utils/constants';
+import {
+	ACTIVATION_STATUS_DXP_CLOUD,
+	getInitialDxpAdmin,
+} from '../../../utils/constants';
 import BaseButton from '../../BaseButton';
 import Input from '../../Input';
 import Select from '../../Select';
@@ -34,12 +40,13 @@ const SetupDXPCloudPage = ({
 	leftButton,
 	project,
 	setFieldValue,
+	subscriptionGroupId,
 	touched,
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const {data} = useQuery(getSetupDXPCloudInfo, {
+	const {data} = useQuery(getDXPCloudPageInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
 		},
@@ -85,28 +92,57 @@ const SetupDXPCloudPage = ({
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const [sendEmailData, {called, error}] = useMutation(addSetupDXPCloud);
-
-	const sendEmail = () => {
+	const sendEmail = async () => {
 		const dxp = values?.dxp;
 
-		if (!called && dxp) {
-			sendEmailData({
+		if (dxp) {
+			const {data} = await client.mutate({
+				mutation: addDXPCloudEnvironment,
 				variables: {
-					SetupDXPCloud: {
-						admins: JSON.stringify(dxp.admins),
-						dataCenterRegion: JSON.stringify(dxp.dataCenterRegion),
-						disasterDataCenterRegion: JSON.stringify(
-							dxp.disasterDataCenterRegion
-						),
-						projectId: JSON.stringify(dxp.projectId),
+					DXPCloudEnvironment: {
+						accountKey: project.accountKey,
+						dataCenterRegion: dxp.dataCenterRegion?.label,
+						disasterDataCenterRegion:
+							dxp.disasterDataCenterRegion?.label,
+						projectId: dxp.projectId,
 					},
 					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 
-			if (!error) {
-				handlePage();
+			if (data) {
+				const dxpCloudEnvironmentId =
+					data.c?.createDXPCloudEnvironment?.dxpCloudEnvironmentId;
+				await Promise.all(
+					dxp.admins.map(({email, firstName, github, lastName}) =>
+						client.mutate({
+							mutation: addAdminDXPCloud,
+							variables: {
+								AdminDXPCloud: {
+									dxpCloudEnvironmentId,
+									emailAddress: email,
+									firstName,
+									githubUsername: github,
+									lastName,
+								},
+								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+							},
+						})
+					)
+				);
+
+				await client.mutate({
+					mutation: updateAccountSubscriptionGroups,
+					variables: {
+						accountSubscriptionGroup: {
+							activationStatus:
+								ACTIVATION_STATUS_DXP_CLOUD.inProgress,
+						},
+						id: subscriptionGroupId,
+					},
+				});
+
+				handlePage(true);
 			}
 		}
 	};

@@ -11,8 +11,8 @@
 
 import {gql} from '@apollo/client';
 
-export const getSetupDXPCloudInfo = gql`
-	query getSetupDXPCloudInfo($accountSubscriptionsFilter: String) {
+export const getDXPCloudPageInfo = gql`
+	query getDXPCloudPageInfo($accountSubscriptionsFilter: String) {
 		c {
 			accountSubscriptions(filter: $accountSubscriptionsFilter) {
 				items {
@@ -141,17 +141,18 @@ export const getBannedEmailDomains = gql`
 	}
 `;
 
-export const addSetupDXPCloud = gql`
-	mutation addSetupDXPCloud(
-		$scopeKey: String
-		$SetupDXPCloud: InputC_SetupDXPCloud!
+export const addDXPCloudEnvironment = gql`
+	mutation addDXPCloudEnvironment(
+		$scopeKey: String!
+		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
 	) {
 		c {
-			createSetupDXPCloud(
+			createDXPCloudEnvironment(
 				scopeKey: $scopeKey
-				SetupDXPCloud: $SetupDXPCloud
+				DXPCloudEnvironment: $DXPCloudEnvironment
 			) {
-				admins
+				dxpCloudEnvironmentId
+				accountKey
 				dataCenterRegion
 				disasterDataCenterRegion
 				projectId
@@ -160,9 +161,41 @@ export const addSetupDXPCloud = gql`
 	}
 `;
 
+export const getDXPCloudEnvironment = gql`
+	query getDXPCloudEnvironment($scopeKey: String, $filter: String) {
+		c {
+			dXPCloudEnvironments(filter: $filter, scopeKey: $scopeKey) {
+				items {
+					projectId
+				}
+			}
+		}
+	}
+`;
+
+export const addAdminDXPCloud = gql`
+	mutation addAdminDXPCloud(
+		$scopeKey: String!
+		$AdminDXPCloud: InputC_AdminDXPCloud!
+	) {
+		c {
+			createAdminDXPCloud(
+				scopeKey: $scopeKey
+				AdminDXPCloud: $AdminDXPCloud
+			) {
+				emailAddress
+				firstName
+				githubUsername
+				lastName
+				dxpCloudEnvironmentId
+			}
+		}
+	}
+`;
+
 export const addTeamMembersInvitation = gql`
 	mutation addTeamMembersInvitation(
-		$scopeKey: String
+		$scopeKey: String!
 		$TeamMembersInvitation: InputC_TeamMembersInvitation!
 	) {
 		c {
@@ -221,6 +254,7 @@ export const getAccountSubscriptionGroups = gql`
 				sort: $sort
 			) {
 				items {
+					accountSubscriptionGroupId
 					accountKey
 					activationStatus
 					name
@@ -279,6 +313,25 @@ export const getUserAccount = gql`
 			id
 			image
 			name
+		}
+	}
+`;
+
+export const updateAccountSubscriptionGroups = gql`
+	mutation putAccountSubscriptionGroups(
+		$id: Long!
+		$accountSubscriptionGroup: InputC_AccountSubscriptionGroup!
+	) {
+		c {
+			updateAccountSubscriptionGroup(
+				accountSubscriptionGroupId: $id
+				AccountSubscriptionGroup: $accountSubscriptionGroup
+			) {
+				accountSubscriptionGroupId
+				accountKey
+				activationStatus
+				name
+			}
 		}
 	}
 `;

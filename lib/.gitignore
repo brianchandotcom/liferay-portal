@@ -156,15 +156,12 @@
 /portal/jhlabs-filters.jar
 /portal/jmatio.jar
 /portal/jna.jar
-/portal/jodconverter.jar
 /portal/jodd-json.jar
 /portal/jodd-proxetta.jar
 /portal/jodd-util.jar
 /portal/json-java.jar
 /portal/jsr107cache.jar
-/portal/juh.jar
 /portal/juniversalchardet.jar
-/portal/jurt.jar
 /portal/jws-api.jar
 /portal/kxml2.jar
 /portal/liferay-icu4j.jar
@@ -197,7 +194,6 @@
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
 /portal/rhino.jar
-/portal/ridl.jar
 /portal/rmi-api.jar
 /portal/rometools-utils.jar
 /portal/rometools.jar
@@ -234,7 +230,6 @@
 /portal/tomcat-jdbc.jar
 /portal/tomcat-juli.jar
 /portal/transaction.jar
-/portal/unoil.jar
 /portal/vorbis-java-core.jar
 /portal/vorbis-java-tika.jar
 /portal/wsdl4j.jar

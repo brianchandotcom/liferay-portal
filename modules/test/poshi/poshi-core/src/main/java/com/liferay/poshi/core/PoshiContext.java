@@ -1494,6 +1494,9 @@ public class PoshiContext {
 			}
 
 			if (fileName.endsWith(".macro")) {
+				_validateUniqueCommandName(
+					StringUtil.replace(fileName, ".macro", ""), file.getPath());
+
 				_macroFileNames.add(StringUtil.replace(fileName, ".macro", ""));
 
 				_macroFileNames.add(
@@ -1583,6 +1586,23 @@ public class PoshiContext {
 					StringUtil.join(propertyNames.toArray(new String[0]), ","),
 					"\" cannot be set as they are set in \"", propertyGroup,
 					"\"")));
+	}
+
+	private static void _validateUniqueCommandName(
+		String macroName, String filePath) {
+
+		for (String functionName : _functionFileNames) {
+			if (functionName.contains("LocalFile")) {
+				functionName = StringUtil.replace(
+					functionName, "LocalFile.", "");
+			}
+
+			if (functionName.equals(macroName)) {
+				throw new RuntimeException(
+					"Duplicate macro and function file name: " + macroName +
+						"\n" + filePath + "\n");
+			}
+		}
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {

@@ -52,8 +52,8 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var portletName : list "Search Bar,Search Options") {
-				Portlet.viewSpecificPG(portletName = "${portletName}");
+			for (var portletName : list "Search Bar,Suggestions,Site Facet,Type Facet,Tag Facet,Category Facet,Folder Facet,User Facet,Modified Facet,Search Results,Search Options") {
+				Portlet.viewDefaultTitle(portletName = "${portletName}");
 			}
 		}
 	}

@@ -177,11 +177,6 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
-	public Properties getJobProperties() {
-		return _jobProperties;
-	}
-
-	@Override
 	public List<File> getJobPropertiesFiles() {
 		return jobPropertiesFiles;
 	}
@@ -389,17 +384,9 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public boolean isSegmentEnabled() {
-		String testSuiteName = "default";
+		JobProperty jobProperty = getJobProperty("test.batch.segment.enabled");
 
-		if (this instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
-
-			testSuiteName = testSuiteJob.getTestSuiteName();
-		}
-
-		String segmentEnabled = JenkinsResultsParserUtil.getProperty(
-			_jobProperties, "test.batch.segment.enabled", getJobName(),
-			testSuiteName);
+		String segmentEnabled = jobProperty.getValue();
 
 		if ((segmentEnabled != null) && segmentEnabled.equals("true")) {
 			return true;
@@ -411,16 +398,6 @@ public abstract class BaseJob implements Job {
 	@Override
 	public boolean isValidationRequired() {
 		return false;
-	}
-
-	@Override
-	public void readJobProperties() {
-		_jobProperties.clear();
-
-		for (File jobPropertiesFile : jobPropertiesFiles) {
-			_jobProperties.putAll(
-				JenkinsResultsParserUtil.getProperties(jobPropertiesFile));
-		}
 	}
 
 	@Override
@@ -676,12 +653,6 @@ public abstract class BaseJob implements Job {
 		return set;
 	}
 
-	protected void setJobProperties(Properties properties) {
-		_jobProperties.clear();
-
-		_jobProperties.putAll(properties);
-	}
-
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 
 	private int _getDistNodeAxisCount() {
@@ -755,6 +726,5 @@ public abstract class BaseJob implements Job {
 
 	private final BuildProfile _buildProfile;
 	private final String _jobName;
-	private final Properties _jobProperties = new Properties();
 
 }

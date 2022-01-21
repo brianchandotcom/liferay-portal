@@ -71,8 +71,6 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 			new File(
 				_portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
-
-		readJobProperties();
 	}
 
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;

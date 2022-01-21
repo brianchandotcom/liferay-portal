@@ -62,8 +62,6 @@ public class PortalAWSJob extends BaseJob implements PortalTestClassJob {
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/test-aws-batch.properties"));
-
-		readJobProperties();
 	}
 
 	private final String _portalBranchName;

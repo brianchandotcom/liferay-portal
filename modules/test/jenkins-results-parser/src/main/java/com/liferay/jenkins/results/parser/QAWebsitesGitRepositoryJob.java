@@ -77,8 +77,6 @@ public class QAWebsitesGitRepositoryJob
 		checkGitRepositoryDir();
 
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
-
-		readJobProperties();
 	}
 
 	private File _getQAWebsitesGitRepositoryDir() {

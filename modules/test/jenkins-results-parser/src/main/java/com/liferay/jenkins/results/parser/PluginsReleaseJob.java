@@ -24,8 +24,6 @@ public class PluginsReleaseJob extends PluginsTestSuiteJob {
 		String branchName) {
 
 		super(jobName, pluginName, buildProfile, branchName);
-
-		readJobProperties();
 	}
 
 }

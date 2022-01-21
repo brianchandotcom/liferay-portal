@@ -61,8 +61,6 @@ public class FixPackBuilderGitRepositoryJob
 		checkGitRepositoryDir();
 
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
-
-		readJobProperties();
 	}
 
 	private File _getFixPackBuilderGitRepositoryDir() {

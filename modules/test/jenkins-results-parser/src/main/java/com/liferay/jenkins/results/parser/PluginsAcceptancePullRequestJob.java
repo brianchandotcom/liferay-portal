@@ -37,8 +37,6 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 		super(jobName, buildProfile, branchName);
 
 		_pluginsTestBaseDirs = _getPluginsTestBaseDirs();
-
-		readJobProperties();
 	}
 
 	private List<File> _getPluginsTestBaseDirs() {

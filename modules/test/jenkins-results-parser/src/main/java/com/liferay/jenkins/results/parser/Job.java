@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -55,8 +54,6 @@ public interface Job {
 
 	public String getJobName();
 
-	public Properties getJobProperties();
-
 	public List<File> getJobPropertiesFiles();
 
 	public List<String> getJobPropertyOptions();
@@ -74,8 +71,6 @@ public interface Job {
 	public boolean isSegmentEnabled();
 
 	public boolean isValidationRequired();
-
-	public void readJobProperties();
 
 	public boolean testReleaseBundle();
 

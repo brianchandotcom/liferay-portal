@@ -51,8 +51,6 @@ public class RootCauseAnalysisToolJob
 			new File(
 				_portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
-
-		readJobProperties();
 	}
 
 	@Override

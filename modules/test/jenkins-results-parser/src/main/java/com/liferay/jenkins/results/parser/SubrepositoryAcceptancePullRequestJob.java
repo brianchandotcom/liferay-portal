@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+
 /**
  * @author Michael Hashimoto
  */
@@ -37,10 +39,9 @@ public class SubrepositoryAcceptancePullRequestJob
 	}
 
 	private void _setValidationRequired() {
-		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.run.validation", getTestSuiteName());
+		JobProperty jobProperty = getJobProperty("test.run.validation");
 
-		validationRequired = Boolean.parseBoolean(testRunValidationProperty);
+		validationRequired = Boolean.parseBoolean(jobProperty.getValue());
 	}
 
 	private final String _testSuiteName;

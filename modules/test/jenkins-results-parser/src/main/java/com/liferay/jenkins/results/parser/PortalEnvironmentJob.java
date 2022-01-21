@@ -70,8 +70,6 @@ public class PortalEnvironmentJob
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/test-environment.properties"));
-
-		readJobProperties();
 	}
 
 	protected String getPortalBranchName() {

@@ -57,8 +57,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		_buildData = buildData;
 
 		_job = JobFactory.newJob(_buildData);
-
-		_job.readJobProperties();
 	}
 
 	protected void cleanUpHostServices() {

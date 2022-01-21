@@ -239,6 +239,20 @@ public class DBInspectorTest {
 			_dbInspector.isNullable(_TABLE_NAME, "notNilColumn"));
 	}
 
+	@Test
+	public void testNotHasColumnTypeString() throws Exception {
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarchar", "STRING null"));
+	}
+
+	@Test
+	public void testNotHasColumnTypeText() throws Exception {
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarchar", "TEXT null"));
+	}
+
 	private static final String _COLUMN_NAME = "id";
 
 	private static final String _COLUMN_NAME_NONEXISTING = "nonexistingColumn";

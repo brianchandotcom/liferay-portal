@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -52,32 +54,6 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		_tckHomeDir = _getTCKHomeDir();
 
-		excludesPathMatchers.addAll(
-			getPathMatchers(
-				getFirstPropertyValue("test.batch.class.names.excludes"),
-				_tckHomeDir));
-
-		includesPathMatchers.addAll(
-			getPathMatchers(
-				getFirstPropertyValue("test.batch.class.names.includes"),
-				_tckHomeDir));
-
-		if (includeStableTestSuite && isStableTestSuiteBatch()) {
-			excludesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue(
-						"test.batch.class.names.excludes", batchName,
-						NAME_STABLE_TEST_SUITE),
-					_tckHomeDir));
-
-			includesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue(
-						"test.batch.class.names.includes", batchName,
-						NAME_STABLE_TEST_SUITE),
-					_tckHomeDir));
-		}
-
 		setTestClasses();
 
 		setAxisTestClassGroups();
@@ -86,6 +62,11 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
+		final List<PathMatcher> includesPathMatchers = getPathMatchers(
+			_getIncludesJobProperties());
+		final List<PathMatcher> excludesPathMatchers = getPathMatchers(
+			_getExcludesJobProperties());
+
 		final List<File> tckTestFiles = new ArrayList<>();
 
 		try {
@@ -107,7 +88,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 						if (JenkinsResultsParserUtil.isFileIncluded(
 								excludesPathMatchers, includesPathMatchers,
-								filePath.toFile())) {
+								filePath)) {
 
 							tckTestFiles.add(filePath.toFile());
 						}
@@ -140,11 +121,48 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		Collections.sort(testClasses);
 	}
 
-	private File _getTCKHomeDir() {
-		String tckHome = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "tck.home");
+	private List<JobProperty> _getExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
 
-		if ((tckHome == null) || tckHome.isEmpty()) {
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes", _tckHomeDir,
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			excludesJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.excludes", NAME_STABLE_TEST_SUITE,
+					_tckHomeDir, JobProperty.Type.EXCLUDE_GLOB));
+		}
+
+		return excludesJobProperties;
+	}
+
+	private List<JobProperty> _getIncludesJobProperties() {
+		List<JobProperty> includesJobProperties = new ArrayList<>();
+
+		includesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.includes", _tckHomeDir,
+				JobProperty.Type.INCLUDE_GLOB));
+
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			includesJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.includes", NAME_STABLE_TEST_SUITE,
+					_tckHomeDir, JobProperty.Type.INCLUDE_GLOB));
+		}
+
+		return includesJobProperties;
+	}
+
+	private File _getTCKHomeDir() {
+		JobProperty jobProperty = getJobProperty("tck.home");
+
+		String tckHome = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(tckHome)) {
 			File jenkinsDir = new File(
 				"/opt/dev/projects/github/liferay-jenkins-ee");
 
@@ -158,7 +176,17 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 		}
 
-		if ((tckHome == null) || tckHome.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(tckHome)) {
+			try {
+				tckHome = JenkinsResultsParserUtil.getBuildProperty(
+					"portal.test.properties[tck.home]");
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(tckHome)) {
 			throw new RuntimeException("Unable find the TCK home");
 		}
 

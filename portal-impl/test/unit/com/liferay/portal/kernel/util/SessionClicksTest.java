@@ -22,7 +22,10 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.test.rule.PortalProps;
 import com.liferay.portlet.PortalPreferencesImpl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -30,6 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 
 /**
  * @author Dante Wang
@@ -45,7 +49,7 @@ public class SessionClicksTest {
 		properties = PropsKeys.SESSION_CLICKS_MAX_ALLOWED_VALUES + "=" + _MAX_ALLOWED_VALUES
 	)
 	@Test
-	public void testPut() {
+	public void testPutMaxAllowedValues() {
 		PortalPreferences portalPreferences = new PortalPreferencesImpl();
 
 		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
@@ -81,8 +85,51 @@ public class SessionClicksTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(_MAX_ALLOWED_VALUES, portalPreferences.size());
+
+		HttpSession httpSession = new MockHttpSession();
+
+		for (int i = 1; i <= _MAX_ALLOWED_VALUES; i++) {
+			SessionClicks.put(
+				httpSession, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+		}
+
+		SessionClicks.put(
+			httpSession, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		List<String> attributeNames = ListUtil.fromEnumeration(
+			httpSession.getAttributeNames());
+
+		Assert.assertEquals(
+			attributeNames.toString(), _MAX_ALLOWED_VALUES,
+			attributeNames.size());
+	}
+
+	@PortalProps(
+		properties = PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS + "=" + _MAX_SIZE_TERMS
+	)
+	@Test
+	public void testPutMaxSizeTerms() {
+		HttpSession httpSession = new MockHttpSession();
+
+		String key = RandomTestUtil.randomString(_MAX_SIZE_TERMS - 1);
+
+		SessionClicks.put(
+			httpSession, key, RandomTestUtil.randomString(_MAX_SIZE_TERMS + 1));
+
+		Assert.assertNull(SessionClicks.get(httpSession, key, null));
+
+		key = RandomTestUtil.randomString(_MAX_SIZE_TERMS + 1);
+
+		SessionClicks.put(
+			httpSession, key, RandomTestUtil.randomString(_MAX_SIZE_TERMS - 1));
+
+		Assert.assertNull(SessionClicks.get(httpSession, key, null));
 	}
 
 	private static final int _MAX_ALLOWED_VALUES = 10;
+
+	private static final int _MAX_SIZE_TERMS = 10;
 
 }

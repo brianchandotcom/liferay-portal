@@ -143,22 +143,8 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(
-			fieldPositionNumber = "2",
-			formPageNumber = "0");
-
-		var fieldMultilineTextField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "MultilineText");
-
-		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
-
-		FormFields.enableSwitch(fieldName = "Required Field");
-
-		Form.closeSidebar();
-
 		Form.gotoAddField(
-			fieldPositionNumber = "3",
+			fieldPositionNumber = "2",
 			fieldType = "Select from List",
 			formPageNumber = "0");
 
@@ -178,7 +164,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "4",
+			fieldPositionNumber = "3",
 			fieldType = "Single Selection",
 			formPageNumber = "0");
 
@@ -200,7 +186,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "5",
+			fieldPositionNumber = "4",
 			fieldType = "Date",
 			formPageNumber = "0");
 
@@ -209,7 +195,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "6",
+			fieldPositionNumber = "5",
 			fieldType = "Multiple Selection",
 			formPageNumber = "0");
 
@@ -349,10 +335,6 @@ definition {
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
 			fieldName = "${fieldMultipleSelectionField}");
-
-		FormFields.editTextMultilineOnPages(
-			fieldName = "${fieldMultilineTextField}",
-			fieldValue = "Multiline Text");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 1",

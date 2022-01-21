@@ -1706,9 +1706,9 @@ definition {
 		task ("Disable Search with Index") {
 			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
-			FormFields.disableCheckbox(fieldName = "searchWithIndex");
-
-			SystemSettings.saveConfiguration();
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Search with Index");
 		}
 
 		task ("Assert both web contents are present in AP") {

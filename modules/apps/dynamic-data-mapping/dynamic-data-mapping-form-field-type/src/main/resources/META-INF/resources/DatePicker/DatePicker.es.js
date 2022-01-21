@@ -208,11 +208,18 @@ export default function DatePicker({
 			setExpand(false);
 			inputRef.current.focus();
 		}
-		const firstSpace = value.indexOf(' ');
-		const formattedDate = value.substring(0, firstSpace);
-		const formattedTime = value.substring(firstSpace).replaceAll('-', '_');
+
+		let formattedDate = value;
+		if (isDateTime) {
+			const firstSpace = value.indexOf(' ');
+			formattedDate = value.substring(0, firstSpace);
+			const formattedTime = value
+				.substring(firstSpace)
+				.replaceAll('-', '_');
+			formattedDate = `${formattedDate}${formattedTime}`;
+		}
 		const nextState = {
-			formattedDate: `${formattedDate}${formattedTime}`,
+			formattedDate,
 			rawDate: '',
 		};
 

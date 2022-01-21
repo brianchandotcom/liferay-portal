@@ -63,16 +63,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_CONTENT_2</td>
-	<td>xPath=(//div[contains(@class,'journal-content-article')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_CONTENT_3</td>
-	<td>xPath=(//div[contains(@class,'journal-content-article')])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WEB_CONTENT_LINK</td>
 	<td>//div[contains(@class,'portlet-content')][*//*[contains(@class,'portlet-title')][normalize-space(text())='${key_webContentTitle}']]//div[contains(@class,'journal-content-article')]//a[contains(.,'${key_displayText}')]</td>
 	<td></td>

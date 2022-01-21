@@ -681,6 +681,7 @@ definition {
 			IFrame.closeFrame();
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_TITLE",
 				value1 = "WC WebContent Title");
 

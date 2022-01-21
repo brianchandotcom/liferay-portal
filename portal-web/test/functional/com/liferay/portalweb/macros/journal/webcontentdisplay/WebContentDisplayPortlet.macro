@@ -290,6 +290,7 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN_MENU_ITEM");
 
 		AssertTextEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_TITLE",
 			value1 = "${webContentTitleLocalized}");
 
@@ -374,6 +375,7 @@ definition {
 		}
 		else if (isSet(videoShortcutTitle)) {
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_TITLE",
 				value1 = "${webContentTitle}");
 
@@ -401,14 +403,19 @@ definition {
 			}
 		}
 		else {
+			if (!(isSet(index))) {
+				var index = "1";
+			}
+
 			if (isSet(webContentTitle)) {
 				AssertTextEquals(
+					index = "${index}",
 					locator1 = "WCD#WEB_CONTENT_TITLE",
 					value1 = "${webContentTitle}");
 			}
 
 			AssertTextEquals.assertPartialText(
-				index = "1",
+				index = "${index}",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${webContentContent}");
 		}

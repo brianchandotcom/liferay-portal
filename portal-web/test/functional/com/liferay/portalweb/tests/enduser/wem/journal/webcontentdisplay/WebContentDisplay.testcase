@@ -394,9 +394,15 @@ definition {
 			pageName = "Web Content Display Page",
 			webContentContent = "WC WebContent Content");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		AssertTextEquals(
+			index = "2",
+			locator1 = "WCD#WEB_CONTENT_TITLE",
+			value1 = "WC WebContent Title");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "WC WebContent Content");
 	}
 
 	@description = "This is a use case for LPS-70386."

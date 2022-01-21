@@ -69,7 +69,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TITLE</td>
-	<td>//section[contains(@id,'journal_content_web')]//h2[contains(@class,'title')]</td>
+	<td>xpath=(//section[contains(@id,'JournalContentPortlet')])[${index}]//h2[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -54,9 +54,10 @@ public class UserSystemObjectDefinitionMetadata
 			createObjectField(
 				"Text", "String", "email-address", "emailAddress", true),
 			createObjectField(
-				"Text", "String", "first-name", "firstName", true),
+				"Text", "firstName", "String", "first-name", "givenName", true),
 			createObjectField(
-				"Text", "String", "middle-name", "middleName", false),
+				"Text", "middleName", "String", "middle-name", "additionalName",
+				false),
 			createObjectField(
 				"Text", "uuid_", "String", "uuid", "uuid", false));
 	}

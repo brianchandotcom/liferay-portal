@@ -893,7 +893,6 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
 
 		ACUtils.createBlogsAndAddToPage();

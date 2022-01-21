@@ -38,8 +38,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
-		property portal.upstream = "quarantine";
-
 		task ("Create Blog and Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 		}

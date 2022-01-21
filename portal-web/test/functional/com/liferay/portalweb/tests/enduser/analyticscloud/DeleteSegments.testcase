@@ -106,8 +106,6 @@ definition {
 	@description = "Delete a dynamic segment"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
-		property portal.upstream = "quarantine";
-
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

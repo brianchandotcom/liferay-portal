@@ -28,10 +28,12 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12"
+	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12. Blocked by COMMERCE-8225."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
 
 		task ("View SAML general IdP and connection configuration") {
@@ -108,10 +110,12 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12"
+	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12. Blocked by COMMERCE-8225."
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
 
 		task ("View SAML general IdP and connection with encryption configuration") {

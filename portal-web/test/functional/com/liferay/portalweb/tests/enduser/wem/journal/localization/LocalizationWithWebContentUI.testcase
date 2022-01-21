@@ -124,7 +124,8 @@ definition {
 			webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world",
 			webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		AssertTextNotPresent(
+		AssertTextNotEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}

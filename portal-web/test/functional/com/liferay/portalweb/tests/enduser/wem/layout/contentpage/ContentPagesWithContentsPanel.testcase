@@ -336,6 +336,7 @@ definition {
 
 		task ("View the edited web content in Web Content Display") {
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "WC WebContent Content Edit");
 

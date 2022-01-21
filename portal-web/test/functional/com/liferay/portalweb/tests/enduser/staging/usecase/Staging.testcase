@@ -1533,6 +1533,7 @@ definition {
 			siteName = "Site Name");
 
 		AssertTextEquals.assertPartialText(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 1");
 
@@ -1570,13 +1571,16 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		if (IsElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT")) {
+		if (IsElementPresent(index = "1", locator1 = "WCD#WEB_CONTENT_CONTENT")) {
 			AssertTextNotEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Title 2");
 		}
 		else {
-			AssertElementNotPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
+			AssertElementNotPresent(
+				index = "1",
+				locator1 = "WCD#WEB_CONTENT_CONTENT");
 		}
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -1606,6 +1610,7 @@ definition {
 			siteName = "Site Name");
 
 		AssertTextEquals.assertPartialText(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 2");
 

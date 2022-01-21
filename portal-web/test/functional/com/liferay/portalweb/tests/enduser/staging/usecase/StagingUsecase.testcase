@@ -687,6 +687,7 @@ definition {
 			siteName = "Site Name");
 
 		AssertTextEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Faculty Meet-and-Greet Brunch Events All faculty are invited to a Meet-and-Greet Brunch at Allen Café 11:00 A.M. Saturday, June 13. This brunch is intended to introduce new faculty members and promote inter-departmental unity. Brunch will be catered by the Provincetown chapter of the NECI.");
 
@@ -772,7 +773,8 @@ definition {
 
 		Portlet.viewApplicationDecorator(decorator = "Barebone");
 
-		AssertTextPresent(
+		AssertTextEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "You're a part of the S.P.A.C.E. family");
 

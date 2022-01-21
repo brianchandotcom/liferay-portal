@@ -498,6 +498,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content Edit");
 		}

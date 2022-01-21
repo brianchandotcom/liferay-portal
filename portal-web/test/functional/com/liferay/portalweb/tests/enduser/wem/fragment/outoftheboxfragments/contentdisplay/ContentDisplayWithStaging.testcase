@@ -79,6 +79,7 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}
@@ -95,6 +96,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}
@@ -115,6 +117,7 @@ definition {
 				siteName = "Test site Name Staging");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content Edit");
 		}
@@ -125,6 +128,7 @@ definition {
 				siteName = "Test site Name");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}
@@ -145,6 +149,7 @@ definition {
 				siteName = "Test site Name");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content Edit");
 		}

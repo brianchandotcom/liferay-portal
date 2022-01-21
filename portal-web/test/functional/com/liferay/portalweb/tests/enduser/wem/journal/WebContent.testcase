@@ -197,6 +197,7 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}

@@ -108,11 +108,13 @@ definition {
 
 		if (isSet(templateScript)) {
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${templateScript}");
 		}
 		else {
 			AssertTextEquals(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${webContentContent}");
 		}
@@ -292,6 +294,7 @@ definition {
 			value1 = "${webContentTitleLocalized}");
 
 		AssertTextEquals.assertPartialText(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "${webContentContentLocalized}");
 
@@ -403,6 +406,7 @@ definition {
 				value1 = "${webContentTitle}");
 
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${webContentContent}");
 		}
@@ -424,6 +428,7 @@ definition {
 			value1 = "2");
 
 		AssertTextEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "${webContentContent}");
 

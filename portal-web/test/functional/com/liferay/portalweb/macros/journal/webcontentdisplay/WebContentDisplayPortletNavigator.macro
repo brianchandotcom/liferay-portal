@@ -34,8 +34,10 @@ definition {
 	}
 
 	macro gotoArticleEllipsisMenu {
-		if (IsElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT")) {
-			MouseOver(locator1 = "WCD#WEB_CONTENT_CONTENT");
+		if (IsElementPresent(index = "1", locator1 = "WCD#WEB_CONTENT_CONTENT")) {
+			MouseOver(
+				index = "1",
+				locator1 = "WCD#WEB_CONTENT_CONTENT");
 		}
 
 		if (isSet(contentPage)) {

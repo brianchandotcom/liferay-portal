@@ -1136,6 +1136,7 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_ASSET_DETAILS_TITLE");
 
 		AssertTextEquals(
+			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "red apple, citrus-orange");
 	}

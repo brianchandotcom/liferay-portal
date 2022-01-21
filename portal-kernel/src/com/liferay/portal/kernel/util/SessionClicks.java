@@ -85,17 +85,7 @@ public class SessionClicks {
 		HttpServletRequest httpServletRequest, String namespace, String key,
 		String value) {
 
-		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
-			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Session clicks has attempted to exceed the maximum ",
-						"size allowed for keys or values with {key=", key,
-						", value=", value, "}"));
-			}
-
+		if (!_isValidKeyValue(key, value)) {
 			return;
 		}
 
@@ -107,17 +97,8 @@ public class SessionClicks {
 
 				int size = portalPreferences.size();
 
-				if (size < _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+				if (_isValidSize(size, key, value)) {
 					portalPreferences.setValue(namespace, key, value);
-				}
-				else {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Session clicks has attempted to exceed the ",
-								"maximum number of allowed values with {key=",
-								key, ", value=", value, "}"));
-					}
 				}
 
 				break;
@@ -144,17 +125,7 @@ public class SessionClicks {
 	public static void put(
 		HttpSession httpSession, String namespace, String key, String value) {
 
-		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
-			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Session clicks has attempted to exceed the maximum ",
-						"size allowed for keys or values with {key=", key,
-						", value=", value, "}"));
-			}
-
+		if (!_isValidKeyValue(key, value)) {
 			return;
 		}
 
@@ -168,13 +139,35 @@ public class SessionClicks {
 			size++;
 		}
 
-		if (size < _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+		if (_isValidSize(size, key, value)) {
 			String sessionKey = StringBundler.concat(
 				namespace, StringPool.COLON, key);
 
 			httpSession.setAttribute(sessionKey, value);
+		}
+	}
 
-			return;
+	private static boolean _isValidKeyValue(String key, String value) {
+		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
+			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Session clicks has attempted to exceed the maximum ",
+						"size allowed for keys or values with {key=", key,
+						", value=", value, "}"));
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private static boolean _isValidSize(int size, String key, String value) {
+		if (size < _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+			return true;
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -184,6 +177,8 @@ public class SessionClicks {
 					"number of allowed values with {key=", key, ", value=",
 					value, "}"));
 		}
+
+		return false;
 	}
 
 	private static final String _DEFAULT_NAMESPACE =

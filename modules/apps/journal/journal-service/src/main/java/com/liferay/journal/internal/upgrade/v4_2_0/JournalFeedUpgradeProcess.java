@@ -24,11 +24,17 @@ public class JournalFeedUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			JournalFeedTable.class,
-			new AlterColumnType("DDMStructureKey", "VARCHAR(75) null"),
-			new AlterColumnType("DDMTemplateKey", "VARCHAR(75) null"),
-			new AlterColumnType("DDMRendererTemplateKey", "VARCHAR(75) null"));
+		_alterColumnType("DDMStructureKey");
+		_alterColumnType("DDMTemplateKey");
+		_alterColumnType("DDMRendererTemplateKey");
+	}
+
+	private void _alterColumnType(String columnName) throws Exception {
+		if (!hasColumnType("JournalFeed", columnName, "VARCHAR(75) null")) {
+			alter(
+				JournalFeedTable.class,
+				new AlterColumnType(columnName, "VARCHAR(75) null"));
+		}
 	}
 
 }

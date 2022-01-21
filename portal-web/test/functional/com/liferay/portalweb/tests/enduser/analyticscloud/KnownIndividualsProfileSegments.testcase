@@ -127,6 +127,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = "3"
 	test AssertIndividualsSegmentSelected {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor ticket: LRAC-9707
+
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("View the page as different users") {

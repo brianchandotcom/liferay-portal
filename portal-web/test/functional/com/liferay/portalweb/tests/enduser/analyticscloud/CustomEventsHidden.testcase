@@ -387,6 +387,8 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10234 | Test Summary: Non-admin cannot hide events"
 	@priority = "5"
 	test NonAdminUserCannotHideEvents {
+		property portal.upstream = "quarantine";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

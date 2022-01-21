@@ -78,6 +78,8 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10195 | Test Summary: Unblock single custom event and unblock custom events in bulk"
 	@priority = "5"
 	test CanUnblockCustomEvent {
+		property portal.upstream = "quarantine";
+
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 

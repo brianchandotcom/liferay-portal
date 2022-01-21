@@ -130,6 +130,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8564 | Test Summary: Add segment using an individual property 'site'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertySite {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor ticket: LRAC-9707
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac1@liferay.com",

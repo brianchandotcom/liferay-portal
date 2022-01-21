@@ -171,6 +171,16 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function dragAtAndDrop {
+		WaitForSPARefresh();
+
+		selenium.dragAtAndDrop("${locator1}", "${locator2}", "${value1}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function javaScriptDragAndDropObjectBelowShortNestedObject {
 		WaitForSPARefresh();
 

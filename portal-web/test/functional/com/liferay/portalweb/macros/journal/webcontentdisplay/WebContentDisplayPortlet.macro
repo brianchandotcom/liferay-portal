@@ -133,8 +133,12 @@ definition {
 	}
 
 	macro gotoSelectWebContent {
+		if (!(isSet(portletName))) {
+			var portletName = "Web Content Display";
+		}
+
 		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
+			portletName = "${portletName}",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -196,7 +200,9 @@ definition {
 	}
 
 	macro searchWebContent {
-		WebContentDisplayPortlet.gotoSelectWebContent(depotName = "${depotName}");
+		WebContentDisplayPortlet.gotoSelectWebContent(
+			depotName = "${depotName}",
+			portletName = "${portletName}");
 
 		if (isSet(webContentTitleNotPresentList)) {
 			if (isSet(depotName)) {
@@ -236,7 +242,9 @@ definition {
 	}
 
 	macro selectWebContent {
-		WebContentDisplayPortlet.gotoSelectWebContent(depotName = "${depotName}");
+		WebContentDisplayPortlet.gotoSelectWebContent(
+			depotName = "${depotName}",
+			portletName = "${portletName}");
 
 		if (isSet(depotName)) {
 			Click(

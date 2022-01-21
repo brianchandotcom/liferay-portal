@@ -1691,19 +1691,19 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert both Web Content are present in AP") {
+		task ("Assert both web contents are present in AP") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			for (var text : list "1,2") {
+			for (var i : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
-					assetContent = "WC WebContent Content ${text}",
-					assetTitle = "WC WebContent Title ${text}");
+					assetContent = "WC WebContent Content ${i}",
+					assetTitle = "WC WebContent Title ${i}");
 			}
 		}
 
-		task ("Uncheck Search with Index Configuration") {
+		task ("Disable Search with Index") {
 			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
 			FormFields.disableCheckbox(fieldName = "searchWithIndex");
@@ -1711,15 +1711,15 @@ definition {
 			SystemSettings.saveConfiguration();
 		}
 
-		task ("Assert both Web Content are present in AP") {
+		task ("Assert both web contents are present in AP") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			for (var text : list "1,2") {
+			for (var i : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
-					assetContent = "WC WebContent Content ${text}",
-					assetTitle = "WC WebContent Title ${text}");
+					assetContent = "WC WebContent Content ${i}",
+					assetTitle = "WC WebContent Title ${i}");
 			}
 		}
 	}

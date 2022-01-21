@@ -148,21 +148,21 @@ public class SessionClicks {
 	}
 
 	private static boolean _isValidKeyValue(String key, String value) {
-		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
-			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
+		if ((key.length() <= _SESSION_CLICKS_MAX_SIZE_TERMS) &&
+			(value.length() <= _SESSION_CLICKS_MAX_SIZE_TERMS)) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Session clicks has attempted to exceed the maximum ",
-						"size allowed for keys or values with {key=", key,
-						", value=", value, "}"));
-			}
-
-			return false;
+			return true;
 		}
 
-		return true;
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Session clicks has attempted to exceed the maximum size ",
+					"allowed for keys or values with {key=", key, ", value=",
+					value, "}"));
+		}
+
+		return false;
 	}
 
 	private static boolean _isValidSize(int size, String key, String value) {

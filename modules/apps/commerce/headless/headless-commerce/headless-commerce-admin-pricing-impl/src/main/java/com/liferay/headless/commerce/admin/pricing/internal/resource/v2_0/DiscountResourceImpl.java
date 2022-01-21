@@ -502,7 +502,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 							commerceDiscount.getCommerceDiscountId(),
 							discountOrderType.getOrderTypeId());
 
-				if (commerceDiscountOrderTypeRel == null) {
+				if (commerceDiscountOrderTypeRel != null) {
 					continue;
 				}
 

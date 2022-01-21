@@ -407,7 +407,7 @@ definition {
 				ControlMenu.viewHeaderTitle(headerTitle = "${pageName}");
 			}
 			else {
-				AssertLocation.assertPartialLocation(value1 = "${URL}");
+				AssertLocation.assertPartialLocation(value1 = "${url}");
 			}
 		}
 		else {

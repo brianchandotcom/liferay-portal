@@ -447,7 +447,7 @@ definition {
 			parentFolderId = "${parentFolderId}");
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}");
 	}
 

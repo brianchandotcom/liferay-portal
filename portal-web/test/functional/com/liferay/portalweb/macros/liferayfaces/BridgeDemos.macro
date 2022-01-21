@@ -405,7 +405,6 @@ definition {
 		var displayDate = DateUtil.getFormattedCurrentDate("${dateFormat}");
 
 		// Ignored assetion because of the time zone issue: LRQA-61393
-
 		//AssertTextEquals(
 		//	key_text = "Birthday",
 		//	locator1 = "TextInput#ANY",
@@ -516,7 +515,6 @@ definition {
 			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
 
 		// Ignored assetion because of the time zone issue: LRQA-61393
-
 		//AssertTextEquals(
 		//	key_item = "Start Date",
 		//	locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",

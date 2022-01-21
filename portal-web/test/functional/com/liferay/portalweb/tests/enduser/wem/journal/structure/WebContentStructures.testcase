@@ -434,7 +434,7 @@ definition {
 
 			WebContentDisplayPortlet.viewContent(
 				displayText = "Link To URL",
-				URL = "https://www.liferay.com",
+				url = "https://www.liferay.com",
 				webContentTitle = "Web Content Title");
 		}
 	}

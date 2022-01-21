@@ -2366,11 +2366,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -2568,11 +2568,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 

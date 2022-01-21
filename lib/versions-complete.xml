@@ -6655,30 +6655,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jai_codec.jar</file-name>
-				<version>1.1.3</version>
-				<project-name>Java Advanced Imaging</project-name>
-				<project-url>http://java.sun.com/javase/technologies/desktop/media/jai</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jai_core.jar</file-name>
-				<version>1.1.3</version>
-				<project-name>Java Advanced Imaging</project-name>
-				<project-url>http://java.sun.com/javase/technologies/desktop/media/jai</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/java-libpst.jar</file-name>
 				<version>0.8.1</version>
 				<project-name>java-libpst</project-name>

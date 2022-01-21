@@ -1,3 +1,9 @@
+.hide-input-label {
+	label {
+		display: none;
+	}
+}
+
 .input-area {
 	display: flex;
 	flex-direction: column;

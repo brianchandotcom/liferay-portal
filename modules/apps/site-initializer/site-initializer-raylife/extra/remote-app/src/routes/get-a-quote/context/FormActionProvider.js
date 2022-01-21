@@ -14,13 +14,9 @@
 
 import {createContext, useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {DEVICES} from '../../../common/utils/constants';
-import {clearExitAlert} from '../../../common/utils/exitAlert';
-import {getLiferaySiteName} from '../../../common/utils/liferay';
 import ProgressSavedModal from '../components/containers/Forms/Modal/ProgressSaved';
 import useFormActions from '../hooks/useFormActions';
-import {STEP_ORDERED} from '../utils/constants';
 import {AppContext} from './AppContextProvider';
 
 export const FormActionContext = createContext();
@@ -40,6 +36,7 @@ const FormActionProvider = ({children, form}) => {
 		state: {
 			dimensions: {deviceSize},
 			selectedStep: {index: currentStepIndex = 0},
+			steps,
 		},
 	} = useContext(AppContext);
 
@@ -52,8 +49,8 @@ const FormActionProvider = ({children, form}) => {
 
 	const {onNext, onPrevious, onSave} = useFormActions({
 		form,
-		nextSection: STEP_ORDERED[currentStepIndex + 1],
-		previousSection: STEP_ORDERED[currentStepIndex - 1],
+		nextSection: steps[currentStepIndex + 1],
+		previousSection: steps[currentStepIndex - 1],
 		saveData: currentStepIndex > 1,
 	});
 
@@ -66,31 +63,17 @@ const FormActionProvider = ({children, form}) => {
 			.finally(() => setLoading(false));
 	};
 
-	const _onPrevious = () => {
-		if (currentStepIndex !== 0) {
-			return onPrevious();
-		}
-
-		clearExitAlert();
-
-		window.location.href = getLiferaySiteName();
-
-		Storage.removeItem(STORAGE_KEYS.BACK_TO_EDIT);
-	};
-
-	const actionProps = {
-		onClickSaveAndExit,
-		onNext,
-		onPrevious: _onPrevious,
-		onSave,
-		onSaveDisabled: !email || emailHasError || loading,
-		showSaveAndExit: onNext && currentStepIndex >= 2,
-	};
-
 	return (
 		<FormActionContext.Provider
 			value={{
-				actionProps,
+				actionProps: {
+					onClickSaveAndExit,
+					onNext,
+					onPrevious,
+					onSave,
+					onSaveDisabled: !email || emailHasError || loading,
+					showSaveAndExit: onNext && currentStepIndex >= 2,
+				},
 				errorModal,
 				isMobileDevice,
 				isValid,

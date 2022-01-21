@@ -66,63 +66,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_DISPLAY_ICON</td>
-	<td>//span[contains(@class, 'inline-item inline-item-after')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_COLUMN_ADDED_VALUE</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-added')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_COLUMN_REMOVED_VALUE</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_COLUMN_VALUE_IN_PRODUCTION</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_COLUMN_VALUE_IN_PUBLICATION</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIFF_ADDED_VALUE</td>
-	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIFF_REMOVED_VALUE</td>
-	<td>//span[contains(@class,'diff-html-removed') and contains(.,'${key_diffRemovedValue}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISCARDED_CHANGES_TITLE</td>
 	<td>//h2[contains(.,'Discarded Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPALY_CONTENT_VALUE_IN_PRODUCTION</td>
-	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInProduction}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPALY_CONTENT_VALUE_IN_PUBLICATION</td>
-	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInPublication}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_VALUE_IN_PRODUCTION</td>
-	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInProduction}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_VALUE_IN_PUBLICATION</td>
-	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInPublication}')]</td>
 	<td></td>
 </tr>
 <tr>

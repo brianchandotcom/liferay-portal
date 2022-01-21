@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>PublicationsChangeDetails</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PublicationsChangeDetails</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CURRENT_DISPLAY_ICON</td>
+	<td>//span[contains(@class, 'inline-item inline-item-after')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_DISPLAY_ITEM</td>
+	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_displayItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_ADDED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_REMOVED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_VALUE_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_VALUE_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIFF_ADDED_VALUE</td>
+	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIFF_REMOVED_VALUE</td>
+	<td>//span[contains(@class,'diff-html-removed') and contains(.,'${key_diffRemovedValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPALY_CONTENT_VALUE_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPALY_CONTENT_VALUE_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInPublication}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_VALUE_IN_PRODUCTION</td>
+	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_VALUE_IN_PUBLICATION</td>
+	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInPublication}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

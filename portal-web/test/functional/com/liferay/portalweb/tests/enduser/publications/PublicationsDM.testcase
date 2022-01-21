@@ -370,7 +370,7 @@ definition {
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "DM Document Title Edit");
 
-		PublicationsChanges.viewConflictingChangeDetails(
+		PublicationsChangeDetails.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",

@@ -32,27 +32,27 @@ definition {
 		}
 	}
 
-	@description = "The user can add a page based in global wiki template."
+	@description = "The user can add a page based in global search template."
 	@priority = "5"
 	@uitest
-	test AddPageBasedOnGlobalWikiTemplate {
+	test AddPageBasedOnGlobalSearchTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		task ("Add a page based in global wiki template") {
+		task ("Add a page based in global search template") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
-				pageTemplateName = "Wiki");
+				pageTemplateName = "Search");
 		}
 
-		task ("View portlets are shown in wiki template page") {
+		task ("View portlets are shown in search template page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var portletName : list "Tag Filter,Category Filter,Wiki") {
+			for (var portletName : list "Search Bar,Search Options") {
 				Portlet.viewSpecificPG(portletName = "${portletName}");
 			}
 		}

@@ -2740,7 +2740,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		Search.searchCP(searchTerm = "FirstName");
+		Search.searchCP(searchTerm = "GivenName");
 
 		CreateObject.viewObject(labelName = "First Name");
 

@@ -33,14 +33,13 @@ const fetchLicense = async (
 
 const fetchDeveloperKeysLicense = async (
 	accountKey,
-	environment,
 	licenseKeyDownloadURL,
 	sessionId,
 	selectedVersion
 ) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/${accountKey}/product-groups/${environment}/product-version/${selectedVersion}/development-license-key`,
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/DXP/product-version/${selectedVersion}/development-license-key`,
 
 		{
 			headers: {

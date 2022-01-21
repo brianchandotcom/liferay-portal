@@ -28,7 +28,6 @@ const DevelopersKeysInputs = ({
 	accountKey,
 	downloadTextHelper,
 	dxpVersion,
-	productTitle,
 	sessionId,
 }) => {
 	const {
@@ -66,7 +65,6 @@ const DevelopersKeysInputs = ({
 	const handleClick = async () => {
 		const license = await fetchDeveloperKeysLicense(
 			accountKey,
-			encodeURI(productTitle),
 			licenseKeyDownloadURL,
 			sessionId,
 			selectedVersion

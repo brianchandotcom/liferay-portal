@@ -534,6 +534,8 @@ public class ObjectEntryDisplayContext {
 			return null;
 		}
 
+		_setDateDDMFormFieldValue(ddmForm.getDDMFormFields(), values);
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
@@ -669,6 +671,31 @@ public class ObjectEntryDisplayContext {
 		}
 
 		return true;
+	}
+
+	private void _setDateDDMFormFieldValue(
+		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (StringUtil.equals(ddmFormField.getType(), "date")) {
+				for (Map.Entry<String, Serializable> value :
+						values.entrySet()) {
+
+					String key = value.getKey();
+
+					if (key.equals(ddmFormField.getName())) {
+						Serializable date = value.getValue();
+
+						String dateString = date.toString();
+
+						String dateWithoutTime = dateString.replaceAll(
+							" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]", "");
+
+						values.replace(key, date, dateWithoutTime);
+					}
+				}
+			}
+		}
 	}
 
 	private void _setDDMFormFieldProperties(

@@ -348,9 +348,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content Edit",
-				webContentTitle = "WC WebContent Title Edit");
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content Edit");
 		}
 	}
 

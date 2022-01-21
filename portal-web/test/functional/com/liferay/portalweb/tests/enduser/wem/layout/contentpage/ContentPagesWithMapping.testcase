@@ -1430,9 +1430,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Content 1",
-				webContentTitle = "Web Content Title 1");
+			WebContentDisplayPortlet.viewContent(webContentContent = "Web Content Content 1");
 		}
 
 		task ("Add a Heading") {

@@ -401,9 +401,11 @@ definition {
 			}
 		}
 		else {
-			AssertTextEquals(
-				locator1 = "WCD#WEB_CONTENT_TITLE",
-				value1 = "${webContentTitle}");
+			if (isSet(webContentTitle)) {
+				AssertTextEquals(
+					locator1 = "WCD#WEB_CONTENT_TITLE",
+					value1 = "${webContentTitle}");
+			}
 
 			AssertTextEquals.assertPartialText(
 				index = "1",

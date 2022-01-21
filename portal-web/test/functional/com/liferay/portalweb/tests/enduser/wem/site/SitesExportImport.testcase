@@ -98,9 +98,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 		}
 
 		task ("Expoet site and download site lar") {
@@ -137,9 +135,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent New Content",
-				webContentTitle = "WC WebContent New Title");
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent New Content");
 		}
 
 		task ("	View the Web Content doesn't change on the new site") {
@@ -147,9 +143,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Site Name");
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 		}
 	}
 

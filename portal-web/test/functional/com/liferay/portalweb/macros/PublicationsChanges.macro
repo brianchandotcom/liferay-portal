@@ -252,6 +252,90 @@ definition {
 		}
 	}
 
+	macro viewChangeDetailsInDisplay {
+		if ("${changeType}" == "Added") {
+			AssertElementPresent(
+				key_displayItem = "PUBLICATION (NEW)",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM");
+
+			var key_contentValueInPublication = "${contentValueInPublication}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+				value1 = "${contentValueInPublication}");
+		}
+
+		if ("${changeType}" == "Deleted") {
+			AssertElementPresent(
+				key_displayItem = "PRODUCTION (DELETED)",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM");
+
+			var key_contentValueInPublication = "${contentValueInProduction}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+				value1 = "${contentValueInProduction}");
+		}
+
+		if ("${changeType}" == "Modified") {
+			AssertElementPresent(
+				key_displayItem = "Unified View",
+				locator1 = "PublicationsChanges#CURRENT_DISPLAY_ITEM");
+
+			if (isSet(diffAddedValue)) {
+				AssertTextEquals.assertPartialText(
+					key_diffAddedValue = "${diffAddedValue}",
+					locator1 = "PublicationsChanges#DIFF_ADDED_VALUE",
+					value1 = "${diffAddedValue}");
+			}
+
+			if (isSet(diffRemovedValue)) {
+				AssertTextEquals.assertPartialText(
+					key_diffRemovedValue = "${diffRemovedValue}",
+					locator1 = "PublicationsChanges#DIFF_REMOVED_VALUE",
+					value1 = "${diffRemovedValue}");
+			}
+
+			PublicationsChanges.changeDisplayItem(displayItem = "Split View");
+
+			if (isSet(contentValueInProduction)) {
+				var key_contentValueInProduction = "${contentValueInProduction}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+					value1 = "${contentValueInProduction}");
+			}
+
+			if (isSet(contentValueInPublication)) {
+				var key_contentValueInPublication = "${contentValueInPublication}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+					value1 = "${contentValueInPublication}");
+			}
+
+			PublicationsChanges.changeDisplayItem(displayItem = "Production");
+
+			if (isSet(contentValueInProduction)) {
+				var key_contentValueInProduction = "${contentValueInProduction}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+					value1 = "${contentValueInProduction}");
+			}
+
+			PublicationsChanges.changeDisplayItem(displayItem = "Publication");
+
+			if (isSet(contentValueInPublication)) {
+				var key_contentValueInPublication = "${contentValueInPublication}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "PublicationsChanges#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+					value1 = "${contentValueInPublication}");
+			}
+		}
+	}
+
 	macro viewConflictingChangeDetails {
 		if ("${DeletionModificationConflict}" == "true") {
 			AssertElementPresent(

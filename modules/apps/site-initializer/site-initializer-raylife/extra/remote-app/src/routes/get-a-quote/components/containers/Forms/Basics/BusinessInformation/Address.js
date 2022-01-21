@@ -36,6 +36,7 @@ export function BusinessInformationAddress() {
 	}, [ref]);
 
 	const updateFormWithGoogleAddress = (address) => {
+
 		// We need to put shouldValidate at least in one Field
 		// to force validation to others
 

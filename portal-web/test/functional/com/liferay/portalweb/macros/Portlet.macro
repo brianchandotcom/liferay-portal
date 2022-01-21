@@ -590,6 +590,12 @@ definition {
 		SikuliClick(locator1 = "Portlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL");
 	}
 
+	macro viewDefaultTitle {
+		AssertElementPresent(
+			key_portletName = "${portletName}",
+			locator1 = "Portlet#SPECIFIC_DEFAULT_TITLE");
+	}
+
 	macro viewDuplicatePG {
 		var i = "0";
 

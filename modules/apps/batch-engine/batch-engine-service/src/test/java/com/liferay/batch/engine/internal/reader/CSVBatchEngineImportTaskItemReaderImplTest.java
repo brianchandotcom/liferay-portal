@@ -367,10 +367,11 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		throws IOException {
 
 		return new CSVBatchEngineImportTaskItemReaderImpl(
-			StringPool.COMMA, _getProperties(delimiter, enclosingCharacter),
+			StringPool.COMMA,
 			new ByteArrayInputStream(
 				_getContent(
-					cellNames, delimiter, enclosingCharacter, rowValues)));
+					cellNames, delimiter, enclosingCharacter, rowValues)),
+			_getProperties(delimiter, enclosingCharacter));
 	}
 
 	private Map<String, Serializable> _getProperties(

@@ -52,12 +52,19 @@ const Pages = () => {
 		[steps.dxpCloud]: {
 			Component: (
 				<SetupDXPCloud
-					handlePage={() =>
-						dispatch({
-							payload: steps.successDxpCloud,
-							type: actionTypes.CHANGE_STEP,
-						})
-					}
+					handlePage={(isSuccess) => {
+						if (isSuccess) {
+							dispatch({
+								payload: steps.successDxpCloud,
+								type: actionTypes.CHANGE_STEP,
+							});
+						}
+						else {
+							window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
+								PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+							}=${project.accountKey}`;
+						}
+					}}
 					leftButton="Skip for now"
 					project={project}
 					subscriptionGroupId={

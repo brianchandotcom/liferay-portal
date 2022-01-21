@@ -43,17 +43,15 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 
 	return (
 		<div className="mr-4">
-			{dxpCloudEnvironment && (
-				<ActivationStatus
-					dxpCloudEnvironment={dxpCloudEnvironment}
-					project={project}
-					subscriptionGroupDXPCloud={subscriptionGroups.find(
-						(subscriptionGroup) =>
-							subscriptionGroup.name === PRODUCTS.dxp_cloud
-					)}
-					userAccount={userAccount}
-				/>
-			)}
+			<ActivationStatus
+				dxpCloudEnvironment={dxpCloudEnvironment}
+				project={project}
+				subscriptionGroupDXPCloud={subscriptionGroups.find(
+					(subscriptionGroup) =>
+						subscriptionGroup.name === PRODUCTS.dxp_cloud
+				)}
+				userAccount={userAccount}
+			/>
 
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs

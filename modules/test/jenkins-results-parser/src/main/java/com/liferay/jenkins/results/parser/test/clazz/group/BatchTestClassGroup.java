@@ -414,6 +414,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected JobProperty getJobProperty(
+		String basePropertyName, String testSuiteName, File testBaseDir,
+		JobProperty.Type type) {
+
+		return _getJobProperty(
+			basePropertyName, testSuiteName, null, testBaseDir, type, true);
+	}
+
+	protected JobProperty getJobProperty(
 		String basePropertyName, String testSuiteName, String testBatchName) {
 
 		return _getJobProperty(

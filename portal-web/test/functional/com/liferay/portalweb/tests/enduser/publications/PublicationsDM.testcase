@@ -370,11 +370,12 @@ definition {
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "DM Document Title Edit");
 
-		PublicationsChanges.viewChangeDiff(
+		PublicationsChanges.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",
 			diffRemovedValue = "2",
+			ModificationConflict = "true",
 			publicationName = "Publication Name");
 
 		IFrame.closeFrame();

@@ -175,10 +175,10 @@ definition {
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Publication Calendar Event Title Edit");
 
-		PublicationsChanges.viewChangeDiff(
+		PublicationsChanges.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInPublication = "Publication Calendar Event Title Edit",
-			entryDeletedInProduction = "true",
+			deletionModificationConflict = "true",
 			publicationName = "Publication Name");
 
 		IFrame.closeFrame();

@@ -10,15 +10,14 @@
 </thead>
 
 <tbody>
-<!--PAGE_TEMPLATE_TABLE-->
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME</td>
-	<td>//*[@data-qa-id='row']//a[contains(.,'${key_pageTemplateName}')]</td>
+	<td>PAGE_TEMPLATE_CARD_ITEM</td>
+	<td>xpath=(//*[contains(@class,'card-page-item')][@data-qa-id='row'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
-	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[4]</td>
+	<td>PAGE_TEMPLATE_TABLE_NAME</td>
+	<td>//*[@data-qa-id='row']//a[contains(.,'${key_pageTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>

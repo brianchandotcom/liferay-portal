@@ -36,7 +36,6 @@ export function BusinessInformationAddress() {
 	}, [ref]);
 
 	const updateFormWithGoogleAddress = (address) => {
-
 		// We need to put shouldValidate at least in one Field
 		// to force validation to others
 
@@ -51,11 +50,12 @@ export function BusinessInformationAddress() {
 
 	return (
 		<div className="d-flex flex-column">
-			<div className="d-flex justify-content-between">
+			<div className="d-flex flex-wrap justify-content-between">
 				<ControlledInput
 					control={control}
 					inputProps={{
-						className: 'flex-grow-1 mr-4 p-0',
+						className:
+							'col-sm-12 col-md-8 col-lg-8 pr-lg-4 pr-md-4 p-0',
 						placeholder: 'Street address',
 						ref,
 					}}
@@ -66,47 +66,49 @@ export function BusinessInformationAddress() {
 
 				<Input
 					{...register(setFormPath('addressApt'))}
-					className="apt p-0"
+					className="col-lg-4 col-md-4 col-sm-12 p-0"
 					label="&nbsp;"
 					placeholder="Apt/Suite (optional)"
 				/>
 			</div>
 
-			<div className="d-flex flex-row justify-content-between my-5">
-				<div className="d-flex flex-grow-1">
-					<ControlledInput
-						control={control}
-						inputProps={{
-							className: ' flex-grow-1 p-0',
-						}}
-						label="City"
-						name={setFormPath('city')}
-						rules={{required: 'City is required.'}}
-					/>
+			<div className="d-flex flex-row flex-wrap justify-content-between my-3 my-lg-5 my-md-5 my-sm-3">
+				<ControlledInput
+					control={control}
+					inputProps={{
+						className:
+							'col-sm-8 col-md-5 col-lg-5 pr-sm-4 pr-xs-0 p-0',
+					}}
+					label="City"
+					name={setFormPath('city')}
+					rules={{required: 'City is required.'}}
+				/>
 
-					<StatesControlledSelect
-						control={control}
-						inputProps={{
-							className: 'flex-grow-1 p-0 mx-4',
-						}}
-						label="State"
-						name={setFormPath('state')}
-						rules={{
-							required: 'This field is required.',
-						}}
-					/>
-				</div>
+				<StatesControlledSelect
+					control={control}
+					inputProps={{
+						className:
+							'col-sm-4 col-md-3 col-lg-3 pr-md-4 pr-lg-4 p-0 mt-3 mt-sm-0 mt-md-0 mt-lg-0',
+					}}
+					label="State"
+					name={setFormPath('state')}
+					rules={{
+						required: 'This field is required.',
+					}}
+				/>
 
-				<div className="d-flex">
-					<ZIPControlledInput
-						control={control}
-						label="ZIP"
-						name={setFormPath('zip')}
-						rules={{
-							required: 'ZIP is required.',
-						}}
-					/>
-				</div>
+				<ZIPControlledInput
+					control={control}
+					inputProps={{
+						className:
+							'col-sm-12 col-md-4 col-lg-4 mt-md-0 mt-sm-3 pt-xs-3 p-0 mt-3 mt-md-0 mt-lg-0',
+					}}
+					label="ZIP"
+					name={setFormPath('zip')}
+					rules={{
+						required: 'ZIP is required.',
+					}}
+				/>
 			</div>
 		</div>
 	);

@@ -12,7 +12,8 @@
  * details.
  */
 
-import React, {useEffect} from 'react';
+import classNames from 'classnames';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
 import {EmailControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Email';
@@ -20,13 +21,37 @@ import {WebsiteControlledInput} from '../../../../../../../common/components/con
 import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
+import {AppContext} from '../../../../../context/AppContextProvider';
+import {MOBILE_SUBSECTION_KEYS} from '../../../../../utils/constants';
+import MobileContainer from '../../../../mobile/MobileContainer';
 
 import {BusinessInformationAddress} from './Address';
 
 const setFormPath = (value) => `basics.businessInformation.${value}`;
 
-export function FormBasicBusinessInformation({form}) {
+export function FormBasicBusinessInformation({form, isMobile}) {
+	const {
+		BUSINESS_EMAIL,
+		BUSINESS_WEBSITE,
+		PHONE,
+		PHYSICAL_ADDRESS,
+		YOUR_NAME,
+	} = MOBILE_SUBSECTION_KEYS;
+
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
+	const {
+		state: {
+			selectedStep: {mobileSubSections = []},
+		},
+	} = useContext(AppContext);
+
+	const activeMobileSubSection = mobileSubSections.find(({active}) => active);
+
+	const getMobileSubSection = useCallback(
+		(sectionTitle) =>
+			mobileSubSections.find(({title}) => title === sectionTitle),
+		[mobileSubSections]
+	);
 
 	const {control} = useFormContext();
 
@@ -57,63 +82,102 @@ export function FormBasicBusinessInformation({form}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const mobileContainerProps = {
+		activeMobileSubSection,
+		isMobile,
+	};
+
 	return (
 		<div className="p-0">
-			<div className="d-flex justify-content-between mb-5">
-				<ControlledInput
+			<MobileContainer
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(YOUR_NAME)}
+			>
+				<div
+					className={classNames(
+						'd-flex justify-content-between mb-5',
+						{
+							['flex-wrap']: isMobile,
+						}
+					)}
+				>
+					<ControlledInput
+						control={control}
+						inputProps={{
+							autoFocus: true,
+							className: classNames('flex-grow-1 p-0 mr-4', {
+								'col-12 mb-4': isMobile,
+							}),
+							maxLength: 256,
+							onBlur: onFirstNameSettled,
+						}}
+						label="First Name"
+						name={setFormPath('firstName')}
+						rules={{
+							required: 'First name is required.',
+						}}
+					/>
+
+					<ControlledInput
+						control={control}
+						inputProps={{
+							className: 'flex-grow-1 p-0 ',
+							maxLength: 256,
+						}}
+						label="Last Name"
+						name={setFormPath('lastName')}
+						rules={{
+							required: 'Last name is required.',
+						}}
+					/>
+				</div>
+			</MobileContainer>
+
+			<MobileContainer
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(BUSINESS_EMAIL)}
+			>
+				<EmailControlledInput
 					control={control}
-					inputProps={{
-						autoFocus: true,
-						className: 'flex-grow-1 p-0 mr-4',
-						maxLength: 256,
-						onBlur: onFirstNameSettled,
-					}}
-					label="First Name"
-					name={setFormPath('firstName')}
+					label="Business Email"
+					name={setFormPath('business.email')}
 					rules={{
-						required: 'First name is required.',
+						required: 'Email is required.',
 					}}
 				/>
+			</MobileContainer>
 
-				<ControlledInput
+			<MobileContainer
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(PHONE)}
+			>
+				<PhoneControlledInput
 					control={control}
-					inputProps={{
-						className: 'flex-grow-1 p-0 ',
-						maxLength: 256,
-					}}
-					label="Last Name"
-					name={setFormPath('lastName')}
+					label="Phone"
+					name={setFormPath('business.phone')}
 					rules={{
-						required: 'Last name is required.',
+						required: 'Phone number is required.',
 					}}
 				/>
-			</div>
+			</MobileContainer>
 
-			<EmailControlledInput
-				control={control}
-				label="Business Email"
-				name={setFormPath('business.email')}
-				rules={{
-					required: 'Email is required.',
-				}}
-			/>
+			<MobileContainer
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(BUSINESS_WEBSITE)}
+			>
+				<WebsiteControlledInput
+					control={control}
+					label="Business Website (optional)"
+					name={setFormPath('business.website')}
+				/>
+			</MobileContainer>
 
-			<PhoneControlledInput
-				control={control}
-				label="Phone"
-				name={setFormPath('business.phone')}
-				rules={{
-					required: 'Phone number is required.',
-				}}
-			/>
-
-			<WebsiteControlledInput
-				control={control}
-				label="Business Website (optional)"
-				name={setFormPath('business.website')}
-			/>
-
-			<BusinessInformationAddress />
+			<MobileContainer
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(PHYSICAL_ADDRESS)}
+			>
+				<BusinessInformationAddress />
+			</MobileContainer>
 		</div>
 	);
 }

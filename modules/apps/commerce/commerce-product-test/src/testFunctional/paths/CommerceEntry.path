@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_PAGE_ANY</td>
+	<td>//span[contains (@id,'displayPageNameInput')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_TAB</td>
 	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link') and (contains(.,'${key_menuTab}'))]</td>
 	<td></td>

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
@@ -386,30 +388,38 @@ public class LayoutActionDropdownItemsProvider {
 									layout));
 
 							String messageKey =
-								"are-you-sure-you-want-to-delete-this-page";
+								"are-you-sure-you-want-to-delete-the-page-x.-" +
+									"it-will-be-removed-immediately";
 
 							if (layout.hasChildren() &&
 								_hasScopeGroup(layout)) {
 
-								messageKey =
-									"this-page-is-being-used-as-a-scope-for-" +
-										"content-and-also-has-child-pages";
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content-and-also-contains-child-pages");
 							}
 							else if (layout.hasChildren()) {
-								messageKey =
-									"this-page-has-child-pages-that-will-" +
-										"also-be-removed";
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-contains-child-pages-that-",
+									"will-also-be-removed");
 							}
 							else if (_hasScopeGroup(layout)) {
-								messageKey =
-									"this-page-is-being-used-as-a-scope-for-" +
-										"content";
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content");
 							}
 
 							dropdownItem.putData(
 								"message",
-								LanguageUtil.get(
-									_httpServletRequest, messageKey));
+								LanguageUtil.format(
+									_httpServletRequest, messageKey,
+									HtmlUtil.escape(
+										layout.getName(
+											_themeDisplay.getLocale()))));
+
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

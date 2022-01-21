@@ -16,16 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COLUMN_VALUE_IN_PRODUCTION</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLUMN_VALUE_IN_PUBLICATION</td>
-	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENT_ACTIONS</td>
 	<td>//div[contains(@class,'autofit-row') and contains(.,'${key_commentValue}')]/preceding-sibling::div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
@@ -88,6 +78,16 @@
 <tr>
 	<td>DATA_COLUMN_REMOVED_VALUE</td>
 	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_VALUE_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_COLUMN_VALUE_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
 	<td></td>
 </tr>
 <tr>

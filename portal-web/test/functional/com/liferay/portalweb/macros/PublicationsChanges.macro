@@ -177,7 +177,7 @@ definition {
 			var key_columnValueInPublication = "${columnValueInPublication}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+				locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 				value1 = "${columnValueInPublication}");
 		}
 
@@ -189,7 +189,7 @@ definition {
 			var key_columnValueInPublication = "${columnValueInProduction}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+				locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 				value1 = "${columnValueInProduction}");
 		}
 
@@ -218,7 +218,7 @@ definition {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 			}
 
@@ -226,7 +226,7 @@ definition {
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 					value1 = "${columnValueInPublication}");
 			}
 
@@ -236,7 +236,7 @@ definition {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 			}
 
@@ -246,7 +246,7 @@ definition {
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 					value1 = "${columnValueInPublication}");
 			}
 		}
@@ -268,7 +268,7 @@ definition {
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 					value1 = "${columnValueInPublication}");
 			}
 		}
@@ -278,7 +278,7 @@ definition {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 		}
 
@@ -307,7 +307,7 @@ definition {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 			}
 
@@ -315,7 +315,7 @@ definition {
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 					value1 = "${columnValueInPublication}");
 			}
 
@@ -325,7 +325,7 @@ definition {
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
 			}
 
@@ -335,7 +335,7 @@ definition {
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChanges#COLUMN_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChanges#DATA_COLUMN_VALUE_IN_PUBLICATION",
 					value1 = "${columnValueInPublication}");
 			}
 		}

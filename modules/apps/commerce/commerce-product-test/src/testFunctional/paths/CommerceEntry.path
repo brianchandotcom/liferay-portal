@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'portlet-content-editable')]//*[contains(@class,'category-title')] | //div[contains(@class,'category-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_TAX_CATEGORY</td>
 	<td>//label[text()='Shipping Tax Category']/..//input[@type='text']</td>
 	<td></td>

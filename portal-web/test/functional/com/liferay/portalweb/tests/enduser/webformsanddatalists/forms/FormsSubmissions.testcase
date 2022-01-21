@@ -62,9 +62,7 @@ definition {
 
 		FormPortlet.clickSubmit();
 
-		FormFields.viewFieldValidationErrorMessage(
-			fieldName = "Text",
-			fieldValidationErrorMessage = "This field is required.");
+		FormFields.viewTextLabel(fieldLabel = "Indicates Required Fields");
 
 		FormFields.viewFieldNotRequired(fieldLabel = "Numeric");
 

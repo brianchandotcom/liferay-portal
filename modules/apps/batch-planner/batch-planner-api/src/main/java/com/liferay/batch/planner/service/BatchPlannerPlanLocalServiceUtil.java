@@ -323,11 +323,12 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan updateBatchPlannerPlan(
-			long userId, long batchPlannerPlanId, String name)
+			long userId, long batchPlannerPlanId, String externalType,
+			String internalClassName, String name)
 		throws PortalException {
 
 		return getService().updateBatchPlannerPlan(
-			userId, batchPlannerPlanId, name);
+			userId, batchPlannerPlanId, externalType, internalClassName, name);
 	}
 
 	public static BatchPlannerPlanLocalService getService() {

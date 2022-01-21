@@ -147,6 +147,12 @@ public class BatchPlannerMappingLocalServiceWrapper
 			batchPlannerPlanId, externalFieldName, internalFieldName);
 	}
 
+	@Override
+	public void deleteBatchPlannerMappings(long batchPlannerPlanId) {
+		_batchPlannerMappingLocalService.deleteBatchPlannerMappings(
+			batchPlannerPlanId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

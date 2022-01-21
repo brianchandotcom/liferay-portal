@@ -106,7 +106,8 @@ public interface BatchPlannerPlanService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public BatchPlannerPlan updateBatchPlannerPlan(
-			long batchPlannerPlanId, String name)
+			long batchPlannerPlanId, String externalType,
+			String internalClassName, String name)
 		throws PortalException;
 
 }

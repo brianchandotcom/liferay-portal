@@ -366,11 +366,12 @@ public class BatchPlannerPlanLocalServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan
 			updateBatchPlannerPlan(
-				long userId, long batchPlannerPlanId, String name)
+				long userId, long batchPlannerPlanId, String externalType,
+				String internalClassName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			userId, batchPlannerPlanId, name);
+			userId, batchPlannerPlanId, externalType, internalClassName, name);
 	}
 
 	@Override

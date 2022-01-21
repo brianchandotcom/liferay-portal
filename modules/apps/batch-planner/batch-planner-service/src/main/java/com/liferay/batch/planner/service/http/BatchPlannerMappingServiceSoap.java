@@ -107,6 +107,20 @@ public class BatchPlannerMappingServiceSoap {
 		}
 	}
 
+	public static void deleteBatchPlannerMappings(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			BatchPlannerMappingServiceUtil.deleteBatchPlannerMappings(
+				batchPlannerPlanId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.batch.planner.model.BatchPlannerMappingSoap[]
 			getBatchPlannerMappings(long batchPlannerPlanId)
 		throws RemoteException {

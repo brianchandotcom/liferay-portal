@@ -62,6 +62,14 @@ public class BatchPlannerMappingServiceWrapper
 	}
 
 	@Override
+	public void deleteBatchPlannerMappings(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_batchPlannerMappingService.deleteBatchPlannerMappings(
+			batchPlannerPlanId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerMapping>
 			getBatchPlannerMappings(long batchPlannerPlanId)
 		throws com.liferay.portal.kernel.exception.PortalException {

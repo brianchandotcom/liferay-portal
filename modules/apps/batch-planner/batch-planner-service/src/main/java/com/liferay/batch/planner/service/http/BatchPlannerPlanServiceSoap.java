@@ -286,13 +286,15 @@ public class BatchPlannerPlanServiceSoap {
 	}
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
-			updateBatchPlannerPlan(long batchPlannerPlanId, String name)
+			updateBatchPlannerPlan(
+				long batchPlannerPlanId, String externalType,
+				String internalClassName, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.updateBatchPlannerPlan(
-					batchPlannerPlanId, name);
+					batchPlannerPlanId, externalType, internalClassName, name);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
 				toSoapModel(returnValue);

@@ -62,6 +62,9 @@ public interface BatchPlannerMappingService extends BaseService {
 			String internalFieldName)
 		throws PortalException;
 
+	public void deleteBatchPlannerMappings(long batchPlannerPlanId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerMapping> getBatchPlannerMappings(
 			long batchPlannerPlanId)

@@ -10,6 +10,12 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro gotoChangeDetailsNavbar {
+		Click(
+			key_navBarTitle = "${navBarTitle}",
+			locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
+	}
+
 	macro gotoPublish {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
@@ -65,7 +71,7 @@ definition {
 
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
-			locator1 = "Publications#CONFLICTING_CHANGES_DETAILS_IFRAME_TITLE");
+			locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DETAILS_IFRAME_TITLE");
 	}
 
 	macro openPublicationsAdmin {

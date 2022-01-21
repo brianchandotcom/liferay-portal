@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -152,38 +151,73 @@ public class JobFactory {
 		if (jobName.equals("js-test-csv-report") ||
 			jobName.equals("junit-test-csv-report")) {
 
-			PortalGitRepositoryJob portalGitRepositoryJob =
-				new PortalGitRepositoryJob(jobName, buildProfile) {
+			PortalAcceptanceTestSuiteJob portalAcceptanceTestSuiteJob =
+				new PortalAcceptanceTestSuiteJob(
+					jobName, buildProfile, testSuiteName, branchName) {
 
 					@Override
 					protected GitWorkingDirectory getNewGitWorkingDirectory() {
+						File workingDirectory = _getWorkingDirectory(
+							new File(System.getProperty("user.dir")));
+
 						return GitWorkingDirectoryFactory.
 							newGitWorkingDirectory(
 								getBranchName(),
-								System.getProperty("user.dir"));
+								JenkinsResultsParserUtil.getCanonicalPath(
+									workingDirectory));
 					}
 
 					@Override
 					protected void init() {
-						try {
-							setJobProperties(
-								JenkinsResultsParserUtil.getBuildProperties());
-						}
-						catch (IOException ioException) {
-							throw new RuntimeException(ioException);
-						}
-
 						gitWorkingDirectory = getNewGitWorkingDirectory();
 
 						setGitRepositoryDir(
 							gitWorkingDirectory.getWorkingDirectory());
 
 						checkGitRepositoryDir();
+
+						jobPropertiesFiles.add(
+							new File(
+								gitRepositoryDir,
+								"tools/sdk/build.properties"));
+
+						jobPropertiesFiles.add(
+							new File(gitRepositoryDir, "build.properties"));
+
+						jobPropertiesFiles.add(
+							new File(gitRepositoryDir, "test.properties"));
+					}
+
+					private File _getWorkingDirectory(File file) {
+						if (file == null) {
+							return null;
+						}
+
+						File canonicalFile =
+							JenkinsResultsParserUtil.getCanonicalFile(file);
+
+						File parentFile = canonicalFile.getParentFile();
+
+						if ((parentFile == null) || !parentFile.exists()) {
+							return file;
+						}
+
+						if (!canonicalFile.isDirectory()) {
+							return _getWorkingDirectory(parentFile);
+						}
+
+						File gitDir = new File(canonicalFile, ".git");
+
+						if (!gitDir.exists()) {
+							return _getWorkingDirectory(parentFile);
+						}
+
+						return canonicalFile;
 					}
 
 				};
 
-			_jobs.put(jobKey, portalGitRepositoryJob);
+			_jobs.put(jobKey, portalAcceptanceTestSuiteJob);
 
 			return _jobs.get(jobKey);
 		}

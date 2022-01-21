@@ -38,6 +38,10 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 		ExceptionListener exceptionListener, String latitude, String longitude,
 		OpenWeatherMapConfiguration openWeatherMapConfiguration) {
 
+		if (!openWeatherMapConfiguration.enabled()) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
 				OpenWeatherMapWebCacheItem.class.getName(), StringPool.POUND,
@@ -60,10 +64,6 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 	@Override
 	public JSONObject convert(String key) {
 		try {
-			if (!_openWeatherMapConfiguration.enabled()) {
-				return JSONFactoryUtil.createJSONObject();
-			}
-
 			String url = StringBundler.concat(
 				_openWeatherMapConfiguration.apiURL(), "?APPID=",
 				_openWeatherMapConfiguration.apiKey(), "&format=json&lat=",
@@ -104,7 +104,7 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 	private void _validateResponse(JSONObject jsonObject) {
 		String cod = jsonObject.getString("cod");
 
-		if (Validator.isNull(cod)) {
+		if (Validator.isNull(cod) || cod.startsWith("2")) {
 			return;
 		}
 

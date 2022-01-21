@@ -406,8 +406,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM_2</td>
-	<td>xpath=(//div[contains(@class,'text-success')]/preceding-sibling::div)[2]</td>
+	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM_N</td>
+	<td>xpath=(//div[contains(@class,'text-success')]/preceding-sibling::div)[${key_indexNumber}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a translated zip file with all available language can be exported."
+	@description = "This ensures that a translated zip file contains multiple web contents with multiple available languages can be exported."
 	@priority = "5"
 	@refactordone
 	test CanExportMultipleWCsWithMultipleLanguages {
@@ -587,8 +587,15 @@ definition {
 		Translations.gotoBulkImportTranslation();
 
 		Translations.importTranslation(
+			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessageItem = "The translation file does not correspond to this web content.",
+			failFileName = "WebContentTitle1-en_US-ja_JP.xlf",
 			fileName = "WebContentTitle3-en_US_translated.zip",
-			filePath = "");
+			filePath = "",
+			successFileName = "WebContentTitle1-en_US-es_ES.xlf",
+			successFileName2 = "WebContentTitle3-en_US-es_ES.xlf",
+			successFileName3 = "WebContentTitle3-en_US-ja_JP_utf8.xlf",
+			successFileNumber = "3 Files Published");
 
 		for (var i : list "1,3") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle${i}");

@@ -659,8 +659,16 @@ definition {
 
 			if (isSet(successFileName2)) {
 				AssertTextEquals(
-					locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS_ITEM_2",
+					key_indexNumber = "2",
+					locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS_ITEM_N",
 					value1 = "${successFileName2}");
+			}
+
+			if (isSet(successFileName3)) {
+				AssertTextEquals(
+					key_indexNumber = "3",
+					locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS_ITEM_N",
+					value1 = "${successFileName3}");
 			}
 		}
 

@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
@@ -24,6 +23,7 @@ import DocumentPreview from './DocumentPreview';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
 import Sidebar from './Sidebar';
+import SidebarPanelInfoCollapsibleSection from './SidebarPanelCollapsibleSection';
 
 const formatDate = (date, languageTag) => {
 	return (
@@ -184,134 +184,94 @@ const SidebarPanelInfoView = ({
 
 				<ClayPanel.Group className="panel-group-flush panel-group-sm">
 					{showTaxonomies && (
-						<ClayPanel
-							collapsable
-							displayTitle={
-								<span className="c-inner" tabIndex="-1">
-									<ClayPanel.Title>
-										<ClayLayout.ContentRow>
-											<ClayLayout.ContentCol
-												className="align-self-center panel-title"
-												expand
-											>
-												{Liferay.Language.get(
-													'categorization'
-												)}
-											</ClayLayout.ContentCol>
-										</ClayLayout.ContentRow>
-									</ClayPanel.Title>
-								</span>
-							}
-							displayType="unstyled"
-							showCollapseIcon={true}
+						<SidebarPanelInfoCollapsibleSection
+							title={Liferay.Language.get('categorization')}
 						>
-							<ClayPanel.Body>
-								{!!categories.length && (
-									<div className="c-mb-4 sidebar-dl sidebar-section">
-										<h5 className="c-mb-1 font-weight-semi-bold">
-											{Liferay.Language.get('categories')}
-										</h5>
-
-										<p>
-											{categories.map((category) => (
-												<ClayLabel
-													displayType="secondary"
-													key={category}
-													large
-												>
-													{category}
-												</ClayLabel>
-											))}
-										</p>
-									</div>
-								)}
-
-								{!!tags.length && (
-									<div className="c-mb-4 sidebar-dl sidebar-section">
-										<h5 className="c-mb-1 font-weight-semi-bold">
-											{Liferay.Language.get('tags')}
-										</h5>
-
-										<p>
-											{tags.map((tag) => (
-												<ClayLabel
-													displayType="secondary"
-													key={tag}
-													large
-												>
-													{tag}
-												</ClayLabel>
-											))}
-										</p>
-									</div>
-								)}
-							</ClayPanel.Body>
-						</ClayPanel>
-					)}
-
-					<ClayPanel
-						collapsable
-						displayTitle={
-							<span className="c-inner" tabIndex="-1">
-								<ClayPanel.Title>
-									<ClayLayout.ContentRow>
-										<ClayLayout.ContentCol
-											className="align-self-center panel-title"
-											expand
-										>
-											{Liferay.Language.get('details')}
-										</ClayLayout.ContentCol>
-									</ClayLayout.ContentRow>
-								</ClayPanel.Title>
-							</span>
-						}
-						displayType="unstyled"
-						showCollapseIcon={true}
-					>
-						<ClayPanel.Body>
-							{documentIsAFile && (
-								<div className="sidebar-section">
+							{!!categories.length && (
+								<div className="c-mb-4 sidebar-dl sidebar-section">
 									<h5 className="c-mb-1 font-weight-semi-bold">
-										{Liferay.Language.get('extension')}
+										{Liferay.Language.get('categories')}
 									</h5>
 
-									<p className="text-secondary">
-										{extension}
+									<p>
+										{categories.map((category) => (
+											<ClayLabel
+												displayType="secondary"
+												key={category}
+												large
+											>
+												{category}
+											</ClayLabel>
+										))}
 									</p>
-
-									<h5 className="c-mb-1 font-weight-semi-bold">
-										{Liferay.Language.get('size')}
-									</h5>
-
-									<p className="text-secondary">{size}</p>
 								</div>
 							)}
 
-							{!!itemDates.length &&
-								itemDates.map(
-									({text, title}) =>
-										text &&
-										title && (
-											<div
-												className="c-mb-4 sidebar-dl sidebar-section"
-												key={title}
+							{!!tags.length && (
+								<div className="c-mb-4 sidebar-dl sidebar-section">
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('tags')}
+									</h5>
+
+									<p>
+										{tags.map((tag) => (
+											<ClayLabel
+												displayType="secondary"
+												key={tag}
+												large
 											>
-												<h5 className="c-mb-1 font-weight-semi-bold">
-													{title}
-												</h5>
-
-												<p className="text-secondary">
-													{text}
-												</p>
-											</div>
-										)
-								)}
-
-							{!!viewURLs.length && !isADocument && (
-								<ItemLanguages urls={viewURLs} />
+												{tag}
+											</ClayLabel>
+										))}
+									</p>
+								</div>
 							)}
-						</ClayPanel.Body>
-					</ClayPanel>
+						</SidebarPanelInfoCollapsibleSection>
+					)}
+
+					<SidebarPanelInfoCollapsibleSection
+						title={Liferay.Language.get('details')}
+					>
+						{documentIsAFile && (
+							<div className="sidebar-section">
+								<h5 className="c-mb-1 font-weight-semi-bold">
+									{Liferay.Language.get('extension')}
+								</h5>
+
+								<p className="text-secondary">{extension}</p>
+
+								<h5 className="c-mb-1 font-weight-semi-bold">
+									{Liferay.Language.get('size')}
+								</h5>
+
+								<p className="text-secondary">{size}</p>
+							</div>
+						)}
+
+						{!!itemDates.length &&
+							itemDates.map(
+								({text, title}) =>
+									text &&
+									title && (
+										<div
+											className="c-mb-4 sidebar-dl sidebar-section"
+											key={title}
+										>
+											<h5 className="c-mb-1 font-weight-semi-bold">
+												{title}
+											</h5>
+
+											<p className="text-secondary">
+												{text}
+											</p>
+										</div>
+									)
+							)}
+
+						{!!viewURLs.length && !isADocument && (
+							<ItemLanguages urls={viewURLs} />
+						)}
+					</SidebarPanelInfoCollapsibleSection>
 				</ClayPanel.Group>
 			</Sidebar.Body>
 		</>

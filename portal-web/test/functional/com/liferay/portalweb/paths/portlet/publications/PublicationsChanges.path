@@ -81,18 +81,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DDL_RECORD_DIFF_ADDED_VALUE</td>
-	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIFF_ADDED_VALUE</td>
+	<td>DATA_COLUMN_ADDED_VALUE</td>
 	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-added')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DIFF_REMOVED_VALUE</td>
+	<td>DATA_COLUMN_REMOVED_VALUE</td>
 	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDL_RECORD_DIFF_ADDED_VALUE</td>
+	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
 	<td></td>
 </tr>
 <tr>

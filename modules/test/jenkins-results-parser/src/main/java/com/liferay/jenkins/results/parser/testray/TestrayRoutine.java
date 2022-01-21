@@ -238,10 +238,6 @@ public class TestrayRoutine {
 		return getTestrayBuilds(_DELTA);
 	}
 
-	public List<TestrayBuild> getTestrayBuilds(int maxSize) {
-		return getTestrayBuilds(maxSize, null);
-	}
-
 	public List<TestrayBuild> getTestrayBuilds(
 		int maxSize, String... nameFilters) {
 

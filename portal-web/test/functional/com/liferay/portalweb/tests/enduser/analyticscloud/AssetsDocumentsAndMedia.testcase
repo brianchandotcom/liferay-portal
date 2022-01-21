@@ -143,12 +143,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: More than one document is being created in the assets list because of the bug
-		// AC Bug ticket: LRAC-7890
-		// AC Quarantine ticket: LRAC-9805
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -206,9 +200,6 @@ definition {
 		}
 
 		task ("Open document by name") {
-
-			// More than one document is being created in the assets list because of the bug
-
 			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
@@ -400,8 +391,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8116 | Test Summary: Assert clicking a document in the documents and media list navigates to the documents overview page"
 	@priority = "5"
 	test CanNavigatesToDocumentsOverviewPage {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(

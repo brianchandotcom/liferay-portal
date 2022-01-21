@@ -365,8 +365,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -418,8 +416,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
 	@priority = "5"
 	test CanSearchWebContentList {
-		property portal.upstream = "quarantine";
-
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		task ("Add pages and add web content to earch of the page") {

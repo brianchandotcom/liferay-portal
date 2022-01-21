@@ -78,6 +78,10 @@ if (editorOptions != null) {
 	CKEDITOR.env.isCompatible = true;
 </script>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <liferay-util:buffer
 	var="alloyEditor"
 >

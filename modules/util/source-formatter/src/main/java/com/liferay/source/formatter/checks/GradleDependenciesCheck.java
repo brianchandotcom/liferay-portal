@@ -72,6 +72,16 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 					content, dependencies, _petraPattern);
 				content = _formatTestIntegrationCompileDependencies(
 					content, dependencies, _portalKernelPattern);
+
+				Matcher matcher = _dataEnginePattern.matcher(dependencies);
+
+				if (matcher.find()) {
+					addMessage(
+						fileName,
+						"Project dependencies ':apps:data-engine:data-engine-" +
+							"rest-client' can only be used for " +
+								"'testIntegrationCompile'");
+				}
 			}
 
 			content = _formatDependencies(
@@ -296,6 +306,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	private static final String _RELEASE_PORTAL_API_VERSION_KEY =
 		"releasePortalAPIVersion";
 
+	private static final Pattern _dataEnginePattern = Pattern.compile(
+		"(?<!testIntegrationCompile) project\\(\":apps:data-engine:data-" +
+			"engine-rest-client\"\\)");
 	private static final Pattern _dependencyAttributesPattern = Pattern.compile(
 		"(\\w+): \"([\\w.-]+)\"");
 	private static final Pattern _dependencyPattern = Pattern.compile(

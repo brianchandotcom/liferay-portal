@@ -1788,18 +1788,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jodconverter.jar</file-name>
-				<version>2.2.2</version>
-				<project-name>JODConverter</project-name>
-				<project-url>http://jodconverter.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jodd-json.jar</file-name>
 				<version>6.0.3</version>
 				<project-name>Jodd JSON</project-name>
@@ -1863,18 +1851,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/juh.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/juniversalchardet.jar</file-name>
 				<version>1.0.3</version>
 				<project-name>Universal Character Detection</project-name>
@@ -1883,18 +1859,6 @@
 					<license>
 						<license-name>MPL 1.1</license-name>
 						<license-url>http://www.mozilla.org/MPL/1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jurt.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2255,18 +2219,6 @@
 					<license>
 						<license-name>MPL 2.0</license-name>
 						<license-url>https://www.mozilla.org/en-US/MPL/2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/ridl.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2754,18 +2706,6 @@
 				<licenses>
 					<license>CDDL 1.1</license>
 					<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/unoil.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
 				</licenses>
 			</library>
 			<library>

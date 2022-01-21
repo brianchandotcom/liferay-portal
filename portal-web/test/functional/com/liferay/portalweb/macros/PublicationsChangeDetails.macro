@@ -179,6 +179,24 @@ definition {
 		}
 	}
 
+	macro viewChangeDetailsInChildren {
+		var key_changeChildrenCategory = "${changeChildrenCategory}";
+		var key_changeChildrenTitle = "${changeChildrenTitle}";
+
+		AssertTextEquals(
+			locator1 = "PublicationsChangeDetails#CHANGE_CHILDREN_TITLE",
+			value1 = "${changeChildrenTitle}");
+	}
+
+	macro viewChangeDetailsInParents {
+		var key_changeParentsCategory = "${changeParentsCategory}";
+		var key_changeParentsTitle = "${changeParentsTitle}";
+
+		AssertTextEquals(
+			locator1 = "PublicationsChangeDetails#CHANGE_PARENTS_TITLE",
+			value1 = "${changeParentsTitle}");
+	}
+
 	macro viewConflictingChangeDetails {
 		if ("${DeletionModificationConflict}" == "true") {
 			AssertElementPresent(

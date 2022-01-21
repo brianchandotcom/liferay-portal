@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>CHANGE_CHILDREN_TITLE</td>
+	<td>//tr[contains(.,'${key_changeChildrenCategory}')]//following-sibling::tr[contains(.,'${key_changeChildrenTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_PARENTS_TITLE</td>
+	<td>//tr[contains(.,'${key_changeParentsCategory}')]//following-sibling::tr[contains(.,'${key_changeParentsTitle}')]</td>
+	<td></td>
+</tr>	
+<tr>
 	<td>CURRENT_DISPLAY_ICON</td>
 	<td>//span[contains(@class, 'inline-item inline-item-after')]</td>
 	<td></td>

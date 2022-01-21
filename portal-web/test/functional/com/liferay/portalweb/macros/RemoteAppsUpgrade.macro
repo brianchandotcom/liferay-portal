@@ -1,5 +1,35 @@
 definition {
 
+	macro assertCustomRemoteAppEntryFields {
+		Click(
+			key_tableEntryName = "${upgradeName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		AssertTextEquals(
+			custom_entryName = "${upgradeName}",
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${upgradeName}");
+
+		AssertTextEquals(
+			custom_entryHTMLName = "${upgradeHTMLName}",
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${upgradeHTMLName}");
+
+		AssertTextEquals(
+			custom_entryURL = "${upgradeURL}",
+			key_id = "customElementURLs",
+			locator1 = "RemoteAppsEntry#URL",
+			value1 = "${upgradeURL}");
+
+		AssertTextEquals(
+			custom_entryCSSURL = "${upgradeCSSURL}",
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${upgradeCSSURL}");
+	}
+
 	macro assertRemoteAppEntry {
 		RemoteApps.goToRemoteAppsPortlet();
 

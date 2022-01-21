@@ -13,7 +13,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	waitFor,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 
 import {DropdownColorPicker} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/DropdownColorPicker';
@@ -125,10 +130,9 @@ describe('DropdownColorPicker', () => {
 			target: {value: 'Category 1'},
 		});
 
-		await waitFor(() => {
-			expect(queryByText('Category 1')).toBeInTheDocument();
-			expect(queryByText('Category 2')).not.toBeInTheDocument();
-		});
+		await waitForElementToBeRemoved(queryByText('Category 2'));
+
+		expect(queryByText('Category 1')).toBeInTheDocument();
 	});
 
 	it('filters by tokenSet', async () => {
@@ -181,7 +185,7 @@ describe('DropdownColorPicker', () => {
 	});
 
 	it('shows empty results', async () => {
-		const {getByLabelText, queryByText} = renderDropdownColorPicker({
+		const {findByText, getByLabelText} = renderDropdownColorPicker({
 			active: true,
 		});
 		const searchForm = getByLabelText('search-form');
@@ -190,8 +194,8 @@ describe('DropdownColorPicker', () => {
 			target: {value: 'Color 123'},
 		});
 
-		await waitFor(() => {
-			expect(queryByText('no-results-found')).toBeInTheDocument();
-		});
+		const noResultsMessage = await findByText('no-results-found');
+
+		expect(noResultsMessage).toBeInTheDocument();
 	});
 });

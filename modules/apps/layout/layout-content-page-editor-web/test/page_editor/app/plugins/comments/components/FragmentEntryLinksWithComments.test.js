@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -134,11 +134,9 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		sandroFragment.focus();
 
-		await waitFor(() => {
-			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
-			expect(sandroFragment).toHaveFocus();
-			expect(hoverItem).toHaveBeenCalledWith('sandro-item');
-		});
+		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
+		expect(sandroFragment).toHaveFocus();
+		expect(hoverItem).toHaveBeenCalledWith('sandro-item');
 	});
 
 	it('sets a fragment to hovered on mouseover', async () => {
@@ -153,10 +151,8 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.mouseOver(sandroFragment);
 
-		await waitFor(() => {
-			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
-			expect(hoverItem).toHaveBeenCalledWith('sandro-item');
-		});
+		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
+		expect(hoverItem).toHaveBeenCalledWith('sandro-item');
 	});
 
 	it('sets a fragment to not hovered on mouseout', async () => {
@@ -171,10 +167,8 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.mouseOut(sandroFragment);
 
-		await waitFor(() => {
-			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
-			expect(hoverItem).toHaveBeenCalledWith(null);
-		});
+		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
+		expect(hoverItem).toHaveBeenCalledWith(null);
 	});
 
 	it('sets a fragment to selected on click', async () => {
@@ -189,10 +183,8 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.click(sandroFragment);
 
-		await waitFor(() => {
-			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
-			expect(selectItem).toHaveBeenCalledWith('sandro-item');
-		});
+		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
+		expect(selectItem).toHaveBeenCalledWith('sandro-item');
 	});
 
 	test.todo('shows the number of comments on each list item');

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -156,11 +156,9 @@ describe('PageContent', () => {
 		fireEvent.click(queryByText('open-actions-menu'));
 		fireEvent.click(queryByText('edit-image'));
 
-		await waitFor(() => {
-			expect(
-				baseElement.querySelector('.image-editor-modal')
-			).toBeInTheDocument();
-		});
+		expect(
+			baseElement.querySelector('.image-editor-modal')
+		).toBeInTheDocument();
 	});
 
 	it('shows the edit button if the content is inline text', () => {
@@ -175,11 +173,9 @@ describe('PageContent', () => {
 
 		fireEvent.click(getByText('edit-inline-text'));
 
-		await waitFor(() => {
-			expect(selectItem).toHaveBeenCalledWith('11113-element-text', {
-				itemType: 'editable',
-				origin: 'sidebar',
-			});
+		expect(selectItem).toHaveBeenCalledWith('11113-element-text', {
+			itemType: 'editable',
+			origin: 'sidebar',
 		});
 	});
 

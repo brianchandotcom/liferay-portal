@@ -21,9 +21,9 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
-BatchPlannerPlan batchPlannerPlan = BatchPlannerPlanServiceUtil.fetchBatchPlannerPlan(batchPlannerPlanId);
+boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
 
-renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "import") : LanguageUtil.get(request, "edit"));
+renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : LanguageUtil.get(request, "import"));
 %>
 
 <div class="container pt-4">
@@ -107,18 +107,18 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 						).setCMD(
 							Constants.IMPORT
 						).setResourceID(
-							"/batch_planner/edit_import_batch_planner_plan"
+							"/batch_planner/submit_batch_planner_plan"
 						).buildString()
 					).put(
 						"formSaveAsTemplateURL",
-						ResourceURLBuilder.createResourceURL(
+						ActionURLBuilder.createActionURL(
 							renderResponse
+						).setActionName(
+							"/batch_planner/edit_import_batch_planner_plan"
 						).setCMD(
-							Constants.SAVE
+							Constants.ADD
 						).setParameter(
 							"template", true
-						).setResourceID(
-							"/batch_planner/edit_import_batch_planner_plan"
 						).buildString()
 					).build()
 				%>'

@@ -21,7 +21,9 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
-renderResponse.setTitle(LanguageUtil.get(request, "export"));
+boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
+
+renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : LanguageUtil.get(request, "export"));
 %>
 
 <div class="container pt-4">
@@ -146,14 +148,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 								"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
 							).put(
 								"formSaveAsTemplateURL",
-								ResourceURLBuilder.createResourceURL(
+								ActionURLBuilder.createActionURL(
 									renderResponse
+								).setActionName(
+									"/batch_planner/edit_export_batch_planner_plan"
 								).setCMD(
-									Constants.SAVE
+									Constants.ADD
 								).setParameter(
 									"template", true
-								).setResourceID(
-									"/batch_planner/edit_export_batch_planner_plan"
 								).buildString()
 							).put(
 								"namespace", liferayPortletResponse.getNamespace()
@@ -174,7 +176,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 								).setCMD(
 									Constants.EXPORT
 								).setResourceID(
-									"/batch_planner/edit_export_batch_planner_plan"
+									"/batch_planner/submit_batch_planner_plan"
 								).buildString()
 							).build()
 						%>'

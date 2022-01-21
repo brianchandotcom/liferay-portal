@@ -22,16 +22,17 @@ BatchPlannerLogDisplayContext batchPlannerLogDisplayContext = (BatchPlannerLogDi
 SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = batchPlannerLogDisplayContext.getSearchContainer();
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= batchPlannerLogDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new BatchPlannerLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerLogDisplaySearchContainer) %>"
 />
 
+<clay:navigation-bar
+	navigationItems="<%= batchPlannerLogDisplayContext.getNavigationItems() %>"
+/>
+
 <clay:container-fluid>
 	<liferay-ui:search-container
+		cssClass="mt-3"
 		searchContainer="<%= batchPlannerLogDisplaySearchContainer %>"
 	>
 		<liferay-ui:search-container-row
@@ -67,12 +68,12 @@ SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = 
 			/>
 
 			<liferay-ui:search-container-column-text
-				name="create-date"
+				name="creation-date"
 				value="<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				name="user"
+				name="author"
 				value="<%= PortalUtil.getUserEmailAddress(batchPlannerLogDisplay.getUserId()) %>"
 			/>
 
@@ -83,6 +84,21 @@ SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = 
 					<liferay-ui:message key="<%= BatchPlannerLogConstants.getStatusLabel(batchPlannerLogDisplay.getStatus()) %>" />
 				</h6>
 			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="rows-imported"
+				value="<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="rows-warnings"
+				value="<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="rows-failed"
+				value="<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

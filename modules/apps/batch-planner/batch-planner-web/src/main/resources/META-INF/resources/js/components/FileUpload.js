@@ -16,8 +16,8 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useState} from 'react';
 
-import parseFile from './FileParsers';
-import {FILE_SCHEMA_EVENT, IMPORT_FILE_FORMATS} from './constants';
+import parseFile from '../FileParsers';
+import {FILE_SCHEMA_EVENT, IMPORT_FILE_FORMATS} from '../constants';
 
 function FileUpload({portletNamespace}) {
 	const isMounted = useIsMounted();

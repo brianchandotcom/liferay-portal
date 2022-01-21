@@ -25,16 +25,55 @@ export const TOTAL_OF_FIELD = {
 	PROPERTY: 6,
 };
 
+export const MOBILE_SUBSECTION_KEYS = {
+	BUSINESS_EMAIL: 'Business Email',
+	BUSINESS_WEBSITE: 'Business Website',
+	PHONE: 'Phone',
+	PHYSICAL_ADDRESS: 'Physical Address',
+	YOUR_NAME: 'Your Name',
+};
+
 export const AVAILABLE_STEPS = {
 	BASICS_BUSINESS_INFORMATION: {
 		Component: FormBasicBusinessInformation,
+		active: false,
+		id: 'BASICS_BUSINESS_INFORMATION',
 		index: 2,
+		mobileSubSections: [
+			{
+				active: true,
+				hideInputLabel: false,
+				title: MOBILE_SUBSECTION_KEYS.YOUR_NAME,
+			},
+			{
+				active: false,
+				hideInputLabel: true,
+				title: MOBILE_SUBSECTION_KEYS.BUSINESS_EMAIL,
+			},
+			{
+				active: false,
+				hideInputLabel: true,
+				title: MOBILE_SUBSECTION_KEYS.PHONE,
+			},
+			{
+				active: false,
+				hideInputLabel: true,
+				title: MOBILE_SUBSECTION_KEYS.BUSINESS_WEBSITE,
+			},
+			{
+				active: false,
+				hideInputLabel: false,
+				title: MOBILE_SUBSECTION_KEYS.PHYSICAL_ADDRESS,
+			},
+		],
 		section: 'basics',
 		subsection: 'businessInformation',
 		title: 'Just the business basics!',
 	},
 	BASICS_BUSINESS_TYPE: {
 		Component: FormBasicBusinessType,
+		active: false,
+		id: 'BASICS_BUSINESS_TYPE',
 		index: 1,
 		section: 'basics',
 		subsection: 'business-type',
@@ -42,6 +81,8 @@ export const AVAILABLE_STEPS = {
 	},
 	BASICS_PRODUCT_QUOTE: {
 		Component: FormBasicProductQuote,
+		active: true,
+		id: 'BASICS_PRODUCT_QUOTE',
 		index: 0,
 		section: 'basics',
 		subsection: 'product-quote',
@@ -49,6 +90,8 @@ export const AVAILABLE_STEPS = {
 	},
 	BUSINESS: {
 		Component: FormBusiness,
+		active: false,
+		id: 'BUSINESS',
 		index: 3,
 		section: 'business',
 		subsection: '',
@@ -56,6 +99,8 @@ export const AVAILABLE_STEPS = {
 	},
 	EMPLOYEES: {
 		Component: FormEmployees,
+		active: false,
+		id: 'EMPLOYEES',
 		index: 4,
 		section: 'employees',
 		subsection: '',
@@ -63,6 +108,8 @@ export const AVAILABLE_STEPS = {
 	},
 	PROPERTY: {
 		Component: FormProperty,
+		active: false,
+		id: 'PROPERTY',
 		index: 5,
 		section: 'property',
 		subsection: '',

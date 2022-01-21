@@ -29,17 +29,18 @@ const initialState = {
 	},
 	selectedProduct: JSON.parse(Storage.getItem(STORAGE_KEYS.APPLICATION_FORM))
 		?.basics?.businessCategoryId,
-	selectedStep: STEP_ORDERED[0],
 	selectedTrigger: '',
+	steps: STEP_ORDERED,
 	taxonomyVocabulary: {},
 };
 
 export const ActionTypes = {
 	SET_DIMENSIONS: 'SET_DIMENSIONS',
+	SET_MOBILE_SUBSECTION_ACTIVE: 'SET_MOBILE_SUBSECTION_ACTIVE',
 	SET_PERCENTAGE: 'SET_PERCENTAGE',
 	SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
-	SET_SELECTED_STEP: 'SET_SELECTED_STEP',
 	SET_SELECTED_TRIGGER: 'SET_SELECTED_TRIGGER',
+	SET_STEP_ACTIVE: 'SET_STEP_ACTIVE',
 	SET_TAXONOMY_VOCABULARY: 'SET_TAXONOMY_VOCABULARY',
 };
 
@@ -57,12 +58,6 @@ function AppContextReducer(state, action) {
 				percentage: action.payload,
 			};
 
-		case ActionTypes.SET_SELECTED_STEP:
-			return {
-				...state,
-				selectedStep: action.payload,
-			};
-
 		case ActionTypes.SET_SELECTED_TRIGGER:
 			return {
 				...state,
@@ -73,6 +68,47 @@ function AppContextReducer(state, action) {
 			return {
 				...state,
 				selectedProduct: action.payload,
+			};
+
+		case ActionTypes.SET_MOBILE_SUBSECTION_ACTIVE:
+			return {
+				...state,
+				steps: state.steps.map((step) => {
+					const mobileSubSections = step.mobileSubSections;
+
+					if (step.active && Array.isArray(mobileSubSections)) {
+						const currentIndex = mobileSubSections.findIndex(
+							({active}) => active
+						);
+
+						const _currentIndex = action.payload.nextStep
+							? currentIndex + 1
+							: currentIndex - 1;
+
+						return {
+							...step,
+							mobileSubSections: mobileSubSections.map(
+								(mobileSubSection, index) => ({
+									...mobileSubSection,
+									active: index === _currentIndex,
+								})
+							),
+						};
+					}
+
+					return step;
+				}),
+			};
+
+		case ActionTypes.SET_STEP_ACTIVE:
+			return {
+				...state,
+				steps: state.steps.map((step) => {
+					return {
+						...step,
+						active: step.id === action.payload.id,
+					};
+				}),
 			};
 
 		case ActionTypes.SET_TAXONOMY_VOCABULARY:
@@ -123,7 +159,15 @@ export function AppContextProvider({children}) {
 	}, [dimensions]);
 
 	return (
-		<AppContext.Provider value={{dispatch, state}}>
+		<AppContext.Provider
+			value={{
+				dispatch,
+				state: {
+					...state,
+					selectedStep: state.steps.find(({active}) => active),
+				},
+			}}
+		>
 			{children}
 		</AppContext.Provider>
 	);

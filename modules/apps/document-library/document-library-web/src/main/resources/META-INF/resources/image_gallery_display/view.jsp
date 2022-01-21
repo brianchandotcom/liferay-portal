@@ -58,13 +58,11 @@ if (defaultFolderView) {
 
 long repositoryId = dlPortletInstanceSettings.getSelectedRepositoryId();
 
-if (repositoryId == 0) {
-	if (folder != null) {
-		repositoryId = folder.getRepositoryId();
-	}
-	else {
-		repositoryId = scopeGroupId;
-	}
+if ((folder != null) && (dlPortletInstanceSettings.getSelectedRepositoryId() != folder.getRepositoryId())) {
+	repositoryId = folder.getRepositoryId();
+}
+else if (repositoryId == 0) {
+	repositoryId = scopeGroupId;
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;

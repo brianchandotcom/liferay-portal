@@ -23,6 +23,8 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.PathMatcher;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -86,6 +88,11 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 		File portalModulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+		List<PathMatcher> excludesPathMatchers = getPathMatchers(
+			getExcludesJobProperties());
+		List<PathMatcher> includesPathMatchers = getPathMatchers(
+			getIncludesJobProperties());
 
 		if (testRelevantChanges &&
 			!(includeStableTestSuite && isStableTestSuiteBatch())) {

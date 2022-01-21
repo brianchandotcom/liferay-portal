@@ -140,7 +140,7 @@ definition {
 		task ("Assert Title is present") {
 			AssertElementPresent(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				value1 = "content page");
+				pageName = "Content Page");
 		}
 
 		task ("Assert URL is present") {
@@ -163,12 +163,22 @@ definition {
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
-	@ignore = "true"
 	@priority = "3"
 	test DefaultLanguageOnTop {
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-144028 DefaultLanguageOnTop pending implementation
+		task ("Open flag selector dropdown") {
+			Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
 
+		task ("Check if top language is the default one") {
+			AssertTextEquals.assertPartialText(
+				key_index = "1",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM_INDEX",
+				value1 = "English");
+		}
 	}
 
 	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
@@ -249,12 +259,15 @@ definition {
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the languages are alphabetically ordered"
-	@ignore = "true"
 	@priority = "3"
 	test LanguagesAlphabeticallyOrdered {
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-144028 LanguagesAlphabeticallyOrdered pending implementation
-
+		task ("Check if languages are alphabetically ordered") {
+			ContentPerformance.checkLanguagesOrder();
+		}
 	}
 
 	@description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
@@ -336,12 +349,29 @@ definition {
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the Translated/Unstraslated label does not appear"
-	@ignore = "true"
 	@priority = "3"
 	test LanguagesLabel {
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-144028 LanguagesLabel pending implementation
+		task ("Open flag selector dropdown") {
+			Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
 
+		task ("Check that there is not any  Translated/Unstraslated label") {
+			AssertTextEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Default");
+
+			AssertTextNotEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Translated");
+
+			AssertTextNotEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Untranslated");
+		}
 	}
 
 	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a blog display page, the content performance panel displays with the metrics of the content page"
@@ -354,12 +384,21 @@ definition {
 	}
 
 	@description = "LPS-127220: When DXP is connected and synced to AC and the user clicks on the metrics icon in a content page, the content performance panel displays with the metrics of the content page"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsIconVisibleInContentPage {
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-144028 MetricsIconVisibleInContentPage pending implementation
+		task ("Check if infomation if from that page") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Content Page");
 
+			AssertTextEquals(
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a document display page, the content performance panel displays with the metrics of the content page"
@@ -960,12 +999,23 @@ definition {
 	}
 
 	@description = "LPS-127220: When the user accesses to the content performance panel of a content page, the name, the URL of the page and the language selector are shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test PanelInformationInContentPage {
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-144028 PanelInformationInContentPage pending implementation
+		task ("Check if the name, the URL and the language selector are shown") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Content Page");
 
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "web/test-site-name");
+
+			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
 	}
 
 	@description = "LPS-126044: When the user accesses to the content performance panel of a document display page, the name, the URL of the page and the language selector are shown in the content performance panel"

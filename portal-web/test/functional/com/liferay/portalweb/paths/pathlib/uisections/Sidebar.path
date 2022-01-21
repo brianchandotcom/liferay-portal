@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_2</td>
+	<td>//div[contains(@class,'sidebar-header')] //span[contains(@class,'font-weight-bold')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_FIELD_REFERENCE</td>
 	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input[contains(@class,'form-control') and (@type='text')]</td>
 	<td></td>

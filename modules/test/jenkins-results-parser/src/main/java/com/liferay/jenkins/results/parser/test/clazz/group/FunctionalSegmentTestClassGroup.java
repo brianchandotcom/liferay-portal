@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -149,9 +150,10 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 			return null;
 		}
 
-		String value = JenkinsResultsParserUtil.getProperty(
-			_parentBatchTestClassGroup.getJobProperties(), name,
-			_parentBatchTestClassGroup.getBatchName());
+		JobProperty jobProperty = _parentBatchTestClassGroup.getJobProperty(
+			name);
+
+		String value = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
 			return null;

@@ -537,6 +537,26 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro assertDefaultDisplayPage {
+		if (!(isSet(pageType))) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
+				value1 = "${$pageName}");
+		}
+
+		if ("${pageType}" == "Public") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
+				value1 = "Public Pages > ${pageName}");
+		}
+
+		if ("${pageType}" == "Private") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
+				value1 = "Private Pages > ${pageName}");
+		}
+	}
+
 	macro assertDefaultProductDisplayPage {
 		AssertElementPresent(
 			key_displayPage = "${pageName}",

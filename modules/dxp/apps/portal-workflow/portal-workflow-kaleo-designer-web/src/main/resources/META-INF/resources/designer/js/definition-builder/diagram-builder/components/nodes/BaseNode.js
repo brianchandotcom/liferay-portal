@@ -32,6 +32,7 @@ export default function BaseNode({
 	id,
 	label,
 	newNode,
+	script,
 	type,
 	...otherProps
 }) {
@@ -132,6 +133,7 @@ export default function BaseNode({
 				description,
 				label,
 				newNode: false,
+				script,
 			},
 			id,
 			type,
@@ -189,6 +191,7 @@ export default function BaseNode({
 							data: {
 								description,
 								label,
+								script,
 							},
 							id,
 							type,

@@ -55,10 +55,9 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 			externalReferenceCode
 		);
 		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
+		const isAccountAdministrator = userAccount.isAdmin;
 
 		if (pageKey === ROUTES.ONBOARDING) {
-			const isAccountAdministrator = userAccount.isAdmin;
-
 			if (
 				!(
 					isValidExternalReferenceCode &&
@@ -84,8 +83,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTES.OVERVIEW) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			}
-			else if (!hasAccountFlags) {
+			} else if (!hasAccountFlags && isAccountAdministrator) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

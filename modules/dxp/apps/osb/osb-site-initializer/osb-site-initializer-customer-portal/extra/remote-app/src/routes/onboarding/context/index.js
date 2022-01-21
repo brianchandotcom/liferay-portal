@@ -14,7 +14,6 @@ import client from '../../../apolloClient';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
-	getAccountRoles,
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getUserAccount,
@@ -42,7 +41,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 	});
 
 	useEffect(() => {
-		const getUser = async () => {
+		const getUser = async (projectExternalReferenceCode) => {
 			const {data} = await client.query({
 				query: getUserAccount,
 				variables: {
@@ -51,16 +50,16 @@ const AppContextProvider = ({assetsPath, children}) => {
 			});
 
 			if (data) {
-				const {data: accountRolesData} = await client.query({
-					query: getAccountRoles,
-					variables: {
-						accountId: data.userAccount.id,
-					},
-				});
-
-				const isAccountAdministrator = !!accountRolesData.accountAccountRoles?.items?.find(
-					({name}) => name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
-				);
+				const isAccountAdministrator = !!data.userAccount?.accountBriefs
+					?.find(
+						({externalReferenceCode}) =>
+							externalReferenceCode ===
+							projectExternalReferenceCode
+					)
+					?.roleBriefs?.find(
+						({name}) =>
+							name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
+					);
 
 				const userAccount = {
 					...data.userAccount,
@@ -114,11 +113,11 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		const fetchData = async () => {
-			const user = await getUser();
-
 			const projectExternalReferenceCode = SearchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
+
+			const user = await getUser(projectExternalReferenceCode);
 
 			if (!user) {
 				return;

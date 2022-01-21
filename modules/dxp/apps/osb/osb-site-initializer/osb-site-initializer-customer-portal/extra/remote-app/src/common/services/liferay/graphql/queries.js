@@ -308,6 +308,10 @@ export const getUserAccount = gql`
 				externalReferenceCode
 				id
 				name
+				roleBriefs {
+					id
+					name
+				}
 			}
 			externalReferenceCode
 			id

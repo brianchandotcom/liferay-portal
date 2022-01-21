@@ -1,9 +1,8 @@
 .img-activation-status {
-	.not-active {
+	&.not-active {
 		filter: opacity(0.5) saturate(0);
 	}
-
-	.in-progress {
+	&.in-progress {
 		filter: opacity(0.5) saturate(1);
 	}
 }

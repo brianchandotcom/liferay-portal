@@ -31,8 +31,7 @@ const Pages = () => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
@@ -60,6 +59,10 @@ const Pages = () => {
 					}
 					leftButton="Skip for now"
 					project={project}
+					subscriptionGroupId={
+						!!subscriptionGroups?.length &&
+						subscriptionGroups[0].accountSubscriptionGroupId
+					}
 				/>
 			),
 		},
@@ -72,7 +75,7 @@ const Pages = () => {
 		},
 	};
 
-	if (project) {
+	if (project && subscriptionGroups) {
 		return StepsLayout[step].Component;
 	}
 

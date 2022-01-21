@@ -56,3 +56,9 @@ export function getInitialInvite(roleId = '') {
 		roleId,
 	};
 }
+
+export const ACTIVATION_STATUS_DXP_CLOUD = {
+	active: 'Active',
+	inProgress: 'In Progress',
+	notActivated: 'Not Activated',
+};

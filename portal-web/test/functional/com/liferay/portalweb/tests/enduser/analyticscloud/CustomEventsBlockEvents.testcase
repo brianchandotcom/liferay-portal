@@ -78,7 +78,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
 	@priority = "5"
 	test CanBlockCustomEvent {
-
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -337,8 +336,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10151 | Test Summary: Blocked events are not processed"
 	@priority = "5"
 	test CheckEventAnalysisNotUpdatedWhenEventIsBlocked {
-		property portal.upstream = "quarantine";
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

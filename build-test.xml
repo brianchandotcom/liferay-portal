@@ -1750,6 +1750,9 @@ war.path=${app.server.portal.dir}/</echo>
 					<not>
 						<contains string="${patch.requirements}" substring="base-" />
 					</not>
+					<not>
+						<matches pattern="sp\d+" string="${patch.requirements}" />
+					</not>
 				</and>
 				<then>
 					<local name="patch.portal.version" />

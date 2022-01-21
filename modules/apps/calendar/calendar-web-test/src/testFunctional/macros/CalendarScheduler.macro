@@ -121,9 +121,6 @@ definition {
 
 	macro gotoAddViaDayView {
 		Click(locator1 = "CalendarDayView#SCHEDULER_VIEW_DAY");
-
-
-		
 	}
 
 	macro gotoDetailsViaDialogBox {

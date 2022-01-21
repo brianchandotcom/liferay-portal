@@ -393,14 +393,16 @@ definition {
 			changeCategory = "Dynamic Data Lists Record",
 			changeTitle = "${changeTitle}");
 
-		PublicationsChanges.viewDDLRecordChangeDiff(
+		PublicationsChanges.viewDDLRecordChangeDetails(
+			changeType = "Modified",
 			diffAddedValue = "Edit",
 			fieldName = "Text",
 			fieldValueInProduction = "Record Text",
 			fieldValueInPublication = "Record Text Edited",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewDDLRecordChangeDiff(
+		PublicationsChanges.viewDDLRecordChangeDetails(
+			changeType = "Modified",
 			diffAddedValue = "3/30/21",
 			fieldName = "Date",
 			fieldValueInPublication = "3/30/21",

@@ -91,7 +91,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DDL_RECORD_DIFF_ADDED_VALUE</td>
+	<td>DIFF_ADDED_VALUE</td>
 	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
 	<td></td>
 </tr>

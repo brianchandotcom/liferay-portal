@@ -1424,7 +1424,6 @@ definition {
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
 
-			var key_navItem = "Site and Asset Library Administration";
 			var key_subItem = "Applications";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
@@ -1464,7 +1463,6 @@ definition {
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
 
-			var key_navItem = "Site and Asset Library Administration";
 			var key_subItem = "Applications";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");

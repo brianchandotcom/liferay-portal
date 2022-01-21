@@ -352,7 +352,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			String jobPropertyValue = jobProperty.getValue();
 
 			if ((jobPropertyValue != null) && includeStableTestSuite &&
-				isStableTestSuiteBatch()) {
+				isStableTestSuiteBatch(batchName)) {
 
 				sb.append(" OR (");
 				sb.append(jobPropertyValue);

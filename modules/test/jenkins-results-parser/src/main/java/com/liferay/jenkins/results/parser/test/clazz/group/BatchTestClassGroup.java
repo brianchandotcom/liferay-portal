@@ -611,6 +611,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected boolean isStableTestSuiteBatch() {
+		return isStableTestSuiteBatch(batchName);
+	}
+
+	protected boolean isStableTestSuiteBatch(String batchName) {
 		List<String> testBatchNames = new ArrayList<>();
 
 		JobProperty jobProperty = getJobProperty("test.batch.names[stable]");
@@ -696,8 +700,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final List<AxisTestClassGroup> axisTestClassGroups =
 		new ArrayList<>();
 	protected final String batchName;
-	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
-	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
 	protected boolean includeStableTestSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;

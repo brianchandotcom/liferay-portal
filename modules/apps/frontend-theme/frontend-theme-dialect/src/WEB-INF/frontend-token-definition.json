@@ -1277,14 +1277,14 @@
 						{
 							"defaultValue": "#4d2ec9",
 							"editorType": "ColorPicker",
-							"label": "color-chart-1",
+							"label": "color-chart-0",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-chart-1"
+									"value": "color-chart-0"
 								}
 							],
-							"name": "colorChart1",
+							"name": "colorChart0",
 							"type": "String"
 						},
 						{

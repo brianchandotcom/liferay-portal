@@ -1219,7 +1219,7 @@ ${runtimeInstance}
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.viewEnabledFileTypesPGViaWCD(fileTypes = "DOC,ODT,PDF,TXT");
+		WebContentDisplayPortlet.viewEnabledFileTypes(fileTypeList = "DOC,ODT,PDF,TXT");
 	}
 
 	@priority = "4"

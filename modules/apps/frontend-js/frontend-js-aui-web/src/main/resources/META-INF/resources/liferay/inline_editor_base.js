@@ -35,7 +35,7 @@ AUI.add(
 		var TPL_NOTICE =
 			'<div class="alert alert-success lfr-editable-notice">' +
 			'<span class="lfr-editable-notice-text yui3-widget-bd"></span>' +
-			'<a class="lfr-editable-notice-close yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
+			'<a class="lfr-editable-notice-close ml-3 yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
 			'</div>';
 
 		function InlineEditorBase() {

@@ -29,7 +29,15 @@ import PageStructureSidebar from '../../../../../../../../src/main/resources/MET
 
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {layoutType: 'content'}})
+	() => ({
+		config: {
+			availableViewportSizes: {
+				desktop: {label: 'Desktop'},
+			},
+			commonStyles: [],
+			layoutType: 'content',
+		},
+	})
 );
 
 const renderComponent = ({

@@ -43,6 +43,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
@@ -121,6 +123,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		includesJobProperties.removeAll(Collections.singleton(null));
 
 		return includesJobProperties;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("exclude_globs", getGlobs(getExcludesJobProperties()));
+		jsonObject.put("filter_globs", getGlobs(getFilterJobProperties()));
+		jsonObject.put("include_globs", getGlobs(getExcludesJobProperties()));
+
+		return jsonObject;
 	}
 
 	public List<JUnitTestClass> getJUnitTestClasses() {

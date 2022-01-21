@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Leslie Wong
  */
@@ -37,6 +39,16 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("exclude_globs", getGlobs(getExcludesJobProperties()));
+		jsonObject.put("include_globs", getGlobs(getIncludesJobProperties()));
+
+		return jsonObject;
 	}
 
 	protected ModulesBatchTestClassGroup(

@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -46,6 +48,16 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("exclude_globs", getGlobs(_getExcludesJobProperties()));
+		jsonObject.put("include_globs", getGlobs(_getIncludesJobProperties()));
+
+		return jsonObject;
 	}
 
 	protected PluginsBatchTestClassGroup(

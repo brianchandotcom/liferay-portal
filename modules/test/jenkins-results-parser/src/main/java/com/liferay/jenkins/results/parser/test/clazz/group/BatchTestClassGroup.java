@@ -383,6 +383,30 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	protected List<String> getGlobs(List<JobProperty> jobProperties) {
+		List<String> globs = new ArrayList<>();
+
+		for (JobProperty jobProperty : jobProperties) {
+			if (!(jobProperty instanceof GlobJobProperty)) {
+				continue;
+			}
+
+			GlobJobProperty globJobProperty = (GlobJobProperty)jobProperty;
+
+			for (String relativeGlob : globJobProperty.getRelativeGlobs()) {
+				if ((relativeGlob == null) || globs.contains(relativeGlob)) {
+					continue;
+				}
+
+				globs.add(relativeGlob);
+			}
+		}
+
+		Collections.sort(globs);
+
+		return globs;
+	}
+
 	protected String getJobName() {
 		return portalTestClassJob.getJobName();
 	}

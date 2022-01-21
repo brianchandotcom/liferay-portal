@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.remote.app.web.internal.frontend.data.set.provider;
 
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
-import com.liferay.remote.app.web.internal.constants.RemoteAppAdminConstants;
-import com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model.RemoteAppClayDataSetEntry;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminFDSNames;
+import com.liferay.remote.app.web.internal.frontend.data.set.model.RemoteAppFDSEntry;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,16 +40,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "clay.data.provider.key=" + RemoteAppAdminConstants.REMOTE_APP_ENTRY_DATA_SET_DISPLAY,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES,
+	service = FDSDataProvider.class
 )
-public class RemoteAppEntryClayDataSetDataProvider
-	implements ClayDataSetDataProvider<RemoteAppClayDataSetEntry> {
+public class RemoteAppEntryFDSDataProvider
+	implements FDSDataProvider<RemoteAppFDSEntry> {
 
 	@Override
-	public List<RemoteAppClayDataSetEntry> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+	public List<RemoteAppFDSEntry> getItems(
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -58,14 +58,14 @@ public class RemoteAppEntryClayDataSetDataProvider
 
 		List<RemoteAppEntry> remoteAppEntries =
 			_remoteAppEntryLocalService.search(
-				themeDisplay.getCompanyId(), filter.getKeywords(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				sort);
+				themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), sort);
 
 		Stream<RemoteAppEntry> stream = remoteAppEntries.stream();
 
 		return stream.map(
-			remoteAppEntry -> new RemoteAppClayDataSetEntry(
+			remoteAppEntry -> new RemoteAppFDSEntry(
 				remoteAppEntry, themeDisplay.getLocale())
 		).collect(
 			Collectors.toList()
@@ -74,7 +74,7 @@ public class RemoteAppEntryClayDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -82,7 +82,7 @@ public class RemoteAppEntryClayDataSetDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		return _remoteAppEntryLocalService.searchCount(
-			themeDisplay.getCompanyId(), filter.getKeywords());
+			themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
 	}
 
 	@Reference

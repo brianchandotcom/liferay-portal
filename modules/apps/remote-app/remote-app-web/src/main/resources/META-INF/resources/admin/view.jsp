@@ -20,12 +20,12 @@
 RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT);
 %>
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	actionParameterName="remoteAppEntryId"
 	creationMenu="<%= remoteAppAdminDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= RemoteAppAdminConstants.REMOTE_APP_ENTRY_DATA_SET_DISPLAY %>"
+	dataProviderKey="<%= RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	formName="fm"
-	id="<%= RemoteAppAdminConstants.REMOTE_APP_ENTRY_DATA_SET_DISPLAY %>"
+	id="<%= RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

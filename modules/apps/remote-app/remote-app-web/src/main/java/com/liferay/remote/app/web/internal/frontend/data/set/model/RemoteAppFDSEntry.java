@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model;
+package com.liferay.remote.app.web.internal.frontend.data.set.model;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -24,11 +24,9 @@ import java.util.Locale;
 /**
  * @author Bruno Basto
  */
-public class RemoteAppClayDataSetEntry {
+public class RemoteAppFDSEntry {
 
-	public RemoteAppClayDataSetEntry(
-		RemoteAppEntry remoteAppEntry, Locale locale) {
-
+	public RemoteAppFDSEntry(RemoteAppEntry remoteAppEntry, Locale locale) {
 		_remoteAppEntry = remoteAppEntry;
 		_locale = locale;
 	}

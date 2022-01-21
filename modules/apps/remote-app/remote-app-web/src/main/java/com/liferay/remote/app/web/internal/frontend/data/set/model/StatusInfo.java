@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model;
+package com.liferay.remote.app.web.internal.frontend.data.set.model;
 
 /**
  * @author Javier de Arcos

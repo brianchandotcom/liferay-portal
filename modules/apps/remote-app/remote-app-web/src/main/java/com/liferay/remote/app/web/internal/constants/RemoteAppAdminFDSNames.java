@@ -17,9 +17,8 @@ package com.liferay.remote.app.web.internal.constants;
 /**
  * @author Bruno Basto
  */
-public class RemoteAppAdminConstants {
+public class RemoteAppAdminFDSNames {
 
-	public static final String REMOTE_APP_ENTRY_DATA_SET_DISPLAY =
-		"REMOTE_APP_ENTRY_DATA_SET_DISPLAY";
+	public static final String REMOTE_APP_ENTRIES = "remoteAppEntries";
 
 }

@@ -17,14 +17,10 @@ definition {
 	}
 
 	macro configureSetupPG {
-		Pause(locator1 = "3000");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(userToolNameList)) {
 			for (var userToolName : list "${userToolNameList}") {
-				Pause(locator1 = "3000");
-
 				Check.checkToggleSwitch(
 					key_fieldName = "${userToolName}",
 					locator1 = "Portlet#CONFIGURATION_CHECKBOX");
@@ -33,8 +29,6 @@ definition {
 
 		if (isSet(metadataNameList)) {
 			for (var metadataName : list "${metadataNameList}") {
-				Pause(locator1 = "3000");
-
 				Check.checkToggleSwitch(
 					key_fieldName = "${metadataName}",
 					locator1 = "Portlet#CONFIGURATION_CHECKBOX");
@@ -42,8 +36,12 @@ definition {
 		}
 
 		if ("${enableViewCountIncrement}" == "true") {
-			Check.checkToggleSwitch(locator1 = "WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX");
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "View Count Increment",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
+
+		PortletEntry.save();
 
 		SelectFrame(value1 = "relative=top");
 	}

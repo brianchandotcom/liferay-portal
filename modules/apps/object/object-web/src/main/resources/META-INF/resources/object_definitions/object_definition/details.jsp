@@ -55,6 +55,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
 
+		<aui:input name="system" type="hidden" value="<%= objectDefinition.isSystem() %>" />
+
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "information") %>
 		</h2>
@@ -95,7 +97,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
+						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
 							<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="" />
 
 							<%

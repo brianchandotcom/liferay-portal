@@ -76,8 +76,16 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> pluralLabelMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "pluralLabel");
 		String scope = ParamUtil.getString(actionRequest, "scope");
+		boolean system = ParamUtil.getBoolean(actionRequest, "system");
 
 		try {
+			if (system) {
+				_objectDefinitionService.updateTitleObjectFieldId(
+					objectDefinitionId, titleObjectFieldId);
+
+				return;
+			}
+
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId, descriptionObjectFieldId,
 				titleObjectFieldId, active, labelMap, name, panelCategoryOrder,

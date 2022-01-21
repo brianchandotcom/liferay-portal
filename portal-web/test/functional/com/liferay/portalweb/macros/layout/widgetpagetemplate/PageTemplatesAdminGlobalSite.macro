@@ -110,15 +110,11 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		for (var pageTemplateName : list "Search,Blog,Wiki") {
-			PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
+		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "Search");
 
-			AssertElementNotPresent(
-				key_rowNumber = "4",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER");
-		}
-
-		AssertElementNotPresent(locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME_4");
+		AssertElementNotPresent(
+			index = "2",
+			locator1 = "PageTemplates#PAGE_TEMPLATE_CARD_ITEM");
 	}
 
 	macro viewDefaultLocalizedCP {

@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -54,32 +56,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		_pluginsGitWorkingDirectory =
 			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
 
-		excludesPathMatchers.addAll(
-			getPathMatchers(
-				getFirstPropertyValue("test.batch.plugin.names.excludes"),
-				_pluginsGitWorkingDirectory.getWorkingDirectory()));
-
-		includesPathMatchers.addAll(
-			getPathMatchers(
-				getFirstPropertyValue("test.batch.plugin.names.includes"),
-				_pluginsGitWorkingDirectory.getWorkingDirectory()));
-
-		if (includeStableTestSuite && isStableTestSuiteBatch()) {
-			excludesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue(
-						"test.batch.plugin.names.excludes", batchName,
-						NAME_STABLE_TEST_SUITE),
-					_pluginsGitWorkingDirectory.getWorkingDirectory()));
-
-			includesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue(
-						"test.batch.plugin.names.includes", batchName,
-						NAME_STABLE_TEST_SUITE),
-					_pluginsGitWorkingDirectory.getWorkingDirectory()));
-		}
-
 		setTestClasses();
 
 		setAxisTestClassGroups();
@@ -88,8 +64,18 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
+		final List<PathMatcher> includesPathMatchers = getPathMatchers(
+			_getIncludesJobProperties());
+
+		if (includesPathMatchers.isEmpty()) {
+			return;
+		}
+
 		File workingDirectory =
 			_pluginsGitWorkingDirectory.getWorkingDirectory();
+
+		final List<PathMatcher> excludesPathMatchers = getPathMatchers(
+			_getExcludesJobProperties());
 
 		final List<File> pluginsDirs = new ArrayList<>();
 
@@ -145,6 +131,46 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		Collections.sort(testClasses);
+	}
+
+	private List<JobProperty> _getExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.plugin.names.excludes",
+				_pluginsGitWorkingDirectory.getWorkingDirectory(),
+				JobProperty.Type.EXCLUDE_GLOB));
+
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			excludesJobProperties.add(
+				getJobProperty(
+					"test.batch.plugin.names.excludes", NAME_STABLE_TEST_SUITE,
+					_pluginsGitWorkingDirectory.getWorkingDirectory(),
+					JobProperty.Type.EXCLUDE_GLOB));
+		}
+
+		return excludesJobProperties;
+	}
+
+	private List<JobProperty> _getIncludesJobProperties() {
+		List<JobProperty> includesJobProperties = new ArrayList<>();
+
+		includesJobProperties.add(
+			getJobProperty(
+				"test.batch.plugin.names.includes",
+				_pluginsGitWorkingDirectory.getWorkingDirectory(),
+				JobProperty.Type.INCLUDE_GLOB));
+
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
+			includesJobProperties.add(
+				getJobProperty(
+					"test.batch.plugin.names.includes", NAME_STABLE_TEST_SUITE,
+					_pluginsGitWorkingDirectory.getWorkingDirectory(),
+					JobProperty.Type.INCLUDE_GLOB));
+		}
+
+		return includesJobProperties;
 	}
 
 	private final PluginsGitWorkingDirectory _pluginsGitWorkingDirectory;

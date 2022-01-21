@@ -441,14 +441,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		List<JavaScriptError> javaScriptErrors = new ArrayList<>();
 
 		try {
-			WebElement webElement = getWebElement("//body");
-
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 			javaScriptErrors.addAll(
-				JavaScriptError.readErrors(wrappedWebDriver));
+				JavaScriptError.readErrors(getWrappedWebDriver("//body")));
 		}
 		catch (Exception exception) {
 		}
@@ -816,11 +810,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			scrollWebElementIntoView(webElement);
 
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			Actions actions = new Actions(webDriver);
+			Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 			actions.moveToElement(webElement, offsetX, offsetY);
 
@@ -874,11 +864,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void doubleClick(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.doubleClick(webElement);
 
@@ -891,11 +877,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void doubleClickAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
 			String[] coords = coordString.split(",");
@@ -930,11 +912,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			WebElement webElement = getWebElement(locator);
 
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			Actions actions = new Actions(webDriver);
+			Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 			actions.clickAndHold(webElement);
 
@@ -994,14 +972,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void executeJavaScript(
 		String javaScript, String argument1, String argument2) {
 
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		Object object1 = null;
 		Object object2 = null;
@@ -1140,14 +1112,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getEval(String script) {
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		return (String)javascriptExecutor.executeScript(script);
 	}
@@ -1262,14 +1228,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public String getJavaScriptResult(
 		String javaScript, String argument1, String argument2) {
 
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		Object object1 = null;
 		Object object2 = null;
@@ -1494,10 +1454,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return _webDriver.getWindowHandles();
 	}
 
-	public WebDriver getWrappedWebDriver() {
-		return _webDriver;
-	}
-
 	@Override
 	public void goBack() {
 		WebDriver.Navigation navigation = navigate();
@@ -1534,12 +1490,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public boolean isAttributePresent(String attribute, String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -1846,12 +1798,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebElement webElement = getWebElement(locator, timeout);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		StringBuilder sb = new StringBuilder(2);
 
@@ -1880,11 +1828,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void keyDown(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		String keycode = keySequence.substring(1);
 
@@ -1936,11 +1880,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void keyUp(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		String keycode = keySequence.substring(1);
 
@@ -1955,14 +1895,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void makeVisible(String locator) {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -1990,11 +1924,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.moveToElement(webElement);
 
@@ -2011,11 +1941,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
 			String[] coords = coordString.split(",");
@@ -2044,11 +1970,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.moveToElement(webElement);
 
@@ -2063,11 +1985,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
 			String[] coords = coordString.split(",");
@@ -2092,11 +2010,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.moveToElement(webElement);
 		actions.moveByOffset(10, 10);
@@ -2112,11 +2026,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.moveToElement(webElement);
 
@@ -2127,13 +2037,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void mouseRelease() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver("//body"));
 
 		actions.release();
 
@@ -2148,11 +2052,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.release(webElement);
 
@@ -2167,11 +2067,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
 			String[] coords = coordString.split(",");
@@ -2309,11 +2205,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void rightClick(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		actions.contextClick(webElement);
 
@@ -2398,14 +2290,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void scrollBy(String coordString) {
-		WebElement webElement = getWebElement("//html");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//html");
 
 		javascriptExecutor.executeScript(
 			"window.scrollBy(" + coordString + ");");
@@ -2977,13 +2863,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void tripleClick(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(getWrappedWebDriver(locator));
 
 		int count = 3;
 
@@ -3100,12 +2980,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -3127,14 +3003,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void typeAlloyEditor(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(locator);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -3188,12 +3058,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		javascriptExecutor.executeScript(
 			"arguments[0].CodeMirror.setValue(arguments[1]);", webElement,
@@ -3202,10 +3068,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void typeEditor(String locator, String value) {
-		WrapsDriver wrapsDriver = (WrapsDriver)getWebElement(locator);
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
+			(JavascriptExecutor)getWrappedWebDriver(locator);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -3681,12 +3545,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		if (!webElement.isDisplayed()) {
 			scrollWebElementIntoView(webElement);
@@ -3920,11 +3780,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		int x = 0;
 		int y = 0;
 
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
 
 		WebDriver.TargetLocator targetLocator = wrappedWebDriver.switchTo();
 
@@ -3975,14 +3831,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() {
-				WebElement bodyWebElement = getWebElement("//body");
-
-				WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-				WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 				JavascriptExecutor javascriptExecutor =
-					(JavascriptExecutor)wrappedWebDriver;
+					(JavascriptExecutor)getWrappedWebDriver("//body");
 
 				Object object = null;
 
@@ -4253,14 +4103,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getScrollOffsetX() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		Object pageXOffset = javascriptExecutor.executeScript(
 			"return window.pageXOffset;");
@@ -4269,14 +4113,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getScrollOffsetY() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		Object pageYOffset = javascriptExecutor.executeScript(
 			"return window.pageYOffset;");
@@ -4418,14 +4256,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getViewportHeight() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)getWrappedWebDriver("//body");
 
 		return GetterUtil.getInteger(
 			javascriptExecutor.executeScript("return window.innerHeight;"));
@@ -4523,11 +4355,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected Point getWindowPoint() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
 
 		WebDriver.Options options = wrappedWebDriver.manage();
 
@@ -4546,6 +4374,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Point point = getWindowPoint();
 
 		return point.getY();
+	}
+
+	protected WebDriver getWrappedWebDriver(String locator) {
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		return wrapsDriver.getWrappedDriver();
+	}
+
+	protected WebDriver getWrappedWebDriver(WebElement webElement) {
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		return wrapsDriver.getWrappedDriver();
 	}
 
 	protected boolean isObscured(WebElement webElement) {
@@ -4624,12 +4466,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	protected void scrollWebElementIntoView(WebElement webElement) {
 		if (!webElement.isDisplayed() || isObscured(webElement)) {
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
 			JavascriptExecutor javascriptExecutor =
-				(JavascriptExecutor)wrappedWebDriver;
+				(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 			javascriptExecutor.executeScript(
 				"arguments[0].scrollIntoView(false);", webElement);

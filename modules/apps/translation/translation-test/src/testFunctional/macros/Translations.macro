@@ -156,7 +156,7 @@ definition {
 		if (isSet(options)) {
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
-			MenuItem.clickNoError(menuItem = "Export for Translation");
+			MenuItem.clickNoError(menuItem = "Export for Translations");
 		}
 		else {
 			Click(locator1 = "Icon#EXPORT_FOR_TRANSLATION");
@@ -168,7 +168,7 @@ definition {
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
-		MenuItem.click(menuItem = "Import Translation");
+		MenuItem.click(menuItem = "Import Translations");
 	}
 
 	macro gotoExportTranslation {

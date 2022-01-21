@@ -89,6 +89,15 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				getAttributeValues(
 					_ALLOWED_COMMERCE_DEPENDENCIES_MODULE_PATH_NAMES,
 					absolutePath));
+
+			Matcher matcher = _restClientPattern.matcher(dependencies);
+
+			if (matcher.find()) {
+				addMessage(
+					fileName,
+					"Project dependencies '.*-rest-client' can only be used " +
+						"for 'testIntegrationCompile'");
+			}
 		}
 
 		return content;
@@ -310,6 +319,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"testIntegrationCompile project\\(\":core:petra:.*");
 	private static final Pattern _portalKernelPattern = Pattern.compile(
 		"testIntegrationCompile.* name: \"com\\.liferay\\.portal\\.kernel\".*");
+	private static final Pattern _restClientPattern = Pattern.compile(
+		"(?<!testIntegrationCompile) project\\(\".*-rest-client\"\\)");
 
 	private class GradleDependencyComparator
 		implements Comparator<String>, Serializable {

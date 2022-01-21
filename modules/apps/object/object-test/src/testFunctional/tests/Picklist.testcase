@@ -275,12 +275,44 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSetDifferentPicklistItemNameLanguage {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139769 CanSetDifferentPicklistItemNameLanguage pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "ItemTest",
+			itemName = "Picklist Item",
+			picklistName = "Picklist Test");
 
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "ItemTest",
+			picklistItemOption = "View");
+
+		Picklist.chooseLanguagePicklistItem(
+			itemName = "Teste de entrada",
+			newlanguage = "pt-BR");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "ItemTest",
+			picklistItemOption = "View");
+
+		Picklist.assertPicklistItemByLanguage(
+			language = "pt-BR",
+			nameItem = "Teste de entrada");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name when updating it"

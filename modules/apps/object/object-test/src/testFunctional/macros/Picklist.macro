@@ -91,6 +91,18 @@ definition {
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
+	macro assertPicklistItemByLanguage {
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		PortletEntry.changeLocale(locale = "${language}");
+
+		AssertTextEquals(
+			locator1 = "Picklist#EDIT_ITEM_NAME",
+			value1 = "${nameItem}");
+	}
+
 	macro assertPicklistItemDetails {
 		IFrame.selectTopFrame();
 

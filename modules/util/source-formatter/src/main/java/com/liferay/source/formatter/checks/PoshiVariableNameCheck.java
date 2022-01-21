@@ -101,6 +101,10 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		String fileName, String commandName, String executeName,
 		String variableName) {
 
+		if (Validator.isNull(variableName)) {
+			return;
+		}
+
 		String message = commandName;
 
 		if (Validator.isNotNull(executeName)) {

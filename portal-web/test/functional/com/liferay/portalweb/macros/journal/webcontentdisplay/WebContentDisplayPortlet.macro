@@ -454,11 +454,10 @@ definition {
 			value1 = "Previous");
 	}
 
-	macro viewEnabledFileTypesPGViaWCD {
-		for (var fileType : list "${fileTypes}") {
-			var key_fileType = "${fileType}";
-
+	macro viewEnabledFileTypes {
+		for (var fileType : list "${fileTypeList}") {
 			AssertTextEquals.assertPartialText(
+				key_fileType = "${fileType}",
 				locator1 = "WCD#DOCUMENT_CONVERSION_TYPE",
 				value1 = "${fileType}");
 		}

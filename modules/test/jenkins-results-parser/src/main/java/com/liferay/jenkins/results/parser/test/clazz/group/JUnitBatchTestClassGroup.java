@@ -87,13 +87,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public List<JobProperty> getFilterJobProperties() {
-		List<JobProperty> includesJobProperties = new ArrayList<>();
+		List<JobProperty> filterJobProperties = new ArrayList<>();
 
-		includesJobProperties.add(
+		filterJobProperties.add(
 			getJobProperty(
 				"test.batch.class.names.filter", JobProperty.Type.FILTER_GLOB));
 
-		return includesJobProperties;
+		return filterJobProperties;
 	}
 
 	public List<JobProperty> getIncludesJobProperties() {
@@ -145,8 +145,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		for (JUnitTestClass jUnitTestClass : getJUnitTestClasses()) {
 			File testClassFile = jUnitTestClass.getTestClassFile();
 
-			String testClassFileRelativePath = _getRelativePath(
-				testClassFile, portalGitWorkingDirectory.getWorkingDirectory());
+			String testClassFileRelativePath =
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					testClassFile);
 
 			String className = testClassFile.getName();
 
@@ -447,7 +449,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			for (File autoBalanceTestFile : _autoBalanceTestFiles) {
 				String filePath = autoBalanceTestFile.getPath();
 
-				filePath = filePath.replace(".java", ".class");
+				filePath = filePath.replace(".class", ".java");
 
 				TestClass testClass = TestClassFactory.newTestClass(
 					this, new File(filePath));
@@ -544,19 +546,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		new ArrayList<>();
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
-
-	private String _getRelativePath(File file, File parentFile) {
-		String filePath = JenkinsResultsParserUtil.getCanonicalPath(file);
-		String parentFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-			parentFile);
-
-		if (!filePath.startsWith(parentFilePath)) {
-			throw new IllegalArgumentException(
-				"Working directory does not contain this file");
-		}
-
-		return filePath.replaceAll(parentFilePath, "");
-	}
 
 	private void _setAutoBalanceTestFiles() {
 		JobProperty jobProperty = getJobProperty(

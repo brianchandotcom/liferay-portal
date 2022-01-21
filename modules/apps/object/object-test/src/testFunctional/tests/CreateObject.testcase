@@ -2553,13 +2553,130 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRelateManyOtherEntriesBothObjects {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141662 CanRelateManyOtherEntriesBothObjects pending implementation
+		for (var nameObject : list "A,B") {
+            ObjectAdmin.addObjectViaAPI(
+                labelName = "Custom Object ${nameObject}",
+                objectName = "CustomObject${nameObject}",
+                pluralLabelName = "Custom Objects ${nameObject}");
+        }
+        for (var nameField : list "A,B") {
+            ObjectAdmin.addObjectFieldViaAPI(
+                fieldLabelName = "Custom Field ${nameField}",
+                fieldName = "customObjectField${nameField}",
+                fieldType = "String",
+                isRequired = "false",
+                objectName = "CustomObject${nameField}");
+        }
+        for (var letter : list "A,B") {
+            ObjectAdmin.addObjectLayoutViaAPI(
+                layoutName = "Layout ${letter}",
+                objectName = "CustomObject${letter}");
+        }
+        ObjectAdmin.addObjectRelationshipViaAPI(
+            objectName_1 = "CustomObjectA",
+            objectName_2 = "CustomObjectB",
+            relationshipLabel = "Relationship",
+            relationshipName = "relationship",
+            relationshipType = "manyToMany");
 
+        for (var letter : list "A,B") {
+            Navigator.openURL();
+            
+			ObjectAdmin.openObjectAdmin();
+            
+			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter}");
+            
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
+            
+			Button.clickSave();
+            
+			ObjectAdmin.goToLayoutsTab();
+            
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+            
+			ObjectAdmin.addTabFieldsOnLayout(
+                blockName = "Block 1",
+                columnsNumber = "2",
+                fieldLabelName = "Custom Field ${letter}",
+                tabName = "Field Tab");
+            
+			ObjectAdmin.addTabRelationshipsOnLayout(
+                relationshipsLabelName = "Relationship",
+                tabName = "Relationship Tab");
+
+			Button.clickSave();
+        }
+        
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+        
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for(var letter : list "A,B,C") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
+        
+		}
+
+		for(var letter : list "D,E,F") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+			
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
+        
+		}
+        
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+        
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+        
+		ObjectAdmin.gotoRelationshipsTab();
+
+		for (var letter: list "D,E") {
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
+			
+			Refresh();
+		}
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+        
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+        
+		ObjectAdmin.gotoRelationshipsTab();
+
+		for (var letter: list "D,E") {
+			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+        
+		ObjectPortlet.viewEntryDetails(entry = "Entry F");
+        
+		ObjectAdmin.gotoRelationshipsTab();
+        
+		for (var letter: list "B,C") {
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
+
+			Refresh();
+		}
+		
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+        
+		ObjectPortlet.viewEntryDetails(entry = "Entry F");
+        
+		ObjectAdmin.gotoRelationshipsTab();
+        
+		for (var letter: list "B,C") {
+			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
+		}
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"

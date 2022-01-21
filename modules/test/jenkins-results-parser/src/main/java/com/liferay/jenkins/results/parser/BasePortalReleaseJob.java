@@ -58,8 +58,6 @@ public abstract class BasePortalReleaseJob
 			new File(
 				_portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
-
-		readJobProperties();
 	}
 
 	@Override
@@ -120,10 +118,6 @@ public abstract class BasePortalReleaseJob
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
-	}
-
-	protected GitWorkingDirectory getJenkinsGitWorkingDirectory() {
-		return _jenkinsGitWorkingDirectory;
 	}
 
 	@Override

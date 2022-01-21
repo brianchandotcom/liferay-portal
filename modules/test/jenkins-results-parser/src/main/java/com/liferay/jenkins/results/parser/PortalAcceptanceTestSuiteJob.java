@@ -90,7 +90,7 @@ public abstract class PortalAcceptanceTestSuiteJob
 			}
 		}
 
-		return super.getDistType();
+		return DistType.CI;
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public abstract class PortalAcceptanceTestSuiteJob
 	protected Set<String> getRawBatchNames() {
 		Set<String> rawBatchNames = super.getRawBatchNames();
 
-		if (!_testSuiteName.equals("relevant")) {
+		if (!testRelevantChanges()) {
 			return rawBatchNames;
 		}
 

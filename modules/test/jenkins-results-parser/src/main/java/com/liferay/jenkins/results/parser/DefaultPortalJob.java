@@ -84,8 +84,6 @@ public class DefaultPortalJob
 			new File(portalWorkingDirectory, "build.properties"));
 		jobPropertiesFiles.add(
 			new File(portalWorkingDirectory, "test.properties"));
-
-		readJobProperties();
 	}
 
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;

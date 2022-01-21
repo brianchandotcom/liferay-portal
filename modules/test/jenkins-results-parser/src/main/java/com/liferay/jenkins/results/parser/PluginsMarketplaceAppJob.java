@@ -64,8 +64,6 @@ public class PluginsMarketplaceAppJob
 			new File(
 				_portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
-
-		readJobProperties();
 	}
 
 	private final String _appType;

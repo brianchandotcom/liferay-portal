@@ -328,7 +328,9 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			if (elementName.equals("command")) {
 				commandName = element.attributeValue("name");
 			}
-			else if (elementName.equals("var")) {
+			else if (elementName.equals("return") ||
+					 elementName.equals("var")) {
+
 				Element variableParentElement = element.getParent();
 
 				String variableParentElementName =

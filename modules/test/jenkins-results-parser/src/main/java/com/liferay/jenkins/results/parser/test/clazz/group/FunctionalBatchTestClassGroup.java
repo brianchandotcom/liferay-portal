@@ -342,7 +342,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 			String jobPropertyValue = jobProperty.getValue();
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) ||
+				jobPropertyValue.equals("false")) {
+
 				continue;
 			}
 
@@ -359,15 +361,17 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			sb.append(")");
 		}
 
-		if (sb.length() == 0) {
-			sb.append("(");
-
-			sb.append(
-				getDefaultTestBatchRunPropertyQuery(
-					testBaseDir, testSuiteName));
-
-			sb.append(")");
+		if (sb.length() > 0) {
+			sb.append(" OR ");
 		}
+
+		sb.append("(");
+
+		sb.append(
+			getDefaultTestBatchRunPropertyQuery(
+				testBaseDir, testSuiteName));
+
+		sb.append(")");
 
 		if (!NAME_STABLE_TEST_SUITE.equals(getTestSuiteName())) {
 			String batchName = getBatchName();

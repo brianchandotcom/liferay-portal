@@ -16,4 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/common/common_user_account_entries.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/common/common_user_account_entries.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="singleSelect" value="<%= Boolean.FALSE.toString() %>" />
+</liferay-util:include>

@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
+%>
+
 <clay:content-row
 	containerElement="h3"
 	cssClass="sheet-subtitle"
@@ -109,6 +113,12 @@
 		/>
 	</liferay-ui:search-container>
 
+	<liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" var="selectAccountEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
+		<portlet:param name="singleSelect" value="<%= String.valueOf(singleSelect) %>" />
+		<portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" />
+	</liferay-portlet:renderURL>
+
 	<aui:script use="liferay-search-container">
 		var deleteAccountEntryIds = [];
 
@@ -149,32 +159,38 @@
 			selectAccountLink.on('click', (event) => {
 				Liferay.Util.openSelectionModal({
 					id: '<portlet:namespace />selectAccountEntry',
-					onSelect: function (selectedItem) {
-						const entityId = selectedItem.entityid;
+					multiple: !<%= singleSelect %>,
+					onSelect: function (selectedItems) {
+						if (!Array.isArray(selectedItems)) {
+							selectedItems = [selectedItems];
+						}
 
-						searchContainer.addRow(
-							[
-								selectedItem.entityname,
-								'',
-								'<a class="modify-link" data-rowId="' +
-									entityId +
-									'" href="javascript:;"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
-							],
-							entityId
-						);
+						for (const selectedItem of selectedItems) {
+							const entityId = selectedItem.entityid;
 
-						deleteAccountEntryIds.splice(
-							deleteAccountEntryIds.indexOf(entityId),
-							1
-						);
+							searchContainer.addRow(
+								[
+									selectedItem.entityname,
+									'',
+									'<a class="modify-link" data-rowId="' +
+										entityId +
+										'" href="javascript:;"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
+								],
+								entityId
+							);
+
+							deleteAccountEntryIds.splice(
+								deleteAccountEntryIds.indexOf(entityId),
+								1
+							);
+						}
 
 						updateData();
 					},
 					selectEventName: '<portlet:namespace />selectAccountEntry',
 					selectedData: searchContainer.getData(true),
 					title: '<liferay-ui:message arguments="account" key="select-x" />',
-					url:
-						'<liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="singleSelect" value="<%= Boolean.TRUE.toString() %>" /><portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" /></liferay-portlet:renderURL>',
+					url: '<%= selectAccountEntryURL %>',
 				});
 			});
 		}

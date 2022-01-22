@@ -208,14 +208,14 @@ public class LayoutSetPrototypeDisplayContext {
 		searchContainer.setOrderByComparator(
 			new LayoutSetPrototypeCreateDateComparator(orderByAsc));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setResults(
-			LayoutSetPrototypeLocalServiceUtil.search(
+		searchContainer.setResultsAndTotal(
+			() -> LayoutSetPrototypeLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), getActive(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator()));
+				searchContainer.getOrderByComparator()),
+			_getTotal());
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(_getTotal());
 
 		return searchContainer;
 	}

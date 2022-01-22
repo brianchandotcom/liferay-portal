@@ -186,14 +186,13 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		String keywords = _getKeywords();
 
 		if (Validator.isNull(keywords)) {
-			_searchContainer.setTotal(
-				KBTemplateServiceUtil.getGroupKBTemplatesCount(
-					_themeDisplay.getScopeGroupId()));
-			_searchContainer.setResults(
-				KBTemplateServiceUtil.getGroupKBTemplates(
+			_searchContainer.setResultsAndTotal(
+				() -> KBTemplateServiceUtil.getGroupKBTemplates(
 					_themeDisplay.getScopeGroupId(),
 					_searchContainer.getStart(), _searchContainer.getEnd(),
-					_searchContainer.getOrderByComparator()));
+					_searchContainer.getOrderByComparator()),
+				KBTemplateServiceUtil.getGroupKBTemplatesCount(
+					_themeDisplay.getScopeGroupId()));
 		}
 		else {
 			KBTemplateSearchDisplay kbTemplateSearchDisplay =
@@ -203,7 +202,9 @@ public class KBTemplatesManagementToolbarDisplayContext {
 					_searchContainer.getDelta(),
 					_searchContainer.getOrderByComparator());
 
-			_searchContainer.setResults(kbTemplateSearchDisplay.getResults());
+			_searchContainer.setResultsAndTotal(
+				kbTemplateSearchDisplay::getResults,
+				kbTemplateSearchDisplay.getTotal());
 			_searchContainer.setTotal(kbTemplateSearchDisplay.getTotal());
 		}
 	}

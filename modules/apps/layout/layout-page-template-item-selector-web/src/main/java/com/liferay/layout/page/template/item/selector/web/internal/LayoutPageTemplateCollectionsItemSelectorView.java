@@ -256,27 +256,27 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 				_httpServletRequest, "keywords");
 
 			if (Validator.isNull(keywords)) {
-				searchContainer.setResults(
-					_layoutPageTemplateCollectionLocalService.
-						getLayoutPageTemplateCollections(
-							_themeDisplay.getScopeGroupId(),
-							searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator()));
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() ->
+						_layoutPageTemplateCollectionLocalService.
+							getLayoutPageTemplateCollections(
+								_themeDisplay.getScopeGroupId(),
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
 							_themeDisplay.getScopeGroupId()));
 			}
 			else {
-				searchContainer.setResults(
-					_layoutPageTemplateCollectionLocalService.
-						getLayoutPageTemplateCollections(
-							_themeDisplay.getScopeGroupId(), keywords,
-							searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator()));
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() ->
+						_layoutPageTemplateCollectionLocalService.
+							getLayoutPageTemplateCollections(
+								_themeDisplay.getScopeGroupId(), keywords,
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
 							_themeDisplay.getScopeGroupId(), keywords));

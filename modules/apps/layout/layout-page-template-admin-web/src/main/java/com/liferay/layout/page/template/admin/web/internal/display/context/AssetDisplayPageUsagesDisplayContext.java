@@ -168,18 +168,17 @@ public class AssetDisplayPageUsagesDisplayContext {
 			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc));
 
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setResults(
-			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
+		searchContainer.setResultsAndTotal(
+			() -> AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
 				getClassNameId(), getClassTypeId(),
 				getLayoutPageTemplateEntryId(), isDefaultTemplate(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator()));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(
+				searchContainer.getOrderByComparator()),
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
 				getClassNameId(), getClassTypeId(),
 				getLayoutPageTemplateEntryId(), isDefaultTemplate()));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		_searchContainer = searchContainer;
 

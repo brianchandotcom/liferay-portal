@@ -85,11 +85,11 @@ public class SelectLayoutCollectionDisplayContext {
 		List<InfoCollectionProvider<?>> infoCollectionProviders =
 			_getInfoCollectionProviders();
 
-		searchContainer.setResults(
-			ListUtil.subList(
+		searchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
 				infoCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()));
-		searchContainer.setTotal(infoCollectionProviders.size());
+				searchContainer.getEnd()),
+			infoCollectionProviders.size());
 
 		return searchContainer;
 	}
@@ -105,35 +105,28 @@ public class SelectLayoutCollectionDisplayContext {
 				_getOrderByCol(), _getOrderByType()));
 		searchContainer.setOrderByType(_getOrderByType());
 
-		List<AssetListEntry> assetListEntries = null;
-
-		int assetListEntriesCount = 0;
-
 		if (_isSearch()) {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				_themeDisplay.getScopeGroupId(), _getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			assetListEntriesCount =
+			searchContainer.setResultsAndTotal(
+				() -> AssetListEntryServiceUtil.getAssetListEntries(
+					_themeDisplay.getScopeGroupId(), _getKeywords(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					_themeDisplay.getScopeGroupId(), _getKeywords());
+					_themeDisplay.getScopeGroupId(), _getKeywords()));
 		}
 		else {
 			long[] groupIds = {_themeDisplay.getScopeGroupId()};
 
 			List<String> types = _getInfoItemFormProviderClassNames();
 
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				groupIds, types.toArray(new String[0]),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			assetListEntriesCount =
+			searchContainer.setResultsAndTotal(
+				() -> AssetListEntryServiceUtil.getAssetListEntries(
+					groupIds, types.toArray(new String[0]),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					groupIds, types.toArray(new String[0]));
+					groupIds, types.toArray(new String[0])));
 		}
-
-		searchContainer.setResults(assetListEntries);
-		searchContainer.setTotal(assetListEntriesCount);
 
 		return searchContainer;
 	}

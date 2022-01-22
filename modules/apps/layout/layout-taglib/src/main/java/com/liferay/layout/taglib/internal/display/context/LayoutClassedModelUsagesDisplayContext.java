@@ -368,63 +368,54 @@ public class LayoutClassedModelUsagesDisplayContext {
 		layoutClassedModelUsagesSearchContainer.setOrderByType(
 			_getOrderByType());
 
-		List<LayoutClassedModelUsage> layoutClassedModelUsages = null;
-
-		int layoutClassedModelUsagesCount = 0;
-
 		if (Objects.equals(getNavigation(), "pages")) {
-			layoutClassedModelUsages =
-				LayoutClassedModelUsageLocalServiceUtil.
-					getLayoutClassedModelUsages(
-						_classNameId, _classPK,
-						LayoutClassedModelUsageConstants.TYPE_LAYOUT,
-						layoutClassedModelUsagesSearchContainer.getStart(),
-						layoutClassedModelUsagesSearchContainer.getEnd(),
-						orderByComparator);
-
-			layoutClassedModelUsagesCount = getPagesUsageCount();
+			layoutClassedModelUsagesSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutClassedModelUsageLocalServiceUtil.
+						getLayoutClassedModelUsages(
+							_classNameId, _classPK,
+							LayoutClassedModelUsageConstants.TYPE_LAYOUT,
+							layoutClassedModelUsagesSearchContainer.getStart(),
+							layoutClassedModelUsagesSearchContainer.getEnd(),
+							orderByComparator),
+				getPagesUsageCount());
 		}
 		else if (Objects.equals(getNavigation(), "page-templates")) {
-			layoutClassedModelUsages =
-				LayoutClassedModelUsageLocalServiceUtil.
-					getLayoutClassedModelUsages(
-						_classNameId, _classPK,
-						LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE,
-						layoutClassedModelUsagesSearchContainer.getStart(),
-						layoutClassedModelUsagesSearchContainer.getEnd(),
-						orderByComparator);
-
-			layoutClassedModelUsagesCount = getPageTemplatesUsageCount();
+			layoutClassedModelUsagesSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutClassedModelUsageLocalServiceUtil.
+						getLayoutClassedModelUsages(
+							_classNameId, _classPK,
+							LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE,
+							layoutClassedModelUsagesSearchContainer.getStart(),
+							layoutClassedModelUsagesSearchContainer.getEnd(),
+							orderByComparator),
+				getPageTemplatesUsageCount());
 		}
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
-			layoutClassedModelUsages =
-				LayoutClassedModelUsageLocalServiceUtil.
-					getLayoutClassedModelUsages(
-						_classNameId, _classPK,
-						LayoutClassedModelUsageConstants.
-							TYPE_DISPLAY_PAGE_TEMPLATE,
-						layoutClassedModelUsagesSearchContainer.getStart(),
-						layoutClassedModelUsagesSearchContainer.getEnd(),
-						orderByComparator);
-
-			layoutClassedModelUsagesCount = getDisplayPagesUsageCount();
+			layoutClassedModelUsagesSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutClassedModelUsageLocalServiceUtil.
+						getLayoutClassedModelUsages(
+							_classNameId, _classPK,
+							LayoutClassedModelUsageConstants.
+								TYPE_DISPLAY_PAGE_TEMPLATE,
+							layoutClassedModelUsagesSearchContainer.getStart(),
+							layoutClassedModelUsagesSearchContainer.getEnd(),
+							orderByComparator),
+				getDisplayPagesUsageCount());
 		}
 		else {
-			layoutClassedModelUsages =
-				LayoutClassedModelUsageLocalServiceUtil.
-					getLayoutClassedModelUsages(
-						_classNameId, _classPK,
-						layoutClassedModelUsagesSearchContainer.getStart(),
-						layoutClassedModelUsagesSearchContainer.getEnd(),
-						orderByComparator);
-
-			layoutClassedModelUsagesCount = getAllUsageCount();
+			layoutClassedModelUsagesSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutClassedModelUsageLocalServiceUtil.
+						getLayoutClassedModelUsages(
+							_classNameId, _classPK,
+							layoutClassedModelUsagesSearchContainer.getStart(),
+							layoutClassedModelUsagesSearchContainer.getEnd(),
+							orderByComparator),
+				getAllUsageCount());
 		}
-
-		layoutClassedModelUsagesSearchContainer.setResults(
-			layoutClassedModelUsages);
-		layoutClassedModelUsagesSearchContainer.setTotal(
-			layoutClassedModelUsagesCount);
 
 		_searchContainer = layoutClassedModelUsagesSearchContainer;
 

@@ -129,20 +129,20 @@ public class LayoutPrototypeDisplayContext {
 				getLayoutPageTemplateEntryOrderByComparator(
 					getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setResults(
-			LayoutPageTemplateEntryServiceUtil.
-				getLayoutPageTemplateEntriesByType(
-					themeDisplay.getScopeGroupId(), 0,
-					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(
+		searchContainer.setResultsAndTotal(
+			() ->
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesByType(
+						themeDisplay.getScopeGroupId(), 0,
+						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCountByType(
 					themeDisplay.getScopeGroupId(), 0,
 					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		return searchContainer;
 	}

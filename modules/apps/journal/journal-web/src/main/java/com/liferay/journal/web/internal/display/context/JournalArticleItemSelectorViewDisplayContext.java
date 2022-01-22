@@ -310,14 +310,13 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				JournalPortletUtil.getArticleOrderByComparator(
 					_getOrderByCol(), _getOrderByType()));
 			articleSearchContainer.setOrderByType(_getOrderByType());
-			articleSearchContainer.setResults(
-				JournalArticleServiceUtil.getArticlesByStructureId(
+			articleSearchContainer.setResultsAndTotal(
+				() -> JournalArticleServiceUtil.getArticlesByStructureId(
 					_getGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
 					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator()));
-			articleSearchContainer.setTotal(
+					articleSearchContainer.getOrderByComparator()),
 				JournalArticleServiceUtil.getArticlesCountByStructureId(
 					_getGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED));
@@ -383,8 +382,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			articleAndFolderSearchContainer.setTotal(hits.getLength());
-
 			List<Object> results = new ArrayList<>();
 
 			Document[] documents = hits.getDocs();
@@ -407,46 +404,46 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				}
 			}
 
-			articleAndFolderSearchContainer.setResults(results);
+			articleAndFolderSearchContainer.setResultsAndTotal(
+				() -> results, hits.getLength());
 		}
 		else {
-			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_getGroupId(), 0, _getFolderId(),
-				_infoItemItemSelectorCriterion.getStatus());
+			articleAndFolderSearchContainer.setResultsAndTotal(
+				() -> {
+					OrderByComparator<Object> folderOrderByComparator = null;
 
-			articleAndFolderSearchContainer.setTotal(total);
+					boolean orderByAsc = false;
 
-			OrderByComparator<Object> folderOrderByComparator = null;
+					if (Objects.equals(_getOrderByType(), "asc")) {
+						orderByAsc = true;
+					}
 
-			boolean orderByAsc = false;
+					if (Objects.equals(_getOrderByCol(), "id")) {
+						folderOrderByComparator =
+							new FolderArticleArticleIdComparator(orderByAsc);
+					}
+					else if (Objects.equals(
+								_getOrderByCol(), "modified-date")) {
 
-			if (Objects.equals(_getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
+						folderOrderByComparator =
+							new FolderArticleModifiedDateComparator(orderByAsc);
+					}
+					else if (Objects.equals(_getOrderByCol(), "title")) {
+						folderOrderByComparator =
+							new FolderArticleTitleComparator(orderByAsc);
+					}
 
-			if (Objects.equals(_getOrderByCol(), "id")) {
-				folderOrderByComparator = new FolderArticleArticleIdComparator(
-					orderByAsc);
-			}
-			else if (Objects.equals(_getOrderByCol(), "modified-date")) {
-				folderOrderByComparator =
-					new FolderArticleModifiedDateComparator(orderByAsc);
-			}
-			else if (Objects.equals(_getOrderByCol(), "title")) {
-				folderOrderByComparator = new FolderArticleTitleComparator(
-					orderByAsc);
-			}
-
-			List<Object> results =
-				JournalFolderServiceUtil.getFoldersAndArticles(
+					return JournalFolderServiceUtil.getFoldersAndArticles(
+						_getGroupId(), 0, _getFolderId(),
+						_infoItemItemSelectorCriterion.getStatus(),
+						_themeDisplay.getLocale(),
+						articleAndFolderSearchContainer.getStart(),
+						articleAndFolderSearchContainer.getEnd(),
+						folderOrderByComparator);
+				},
+				JournalFolderServiceUtil.getFoldersAndArticlesCount(
 					_getGroupId(), 0, _getFolderId(),
-					_infoItemItemSelectorCriterion.getStatus(),
-					_themeDisplay.getLocale(),
-					articleAndFolderSearchContainer.getStart(),
-					articleAndFolderSearchContainer.getEnd(),
-					folderOrderByComparator);
-
-			articleAndFolderSearchContainer.setResults(results);
+					_infoItemItemSelectorCriterion.getStatus()));
 		}
 
 		_articleSearchContainer = articleAndFolderSearchContainer;

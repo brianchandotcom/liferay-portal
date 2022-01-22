@@ -199,8 +199,7 @@ public class SelectThemeDisplayContext {
 				themeDisplay.getUserId()),
 			new ThemeNameComparator(orderByAsc));
 
-		themesSearchContainer.setResults(themes);
-		themesSearchContainer.setTotal(themes.size());
+		themesSearchContainer.setResultsAndTotal(() -> themes, themes.size());
 
 		_themesSearchContainer = themesSearchContainer;
 

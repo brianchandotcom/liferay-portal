@@ -149,17 +149,15 @@ public class JournalSelectDDMTemplateDisplayContext {
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					themeDisplay.getScopeGroupId(), true);
 
-		templateSearch.setResults(
-			DDMTemplateServiceUtil.search(
+		templateSearch.setResultsAndTotal(
+			() -> DDMTemplateServiceUtil.search(
 				themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
 				new long[] {getDDMStructureId()},
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
 				WorkflowConstants.STATUS_ANY, templateSearch.getStart(),
-				templateSearch.getEnd(),
-				templateSearch.getOrderByComparator()));
-		templateSearch.setTotal(
+				templateSearch.getEnd(), templateSearch.getOrderByComparator()),
 			DDMTemplateServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},

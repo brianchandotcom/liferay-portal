@@ -113,56 +113,50 @@ public class KBSuggestionListDisplayContext {
 
 		if (_kbArticle == null) {
 			if (status == KBCommentConstants.STATUS_ANY) {
-				searchContainer.setTotal(
-					KBCommentServiceUtil.getKBCommentsCount(_groupId));
-
-				searchContainer.setResults(
-					KBCommentServiceUtil.getKBComments(
+				searchContainer.setResultsAndTotal(
+					() -> KBCommentServiceUtil.getKBComments(
 						_groupId, searchContainer.getStart(),
 						searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType())));
+							searchContainer.getOrderByType())),
+					KBCommentServiceUtil.getKBCommentsCount(_groupId));
 			}
 			else {
-				searchContainer.setTotal(getKBCommentsCount(status));
-
-				searchContainer.setResults(
-					KBCommentServiceUtil.getKBComments(
+				searchContainer.setResultsAndTotal(
+					() -> KBCommentServiceUtil.getKBComments(
 						_groupId, status, searchContainer.getStart(),
 						searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType())));
+							searchContainer.getOrderByType())),
+					getKBCommentsCount(status));
 			}
 		}
 		else {
 			if (status == KBCommentConstants.STATUS_ANY) {
-				searchContainer.setTotal(
-					KBCommentServiceUtil.getKBCommentsCount(
-						_groupId, KBArticleConstants.getClassName(),
-						_kbArticle.getResourcePrimKey()));
-
-				searchContainer.setResults(
-					KBCommentServiceUtil.getKBComments(
+				searchContainer.setResultsAndTotal(
+					() -> KBCommentServiceUtil.getKBComments(
 						_groupId, KBArticleConstants.getClassName(),
 						_kbArticle.getResourcePrimKey(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType())));
+							searchContainer.getOrderByType())),
+					KBCommentServiceUtil.getKBCommentsCount(
+						_groupId, KBArticleConstants.getClassName(),
+						_kbArticle.getResourcePrimKey()));
 			}
 			else {
-				searchContainer.setTotal(getKBCommentsCount(status));
-
-				searchContainer.setResults(
-					KBCommentServiceUtil.getKBComments(
+				searchContainer.setResultsAndTotal(
+					() -> KBCommentServiceUtil.getKBComments(
 						_groupId, KBArticleConstants.getClassName(),
 						_kbArticle.getResourcePrimKey(), status,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType())));
+							searchContainer.getOrderByType())),
+					getKBCommentsCount(status));
 			}
 		}
 	}

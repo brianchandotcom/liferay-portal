@@ -97,28 +97,29 @@ public class MasterLayoutDisplayContext {
 					getOrderByCol(), getOrderByType()));
 		masterLayoutsSearchContainer.setOrderByType(getOrderByType());
 
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries = null;
-		int layoutPageTemplateEntriesCount = 0;
-
 		if (isSearch()) {
-			layoutPageTemplateEntries =
-				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-					_themeDisplay.getScopeGroupId(), getKeywords(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-					masterLayoutsSearchContainer.getStart(),
-					masterLayoutsSearchContainer.getEnd(),
-					masterLayoutsSearchContainer.getOrderByComparator());
-			layoutPageTemplateEntriesCount =
+			masterLayoutsSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntries(
+							_themeDisplay.getScopeGroupId(), getKeywords(),
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_MASTER_LAYOUT,
+							masterLayoutsSearchContainer.getStart(),
+							masterLayoutsSearchContainer.getEnd(),
+							masterLayoutsSearchContainer.
+								getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
 						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT);
+							TYPE_MASTER_LAYOUT));
 		}
 		else {
-			if (masterLayoutsSearchContainer.getStart() == 0) {
-				layoutPageTemplateEntries = new ArrayList<>();
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+				new ArrayList<>();
 
+			if (masterLayoutsSearchContainer.getStart() == 0) {
 				layoutPageTemplateEntries.add(_addBlankMasterLayout());
 			}
 
@@ -129,7 +130,8 @@ public class MasterLayoutDisplayContext {
 					masterLayoutsSearchContainer.getStart(),
 					masterLayoutsSearchContainer.getEnd(),
 					masterLayoutsSearchContainer.getOrderByComparator()));
-			layoutPageTemplateEntriesCount =
+
+			int layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
@@ -139,12 +141,14 @@ public class MasterLayoutDisplayContext {
 			if (masterLayoutsSearchContainer.getStart() == 0) {
 				layoutPageTemplateEntriesCount++;
 			}
+
+			masterLayoutsSearchContainer.setResultsAndTotal(
+				() -> layoutPageTemplateEntries,
+				layoutPageTemplateEntriesCount);
 		}
 
-		masterLayoutsSearchContainer.setResults(layoutPageTemplateEntries);
 		masterLayoutsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		masterLayoutsSearchContainer.setTotal(layoutPageTemplateEntriesCount);
 
 		_masterLayoutsSearchContainer = masterLayoutsSearchContainer;
 

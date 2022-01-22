@@ -388,23 +388,22 @@ public class KBAdminManagementToolbarDisplayContext {
 					_searchContainer.getCur(), _searchContainer.getDelta(),
 					kbArticleOrderByComparator);
 
-			_searchContainer.setResults(
-				new ArrayList<>(kbArticleSearchDisplay.getResults()));
-			_searchContainer.setTotal(kbArticleSearchDisplay.getTotal());
+			_searchContainer.setResultsAndTotal(
+				() -> new ArrayList<>(kbArticleSearchDisplay.getResults()),
+				kbArticleSearchDisplay.getTotal());
 		}
 		else if (kbFolderView) {
-			_searchContainer.setTotal(
-				KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
-					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
-					WorkflowConstants.STATUS_ANY));
-			_searchContainer.setResults(
-				KBFolderServiceUtil.getKBFoldersAndKBArticles(
+			_searchContainer.setResultsAndTotal(
+				() -> KBFolderServiceUtil.getKBFoldersAndKBArticles(
 					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
 					WorkflowConstants.STATUS_ANY, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					KBUtil.getKBObjectsOrderByComparator(
 						_searchContainer.getOrderByCol(),
-						_searchContainer.getOrderByType())));
+						_searchContainer.getOrderByType())),
+				KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
+					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
+					WorkflowConstants.STATUS_ANY));
 		}
 		else {
 			OrderByComparator<KBArticle> kbArticleOrderByComparator =
@@ -415,17 +414,16 @@ public class KBAdminManagementToolbarDisplayContext {
 			_searchContainer.setOrderByComparator(
 				new KBOrderByComparatorAdapter<>(kbArticleOrderByComparator));
 
-			_searchContainer.setTotal(
-				KBArticleServiceUtil.getKBArticlesCount(
-					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
-					WorkflowConstants.STATUS_ANY));
-			_searchContainer.setResults(
-				new ArrayList<>(
+			_searchContainer.setResultsAndTotal(
+				() -> new ArrayList<>(
 					KBArticleServiceUtil.getKBArticles(
 						_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
 						WorkflowConstants.STATUS_ANY,
 						_searchContainer.getStart(), _searchContainer.getEnd(),
-						kbArticleOrderByComparator)));
+						kbArticleOrderByComparator)),
+				KBArticleServiceUtil.getKBArticlesCount(
+					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
+					WorkflowConstants.STATUS_ANY));
 		}
 
 		_searchContainer.setRowChecker(

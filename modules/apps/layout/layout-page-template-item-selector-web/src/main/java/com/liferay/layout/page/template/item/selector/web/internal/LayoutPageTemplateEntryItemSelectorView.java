@@ -422,18 +422,18 @@ public class LayoutPageTemplateEntryItemSelectorView
 				_httpServletRequest, "keywords");
 
 			if (Validator.isNull(keywords)) {
-				searchContainer.setResults(
-					_layoutPageTemplateEntryService.
-						getLayoutPageTemplateEntries(
-							_getGroupId(),
-							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutTypes(),
-							_layoutPageTemplateEntryItemSelectorCriterion.
-								getStatus(),
-							searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator()));
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() ->
+						_layoutPageTemplateEntryService.
+							getLayoutPageTemplateEntries(
+								_getGroupId(),
+								_layoutPageTemplateEntryItemSelectorCriterion.
+									getLayoutTypes(),
+								_layoutPageTemplateEntryItemSelectorCriterion.
+									getStatus(),
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntriesCount(
 							_getGroupId(),
@@ -443,18 +443,18 @@ public class LayoutPageTemplateEntryItemSelectorView
 								getStatus()));
 			}
 			else {
-				searchContainer.setResults(
-					_layoutPageTemplateEntryService.
-						getLayoutPageTemplateEntries(
-							_getGroupId(), keywords,
-							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutTypes(),
-							_layoutPageTemplateEntryItemSelectorCriterion.
-								getStatus(),
-							searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator()));
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() ->
+						_layoutPageTemplateEntryService.
+							getLayoutPageTemplateEntries(
+								_getGroupId(), keywords,
+								_layoutPageTemplateEntryItemSelectorCriterion.
+									getLayoutTypes(),
+								_layoutPageTemplateEntryItemSelectorCriterion.
+									getStatus(),
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntriesCount(
 							_getGroupId(), keywords,

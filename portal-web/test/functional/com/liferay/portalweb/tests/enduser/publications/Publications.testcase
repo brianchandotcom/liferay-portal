@@ -647,4 +647,61 @@ definition {
 		}
 	}
 
+	@description = "Assert Publications change details on Display Data Parents and Children Tabs"
+	@priority = "4"
+	test ViewPublicationsChangeDetails {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edited",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edited");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsNavigator.gotoViewChangeDetails(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC WebContent Title Edited");
+
+		PublicationsChangeDetails.viewChangeDetailsInDisplay(
+			changeType = "Modified",
+			contentValueInProduction = "WC WebContent Content",
+			contentValueInPublication = "WC WebContent Content Edited",
+			diffAddedValue = "Edited");
+
+		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Data");
+
+		PublicationsChangeDetails.viewChangeDetailsInData(
+			changeType = "Modified",
+			columnName = "Name",
+			columnValueInProduction = "WC WebContent Title",
+			columnValueInPublication = "WC WebContent Title Edited",
+			diffAddedValue = "Edited");
+
+		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Parents");
+
+		PublicationsChangeDetails.viewChangeDetailsInParents(
+			changeParentsCategory = "Dynamic Data Mapping Template",
+			changeParentsTitle = "Basic Web Content");
+
+		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Children");
+
+		PublicationsChangeDetails.viewChangeDetailsInChildren(
+			changeChildrenCategory = "Web Content Translation",
+			changeChildrenTitle = "WC WebContent Title Edited");
+	}
+
 }

@@ -70,7 +70,7 @@ public abstract class BaseJobProperty implements JobProperty {
 		}
 
 		if (_propertiesFile == null) {
-			return "liferay-jenkins-ee/commands/build.properties";
+			return "CI Properties";
 		}
 
 		File workingDirectory = getWorkingDirectory(_propertiesFile);

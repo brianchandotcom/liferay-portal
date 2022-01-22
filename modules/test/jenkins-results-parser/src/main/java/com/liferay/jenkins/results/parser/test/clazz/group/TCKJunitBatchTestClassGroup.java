@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -45,6 +47,16 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("exclude_globs", getGlobs(_getExcludesJobProperties()));
+		jsonObject.put("include_globs", getGlobs(_getIncludesJobProperties()));
+
+		return jsonObject;
 	}
 
 	protected TCKJunitBatchTestClassGroup(
@@ -136,6 +148,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 					_tckHomeDir, JobProperty.Type.EXCLUDE_GLOB));
 		}
 
+		recordJobProperties(excludesJobProperties);
+
 		return excludesJobProperties;
 	}
 
@@ -153,6 +167,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 					"test.batch.class.names.includes", NAME_STABLE_TEST_SUITE,
 					_tckHomeDir, JobProperty.Type.INCLUDE_GLOB));
 		}
+
+		recordJobProperties(includesJobProperties);
 
 		return includesJobProperties;
 	}

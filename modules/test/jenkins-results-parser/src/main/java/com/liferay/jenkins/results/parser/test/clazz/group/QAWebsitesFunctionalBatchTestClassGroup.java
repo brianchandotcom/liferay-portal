@@ -79,6 +79,8 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 			"test.batch.run.property.query", testBaseDir,
 			JobProperty.Type.QA_WEBSITES_TEST_DIR);
 
+		recordJobProperty(jobProperty);
+
 		return jobProperty.getValue();
 	}
 

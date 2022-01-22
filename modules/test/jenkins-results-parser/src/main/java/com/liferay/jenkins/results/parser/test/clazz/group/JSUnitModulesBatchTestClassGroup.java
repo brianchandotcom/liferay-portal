@@ -39,10 +39,12 @@ public class JSUnitModulesBatchTestClassGroup
 	public boolean testGitrepoJSUnit() {
 		JobProperty jobProperty = getJobProperty("test.gitrepo.js.unit");
 
-		String testGitrepoJSUnit = jobProperty.getValue();
+		String jobPropertyValue = jobProperty.getValue();
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(testGitrepoJSUnit) &&
-			testGitrepoJSUnit.equals("true")) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) &&
+			jobPropertyValue.equals("true")) {
+
+			recordJobProperty(jobProperty);
 
 			return true;
 		}

@@ -139,6 +139,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.run.property.query", testSuiteName, batchName);
 
+		recordJobProperty(jobProperty);
+
 		return jobProperty.getValue();
 	}
 
@@ -268,6 +270,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
+			recordJobProperty(jobProperty);
+
 			for (String functionalRequiredModuleDirPath :
 					jobPropertyValue.split(",")) {
 
@@ -342,6 +346,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
+			recordJobProperty(jobProperty);
+
 			if (sb.length() > 0) {
 				sb.append(" OR (");
 			}
@@ -379,6 +385,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			if ((jobPropertyValue != null) && includeStableTestSuite &&
 				isStableTestSuiteBatch(batchName)) {
 
+				recordJobProperty(jobProperty);
+
 				sb.append(" OR (");
 				sb.append(jobPropertyValue);
 				sb.append(")");
@@ -393,6 +401,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (jobPropertyValue != null) {
+			recordJobProperty(jobProperty);
+
 			testBatchRunPropertyQuery = JenkinsResultsParserUtil.combine(
 				"(", jobPropertyValue, ") AND (", testBatchRunPropertyQuery,
 				")");

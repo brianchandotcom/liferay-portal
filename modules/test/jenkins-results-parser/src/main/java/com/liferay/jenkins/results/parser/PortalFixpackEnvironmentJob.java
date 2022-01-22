@@ -34,6 +34,8 @@ public class PortalFixpackEnvironmentJob extends PortalEnvironmentJob {
 		JobProperty jobProperty = getJobProperty(
 			"fixpack.environment.job.names");
 
+		recordJobProperty(jobProperty);
+
 		return getSetFromString(jobProperty.getValue());
 	}
 

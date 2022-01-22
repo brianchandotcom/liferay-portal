@@ -179,6 +179,8 @@ public class SubrepositoryGitRepositoryJob
 	protected Set<String> getRawDependentBatchNames() {
 		JobProperty jobProperty = getJobProperty("test.batch.names.smoke");
 
+		recordJobProperty(jobProperty);
+
 		return getSetFromString(jobProperty.getValue());
 	}
 

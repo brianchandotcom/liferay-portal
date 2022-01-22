@@ -85,6 +85,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		excludesJobProperties.removeAll(Collections.singleton(null));
 
+		recordJobProperties(excludesJobProperties);
+
 		return excludesJobProperties;
 	}
 
@@ -94,6 +96,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		filterJobProperties.add(
 			getJobProperty(
 				"test.batch.class.names.filter", JobProperty.Type.FILTER_GLOB));
+
+		recordJobProperties(filterJobProperties);
 
 		return filterJobProperties;
 	}
@@ -122,6 +126,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		includesJobProperties.removeAll(Collections.singleton(null));
 
+		recordJobProperties(includesJobProperties);
+
 		return includesJobProperties;
 	}
 
@@ -131,7 +137,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		jsonObject.put("exclude_globs", getGlobs(getExcludesJobProperties()));
 		jsonObject.put("filter_globs", getGlobs(getFilterJobProperties()));
-		jsonObject.put("include_globs", getGlobs(getExcludesJobProperties()));
+		jsonObject.put("include_globs", getGlobs(getIncludesJobProperties()));
 
 		return jsonObject;
 	}
@@ -569,6 +575,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
 			return;
 		}
+
+		recordJobProperty(jobProperty);
 
 		for (String autoBalanceTestName : jobPropertyValue.split(",")) {
 			String fullClassName = autoBalanceTestName.replaceAll(

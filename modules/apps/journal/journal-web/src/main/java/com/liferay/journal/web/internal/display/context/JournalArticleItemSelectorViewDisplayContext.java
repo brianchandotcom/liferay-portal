@@ -349,7 +349,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			boolean orderByAsc = false;
 
-			if (Objects.equals(_getOrderByCol(), "asc")) {
+			if (Objects.equals(_getOrderByType(), "asc")) {
 				orderByAsc = true;
 			}
 

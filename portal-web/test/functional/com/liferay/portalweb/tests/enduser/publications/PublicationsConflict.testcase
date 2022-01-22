@@ -362,10 +362,10 @@ definition {
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
-		PublicationsChanges.viewChangeDiff(
+		PublicationsChangeDetails.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			entryDeletedInProduction = "true",
+			deletionModificationConflict = "true",
 			publicationName = "Publication 2 Name");
 
 		IFrame.closeFrame();

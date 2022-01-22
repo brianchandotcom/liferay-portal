@@ -11,6 +11,15 @@ definition {
 			value1 = "${displayItem}");
 	}
 
+	macro viewChangeDetailsInChildren {
+		var key_changeChildrenCategory = "${changeChildrenCategory}";
+		var key_changeChildrenTitle = "${changeChildrenTitle}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChangeDetails#CHANGE_CHILDREN_TITLE",
+			value1 = "${changeChildrenTitle}");
+	}
+
 	macro viewChangeDetailsInData {
 		if ("${changeType}" == "Added") {
 			AssertElementPresent(
@@ -37,9 +46,9 @@ definition {
 		}
 
 		if ("${changeType}" == "Modified") {
-			AssertElementPresent(
-				key_displayItem = "Unified View",
-				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+			if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Unified View");
+			}
 
 			var key_columnName = "${columnName}";
 
@@ -73,7 +82,7 @@ definition {
 					value1 = "${columnValueInPublication}");
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.0 (Production)");
 
 			if (isSet(columnValueInProduction)) {
 				var key_columnValueInProduction = "${columnValueInProduction}";
@@ -83,7 +92,7 @@ definition {
 					value1 = "${columnValueInProduction}");
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (Publication)");
 
 			if (isSet(columnValueInPublication)) {
 				var key_columnValueInPublication = "${columnValueInPublication}";
@@ -121,9 +130,9 @@ definition {
 		}
 
 		if ("${changeType}" == "Modified") {
-			AssertElementPresent(
-				key_displayItem = "Unified View",
-				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+			if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Unified View");
+			}
 
 			if (isSet(diffAddedValue)) {
 				AssertTextEquals.assertPartialText(
@@ -157,7 +166,7 @@ definition {
 					value1 = "${contentValueInPublication}");
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.0 (Production)");
 
 			if (isSet(contentValueInProduction)) {
 				var key_contentValueInProduction = "${contentValueInProduction}";
@@ -167,7 +176,7 @@ definition {
 					value1 = "${contentValueInProduction}");
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (Publication)");
 
 			if (isSet(contentValueInPublication)) {
 				var key_contentValueInPublication = "${contentValueInPublication}";
@@ -177,15 +186,6 @@ definition {
 					value1 = "${contentValueInPublication}");
 			}
 		}
-	}
-
-	macro viewChangeDetailsInChildren {
-		var key_changeChildrenCategory = "${changeChildrenCategory}";
-		var key_changeChildrenTitle = "${changeChildrenTitle}";
-
-		AssertTextEquals(
-			locator1 = "PublicationsChangeDetails#CHANGE_CHILDREN_TITLE",
-			value1 = "${changeChildrenTitle}");
 	}
 
 	macro viewChangeDetailsInParents {
@@ -198,18 +198,17 @@ definition {
 	}
 
 	macro viewConflictingChangeDetails {
-		if ("${DeletionModificationConflict}" == "true") {
-			AssertElementPresent(
-				key_displayItem = "Split View",
-				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
-
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+		if ("${deletionModificationConflict}" == "true") {
+			if (IsElementNotPresent(key_displayItem = "Production", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+			}
 
 			Alert.viewErrorMessage(errorMessage = "This item is missing or is deleted.");
 
 			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
 
 			if (isSet(columnValueInPublication)) {
+				var key_columnName = "${columnName}";
 				var key_columnValueInPublication = "${columnValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
@@ -218,19 +217,25 @@ definition {
 			}
 		}
 
-		if ("${ModificationDeletionConflict}" == "true") {
+		if ("${modificationDeletionConflict}" == "true") {
+			AssertElementPresent(
+				key_displayItem = "PRODUCTION",
+				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+
 			if (isSet(columnValueInProduction)) {
+				var key_columnName = "${columnName}";
 				var key_columnValueInProduction = "${columnValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "PublicationsChangeDetails#DATA_COLUMN_VALUE_IN_PRODUCTION",
 					value1 = "${columnValueInProduction}");
+			}
 		}
 
-		if ("${ModificationConflict}" == "true") {
-			AssertElementPresent(
-				key_displayItem = "Unified View",
-				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+		if ("${modificationConflict}" == "true") {
+			if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Unified View");
+			}
 
 			var key_columnName = "${columnName}";
 
@@ -288,6 +293,10 @@ definition {
 
 	macro viewDDLRecordChangeDetails {
 		if ("${changeType}" == "Modified") {
+			if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Unified View");
+			}
+
 			var key_fieldName = "${fieldName}";
 
 			if (isSet(diffAddedValue)) {

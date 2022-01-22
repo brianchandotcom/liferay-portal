@@ -124,6 +124,8 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 				"modules.excludes." + portalTestClassJob.getBuildProfile(),
 				modulesDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
 
+		recordJobProperties(excludesJobProperties);
+
 		return excludesJobProperties;
 	}
 
@@ -174,6 +176,8 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			getJobProperty(
 				"modules.includes." + portalTestClassJob.getBuildProfile(),
 				modulesDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+
+		recordJobProperties(includesJobProperties);
 
 		return includesJobProperties;
 	}

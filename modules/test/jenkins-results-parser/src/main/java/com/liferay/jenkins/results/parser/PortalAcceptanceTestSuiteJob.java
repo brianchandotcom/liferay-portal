@@ -85,6 +85,8 @@ public abstract class PortalAcceptanceTestSuiteJob
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(distType)) {
 			for (DistType distTypeValue : DistType.values()) {
 				if (distType.equals(distTypeValue.toString())) {
+					recordJobProperty(jobProperty);
+
 					return distTypeValue;
 				}
 			}
@@ -124,15 +126,19 @@ public abstract class PortalAcceptanceTestSuiteJob
 
 		JobProperty jobProperty = getJobProperty("test.batch.names[stable]");
 
+		recordJobProperty(jobProperty);
+
 		rawBatchNames.addAll(getSetFromString(jobProperty.getValue()));
 
 		return rawBatchNames;
 	}
 
 	protected Set<String> getRawDependentBatchNames() {
-		JobProperty batchJobProperty = getJobProperty("test.batch.names.smoke");
+		JobProperty jobProperty = getJobProperty("test.batch.names.smoke");
 
-		return getSetFromString(batchJobProperty.getValue());
+		recordJobProperty(jobProperty);
+
+		return getSetFromString(jobProperty.getValue());
 	}
 
 	private final String _testSuiteName;

@@ -41,6 +41,8 @@ public class SubrepositoryAcceptancePullRequestJob
 	private void _setValidationRequired() {
 		JobProperty jobProperty = getJobProperty("test.run.validation");
 
+		recordJobProperty(jobProperty);
+
 		validationRequired = Boolean.parseBoolean(jobProperty.getValue());
 	}
 

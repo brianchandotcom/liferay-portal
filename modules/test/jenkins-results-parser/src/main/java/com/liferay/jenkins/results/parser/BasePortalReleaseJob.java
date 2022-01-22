@@ -124,12 +124,16 @@ public abstract class BasePortalReleaseJob
 	protected Set<String> getRawBatchNames() {
 		JobProperty jobProperty = getJobProperty("test.batch.names", false);
 
+		recordJobProperty(jobProperty);
+
 		return getSetFromString(jobProperty.getValue());
 	}
 
 	protected Set<String> getRawDependentBatchNames() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.names.smoke", false);
+
+		recordJobProperty(jobProperty);
 
 		return getSetFromString(jobProperty.getValue());
 	}

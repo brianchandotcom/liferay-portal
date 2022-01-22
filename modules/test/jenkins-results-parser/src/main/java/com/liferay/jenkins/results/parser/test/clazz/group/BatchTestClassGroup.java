@@ -36,6 +36,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +57,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return Integer.parseInt(jobPropertyValue);
 		}
 
@@ -114,6 +118,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return jobPropertyValue;
 		}
 
@@ -144,6 +150,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jsonObject.put("batch_name", getBatchName());
 
+		jsonObject.put("job_properties", _getJobPropertiesMap());
+
 		return jsonObject;
 	}
 
@@ -154,6 +162,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return Integer.valueOf(jobPropertyValue);
 		}
 
@@ -167,6 +177,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return Integer.valueOf(jobPropertyValue);
 		}
 
@@ -195,6 +207,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (jobPropertyValue != null) {
+			recordJobProperty(jobProperty);
+
 			return jobPropertyValue;
 		}
 
@@ -253,6 +267,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return Integer.parseInt(jobPropertyValue);
 		}
 
@@ -450,6 +466,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			recordJobProperty(jobProperty);
+
 			return Integer.valueOf(jobPropertyValue);
 		}
 
@@ -505,6 +523,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return false;
+	}
+
+	protected void recordJobProperties(List<JobProperty> jobProperties) {
+		for (JobProperty jobProperty : jobProperties) {
+			recordJobProperty(jobProperty);
+		}
+	}
+
+	protected void recordJobProperty(JobProperty jobProperty) {
+		if ((jobProperty == null) || (jobProperty.getValue() == null) ||
+			_jobProperties.contains(jobProperty)) {
+
+			return;
+		}
+
+		_jobProperties.add(jobProperty);
 	}
 
 	protected void setAxisTestClassGroups() {
@@ -645,6 +679,32 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	}
 
+	private Map<String, Properties> _getJobPropertiesMap() {
+		Map<String, Properties> batchProperties = new TreeMap<>();
+
+		for (JobProperty jobProperty : _jobProperties) {
+			String jobPropertyValue = jobProperty.getValue();
+
+			if (jobPropertyValue == null) {
+				continue;
+			}
+
+			String propertiesFilePath = jobProperty.getPropertiesFilePath();
+
+			Properties properties = batchProperties.get(propertiesFilePath);
+
+			if (properties == null) {
+				properties = new Properties();
+			}
+
+			properties.setProperty(jobProperty.getName(), jobPropertyValue);
+
+			batchProperties.put(propertiesFilePath, properties);
+		}
+
+		return batchProperties;
+	}
+
 	private JobProperty _getJobProperty(
 		String basePropertyName, String testSuiteName, String testBatchName,
 		File testBaseDir, JobProperty.Type type, boolean useBasePropertyName) {
@@ -674,6 +734,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			if (jobPropertyValue == null) {
 				continue;
 			}
+
+			recordJobProperty(jobProperty);
 
 			for (String requiredModuleDirPath : jobPropertyValue.split(",")) {
 				File requiredModuleDir = new File(
@@ -847,6 +909,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"(?<jobBaseName>.*)(?<jobVariant>\\([^\\)]+\\))");
 
+	private final List<JobProperty> _jobProperties = new ArrayList<>();
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
 		new ArrayList<>();
 

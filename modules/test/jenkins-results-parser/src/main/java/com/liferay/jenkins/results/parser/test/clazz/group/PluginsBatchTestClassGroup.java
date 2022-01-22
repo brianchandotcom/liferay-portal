@@ -162,6 +162,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 					JobProperty.Type.EXCLUDE_GLOB));
 		}
 
+		recordJobProperties(excludesJobProperties);
+
 		return excludesJobProperties;
 	}
 
@@ -181,6 +183,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 					_pluginsGitWorkingDirectory.getWorkingDirectory(),
 					JobProperty.Type.INCLUDE_GLOB));
 		}
+
+		recordJobProperties(includesJobProperties);
 
 		return includesJobProperties;
 	}

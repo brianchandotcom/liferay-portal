@@ -34,6 +34,8 @@ public class PortalReleaseEnvironmentJob extends PortalEnvironmentJob {
 		JobProperty jobProperty = getJobProperty(
 			"environment.release.job.names");
 
+		recordJobProperty(jobProperty);
+
 		return getSetFromString(jobProperty.getValue());
 	}
 

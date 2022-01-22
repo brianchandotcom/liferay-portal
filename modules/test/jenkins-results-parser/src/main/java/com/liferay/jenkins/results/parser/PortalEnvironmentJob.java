@@ -80,6 +80,8 @@ public class PortalEnvironmentJob
 	protected Set<String> getRawBatchNames() {
 		JobProperty jobProperty = getJobProperty("environment.job.names");
 
+		recordJobProperty(jobProperty);
+
 		return getSetFromString(jobProperty.getValue());
 	}
 

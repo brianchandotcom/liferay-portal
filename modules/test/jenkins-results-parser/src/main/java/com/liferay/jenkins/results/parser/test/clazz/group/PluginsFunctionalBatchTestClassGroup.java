@@ -74,6 +74,8 @@ public class PluginsFunctionalBatchTestClassGroup
 			"test.batch.run.property.query", testBaseDir,
 			JobProperty.Type.PLUGIN_TEST_DIR);
 
+		recordJobProperty(jobProperty);
+
 		return jobProperty.getValue();
 	}
 

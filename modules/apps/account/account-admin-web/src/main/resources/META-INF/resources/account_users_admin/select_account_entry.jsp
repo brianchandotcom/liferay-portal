@@ -31,12 +31,6 @@ if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));
 }
 
-long accountUserId = ParamUtil.getLong(request, "accountUserId");
-
-if (accountUserId > 0) {
-	accountEntryDisplaySearchContainer.setRowChecker(new AccountUserAccountEntryRowChecker(liferayPortletResponse, accountUserId));
-}
-
 SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 
 if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
@@ -74,14 +68,6 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 			row.setData(data);
 
 			String cssClass = "table-cell-expand";
-
-			Optional<User> userOptional = accountEntryDisplay.getPersonAccountEntryUserOptional();
-
-			boolean disabled = userOptional.isPresent();
-
-			if (disabled) {
-				cssClass += " text-muted";
-			}
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -99,7 +85,7 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 
 			<c:if test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">
 				<liferay-ui:search-container-column-text>
-					<aui:button cssClass="choose-account selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+					<aui:button cssClass="choose-account selector-button" data="<%= data %>" value="choose" />
 				</liferay-ui:search-container-column-text>
 			</c:if>
 		</liferay-ui:search-container-row>

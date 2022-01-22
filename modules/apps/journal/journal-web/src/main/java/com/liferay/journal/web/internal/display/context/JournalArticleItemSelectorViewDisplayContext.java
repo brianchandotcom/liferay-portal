@@ -394,11 +394,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					document.get(Field.ENTRY_CLASS_PK));
 
 				if (className.equals(JournalArticle.class.getName())) {
-					JournalArticle article =
+					results.add(
 						JournalArticleLocalServiceUtil.fetchLatestArticle(
-							classPK, WorkflowConstants.STATUS_ANY, false);
-
-					results.add(article);
+							classPK, WorkflowConstants.STATUS_ANY, false));
 				}
 				else if (className.equals(JournalFolder.class.getName())) {
 					results.add(
@@ -549,9 +547,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			return _folder;
 		}
 
-		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
-
-		_folder = JournalFolderLocalServiceUtil.fetchFolder(folderId);
+		_folder = JournalFolderLocalServiceUtil.fetchFolder(
+			ParamUtil.getLong(_httpServletRequest, "folderId"));
 
 		return _folder;
 	}

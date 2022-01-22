@@ -62,7 +62,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -97,10 +96,10 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, LayoutPageTemplateEntryItemSelectorView.class);
-
-		return ResourceBundleUtil.getString(resourceBundle, "page-template");
+		return ResourceBundleUtil.getString(
+			ResourceBundleUtil.getBundle(
+				locale, LayoutPageTemplateEntryItemSelectorView.class),
+			"page-template");
 	}
 
 	@Override
@@ -226,12 +225,10 @@ public class LayoutPageTemplateEntryItemSelectorView
 				}
 			).put(
 				"url",
-				() -> {
-					Layout layout = _layoutLocalService.getLayout(
-						_layoutPageTemplateEntry.getPlid());
-
-					return _portal.getLayoutFullURL(layout, _themeDisplay);
-				}
+				() -> _portal.getLayoutFullURL(
+					_layoutLocalService.getLayout(
+						_layoutPageTemplateEntry.getPlid()),
+					_themeDisplay)
 			).put(
 				"uuid", _layoutPageTemplateEntry.getUuid()
 			).toString();
@@ -271,12 +268,11 @@ public class LayoutPageTemplateEntryItemSelectorView
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_MASTER_LAYOUT)) {
 
-				int layoutsCount = _layoutLocalService.getMasterLayoutsCount(
-					_layoutPageTemplateEntry.getGroupId(),
-					_layoutPageTemplateEntry.getPlid());
-
 				return LanguageUtil.format(
-					_httpServletRequest, "x-usages", layoutsCount);
+					_httpServletRequest, "x-usages",
+					_layoutLocalService.getMasterLayoutsCount(
+						_layoutPageTemplateEntry.getGroupId(),
+						_layoutPageTemplateEntry.getPlid()));
 			}
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -399,6 +395,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
+			searchContainer.setOrderByCol(
+				ParamUtil.getString(_httpServletRequest, "orderByCol", "name"));
+
 			boolean orderByAsc = true;
 
 			String orderByType = ParamUtil.getString(
@@ -410,12 +409,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 			searchContainer.setOrderByComparator(
 				new LayoutPageTemplateEntryNameComparator(orderByAsc));
-
-			String orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "name");
-
-			searchContainer.setOrderByCol(orderByCol);
-
 			searchContainer.setOrderByType(orderByType);
 
 			String keywords = ParamUtil.getString(

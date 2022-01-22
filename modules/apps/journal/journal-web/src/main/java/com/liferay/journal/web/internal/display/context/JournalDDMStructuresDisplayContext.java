@@ -66,13 +66,14 @@ public class JournalDDMStructuresDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<DDMStructure> ddmStructureSearch = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
+		String emptyResultsMessage = "there-are-no-structures";
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmStructureSearch.setEmptyResultsMessage(
-				"no-structures-were-found");
+			emptyResultsMessage = "no-structures-were-found";
 		}
+
+		SearchContainer<DDMStructure> ddmStructureSearch = new SearchContainer(
+			_renderRequest, _getPortletURL(), null, emptyResultsMessage);
 
 		ddmStructureSearch.setOrderByCol(getOrderByCol());
 		ddmStructureSearch.setOrderByComparator(

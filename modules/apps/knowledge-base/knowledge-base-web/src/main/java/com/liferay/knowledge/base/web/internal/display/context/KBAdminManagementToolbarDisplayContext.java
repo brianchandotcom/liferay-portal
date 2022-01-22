@@ -224,14 +224,12 @@ public class KBAdminManagementToolbarDisplayContext {
 						LanguageUtil.get(_httpServletRequest, "basic-article"));
 				});
 
-			OrderByComparator<KBTemplate> orderByComparator =
-				OrderByComparatorFactoryUtil.create(
-					"KBTemplate", "title", false);
-
 			List<KBTemplate> kbTemplates =
 				KBTemplateServiceUtil.getGroupKBTemplates(
 					_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator);
+					QueryUtil.ALL_POS,
+					OrderByComparatorFactoryUtil.create(
+						"KBTemplate", "title", false));
 
 			if (!kbTemplates.isEmpty()) {
 				for (KBTemplate kbTemplate : kbTemplates) {

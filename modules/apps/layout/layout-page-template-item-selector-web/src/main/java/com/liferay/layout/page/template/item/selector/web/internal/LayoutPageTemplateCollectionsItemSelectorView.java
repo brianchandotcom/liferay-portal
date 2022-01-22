@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -76,11 +75,10 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, LayoutPageTemplateCollectionsItemSelectorView.class);
-
 		return ResourceBundleUtil.getString(
-			resourceBundle, "page-template-collections");
+			ResourceBundleUtil.getBundle(
+				locale, LayoutPageTemplateCollectionsItemSelectorView.class),
+			"page-template-collections");
 	}
 
 	@Override
@@ -233,6 +231,9 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
+			searchContainer.setOrderByCol(
+				ParamUtil.getString(_httpServletRequest, "orderByCol", "name"));
+
 			boolean orderByAsc = true;
 
 			String orderByType = ParamUtil.getString(
@@ -244,12 +245,6 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 
 			searchContainer.setOrderByComparator(
 				new LayoutPageTemplateCollectionNameComparator(orderByAsc));
-
-			String orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "name");
-
-			searchContainer.setOrderByCol(orderByCol);
-
 			searchContainer.setOrderByType(orderByType);
 
 			String keywords = ParamUtil.getString(

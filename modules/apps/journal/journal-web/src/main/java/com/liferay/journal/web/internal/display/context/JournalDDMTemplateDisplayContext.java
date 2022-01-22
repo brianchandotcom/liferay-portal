@@ -110,12 +110,14 @@ public class JournalDDMTemplateDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<DDMTemplate> ddmTemplateSearch = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-templates");
+		String emptyResultsMessage = "there-are-no-templates";
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmTemplateSearch.setEmptyResultsMessage("no-templates-were-found");
+			emptyResultsMessage = "no-templates-were-found";
 		}
+
+		SearchContainer<DDMTemplate> ddmTemplateSearch = new SearchContainer(
+			_renderRequest, _getPortletURL(), null, emptyResultsMessage);
 
 		ddmTemplateSearch.setOrderByCol(getOrderByCol());
 		ddmTemplateSearch.setOrderByComparator(

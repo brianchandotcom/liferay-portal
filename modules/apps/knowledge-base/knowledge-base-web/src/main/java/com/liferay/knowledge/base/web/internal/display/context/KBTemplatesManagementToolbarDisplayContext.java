@@ -205,7 +205,6 @@ public class KBTemplatesManagementToolbarDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				kbTemplateSearchDisplay::getResults,
 				kbTemplateSearchDisplay.getTotal());
-			_searchContainer.setTotal(kbTemplateSearchDisplay.getTotal());
 		}
 	}
 

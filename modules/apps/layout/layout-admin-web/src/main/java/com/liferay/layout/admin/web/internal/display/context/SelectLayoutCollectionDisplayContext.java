@@ -263,10 +263,11 @@ public class SelectLayoutCollectionDisplayContext {
 	private NavigationItem _getNavigationItem(String label, String tabName) {
 		NavigationItem navigationItem = new NavigationItem();
 
-		String selectedTabName = ParamUtil.getString(
-			_httpServletRequest, "selectedTab", "collections");
+		if (Objects.equals(
+				tabName,
+				ParamUtil.getString(
+					_httpServletRequest, "selectedTab", "collections"))) {
 
-		if (Objects.equals(tabName, selectedTabName)) {
 			navigationItem.setActive(true);
 		}
 

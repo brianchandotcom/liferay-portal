@@ -166,7 +166,6 @@ public class AssetDisplayPageUsagesDisplayContext {
 
 		searchContainer.setOrderByComparator(
 			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc));
-
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() -> AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
@@ -195,10 +194,8 @@ public class AssetDisplayPageUsagesDisplayContext {
 			className = DLFileEntry.class.getName();
 		}
 
-		AssetEntry assetEntry = null;
-
 		try {
-			assetEntry = AssetEntryServiceUtil.getEntry(
+			AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
 				className, assetDisplayPageEntry.getClassPK());
 
 			return assetEntry.getTitle(locale);
@@ -209,15 +206,13 @@ public class AssetDisplayPageUsagesDisplayContext {
 			}
 		}
 
-		String title = StringPool.BLANK;
-
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class,
 				PortalUtil.getClassName(getClassNameId()));
 
 		if (infoItemObjectProvider == null) {
-			return title;
+			return StringPool.BLANK;
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
@@ -226,28 +221,28 @@ public class AssetDisplayPageUsagesDisplayContext {
 				PortalUtil.getClassName(getClassNameId()));
 
 		if (infoItemFieldValuesProvider == null) {
-			return title;
+			return StringPool.BLANK;
 		}
 
 		Object infoItem = infoItemObjectProvider.getInfoItem(
 			new ClassPKInfoItemIdentifier(assetDisplayPageEntry.getClassPK()));
 
 		if (infoItem == null) {
-			return title;
+			return StringPool.BLANK;
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(infoItem, "title");
 
 		if (infoFieldValue == null) {
-			return title;
+			return StringPool.BLANK;
 		}
 
 		Object infoFieldValueValue = infoFieldValue.getValue(
 			LocaleUtil.getMostRelevantLocale());
 
 		if (infoFieldValueValue == null) {
-			return title;
+			return StringPool.BLANK;
 		}
 
 		return String.valueOf(infoFieldValueValue);

@@ -127,10 +127,10 @@ function getBatchSummaryElement(batch) {
 	infoBoxElement.appendChild(createInfoItemElement("Build Profile", data.build_profile));
 	infoBoxElement.appendChild(createInfoItemElement("Batch Name", batch.batch_name));
 
-	let batchPropertiesElements = getBatchPropertiesElements(batch.batch_properties);
+	let jobPropertiesElements = getJobPropertiesElements(batch.job_properties);
 
-	for (var i = 0; i < batchPropertiesElements.length; i++) {
-		infoBoxElement.appendChild(batchPropertiesElements[i]);
+	for (var i = 0; i < jobPropertiesElements.length; i++) {
+		infoBoxElement.appendChild(jobPropertiesElements[i]);
 	}
 
 	infoBoxElement.appendChild(createInfoItemElement("Batch Exclude Globs", batch.exclude_globs));
@@ -170,14 +170,14 @@ function getBatchElement(batch) {
 	return detailsElement;
 }
 
-function getBatchPropertiesElements(batch_properties) {
-	if (batch_properties == undefined) {
+function getJobPropertiesElements(job_properties) {
+	if (job_properties == undefined) {
 		return [];
 	}
 
-	var batchPropertiesElements = [];
+	var jobPropertiesElements = [];
 
-	for (let [file, properties] of Object.entries(batch_properties)) {
+	for (let [file, properties] of Object.entries(job_properties)) {
 		let lines = [];
 
 		for (let [name, value] of Object.entries(properties)) {
@@ -203,10 +203,10 @@ function getBatchPropertiesElements(batch_properties) {
 
 		lines.sort();
 
-		batchPropertiesElements.push(createInfoItemElement("Batch Properties (" + file + ")", lines, true));
+		jobPropertiesElements.push(createInfoItemElement("Job Properties (" + file + ")", lines, true));
 	}
 
-	return batchPropertiesElements;
+	return jobPropertiesElements;
 }
 
 function getPQLQueryLines(pql_query, balance) {
@@ -340,10 +340,10 @@ function updateJobSummary() {
 		}
 	}
 
-	let batchPropertiesElements = getBatchPropertiesElements(data.batch_properties);
+	let jobPropertiesElements = getJobPropertiesElements(data.job_properties);
 
-	for (var i = 0; i < batchPropertiesElements.length; i++) {
-		infoBoxElement.appendChild(batchPropertiesElements[i]);
+	for (var i = 0; i < jobPropertiesElements.length; i++) {
+		infoBoxElement.appendChild(jobPropertiesElements[i]);
 	}
 }
 

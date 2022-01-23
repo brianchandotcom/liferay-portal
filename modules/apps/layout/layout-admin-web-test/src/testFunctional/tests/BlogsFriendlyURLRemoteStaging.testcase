@@ -58,24 +58,24 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customURL = "custom-url");
+		BlogsEntry.addCustomURL(customUrl = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.viewActiveURL(activeURL = "custom-url");
+		BlogsEntry.viewActiveURL(activeUrl = "custom-url");
 
-		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+		BlogsEntry.viewOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
 
 		Navigator.openSitePage(
 			pageName = "Staging Blogs Page",
@@ -89,7 +89,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/custom-url");
@@ -112,22 +112,22 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customURL = "custom-url");
+		BlogsEntry.addCustomURL(customUrl = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.removeOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+		BlogsEntry.removeOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
 
 		PortletEntry.publish();
 
@@ -143,7 +143,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/blogs-entry-title");
@@ -170,25 +170,25 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customURL = "custom-url");
+		BlogsEntry.addCustomURL(customUrl = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
 		BlogsEntry.restoreOldFriendlyURL(
-			activeURL = "custom-url",
-			oldFriendlyURL = "blogs-entry-title",
-			restoredURL = "blogs-entry-title");
+			activeUrl = "custom-url",
+			oldFriendlyUrl = "blogs-entry-title",
+			restoredUrl = "blogs-entry-title");
 
 		PortletEntry.publish();
 
@@ -204,7 +204,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/staging-blogs-page/-/blogs/blogs-entry-title");

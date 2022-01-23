@@ -12,22 +12,22 @@ definition {
 			value1 = "${upgradeName}");
 
 		AssertTextEquals(
-			custom_entryHTMLName = "${upgradeHTMLName}",
+			custom_entryHtmlName = "${upgradeHtmlName}",
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${upgradeHTMLName}");
+			value1 = "${upgradeHtmlName}");
 
 		AssertTextEquals(
-			custom_entryURL = "${upgradeURL}",
+			custom_entryUrl = "${upgradeUrl}",
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${upgradeURL}");
+			value1 = "${upgradeUrl}");
 
 		AssertTextEquals(
-			custom_entryCSSURL = "${upgradeCSSURL}",
+			custom_entryCssurl = "${upgradeCssurl}",
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${upgradeCSSURL}");
+			value1 = "${upgradeCssurl}");
 	}
 
 	macro assertRemoteAppEntry {

@@ -40,7 +40,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a page based in global search template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
@@ -62,7 +62,7 @@ definition {
 	@priority = "3"
 	test AddPageWithEscapeCharacter {
 		task ("Add a page with escape characters name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(pageName = "Test's Page Name");
 		}
@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("View parent page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Page Name",
@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("View child page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
 				depth = "2",
@@ -318,7 +318,7 @@ definition {
 
 		task ("Configure the page with all available portlets then view the portlet is shown") {
 			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+				PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 				PagesAdmin.configurePage(
 					pageName = "Test Page Name",
@@ -352,7 +352,7 @@ definition {
 		}
 
 		task ("Delete the first widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.deletePage(pageName = "Test Page Name 1");
 		}
@@ -379,7 +379,7 @@ definition {
 		}
 
 		task ("Edit the name of the first page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -430,7 +430,7 @@ definition {
 		}
 
 		task ("View default locale is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

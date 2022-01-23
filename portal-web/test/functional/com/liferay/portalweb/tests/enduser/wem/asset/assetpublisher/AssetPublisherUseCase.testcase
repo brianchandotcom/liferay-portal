@@ -1674,7 +1674,7 @@ definition {
 		}
 
 		task ("Add a non-searchable web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 

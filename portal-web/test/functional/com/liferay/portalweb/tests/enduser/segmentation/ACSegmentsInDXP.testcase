@@ -8,9 +8,9 @@ definition {
 
 	setUp {
 		task ("Open Analytics Cloud") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+			var analyticsCloudUrl = PropsUtil.get("analytics.cloud.url");
 
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			Navigator.openURL(baseUrl = "${analyticsCloudUrl}");
 		}
 
 		task ("Take token from Analytics Cloud") {
@@ -140,7 +140,7 @@ definition {
 		task ("Go to Virtual Instance Created") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");

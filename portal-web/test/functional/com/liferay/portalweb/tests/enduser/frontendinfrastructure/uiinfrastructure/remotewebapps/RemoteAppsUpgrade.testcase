@@ -32,10 +32,10 @@ definition {
 
 		task ("Assert custom remote app fields are saved after upgrade") {
 			RemoteAppsUpgrade.assertCustomRemoteAppEntryFields(
-				upgradeCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				upgradeHTMLName = "vanilla-counter",
+				upgradeCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				upgradeHtmlName = "vanilla-counter",
 				upgradeName = "Vanilla Counter",
-				upgradeURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				upgradeUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Navigate to content page") {

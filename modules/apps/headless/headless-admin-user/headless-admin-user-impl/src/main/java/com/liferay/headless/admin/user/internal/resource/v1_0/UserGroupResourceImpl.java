@@ -163,6 +163,12 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				addAction(
 					ActionKeys.UPDATE, userGroupId, "putUserGroup",
 					_userGroupModelResourcePermission)
+			).put(
+				"put-by-external-reference-code",
+				addAction(
+					ActionKeys.UPDATE, userGroupId,
+					"putUserGroupByExternalReferenceCode",
+					_userGroupModelResourcePermission)
 			).build(),
 			null, contextHttpServletRequest, userGroupId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

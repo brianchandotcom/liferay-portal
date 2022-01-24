@@ -335,7 +335,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				locale, getClass());
 
 			Function<String, String> exceptionMessageFunction =
-				_exceptionMessageFunctions.get(xliffFileException.getClass());
+				_exceptionMessageFunctions.getOrDefault(
+					xliffFileException.getClass(),
+					s -> "the-xliff-file-is-invalid");
 
 			failureMessages.put(
 				fileName,
@@ -368,6 +370,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						XLIFFFileException.MustHaveValidId.class,
 						ImportTranslationMVCActionCommand::
 							_getMustHaveValidIdMessage
+					).put(
+						XLIFFFileException.MustHaveValidModel.class,
+						s ->
+							"the-xliff-file-contains-a-translation-for-an-" +
+								"invalid-model"
 					).put(
 						XLIFFFileException.MustHaveValidParameter.class,
 						s -> "the-xliff-file-has-invalid-parameters"

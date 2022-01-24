@@ -15,6 +15,7 @@
 package com.liferay.translation.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -22,11 +23,13 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
@@ -101,6 +105,8 @@ public class TranslationEntryLocalServiceImpl
 			String contentType, String languageId,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_validateInfoItemGroup(groupId, className, classPK);
 
 		TranslationEntry translationEntry =
 			translationEntryPersistence.fetchByC_C_L(
@@ -296,6 +302,35 @@ public class TranslationEntryLocalServiceImpl
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
+		}
+	}
+
+	private void _validateInfoItemGroup(
+			long groupId, String className, long classPK)
+		throws XLIFFFileException {
+
+		try {
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className);
+
+			Object object = infoItemObjectProvider.getInfoItem(classPK);
+
+			if (object instanceof GroupedModel) {
+				GroupedModel groupedModel = (GroupedModel)object;
+
+				if (groupedModel.getGroupId() != groupId) {
+					throw new XLIFFFileException.MustHaveValidModel(
+						StringBundler.concat(
+							"Can not import translation for a model in group ",
+							groupedModel.getGroupId(), " into group ",
+							groupId));
+				}
+			}
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			throw new XLIFFFileException.MustHaveValidModel(
+				noSuchInfoItemException);
 		}
 	}
 

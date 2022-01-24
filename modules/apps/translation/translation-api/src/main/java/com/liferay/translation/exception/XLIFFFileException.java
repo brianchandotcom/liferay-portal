@@ -116,6 +116,25 @@ public class XLIFFFileException extends PortalException {
 
 	}
 
+	public static class MustHaveValidModel extends XLIFFFileException {
+
+		public MustHaveValidModel() {
+		}
+
+		public MustHaveValidModel(String msg) {
+			super(msg);
+		}
+
+		public MustHaveValidModel(String msg, Throwable throwable) {
+			super(msg, throwable);
+		}
+
+		public MustHaveValidModel(Throwable throwable) {
+			super(throwable);
+		}
+
+	}
+
 	public static class MustHaveValidParameter extends XLIFFFileException {
 
 		public MustHaveValidParameter() {

@@ -34,10 +34,10 @@ definition {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 		}
 
-		task ("Assert could not add page via Wiki page template") {
-			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Wiki");
+		task ("Assert could not add page via Search page template") {
+			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Search");
 
-			SelectWindow(locator1 = "title=Wiki - ${siteName}");
+			SelectWindow(locator1 = "title=Search - ${siteName}");
 
 			Dockbar.viewAddTabsWithNoAddPagePermission();
 		}

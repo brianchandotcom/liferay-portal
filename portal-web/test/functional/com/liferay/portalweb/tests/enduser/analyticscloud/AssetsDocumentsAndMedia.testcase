@@ -215,8 +215,7 @@ definition {
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
 		property portal.upstream = "quarantine";
 
-		// This test relies on the test LRAC-7890
-		// AC Bug ticket: LRAC-7890
+		// AC Quarantine reason: The percentage of the downloads does not match the correct one
 		// AC Quarantine ticket: LRAC-9806
 
 		var userNames = "ac,ac2,ac3";
@@ -617,8 +616,7 @@ definition {
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
 		property portal.upstream = "quarantine";
 
-		// AC Deactivated Reason: The name of the document do not show in the proper way in AC
-		// AC Deactivated Ticket: Test blocked by LRAC-7890
+		// AC Quarantine reason: The name of the known individuals do not appear in the list
 		// AC Quarantine ticket: LRAC-9807
 
 		var usernameList = "ac,liferay";

@@ -21,4 +21,8 @@ public class CommerceTermEntryConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.commerce.term";
 
+	public static final String TYPE_DELIVERY_TERMS = "delivery-terms";
+
+	public static final String TYPE_PAYMENT_TERMS = "payment-terms";
+
 }

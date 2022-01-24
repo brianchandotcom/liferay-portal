@@ -88,7 +88,7 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 					_portal.getLiferayPortletResponse(renderResponse), models,
 					_getTitle(
 						translationRequestHelper.getModelClassName(),
-						models.get(0), themeDisplay.getLocale()),
+						models.get(0), themeDisplay.getLocale(), models.size()),
 					_translationInfoItemFieldValuesExporterTracker));
 
 			return "/export_translation.jsp";
@@ -122,7 +122,13 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 		return models;
 	}
 
-	private String _getTitle(String className, Object model, Locale locale) {
+	private String _getTitle(
+		String className, Object model, Locale locale, int size) {
+
+		if (size > 1) {
+			return _language.get(locale, "export-for-translation");
+		}
+
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);

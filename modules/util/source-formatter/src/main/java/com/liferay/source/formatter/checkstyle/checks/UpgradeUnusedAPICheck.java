@@ -27,6 +27,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -177,9 +178,9 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 			String version, String qualifiedPackageClassName,
 			String methodName) {
 
-			_version = version;
-			_qualifiedPackageClassName = qualifiedPackageClassName;
-			_methodName = methodName;
+			this(
+				version, qualifiedPackageClassName, methodName,
+				Collections.emptyList());
 		}
 
 		public UnusedClassMethod(

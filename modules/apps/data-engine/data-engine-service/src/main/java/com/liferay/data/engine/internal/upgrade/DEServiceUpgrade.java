@@ -63,6 +63,11 @@ public class DEServiceUpgrade implements UpgradeStepRegistrator {
 
 			},
 			new UpgradeCTModel("DEDataDefinitionFieldLink", "DEDataListView"));
+
+		registry.register(
+			"2.2.0", "2.2.1",
+			new com.liferay.data.engine.internal.upgrade.v2_2_1.
+				DEDataDefinitionFieldLinkUpgradeProcess());
 	}
 
 }

@@ -15,7 +15,7 @@ definition {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "//tr[${resultOrder}]//td[1]//span[contains(text(),'${searchAssetTitle}')]",
+				locator1 = "ProcessBuilderConfiguration#ASSET_TYPE",
 				resultOrder = "${resultOrder}",
 				value1 = "${searchAssetTitle}");
 		}

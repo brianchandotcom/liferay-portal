@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
+import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -36,12 +38,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
  */
 @Component(
+	configurationPid = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
 	immediate = true,
 	service = {
 		DynamicInclude.class, JSImportmapsExtenderTopHeadDynamicInclude.class
@@ -56,28 +60,31 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (_globalImportmaps.isEmpty() && _scopedImportmaps.isEmpty()) {
-			return;
-		}
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.println("<script type=\"importmap\">");
-		printWriter.println(_importmaps.get());
-		printWriter.println("</script>");
-		printWriter.print("<script src=\"");
+		if (_jsImportmapsConfiguration.enableImportmaps() &&
+			(!_globalImportmaps.isEmpty() || !_scopedImportmaps.isEmpty())) {
 
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
+			printWriter.println("<script type=\"importmap\">");
+			printWriter.println(_importmaps.get());
+			printWriter.println("</script>");
+		}
 
-		printWriter.print(
-			absolutePortalURLBuilder.forModuleScript(
-				_bundleContext.getBundle(),
-				"/es-module-shims/es-module-shims.js"
-			).build());
+		if (_jsImportmapsConfiguration.enableEsModuleShims()) {
+			printWriter.print("<script src=\"");
 
-		printWriter.println("\"></script>\n");
+			AbsolutePortalURLBuilder absolutePortalURLBuilder =
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					httpServletRequest);
+
+			printWriter.print(
+				absolutePortalURLBuilder.forModuleScript(
+					_bundleContext.getBundle(),
+					"/es-module-shims/es-module-shims.js"
+				).build());
+
+			printWriter.println("\"></script>\n");
+		}
 	}
 
 	@Override
@@ -120,10 +127,20 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
 
 		_rebuildImportmaps();
+
+		modified(properties);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_jsImportmapsConfiguration = ConfigurableUtil.createConfigurable(
+			JSImportmapsConfiguration.class, properties);
 	}
 
 	private JSONObject _getGlobalJSONObject() {
@@ -165,10 +182,11 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 	private final ConcurrentMap<Long, JSONObject> _globalImportmaps =
 		new ConcurrentHashMap<>();
 	private final AtomicReference<String> _importmaps = new AtomicReference<>();
+	private volatile JSImportmapsConfiguration _jsImportmapsConfiguration;
 
 	@Reference
 	private JSONFactory _jsonFactory;

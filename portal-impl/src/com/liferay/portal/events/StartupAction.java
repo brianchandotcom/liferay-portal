@@ -15,7 +15,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -80,10 +79,6 @@ public class StartupAction extends SimpleAction {
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo() + "\n");
 
 		StartupHelperUtil.printPatchLevel();
-
-		if (PropsValues.PORTAL_FABRIC_ENABLED) {
-			FabricServerUtil.start();
-		}
 
 		// MySQL version
 

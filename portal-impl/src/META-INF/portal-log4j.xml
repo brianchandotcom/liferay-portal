@@ -80,7 +80,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.events.ShutdownHook" />
 		<Logger level="INFO" name="com.liferay.portal.events.StartupAction" />
 		<Logger level="INFO" name="com.liferay.portal.events.StartupHelperUtil" />
-		<Logger level="INFO" name="com.liferay.portal.fabric" />
 		<Logger level="ERROR" name="com.liferay.portal.image.HookFactory" />
 		<Logger level="ERROR" name="com.liferay.portal.image.ImageToolImpl" />
 		<Logger level="WARN" name="com.liferay.portal.image.SpriteProcessorImpl" />

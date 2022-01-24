@@ -17,7 +17,6 @@ package com.liferay.portal.events;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -40,9 +39,6 @@ import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
 import java.sql.Connection;
 import java.sql.Statement;
-
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Brian Wing Shun Chan
@@ -116,21 +112,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Messaging
 
 		MessageBusUtil.shutdown(true);
-
-		// Portal fabric
-
-		if (PropsValues.PORTAL_FABRIC_ENABLED) {
-			try {
-				Future<?> future = FabricServerUtil.stop();
-
-				future.get(
-					PropsValues.PORTAL_FABRIC_SHUTDOWN_TIMEOUT,
-					TimeUnit.MILLISECONDS);
-			}
-			catch (Exception exception) {
-				_log.error("Unable to stop fabric server", exception);
-			}
-		}
 	}
 
 	protected void shutdownLevel4() {

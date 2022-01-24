@@ -19,7 +19,6 @@ import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
-import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -261,9 +260,7 @@ public class TikaRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 		private static final long serialVersionUID = 1L;
 
-		@InputResource
 		private final File _file;
-
 		private final Metadata _metadata;
 		private final Parser _parser;
 

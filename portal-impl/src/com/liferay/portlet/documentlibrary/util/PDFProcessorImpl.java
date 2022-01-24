@@ -30,8 +30,6 @@ import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.fabric.InputResource;
-import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1145,21 +1143,12 @@ public class PDFProcessorImpl
 		private final boolean _generatePreview;
 		private final boolean _generateThumbnail;
 		private final int _height;
-
-		@InputResource
 		private final File _inputFile;
-
 		private final String _liferayHome;
-
-		@OutputResource
 		private final File[] _previewFiles;
-
 		private final String _serverId;
 		private final String _thumbnailExtension;
-
-		@OutputResource
 		private final File _thumbnailFile;
-
 		private final int _width;
 
 	}

@@ -21,7 +21,6 @@ Export-Package:\
 	\
 	!com.liferay.portal.cache.thread.local,\
 	!com.liferay.portal.dao.jdbc.aop,\
-	!com.liferay.portal.fabric,\
 	!com.liferay.portal.freemarker,\
 	!com.liferay.portal.increment,\
 	!com.liferay.portal.javadoc,\

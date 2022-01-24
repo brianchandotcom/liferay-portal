@@ -645,26 +645,6 @@
 			"name": "com.liferay.portal.deploy.hot.ServiceBag"
 		},
 		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.fabric.netty.codec.serialization.ObjectDecodeChannelInboundHandler"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.fabric.repository.Repository"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.fabric.worker.FabricWorker"
-		},
-		{
 			"genericTypeCount": 2,
 			"name": "com.liferay.portal.kernel.cache.PortalCache"
 		},

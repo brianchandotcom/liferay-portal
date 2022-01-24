@@ -161,10 +161,10 @@ public class JournalArticleIndexerLocalizedContentTest {
 			searchTerm, LocaleUtil.HUNGARY);
 
 		FieldValuesAssert.assertFieldValues(
-			titleStrings, "title", document, searchTerm);
+			titleStrings, "title_", document, searchTerm);
 
 		FieldValuesAssert.assertFieldValues(
-			contentStrings, "content", document, searchTerm);
+			contentStrings, "content_", document, searchTerm);
 
 		FieldValuesAssert.assertFieldValues(
 			localizedTitleStrings, "localized_title", document, searchTerm);

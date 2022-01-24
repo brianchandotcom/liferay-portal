@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
 import {EmailControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Email';
@@ -21,7 +21,7 @@ import {WebsiteControlledInput} from '../../../../../../../common/components/con
 import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
-import {AppContext} from '../../../../../context/AppContextProvider';
+import useMobileContainer from '../../../../../hooks/useMobileContainer';
 import {MOBILE_SUBSECTION_KEYS} from '../../../../../utils/constants';
 import MobileContainer from '../../../../mobile/MobileContainer';
 
@@ -39,19 +39,7 @@ export function FormBasicBusinessInformation({form, isMobile}) {
 	} = MOBILE_SUBSECTION_KEYS;
 
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
-	const {
-		state: {
-			selectedStep: {mobileSubSections = []},
-		},
-	} = useContext(AppContext);
-
-	const activeMobileSubSection = mobileSubSections.find(({active}) => active);
-
-	const getMobileSubSection = useCallback(
-		(sectionTitle) =>
-			mobileSubSections.find(({title}) => title === sectionTitle),
-		[mobileSubSections]
-	);
+	const {getMobileSubSection, mobileContainerProps} = useMobileContainer();
 
 	const {control} = useFormContext();
 
@@ -81,11 +69,6 @@ export function FormBasicBusinessInformation({form, isMobile}) {
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const mobileContainerProps = {
-		activeMobileSubSection,
-		isMobile,
-	};
 
 	return (
 		<div className="p-0">

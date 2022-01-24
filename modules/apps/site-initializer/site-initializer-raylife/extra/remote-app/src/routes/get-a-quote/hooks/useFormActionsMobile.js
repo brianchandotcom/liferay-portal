@@ -23,6 +23,7 @@ const useFormActionsMobile = (formActionsDefault, redirectToHomePage) => {
 		},
 	} = useContext(AppContext);
 
+	const hasMobileSubSections = Array.isArray(mobileSubSections);
 	const activeIndex = mobileSubSections?.findIndex(({active}) => active);
 
 	const setMobileSubSectionActive = (nextStep) => {
@@ -34,7 +35,7 @@ const useFormActionsMobile = (formActionsDefault, redirectToHomePage) => {
 
 	const onNext = () => {
 		if (
-			Array.isArray(mobileSubSections) &&
+			hasMobileSubSections &&
 			activeIndex !== mobileSubSections.length - 1
 		) {
 			return setMobileSubSectionActive(true);
@@ -44,11 +45,11 @@ const useFormActionsMobile = (formActionsDefault, redirectToHomePage) => {
 	};
 
 	const onPrevious = () => {
-		if (currentStepIndex === 0) {
+		if (currentStepIndex === 0 && !hasMobileSubSections) {
 			return redirectToHomePage();
 		}
 
-		if (Array.isArray(mobileSubSections) && activeIndex) {
+		if (activeIndex && hasMobileSubSections) {
 			return setMobileSubSectionActive(false);
 		}
 

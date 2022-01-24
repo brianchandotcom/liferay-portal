@@ -13,6 +13,8 @@
  */
 
 import classNames from 'classnames';
+import {useEffect} from 'react';
+import useForceValidation from '../../hooks/useForceValidation';
 
 const MobileContainer = ({
 	activeMobileSubSection = {},
@@ -20,8 +22,16 @@ const MobileContainer = ({
 	isMobile,
 	mobileSubSection = {},
 }) => {
+	const forceValidation = useForceValidation();
 	const {hideInputLabel, title} = mobileSubSection;
 	const visible = title === activeMobileSubSection.title;
+
+	useEffect(() => {
+		if (isMobile && visible) {
+			forceValidation();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isMobile, visible]);
 
 	if (!isMobile) {
 		return children;

@@ -243,29 +243,13 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 	}
 
-
 	@Test
 	public void testReadRowsWithEnclosingCharacter() throws Exception {
-		try (CSVBatchEngineImportTaskItemReaderImpl
-				csvBatchEngineImportTaskItemReaderImpl =
-					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null, StringPool.QUOTE,
-						new Object[][] {
-							{
-								createDateString, "hey, here is comma inside",
-								1, "sample name", "naziv"
-							}
-						})) {
-
-			validate(
-				createDateString, "hey, here is comma inside", 1L,
-				Collections.emptyMap(),
-				csvBatchEngineImportTaskItemReaderImpl.read(),
-				HashMapBuilder.put(
-					"en", "sample name"
-				).put(
-					"hr", "naziv"
-				).build());
+		for (String delimiter : _CSV_DELIMITERS) {
+			for (String enclosingCharacter : _CSV_ENCLOSING_CHARACTERS) {
+				_testReadRowsWithEnclosingCharacter(
+					delimiter, enclosingCharacter);
+			}
 		}
 	}
 
@@ -389,5 +373,45 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 
 		return map;
 	}
+
+	private void _testReadRowsWithEnclosingCharacter(
+			String delimiter, String enclosingCharacter)
+		throws Exception {
+
+		try (CSVBatchEngineImportTaskItemReaderImpl
+				csvBatchEngineImportTaskItemReaderImpl =
+					_getCSVBatchEngineImportTaskItemReader(
+						FIELD_NAMES, delimiter, enclosingCharacter,
+						new Object[][] {
+							{
+								createDateString, "hey, here is comma inside",
+								1, "sample name", "naziv"
+							}
+						})) {
+
+			validate(
+				createDateString, "hey, here is comma inside", 1L,
+				Collections.emptyMap(),
+				csvBatchEngineImportTaskItemReaderImpl.read(),
+				HashMapBuilder.put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
+		}
+	}
+
+	private static final String[] _CSV_DELIMITERS = {
+		StringPool.CARET, StringPool.CLOSE_BRACKET,
+		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
+		StringPool.DOLLAR, StringPool.EXCLAMATION, StringPool.OPEN_BRACKET,
+		StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS,
+		StringPool.PERIOD, StringPool.PIPE, StringPool.PLUS,
+		StringPool.QUESTION, StringPool.STAR
+	};
+
+	private static final String[] _CSV_ENCLOSING_CHARACTERS = {
+		StringPool.QUOTE, StringPool.APOSTROPHE
+	};
 
 }

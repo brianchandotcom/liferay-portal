@@ -1,5 +1,13 @@
 definition {
 
+	macro changeLocale {
+		Click(locator1 = "ContentPerformance#LOCALE_BUTTON");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+	}
+
 	macro checkLanguagesOrder {
 		Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 

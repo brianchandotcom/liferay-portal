@@ -126,12 +126,23 @@ definition {
 	}
 
 	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is shown in the bar above the widget page in the view mode"
-	@ignore = "true"
 	@priority = "3"
 	test MetricsIconNotVisibleInWidgetPageWithoutAC {
+		task ("Create Widget Page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-144029 MetricsIconNotVisibleInWidgetPageWithoutAC pending implementation
+			PagesAdmin.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
+		task ("Navigate to Widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
+
+		task ("Assert icon is displayed by opening panel") {
+			ContentPerformance.openContentPerformance();
+		}
 	}
 
 	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"

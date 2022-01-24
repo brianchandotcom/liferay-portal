@@ -117,12 +117,54 @@ definition {
 	}
 
 	@description = "LPS-126047: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
-	@ignore = "true"
 	@priority = "3"
 	test ChangeLanguageInWidgetPage {
+		property test.name.skip.portal.instance = "ContentPerformance#LanguageSelector";
 
-		// TODO LPS-144029 ChangeLanguageInWidgetPage pending implementation
+		task ("Set portal to use Localized URL") {
+			SystemSettings.openSystemSettingsAdmin();
 
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "SEO",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.selectOptionSetting(
+				fieldName = "Canonical URL",
+				selectOption = "Use Localized URL");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Create Widget Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			PagesAdmin.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
+
+		task ("Navigate to Widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
+
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Change language") {
+			ContentPerformance.changeLocale(locale = "Portuguese");
+		}
+
+		task ("Check that the URL and date is from that translated page") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "pt/web/test-site-name");
+
+			AssertTextEquals(
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
@@ -412,12 +454,31 @@ definition {
 	}
 
 	@description = "LPS-126047: When DXP is connected and synced to AC and the user clicks on the metrics icon in a widget page, the content performance panel displays with the metrics of the content page"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsIconVisibleInWidgetPage {
+		task ("Create Widget Page") {
+			PagesAdmin.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
-		// TODO LPS-144029 MetricsIconVisibleInWidgetPage pending implementation
+		task ("Navigate to Widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
 
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if infomation if from that page") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Widget Page Name");
+
+			AssertTextEquals(
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
@@ -1019,12 +1080,33 @@ definition {
 	}
 
 	@description = "LPS-126047: When the user accesses to the content performance panel of a widget page, the name, the URL of the page and the language selector are shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test PanelInformationInWidgetPage {
+		task ("Create Widget Page") {
+			PagesAdmin.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
-		// TODO LPS-144029 PanelInformationInWidgetPage pending implementation
+		task ("Navigate to Widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
 
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if the name, the URL and the language selector are shown") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Widget Page Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "web/test-site-name/3");
+
+			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
 	}
 
 	@description = "LPS-109417: When the graphic shows the publication date, all previous dots will be 0"

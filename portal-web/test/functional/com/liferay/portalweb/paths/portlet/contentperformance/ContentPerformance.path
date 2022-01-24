@@ -51,13 +51,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOTAL_VIEWS_NUMBER</td>
-	<td>//*[contains(@class, 'mb-2')]//span[contains(@class, 'inline-item-after')]</td>
+	<td>CONTENT_PERFORMANCE_TRAFFIC</td>
+	<td>//h5[contains(@class,'mt-3 sheet-subtitle') and contains(text(),'Traffic Channels')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_TRAFFIC</td>
-	<td>//h5[contains(@class,'mt-3 sheet-subtitle') and contains(text(),'Traffic Channels')]</td>
+	<td>ICON_VIEW_METRICS</td>
+	<td>//button[contains(@label,'View Metrics')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTRUCTIONS_SYNC_AC</td>
+	<td>//*[contains(@class,'font-weight') and contains(text(),'Sync to Liferay Analytics Cloud')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_DROPDOWN_BUTTON</td>
+	<td>//div[contains(@class, 'sidebar-section')] //button[contains(@class, 'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_LABEL</td>
+	<td>//span[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALE_BUTTON</td>
+	<td>//div[contains(@class,'sidebar-body')] //button[*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,23 +101,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INSTRUCTIONS_SYNC_AC</td>
-	<td>//*[contains(@class,'font-weight') and contains(text(),'Sync to Liferay Analytics Cloud')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_VIEW_METRICS</td>
-	<td>//button[contains(@label,'View Metrics')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_DROPDOWN_BUTTON</td>
-	<td>//div[contains(@class, 'sidebar-section')] //button[contains(@class, 'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_LABEL</td>
-	<td>//span[contains(@class,'label-item')]</td>
+	<td>TOTAL_VIEWS_NUMBER</td>
+	<td>//*[contains(@class, 'mb-2')]//span[contains(@class, 'inline-item-after')]</td>
 	<td></td>
 </tr>
 </tbody>

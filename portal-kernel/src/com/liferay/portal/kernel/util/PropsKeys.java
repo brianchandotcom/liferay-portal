@@ -1415,46 +1415,6 @@ public interface PropsKeys {
 
 	public static final String INDEXER_ENABLED = "indexer.enabled";
 
-	public static final String INTRABAND_IMPL = "intraband.impl";
-
-	public static final String INTRABAND_MAILBOX_REAPER_THREAD_ENABLED =
-		"intraband.mailbox.reaper.thread.enabled";
-
-	public static final String INTRABAND_MAILBOX_STORAGE_LIFE =
-		"intraband.mailbox.storage.life";
-
-	public static final String INTRABAND_PROXY_DUMP_CLASSES_DIR =
-		"intraband.proxy.dump.classes.dir";
-
-	public static final String INTRABAND_PROXY_DUMP_CLASSES_ENABLED =
-		"intraband.proxy.dump.classes.enabled";
-
-	public static final String INTRABAND_TIMEOUT_DEFAULT =
-		"intraband.timeout.default";
-
-	public static final String INTRABAND_WELDER_IMPL = "intraband.welder.impl";
-
-	public static final String INTRABAND_WELDER_SOCKET_BUFFER_SIZE =
-		"intraband.welder.socket.buffer.size";
-
-	public static final String INTRABAND_WELDER_SOCKET_KEEP_ALIVE =
-		"intraband.welder.socket.keep.alive";
-
-	public static final String INTRABAND_WELDER_SOCKET_REUSE_ADDRESS =
-		"intraband.welder.socket.reuse.address";
-
-	public static final String INTRABAND_WELDER_SOCKET_SERVER_START_PORT =
-		"intraband.welder.socket.server.start.port";
-
-	public static final String INTRABAND_WELDER_SOCKET_SO_LINGER =
-		"intraband.welder.socket.so.linger";
-
-	public static final String INTRABAND_WELDER_SOCKET_SO_TIMEOUT =
-		"intraband.welder.socket.so.timeout";
-
-	public static final String INTRABAND_WELDER_SOCKET_TCP_NO_DELAY =
-		"intraband.welder.socket.tcp.no.delay";
-
 	public static final String INVOKER_FILTER_CHAIN_ENABLED =
 		"invoker.filter.chain.cache.enabled";
 
@@ -2481,28 +2441,6 @@ public interface PropsKeys {
 		"portal.jaas.strict.password";
 
 	public static final String PORTAL_PROXY_PATH = "portal.proxy.path";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTAL_RESILIENCY_ENABLED =
-		"portal.resiliency.enabled";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER =
-		"portal.resiliency.portlet.show.footer";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE =
-			"portal.resiliency.spi.agent.client.pool.max.size";
 
 	public static final String
 		PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS =

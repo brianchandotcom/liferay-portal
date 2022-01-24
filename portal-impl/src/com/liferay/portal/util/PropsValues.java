@@ -1218,13 +1218,6 @@ public class PropsValues {
 	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
 
-	public static final String INTRABAND_PROXY_DUMP_CLASSES_DIR = PropsUtil.get(
-		PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_DIR);
-
-	public static final boolean INTRABAND_PROXY_DUMP_CLASSES_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_ENABLED));
-
 	public static final boolean JAVASCRIPT_BAREBONE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JAVASCRIPT_BAREBONE_ENABLED));
@@ -2166,31 +2159,6 @@ public class PropsValues {
 
 	public static final String PORTAL_PROXY_PATH = PropsUtil.get(
 		PropsKeys.PORTAL_PROXY_PATH);
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean PORTAL_RESILIENCY_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PORTAL_RESILIENCY_ENABLED));
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER));
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE));
 
 	public static final String[]
 		PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES =

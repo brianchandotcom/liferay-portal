@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.dao.jdbc;
 
 import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;

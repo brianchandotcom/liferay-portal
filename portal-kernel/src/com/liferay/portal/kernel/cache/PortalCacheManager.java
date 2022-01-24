@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
-
 import java.io.Serializable;
 
 import java.net.URL;
@@ -36,7 +34,6 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public static final String PORTAL_CACHE_MANAGER_TYPE =
 		"portal.cache.manager.type";
 
-	@Proxy
 	public void clearAll() throws PortalCacheException;
 
 	public void destroy();
@@ -70,10 +67,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	 *             #reconfigurePortalCaches(URL, ClassLoader)}
 	 */
 	@Deprecated
-	@Proxy
 	public void reconfigurePortalCaches(URL configurationURL);
 
-	@Proxy
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader);
 

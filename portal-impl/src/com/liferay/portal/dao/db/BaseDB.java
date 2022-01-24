@@ -890,6 +890,8 @@ public abstract class BaseDB implements DB {
 		"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"
 	};
 
+	protected static final int SQL_VARCHAR_SIZE_NONE = -1;
+
 	protected static final String[] TEMPLATE = {
 		"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",

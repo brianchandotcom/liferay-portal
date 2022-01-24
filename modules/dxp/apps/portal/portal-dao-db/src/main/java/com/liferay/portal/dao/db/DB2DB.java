@@ -293,7 +293,9 @@ public class DB2DB extends BaseDB {
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
 
-	private static final int[] _SQL_VARCHAR_SIZES = {_SQL_STRING_SIZE, -1};
+	private static final int[] _SQL_VARCHAR_SIZES = {
+		_SQL_STRING_SIZE, SQL_VARCHAR_SIZE_NONE
+	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

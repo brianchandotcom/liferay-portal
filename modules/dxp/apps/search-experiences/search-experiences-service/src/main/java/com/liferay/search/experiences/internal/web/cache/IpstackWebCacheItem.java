@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.web.cache;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,8 +30,11 @@ import com.liferay.search.experiences.internal.configuration.IpstackConfiguratio
 
 import java.beans.ExceptionListener;
 
+import java.io.IOException;
+
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,28 +47,32 @@ public class IpstackWebCacheItem implements WebCacheItem {
 
 		try {
 			if (!ipstackConfiguration.enabled() ||
-				_isPrivateIPAddress(exceptionListener, ipAddress)) {
+				_isPrivateIPAddress(ipAddress)) {
 
 				return JSONFactoryUtil.createJSONObject();
 			}
+
+			return (JSONObject)WebCachePoolUtil.get(
+				StringBundler.concat(
+					IpstackWebCacheItem.class.getName(), StringPool.POUND,
+					ipstackConfiguration.apiKey(), StringPool.POUND,
+					ipstackConfiguration.apiURL(), StringPool.POUND, ipAddress),
+				new IpstackWebCacheItem(ipAddress, ipstackConfiguration));
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
 			exceptionListener.exceptionThrown(exception);
 
 			return JSONFactoryUtil.createJSONObject();
 		}
-
-		return (JSONObject)WebCachePoolUtil.get(
-			IpstackWebCacheItem.class.getName() + StringPool.POUND + ipAddress,
-			new IpstackWebCacheItem(
-				exceptionListener, ipAddress, ipstackConfiguration));
 	}
 
 	public IpstackWebCacheItem(
-		ExceptionListener exceptionListener, String ipAddress,
-		IpstackConfiguration ipstackConfiguration) {
+		String ipAddress, IpstackConfiguration ipstackConfiguration) {
 
-		_exceptionListener = exceptionListener;
 		_ipAddress = ipAddress;
 		_ipstackConfiguration = ipstackConfiguration;
 	}
@@ -93,14 +101,8 @@ public class IpstackWebCacheItem implements WebCacheItem {
 
 			return jsonObject;
 		}
-		catch (Exception exception) {
-			_exceptionListener.exceptionThrown(exception);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return JSONFactoryUtil.createJSONObject();
+		catch (IOException | JSONException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -113,9 +115,8 @@ public class IpstackWebCacheItem implements WebCacheItem {
 		return 0;
 	}
 
-	private static boolean _isPrivateIPAddress(
-			ExceptionListener exceptionListener, String ipAddress)
-		throws Exception {
+	private static boolean _isPrivateIPAddress(String ipAddress)
+		throws PrivateIPAddressException, UnknownHostException {
 
 		Inet4Address inet4Address = (Inet4Address)InetAddress.getByName(
 			ipAddress);
@@ -126,11 +127,8 @@ public class IpstackWebCacheItem implements WebCacheItem {
 			inet4Address.isMulticastAddress() ||
 			inet4Address.isSiteLocalAddress()) {
 
-			exceptionListener.exceptionThrown(
-				new PrivateIPAddressException(
-					"Unable to resolve private IP address " + ipAddress));
-
-			return true;
+			throw new PrivateIPAddressException(
+				"Unable to resolve private IP address " + ipAddress);
 		}
 
 		return false;
@@ -143,22 +141,20 @@ public class IpstackWebCacheItem implements WebCacheItem {
 			return;
 		}
 
-		_exceptionListener.exceptionThrown(
-			new RuntimeException(
-				StringBundler.concat(
-					"IPStack: ",
-					JSONUtil.getValueAsString(
-						jsonObject, "JSONObject/error", "Object/info"),
-					" (",
-					JSONUtil.getValueAsString(
-						jsonObject, "JSONObject/error", "Object/code"),
-					")")));
+		throw new RuntimeException(
+			StringBundler.concat(
+				"IPStack: ",
+				JSONUtil.getValueAsString(
+					jsonObject, "JSONObject/error", "Object/info"),
+				" (",
+				JSONUtil.getValueAsString(
+					jsonObject, "JSONObject/error", "Object/code"),
+				")"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IpstackWebCacheItem.class);
 
-	private final ExceptionListener _exceptionListener;
 	private final String _ipAddress;
 	private final IpstackConfiguration _ipstackConfiguration;
 

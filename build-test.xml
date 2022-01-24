@@ -8977,6 +8977,24 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 		</if>
 
 		<if>
+			<matches pattern="https?://.*" string="${test.build.fix.pack.zip.url}" />
+			<then>
+				<local name="patch.requirements" />
+
+				<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+
+				<if>
+					<matches pattern="sp\d+" string="${patch.requirements}" />
+					<then>
+						<echo append="true" file="portal-impl/src/portal-ext.properties">
+							verify.patch.levels.disabled=true
+						</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.set.default.portal.properties" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}</echo>

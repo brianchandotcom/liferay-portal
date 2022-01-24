@@ -10,13 +10,13 @@
 					"content_${context.language_id}",
 					"createDate",
 					"description",
-					"description_{context.language_id}",
+					"description_${context.language_id}",
 					"entryClassName",
 					"entryClassPK",
 					"fullName",
 					"localized_title_${context.language_id}",
 					"name",
-					"name_{context.language_id}",
+					"name_${context.language_id}",
 					"title_${context.language_id}",
 					"modified"
 				]

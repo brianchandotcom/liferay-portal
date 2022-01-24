@@ -18,7 +18,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 
 import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar';
-import SidebarPanelInfoView from '../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView';
+import SidebarPanelInfoView from '../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView/SidebarPanelInfoView';
 import {
 	mockedFileDocumentProps,
 	mockedImageDocumentProps,

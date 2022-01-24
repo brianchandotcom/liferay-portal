@@ -19,11 +19,11 @@ import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import React from 'react';
 
+import Sidebar from '../Sidebar';
+import CollapsibleSection from './CollapsibleSection';
 import DocumentPreview from './DocumentPreview';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
-import Sidebar from './Sidebar';
-import SidebarPanelInfoCollapsibleSection from './SidebarPanelCollapsibleSection';
 
 const formatDate = (date, languageTag) => {
 	return (
@@ -184,7 +184,7 @@ const SidebarPanelInfoView = ({
 
 				<ClayPanel.Group className="panel-group-flush panel-group-sm">
 					{showTaxonomies && (
-						<SidebarPanelInfoCollapsibleSection
+						<CollapsibleSection
 							expanded={true}
 							title={Liferay.Language.get('categorization')}
 						>
@@ -227,10 +227,10 @@ const SidebarPanelInfoView = ({
 									</p>
 								</div>
 							)}
-						</SidebarPanelInfoCollapsibleSection>
+						</CollapsibleSection>
 					)}
 
-					<SidebarPanelInfoCollapsibleSection
+					<CollapsibleSection
 						expanded={false}
 						title={Liferay.Language.get('details')}
 					>
@@ -273,7 +273,7 @@ const SidebarPanelInfoView = ({
 						{!!viewURLs.length && !isADocument && (
 							<ItemLanguages urls={viewURLs} />
 						)}
-					</SidebarPanelInfoCollapsibleSection>
+					</CollapsibleSection>
 				</ClayPanel.Group>
 			</Sidebar.Body>
 		</>

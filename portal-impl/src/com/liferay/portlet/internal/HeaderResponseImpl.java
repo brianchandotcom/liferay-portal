@@ -95,26 +95,8 @@ public class HeaderResponseImpl
 
 			xml = _addClosingTags(xml);
 
-			List<ParsedElement> parsedElements = _parseElements(xml);
-
-			if (parsedElements.isEmpty()) {
+			if (_validateParsedElements(xml) == 0) {
 				return;
-			}
-
-			ParsedElement firstParsedElement = parsedElements.get(0);
-
-			if (!firstParsedElement.isScriptTemplate() &&
-				(parsedElements.size() > 1)) {
-
-				throw new IllegalArgumentException(
-					"More than one element in markup: " + xml);
-			}
-
-			for (ParsedElement parsedElement : parsedElements) {
-				if (!parsedElement.isValid()) {
-					throw new IllegalArgumentException(
-						"Invalid dependency: " + xml);
-				}
 			}
 		}
 
@@ -587,6 +569,34 @@ public class HeaderResponseImpl
 		}
 
 		return parsedElements;
+	}
+
+	private int _validateParsedElements(String xml) {
+		List<ParsedElement> parsedElements = _parseElements(xml);
+
+		int totalParsedElements = parsedElements.size();
+
+		if (totalParsedElements == 0) {
+			return totalParsedElements;
+		}
+
+		ParsedElement firstParsedElement = parsedElements.get(0);
+
+		if (!firstParsedElement.isScriptTemplate() &&
+			(totalParsedElements > 1)) {
+
+			throw new IllegalArgumentException(
+				"More than one element in markup: " + xml);
+		}
+
+		for (ParsedElement parsedElement : parsedElements) {
+			if (!parsedElement.isValid()) {
+				throw new IllegalArgumentException(
+					"Invalid dependency: " + xml);
+			}
+		}
+
+		return totalParsedElements;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

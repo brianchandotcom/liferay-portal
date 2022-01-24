@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,6 +34,53 @@ public class HeaderResponseImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() throws Exception {
+		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
+			new SecureXMLFactoryProviderUtil();
+
+		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
+			new SecureXMLFactoryProviderImpl());
+	}
+
+	@Test
+	public void testAddDependencyScriptDataTemplate() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<script id=\"dt\" type=\"data/template\">");
+		sb.append("<p>foo</p><p>bar</p>");
+		sb.append("</script>");
+
+		try {
+			ReflectionTestUtil.invoke(
+				new HeaderResponseImpl(), "_validateParsedElements",
+				new Class<?>[] {String.class}, sb.toString());
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.fail(
+				"Unable to add a <script type=\"data-template\"> with " +
+					"multiple child elements");
+		}
+
+		sb = new StringBuilder();
+
+		sb.append("<script id=\"dt\" type=\"text/javascript\">");
+		sb.append("<p>foo</p><p>bar</p>");
+		sb.append("</script>");
+
+		try {
+			ReflectionTestUtil.invoke(
+				new HeaderResponseImpl(), "_validateParsedElements",
+				new Class<?>[] {String.class}, sb.toString());
+
+			Assert.fail(
+				"Was able to add a <script type=\"text-javascript\"> with " +
+					"multiple child elements");
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+		}
+	}
 
 	@Test
 	public void testWellFormedXML() {

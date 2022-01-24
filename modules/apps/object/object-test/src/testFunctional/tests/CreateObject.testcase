@@ -437,43 +437,43 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
 	@priority = "5"
 	test CanAddRelationOnRelationshipField {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141652",
+			objectName = "CustomObject141652",
+			pluralLabelName = "Custom Objects 141652");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141652");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141652",
+			objectName_2 = "CustomObject141652",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141652");
 
 		for (var fieldEntry : list "A,B") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
-				objectName = "CustomObject",
+				objectName = "CustomObject141652",
 				value = "Entry ${fieldEntry}");
 		}
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject141652");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141652");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
@@ -490,7 +490,7 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Custom Object",
+			fieldList = "Custom Field,Custom Object 141652",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabRelationshipsOnLayout(
@@ -501,7 +501,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141652");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
@@ -509,7 +509,7 @@ definition {
 			entry = "",
 			newEntry = "Entry B");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141652");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
@@ -1334,34 +1334,34 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
 	@priority = "5"
 	test CanDeleteRelationOnRelationshipTab {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141661",
+			objectName = "CustomObject141661",
+			pluralLabelName = "Custom Objects 141661");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141661");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141661",
+			objectName_2 = "CustomObject141661",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject141661");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141661");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
@@ -1378,7 +1378,7 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Custom Object",
+			fieldList = "Custom Field,Custom Object 141661",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
@@ -1389,14 +1389,14 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141661");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141661",
 			value = "Entry A");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141661");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(
 			entryOption = "Entry A",
@@ -1408,7 +1408,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141661");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
@@ -1418,7 +1418,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141661");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
@@ -4240,29 +4240,29 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141614",
+			objectName = "CustomObject141614",
+			pluralLabelName = "Custom Objects 141614");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Double",
 			fieldName = "customObjectField",
 			fieldType = "Double",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141614");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141614",
+			objectName_2 = "CustomObject141614",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141614");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141614");
 
 		CreateObject.selectTitleField(fieldLabel = "Double");
 
@@ -4270,10 +4270,10 @@ definition {
 
 		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141614",
 			value = "12.34");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141614");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12.34");
 	}
@@ -4282,29 +4282,29 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleIntegerOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141615",
+			objectName = "CustomObject141615",
+			pluralLabelName = "Custom Objects 141615");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Integer",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141615");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141615",
+			objectName_2 = "CustomObject141615",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141615");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141615");
 
 		CreateObject.selectTitleField(fieldLabel = "Integer");
 
@@ -4312,10 +4312,10 @@ definition {
 
 		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141615",
 			value = "123");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141615");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "123");
 	}
@@ -4324,39 +4324,39 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleLongOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141616",
+			objectName = "CustomObject141616",
+			pluralLabelName = "Custom Objects 141616");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Long",
 			fieldName = "customObjectField",
 			fieldType = "Long",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141616");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141616",
+			objectName_2 = "CustomObject141616",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141616");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141616");
 
 		CreateObject.selectTitleField(fieldLabel = "Long");
 
 		Button.clickSave();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
 		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = "12345678912345678");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12345678912345678");
 	}
@@ -4418,34 +4418,32 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnRelationshipTab {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141620",
+			objectName = "CustomObject141620",
+			pluralLabelName = "Custom Objects 141620");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141620");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141620",
+			objectName_2 = "CustomObject141620",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject141620");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141620");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
@@ -4462,7 +4460,7 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Custom Object",
+			fieldList = "Custom Field,Custom Object 141620",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabRelationshipsOnLayout(
@@ -4471,18 +4469,18 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141620");
 
 		for (var fieldEntry : list "A,B") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
-				objectName = "CustomObject",
+				objectName = "CustomObject141620",
 				value = "Entry ${fieldEntry}");
 		}
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141620");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
@@ -4498,39 +4496,37 @@ definition {
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnWorkflowPages {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141624",
+			objectName = "CustomObject141624",
+			pluralLabelName = "Custom Objects 141624");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141624");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141624");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141624");
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 141624");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141624",
 			value = "Test Entry");
 
 		Navigator.openURL();
@@ -4562,33 +4558,31 @@ definition {
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed when selecting to preview an object entry on a Page Template"
 	@priority = "4"
 	test CanViewObjectEntryTitlePreviewOnPageTemplate {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141623",
+			objectName = "CustomObject141623",
+			pluralLabelName = "Custom Objects 141623");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141623");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141623");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141623");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141623",
 			value = "Test Entry");
 
 		Navigator.openURL();
@@ -4596,9 +4590,9 @@ definition {
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
-			contentType = "Custom Object",
+			contentType = "Custom Object 141623",
 			displayPageName = "Blank Display Page",
-			subtype = "Custom Object");
+			subtype = "Custom Object 141623");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -6319,12 +6313,10 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
+			labelName = "Custom Object 140887",
 			objectName = "CustomObject140887",
-			pluralLabelName = "Custom Objects");
+			pluralLabelName = "Custom Objects 140887");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
@@ -6369,7 +6361,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140887");
 
 		CreateObject.checkToggleInactive();
 
@@ -6377,7 +6369,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140887");
 
 		CreateObject.checkToggleActive();
 
@@ -6386,25 +6378,25 @@ definition {
 		ObjectAdmin.openMyWorkflowTasks();
 
 		AssertElementPresent(
-			key_workflowAssetTitle = "Custom Object",
+			key_workflowAssetTitle = "Custom Object 140887",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		AssertElementPresent(
-			key_workflowAssetTitle = "Custom Object",
+			key_workflowAssetTitle = "Custom Object 140887",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		ObjectAdmin.openMySubmissions();
 
 		AssertElementPresent(
-			key_submissionName = "Custom Object",
+			key_submissionName = "Custom Object 140887",
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 
 		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(
-			key_submissionName = "Custom Object",
+			key_submissionName = "Custom Object 140887",
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
@@ -6535,25 +6527,25 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
 	@priority = "5"
 	test ObjectPorletDisappearsOpenMenuWhenInactivated {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 140856",
+			objectName = "CustomObject140856",
+			pluralLabelName = "Custom Objects 140856");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject140856");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140856");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140856");
 
 		CreateObject.checkToggleInactive();
 
@@ -6565,7 +6557,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_category = "Object",
-			key_portlet = "Custom Objects",
+			key_portlet = "Custom Objects 140856",
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 

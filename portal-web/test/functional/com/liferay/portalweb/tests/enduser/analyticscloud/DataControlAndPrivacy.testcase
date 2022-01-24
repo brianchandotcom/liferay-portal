@@ -41,6 +41,8 @@ definition {
 	@priority = "4"
 	test CanChangeRetentionPeriod {
 		task ("Launch AC and go to Settings") {
+			ACUtils.launchAC();
+
 			ACNavigation.goToSettings();
 		}
 

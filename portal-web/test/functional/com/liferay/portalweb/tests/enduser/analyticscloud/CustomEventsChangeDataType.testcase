@@ -264,7 +264,7 @@ definition {
 
 			ACEventAnalysis.changeAttributeDataType(
 				attributeName = "${attributeName}",
-				editOption = "Filter",
+				editOption = "Description",
 				newDataType = "Duration");
 		}
 

@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -119,16 +117,12 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return bodyElement.html();
 		}
 
-		Optional<Map<String, Object>> fieldValuesOptional =
-			fragmentEntryProcessorContext.getFieldValuesOptional();
-
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = elements.get(i);
 
 			String dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				fragmentEntryProcessorContext.getHttpServletResponse(),
-				fieldValuesOptional.orElse(null),
 				fragmentEntryLink.getGroupId(), 0, dropZoneItemIds.get(i),
 				fragmentEntryProcessorContext.getMode(), true);
 

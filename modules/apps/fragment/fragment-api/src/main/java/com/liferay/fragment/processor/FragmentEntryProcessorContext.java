@@ -15,7 +15,6 @@
 package com.liferay.fragment.processor;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FragmentEntryProcessorContext {
 
 	public Optional<Object> getDisplayObjectOptional();
-
-	public Optional<Map<String, Object>> getFieldValuesOptional();
 
 	public String getFragmentElementId();
 

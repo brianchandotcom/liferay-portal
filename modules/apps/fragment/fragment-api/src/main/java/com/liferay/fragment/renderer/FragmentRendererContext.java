@@ -17,7 +17,6 @@ package com.liferay.fragment.renderer;
 import com.liferay.fragment.model.FragmentEntryLink;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -29,8 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FragmentRendererContext {
 
 	public Optional<Object> getDisplayObjectOptional();
-
-	public Optional<Map<String, Object>> getFieldValuesOptional();
 
 	public String getFragmentElementId();
 

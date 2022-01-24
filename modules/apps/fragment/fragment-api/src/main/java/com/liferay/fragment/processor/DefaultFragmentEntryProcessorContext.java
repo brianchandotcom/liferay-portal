@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.item.InfoItemIdentifier;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,11 +42,6 @@ public class DefaultFragmentEntryProcessorContext
 	@Override
 	public Optional<Object> getDisplayObjectOptional() {
 		return Optional.ofNullable(_displayObject);
-	}
-
-	@Override
-	public Optional<Map<String, Object>> getFieldValuesOptional() {
-		return Optional.ofNullable(_fieldValues);
 	}
 
 	@Override
@@ -104,10 +98,6 @@ public class DefaultFragmentEntryProcessorContext
 		_displayObject = object;
 	}
 
-	public void setFieldValues(Map<String, Object> fieldValues) {
-		_fieldValues = fieldValues;
-	}
-
 	public void setFragmentElementId(String fragmentElementId) {
 		_fragmentElementId = fragmentElementId;
 	}
@@ -133,7 +123,6 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	private Object _displayObject;
-	private Map<String, Object> _fieldValues;
 	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

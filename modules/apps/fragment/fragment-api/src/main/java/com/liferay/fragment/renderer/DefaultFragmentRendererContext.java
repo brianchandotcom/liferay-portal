@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -38,11 +37,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	@Override
 	public Optional<Object> getDisplayObjectOptional() {
 		return Optional.ofNullable(_displayObject);
-	}
-
-	@Override
-	public Optional<Map<String, Object>> getFieldValuesOptional() {
-		return Optional.ofNullable(_fieldValues);
 	}
 
 	@Override
@@ -130,10 +124,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_displayObject = object;
 	}
 
-	public void setFieldValues(Map<String, Object> fieldValues) {
-		_fieldValues = fieldValues;
-	}
-
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
@@ -169,7 +159,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	private int _collectionElementIndex = -1;
 	private List<String> _collectionStyledLayoutStructureItemIds;
 	private Object _displayObject;
-	private Map<String, Object> _fieldValues;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private String _mode = FragmentEntryLinkConstants.VIEW;

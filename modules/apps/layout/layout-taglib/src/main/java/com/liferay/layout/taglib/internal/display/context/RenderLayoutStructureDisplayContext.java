@@ -71,7 +71,6 @@ import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,11 +81,9 @@ import javax.servlet.http.HttpServletRequest;
 public class RenderLayoutStructureDisplayContext {
 
 	public RenderLayoutStructureDisplayContext(
-		Map<String, Object> fieldValues, HttpServletRequest httpServletRequest,
-		LayoutStructure layoutStructure, String mainItemId, String mode,
-		boolean showPreview) {
+		HttpServletRequest httpServletRequest, LayoutStructure layoutStructure,
+		String mainItemId, String mode, boolean showPreview) {
 
-		_fieldValues = fieldValues;
 		_httpServletRequest = httpServletRequest;
 		_layoutStructure = layoutStructure;
 		_mainItemId = mainItemId;
@@ -452,7 +449,6 @@ public class RenderLayoutStructureDisplayContext {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			defaultFragmentRendererContext.setFieldValues(_fieldValues);
 			defaultFragmentRendererContext.setMode(_mode);
 			defaultFragmentRendererContext.setPreviewClassNameId(
 				_getPreviewClassNameId());
@@ -1154,7 +1150,6 @@ public class RenderLayoutStructureDisplayContext {
 
 	private final List<String> _collectionStyledLayoutStructureItemIds =
 		new ArrayList<>();
-	private final Map<String, Object> _fieldValues;
 	private JSONObject _frontendTokensJSONObject;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;

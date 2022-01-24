@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -33,12 +32,10 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,25 +118,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
 				PortalUtil.getClassNameId(_infoItemDetails.getClassName()));
-	}
-
-	public Map<String, Object> getInfoDisplayFieldsValues() {
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			(InfoItemFieldValuesProvider)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
-
-		if (infoItemFieldValuesProvider == null) {
-			return null;
-		}
-
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(_infoItem);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return infoItemFieldValues.getMap(themeDisplay.getLocale());
 	}
 
 	public boolean hasPermission(

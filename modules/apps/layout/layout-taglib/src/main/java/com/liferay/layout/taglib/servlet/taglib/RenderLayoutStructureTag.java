@@ -64,7 +64,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,10 +75,6 @@ import javax.servlet.jsp.PageContext;
  * @author Eudaldo Alonso
  */
 public class RenderLayoutStructureTag extends IncludeTag {
-
-	public Map<String, Object> getFieldValues() {
-		return _fieldValues;
-	}
 
 	public LayoutStructure getLayoutStructure() {
 		return _layoutStructure;
@@ -95,10 +90,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 	public boolean isShowPreview() {
 		return _showPreview;
-	}
-
-	public void setFieldValues(Map<String, Object> fieldValues) {
-		_fieldValues = fieldValues;
 	}
 
 	public void setLayoutStructure(LayoutStructure layoutStructure) {
@@ -128,7 +119,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_fieldValues = null;
 		_layoutStructure = null;
 		_mainItemId = null;
 		_mode = FragmentEntryLinkConstants.VIEW;
@@ -147,8 +137,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		RenderLayoutStructureDisplayContext
 			renderLayoutStructureDisplayContext =
 				new RenderLayoutStructureDisplayContext(
-					getFieldValues(), getRequest(), getLayoutStructure(),
-					getMainItemId(), getMode(), isShowPreview());
+					getRequest(), getLayoutStructure(), getMainItemId(),
+					getMode(), isShowPreview());
 
 		_renderLayoutStructure(
 			renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
@@ -832,7 +822,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";
 
-	private Map<String, Object> _fieldValues;
 	private LayoutStructure _layoutStructure;
 	private String _mainItemId;
 	private String _mode = FragmentEntryLinkConstants.VIEW;

@@ -274,12 +274,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		defaultFragmentEntryProcessorContext.setDisplayObject(
 			displayObjectOptional.orElse(null));
 
-		Optional<Map<String, Object>> fieldValuesOptional =
-			fragmentRendererContext.getFieldValuesOptional();
-
-		defaultFragmentEntryProcessorContext.setFieldValues(
-			fieldValuesOptional.orElse(null));
-
 		defaultFragmentEntryProcessorContext.setFragmentElementId(
 			fragmentRendererContext.getFragmentElementId());
 		defaultFragmentEntryProcessorContext.setPreviewClassNameId(

@@ -16,8 +16,6 @@ package com.liferay.fragment.renderer;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,8 +26,7 @@ public interface FragmentDropZoneRenderer {
 
 	public String renderDropZone(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			Map<String, Object> fieldValues, long groupId, long plid,
+			HttpServletResponse httpServletResponse, long groupId, long plid,
 			String mainItemId, String mode, boolean showPreview)
 		throws PortalException;
 

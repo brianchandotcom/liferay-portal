@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -525,15 +524,6 @@ public class FragmentEntryProcessorHelperImpl
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 		template.put("contentAccessorUtil", ContentAccessorUtil.getInstance());
-
-		Optional<Map<String, Object>> fieldValuesOptional =
-			fragmentEntryProcessorContext.getFieldValuesOptional();
-
-		if (fieldValuesOptional.isPresent() &&
-			MapUtil.isNotEmpty(fieldValuesOptional.get())) {
-
-			template.putAll(fieldValuesOptional.get());
-		}
 
 		template.prepare(fragmentEntryProcessorContext.getHttpServletRequest());
 

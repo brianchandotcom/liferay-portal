@@ -21,8 +21,6 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,8 +35,7 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 	@Override
 	public String renderDropZone(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			Map<String, Object> fieldValues, long groupId, long plid,
+			HttpServletResponse httpServletResponse, long groupId, long plid,
 			String mainItemId, String mode, boolean showPreview)
 		throws PortalException {
 
@@ -51,7 +48,6 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 			RenderFragmentLayoutTag renderFragmentLayoutTag =
 				new RenderFragmentLayoutTag();
 
-			renderFragmentLayoutTag.setFieldValues(fieldValues);
 			renderFragmentLayoutTag.setGroupId(groupId);
 			renderFragmentLayoutTag.setMainItemId(mainItemId);
 			renderFragmentLayoutTag.setMode(mode);

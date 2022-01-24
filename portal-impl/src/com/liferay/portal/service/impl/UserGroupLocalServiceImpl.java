@@ -176,11 +176,27 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public UserGroup addOrUpdateUserGroup(
 			String externalReferenceCode, long userId, long companyId,
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
+		UserGroup userGroup = fetchUserGroupByExternalReferenceCode(
+			companyId, externalReferenceCode);
+
+		if (userGroup != null) {
+			return updateUserGroup(
+				companyId, userGroup.getUserGroupId(), name, description,
+				serviceContext);
+		}
+
+		userGroup = addUserGroup(
+			userId, companyId, name, description, serviceContext);
+
+		userGroup.setExternalReferenceCode(externalReferenceCode);
+
+		return userGroupPersistence.update(userGroup);
 	}
 
 	/**

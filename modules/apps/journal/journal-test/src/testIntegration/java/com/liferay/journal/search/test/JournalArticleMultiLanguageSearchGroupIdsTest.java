@@ -255,7 +255,7 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 		SearchContext searchContext) {
 
 		FieldValuesAssert.assertFieldValues(
-			Collections.singletonMap(fieldPrefix + "_" + locale, fieldValue),
+			Collections.singletonMap(fieldPrefix + locale, fieldValue),
 			fieldPrefix, document,
 			(String)searchContext.getAttribute("queryString"));
 	}
@@ -267,10 +267,10 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 		Document document = findDocument(locale, documents);
 
 		assertOnlyPrefixedFieldIsTranslation(
-			"content", locale, content, document, searchContext);
+			"content_", locale, content, document, searchContext);
 
 		assertOnlyPrefixedFieldIsTranslation(
-			"title", locale, title, document, searchContext);
+			"title_", locale, title, document, searchContext);
 	}
 
 	protected Document findDocument(Locale locale, List<Document> documents) {

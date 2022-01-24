@@ -93,7 +93,8 @@ public class FragmentLayoutStructureItemImporter
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layoutStructureItemImporterContext.getLayout(), pageElement,
+			layoutStructureItemImporterContext.getLayout(),
+			layoutStructureItemImporterContext, pageElement,
 			layoutStructureItemImporterContext.getPosition(), warningMessages);
 
 		if (fragmentEntryLink == null) {
@@ -125,9 +126,9 @@ public class FragmentLayoutStructureItemImporter
 					MapUtil.isNotEmpty(fragmentStyleMap)) {
 
 					JSONObject commonStylesJSONObject = toStylesJSONObject(
-						fragmentStyleMap);
+						layoutStructureItemImporterContext, fragmentStyleMap);
 					JSONObject configStylesJSONObject = toStylesJSONObject(
-						fragmentConfigMap);
+						layoutStructureItemImporterContext, fragmentConfigMap);
 
 					for (String key : commonStylesJSONObject.keySet()) {
 						if (Validator.isNull(
@@ -148,7 +149,9 @@ public class FragmentLayoutStructureItemImporter
 			}
 			else if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(fragmentStyleMap));
+					"styles",
+					toStylesJSONObject(
+						layoutStructureItemImporterContext, fragmentStyleMap));
 
 				layoutStructureItem.updateItemConfig(jsonObject);
 			}
@@ -177,8 +180,10 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			Layout layout, PageElement pageElement, int position,
-			Set<String> warningMessages)
+			Layout layout,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement, int position, Set<String> warningMessages)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -246,6 +251,7 @@ public class FragmentLayoutStructureItemImporter
 			"com.liferay.fragment.entry.processor.background.image." +
 				"BackgroundImageFragmentEntryProcessor",
 			_toBackgroundImageFragmentEntryProcessorJSONObject(
+				layoutStructureItemImporterContext,
 				(List<Object>)definitionMap.get("fragmentFields"))
 		).put(
 			"com.liferay.fragment.entry.processor.editable." +
@@ -254,7 +260,8 @@ public class FragmentLayoutStructureItemImporter
 				JSONObject editableFragmentEntryProcessorJSONObject =
 					_toEditableFragmentEntryProcessorJSONObject(
 						editableTypes,
-						(List<Object>)definitionMap.get("fragmentFields"));
+						(List<Object>)definitionMap.get("fragmentFields"),
+						layoutStructureItemImporterContext);
 
 				if (editableFragmentEntryProcessorJSONObject.length() > 0) {
 					return editableFragmentEntryProcessorJSONObject;
@@ -305,6 +312,7 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private JSONObject _createBaseFragmentFieldJSONObject(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
 		Map<String, Object> map) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -347,7 +355,9 @@ public class FragmentLayoutStructureItemImporter
 			return jsonObject;
 		}
 
-		processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
+		processMapping(
+			jsonObject, layoutStructureItemImporterContext,
+			(Map<String, Object>)map.get("mapping"));
 
 		return jsonObject;
 	}
@@ -397,7 +407,8 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private JSONObject _createFragmentLinkConfigJSONObject(
-		Map<String, Object> fragmentLinkMap) {
+		Map<String, Object> fragmentLinkMap,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -416,7 +427,8 @@ public class FragmentLayoutStructureItemImporter
 				jsonObject.put(
 					entry.getKey(),
 					_createFragmentLinkValueConfigJSONObject(
-						fragmentLinkValueMap));
+						fragmentLinkValueMap,
+						layoutStructureItemImporterContext));
 			}
 		}
 
@@ -427,12 +439,14 @@ public class FragmentLayoutStructureItemImporter
 			if (valueMap != null) {
 				jsonObject = JSONUtil.merge(
 					jsonObject,
-					_createFragmentLinkValueConfigJSONObject(valueMap));
+					_createFragmentLinkValueConfigJSONObject(
+						valueMap, layoutStructureItemImporterContext));
 			}
 
 			jsonObject = JSONUtil.merge(
 				jsonObject,
-				_createFragmentLinkValueConfigJSONObject(fragmentLinkMap));
+				_createFragmentLinkValueConfigJSONObject(
+					fragmentLinkMap, layoutStructureItemImporterContext));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
@@ -446,7 +460,8 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private JSONObject _createFragmentLinkValueConfigJSONObject(
-		Map<String, Object> fragmentLinkValueMap) {
+		Map<String, Object> fragmentLinkValueMap,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -498,7 +513,9 @@ public class FragmentLayoutStructureItemImporter
 			jsonObject.put("href", value);
 		}
 
-		processMapping(jsonObject, (Map<String, Object>)hrefMap.get("mapping"));
+		processMapping(
+			jsonObject, layoutStructureItemImporterContext,
+			(Map<String, Object>)hrefMap.get("mapping"));
 
 		return jsonObject;
 	}
@@ -781,6 +798,7 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private JSONObject _toBackgroundImageFragmentEntryProcessorJSONObject(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
 		List<Object> fragmentFields) {
 
 		JSONObject backgroundImageFragmentEntryProcessorValuesJSONObject =
@@ -811,7 +829,8 @@ public class FragmentLayoutStructureItemImporter
 				(Map<String, Object>)backgroundFragmentImageMap.get("url");
 
 			JSONObject fragmentFieldValueJSONObject =
-				_createBaseFragmentFieldJSONObject(urlMap);
+				_createBaseFragmentFieldJSONObject(
+					layoutStructureItemImporterContext, urlMap);
 
 			Map<String, Object> titleMap =
 				(Map<String, Object>)backgroundFragmentImageMap.get("title");
@@ -831,7 +850,8 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private JSONObject _toEditableFragmentEntryProcessorJSONObject(
-		Map<String, String> editableTypes, List<Object> fragmentFields) {
+		Map<String, String> editableTypes, List<Object> fragmentFields,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -861,15 +881,18 @@ public class FragmentLayoutStructureItemImporter
 
 			JSONObject editableFieldConfigJSONObject =
 				_createFragmentLinkConfigJSONObject(
-					(Map<String, Object>)valueMap.get("fragmentLink"));
+					(Map<String, Object>)valueMap.get("fragmentLink"),
+					layoutStructureItemImporterContext);
 
 			JSONObject baseFragmentFieldJSONObject =
 				_createBaseFragmentFieldJSONObject(
+					layoutStructureItemImporterContext,
 					(Map<String, Object>)valueMap.get("text"));
 
 			if (Objects.equals(editableTypes.get(fragmentFieldId), "html")) {
 				baseFragmentFieldJSONObject =
 					_createBaseFragmentFieldJSONObject(
+						layoutStructureItemImporterContext,
 						(Map<String, Object>)valueMap.get("html"));
 			}
 
@@ -884,6 +907,7 @@ public class FragmentLayoutStructureItemImporter
 					if (fragmentImageMap.containsKey("url")) {
 						baseFragmentFieldJSONObject =
 							_createBaseFragmentFieldJSONObject(
+								layoutStructureItemImporterContext,
 								(Map<String, Object>)fragmentImageMap.get(
 									"url"));
 					}

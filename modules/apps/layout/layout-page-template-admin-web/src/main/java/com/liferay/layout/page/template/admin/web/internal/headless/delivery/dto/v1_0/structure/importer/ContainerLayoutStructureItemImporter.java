@@ -99,7 +99,8 @@ public class ContainerLayoutStructureItemImporter
 					jsonObject.put("url", getLocalizedValue(urlMap));
 
 					processMapping(
-						jsonObject, (Map<String, Object>)urlMap.get("mapping"));
+						jsonObject, layoutStructureItemImporterContext,
+						(Map<String, Object>)urlMap.get("mapping"));
 				}
 
 				stylesJSONObject.put("backgroundImage", jsonObject);
@@ -279,7 +280,7 @@ public class ContainerLayoutStructureItemImporter
 					}
 
 					processMapping(
-						jsonObject,
+						jsonObject, layoutStructureItemImporterContext,
 						(Map<String, Object>)hrefMap.get("mapping"));
 				}
 
@@ -308,7 +309,9 @@ public class ContainerLayoutStructureItemImporter
 
 			if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(fragmentStyleMap));
+					"styles",
+					toStylesJSONObject(
+						layoutStructureItemImporterContext, fragmentStyleMap));
 
 				containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
 			}

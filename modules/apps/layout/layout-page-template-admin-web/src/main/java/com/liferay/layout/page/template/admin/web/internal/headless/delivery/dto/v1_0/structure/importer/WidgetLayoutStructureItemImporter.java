@@ -82,7 +82,9 @@ public class WidgetLayoutStructureItemImporter
 
 			if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(fragmentStyleMap));
+					"styles",
+					toStylesJSONObject(
+						layoutStructureItemImporterContext, fragmentStyleMap));
 
 				fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
 			}

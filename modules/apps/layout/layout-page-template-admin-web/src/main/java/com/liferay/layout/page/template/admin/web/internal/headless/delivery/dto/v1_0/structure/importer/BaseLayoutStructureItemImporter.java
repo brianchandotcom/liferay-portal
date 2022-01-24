@@ -79,7 +79,9 @@ public abstract class BaseLayoutStructureItemImporter {
 	}
 
 	protected void processMapping(
-		JSONObject jsonObject, Map<String, Object> map) {
+		JSONObject jsonObject,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		Map<String, Object> map) {
 
 		if (map == null) {
 			return;
@@ -238,7 +240,10 @@ public abstract class BaseLayoutStructureItemImporter {
 			));
 	}
 
-	protected JSONObject toStylesJSONObject(Map<String, Object> styles) {
+	protected JSONObject toStylesJSONObject(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		Map<String, Object> styles) {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (MapUtil.isEmpty(styles)) {
@@ -279,6 +284,7 @@ public abstract class BaseLayoutStructureItemImporter {
 
 					processMapping(
 						backgroundImageJSONObject,
+						layoutStructureItemImporterContext,
 						(Map<String, Object>)urlMap.get("mapping"));
 				}
 

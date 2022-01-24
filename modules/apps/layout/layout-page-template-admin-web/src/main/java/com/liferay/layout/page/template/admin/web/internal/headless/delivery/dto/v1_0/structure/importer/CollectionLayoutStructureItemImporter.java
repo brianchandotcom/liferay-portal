@@ -108,7 +108,9 @@ public class CollectionLayoutStructureItemImporter
 
 			if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(fragmentStyleMap));
+					"styles",
+					toStylesJSONObject(
+						layoutStructureItemImporterContext, fragmentStyleMap));
 
 				collectionStyledLayoutStructureItem.updateItemConfig(
 					jsonObject);

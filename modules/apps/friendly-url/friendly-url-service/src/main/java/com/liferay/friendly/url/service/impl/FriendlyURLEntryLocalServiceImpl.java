@@ -14,6 +14,7 @@
 
 package com.liferay.friendly.url.service.impl;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
@@ -136,9 +137,11 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry.setClassPK(classPK);
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 
-		friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
 
-		friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
+			friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
+		}
 
 		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 

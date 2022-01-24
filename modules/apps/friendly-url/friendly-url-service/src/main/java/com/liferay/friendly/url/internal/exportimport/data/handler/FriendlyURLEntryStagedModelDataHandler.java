@@ -141,6 +141,14 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 			importedFriendlyURLEntry = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedFriendlyURLEntry);
+
+			boolean mainEntry = GetterUtil.getBoolean(
+				friendlyURLEntryElement.attributeValue("mainEntry"));
+
+			if (mainEntry) {
+				_friendlyURLEntryLocalService.setMainFriendlyURLEntry(
+					importedFriendlyURLEntry);
+			}
 		}
 		else {
 			importedFriendlyURLEntry = _stagedModelRepository.updateStagedModel(

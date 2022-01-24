@@ -230,8 +230,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10203 | Test Summary: Change data type to Time"
 	@priority = "4"
 	test CanChangeDataTypeToTime {
-		var attributeName = "animal";
-		var attributeValue = "dog";
+		var attributeName = "portal";
+		var attributeValue = "ac";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

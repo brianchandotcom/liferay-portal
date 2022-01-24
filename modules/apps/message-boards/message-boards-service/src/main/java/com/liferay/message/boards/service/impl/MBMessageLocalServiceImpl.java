@@ -2610,8 +2610,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage message, String portletId, ServiceContext serviceContext)
 		throws PortalException {
 
-		String layoutFullURL = _portal.getLayoutFullURL(
-			message.getGroupId(), portletId);
+		String layoutFullURL = StringPool.BLANK;
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_portal.getPlidFromPortletId(
+				message.getGroupId(), false, portletId));
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((layout != null) && (themeDisplay != null)) {
+			layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
+		}
+		else {
+			layoutFullURL = _portal.getLayoutFullURL(
+				message.getGroupId(), portletId);
+		}
 
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL;
@@ -2620,16 +2633,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		List<Layout> layouts = _layoutLocalService.getPublishedLayouts(
 			message.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		for (Layout layout : layouts) {
+		for (Layout curLayout : layouts) {
 			PortletPreferences portletPreferences =
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, curLayout.getPlid(),
 					portletId);
 
 			if (portletPreferences != null) {
 				return _portal.getLayoutFullURL(
-					layout, serviceContext.getThemeDisplay(), false);
+					curLayout, serviceContext.getThemeDisplay(), false);
 			}
 		}
 

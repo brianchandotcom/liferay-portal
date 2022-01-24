@@ -203,7 +203,7 @@ definition {
 
 		WaitForPageLoad();
 
-		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+		while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 		}
 

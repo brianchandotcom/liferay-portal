@@ -20,3 +20,5 @@ export {default as orderRuleChannelAPI} from './OrderRuleChannel';
 export {default as orderRuleOrderTypeAPI} from './OrderRuleOrderType';
 export {default as orderTypeAPI} from './OrderType';
 export {default as orderTypeChannelAPI} from './OrderTypeChannel';
+export {default as termAPI} from './Term';
+export {default as termOrderTypeAPI} from './TermOrderType';

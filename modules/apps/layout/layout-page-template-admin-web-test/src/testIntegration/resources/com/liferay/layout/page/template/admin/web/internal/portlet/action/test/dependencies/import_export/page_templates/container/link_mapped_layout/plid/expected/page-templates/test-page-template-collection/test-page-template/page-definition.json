@@ -8,8 +8,16 @@
 							"mapping": {
 								"itemReference": {
 									"className": "com.liferay.portal.kernel.model.Layout",
-									"fieldName": "plid",
-									"fieldValue": "£{PLID}"
+									"fields": [
+										{
+											"fieldName": "friendlyURL",
+											"fieldValue": "£{FRIENDLY_URL}"
+										},
+										{
+											"fieldName": "privatePage",
+											"fieldValue": "false"
+										}
+									]
 								}
 							}
 						}

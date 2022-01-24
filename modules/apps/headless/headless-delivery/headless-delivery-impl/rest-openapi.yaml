@@ -1773,6 +1773,7 @@ components:
                                 The mapping's item reference.
                             oneOf:
                                 - $ref: "#/components/schemas/ClassFieldReference"
+                                - $ref: "#/components/schemas/ClassFieldsReference"
                                 - $ref: "#/components/schemas/ClassPKReference"
                                 - $ref: "#/components/schemas/ContextReference"
                     type: object

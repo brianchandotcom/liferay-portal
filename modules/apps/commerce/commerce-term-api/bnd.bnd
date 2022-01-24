@@ -4,6 +4,7 @@ Bundle-Version: 1.0.2
 Export-Package:\
 	com.liferay.commerce.term.configuration,\
 	com.liferay.commerce.term.constants,\
+	com.liferay.commerce.term.entry.type,\
 	com.liferay.commerce.term.exception,\
 	com.liferay.commerce.term.model,\
 	com.liferay.commerce.term.permission,\

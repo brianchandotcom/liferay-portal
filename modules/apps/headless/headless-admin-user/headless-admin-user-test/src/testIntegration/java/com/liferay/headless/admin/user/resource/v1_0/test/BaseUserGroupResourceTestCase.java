@@ -317,6 +317,60 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPutUserGroupByExternalReferenceCode() throws Exception {
+		UserGroup postUserGroup =
+			testPutUserGroupByExternalReferenceCode_addUserGroup();
+
+		UserGroup randomUserGroup = randomUserGroup();
+
+		UserGroup putUserGroup =
+			userGroupResource.putUserGroupByExternalReferenceCode(
+				postUserGroup.getExternalReferenceCode(), randomUserGroup);
+
+		assertEquals(randomUserGroup, putUserGroup);
+		assertValid(putUserGroup);
+
+		UserGroup getUserGroup =
+			userGroupResource.getUserGroupByExternalReferenceCode(
+				putUserGroup.getExternalReferenceCode());
+
+		assertEquals(randomUserGroup, getUserGroup);
+		assertValid(getUserGroup);
+
+		UserGroup newUserGroup =
+			testPutUserGroupByExternalReferenceCode_createUserGroup();
+
+		putUserGroup = userGroupResource.putUserGroupByExternalReferenceCode(
+			newUserGroup.getExternalReferenceCode(), newUserGroup);
+
+		assertEquals(newUserGroup, putUserGroup);
+		assertValid(putUserGroup);
+
+		getUserGroup = userGroupResource.getUserGroupByExternalReferenceCode(
+			putUserGroup.getExternalReferenceCode());
+
+		assertEquals(newUserGroup, getUserGroup);
+
+		Assert.assertEquals(
+			newUserGroup.getExternalReferenceCode(),
+			putUserGroup.getExternalReferenceCode());
+	}
+
+	protected UserGroup
+			testPutUserGroupByExternalReferenceCode_createUserGroup()
+		throws Exception {
+
+		return randomUserGroup();
+	}
+
+	protected UserGroup testPutUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteUserGroup() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup = testDeleteUserGroup_addUserGroup();

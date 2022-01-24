@@ -17,8 +17,8 @@ import getCN from 'classnames';
 import moment from 'moment';
 import React, {useContext, useState} from 'react';
 
-import {PreviewModalWithCopyDownload} from '../shared/PreviewModal';
-import ThemeContext from '../shared/ThemeContext';
+import {PreviewModalWithCopyDownload} from '../../shared/PreviewModal';
+import ThemeContext from '../../shared/ThemeContext';
 
 const getResultDefaultKeys = (locale) => [
 	'entryClassName',

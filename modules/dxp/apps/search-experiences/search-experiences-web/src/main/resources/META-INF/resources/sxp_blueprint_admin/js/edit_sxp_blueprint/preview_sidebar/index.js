@@ -23,13 +23,13 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import ErrorListItem from '../shared/ErrorListItem';
-import {PreviewModalWithCopyDownload} from '../shared/PreviewModal';
-import SearchInput from '../shared/SearchInput';
-import {sub} from '../utils/language';
-import {TEST_IDS} from '../utils/testIds';
-import useDidUpdateEffect from '../utils/useDidUpdateEffect';
-import {isDefined, parseAndPrettifyJSON} from '../utils/utils';
+import ErrorListItem from '../../shared/ErrorListItem';
+import {PreviewModalWithCopyDownload} from '../../shared/PreviewModal';
+import SearchInput from '../../shared/SearchInput';
+import {sub} from '../../utils/language';
+import {TEST_IDS} from '../../utils/testIds';
+import useDidUpdateEffect from '../../utils/useDidUpdateEffect';
+import {isDefined, parseAndPrettifyJSON} from '../../utils/utils';
 import PreviewAttributesModal from './PreviewAttributesModal';
 import ResultListItem from './ResultListItem';
 

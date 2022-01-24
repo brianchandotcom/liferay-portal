@@ -12,14 +12,14 @@
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import PreviewSidebar from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/PreviewSidebar';
-import {transformToSearchPreviewHits} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
-import {mockSearchResults} from '../mocks/data';
+import PreviewSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/preview_sidebar/index';
+import {transformToSearchPreviewHits} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+import {mockSearchResults} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
+	'../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
 	() => ({onChange, value}) => (
 		<textarea aria-label="text-area" onChange={onChange} value={value} />
 	)

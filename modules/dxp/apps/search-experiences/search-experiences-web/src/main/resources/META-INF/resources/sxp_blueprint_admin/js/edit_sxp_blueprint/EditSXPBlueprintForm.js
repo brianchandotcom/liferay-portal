@@ -50,9 +50,9 @@ import {
 	validateRequired,
 } from '../utils/validation';
 import AddSXPElementSidebar from './AddSXPElementSidebar';
-import PreviewSidebar from './PreviewSidebar';
 import ClauseContributorsSidebar from './clause_contributors_sidebar/index';
 import ConfigurationTab from './configuration_tab/index';
+import PreviewSidebar from './preview_sidebar/index';
 import QueryBuilderTab from './query_builder_tab/index';
 
 // Tabs in display order

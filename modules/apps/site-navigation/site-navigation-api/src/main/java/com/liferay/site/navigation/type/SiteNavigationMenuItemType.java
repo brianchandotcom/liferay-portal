@@ -112,6 +112,12 @@ public interface SiteNavigationMenuItemType {
 		return StringPool.BLANK;
 	}
 
+	public default String getStatusIcon(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		return StringPool.BLANK;
+	}
+
 	public default String getSubtitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 

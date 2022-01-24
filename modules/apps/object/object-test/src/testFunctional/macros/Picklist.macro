@@ -140,7 +140,7 @@ definition {
 		Click.javaScriptClick(locator1 = "Picklist#CANCEL_UPDATE_PICKLIST");
 	}
 
-	macro chooseLanguagePicklistItem {
+	macro addLanguageOnPicklistItem {
 		SelectFrameTop();
 
 		IFrame.selectModalFrame();

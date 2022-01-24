@@ -407,7 +407,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-		Picklist.chooseLanguagePicklistItem(
+		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",
 			newlanguage = "pt-BR");
 

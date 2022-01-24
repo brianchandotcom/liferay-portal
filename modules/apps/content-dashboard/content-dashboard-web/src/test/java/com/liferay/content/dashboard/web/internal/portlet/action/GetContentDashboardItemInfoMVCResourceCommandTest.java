@@ -179,10 +179,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
 		Assert.assertEquals(
+			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
+		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
-		Assert.assertEquals(
-			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
+
 		Assert.assertEquals("portraitURL", userJSONObject.getString("url"));
 
 		List<ContentDashboardItem.Version> versions =
@@ -226,10 +227,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
 		Assert.assertEquals(
+			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
+		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
-		Assert.assertEquals(
-			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
+
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
 	}
 

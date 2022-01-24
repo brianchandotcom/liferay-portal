@@ -212,6 +212,17 @@ export default function DiagramBuilder({version}) {
 
 						setSelectedItem(element);
 					}
+					else if (isEdge(element)) {
+						element = {
+							...element,
+							...(selectedItem.id === element.source && {
+								source: selectedItemNewId,
+							}),
+							...(selectedItem.id === element.target && {
+								target: selectedItemNewId,
+							}),
+						};
+					}
 
 					return element;
 				})

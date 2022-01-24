@@ -312,13 +312,27 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to update a Picklist name"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdatePicklistName {
 		property portal.acceptance = "true";
 
-		// TODO LPS-145705 CanUpdatePicklistName pending implementation
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
+		Picklist.gotoPicklists();
+
+		Picklist.assertPicklist(picklistName = "Picklist Test");
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.updatePicklistName(picklistName = "Update Picklist");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Picklist.assertPicklist(picklistName = "Update Picklist");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to view a Picklist"

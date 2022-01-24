@@ -236,6 +236,8 @@ definition {
 		Type(
 			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
 			value1 = "${picklistName}");
+
+		WaitForSPARefresh();
 	}
 
 }

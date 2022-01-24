@@ -237,7 +237,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-142166. Fragment with item selector breaks when being added to a page."
+	@description = "This is a test for LPS-142166. The user could display blogs entry when item type is blogs entry."
 	@priority = "4"
 	test DisplayBlogsEntryWhenItemTypeIsBlogsEntry {
 		task ("Create a blog entry") {
@@ -247,7 +247,7 @@ definition {
 				title = "Blogs Entry Title");
 		}
 
-		task ("Add a fragment with Item Selector in configuration text field") {
+		task ("Add a fragment with item selector") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -296,7 +296,7 @@ definition {
 			FragmentsEditor.publish();
 		}
 
-		task ("Add the fragment to page") {
+		task ("Add a new fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -310,7 +310,7 @@ definition {
 				messageInfo = "The selected content will be shown here.");
 		}
 
-		task ("Select Blog Entry in Fragment") {
+		task ("Select Blog Entry in fragment") {
 			PageEditor.gotoSelectPanel(fragmentName = "Fragment Name");
 
 			LexiconCard.clickCard(card = "Blogs Entry Title");
@@ -320,7 +320,7 @@ definition {
 				text = "Blogs Entry Title");
 		}
 
-		task ("View the displayed content in Fragment") {
+		task ("View the displayed content") {
 			AssertTextEquals(
 				fragmentName = "blogs",
 				index = "1",

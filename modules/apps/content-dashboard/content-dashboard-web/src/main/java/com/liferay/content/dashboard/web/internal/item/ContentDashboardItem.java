@@ -22,7 +22,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Date;
 import java.util.List;
@@ -71,7 +70,7 @@ public interface ContentDashboardItem<T> {
 
 	public default JSONObject getSpecificInformationJSONObject(
 		String backURL, LiferayPortletResponse liferayPortletResponse,
-		Locale locale, ThemeDisplay themeDisplay) {
+		Locale locale) {
 
 		return null;
 	}

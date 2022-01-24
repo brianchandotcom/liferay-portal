@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -322,7 +321,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 			@Override
 			public JSONObject getSpecificInformationJSONObject(
 				String backURL, LiferayPortletResponse liferayPortletResponse,
-				Locale locale, ThemeDisplay themeDisplay) {
+				Locale locale) {
 
 				return null;
 			}

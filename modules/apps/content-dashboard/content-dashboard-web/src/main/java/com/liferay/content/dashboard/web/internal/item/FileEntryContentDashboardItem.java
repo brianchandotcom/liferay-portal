@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardIt
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -319,7 +317,7 @@ public class FileEntryContentDashboardItem
 	@Override
 	public JSONObject getSpecificInformationJSONObject(
 		String backURL, LiferayPortletResponse liferayPortletResponse,
-		Locale locale, ThemeDisplay themeDisplay) {
+		Locale locale) {
 
 		return JSONUtil.put(
 			"description", getDescription(locale)

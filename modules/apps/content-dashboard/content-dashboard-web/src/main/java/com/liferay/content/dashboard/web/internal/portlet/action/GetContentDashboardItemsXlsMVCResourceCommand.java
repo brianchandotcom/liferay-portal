@@ -185,7 +185,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 					contentDashboardItem.getSpecificInformationJSONObject(
 						ParamUtil.getString(resourceRequest, "backURL"),
 						_portal.getLiferayPortletResponse(resourceResponse),
-						locale, themeDisplay);
+						locale);
 
 				if (jsonObject != null) {
 					workbookBuilder.cell(
@@ -207,7 +207,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 					contentDashboardItem.getSpecificInformationJSONObject(
 						ParamUtil.getString(resourceRequest, "backURL"),
 						_portal.getLiferayPortletResponse(resourceResponse),
-						locale, themeDisplay);
+						locale);
 
 				if (jsonObject != null) {
 					workbookBuilder.cellIndexIncrement(

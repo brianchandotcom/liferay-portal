@@ -816,7 +816,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeUnusedAPICheck">
 			<property name="category" value="Upgrade" />
-			<property name="description" value="Finds calls to unused class and methods after an upgrade" />
+			<property name="description" value="Finds cases where calls are unused after an upgrade." />
 			<message key="method.unused" value="Method ''{0}'' no longer used in class ''{1}'' for version {2}" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ValidatorIsNullCheck">

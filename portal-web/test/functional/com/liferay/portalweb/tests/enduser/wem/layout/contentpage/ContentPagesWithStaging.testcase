@@ -425,6 +425,8 @@ definition {
 		}
 
 		task ("Edit the web content via Contents panel") {
+			Refresh();
+
 			WebContent.editViaContentPanel(
 				webContentContentEdit = "Web Content Content Edit",
 				webContentTitle = "Web Content Title",

@@ -1205,7 +1205,7 @@ definition {
 
 	@description = "This is a use case for LPS-137055. The show only assets configuration should be unavailable to display page template."
 	@priority = "4"
-	test ShowOnlyAssetsWithDisplayPageAsDisplayPageTemplateShownOnDisplayPageTemplates {
+	test CannotViewShowOnlyAssetsConfigurationInDisplayPageTemplate {
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

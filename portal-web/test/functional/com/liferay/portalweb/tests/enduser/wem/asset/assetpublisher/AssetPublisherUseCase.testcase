@@ -1214,7 +1214,7 @@ definition {
 				subType = "Basic Web Content");
 		}
 
-		task ("Add an Asset Publisher widget on the Template") {
+		task ("Add an Asset Publisher widget to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
@@ -1222,7 +1222,7 @@ definition {
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
 
-		task ("Check if 'Show only assets with Display Page Name as its display page template' is present in Asset Publisher's configuration") {
+		task ("Cannot view Show only assets with Display Page Name as its display page template. configuration in Asset Publisher") {
 			AssetPublisherPortlet.gotoConfigurationPG();
 
 			Navigator.gotoNavTab(navTab = "Display Settings");

@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.admin.web.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -87,6 +88,16 @@ public class SiteNavigationMenuPortletUtil {
 					getSiteNavigationMenuItemsJSONArray(
 						siteNavigationMenuItemId, siteNavigationMenuId,
 						siteNavigationMenuItemTypeRegistry, themeDisplay)
+				).put(
+					"icon",
+					() -> {
+						if (siteNavigationMenuItemType != null) {
+							return siteNavigationMenuItemType.getStatusIcon(
+								siteNavigationMenuItem);
+						}
+
+						return StringPool.BLANK;
+					}
 				).put(
 					"parentSiteNavigationMenuItemId",
 					parentSiteNavigationMenuItemId

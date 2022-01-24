@@ -62,6 +62,16 @@ public class UserGroupLocalServiceUtil {
 		getService().addGroupUserGroups(groupId, userGroupIds);
 	}
 
+	public static UserGroup addOrUpdateUserGroup(
+			String externalReferenceCode, long userId, long companyId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateUserGroup(
+			externalReferenceCode, userId, companyId, name, description,
+			serviceContext);
+	}
+
 	public static void addTeamUserGroup(long teamId, long userGroupId) {
 		getService().addTeamUserGroup(teamId, userGroupId);
 	}

@@ -61,6 +61,17 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
+	public UserGroup addOrUpdateUserGroup(
+			String externalReferenceCode, long userId, long companyId,
+			String name, String description, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupLocalService.addOrUpdateUserGroup(
+			externalReferenceCode, userId, companyId, name, description,
+			serviceContext);
+	}
+
+	@Override
 	public void addTeamUserGroup(long teamId, long userGroupId) {
 		_userGroupLocalService.addTeamUserGroup(teamId, userGroupId);
 	}

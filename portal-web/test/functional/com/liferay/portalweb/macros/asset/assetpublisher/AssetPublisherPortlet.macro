@@ -1349,9 +1349,11 @@ definition {
 			locator1 = "AP#ASSET_RICH_SUMMARY_TITLE",
 			value1 = "${assetTitle}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#CUSTOM_ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${assetDescription}");
+		if (isSet(assetDescription)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#CUSTOM_ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "${assetDescription}");
+		}
 
 		AssertElementPresent(locator1 = "Link#READ_MORE");
 
@@ -1366,6 +1368,16 @@ definition {
 		AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 
 		AssertElementPresent(locator1 = "Icon#CUSTOM_EDIT");
+
+		Click(locator1 = "Link#READ_MORE");
+
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${assetTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${assetContent}");
 	}
 
 	macro viewDefaultWithAllDisplaySettingsCheckboxesPG {

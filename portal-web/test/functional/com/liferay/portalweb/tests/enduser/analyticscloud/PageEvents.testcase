@@ -781,6 +781,9 @@ definition {
 	@priority = "5"
 	test CheckTabBlurredWhenComesFromADifferentTab {
 		property proxy.server.enabled = "true";
+		property portal.upstream = "quarantine";
+
+		// AC Refactor ticket: LRAC-9599
 
 		task ("Get site assigned property name and get data source name") {
 			var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
@@ -844,6 +847,9 @@ definition {
 	@priority = "5"
 	test CheckTabFocusedOnceTabIsActive {
 		property proxy.server.enabled = "true";
+		property portal.upstream = "quarantine";
+
+		// AC Refactor ticket: LRAC-9599
 
 		task ("Get site assigned property name and get data source name") {
 			var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");

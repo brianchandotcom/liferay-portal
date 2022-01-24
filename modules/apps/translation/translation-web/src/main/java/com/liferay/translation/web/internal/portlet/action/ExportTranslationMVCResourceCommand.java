@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -49,6 +50,7 @@ import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -94,11 +96,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			for (long classPK :
-					_getClassPKs(
-						className, segmentsExperienceIds,
-						translationRequestHelper)) {
+			long[] classPKs = _getClassPKs(
+				className, segmentsExperienceIds, translationRequestHelper);
 
+			for (long classPK : classPKs) {
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
 					className.equals(SegmentsExperience.class.getName())) {
 
@@ -116,6 +117,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				}
 			}
 
+			Set<Long> differentClassPKs = SetUtil.fromArray(classPKs);
+
 			try (InputStream inputStream = new FileInputStream(
 					zipWriter.getFile())) {
 
@@ -124,7 +127,11 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 					_getZipFileName(
 						translationRequestHelper.getModelClassName(),
 						translationRequestHelper.getModelClassPK(),
-						sourceLanguageId, _portal.getLocale(resourceRequest)),
+						LanguageUtil.get(
+							_portal.getLocale(resourceRequest),
+							"model.resource." + className),
+						differentClassPKs.size(), sourceLanguageId,
+						_portal.getLocale(resourceRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 
@@ -224,6 +231,19 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		return draftLayout.getPlid();
 	}
 
+	private String _getPrefixName(
+		long classPK, String classNameTitle,
+		Optional<String> infoItemTitleOptional, int size, Locale locale) {
+
+		if (size > 1) {
+			return classNameTitle + StringPool.SPACE +
+				LanguageUtil.get(locale, "translations");
+		}
+
+		return infoItemTitleOptional.orElseGet(
+			() -> classNameTitle + StringPool.SPACE + classPK);
+	}
+
 	private String _getXLIFFFileName(
 			String title, String sourceLanguageId, String targetLanguageId)
 		throws PortalException {
@@ -236,8 +256,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private String _getZipFileName(
-			String className, long classPK, String sourceLanguageId,
-			Locale locale)
+			String className, long classPK, String classNameTitle, int size,
+			String sourceLanguageId, Locale locale)
 		throws NoSuchInfoItemException {
 
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
@@ -246,16 +266,13 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
 
-		String infoItemTitle = infoItemTitleOptional.orElseGet(
-			() ->
-				LanguageUtil.get(locale, "model.resource." + className) +
-					StringPool.SPACE + classPK);
-
-		String escapedTitle = StringUtil.removeSubstrings(
-			infoItemTitle, PropsValues.DL_CHAR_BLACKLIST);
+		String prefixName = _getPrefixName(
+			classPK, classNameTitle, infoItemTitleOptional, size, locale);
 
 		return StringBundler.concat(
-			escapedTitle, StringPool.DASH, sourceLanguageId, ".zip");
+			StringUtil.removeSubstrings(
+				prefixName, PropsValues.DL_CHAR_BLACKLIST),
+			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 
 	@Reference

@@ -71,8 +71,6 @@ definition {
 	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"
 	@priority = "3"
 	test AddDiagramProduct {
-		property portal.acceptance = "false";
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -159,7 +157,11 @@ definition {
 	@description = "This is a test for COMMERCE-7023. EditTheDefaultSettingForPinsCreation"
 	@priority = "3"
 	test EditTheDefaultSettingForPinsCreation {
-		property portal.acceptance = "false";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
+
+		// TODO COMMERCE-8268 Test needs refactoring due to a failure locating the Default Diameter button.
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -214,8 +216,6 @@ definition {
 	@description = "This is a test for COMMERCE-7126. RemoveDiagramProduct"
 	@priority = "3"
 	test RemoveDiagramProduct {
-		property portal.acceptance = "false";
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -259,8 +259,6 @@ definition {
 	@description = "This test asserts that a pin can be removed from a diagram product image"
 	@priority = "3"
 	test RemovePin {
-		property test.name.skip.portal.instance = "CPCommerceProductDiagrams#RemovePin";
-
 		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
@@ -410,23 +408,21 @@ definition {
 		Refresh();
 
 		CommerceDiagram.addPin(
-				label = "Test",
-				pinNumber = "1",
-				quantity = "1",
-				selectType = "Not Linked to a Catalog");
+			label = "Test",
+			pinNumber = "1",
+			quantity = "1",
+			selectType = "Not Linked to a Catalog");
 
 		DragAndDrop.dragAndDropReorganizeObjects(
-				key_pinNumber = "1",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN",
-				locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
-				position = "300,0");
+			key_pinNumber = "1",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN",
+			locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
+			position = "300,0");
 	}
 
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"
 	@priority = "3"
 	test UseToolTip {
-		property portal.acceptance = "false";
-
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -487,7 +483,11 @@ definition {
 	@description = "This is a test for COMMERCE-7035. UseZoomAndDragBackground"
 	@priority = "3"
 	test UseZoomAndDragBackground {
-		property portal.acceptance = "false";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
+
+		// TODO COMMERCE-8269 Test needs refactoring due to a failure locating the Reset Zoom button.
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -518,8 +518,6 @@ definition {
 	@description = "This test asserts that the Mapped Products Table saves all info from pins"
 	@priority = "3"
 	test VerifyMappedProductsTableSavesAllPins {
-		property test.name.skip.portal.instance = "CPCommerceProductDiagrams#VerifyMappedProductsTableSavesAllPins";
-
 		task ("Given a minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}

@@ -75,6 +75,27 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		UserGroup userGroup =
+			userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+				permissionChecker.getCompanyId(), externalReferenceCode);
+
+		if (userGroup == null) {
+			PortalPermissionUtil.check(
+				permissionChecker, ActionKeys.ADD_USER_GROUP);
+		}
+		else {
+			UserGroupPermissionUtil.check(
+				permissionChecker, userGroup.getUserGroupId(),
+				ActionKeys.UPDATE);
+		}
+
+		return userGroupLocalService.addOrUpdateUserGroup(
+			externalReferenceCode, permissionChecker.getUserId(),
+			permissionChecker.getCompanyId(), name, description,
+			serviceContext);
+
 	}
 
 	/**

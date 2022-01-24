@@ -17,7 +17,7 @@ import React from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
-import Topper from '../Topper';
+import Topper from '../topper/Topper';
 
 const DropZone = React.forwardRef(({item}, ref) => {
 	return (

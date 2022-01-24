@@ -16,7 +16,6 @@
 @import 'Sidebar';
 @import 'ThemeAdapter';
 @import 'Toolbar';
-@import 'Topper';
 @import 'Translation';
 @import 'ViewportSizeSelector';
 
@@ -26,6 +25,8 @@
 
 @import 'layout-data-items/CollectionPagination';
 @import 'layout-data-items/RowWithControls';
+
+@import 'topper/Topper';
 
 @import 'undo/UndoHistory';
 

@@ -38,7 +38,7 @@ import {
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
-import TopperEmpty from '../TopperEmpty';
+import TopperEmpty from '../topper/TopperEmpty';
 import Column from './Column';
 
 /**

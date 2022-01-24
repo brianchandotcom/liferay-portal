@@ -24,7 +24,7 @@ import {
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import Topper from '../Topper';
+import Topper from '../topper/Topper';
 import Collection from './Collection';
 import isHovered from './isHovered';
 

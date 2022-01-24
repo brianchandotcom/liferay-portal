@@ -25,7 +25,7 @@ import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
-import Topper from '../Topper';
+import Topper from '../topper/Topper';
 import Row from './Row';
 
 const ROW_SIZE = 12;

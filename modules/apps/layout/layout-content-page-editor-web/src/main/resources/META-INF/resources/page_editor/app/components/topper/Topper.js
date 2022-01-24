@@ -19,29 +19,29 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../prop-types/index';
-import {switchSidebarPanel} from '../actions/index';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {switchSidebarPanel} from '../../actions/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import {
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
 	useSelectItem,
-} from '../contexts/ControlsContext';
-import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
-import {useDispatch, useSelector} from '../contexts/StoreContext';
-import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
-import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
-import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
-import moveItem from '../thunks/moveItem';
-import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
+} from '../../contexts/ControlsContext';
+import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import moveItem from '../../thunks/moveItem';
+import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
 import {
 	useDragItem,
 	useDropTarget,
-} from '../utils/drag-and-drop/useDragAndDrop';
-import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
-import ItemActions from './ItemActions';
+} from '../../utils/drag-and-drop/useDragAndDrop';
+import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
+import TopperItemActions from './TopperItemActions';
 
 const TOPPER_BAR_HEIGHT = 24;
 
@@ -205,7 +205,7 @@ function TopperContent({
 
 					{canUpdatePageStructure && isActive && (
 						<li className="page-editor__topper__item tbar-item">
-							<ItemActions item={item} />
+							<TopperItemActions item={item} />
 						</li>
 					)}
 				</ul>

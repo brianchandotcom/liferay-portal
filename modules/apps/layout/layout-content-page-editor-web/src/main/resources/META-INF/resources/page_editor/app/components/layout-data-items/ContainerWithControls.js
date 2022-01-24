@@ -27,7 +27,7 @@ import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateIte
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
-import Topper from '../Topper';
+import Topper from '../topper/Topper';
 import Container from './Container';
 import isHovered from './isHovered';
 

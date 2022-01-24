@@ -18,7 +18,7 @@ import React from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../contexts/StoreContext';
 import isItemEmpty from '../../utils/isItemEmpty';
-import TopperEmpty from '../TopperEmpty';
+import TopperEmpty from '../topper/TopperEmpty';
 
 const Root = React.forwardRef(({children, item}, ref) => {
 	const layoutData = useSelector((state) => state.layoutData);

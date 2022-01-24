@@ -26,8 +26,8 @@ import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
-import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
+import Topper from '../topper/Topper';
 import getAllPortals from './getAllPortals';
 import isHovered from './isHovered';
 

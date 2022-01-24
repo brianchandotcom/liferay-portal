@@ -18,15 +18,15 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import TopperEmpty from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Topper';
-import Row from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Row';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {VIEWPORT_SIZES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
-import {ControlsProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Row';
+import Topper from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
+import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			commonStyles: [
@@ -44,7 +44,7 @@ jest.mock(
 	})
 );
 
-const renderTopperEmpty = ({
+const renderTopper = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 } = {}) => {
@@ -75,26 +75,26 @@ const renderTopperEmpty = ({
 						selectedViewportSize: VIEWPORT_SIZES.desktop,
 					})}
 				>
-					<TopperEmpty item={row} layoutData={layoutData}>
+					<Topper item={row} layoutData={layoutData}>
 						<Row item={row} layoutData={layoutData}></Row>
-					</TopperEmpty>
+					</Topper>
 				</StoreAPIContextProvider>
 			</ControlsProvider>
 		</DndProvider>
 	);
 };
 
-describe('TopperEmpty', () => {
+describe('Topper', () => {
 	afterEach(cleanup);
 
-	it('does not render TopperEmpty if user has no permissions', () => {
-		const {baseElement} = renderTopperEmpty({hasUpdatePermissions: false});
+	it('does not render Topper if user has no permissions', () => {
+		const {baseElement} = renderTopper({hasUpdatePermissions: false});
 
 		expect(baseElement.querySelector('.page-editor__topper')).toBe(null);
 	});
 
-	it('renders empty TopperEmpty if user has permissions', () => {
-		const {baseElement} = renderTopperEmpty({});
+	it('renders Topper if user has permissions', () => {
+		const {baseElement} = renderTopper({});
 
 		expect(
 			baseElement.querySelector('.page-editor__topper')

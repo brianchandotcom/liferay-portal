@@ -18,19 +18,19 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../prop-types/index';
-import {useSelectItem} from '../contexts/ControlsContext';
-import {useDispatch, useSelector} from '../contexts/StoreContext';
-import {useWidgets} from '../contexts/WidgetsContext';
-import deleteItem from '../thunks/deleteItem';
-import duplicateItem from '../thunks/duplicateItem';
-import canBeDuplicated from '../utils/canBeDuplicated';
-import canBeRemoved from '../utils/canBeRemoved';
-import canBeSaved from '../utils/canBeSaved';
-import updateItemStyle from '../utils/updateItemStyle';
-import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {useSelectItem} from '../../contexts/ControlsContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import {useWidgets} from '../../contexts/WidgetsContext';
+import deleteItem from '../../thunks/deleteItem';
+import duplicateItem from '../../thunks/duplicateItem';
+import canBeDuplicated from '../../utils/canBeDuplicated';
+import canBeRemoved from '../../utils/canBeRemoved';
+import canBeSaved from '../../utils/canBeSaved';
+import updateItemStyle from '../../utils/updateItemStyle';
+import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 
-export default function ItemActions({item}) {
+export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
@@ -185,6 +185,6 @@ export default function ItemActions({item}) {
 	);
 }
 
-ItemActions.propTypes = {
+TopperItemActions.propTypes = {
 	item: PropTypes.oneOfType([getLayoutDataItemPropTypes()]),
 };

@@ -40,7 +40,12 @@ export default function SidebarHeader({
 
 	const deleteItem = () => {
 		setElements((elements) =>
-			elements.filter((element) => element.id !== selectedItem.id)
+			elements.filter(
+				(element) =>
+					element.id !== selectedItem.id &&
+					element.source !== selectedItem.id &&
+					element.target !== selectedItem.id
+			)
 		);
 		setShowDeleteConfirmationModal(false);
 		backButtonFunction();

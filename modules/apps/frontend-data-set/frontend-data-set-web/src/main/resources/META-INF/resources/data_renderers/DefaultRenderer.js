@@ -21,7 +21,7 @@ import {logError} from '../utils/logError';
 import TooltipTextRenderer from './TooltipTextRenderer';
 
 const Wrapper = ({options, ...props}) => {
-	return options.truncate ? (
+	return options?.truncate ? (
 		<span
 			className={classNames(
 				'default-renderer__text-truncate',

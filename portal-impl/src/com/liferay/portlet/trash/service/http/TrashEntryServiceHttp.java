@@ -48,7 +48,6 @@ import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see TrashEntryServiceSoap
  * @see HttpPrincipal
  * @see TrashEntryServiceUtil
  * @deprecated As of Judson (7.1.x), replaced by {@link

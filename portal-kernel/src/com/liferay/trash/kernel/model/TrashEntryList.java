@@ -24,10 +24,6 @@ import java.io.Serializable;
 @Deprecated
 public class TrashEntryList implements Serializable {
 
-	public TrashEntrySoap[] getArray() {
-		return _array;
-	}
-
 	public int getCount() {
 		return _count;
 	}
@@ -40,16 +36,11 @@ public class TrashEntryList implements Serializable {
 		_approximate = approximate;
 	}
 
-	public void setArray(TrashEntrySoap[] array) {
-		_array = array;
-	}
-
 	public void setCount(int count) {
 		_count = count;
 	}
 
 	private boolean _approximate;
-	private TrashEntrySoap[] _array;
 	private int _count;
 
 }

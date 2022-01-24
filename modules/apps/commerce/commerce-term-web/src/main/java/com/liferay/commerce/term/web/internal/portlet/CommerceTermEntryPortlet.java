@@ -15,11 +15,24 @@
 package com.liferay.commerce.term.web.internal.portlet;
 
 import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
+import com.liferay.commerce.term.entry.type.CommerceTermEntryTypeRegistry;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryService;
+import com.liferay.commerce.term.web.internal.display.context.CommerceTermEntryDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,4 +59,37 @@ import org.osgi.service.component.annotations.Component;
 	service = {CommerceTermEntryPortlet.class, Portlet.class}
 )
 public class CommerceTermEntryPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		CommerceTermEntryDisplayContext commerceTermEntryDisplayContext =
+			new CommerceTermEntryDisplayContext(
+				_commerceTermEntryModelResourcePermission,
+				_commerceTermEntryTypeRegistry, _commerceTermEntryService,
+				_portal.getHttpServletRequest(renderRequest), _portal);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceTermEntryDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
+	)
+	private ModelResourcePermission<CommerceTermEntry>
+		_commerceTermEntryModelResourcePermission;
+
+	@Reference
+	private CommerceTermEntryService _commerceTermEntryService;
+
+	@Reference
+	private CommerceTermEntryTypeRegistry _commerceTermEntryTypeRegistry;
+
+	@Reference
+	private Portal _portal;
+
 }

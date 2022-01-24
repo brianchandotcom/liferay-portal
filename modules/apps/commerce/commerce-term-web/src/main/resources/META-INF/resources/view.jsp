@@ -13,3 +13,32 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+PortletURL portletURL = commerceTermEntryDisplayContext.getPortletURL();
+%>
+
+<div class="pt-4">
+	<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteCommerceTermEntries" type="hidden" />
+
+		<clay:headless-data-set-display
+			apiURL="/o/headless-commerce-admin-order/v1.0/terms"
+			clayDataSetActionDropdownItems="<%= commerceTermEntryDisplayContext.getCommerceTermEntryClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= commerceTermEntryDisplayContext.getCreationMenu() %>"
+			formName="fm"
+			id="<%= CommerceTermEntryClayDataSetDisplayNames.COMMERCE_TERM_ENTRIES %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletURL %>"
+			style="stacked"
+		/>
+	</aui:form>
+</div>

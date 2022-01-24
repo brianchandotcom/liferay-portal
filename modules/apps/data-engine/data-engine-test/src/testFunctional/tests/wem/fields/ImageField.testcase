@@ -428,7 +428,7 @@ definition {
 		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
+			webContentImage = "Document Title",
 			webContentTitle = "${webTitle}");
 	}
 

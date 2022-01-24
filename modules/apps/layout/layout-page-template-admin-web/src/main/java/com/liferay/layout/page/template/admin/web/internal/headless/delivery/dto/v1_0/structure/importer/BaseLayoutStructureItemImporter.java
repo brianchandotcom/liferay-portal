@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -130,35 +133,42 @@ public abstract class BaseLayoutStructureItemImporter {
 			Layout layout = layoutLocalService.fetchLayout(
 				GetterUtil.getLong(fieldValue));
 
-			if (layout == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to process mapping because layout could not " +
-							"be obtained for PLID " + fieldValue);
-				}
+			_processLayout("PLID", fieldValue, jsonObject, layout);
 
+			return;
+		}
+
+		if (Objects.equals(className, Layout.class.getName()) &&
+			itemReferenceMap.containsKey("fields")) {
+
+			String friendlyURL = null;
+			Boolean privatePage = null;
+
+			List<Map<String, String>> fields = (ArrayList)itemReferenceMap.get(
+				"fields");
+
+			for (Map<String, String> field : fields) {
+				String key = field.get("fieldName");
+
+				if (Objects.equals(key, "friendlyURL")) {
+					friendlyURL = field.get("fieldValue");
+				}
+				else if (Objects.equals(key, "privatePage")) {
+					privatePage = Boolean.valueOf(field.get("fieldValue"));
+				}
+			}
+
+			if ((friendlyURL == null) || (privatePage == null)) {
 				return;
 			}
 
-			jsonObject.put(
-				"layout",
-				JSONUtil.put(
-					"groupId", String.valueOf(layout.getGroupId())
-				).put(
-					"id", layout.getUuid()
-				).put(
-					"layoutId", String.valueOf(layout.getLayoutId())
-				).put(
-					"layoutUuid", layout.getUuid()
-				).put(
-					"privateLayout", layout.isPrivateLayout()
-				).put(
-					"title", layout.getName(LocaleUtil.getMostRelevantLocale())
-				).put(
-					"value", layout.getFriendlyURL()
-				));
+			Layout currentLayout =
+				layoutStructureItemImporterContext.getLayout();
 
-			return;
+			Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+				currentLayout.getGroupId(), privatePage, friendlyURL);
+
+			_processLayout("friendlyURL", friendlyURL, jsonObject, layout);
 		}
 
 		String classNameId = null;
@@ -387,6 +397,40 @@ public abstract class BaseLayoutStructureItemImporter {
 
 	@Reference
 	protected Portal portal;
+
+	private void _processLayout(
+		String fieldKey, String fieldValue, JSONObject jsonObject,
+		Layout layout) {
+
+		if (layout == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to process mapping because layout could not ",
+						"be obtained for ", fieldKey, " ", fieldValue));
+			}
+
+			return;
+		}
+
+		jsonObject.put(
+			"layout",
+			JSONUtil.put(
+				"groupId", String.valueOf(layout.getGroupId())
+			).put(
+				"id", layout.getUuid()
+			).put(
+				"layoutId", String.valueOf(layout.getLayoutId())
+			).put(
+				"layoutUuid", layout.getUuid()
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"title", layout.getName(LocaleUtil.getMostRelevantLocale())
+			).put(
+				"value", layout.getFriendlyURL()
+			));
+	}
 
 	private static final String[] _ALIGN_KEYS = {
 		"buttonAlign", "contentAlign", "imageAlign", "textAlign"

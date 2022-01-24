@@ -185,6 +185,7 @@ const SidebarPanelInfoView = ({
 				<ClayPanel.Group className="panel-group-flush panel-group-sm">
 					{showTaxonomies && (
 						<SidebarPanelInfoCollapsibleSection
+							expanded={true}
 							title={Liferay.Language.get('categorization')}
 						>
 							{!!categories.length && (
@@ -230,6 +231,7 @@ const SidebarPanelInfoView = ({
 					)}
 
 					<SidebarPanelInfoCollapsibleSection
+						expanded={false}
 						title={Liferay.Language.get('details')}
 					>
 						{documentIsAFile && (

@@ -17,10 +17,15 @@ import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const SidebarPanelInfoCollapsibleSection = ({children, title}) => {
+const SidebarPanelInfoCollapsibleSection = ({
+	children,
+	expanded = false,
+	title,
+}) => {
 	return (
 		<ClayPanel
 			collapsable
+			defaultExpanded={expanded}
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">
 					<ClayPanel.Title>
@@ -44,6 +49,7 @@ const SidebarPanelInfoCollapsibleSection = ({children, title}) => {
 };
 
 SidebarPanelInfoCollapsibleSection.propTypes = {
+	expanded: PropTypes.bool,
 	title: PropTypes.string.isRequired,
 };
 

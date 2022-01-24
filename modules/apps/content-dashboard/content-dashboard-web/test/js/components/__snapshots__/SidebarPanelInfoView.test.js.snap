@@ -134,8 +134,8 @@ exports[`SidebarPanelInfoView renders 1`] = `
             role="tablist"
           >
             <button
-              aria-expanded="false"
-              class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
+              aria-expanded="true"
+              class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
               role="tab"
               type="button"
             >
@@ -181,7 +181,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
               </span>
             </button>
             <div
-              class="panel-collapse collapse"
+              class="panel-collapse"
               role="tabpanel"
             >
               <div

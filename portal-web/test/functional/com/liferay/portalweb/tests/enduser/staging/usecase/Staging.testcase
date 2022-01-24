@@ -202,9 +202,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -212,17 +210,13 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 	}
 
 	@description = "This is a use case for LPS-90127."

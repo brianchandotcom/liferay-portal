@@ -64,10 +64,9 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 			return;
 		}
 
-		List<UnusedClassMethod> unusedClassMethods =
-			_getUpgradeUnusedMethodNamesMap();
+		for (UnusedClassMethod unusedClassMethod :
+				_getUpgradeUnusedMethodNamesMap()) {
 
-		for (UnusedClassMethod unusedClassMethod : unusedClassMethods) {
 			String targetVersion = unusedClassMethod.getVersion();
 
 			Version targetOsgiVersion = Version.parseVersion(targetVersion);

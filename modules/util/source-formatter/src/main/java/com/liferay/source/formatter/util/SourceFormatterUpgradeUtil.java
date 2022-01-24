@@ -17,6 +17,8 @@ package com.liferay.source.formatter.util;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +43,9 @@ public class SourceFormatterUpgradeUtil {
 			}
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		if (jsonObject == null) {
@@ -51,5 +56,8 @@ public class SourceFormatterUpgradeUtil {
 
 		return new Tuple(jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SourceFormatterUpgradeUtil.class);
 
 }

@@ -461,7 +461,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Test Site Name");
 
-		Content.addPG(assetTitle = "WC WebContent Title");
+		WidgetPages.addRecentContent(assetTitle = "WC WebContent Title");
 
 		WebContentDisplayPortlet.viewContent(
 			webContentContent = "FFFFFF",

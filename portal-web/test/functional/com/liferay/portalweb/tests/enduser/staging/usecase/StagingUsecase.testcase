@@ -741,17 +741,13 @@ definition {
 
 		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 
-		Content.addPG(
-			assetTitle = "Enrollment Features",
-			pageName = "Home");
+		WidgetPages.addRecentContent(assetTitle = "Enrollment Features");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
 			siteName = "Site Name");
 
-		Content.addPG(
-			assetTitle = "The SPACE Family",
-			pageName = "Home");
+		WidgetPages.addRecentContent(assetTitle = "The SPACE Family");
 
 		Portlet.configureApplicationDecorator(
 			decorator = "Barebone",

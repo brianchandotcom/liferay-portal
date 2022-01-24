@@ -103,15 +103,6 @@ definition {
 
 	}
 
-	@description = "LPS-139348 - Verify that a form with an inactivated Object is not available to be used"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test FormWithInactivatedObjectCannotBeUsed {
-
-		// TODO LPS-145731 FormWithInactivatedObjectCannotBeUsed pending implementation
-
-	}
-
 	@description = "LPS-139692 - Verify that 'Select Object' field is required"
 	@ignore = "Test Stub"
 	@priority = "4"

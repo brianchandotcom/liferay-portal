@@ -47,7 +47,12 @@ const onChangeSeachableType = (value, namespace) => {
 	indexedLanguageIdGroup.style.display = value === 'text' ? 'block' : 'none';
 };
 
-const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
+const saveObjectField = (
+	iframeDocument,
+	namespace,
+	objectFieldBusinessTypes,
+	objectFieldId
+) => {
 	const inputIndexed = iframeDocument.getElementById(`${namespace}indexed`);
 
 	const inputIndexedTypeKeyword = iframeDocument
@@ -66,6 +71,11 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 	const inputRequired = iframeDocument.getElementById(`${namespace}required`);
 	const inputType = iframeDocument.getElementById(`${namespace}type`);
 
+	const businessType = inputType.value;
+	const objectFieldType = objectFieldBusinessTypes.find(
+		(objectFieldType) => objectFieldType.businessType === businessType
+	);
+
 	const indexed = inputIndexed.checked;
 	const indexedAsKeyword =
 		inputIndexed.checked && inputIndexedTypeKeyword.checked;
@@ -78,7 +88,6 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 
 	const name = inputName.value;
 	const required = inputRequired.checked;
-	const type = inputType.value;
 
 	const localizedInputs = iframeDocument
 		.querySelector('form')
@@ -94,7 +103,8 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 
 	Liferay.Util.fetch(`/o/object-admin/v1.0/object-fields/${objectFieldId}`, {
 		body: JSON.stringify({
-			DBType: type,
+			DBType: objectFieldType.dbType,
+			businessType,
 			indexed,
 			indexedAsKeyword,
 			indexedLanguageId,
@@ -149,7 +159,7 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 		});
 };
 
-export default function ({namespace, objectFieldId}) {
+export default function ({namespace, objectFieldBusinessTypes, objectFieldId}) {
 	const form = document.getElementById(`${namespace}fm`);
 	const inputType = document.getElementById(`${namespace}type`);
 	const inputIndexed = document.getElementById(`${namespace}indexed`);
@@ -173,6 +183,11 @@ export default function ({namespace, objectFieldId}) {
 		onChangeSeachableType('text', namespace)
 	);
 	form.addEventListener('submit', () =>
-		saveObjectField(document, namespace, objectFieldId)
+		saveObjectField(
+			document,
+			namespace,
+			objectFieldBusinessTypes,
+			objectFieldId
+		)
 	);
 }

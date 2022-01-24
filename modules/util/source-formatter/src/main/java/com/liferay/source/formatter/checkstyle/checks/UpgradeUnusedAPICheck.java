@@ -163,7 +163,7 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 	private static final String _MSG_UNUSED_METHOD = "method.unused";
 
 	private static final String _UPGRADE_UNUSED_METHOD_CATEGORY =
-		"upgradUnusedMethodNames";
+		"upgradeUnusedMethodNames";
 
 	private static final String _UPGRADE_UNUSED_METHOD_NAME =
 		"upgrade-unused-method-names.json";

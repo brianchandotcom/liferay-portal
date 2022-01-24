@@ -1945,7 +1945,7 @@ definition {
 		WebContentDisplayPortlet.viewContent(
 			displayText = "Link to Page",
 			pageName = "Page B",
-			webContentTitle = "WC WebContent Title 2");
+			webContentTitle = "WC WebContent Title 1");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 

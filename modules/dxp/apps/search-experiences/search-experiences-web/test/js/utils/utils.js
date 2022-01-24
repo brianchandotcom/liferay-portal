@@ -1037,7 +1037,7 @@ describe('utils', () => {
 					},
 				})
 			).toEqual({
-				field: 'localized_title${context.language_id}^1',
+				field: 'localized_title_${context.language_id}^1',
 			});
 		});
 
@@ -1099,9 +1099,66 @@ describe('utils', () => {
 				})
 			).toEqual({
 				fields: [
-					'localized_title${context.language_id}^2',
-					'content${context.language_id}^1',
+					'localized_title_${context.language_id}^2',
+					'content_${context.language_id}^1',
 				],
+			});
+		});
+
+		it('gets configurationEntry of field mapping list with undefined or blank locale', () => {
+			expect(
+				getConfigurationEntry({
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								fields: '${configuration.fields}',
+							},
+							uiConfiguration: {
+								fieldSets: [
+									{
+										fields: [
+											{
+												defaultValue: [
+													{
+														boost: 2,
+														field:
+															'localized_title',
+													},
+													{
+														boost: 1,
+														field: 'content',
+														locale: '',
+													},
+												],
+												label: 'Field',
+												name: 'fields',
+												type: 'fieldMappingList',
+												typeOptions: {
+													boost: true,
+												},
+											},
+										],
+									},
+								],
+							},
+						},
+					},
+					uiConfigurationValues: {
+						fields: [
+							{
+								boost: 2,
+								field: 'localized_title',
+							},
+							{
+								boost: 1,
+								field: 'content',
+								locale: '',
+							},
+						],
+					},
+				})
+			).toEqual({
+				fields: ['localized_title^2', 'content^1'],
 			});
 		});
 
@@ -1230,7 +1287,7 @@ describe('utils', () => {
 				})
 			).toEqual({
 				boost: 20,
-				field: 'localized_title${context.language_id}^1',
+				field: 'localized_title_${context.language_id}^1',
 				json: {category: 'custom'},
 			});
 		});

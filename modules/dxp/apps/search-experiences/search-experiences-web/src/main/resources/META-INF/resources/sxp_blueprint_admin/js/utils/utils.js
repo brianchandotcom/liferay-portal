@@ -422,8 +422,7 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 						locale = '',
 					} = initialConfigValue;
 
-					const transformedLocale =
-						!locale || locale.includes('$') ? locale : `_${locale}`;
+					const transformedLocale = !locale ? locale : `_${locale}`;
 
 					let localizedField;
 
@@ -454,10 +453,9 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 								languageIdPosition,
 								locale = '',
 							}) => {
-								const transformedLocale =
-									!locale || locale.includes('$')
-										? locale
-										: `_${locale}`;
+								const transformedLocale = !locale
+									? locale
+									: `_${locale}`;
 
 								let localizedField;
 

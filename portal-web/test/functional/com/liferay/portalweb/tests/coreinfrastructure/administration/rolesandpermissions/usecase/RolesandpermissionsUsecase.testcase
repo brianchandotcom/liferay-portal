@@ -1170,8 +1170,11 @@ definition {
 			pageName = "USA Ice Hockey Team Search",
 			siteName = "Site Name");
 
-		for (var portletName : list "Search Bar,Suggestions,Site Facet,Type Facet,Tag Facet,Category Facet,Folder Facet,User Facet,Modified Facet,Search Results,Search Options") {
-			Portlet.viewDefaultTitle(portletName = "${portletName}");
+		for (var portletName : list "SearchBar,Suggestions,SiteFacet,TypeFacet,TagFacet,CategoryFacet,FolderFacet,UserFacet,ModifiedFacet,SearchResults,SearchOptions") {
+			AssertVisible(
+				key_decorator = "barebone",
+				key_portletTitleName = "${portletName}",
+				locator1 = "Portlet#SPECIFIC_PORTLET_BORDER_DECORATOR");
 		}
 
 		User.logoutPG();

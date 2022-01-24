@@ -541,12 +541,76 @@ definition {
 	}
 
 	@description = "LPS-137865 - Verify that it is possible to submit an entry with a Double field blank that is not required"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSubmitEntryWithDoubleFieldBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141823 CanSubmitEntryWithDoubleFieldBlank pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "String",
+			fieldName = "stringField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Double",
+			fieldName = "doubleField",
+			fieldType = "Double",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "String");
+
+		Form.save();
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		PopulateObjectFormsConfiguration.mapFormObjectField(
+			fieldLabelName = "Double",
+			formObjectField = "Choose an Option");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "");
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "String text");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "String text");
 	}
 
 	@description = "LPS-139902 - Verify that entries Object entries added through forms are not deleted when form is deleted"

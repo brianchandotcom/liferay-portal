@@ -228,12 +228,12 @@ export default function PageToolbar({
 							<div>
 								<ClayButton
 									aria-label={Liferay.Language.get(
-										'edit-name'
+										'edit-title'
 									)}
 									className="entry-heading-edit-button"
 									displayType="unstyled"
 									monospaced={false}
-									onClick={_handleClickEdit('name')}
+									onClick={_handleClickEdit('title')}
 								>
 									<div className="entry-title text-truncate">
 										{title[newDefaultLocale]}

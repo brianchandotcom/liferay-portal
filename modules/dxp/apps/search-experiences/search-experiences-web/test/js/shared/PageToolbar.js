@@ -69,11 +69,11 @@ describe('PageToolbar', () => {
 
 		getByText('Apple');
 
-		fireEvent.click(getByLabelText('edit-name'));
+		fireEvent.click(getByLabelText('edit-title'));
 
 		act(() => jest.runAllTimers());
 
-		fireEvent.change(getByLabelText('name'), {
+		fireEvent.change(getByLabelText('title'), {
 			target: {value: 'Banana'},
 		});
 
@@ -137,7 +137,7 @@ describe('PageToolbar', () => {
 		expect(getByText('save')).toBeDisabled();
 	});
 
-	it('focuses on the name input when clicked on', () => {
+	it('focuses on the title input when clicked on', () => {
 		const initialTitle = {
 			'en-US': 'Apple',
 		};
@@ -146,11 +146,11 @@ describe('PageToolbar', () => {
 			initialTitle,
 		});
 
-		fireEvent.click(getByLabelText('edit-name'));
+		fireEvent.click(getByLabelText('edit-title'));
 
 		act(() => jest.runAllTimers());
 
-		expect(getByLabelText('name')).toHaveFocus();
+		expect(getByLabelText('title')).toHaveFocus();
 	});
 
 	it('focuses on the description input when clicked on', () => {

@@ -839,7 +839,12 @@ public class ServiceBuilder {
 							_createModelCache(entity);
 							_createModelWrapper(entity);
 
-							_createModelSoap(entity);
+							if (isVersionGTE_7_4_0()) {
+								_removeModelSoap(entity, _serviceOutputPath);
+							}
+							else {
+								_createModelSoap(entity);
+							}
 
 							_createModelTable(entity);
 
@@ -893,7 +898,12 @@ public class ServiceBuilder {
 								_removeServiceJsonSerializer(entity);
 							}
 
-							_createServiceSoap(entity);
+							if (isVersionGTE_7_4_0()) {
+								_removeServiceSoap(entity);
+							}
+							else {
+								_createServiceSoap(entity);
+							}
 						}
 						else {
 							_removeServiceImpl(entity, _SESSION_TYPE_REMOTE);

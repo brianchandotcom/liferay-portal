@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author ${author}
+<#if serviceBuilder.isVersionLTE_7_3_0()>
  * @see ${entity.name}ServiceSoap
+</#if>
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

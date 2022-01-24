@@ -341,7 +341,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	<#if entity.hasRemoteService()>
+	<#if entity.hasRemoteService() && serviceBuilder.isVersionLTE_7_3_0()>
 		/**
 		 * Converts the soap model instance into a normal model instance.
 		 *

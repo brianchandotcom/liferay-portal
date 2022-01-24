@@ -76,7 +76,7 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		}
 
 		JobProperty jobProperty = getJobProperty(
-			"test.batch.run.property.query", testBaseDir,
+			"test.batch.property.query", testBaseDir,
 			JobProperty.Type.QA_WEBSITES_TEST_DIR);
 
 		recordJobProperty(jobProperty);

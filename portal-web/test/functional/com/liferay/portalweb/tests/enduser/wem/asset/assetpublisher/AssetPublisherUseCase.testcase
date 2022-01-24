@@ -204,6 +204,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-137055. The show only assets configuration should be unavailable to display page template."
+	@priority = "4"
+	test CannotViewShowOnlyAssetsConfigurationInDisplayPageTemplate {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add an Asset Publisher widget to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Cannot view Show only assets with Display Page Name as its display page template. configuration in Asset Publisher") {
+			AssetPublisherPortlet.gotoConfigurationPG();
+
+			Navigator.gotoNavTab(navTab = "Display Settings");
+
+			Panel.expandPanel(panel = "Set and Enable");
+
+			AssertElementNotPresent(
+				checkboxName = "Show only assets with Display Page Name as its display page template.",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
 	@description = "This is a test for LPS-132428. The user could configure Asset Publisher after adding the Kaleo Forms admin portlet to blacklist."
 	@priority = "4"
 	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
@@ -1200,38 +1232,6 @@ definition {
 
 		task ("View the web content shown in new folder") {
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
-		}
-	}
-
-	@description = "This is a use case for LPS-137055. The show only assets configuration should be unavailable to display page template."
-	@priority = "4"
-	test CannotViewShowOnlyAssetsConfigurationInDisplayPageTemplate {
-		task ("Add a display page template for Web Content Article and Basic Web Content") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-		}
-
-		task ("Add an Asset Publisher widget to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("Cannot view Show only assets with Display Page Name as its display page template. configuration in Asset Publisher") {
-			AssetPublisherPortlet.gotoConfigurationPG();
-
-			Navigator.gotoNavTab(navTab = "Display Settings");
-
-			Panel.expandPanel(panel = "Set and Enable");
-
-			AssertElementNotPresent(
-				checkboxName = "Show only assets with Display Page Name as its display page template.",
-				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
 

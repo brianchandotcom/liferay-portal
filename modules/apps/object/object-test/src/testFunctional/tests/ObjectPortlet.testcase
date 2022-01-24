@@ -2366,11 +2366,11 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
-			value = "Test text Test text Test text Test text Test text Test text Test text  Test");
+			value = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "Test text Test text Test text Test text Test text Test text Test text  Test");
+		ObjectPortlet.viewEntry(entry = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ");
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing a page on the Custom Object Portlet"

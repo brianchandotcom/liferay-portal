@@ -123,7 +123,6 @@ export function handleAction(
 function ActionItem({
 	action,
 	closeMenu,
-	data,
 	handleAction,
 	itemData,
 	itemId,
@@ -136,7 +135,7 @@ function ActionItem({
 }) {
 	const context = useContext(DataSetContext);
 
-	const {icon, label, target} = action;
+	const {data, icon, label, target} = action;
 
 	function handleClickOnLink(event) {
 		event.preventDefault();

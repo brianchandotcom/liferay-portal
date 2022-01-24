@@ -1229,7 +1229,9 @@ definition {
 
 			Panel.expandPanel(panel = "Set and Enable");
 
-			AssertTextNotPresent(value1 = "Show only assets with Display Page Name as its display page template.");
+			AssertElementNotPresent(
+				checkboxName = "Show only assets with Display Page Name as its display page template.",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
 

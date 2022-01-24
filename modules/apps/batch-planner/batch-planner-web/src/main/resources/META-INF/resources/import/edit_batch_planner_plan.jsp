@@ -17,12 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-	String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
-	long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
-
-boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
+long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "import") : LanguageUtil.get(request, "edit"));
 
@@ -103,22 +100,26 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 
 							<div class="row">
 								<div class="col">
-									<clay:radio
-										label='<%= LanguageUtil.get(request, "upload-a-csv-file-from-my-computer") %>'
-										name="uploadFile"
-									/>
+									<div class="form-group">
+										<clay:radio
+											checked="<%= true %>"
+											label='<%= LanguageUtil.get(request, "upload-a-csv-file-from-my-computer") %>'
+											name="selectFile"
+											value="computer"
+										/>
 
-									<span>
+										<clay:radio
+											label='<%= LanguageUtil.get(request, "use-a-file-already-on-the-server") %>'
+											name="selectFile"
+											value="server"
+										/>
+									</div>
+
+									<div id="<portlet:namespace />fileUpload">
 										<react:component
 											module="js/components/FileUpload"
 										/>
-									</span>
-
-									<clay:radio
-										checked="<%= true %>"
-										label='<%= LanguageUtil.get(request, "use-a-file-already-on-the-server") %>'
-										name="selectFile"
-									/>
+									</div>
 
 									<clay:checkbox
 										checked="<%= true %>"
@@ -176,6 +177,24 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 				%>'
 			/>
 		</span>
-
 	</form>
 </clay:container>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
+		).put(
+			"initialTemplateHeadlessEndpoint", editBatchPlannerPlanDisplayContext.getSelectedHeadlessEndpoint()
+		).put(
+			"initialTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
+		).put(
+			"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
+		).build()
+	%>'
+	module="js/edit_batch_planner_plan"
+/>
+
+<liferay-frontend:component
+	module="js/show_upload_input"
+/>

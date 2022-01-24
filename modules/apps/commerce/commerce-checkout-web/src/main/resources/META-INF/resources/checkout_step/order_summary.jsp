@@ -445,6 +445,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 								dayParam="requestedDeliveryDateDay"
 								dayValue="<%= requestedDeliveryDay %>"
 								disabled="<%= false %>"
+								firstEnabledDate="<%= new Date() %>"
 								monthParam="requestedDeliveryDateMonth"
 								monthValue="<%= requestedDeliveryMonth %>"
 								name="requestedDeliveryDate"

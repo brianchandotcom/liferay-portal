@@ -65,8 +65,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
-import java.util.Calendar;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -242,27 +240,21 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 					actionRequest, "requestedDeliveryDateDay");
 				int requestedDeliveryDateYear = ParamUtil.getInteger(
 					actionRequest, "requestedDeliveryDateYear");
-				int requestedDeliveryDateHour = ParamUtil.getInteger(
-					actionRequest, "requestedDeliveryDateHour");
-				int requestedDeliveryDateMinute = ParamUtil.getInteger(
-					actionRequest, "requestedDeliveryDateMinute");
-				int requestedDeliveryDateAmPm = ParamUtil.getInteger(
-					actionRequest, "requestedDeliveryDateAmPm");
 
-				if (requestedDeliveryDateAmPm == Calendar.PM) {
-					requestedDeliveryDateHour += 12;
+				if ((requestedDeliveryDateMonth > -1) &&
+					(requestedDeliveryDateDay > 0) &&
+					(requestedDeliveryDateYear > 0)) {
+
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							CommerceOrder.class.getName(), actionRequest);
+
+					_commerceOrderService.updateInfo(
+						commerceOrder.getCommerceOrderId(),
+						commerceOrder.getPrintedNote(),
+						requestedDeliveryDateMonth, requestedDeliveryDateDay,
+						requestedDeliveryDateYear, 0, 0, serviceContext);
 				}
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						CommerceOrder.class.getName(), actionRequest);
-
-				_commerceOrderService.updateInfo(
-					commerceOrder.getCommerceOrderId(),
-					commerceOrder.getPrintedNote(), requestedDeliveryDateMonth,
-					requestedDeliveryDateDay, requestedDeliveryDateYear,
-					requestedDeliveryDateHour, requestedDeliveryDateMinute,
-					serviceContext);
 			}
 
 			CommerceOrder checkedOutCommerceOrder =

@@ -322,22 +322,22 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LABEL</td>
-		<td>//a[contains(text(),'${key_label}')]</td>
+		<td>//a[text() = '${key_label}']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SCOPE</td>
-		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div[contains(text(),'${key_scope}')]</td>
+		<td>//a[text() = '${key_label}']/../../following-sibling::div[contains(text(),'${key_scope}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div//strong[contains(@class, 'workflow-value') and contains(text(),'${key_status}')]</td>
+		<td>//a[text() = '${key_label}']/../../following-sibling::div//span[contains(@class,'workflow-status')]//strong[contains(text(),'${key_status}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SYSTEM</td>
-		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div[contains(text(),'${key_system}')]</td>
+		<td>//a[text() = '${key_label}']/../../following-sibling::div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>

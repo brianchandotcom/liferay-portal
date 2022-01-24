@@ -52,7 +52,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_STATUS</td>
-		<td>//div[contains(text(),'${key_entry}')]/following-sibling::div//strong[contains(@class, 'workflow-value') and contains(text(),'${key_status}')]</td>
+		<td>//div[contains(text(),'${key_entry}')]/following-sibling::div//span[contains(@class,'workflow-status')]//strong[contains(text(),'${key_status}')]</td>
 		<td></td>
 	</tr>
 	<tr>

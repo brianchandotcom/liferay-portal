@@ -16,6 +16,10 @@ definition {
 		ClickNoError(
 			key_titleFieldName = "${titleFieldName}",
 			locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro assertAddedEntryRelationshipIsDisplayed {
@@ -367,6 +371,8 @@ definition {
 		Click(locator1 = "CreateObject#SAVE_BUTTON");
 
 		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro selectDeletionType {

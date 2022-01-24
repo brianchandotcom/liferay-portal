@@ -3754,7 +3754,7 @@ definition {
 			fieldName = "ObjectEdit",
 			pluralLabelName = "Objects Edit");
 
-		CreateObject.selectTitleField(fieldLabel = "ID");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		ObjectAdmin.selectObjectScope(fieldOption = "Company");
 
@@ -4240,29 +4240,29 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141614",
+			objectName = "CustomObject141614",
+			pluralLabelName = "Custom Objects 141614");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Double",
 			fieldName = "customObjectField",
 			fieldType = "Double",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141614");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject141614",
+			objectName_2 = "CustomObject141614",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141614");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141614");
 
 		CreateObject.selectTitleField(fieldLabel = "Double");
 
@@ -4270,10 +4270,10 @@ definition {
 
 		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141614",
 			value = "12.34");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141614");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12.34");
 	}
@@ -5115,6 +5115,8 @@ definition {
 
 		WaitForSPARefresh();
 
+		WaitForPageLoad();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
@@ -5267,28 +5269,28 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141629",
+			objectName = "CustomObject141629",
+			pluralLabelName = "Custom Objects 141629");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141629");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141629");
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 141629");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject141629",
 			value = "Entry 1");
 
 		ObjectAdmin.openMyWorkflowTasks();
@@ -5303,7 +5305,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141629");
 
 		ObjectPortlet.assertEntryStauts(
 			key_entry = "Entry 1",
@@ -7625,21 +7627,21 @@ definition {
 	test RelationshipFieldNotCreatedOnManyToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter}",
-				objectName = "CustomObject${letter}",
-				pluralLabelName = "Custom Objects ${letter}");
+				labelName = "Custom Object 141659 ${letter}",
+				objectName = "CustomObject141659${letter}",
+				pluralLabelName = "Custom Objects 141659 ${letter}");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA",
-			objectName_2 = "CustomObjectB",
+			objectName_1 = "CustomObject141659A",
+			objectName_2 = "CustomObject141659B",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "manyToMany");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141659 B");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -7824,9 +7826,9 @@ definition {
 	test RelationshipTabDisappearsWhenInactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter}",
-				objectName = "CustomObject${letter}",
-				pluralLabelName = "Custom Objects ${letter}");
+				labelName = "Custom Object 140872 ${letter}",
+				objectName = "CustomObject140872${letter}",
+				pluralLabelName = "Custom Objects 140872 ${letter}");
 		}
 
 		for (var letter : list "A,B") {
@@ -7835,23 +7837,23 @@ definition {
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject${letter}");
+				objectName = "CustomObject140872${letter}");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA",
-			objectName_2 = "CustomObjectB",
+			objectName_1 = "CustomObject140872A",
+			objectName_2 = "CustomObject140872B",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout",
-			objectName = "CustomObjectA");
+			objectName = "CustomObject140872A");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 A");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -7873,27 +7875,24 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140872A");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140872B");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectFieldA",
-			objectName = "CustomObjectA",
+			objectName = "CustomObject140872A",
 			value = "Entry 1");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 B");
 
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects A");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 A");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
@@ -7907,9 +7906,9 @@ definition {
 	test RelationshipTabReappearsWhenReactivatedManyToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter}",
-				objectName = "CustomObject${letter}",
-				pluralLabelName = "Custom Objects ${letter}");
+				labelName = "Custom Object 140875 ${letter}",
+				objectName = "CustomObject140875${letter}",
+				pluralLabelName = "Custom Objects 140875 ${letter}");
 		}
 
 		for (var letter : list "A,B") {
@@ -7918,19 +7917,19 @@ definition {
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject${letter}");
+				objectName = "CustomObject140875${letter}");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA",
-			objectName_2 = "CustomObjectB",
+			objectName_1 = "CustomObject140875A",
+			objectName_2 = "CustomObject140875B",
 			relationshipLabel = "Relationship A",
 			relationshipName = "relationshipA",
 			relationshipType = "manyToMany");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectB",
-			objectName_2 = "CustomObjectA",
+			objectName_1 = "CustomObject140875B",
+			objectName_2 = "CustomObject140875A",
 			relationshipLabel = "Relationship B",
 			relationshipName = "relationshipB",
 			relationshipType = "manyToMany");
@@ -7938,13 +7937,13 @@ definition {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout",
-				objectName = "CustomObject${letter}");
+				objectName = "CustomObject140875${letter}");
 		}
 
 		for (var letter : list "A,B") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter}");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 140875 ${letter}");
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -7967,28 +7966,28 @@ definition {
 			Button.clickSave();
 		}
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140875A");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140875B");
 
 		for (var fieldEntry : list "A,B") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField${fieldEntry}",
-				objectName = "CustomObject${fieldEntry}",
+				objectName = "CustomObject140875${fieldEntry}",
 				value = "Entry ${fieldEntry}");
 		}
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object B");
+		CreateObject.inactiveCustomObject(objectName = "Custom Object 140875 B");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object B");
+		CreateObject.activeCustomObject(objectName = "Custom Object 140875 B");
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject140875A");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
@@ -7996,15 +7995,15 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object A");
+		CreateObject.inactiveCustomObject(objectName = "Custom Object 140875 A");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object A");
+		CreateObject.activeCustomObject(objectName = "Custom Object 140875 A");
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject140875B");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
@@ -8016,9 +8015,9 @@ definition {
 	test RelationshipTabReappearsWhenReactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter}",
-				objectName = "CustomObject${letter}",
-				pluralLabelName = "Custom Objects ${letter}");
+				labelName = "Custom Object 140873 ${letter}",
+				objectName = "CustomObject140873${letter}",
+				pluralLabelName = "Custom Objects 140873 ${letter}");
 		}
 
 		for (var letter : list "A,B") {
@@ -8027,23 +8026,23 @@ definition {
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject${letter}");
+				objectName = "CustomObject140873${letter}");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA",
-			objectName_2 = "CustomObjectB",
+			objectName_1 = "CustomObject140873A",
+			objectName_2 = "CustomObject140873B",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout",
-			objectName = "CustomObjectA");
+			objectName = "CustomObject140873A");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140873 A");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -8065,18 +8064,18 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140873A");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140873B");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectFieldA",
-			objectName = "CustomObjectA",
+			objectName = "CustomObject140873A",
 			value = "Entry 1");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140873 B");
 
 		CreateObject.checkToggleInactive();
 
@@ -8084,7 +8083,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140873 B");
 
 		CreateObject.checkToggleActive();
 
@@ -8093,7 +8092,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "Custom Objects A");
+			portlet = "Custom Objects 140873 A");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
@@ -8123,25 +8122,25 @@ definition {
 	@priority = "4"
 	test UpdatedDataIsKeptWhenPublishing {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141685",
+			objectName = "CustomObject141685",
+			pluralLabelName = "Custom Objects 141685");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141685");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141685");
 
 		ObjectAdmin.editCustomObject(
-			fieldLabelName = "Object Edit",
-			fieldName = "ObjectEdit",
-			pluralLabelName = "Objects Edit");
+			fieldLabelName = "Object Edit 141685",
+			fieldName = "ObjectEdit141685",
+			pluralLabelName = "Objects Edit 141685");
 
 		ObjectAdmin.selectObjectScope(fieldOption = "Site");
 
@@ -8153,9 +8152,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Object Edit");
+		ObjectPortlet.selectCustomObject(label = "Object Edit 141685");
 
-		for (var valueFieldLabel : list "ObjectEdit,Object Edit,Objects Edit") {
+		for (var valueFieldLabel : list "ObjectEdit141685,Object Edit 141685,Objects Edit 141685") {
 			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
 		}
 

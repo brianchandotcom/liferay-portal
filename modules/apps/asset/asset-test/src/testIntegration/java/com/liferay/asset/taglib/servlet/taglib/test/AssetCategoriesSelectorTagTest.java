@@ -229,8 +229,8 @@ public class AssetCategoriesSelectorTagTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

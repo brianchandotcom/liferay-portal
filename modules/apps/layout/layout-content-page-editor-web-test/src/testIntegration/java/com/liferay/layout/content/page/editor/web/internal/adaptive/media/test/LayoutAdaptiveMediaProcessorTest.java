@@ -284,9 +284,9 @@ public class LayoutAdaptiveMediaProcessorTest {
 			layoutStructure.toString(), _serviceContext);
 
 		_themeDisplay.setLayout(_layout);
+		_themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)_layout.getLayoutType());
-		_themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		_themeDisplay.setLookAndFeel(
 			_layout.getTheme(), _layout.getColorScheme());
 		_themeDisplay.setPlid(_layout.getPlid());

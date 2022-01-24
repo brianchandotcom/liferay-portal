@@ -195,8 +195,8 @@ public class AssetPublisherDisplayContextTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

@@ -122,13 +122,13 @@ public class HTMLTitleTemplateContextContributorTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
-		themeDisplay.setLocale(
-			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
-		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
 		themeDisplay.setSecure(true);
 		themeDisplay.setServerName("localhost");
 		themeDisplay.setServerPort(8080);

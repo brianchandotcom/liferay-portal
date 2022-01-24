@@ -139,11 +139,11 @@ public class CommerceOrderHttpHelperImplTest {
 
 		_themeDisplay = ThemeDisplayFactory.create();
 
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setUser(_user);
-		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
+		_themeDisplay.setScopeGroupId(_group.getGroupId());
+		_themeDisplay.setSignedIn(true);
+		_themeDisplay.setUser(_user);
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 

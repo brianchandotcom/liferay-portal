@@ -1443,8 +1443,8 @@ public class ServicePreAction extends Action {
 
 		boolean secure = PortalUtil.isForwardedSecure(httpServletRequest);
 
-		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setCDNDynamicResourcesHost(dynamicResourcesCDNHost);
+		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setPortalDomain(_getPortalDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setRefererPlid(refererPlid);
@@ -1471,10 +1471,10 @@ public class ServicePreAction extends Action {
 		themeDisplay.setIsolated(isolated);
 		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setLayout(layout);
-		themeDisplay.setLayouts(layouts);
 		themeDisplay.setLayoutSet(layoutSet);
 		themeDisplay.setLayoutSetLogo(layoutSetLogo);
 		themeDisplay.setLayoutTypePortlet(layoutTypePortlet);
+		themeDisplay.setLayouts(layouts);
 		themeDisplay.setLifecycle(lifecycle);
 		themeDisplay.setLifecycleAction(lifecycle.equals("1"));
 		themeDisplay.setLifecycleEvent(lifecycle.equals("3"));

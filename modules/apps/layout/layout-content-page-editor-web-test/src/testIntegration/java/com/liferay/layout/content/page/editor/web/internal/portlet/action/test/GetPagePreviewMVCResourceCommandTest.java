@@ -167,9 +167,9 @@ public class GetPagePreviewMVCResourceCommandTest {
 				_group.getGroupId(), layout.getPlid());
 
 		_themeDisplay.setLayout(layout);
+		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
-		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLookAndFeel(
 			layout.getTheme(), layout.getColorScheme());
 		_themeDisplay.setPlid(layout.getPlid());

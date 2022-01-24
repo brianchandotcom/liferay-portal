@@ -166,8 +166,8 @@ public class UpdateItemConfigMVCActionCommandTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

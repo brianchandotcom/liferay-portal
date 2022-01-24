@@ -223,11 +223,11 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPlid(_layout.getPlid());
 		themeDisplay.setUser(user);
 

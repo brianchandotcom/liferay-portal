@@ -291,11 +291,11 @@ public class LayoutSEOLinkManagerTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSecure(false);
 		themeDisplay.setServerName(company.getVirtualHostname());
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 
 		return themeDisplay;
 	}

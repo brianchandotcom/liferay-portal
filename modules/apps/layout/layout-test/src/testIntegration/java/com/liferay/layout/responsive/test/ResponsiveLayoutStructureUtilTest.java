@@ -127,9 +127,9 @@ public class ResponsiveLayoutStructureUtilTest {
 		_themeDisplay.setLanguageId(
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 		_themeDisplay.setLayout(_layout);
+		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)_layout.getLayoutType());
-		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		_themeDisplay.setLocale(LocaleUtil.US);
 		_themeDisplay.setLookAndFeel(
 			_layout.getTheme(), _layout.getColorScheme());

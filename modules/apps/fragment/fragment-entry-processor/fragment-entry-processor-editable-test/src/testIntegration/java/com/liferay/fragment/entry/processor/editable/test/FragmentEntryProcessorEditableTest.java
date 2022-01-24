@@ -900,9 +900,9 @@ public class FragmentEntryProcessorEditableTest {
 
 		themeDisplay.setLookAndFeel(theme, null);
 
+		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(_getHttpServletRequest());
 		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

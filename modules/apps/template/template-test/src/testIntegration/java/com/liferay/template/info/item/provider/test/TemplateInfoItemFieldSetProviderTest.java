@@ -328,9 +328,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(_getMockHttpServletRequest(themeDisplay));
 		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}

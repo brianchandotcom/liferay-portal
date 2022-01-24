@@ -173,13 +173,13 @@ public class LayoutInfoItemLanguagesProviderTest {
 		themeDisplay.setCompany(company);
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
-		themeDisplay.setLocale(
-			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
-		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSecure(true);
 		themeDisplay.setServerName("localhost");

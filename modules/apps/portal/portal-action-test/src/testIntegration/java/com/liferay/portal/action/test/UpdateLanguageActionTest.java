@@ -192,12 +192,12 @@ public class UpdateLanguageActionTest {
 
 		themeDisplay.setI18nLanguageId(_sourceUKLocale.getLanguage());
 		themeDisplay.setI18nPath("/" + _sourceUKLocale.getLanguage());
-		themeDisplay.setLocale(_sourceUKLocale);
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setLocale(_sourceUKLocale);
 		themeDisplay.setPortalDomain(_VIRTUAL_HOSTNAME);
 		themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + _VIRTUAL_HOSTNAME);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		Assert.assertEquals(
 			StringBundler.concat(

@@ -35,9 +35,9 @@ public class ContentDashboardTestUtil {
 		themeDisplay.setCompany(
 			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

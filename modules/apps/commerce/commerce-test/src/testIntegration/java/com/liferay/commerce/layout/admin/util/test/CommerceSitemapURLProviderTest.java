@@ -116,9 +116,9 @@ public class CommerceSitemapURLProviderTest {
 		_themeDisplay.setCompany(_company);
 		_themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
+		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setUser(_user);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(

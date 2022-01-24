@@ -327,8 +327,8 @@ public class AssetInfoCollectionProviderTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

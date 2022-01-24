@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {switchSidebarPanel} from '../../actions/index';
@@ -42,8 +42,7 @@ import {
 } from '../../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
 import TopperItemActions from './TopperItemActions';
-
-const TOPPER_BAR_HEIGHT = 24;
+import {TopperLabel} from './TopperLabel';
 
 const MemoizedTopperContent = React.memo(TopperContent);
 
@@ -259,60 +258,3 @@ class TopperErrorBoundary extends React.Component {
 		);
 	}
 }
-
-function TopperLabel({children, isActive, itemElement}) {
-	const [isInset, setIsInset] = useState(false);
-	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
-
-	useEffect(() => {
-		if (isActive) {
-			const handleWindowScroll = () => {
-				setWindowScrollPosition(window.scrollY);
-			};
-
-			window.addEventListener('scroll', handleWindowScroll);
-
-			return () => {
-				window.removeEventListener('scroll', handleWindowScroll);
-			};
-		}
-	}, [isActive]);
-
-	useEffect(() => {
-		if (itemElement && isActive) {
-			const itemTop =
-				itemElement.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
-
-			const controlMenuContainerHeight =
-				document.querySelector('.control-menu-container')
-					?.offsetHeight ?? 0;
-
-			if (itemTop < controlMenuContainerHeight) {
-				setIsInset(true);
-			}
-			else {
-				setIsInset(false);
-			}
-		}
-	}, [isActive, itemElement, windowScrollPosition]);
-
-	return (
-		<div
-			className={classNames(
-				'cadmin',
-				'page-editor__topper__bar',
-				'tbar',
-				{
-					'page-editor__topper__bar--inset': isInset,
-				}
-			)}
-		>
-			{children}
-		</div>
-	);
-}
-
-TopperLabel.propTypes = {
-	isActive: PropTypes.bool,
-	itemElement: PropTypes.object,
-};

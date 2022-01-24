@@ -1203,7 +1203,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-137055.'Show only assets with [display page] as its display page template' is shown on Display Page Templates."
+	@description = "This is a use case for LPS-137055. The show only assets configuration should be unavailable to display page template."
 	@priority = "4"
 	test ShowOnlyAssetsWithDisplayPageAsDisplayPageTemplateShownOnDisplayPageTemplates {
 		task ("Add a display page template for Web Content Article and Basic Web Content") {

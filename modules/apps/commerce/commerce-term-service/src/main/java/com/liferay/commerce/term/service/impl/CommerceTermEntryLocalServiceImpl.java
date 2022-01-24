@@ -86,9 +86,10 @@ public class CommerceTermEntryLocalServiceImpl
 
 		_validate(null, serviceContext.getCompanyId(), name, priority, type);
 
+		long commerceTermEntryId = counterLocalService.increment();
+
 		CommerceTermEntry commerceTermEntry =
-			commerceTermEntryPersistence.create(
-				counterLocalService.increment());
+			commerceTermEntryPersistence.create(commerceTermEntryId);
 
 		commerceTermEntry.setExternalReferenceCode(externalReferenceCode);
 
@@ -146,8 +147,7 @@ public class CommerceTermEntryLocalServiceImpl
 		// Commerce term entry localization
 
 		_addCommerceTermEntryLocalizedFields(
-			user.getCompanyId(), commerceTermEntry.getCommerceTermEntryId(),
-			descriptionMap, labelMap);
+			user.getCompanyId(), commerceTermEntryId, descriptionMap, labelMap);
 
 		// Resource
 
@@ -360,8 +360,8 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	private List<CTermEntryLocalization> _addCommerceTermEntryLocalizedFields(
-		long companyId, long cTermEntryId, Map<Locale, String> descriptionMap,
-		Map<Locale, String> labelMap) {
+		long companyId, long commerceTermEntryId,
+		Map<Locale, String> descriptionMap, Map<Locale, String> labelMap) {
 
 		Set<Locale> localeSet = new HashSet<>();
 
@@ -394,7 +394,7 @@ public class CommerceTermEntryLocalServiceImpl
 
 			CTermEntryLocalization cTermEntryLocalization =
 				_addCommerceTermEntryLocalizedFields(
-					companyId, cTermEntryId, description, label,
+					companyId, commerceTermEntryId, description, label,
 					LocaleUtil.toLanguageId(locale));
 
 			cTermEntryLocalizations.add(cTermEntryLocalization);
@@ -416,6 +416,7 @@ public class CommerceTermEntryLocalServiceImpl
 			cTermEntryLocalization = cTermEntryLocalizationPersistence.create(
 				counterLocalService.increment());
 
+			cTermEntryLocalization.setCommerceTermEntryId(commerceTermEntryId);
 			cTermEntryLocalization.setCompanyId(companyId);
 			cTermEntryLocalization.setDescription(description);
 			cTermEntryLocalization.setLabel(label);

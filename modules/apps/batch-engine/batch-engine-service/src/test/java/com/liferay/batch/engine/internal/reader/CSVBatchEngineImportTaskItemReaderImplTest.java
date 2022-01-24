@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.liferay.batch.engine.constants.BatchEngineConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -243,29 +244,15 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 	}
 
-
 	@Test
 	public void testReadRowsWithEnclosingCharacter() throws Exception {
-		try (CSVBatchEngineImportTaskItemReaderImpl
-				csvBatchEngineImportTaskItemReaderImpl =
-					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null, StringPool.QUOTE,
-						new Object[][] {
-							{
-								createDateString, "hey, here is comma inside",
-								1, "sample name", "naziv"
-							}
-						})) {
+		for (String delimiter : BatchEngineConstants.CSV_DELIMITERS) {
+			for (String enclosingCharacter :
+					BatchEngineConstants.CSV_ENCLOSING_CHARACTERS) {
 
-			validate(
-				createDateString, "hey, here is comma inside", 1L,
-				Collections.emptyMap(),
-				csvBatchEngineImportTaskItemReaderImpl.read(),
-				HashMapBuilder.put(
-					"en", "sample name"
-				).put(
-					"hr", "naziv"
-				).build());
+				_testReadRowsWithEnclosingCharacter(
+					delimiter, enclosingCharacter);
+			}
 		}
 	}
 
@@ -388,6 +375,33 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 
 		return map;
+	}
+
+	private void _testReadRowsWithEnclosingCharacter(
+			String delimiter, String enclosingCharacter)
+		throws Exception {
+
+		try (CSVBatchEngineImportTaskItemReaderImpl
+				csvBatchEngineImportTaskItemReaderImpl =
+					_getCSVBatchEngineImportTaskItemReader(
+						FIELD_NAMES, delimiter, enclosingCharacter,
+						new Object[][] {
+							{
+								createDateString, "hey, here is comma inside",
+								1, "sample name", "naziv"
+							}
+						})) {
+
+			validate(
+				createDateString, "hey, here is comma inside", 1L,
+				Collections.emptyMap(),
+				csvBatchEngineImportTaskItemReaderImpl.read(),
+				HashMapBuilder.put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
+		}
 	}
 
 }

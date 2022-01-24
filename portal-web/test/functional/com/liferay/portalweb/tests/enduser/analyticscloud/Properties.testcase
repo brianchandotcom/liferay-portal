@@ -459,8 +459,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
+	@ignore = "true"
 	@priority = "5"
 	test OwnerCanCreateNewProperty {
+
+		// AC Bug ticket: LRAC-10434
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();

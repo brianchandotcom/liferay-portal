@@ -97,21 +97,27 @@ function TopperContent({
 		getLayoutDataItemLabel(item, fragmentEntryLinks) ||
 		Liferay.Language.get('element');
 
-	const {handlerRef, isDraggingSource} = useDragItem(
-		{
-			...item,
-			name,
-		},
-		(parentItemId, position) =>
-			dispatch(
-				moveItem({
-					itemId: item.itemId,
-					parentItemId,
-					position,
-					segmentsExperienceId,
-				})
-			)
-	);
+	const onDragEnd = (parentItemId, position) =>
+		dispatch(
+			moveItem({
+				itemId: item.itemId,
+				parentItemId,
+				position,
+				segmentsExperienceId,
+			})
+		);
+
+	const {
+		handlerRef: itemHandlerRef,
+		isDraggingSource: itemIsDraggingSource,
+	} = useDragItem({...item, name}, onDragEnd);
+
+	const {
+		handlerRef: topperHandlerRef,
+		isDraggingSource: topperIsDraggingSource,
+	} = useDragItem({...item, name}, onDragEnd);
+
+	const isDraggingSource = itemIsDraggingSource || topperIsDraggingSource;
 
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 
@@ -161,14 +167,17 @@ function TopperContent({
 
 				hoverItem(item.itemId);
 			}}
-			ref={canBeDragged ? handlerRef : null}
+			ref={canBeDragged ? itemHandlerRef : null}
 			style={style}
 		>
 			{isActive ? (
 				<TopperLabel itemElement={itemElement}>
 					<ul className="tbar-nav">
 						{canBeDragged && (
-							<li className="page-editor__topper__drag-handler page-editor__topper__item tbar-item">
+							<li
+								className="page-editor__topper__drag-handler page-editor__topper__item tbar-item"
+								ref={topperHandlerRef}
+							>
 								<ClayIcon
 									className="page-editor__topper__drag-icon page-editor__topper__icon"
 									symbol="drag"

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -314,10 +313,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(
-		String backURL, LiferayPortletResponse liferayPortletResponse,
-		Locale locale) {
-
+	public JSONObject getSpecificInformationJSONObject(Locale locale) {
 		return JSONUtil.put(
 			"creationDate", _journalArticle.getCreateDate()
 		).put(

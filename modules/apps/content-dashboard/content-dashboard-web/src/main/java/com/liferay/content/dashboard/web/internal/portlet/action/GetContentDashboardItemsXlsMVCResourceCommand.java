@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -183,8 +182,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
 				JSONObject jsonObject =
 					contentDashboardItem.getSpecificInformationJSONObject(
-						ParamUtil.getString(resourceRequest, "backURL"),
-						_portal.getLiferayPortletResponse(resourceResponse),
 						locale);
 
 				if (jsonObject != null) {
@@ -205,8 +202,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 				JSONObject jsonObject =
 					contentDashboardItem.getSpecificInformationJSONObject(
-						ParamUtil.getString(resourceRequest, "backURL"),
-						_portal.getLiferayPortletResponse(resourceResponse),
 						locale);
 
 				if (jsonObject != null) {

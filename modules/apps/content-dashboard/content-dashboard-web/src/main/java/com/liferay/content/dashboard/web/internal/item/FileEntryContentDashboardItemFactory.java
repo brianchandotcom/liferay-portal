@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Optional;
@@ -78,7 +80,8 @@ public class FileEntryContentDashboardItemFactory
 			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId()),
-			fileEntry, _groupLocalService.fetchGroup(fileEntry.getGroupId()),
+			_dlURLHelper, fileEntry,
+			_groupLocalService.fetchGroup(fileEntry.getGroupId()), _http,
 			infoItemFieldValuesProvider, _language, _portal);
 	}
 
@@ -109,7 +112,13 @@ public class FileEntryContentDashboardItemFactory
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Language _language;

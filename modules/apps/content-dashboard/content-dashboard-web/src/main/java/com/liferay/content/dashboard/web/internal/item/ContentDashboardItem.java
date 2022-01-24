@@ -21,7 +21,6 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.util.Date;
 import java.util.List;
@@ -68,10 +67,7 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public default JSONObject getSpecificInformationJSONObject(
-		String backURL, LiferayPortletResponse liferayPortletResponse,
-		Locale locale) {
-
+	public default JSONObject getSpecificInformationJSONObject(Locale locale) {
 		return null;
 	}
 

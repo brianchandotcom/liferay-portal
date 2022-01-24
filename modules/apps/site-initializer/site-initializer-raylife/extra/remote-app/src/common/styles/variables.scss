@@ -1,5 +1,10 @@
 $background: var(--body-bg, #fff);
 
+// Breakpoints
+
+$breakpoint-phone: 768px;
+$breakpoint-tablet: 992px;
+
 // Colors
 
 $color-action-neutral-default: var(--color-action-neutral-default, #7d7e85);

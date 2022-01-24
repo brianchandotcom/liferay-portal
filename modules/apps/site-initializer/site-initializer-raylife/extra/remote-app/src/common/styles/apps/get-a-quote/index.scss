@@ -1,7 +1,7 @@
 @import './components/progress-saved';
 @import './components/tip-container-modal';
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: $breakpoint-tablet) {
 	.get-a-quote-structure {
 		flex-direction: column;
 
@@ -22,7 +22,7 @@
 	}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: $breakpoint-phone) {
 	.raylife-template {
 		padding-left: 16px !important;
 	}

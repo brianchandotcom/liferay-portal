@@ -188,9 +188,11 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DoubleClick(
-			key_image = "Commerce_Black",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
+		CommerceDiagram.addPin(
+			label = "Test",
+			pinNumber = "1",
+			quantity = "1",
+			selectType = "Not Linked to a Catalog");
 
 		Click(
 			key_text = "Default Diameter",
@@ -361,8 +363,6 @@ definition {
 	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
 	@priority = "3"
 	test UploadANotMappedNewImage {
-		property portal.acceptance = "false";
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -382,9 +382,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertElementPresent(
-			key_image = "Commerce_Black.jpg",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
+		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
 
 		AssertElementNotPresent(
 			key_color = "#ffffff",
@@ -392,24 +390,20 @@ definition {
 
 		Refresh();
 
-		AssertElementPresent(
-			key_image = "Commerce_Black.jpg",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
+		AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
 	}
 
 	@description = "This is a test for COMMERCE-7036. UseDragForPin"
 	@priority = "3"
 	test UseDragForPin {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
+		CommerceJSONProductsAPI._addCommerceProduct(
+			catalogName = "Master",
 			productName = "Diagram T-Shirt",
-			productType = "Diagram");
+			productType = "diagram");
+
+		CommerceProducts.openProductsAdmin();
+
+		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
@@ -421,13 +415,19 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DoubleClick(
-			key_image = "Commerce_Black",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
+		Refresh();
 
-		CommerceDiagram.useDragOnPin(
-			image_name = "Commerce_Black",
-			position = "300,0");
+		CommerceDiagram.addPin(
+				label = "Test",
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+
+		DragAndDrop.dragAndDropReorganizeObjects(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN",
+				locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
+				position = "300,0");
 	}
 
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"

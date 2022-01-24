@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"commerce-frontend-js": "*",
+		"frontend-js-web": "*"
+	},
+	"name": "@liferay/commerce-term-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

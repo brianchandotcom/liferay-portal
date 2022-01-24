@@ -214,6 +214,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
+
 		_dlAppService.addFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

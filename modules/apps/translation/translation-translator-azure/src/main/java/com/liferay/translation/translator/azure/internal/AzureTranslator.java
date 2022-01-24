@@ -103,7 +103,7 @@ public class AzureTranslator implements Translator {
 
 			Map<String, String> translatedFieldsMap = _getTranslatedFieldsMap(
 				translatorPacket.getFieldsMap(),
-				JSONFactoryUtil.createJSONArray(json ));
+				JSONFactoryUtil.createJSONArray(json));
 
 			return new TranslatorPacket() {
 

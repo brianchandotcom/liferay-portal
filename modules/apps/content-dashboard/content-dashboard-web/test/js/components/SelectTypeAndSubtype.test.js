@@ -17,7 +17,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import SelectTypeAndSubtype from '../../../src/main/resources/META-INF/resources/js/SelectTypeAndSubtype';
+import SelectTypeAndSubtype from '../../../src/main/resources/META-INF/resources/js/components/SelectTypeAndSubtype';
 
 const mockProps = {
 	contentDashboardItemTypes: [

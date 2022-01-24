@@ -78,7 +78,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 				</div>
 
 				<react:component
-					module="js/AuditGraphApp"
+					module="js/components/AuditGraphApp"
 					props="<%= contentDashboardAdminDisplayContext.getData() %>"
 				/>
 			</div>

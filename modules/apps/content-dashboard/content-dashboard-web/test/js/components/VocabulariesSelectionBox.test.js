@@ -18,7 +18,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
 
-import VocabulariesSelectionBox from '../../../src/main/resources/META-INF/resources/js/VocabulariesSelectionBox';
+import VocabulariesSelectionBox from '../../../src/main/resources/META-INF/resources/js/components/VocabulariesSelectionBox';
 
 const mockProps = {
 	leftBoxName: 'availableAssetVocabularyIds',

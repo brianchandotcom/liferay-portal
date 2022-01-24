@@ -15,8 +15,8 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-import AuditBarChart from './components/AuditBarChart';
-import EmptyAuditBarChart from './components/EmptyAuditBarChart';
+import AuditBarChart from './AuditBarChart';
+import EmptyAuditBarChart from './EmptyAuditBarChart';
 
 export default function ({context, props}) {
 	const {languageDirection, namespace} = context;

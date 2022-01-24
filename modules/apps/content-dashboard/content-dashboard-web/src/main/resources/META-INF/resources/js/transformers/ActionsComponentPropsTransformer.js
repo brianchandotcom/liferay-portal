@@ -14,7 +14,7 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import SidebarPanel from '../SidebarPanel';
+import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 

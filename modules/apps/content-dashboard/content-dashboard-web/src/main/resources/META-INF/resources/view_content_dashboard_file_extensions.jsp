@@ -28,7 +28,7 @@ ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFile
 	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"></span>
 
 	<react:component
-		module="js/SelectFileExtension"
+		module="js/components/SelectFileExtension"
 		props="<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData() %>"
 	/>
 </section>

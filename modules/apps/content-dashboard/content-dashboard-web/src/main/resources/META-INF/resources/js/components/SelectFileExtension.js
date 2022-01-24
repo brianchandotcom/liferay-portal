@@ -15,36 +15,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import TreeFilter from './components/TreeFilter';
-import {nodeTreeArrayMapper} from './utils/tree-utils';
+import {nodeTreeArrayMapper} from '../utils/tree-utils';
+import TreeFilter from './TreeFilter';
 
-const SelectTypeAndSubtype = ({
-	contentDashboardItemTypes,
+const SelectFileExtension = ({
+	fileExtensionGroups,
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
 	const nodes = nodeTreeArrayMapper({
-		childrenPropertyKey: 'itemSubtypes',
-		namePropertyKey: 'label',
-		nodeArray: contentDashboardItemTypes,
+		childrenPropertyKey: 'fileExtensions',
+		namePropertyKey: 'fileExtension',
+		nodeArray: fileExtensionGroups,
 	});
 
 	return (
 		<TreeFilter
-			childrenPropertyKey="itemSubtypes"
+			childrenPropertyKey="fileExtensions"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
-			mandatoryFieldsForFiltering={['className', 'classPK']}
-			namePropertyKey="label"
+			mandatoryFieldsForFiltering={['id']}
+			namePropertyKey="fileExtension"
 			nodes={nodes}
 			portletNamespace={portletNamespace}
 		/>
 	);
 };
 
-SelectTypeAndSubtype.propTypes = {
-	contentDashboardItemTypes: PropTypes.array.isRequired,
+SelectFileExtension.propTypes = {
+	fileExtensionGroups: PropTypes.array.isRequired,
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };
 
-export default SelectTypeAndSubtype;
+export default SelectFileExtension;

@@ -18,7 +18,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
-import Sidebar from './components/Sidebar';
+import Sidebar from './Sidebar';
 
 const initialState = {
 	data: null,

@@ -30,50 +30,42 @@ definition {
 	@description = "This is a test for COMMERCE-7025. AddANewPin"
 	@priority = "3"
 	test AddANewPin {
-		property portal.acceptance = "false";
+		task ("Given a diagram product with an image") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Diagram T-Shirt",
-			productType = "Diagram");
+			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 
-		CommerceProductImages.addDiagramImages(
-			imageTitles = "Black",
-			productType = "Diagram");
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
-		Button.clickPublish();
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
 
-		Alert.viewSuccessMessage();
+			Button.clickPublish();
 
-		DoubleClick(
-			key_image = "Commerce_Black",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
+			Alert.viewSuccessMessage();
+		}
 
-		AssertElementPresent(
-			key_color = "transparent",
-			locator1 = "CommerceEntry#VERIFY_PIN");
+		task ("When a pin is added on the product") {
+			CommerceDiagram.addPin(
+				label = "Test",
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+		}
 
-		AssertElementPresent(
-			key_strokeColor = "#ffa500",
-			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
-
-		Refresh();
-
-		Click(locator1 = "CommerceEntry#DIAGRAM_ADD_BUTTON");
-
-		AssertElementPresent(
-			key_color = "transparent",
-			locator1 = "CommerceEntry#VERIFY_PIN");
-
-		AssertElementPresent(
-			key_strokeColor = "#0B5FFF",
-			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
+		task ("Then the pin should be saved on the product diagram") {
+			AssertElementPresent(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"

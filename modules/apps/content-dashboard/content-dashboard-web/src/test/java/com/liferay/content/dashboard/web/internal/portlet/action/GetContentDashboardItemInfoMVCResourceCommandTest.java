@@ -166,9 +166,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItem.getSpecificInformationJSONObject(
 				"backURL",
 				portal.getLiferayPortletResponse(mockLiferayResourceResponse),
-				LocaleUtil.US,
-				(ThemeDisplay)mockLiferayResourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY));
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			getSpecificInformationJSONObject.toString(),
@@ -357,7 +355,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			@Override
 			public JSONObject getSpecificInformationJSONObject(
 				String backURL, LiferayPortletResponse liferayPortletResponse,
-				Locale locale, ThemeDisplay themeDisplay) {
+				Locale locale) {
 
 				JSONObject jsonObject = new JSONObjectImpl();
 

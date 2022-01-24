@@ -108,6 +108,8 @@ export default function ({
 		}
 	};
 
+	onChangeField();
+
 	const changeField = delegate(
 		selectDDMStructureFieldForm,
 		'change',

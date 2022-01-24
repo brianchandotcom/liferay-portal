@@ -28,6 +28,7 @@ SelectStructureFieldDisplayContext selectStructureFieldDisplayContext = new Sele
 	id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureFieldForm" %>'
 >
 	<clay:select
+		containerCssClass="mt-3"
 		id='<%= liferayPortletResponse.getNamespace() + "fieldName" %>'
 		label="select"
 		name="fieldName"

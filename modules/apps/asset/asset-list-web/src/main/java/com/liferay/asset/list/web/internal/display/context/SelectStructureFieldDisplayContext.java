@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -134,7 +135,10 @@ public class SelectStructureFieldDisplayContext {
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			selectOptions.add(
 				new SelectOption(
-					classTypeField.getLabel(), classTypeField.getName()));
+					classTypeField.getLabel(), classTypeField.getName(),
+					Objects.equals(
+						classTypeField.getName(),
+						_getDDMStructureFieldName())));
 		}
 
 		return selectOptions;

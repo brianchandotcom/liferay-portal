@@ -449,6 +449,7 @@ definition {
 	@priority = "4"
 	test DisableEnterpriseSearch {
 		property license.required = "true";
+		property portal.suite.search.engine = "disable";
 		property portal.upstream = "false";
 		property test.name.skip.portal.instance = "Search#DisableEnterpriseSearch";
 		property test.run.environment = "EE";

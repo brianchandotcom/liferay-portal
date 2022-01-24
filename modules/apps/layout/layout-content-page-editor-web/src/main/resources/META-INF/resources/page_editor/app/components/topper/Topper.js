@@ -164,51 +164,53 @@ function TopperContent({
 			ref={canBeDragged ? handlerRef : null}
 			style={style}
 		>
-			<TopperLabel isActive={isActive} itemElement={itemElement}>
-				<ul className="tbar-nav">
-					{canBeDragged && (
-						<li className="page-editor__topper__drag-handler page-editor__topper__item tbar-item">
-							<ClayIcon
-								className="page-editor__topper__drag-icon page-editor__topper__icon"
-								symbol="drag"
-							/>
-						</li>
-					)}
-
-					<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
-						{name}
-					</li>
-
-					{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
-						<li className="page-editor__topper__item tbar-item">
-							<ClayButton
-								displayType="unstyled"
-								small
-								title={Liferay.Language.get('comments')}
-							>
+			{isActive ? (
+				<TopperLabel itemElement={itemElement}>
+					<ul className="tbar-nav">
+						{canBeDragged && (
+							<li className="page-editor__topper__drag-handler page-editor__topper__item tbar-item">
 								<ClayIcon
-									className="page-editor__topper__icon"
-									onClick={() => {
-										dispatch(
-											switchSidebarPanel({
-												sidebarOpen: true,
-												sidebarPanelId: commentsPanelId,
-											})
-										);
-									}}
-									symbol="comments"
+									className="page-editor__topper__drag-icon page-editor__topper__icon"
+									symbol="drag"
 								/>
-							</ClayButton>
-						</li>
-					)}
+							</li>
+						)}
 
-					{canUpdatePageStructure && isActive && (
-						<li className="page-editor__topper__item tbar-item">
-							<TopperItemActions item={item} />
+						<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
+							{name}
 						</li>
-					)}
-				</ul>
-			</TopperLabel>
+
+						{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
+							<li className="page-editor__topper__item tbar-item">
+								<ClayButton
+									displayType="unstyled"
+									small
+									title={Liferay.Language.get('comments')}
+								>
+									<ClayIcon
+										className="page-editor__topper__icon"
+										onClick={() => {
+											dispatch(
+												switchSidebarPanel({
+													sidebarOpen: true,
+													sidebarPanelId: commentsPanelId,
+												})
+											);
+										}}
+										symbol="comments"
+									/>
+								</ClayButton>
+							</li>
+						)}
+
+						{canUpdatePageStructure && isActive && (
+							<li className="page-editor__topper__item tbar-item">
+								<TopperItemActions item={item} />
+							</li>
+						)}
+					</ul>
+				</TopperLabel>
+			) : null}
 
 			<div className="page-editor__topper__content" ref={targetRef}>
 				<TopperErrorBoundary>

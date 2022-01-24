@@ -18,26 +18,24 @@ import React, {useEffect, useState} from 'react';
 
 const TOPPER_BAR_HEIGHT = 24;
 
-export function TopperLabel({children, isActive, itemElement}) {
+export function TopperLabel({children, itemElement}) {
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 
 	useEffect(() => {
-		if (isActive) {
-			const handleWindowScroll = () => {
-				setWindowScrollPosition(window.scrollY);
-			};
+		const handleWindowScroll = () => {
+			setWindowScrollPosition(window.scrollY);
+		};
 
-			window.addEventListener('scroll', handleWindowScroll);
+		window.addEventListener('scroll', handleWindowScroll);
 
-			return () => {
-				window.removeEventListener('scroll', handleWindowScroll);
-			};
-		}
-	}, [isActive]);
+		return () => {
+			window.removeEventListener('scroll', handleWindowScroll);
+		};
+	}, []);
 
 	useEffect(() => {
-		if (itemElement && isActive) {
+		if (itemElement) {
 			const itemTop =
 				itemElement.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
 
@@ -52,7 +50,7 @@ export function TopperLabel({children, isActive, itemElement}) {
 				setIsInset(false);
 			}
 		}
-	}, [isActive, itemElement, windowScrollPosition]);
+	}, [itemElement, windowScrollPosition]);
 
 	return (
 		<div
@@ -71,6 +69,5 @@ export function TopperLabel({children, isActive, itemElement}) {
 }
 
 TopperLabel.propTypes = {
-	isActive: PropTypes.bool,
 	itemElement: PropTypes.object,
 };

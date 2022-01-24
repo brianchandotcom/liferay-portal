@@ -82,6 +82,27 @@ public class UserGroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.UserGroupSoap
+			addOrUpdateUserGroup(
+				String externalReferenceCode, String name, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.UserGroup returnValue =
+				UserGroupServiceUtil.addOrUpdateUserGroup(
+					externalReferenceCode, name, description, serviceContext);
+
+			return com.liferay.portal.kernel.model.UserGroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Adds the user groups to the team
 	 *

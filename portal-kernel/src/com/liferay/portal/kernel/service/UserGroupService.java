@@ -64,6 +64,11 @@ public interface UserGroupService extends BaseService {
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException;
 
+	public UserGroup addOrUpdateUserGroup(
+			String externalReferenceCode, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the user groups to the team
 	 *

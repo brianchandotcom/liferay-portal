@@ -47,6 +47,16 @@ public class UserGroupServiceWrapper
 		_userGroupService.addGroupUserGroups(groupId, userGroupIds);
 	}
 
+	@Override
+	public UserGroup addOrUpdateUserGroup(
+			String externalReferenceCode, String name, String description,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupService.addOrUpdateUserGroup(
+			externalReferenceCode, name, description, serviceContext);
+	}
+
 	/**
 	 * Adds the user groups to the team
 	 *

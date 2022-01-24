@@ -52,6 +52,15 @@ public class UserGroupServiceUtil {
 		getService().addGroupUserGroups(groupId, userGroupIds);
 	}
 
+	public static UserGroup addOrUpdateUserGroup(
+			String externalReferenceCode, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateUserGroup(
+			externalReferenceCode, name, description, serviceContext);
+	}
+
 	/**
 	 * Adds the user groups to the team
 	 *

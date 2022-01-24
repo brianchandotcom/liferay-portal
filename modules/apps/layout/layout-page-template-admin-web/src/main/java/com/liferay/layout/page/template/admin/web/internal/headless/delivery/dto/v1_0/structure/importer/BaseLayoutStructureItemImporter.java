@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -144,8 +143,8 @@ public abstract class BaseLayoutStructureItemImporter {
 			String friendlyURL = null;
 			Boolean privatePage = null;
 
-			List<Map<String, String>> fields = (ArrayList)itemReferenceMap.get(
-				"fields");
+			List<Map<String, String>> fields =
+				(List<Map<String, String>>)itemReferenceMap.get("fields");
 
 			for (Map<String, String> field : fields) {
 				String key = field.get("fieldName");

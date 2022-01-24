@@ -182,11 +182,25 @@ export function MenuItem({item}) {
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol expand>
-									<ClayCard.Description displayType="title">
+									<ClayCard.Description
+										displayType="title"
+										title={title}
+									>
 										{title}
+
+										{categoriesMultipleSelectionEnabled &&
+											item.icon && (
+												<ClayIcon
+													className="ml-2 text-warning"
+													symbol={item.icon}
+												/>
+											)}
 									</ClayCard.Description>
 
-									<ClayLabel displayType="secondary">
+									<ClayLabel
+										className="mt-1"
+										displayType="secondary"
+									>
 										{type}
 									</ClayLabel>
 								</ClayLayout.ContentCol>

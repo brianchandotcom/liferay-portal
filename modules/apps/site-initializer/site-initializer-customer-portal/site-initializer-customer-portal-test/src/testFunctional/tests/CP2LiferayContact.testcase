@@ -6,9 +6,17 @@ definition {
 	property testray.main.component.name = "Customer Portal";
 
 	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."

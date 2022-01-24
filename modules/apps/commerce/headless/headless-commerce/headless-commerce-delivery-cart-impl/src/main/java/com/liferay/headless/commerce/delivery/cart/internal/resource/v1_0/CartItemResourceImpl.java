@@ -36,6 +36,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,10 @@ public class CartItemResourceImpl
 	public Page<CartItem> getCartItemsPage(
 			@NestedFieldId("id") Long cartId, Pagination pagination)
 		throws Exception {
+
+		if (cartId == 0) {
+			return Page.of(Collections.emptyList());
+		}
 
 		return Page.of(
 			_toCartItems(

@@ -137,6 +137,16 @@ public class FileEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFields.class, "preview-image")
 		).build();
+	public static final InfoField<URLInfoFieldType> previewURL =
+		InfoField.builder(
+		).infoFieldType(
+			URLInfoFieldType.INSTANCE
+		).name(
+			"previewURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				FileEntryInfoItemFields.class, "preview-url")
+		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
 		InfoField.builder(
 		).infoFieldType(

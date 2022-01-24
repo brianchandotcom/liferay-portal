@@ -41,13 +41,30 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is possible to create an Action"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateAction {
 		property portal.acceptance = "true";
 
-		// TODO LPS-145716 CanCreateAction pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Action Name");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to delete an Action"

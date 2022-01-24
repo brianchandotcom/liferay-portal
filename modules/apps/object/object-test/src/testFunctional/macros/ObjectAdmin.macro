@@ -30,6 +30,46 @@ definition {
 		}
 	}
 
+	macro addObjectActionViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ADD_ACTION_NAME_FIELD",
+			value1 = "${actionName}");
+
+		if (isSet(whenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
+
+			Click(
+				key_type = "${whenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		if (isSet(thenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
+
+			Click(
+				key_type = "${thenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		if (isSet(urlAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ADD_URL_ACTION_FIELD",
+				value1 = "${urlAction}");
+		}
+
+		if (isSet(secretAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ADD_SECRET_ACTION_FIELD",
+				value1 = "${secretAction}");
+		}
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
+	}
+
 	macro addObjectBoleanFieldEntryViaUI {
 		ObjectAdmin.goToCustomObject(objectName = "${objectName}");
 
@@ -406,6 +446,13 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
 	}
 
+	macro assertObjectActions {
+		AssertElementPresent(
+			key_actionActive = "${actionActive}",
+			key_actionName = "${actionName}",
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
+	}
+
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
 
@@ -640,6 +687,10 @@ definition {
 		}
 
 		Button.clickSave();
+	}
+
+	macro goToActionsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_ACTIONS_TAB");
 	}
 
 	macro goToCustomObject {

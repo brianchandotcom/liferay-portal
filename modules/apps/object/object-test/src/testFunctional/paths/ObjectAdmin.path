@@ -499,7 +499,42 @@
 		<td>VIEW_ENTRY_NAME_ON_PAGE</td>
 		<td>//span[(@class='text-truncate') and contains(text(),'${key_entryName}')]</td>
 		<td></td>
-</tr>
+	</tr>
+	<tr>
+		<td>OBJECT_ACTIONS_TAB</td>
+		<td>//a[contains(text(),'Actions')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_ACTION_NAME_FIELD</td>
+		<td>//input[@id='objectActionName']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ACTION_WHEN_TYPE</td>
+		<td>//label[contains(text(),'When')]/..//input</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ACTION_THEN_TYPE</td>
+		<td>//label[contains(text(),'Then')]/..//input</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_URL_ACTION_FIELD</td>
+		<td>//input[@id='objectActionExecutorUrl']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_SECRET_ACTION_FIELD</td>
+		<td>//input[@id='objectActionExecutorSecret']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_ACTIONS_TAB</td>
+		<td>//div[contains(@class,'dnd-tr') and contains (.,'${key_actionName}') and contains (.,'${key_actionActive}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

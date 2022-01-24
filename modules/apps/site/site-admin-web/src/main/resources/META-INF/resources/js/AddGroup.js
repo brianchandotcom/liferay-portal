@@ -14,6 +14,7 @@
 
 export default function ({namespace}) {
 	const addButton = document.getElementById(`${namespace}addButton`);
+	const loading = addButton.querySelector('.loading-animation');
 
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -26,6 +27,7 @@ export default function ({namespace}) {
 		}
 
 		addButton.disabled = true;
+		loading.classList.remove('d-none');
 
 		const formData = new FormData(form);
 
@@ -59,6 +61,7 @@ export default function ({namespace}) {
 					});
 
 					addButton.disabled = false;
+					loading.classList.add('d-none');
 				}
 			});
 	});

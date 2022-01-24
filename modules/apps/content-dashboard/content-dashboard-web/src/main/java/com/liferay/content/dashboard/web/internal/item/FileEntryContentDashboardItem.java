@@ -332,7 +332,7 @@ public class FileEntryContentDashboardItem
 		).put(
 			"previewImageURL", _getPreviewImageURL()
 		).put(
-			"previewURL", _getPreviewURL(themeDisplay)
+			"previewURL", _getPreviewURL()
 		).put(
 			"size", _getSize(locale)
 		).put(
@@ -480,17 +480,18 @@ public class FileEntryContentDashboardItem
 		return String.valueOf(infoFieldValue.getValue());
 	}
 
-	private String _getPreviewURL(ThemeDisplay themeDisplay) {
-		try {
-			return DLURLHelperUtil.getPreviewURL(
-				_fileEntry, _fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+	private String _getPreviewURL() {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
-			return null;
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("previewURL");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
 		}
+
+		return String.valueOf(infoFieldValue.getValue());
 	}
 
 	private String _getSize(Locale locale) {

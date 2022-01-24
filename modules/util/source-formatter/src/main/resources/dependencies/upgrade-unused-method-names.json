@@ -1,5 +1,5 @@
 {
-	"upgradUnusedMethodNames": [
+	"upgradeUnusedMethodNames": [
 		{
 			"className": "com.liferay.portlet.asset.model.AssetRenderer",
 			"methodName": "getPreviewPath",

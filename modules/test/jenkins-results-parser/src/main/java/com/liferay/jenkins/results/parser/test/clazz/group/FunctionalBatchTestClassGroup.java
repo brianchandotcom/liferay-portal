@@ -368,8 +368,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		sb.append("(");
 
 		sb.append(
-			getDefaultTestBatchRunPropertyQuery(
-				testBaseDir, testSuiteName));
+			getDefaultTestBatchRunPropertyQuery(testBaseDir, testSuiteName));
 
 		sb.append(")");
 

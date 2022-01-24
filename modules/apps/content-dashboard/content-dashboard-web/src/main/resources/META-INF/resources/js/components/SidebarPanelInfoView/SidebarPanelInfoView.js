@@ -230,10 +230,7 @@ const SidebarPanelInfoView = ({
 						</CollapsibleSection>
 					)}
 
-					<CollapsibleSection
-						expanded={false}
-						title={Liferay.Language.get('details')}
-					>
+					<CollapsibleSection title={Liferay.Language.get('details')}>
 						{documentIsAFile && (
 							<div className="sidebar-section">
 								<h5 className="c-mb-1 font-weight-semi-bold">

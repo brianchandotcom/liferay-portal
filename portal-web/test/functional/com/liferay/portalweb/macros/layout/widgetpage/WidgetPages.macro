@@ -1,9 +1,55 @@
 definition {
 
+	macro addNewContent {
+		Click(locator1 = "ControlMenu#ADD");
+
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+		Navigator.gotoNavTab(navTab = "Content");
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
+			value1 = "Add New");
+
+		Click(
+			key_assetItem = "${assetType}",
+			locator1 = "ControlMenuAddPanel#ASSET_ITEM");
+	}
+
+	macro addRecentContent {
+		Click(locator1 = "ControlMenu#ADD");
+
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+		Navigator.gotoNavTab(navTab = "Content");
+
+		Type(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "${assetTitle}");
+
+		Click.clickNoWaitForVisible(
+			key_portletName = "${assetTitle}",
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+	}
+
 	macro switchToggleControls {
 		Click(
 			key_status = "${status}",
 			locator1 = "ControlMenu#TOGGLE_CONTROLS");
+	}
+
+	macro viewContentPanel {
+		Click(locator1 = "ControlMenu#ADD");
+
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+		Navigator.gotoNavTab(navTab = "Content");
+
+		for (var entryTitle : list "${entryTitleList}") {
+			AssertVisible(
+				key_entryTitle = "${entryTitle}",
+				locator1 = "ControlMenuAddPanel#ASSET_ENTRY");
+		}
 	}
 
 	macro viewPageLayout {

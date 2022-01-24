@@ -213,10 +213,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Content.addPG(
-			assetTitle = "Web Content Title",
-			pageName = "Staging Test Page",
-			webContentContent = "Web Content Content");
+		WidgetPages.addRecentContent(assetTitle = "Web Content Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

@@ -18,6 +18,18 @@ definition {
 			locator2 = "VisualizeObjectCollectionDisplay#SELECT_COLLECTION_ITEM");
 	}
 
+	macro assertTableEntriesNotPresent {
+		AssertElementNotPresent(
+			key_entries = "${entries}",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+	}
+
+	macro assertTableEntriesPresent {
+		AssertElementPresent(
+			key_entries = "${entries}",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+	}
+
 	macro mapFragment {
 		Select(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
@@ -38,12 +50,6 @@ definition {
 		AssertElementPresent(
 			key_entries = "${entries}",
 			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
-	}
-
-	macro viewEntriesTable {
-		AssertElementPresent(
-			key_entries = "${entries}",
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 	}
 
 	macro viewEntryPreviewOnPageTemplate {

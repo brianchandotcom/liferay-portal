@@ -174,7 +174,9 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Display Page");
 
-		VisualizeObjectCollectionDisplay.viewEntriesTable(entries = "Item Test 1");
+		VisualizeObjectCollectionDisplay.assertTableEntriesPresent(entries = "Item Test 1");
+
+		VisualizeObjectCollectionDisplay.assertTableEntriesNotPresent(entries = "Item Test 2");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"

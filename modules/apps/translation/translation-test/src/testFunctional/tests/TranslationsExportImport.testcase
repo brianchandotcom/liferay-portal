@@ -25,7 +25,6 @@ definition {
 
 	@description = "This ensures that a translated zip file contains multiple web contents with multiple available languages can be exported."
 	@priority = "5"
-	@refactordone
 	test CanExportMultipleWCsWithMultipleLanguages {
 		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
@@ -143,7 +142,6 @@ definition {
 
 	@description = "This ensures that the translation files contians multiple web contents can be imported from a zip."
 	@priority = "5"
-	@refactordone
 	test CanImportMultipleWCs {
 		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
@@ -520,7 +518,6 @@ definition {
 
 	@description = "This ensures that only the valid translation files can be imported from a zip."
 	@priority = "5"
-	@refactordone
 	test CanPartiallyImportMultipleWCs {
 		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";

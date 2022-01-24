@@ -24,7 +24,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +47,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -186,43 +190,48 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryProcessorContext.getMode()) &&
 				editableValueJSONObject.has("mappedField")) {
 
-				value = editableValueJSONObject.getString("mappedField");
+				String mappedField = editableValueJSONObject.getString(
+					"mappedField");
 
-				if (Validator.isNotNull(value)) {
-					mappedValueConfigJSONObject =
-						editableElementParser.getFieldTemplateConfigJSONObject(
-							value, fragmentEntryProcessorContext.getLocale(),
-							null);
+				if (Validator.isNotNull(mappedField)) {
+					HttpServletRequest httpServletRequest =
+						fragmentEntryProcessorContext.getHttpServletRequest();
 
-					if (mappedValueConfigJSONObject.has("alt")) {
-						String alt = mappedValueConfigJSONObject.getString(
-							"alt", StringPool.BLANK);
+					Object infoItem = httpServletRequest.getAttribute(
+						InfoDisplayWebKeys.INFO_ITEM);
 
-						alt = _fragmentEntryProcessorHelper.processTemplate(
-							alt, fragmentEntryProcessorContext);
+					InfoItemFieldValuesProvider<Object>
+						infoItemFieldValuesProvider =
+							(InfoItemFieldValuesProvider)
+								httpServletRequest.getAttribute(
+									InfoDisplayWebKeys.
+										INFO_ITEM_FIELD_VALUES_PROVIDER);
 
-						mappedValueConfigJSONObject.put("alt", alt);
+					Object fieldValue =
+						_fragmentEntryProcessorHelper.
+							getMappedInfoItemFieldValue(
+								mappedField, infoItemFieldValuesProvider,
+								fragmentEntryProcessorContext.getLocale(),
+								infoItem);
+
+					if (fieldValue != null) {
+						mappedValueConfigJSONObject =
+							editableElementParser.
+								getFieldTemplateConfigJSONObject(
+									mappedField,
+									fragmentEntryProcessorContext.getLocale(),
+									fieldValue);
+
+						value = editableElementParser.parseFieldValue(
+							fieldValue);
+
+						value = _fragmentEntryProcessorHelper.processTemplate(
+							value, fragmentEntryProcessorContext);
 					}
-
-					if (mappedValueConfigJSONObject.has("fileEntryId")) {
-						String fileEntryId =
-							mappedValueConfigJSONObject.getString(
-								"fileEntryId", StringPool.BLANK);
-
-						fileEntryId = StringUtil.trim(
-							_fragmentEntryProcessorHelper.processTemplate(
-								fileEntryId, fragmentEntryProcessorContext));
-
-						mappedValueConfigJSONObject.put(
-							"fileEntryId", fileEntryId);
+					else {
+						value = editableValueJSONObject.getString(
+							"defaultValue");
 					}
-
-					value = StringUtil.replace(
-						editableElementParser.getFieldTemplate(), "field_name",
-						value);
-
-					value = _fragmentEntryProcessorHelper.processTemplate(
-						value, fragmentEntryProcessorContext);
 				}
 			}
 			else if (_fragmentEntryProcessorHelper.isMapped(

@@ -20,7 +20,9 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,6 +42,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -255,16 +259,26 @@ public class BackgroundImageFragmentEntryProcessor
 		if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
 				fragmentEntryProcessorContext.getMode())) {
 
+			HttpServletRequest httpServletRequest =
+				fragmentEntryProcessorContext.getHttpServletRequest();
+
+			if (httpServletRequest == null) {
+				return null;
+			}
+
 			String mappedField = editableValueJSONObject.getString(
 				"mappedField");
 
-			Optional<Map<String, Object>> fieldValuesOptional =
-				fragmentEntryProcessorContext.getFieldValuesOptional();
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
 
-			Map<String, Object> fieldValues = fieldValuesOptional.orElse(
-				new HashMap<>());
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
 
-			return fieldValues.get(mappedField);
+			return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
+				mappedField, infoItemFieldValuesProvider,
+				fragmentEntryProcessorContext.getLocale(), infoItem);
 		}
 		else if (_fragmentEntryProcessorHelper.isMapped(
 					editableValueJSONObject)) {

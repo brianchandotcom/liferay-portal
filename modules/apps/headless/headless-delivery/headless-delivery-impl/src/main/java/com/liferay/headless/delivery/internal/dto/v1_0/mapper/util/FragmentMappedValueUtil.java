@@ -14,9 +14,10 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper.util;
 
-import com.liferay.headless.delivery.dto.v1_0.ClassFieldReference;
+import com.liferay.headless.delivery.dto.v1_0.ClassFieldsReference;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -115,11 +116,28 @@ public class FragmentMappedValueUtil {
 				return null;
 			}
 
-			return new ClassFieldReference() {
+			return new ClassFieldsReference() {
 				{
 					className = Layout.class.getName();
-					fieldName = "plid";
-					fieldValue = String.valueOf(layout.getPlid());
+
+					setFields(
+						() -> {
+							Field friendlyURLField = new Field();
+
+							friendlyURLField.setFieldName("friendlyURL");
+							friendlyURLField.setFieldValue(
+								layout.getFriendlyURL());
+
+							Field privatePageField = new Field();
+
+							privatePageField.setFieldName("privatePage");
+							privatePageField.setFieldValue(
+								String.valueOf(layout.isPrivateLayout()));
+
+							return new Field[] {
+								friendlyURLField, privatePageField
+							};
+						});
 				}
 			};
 		}

@@ -276,6 +276,16 @@ public class FileEntryInfoItemFieldValuesProvider
 						FileEntryInfoItemFields.downloadURL, downloadURL));
 			}
 
+			String previewURL = _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, true);
+
+			if (Validator.isNotNull(previewURL)) {
+				fileEntryFieldValues.add(
+					new InfoFieldValue<>(
+						FileEntryInfoItemFields.previewURL, previewURL));
+			}
+
 			WebImage imagePreviewURLWebImage = new WebImage(
 				_dlURLHelper.getImagePreviewURL(fileEntry, null),
 				new InfoItemReference(

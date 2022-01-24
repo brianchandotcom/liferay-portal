@@ -6135,6 +6135,11 @@ es-abstract@^1.18.0-next.1, es-abstract@^1.18.0-next.2, es-abstract@^1.5.1:
     string.prototype.trimstart "^1.0.4"
     unbox-primitive "^1.0.0"
 
+es-module-shims@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/es-module-shims/-/es-module-shims-1.4.1.tgz#a23542126487e283f1b09096bd0d4a35c16afa1b"
+  integrity sha512-W2vx+64vuuBhiRR1uMTireQgDAvhnkGdPEWO5Fdplp/wxYnn31oarG0IA/eM01YVQ7eGglgBdWTGe6tYRY1q9A==
+
 es-to-primitive@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/es-to-primitive/-/es-to-primitive-1.2.1.tgz#e55cd4c9cdc188bcefb03b366c736323fc5c898a"
@@ -9882,10 +9887,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.16.2-liferay.5:
-  version "4.16.2-liferay.5"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.2-liferay.5.tgz#05871ba547fa956084276175b5f2089c468dd1f2"
-  integrity sha512-ELxa5ZsChkt9mTygebIADvf6eGCGFrpGwweaH5C2t9o09MgumfEmksl0FxO5aRkx8qVhD9+uj64vvLjjUtZ2hg==
+liferay-ckeditor@4.17.1-liferay.1:
+  version "4.17.1-liferay.1"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.17.1-liferay.1.tgz#1b5ccef50d3e8a8a34512dabcfa5fd6e3f1863e2"
+  integrity sha512-O9J/nN/RSzmm3CXm+UI08Bg/2SvOVtGhFtXL1FSyXnooCaAXKB6NVZ0zO+xnBvS2XMbcG495e8SEtvK1gTOkXQ==
 
 liferay-font-awesome@3.5.0:
   version "3.5.0"
@@ -11648,11 +11653,6 @@ obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
-
-odata-v4-parser@^0.1.29:
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/odata-v4-parser/-/odata-v4-parser-0.1.29.tgz#49e466037dbc4fc088572a2deae822fc14e6c137"
-  integrity sha512-7ZsqxcMbGAqKSBme0+lul7g9K52RadGYU3WvYwDdduJNfnduSL59w4OEskvEzWHZMcPRqPnD9XtuO7Rpl+B3jA==
 
 on-finished@~2.3.0:
   version "2.3.0"

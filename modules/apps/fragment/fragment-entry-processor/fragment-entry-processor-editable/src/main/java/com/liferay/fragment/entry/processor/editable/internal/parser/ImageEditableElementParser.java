@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
-import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -62,25 +61,13 @@ import org.osgi.service.component.annotations.Reference;
 public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
-	public String getFieldTemplate() {
-		return _TMPL_IMAGE_FIELD_TEMPLATE;
-	}
-
-	@Override
 	public JSONObject getFieldTemplateConfigJSONObject(
 		String fieldName, Locale locale, Object fieldValue) {
 
 		String alt = StringPool.BLANK;
 		Object fileEntryId = 0;
 
-		if (fieldValue == null) {
-			alt = StringUtil.replace(
-				_TMPL_IMAGE_FIELD_ALT_TEMPLATE, "field_name", fieldName);
-			fileEntryId = StringUtil.replace(
-				_TMPL_IMAGE_FIELD_FILE_ENTRY_ID_TEMPLATE, "field_name",
-				fieldName);
-		}
-		else if (fieldValue instanceof JSONObject) {
+		if (fieldValue instanceof JSONObject) {
 			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
 
 			alt = fieldValueJSONObject.getString("alt");
@@ -308,23 +295,6 @@ public class ImageEditableElementParser implements EditableElementParser {
 				imageConfiguration);
 		}
 	}
-
-	private static final String _TMPL_IMAGE_FIELD_ALT_TEMPLATE =
-		StringUtil.read(
-			EditableFragmentEntryProcessor.class,
-			"/META-INF/resources/fragment/entry/processor/editable" +
-				"/image_field_alt_template.tmpl");
-
-	private static final String _TMPL_IMAGE_FIELD_FILE_ENTRY_ID_TEMPLATE =
-		StringUtil.read(
-			EditableFragmentEntryProcessor.class,
-			"/META-INF/resources/fragment/entry/processor/editable" +
-				"/image_field_file_entry_id_template.tmpl");
-
-	private static final String _TMPL_IMAGE_FIELD_TEMPLATE = StringUtil.read(
-		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable" +
-			"/image_field_template.tmpl");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageEditableElementParser.class);

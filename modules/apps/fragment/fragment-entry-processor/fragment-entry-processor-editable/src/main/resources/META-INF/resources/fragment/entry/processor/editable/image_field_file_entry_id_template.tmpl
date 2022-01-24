@@ -1,9 +1,0 @@
-[#if .vars["field_name"]??]
-    [#if .vars["field_name"]?is_hash]
-        [#if .vars["field_name"].infoItemReference??]
-			[#if .vars["field_name"].infoItemReference.className?ends_with("FileEntry") && .vars["field_name"].infoItemReference.infoItemIdentifier.classPK??]
-				${.vars["field_name"].infoItemReference.infoItemIdentifier.classPK}
-			[/#if]
-        [/#if]
-    [/#if]
-[/#if]

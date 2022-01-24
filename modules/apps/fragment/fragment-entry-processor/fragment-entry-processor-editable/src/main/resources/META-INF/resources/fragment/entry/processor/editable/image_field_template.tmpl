@@ -1,9 +1,0 @@
-[#if .vars["field_name"]??]
-	[#if .vars["field_name"]?is_hash]
-		[#if .vars["field_name"].url??]
-			${.vars["field_name"].url}
-		[/#if]
-	[#elseif .vars["field_name"]?is_string]
-		${.vars["field_name"]}
-	[/#if]
-[/#if]

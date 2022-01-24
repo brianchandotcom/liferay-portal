@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
-import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -22,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -40,11 +38,6 @@ import org.osgi.service.component.annotations.Component;
 	service = EditableElementParser.class
 )
 public class TextEditableElementParser implements EditableElementParser {
-
-	@Override
-	public String getFieldTemplate() {
-		return _TMPL_VALIDATE_TEXT_FIELD;
-	}
 
 	@Override
 	public String getValue(Element element) {
@@ -109,10 +102,5 @@ public class TextEditableElementParser implements EditableElementParser {
 	}
 
 	private static final String[] _TAGS_BLACKLIST = {"img", "a"};
-
-	private static final String _TMPL_VALIDATE_TEXT_FIELD = StringUtil.read(
-		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable" +
-			"/text_field_template.tmpl");
 
 }

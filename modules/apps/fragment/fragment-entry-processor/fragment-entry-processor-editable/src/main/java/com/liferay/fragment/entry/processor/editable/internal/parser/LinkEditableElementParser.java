@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
-import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -63,11 +62,6 @@ public class LinkEditableElementParser implements EditableElementParser {
 		}
 
 		return jsonObject;
-	}
-
-	@Override
-	public String getFieldTemplate() {
-		return _TMPL_LINK_FIELD_TEMPLATE;
 	}
 
 	@Override
@@ -170,10 +164,5 @@ public class LinkEditableElementParser implements EditableElementParser {
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
-
-	private static final String _TMPL_LINK_FIELD_TEMPLATE = StringUtil.read(
-		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable" +
-			"/link_field_template.tmpl");
 
 }

@@ -31,8 +31,8 @@ import {
 	YAxis,
 } from 'recharts';
 
-import {BAR_CHART, COLORS, DEFAULT_COLOR} from '../utils/constants';
-import {shortenNumber} from '../utils/shortenNumber';
+import {BAR_CHART, COLORS, DEFAULT_COLOR} from '../../utils/constants';
+import {shortenNumber} from '../../utils/shortenNumber';
 
 const handleKeydown = (event) => {
 	const resetBarsCategoryFiltersURL = new URLSearchParams(

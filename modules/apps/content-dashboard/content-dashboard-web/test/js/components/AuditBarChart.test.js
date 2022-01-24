@@ -16,7 +16,7 @@ import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import AuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/AuditBarChart';
+import AuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/AuditGraphApp/AuditBarChart';
 
 import '@testing-library/jest-dom/extend-expect';
 

@@ -22,7 +22,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-import {BAR_CHART} from '../utils/constants';
+import {BAR_CHART} from '../../utils/constants';
 
 export default function EmptyAuditBarChart({learnHowURL}) {
 	const description = learnHowURL && (

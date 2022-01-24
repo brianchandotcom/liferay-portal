@@ -15,7 +15,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/EmptyAuditBarChart';
+import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/AuditGraphApp/EmptyAuditBarChart';
 
 import '@testing-library/jest-dom/extend-expect';
 

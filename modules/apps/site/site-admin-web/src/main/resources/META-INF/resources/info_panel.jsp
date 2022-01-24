@@ -152,7 +152,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
 
 							PortletURL assignMembersURL = PortletURLBuilder.create(
-								PortalUtil.getControlPanelPortletURL(request, portletId, PortletRequest.RENDER_PHASE)
+								PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, 0, PortletRequest.RENDER_PHASE)
 							).setRedirect(
 								currentURL
 							).setParameter(

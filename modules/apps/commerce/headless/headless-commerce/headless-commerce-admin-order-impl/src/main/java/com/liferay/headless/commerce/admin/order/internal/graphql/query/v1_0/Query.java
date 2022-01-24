@@ -29,6 +29,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
@@ -44,6 +45,7 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleResource
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -194,6 +196,14 @@ public class Query {
 
 		_shippingAddressResourceComponentServiceObjects =
 			shippingAddressResourceComponentServiceObjects;
+	}
+
+	public static void setTermResourceComponentServiceObjects(
+		ComponentServiceObjects<TermResource>
+			termResourceComponentServiceObjects) {
+
+		_termResourceComponentServiceObjects =
+			termResourceComponentServiceObjects;
 	}
 
 	/**
@@ -980,6 +990,60 @@ public class Query {
 				shippingAddressResource.getOrderIdShippingAddress(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {terms(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TermPage terms(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getTermsPage(
+					search, _filterBiFunction.apply(termResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(termResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termByExternalReferenceCode(externalReferenceCode: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Term termByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.getTermByExternalReferenceCode(
+				externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {term(id: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Term term(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.getTerm(id));
+	}
+
 	@GraphQLTypeExtension(Order.class)
 	public class GetOrderItemByExternalReferenceCodeTypeExtension {
 
@@ -1300,6 +1364,26 @@ public class Query {
 						getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage(
 							_order.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class GetTermByExternalReferenceCodeTypeExtension {
+
+		public GetTermByExternalReferenceCodeTypeExtension(Order order) {
+			_order = order;
+		}
+
+		@GraphQLField
+		public Term termByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> termResource.getTermByExternalReferenceCode(
+					_order.getExternalReferenceCode()));
 		}
 
 		private Order _order;
@@ -1892,6 +1976,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("TermPage")
+	public class TermPage {
+
+		public TermPage(Page termPage) {
+			actions = termPage.getActions();
+
+			items = termPage.getItems();
+			lastPage = termPage.getLastPage();
+			page = termPage.getPage();
+			pageSize = termPage.getPageSize();
+			totalCount = termPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Term> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -2129,6 +2246,19 @@ public class Query {
 		shippingAddressResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(TermResource termResource)
+		throws Exception {
+
+		termResource.setContextAcceptLanguage(_acceptLanguage);
+		termResource.setContextCompany(_company);
+		termResource.setContextHttpServletRequest(_httpServletRequest);
+		termResource.setContextHttpServletResponse(_httpServletResponse);
+		termResource.setContextUriInfo(_uriInfo);
+		termResource.setContextUser(_user);
+		termResource.setGroupLocalService(_groupLocalService);
+		termResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountGroupResource>
@@ -2159,6 +2289,8 @@ public class Query {
 		_orderTypeChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingAddressResource>
 		_shippingAddressResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TermResource>
+		_termResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

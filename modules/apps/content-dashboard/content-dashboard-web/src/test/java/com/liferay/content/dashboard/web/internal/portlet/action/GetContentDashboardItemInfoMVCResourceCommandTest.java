@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.BrowserSnifferImpl;
@@ -160,12 +158,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
-		Portal portal = PortalUtil.getPortal();
-
 		JSONObject getSpecificInformationJSONObject =
 			contentDashboardItem.getSpecificInformationJSONObject(
-				"backURL",
-				portal.getLiferayPortletResponse(mockLiferayResourceResponse),
 				LocaleUtil.US);
 
 		Assert.assertEquals(
@@ -353,10 +347,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public JSONObject getSpecificInformationJSONObject(
-				String backURL, LiferayPortletResponse liferayPortletResponse,
-				Locale locale) {
-
+			public JSONObject getSpecificInformationJSONObject(Locale locale) {
 				JSONObject jsonObject = new JSONObjectImpl();
 
 				jsonObject.put(

@@ -138,8 +138,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"specificFields",
 					contentDashboardItem.getSpecificInformationJSONObject(
-						ParamUtil.getString(resourceRequest, "backURL"),
-						_portal.getLiferayPortletResponse(resourceResponse),
 						locale)
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)

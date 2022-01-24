@@ -23,12 +23,12 @@ import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardIt
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,12 +38,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -73,7 +76,7 @@ public class FileEntryContentDashboardItem
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
 		ContentDashboardItemSubtype contentDashboardItemSubtype,
-		FileEntry fileEntry, Group group,
+		DLURLHelper dlURLHelper, FileEntry fileEntry, Group group, Http http,
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
 		Language language, Portal portal) {
 
@@ -94,8 +97,10 @@ public class FileEntryContentDashboardItem
 		_contentDashboardItemActionProviderTracker =
 			contentDashboardItemActionProviderTracker;
 		_contentDashboardItemSubtype = contentDashboardItemSubtype;
+		_dlURLHelper = dlURLHelper;
 		_fileEntry = fileEntry;
 		_group = group;
+		_http = http;
 		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 		_language = language;
 		_portal = portal;
@@ -315,10 +320,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(
-		String backURL, LiferayPortletResponse liferayPortletResponse,
-		Locale locale) {
-
+	public JSONObject getSpecificInformationJSONObject(Locale locale) {
 		return JSONUtil.put(
 			"description", getDescription(locale)
 		).put(
@@ -334,7 +336,7 @@ public class FileEntryContentDashboardItem
 		).put(
 			"size", _getSize(locale)
 		).put(
-			"viewURL", _getViewURL(liferayPortletResponse, backURL)
+			"viewURL", _getViewURL()
 		);
 	}
 
@@ -496,18 +498,34 @@ public class FileEntryContentDashboardItem
 		return LanguageUtil.formatStorageSize(_fileEntry.getSize(), locale);
 	}
 
-	private String _getViewURL(
-		LiferayPortletResponse liferayPortletResponse, String redirect) {
+	private String _getViewURL() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getLiferayPortletRequest
+		).map(
+			portletRequest -> {
+				try {
+					String backURL = ParamUtil.getString(
+						portletRequest, "backURL");
 
-		return PortletURLBuilder.createRenderURL(
-			liferayPortletResponse, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
-		).setMVCRenderCommandName(
-			"/document_library/view_file_entry"
-		).setRedirect(
-			redirect
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).buildString();
+					String portletNamespace = _portal.getPortletNamespace(
+						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+					return _http.addParameter(
+						_dlURLHelper.getFileEntryControlPanelLink(
+							portletRequest, _fileEntry.getFileEntryId()),
+						portletNamespace + "redirect", backURL);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+
+					return null;
+				}
+			}
+		).orElse(
+			null
+		);
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(
@@ -553,8 +571,10 @@ public class FileEntryContentDashboardItem
 	private final ContentDashboardItemActionProviderTracker
 		_contentDashboardItemActionProviderTracker;
 	private final ContentDashboardItemSubtype _contentDashboardItemSubtype;
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final Group _group;
+	private final Http _http;
 	private final InfoItemFieldValuesProvider<FileEntry>
 		_infoItemFieldValuesProvider;
 	private final Language _language;

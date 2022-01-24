@@ -354,9 +354,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page2",
@@ -370,9 +368,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 	}
 
 	@priority = "5"
@@ -1033,9 +1029,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		IFrame.closeFrame();
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 	}
 
 	@description = "This is a use case for LPS-71941."

@@ -144,7 +144,7 @@ definition {
 
 		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC Contenido",
-			webContentTitle = "WC Title");
+			webContentTitle = "WC Titulo");
 
 		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Editar contenido web",

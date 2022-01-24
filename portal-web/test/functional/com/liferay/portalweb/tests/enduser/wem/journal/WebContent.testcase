@@ -598,8 +598,8 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Title",
-			webContentTitle = "WC Depot Title");
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"

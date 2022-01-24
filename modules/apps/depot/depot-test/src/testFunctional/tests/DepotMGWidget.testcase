@@ -193,6 +193,8 @@ definition {
 	@description = "This ensures that a user can move video stored in asset library folder to recycle bin via MG on a connected site."
 	@priority = "5"
 	test CanMoveVideoToRecycleBin {
+		property test.name.skip.portal.instance = "DepotMGWidget#CanMoveVideoToRecycleBin";
+
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");

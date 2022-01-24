@@ -54,6 +54,10 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
+		if (ParamUtil.getBoolean(httpServletRequest, "readOnly")) {
+			return null;
+		}
+
 		RelatedModel relatedModel = (RelatedModel)model;
 
 		return DropdownItemListBuilder.add(

@@ -683,6 +683,7 @@ definition {
 	@priority = "5"
 	test CanDeleteEntry {
 		property portal.acceptance = "true";
+		property testray.component.names = "Frontend Dataset";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

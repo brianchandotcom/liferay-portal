@@ -69,6 +69,7 @@ definition {
 	@refactordone
 	test CanBeDeleted {
 		property portal.acceptance = "true";
+		property testray.component.names = "Frontend Dataset,Remote Apps";
 
 		var remoteAppName = "My New Remote App To Delete";
 
@@ -86,7 +87,11 @@ definition {
 	@description = "Verify that remote app of type Custom Element can be created"
 	@priority = "5"
 	test CustomElementCanBeCreated {
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
+		property testray.component.names = "Frontend Dataset,Remote Apps";
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			RemoteApps.goToRemoteAppsPortlet();
@@ -462,16 +467,15 @@ definition {
 	@priority = "5"
 	test IFrameCanBeCreated {
 		property portal.acceptance = "true";
-
-		var remoteAppName = "Test Remote App";
+		property testray.component.names = "Frontend Dataset,Remote Apps";
 
 		RemoteApps.goToRemoteAppsPortlet();
 
 		RemoteApps.addApp(
-			entryName = "${remoteAppName}",
+			entryName = "Test Remote App",
 			entryURL = "http://www.liferay.com");
 
-		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
+		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
 	}
 
 	@description = "Verify that remote app type IFrame can display property fields"

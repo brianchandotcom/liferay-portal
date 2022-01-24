@@ -27,6 +27,43 @@
 			"title": "The ClassFieldReference Schema",
 			"type": "object"
 		},
+		"ClassFieldsReference": {
+			"additionalProperties": false,
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				},
+				"fields": {
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"fieldName": {
+								"title": "The fieldName Schema",
+								"type": "string"
+							},
+							"fieldValue": {
+								"title": "The fieldValue Schema",
+								"type": "string"
+							}
+						},
+						"required": [
+							"fieldName",
+							"fieldValue"
+						],
+						"type": "object"
+					},
+					"title": "The fields Schema",
+					"type": "array"
+				}
+			},
+			"required": [
+				"className",
+				"fields"
+			],
+			"title": "The ClassFieldsReference Schema",
+			"type": "object"
+		},
 		"ClassNameReference": {
 			"additionalProperties": false,
 			"properties": {
@@ -431,6 +468,9 @@
 							"oneOf": [
 								{
 									"$ref": "#/definitions/ClassFieldReference"
+								},
+								{
+									"$ref": "#/definitions/ClassFieldsReference"
 								},
 								{
 									"$ref": "#/definitions/ClassPKReference"

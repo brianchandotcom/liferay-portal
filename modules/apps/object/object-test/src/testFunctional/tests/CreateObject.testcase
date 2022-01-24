@@ -7924,15 +7924,8 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "CustomObjectA",
 			objectName_2 = "CustomObjectB",
-			relationshipLabel = "Relationship A",
-			relationshipName = "relationshipA",
-			relationshipType = "manyToMany");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectB",
-			objectName_2 = "CustomObjectA",
-			relationshipLabel = "Relationship B",
-			relationshipName = "relationshipB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
 			relationshipType = "manyToMany");
 
 		for (var letter : list "A,B") {
@@ -7961,7 +7954,7 @@ definition {
 				tabName = "Field Tab");
 
 			ObjectAdmin.addTabRelationshipsOnLayout(
-				relationshipsLabelName = "Relationship ${letter}",
+				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
 			Button.clickSave();

@@ -107,6 +107,17 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				userGroup.getExternalReferenceCode()));
 	}
 
+	@Override
+	public UserGroup putUserGroupByExternalReferenceCode(
+			String externalReferenceCode, UserGroup userGroup)
+		throws Exception {
+
+		return _toUserGroup(
+			_userGroupService.addOrUpdateUserGroup(
+				externalReferenceCode, userGroup.getName(),
+				userGroup.getDescription(), null));
+	}
+
 	private DTOConverterContext _getDTOConverterContext(long userGroupId) {
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),

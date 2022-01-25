@@ -1,0 +1,177 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"backgroundColor": "brandColor1",
+			"borderWidth": "0",
+			"paddingBottom": "7",
+			"paddingTop": "7",
+			"textAlign": ""
+		},
+		"fragmentViewports": [
+			{
+				"fragmentViewportStyle": {
+					"paddingBottom": "5",
+					"paddingTop": "3"
+				},
+				"id": "tablet"
+			}
+		],
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"paddingBottom": 8,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 8,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"borderWidth": "0",
+					"textAlign": "",
+					"textColor": "whiteColor"
+				},
+				"fragmentViewports": [
+					{
+						"fragmentViewportStyle": {
+							"marginTop": "0",
+							"paddingBottom": "0",
+							"paddingTop": "0"
+						},
+						"id": "tablet"
+					}
+				],
+				"layout": {
+					"borderWidth": 0,
+					"marginBottom": 0,
+					"marginLeft": 0,
+					"marginRight": 0,
+					"marginTop": 0,
+					"paddingBottom": 0,
+					"paddingLeft": 0,
+					"paddingRight": 0,
+					"paddingTop": 0,
+					"widthType": "Fixed"
+				}
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "text-block"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+										"value_i18n": {
+										}
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Page Name"
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"fontSize": "fontSizeLg",
+							"marginBottom": "2",
+							"textAlign": "",
+							"textColor": "brandColor3"
+						}
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "heading"
+						},
+						"fragmentConfig": {
+							"displayLevel": "4",
+							"headingLevel": "h1"
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+										"value_i18n": {
+										}
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Page content short description"
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"marginBottom": "3",
+							"maxWidth": "100%",
+							"textAlign": "",
+							"textColor": "",
+							"width": "540px"
+						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"marginBottom": "2"
+								},
+								"id": "tablet"
+							}
+						]
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "text-block"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+										"value_i18n": {
+										}
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut at magna eros."
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"fontSize": "fontSizeLg",
+							"maxWidth": "100%",
+							"textAlign": "",
+							"textColor": "",
+							"width": "420px"
+						}
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

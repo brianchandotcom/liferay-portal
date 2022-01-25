@@ -1,0 +1,241 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"borderWidth": "0",
+			"textAlign": ""
+		},
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"collectionConfig": {
+					"collectionReference": {
+						"className": "com.liferay.asset.list.model.AssetListEntry",
+						"classPK": "[$ASSET_LIST_ENTRY_ID:JOB-POSITIONS$]"
+					},
+					"collectionType": "Collection"
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 3,
+				"numberOfItems": 9,
+				"numberOfItemsPerPage": 9,
+				"showAllItems": false,
+				"templateKey": ""
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"collectionItemConfig": {
+						}
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "job-card"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "date",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "publishDate",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "socialTwitterLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "https://twitter.com/"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "socialLinkedinLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "https://www.linkedin.com/"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "shortDescription",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "ShortDescription",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "title",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "Title",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "region",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "regions",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "socialFacebookLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "https://www.facebook.com/"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "socialInstagramLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "https://www.instagram.com/"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "4",
+									"textAlign": ""
+								},
+								"fragmentViewports": [
+									{
+										"fragmentViewportStyle": {
+											"marginBottom": "3"
+										},
+										"id": "tablet"
+									}
+								]
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "CollectionItem"
+				}
+			],
+			"type": "Collection"
+		}
+	],
+	"type": "Section"
+}

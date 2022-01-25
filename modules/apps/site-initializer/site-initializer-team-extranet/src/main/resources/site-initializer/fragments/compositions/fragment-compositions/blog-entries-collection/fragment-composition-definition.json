@@ -1,0 +1,163 @@
+{
+	"definition": {
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"collectionConfig": {
+					"collectionReference": {
+						"className": "com.liferay.asset.list.model.AssetListEntry",
+						"classPK": "[$ASSET_LIST_ENTRY_ID:BLOG-ENTRIES$]"
+					},
+					"collectionType": "Collection"
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 3,
+				"numberOfItems": 9,
+				"numberOfItemsPerPage": 9,
+				"showAllItems": false,
+				"templateKey": ""
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"collectionItemConfig": {
+						}
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "entry-card"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "image",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"mapping": {
+														"fieldKey": "MainImage",
+														"itemReference": {
+															"contextSource": "CollectionItem"
+														}
+													}
+												}
+											},
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "author",
+										"value": {
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "authorName",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "category",
+										"value": {
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "roles",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "title",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "Title",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "6",
+									"textAlign": ""
+								},
+								"fragmentViewports": [
+									{
+										"fragmentViewportStyle": {
+											"marginBottom": "5"
+										},
+										"id": "tablet"
+									}
+								]
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "CollectionItem"
+				}
+			],
+			"type": "Collection"
+		}
+	],
+	"type": "Section"
+}

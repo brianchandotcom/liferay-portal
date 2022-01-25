@@ -1,0 +1,292 @@
+{
+	"definition": {
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"key": "class-container"
+				},
+				"fragmentConfig": {
+					"classContainerName": "filter-bar"
+				},
+				"fragmentFields": [
+				],
+				"fragmentStyle": {
+					"backgroundColor": "gray200Color",
+					"paddingBottom": "6",
+					"paddingTop": "6",
+					"textAlign": ""
+				},
+				"fragmentViewports": [
+					{
+						"fragmentViewportStyle": {
+							"paddingBottom": "1",
+							"paddingTop": "3"
+						},
+						"id": "portraitMobile"
+					},
+					{
+						"fragmentViewportStyle": {
+							"paddingBottom": "4",
+							"paddingTop": "4"
+						},
+						"id": "tablet"
+					}
+				]
+			},
+			"pageElements": [
+				{
+					"pageElements": [
+						{
+							"definition": {
+								"fragmentStyle": {
+									"borderWidth": "0",
+									"textAlign": ""
+								},
+								"fragmentViewports": [
+									{
+										"fragmentViewportStyle": {
+											"marginBottom": "0"
+										},
+										"id": "landscapeMobile"
+									}
+								],
+								"layout": {
+									"borderWidth": 0,
+									"marginBottom": 0,
+									"marginLeft": 0,
+									"marginRight": 0,
+									"marginTop": 0,
+									"paddingBottom": 0,
+									"paddingLeft": 0,
+									"paddingRight": 0,
+									"paddingTop": 0,
+									"widthType": "Fixed"
+								}
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"fragmentStyle": {
+											"marginBottom": "1",
+											"overflow": "visible",
+											"textAlign": ""
+										},
+										"fragmentViewports": [
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "0"
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "0"
+												},
+												"id": "tablet"
+											}
+										],
+										"gutters": true,
+										"modulesPerRow": 4,
+										"numberOfColumns": 4,
+										"reverseOrder": false,
+										"rowViewports": [
+											{
+												"id": "landscapeMobile",
+												"rowViewportDefinition": {
+												}
+											},
+											{
+												"id": "portraitMobile",
+												"rowViewportDefinition": {
+												}
+											},
+											{
+												"id": "tablet",
+												"rowViewportDefinition": {
+													"modulesPerRow": 1
+												}
+											}
+										],
+										"verticalAlignment": "middle"
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"columnViewports": [
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "landscapeMobile"
+													},
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "portraitMobile"
+													},
+													{
+														"columnViewportDefinition": {
+															"size": 12
+														},
+														"id": "tablet"
+													}
+												],
+												"size": 3
+											},
+											"pageElements": [
+												{
+													"definition": {
+														"fragment": {
+															"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
+														},
+														"fragmentConfig": {
+														},
+														"fragmentFields": [
+														]
+													},
+													"type": "Fragment"
+												}
+											],
+											"type": "Column"
+										},
+										{
+											"definition": {
+												"columnViewports": [
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "landscapeMobile"
+													},
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "portraitMobile"
+													},
+													{
+														"columnViewportDefinition": {
+															"size": 12
+														},
+														"id": "tablet"
+													}
+												],
+												"size": 3
+											},
+											"pageElements": [
+												{
+													"definition": {
+														"fragment": {
+															"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
+														},
+														"fragmentConfig": {
+														},
+														"fragmentFields": [
+														]
+													},
+													"type": "Fragment"
+												}
+											],
+											"type": "Column"
+										},
+										{
+											"definition": {
+												"columnViewports": [
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "landscapeMobile"
+													},
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "portraitMobile"
+													},
+													{
+														"columnViewportDefinition": {
+															"size": 12
+														},
+														"id": "tablet"
+													}
+												],
+												"size": 3
+											},
+											"type": "Column"
+										},
+										{
+											"definition": {
+												"columnViewports": [
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "landscapeMobile"
+													},
+													{
+														"columnViewportDefinition": {
+														},
+														"id": "portraitMobile"
+													},
+													{
+														"columnViewportDefinition": {
+															"size": 12
+														},
+														"id": "tablet"
+													}
+												],
+												"size": 3
+											},
+											"pageElements": [
+												{
+													"definition": {
+														"fragment": {
+															"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
+														},
+														"fragmentConfig": {
+														},
+														"fragmentFields": [
+														],
+														"fragmentStyle": {
+															"marginTop": "4",
+															"textAlign": ""
+														},
+														"fragmentViewports": [
+															{
+																"fragmentViewportStyle": {
+																	"marginRight": "0",
+																	"marginTop": "0"
+																},
+																"id": "tablet"
+															}
+														]
+													},
+													"type": "Fragment"
+												}
+											],
+											"type": "Column"
+										}
+									],
+									"type": "Row"
+								}
+							],
+							"type": "Section"
+						}
+					],
+					"type": "FragmentDropZone"
+				}
+			],
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

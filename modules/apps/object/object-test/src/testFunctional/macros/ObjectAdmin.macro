@@ -453,6 +453,13 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
 	}
 
+	macro assertObjectActionsNotPresent {
+		AssertElementNotPresent(
+			key_actionActive = "${actionActive}",
+			key_actionName = "${actionName}",
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
+	}
+
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
 

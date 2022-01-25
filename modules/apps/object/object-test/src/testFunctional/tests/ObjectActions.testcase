@@ -132,12 +132,36 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is possible to search for an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145710 CanSearchAction pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		for (var actionsNames : list "1,2") {
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Action Name ${actionsNames}",
+				thenAction = "Webhook",
+				urlAction = "http://localhost:8080",
+				whenAction = "On After Add");
+		}
+
+		Search.searchCP(searchTerm = "1");
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Action Name 1");
+
+		ObjectAdmin.assertObjectActionsNotPresent(
+			actionActive = "Yes",
+			actionName = "Action Name 2");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to update an Action"

@@ -1546,6 +1546,69 @@ definition {
 		}
 	}
 
+	@description = "LPS-103624 - URLs are not well formed when changing language in classic Display Pages."
+	@priority = "4"
+	test ViewInContextTranslatedWCWithFriendlyURL {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Language Selector");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent English Content",
+			webContentTitle = "WC WebContent English Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Asset Publisher Page",
+			pageType = "Public Pages");
+
+		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent German Content",
+			webContentTitle = "WC WebContent German Title");
+
+		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentgerman");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent English Title");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent English Content",
+			assetTitle = "WC WebContent English Title");
+
+		AssertLocation.assertPartialLocation(value1 = "-/webcontentenglish");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "deutsch-Deutschland");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent German Content",
+			assetTitle = "WC WebContent German Title");
+
+		AssertLocation.assertPartialLocation(value1 = "-/webcontentgerman");
+	}
+
 	@description = "View localized web content with localized categories."
 	@priority = "3"
 	test ViewLocalizedWebContentWithLocalizedCategories {

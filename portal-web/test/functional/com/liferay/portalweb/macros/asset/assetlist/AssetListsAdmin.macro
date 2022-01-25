@@ -198,9 +198,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Check(
-			key_fieldName = "${fieldName}",
-			locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
+		Select(
+			key_fieldLabel = "Select",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${fieldName}");
 	}
 
 	macro configureItemTypeInDynamicCollection {

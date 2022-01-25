@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <suppressions>
-	<checkstyle>
-		<suppress checks="GenericTypeCheck" files="object-api/src/main/java/com/liferay/object/system/model/listener/SystemObjectDefinitionMetadataModelListener\.java" />
-	</checkstyle>
+	<source-check>
+		<suppress checks="JavaAPISignatureCheck" files="object-api/src/main/java/com/liferay/object/scope/ObjectScopeProvider\.java" />
+	</source-check>
 </suppressions>

@@ -15,8 +15,10 @@
 package com.liferay.commerce.report.internal.exporter;
 
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -31,6 +33,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -43,13 +46,26 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 	public byte[] export(
 		Collection<?> beanCollection, Map<String, Object> parameters) {
 
+		return export(beanCollection, parameters, null);
+	}
+
+	@Override
+	public byte[] export(
+		Collection<?> beanCollection, Map<String, Object> parameters,
+		FileEntry fileEntry) {
+
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		Class<?> clazz = getClass();
 
-		try (InputStream inputStream = clazz.getResourceAsStream(
-				"dependencies/commerce_order.jrxml")) {
+		try {
+			InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/commerce_order.jrxml");
+
+			if (fileEntry != null) {
+				inputStream = fileEntry.getContentStream();
+			}
 
 			JasperExportManager.exportReportToPdfStream(
 				JasperFillManager.fillReport(
@@ -67,5 +83,8 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceReportExporterImpl.class);
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 }

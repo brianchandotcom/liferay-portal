@@ -87,7 +87,7 @@ function PreviewSidebar({
 	);
 
 	const _renderHits = () => (
-		<div className="preview-results-list sidebar-body">
+		<div className="preview-results-list">
 			<ClayList>
 				{hits.map((result) => (
 					<ResultListItem
@@ -262,63 +262,66 @@ function PreviewSidebar({
 				</div>
 			</nav>
 
-			{!!warnings.length && (
-				<div className="warning-container">
-					{warnings.map((warning, index) => (
-						<ClayAlert
-							displayType="warning"
-							key={index}
-							title={Liferay.Language.get('warning')}
-							variant="stripe"
-						>
-							{warning.msg}
-						</ClayAlert>
-					))}
-				</div>
-			)}
-
-			{isDefined(totalHits) &&
-				!errors.length &&
-				_renderResultsManagementBar()}
-
-			{!loading ? (
-				errors.length ? (
-					_renderErrors()
-				) : totalHits > 0 ? (
-					_renderHits()
-				) : totalHits === 0 ? (
-					<div className="empty-list-message">
-						<ClayEmptyState description="" />
-					</div>
-				) : (
-					<div className="search-message">
-						{Liferay.Language.get(
-							'perform-a-search-to-preview-your-blueprints-search-results'
-						)}
-					</div>
-				)
-			) : (
-				<>
-					<ClayLoadingIndicator />
-
-					{showCancel && (
-						<div className="search-message">
-							{Liferay.Language.get(
-								'it-looks-like-this-is-taking-longer-than-expected'
-							)}
-
-							<ClayButton
-								className="cancel"
-								displayType="secondary"
-								onClick={onFetchCancel}
-								small
+			<div className="sidebar-body">
+				{!!warnings.length && (
+					<div className="warning-container">
+						{warnings.map((warning, index) => (
+							<ClayAlert
+								displayType="warning"
+								key={index}
+								title={Liferay.Language.get('warning')}
+								variant="stripe"
 							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
+								{warning.msg}
+							</ClayAlert>
+						))}
+					</div>
+				)}
+
+				{!!errors.length && _renderErrors()}
+
+				{isDefined(totalHits) && _renderResultsManagementBar()}
+
+				{!loading ? (
+					totalHits > 0 ? (
+						_renderHits()
+					) : totalHits === 0 ? (
+						<div className="empty-list-message">
+							<ClayEmptyState description="" />
 						</div>
-					)}
-				</>
-			)}
+					) : (
+						!warnings.length &&
+						!errors.length && (
+							<div className="search-message">
+								{Liferay.Language.get(
+									'perform-a-search-to-preview-your-blueprints-search-results'
+								)}
+							</div>
+						)
+					)
+				) : (
+					<>
+						<ClayLoadingIndicator />
+
+						{showCancel && (
+							<div className="search-message">
+								{Liferay.Language.get(
+									'it-looks-like-this-is-taking-longer-than-expected'
+								)}
+
+								<ClayButton
+									className="cancel"
+									displayType="secondary"
+									onClick={onFetchCancel}
+									small
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+							</div>
+						)}
+					</>
+				)}
+			</div>
 		</div>
 	);
 }

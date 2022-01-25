@@ -1449,7 +1449,10 @@ public class PoshiValidation {
 		if (methodParameters.size() != seleniumParameterCount) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Incorrect parameter count", "\n", filePath));
+					methodAttributeValue + "\n",
+					"Incorrect parameter count, number of parameters: " +
+						seleniumParameterCount,
+					"\n", filePath));
 		}
 
 		for (String methodParameter : methodParameters) {
@@ -1459,7 +1462,10 @@ public class PoshiValidation {
 			if (exceptionMatcher.find()) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Remove locator|value 1-3", "\n", filePath));
+						methodAttributeValue + "\n",
+						"Remove incorrect paramter syntax: " +
+							exceptionMatcher.group("invalidSyntax"),
+						"\n", filePath));
 			}
 		}
 	}
@@ -1833,7 +1839,7 @@ public class PoshiValidation {
 
 	private static final Set<Exception> _exceptions = new HashSet<>();
 	private static final Pattern _invalidMethodParameterPattern =
-		Pattern.compile("(?<invalidSyntax>(?:locator|value)[1-3][\\s]*=)");
+		Pattern.compile("(?<invalidSyntax>(?:locator|value)[1-3]?[\\s]*=)");
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static final Pattern _seleniumGetterMethodPattern = Pattern.compile(
 		"^selenium#(?<methodName>get[A-z]+)" +

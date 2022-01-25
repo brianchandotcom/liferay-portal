@@ -155,6 +155,31 @@ public class BatchPlannerPlanServiceTest {
 			batchPlannerPlan.getBatchPlannerPlanId());
 	}
 
+	@Test
+	public void testUpdateBatchPlannerPlan() throws Exception {
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				"/" + RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, false);
+
+		try {
+			_batchPlannerPlanService.updateBatchPlannerPlan(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				batchPlannerPlan.getExternalType(),
+				batchPlannerPlan.getInternalClassName(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertEquals(
+				"Only templates can be updated",
+				unsupportedOperationException.getMessage());
+		}
+	}
+
 	@Inject
 	private BatchPlannerPlanService _batchPlannerPlanService;
 

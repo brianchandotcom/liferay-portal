@@ -30,6 +30,15 @@ import org.junit.runner.RunWith;
 public class PlanResourceTest extends BasePlanResourceTestCase {
 
 	@Override
+	protected Plan randomPatchPlan() {
+		Plan plan = randomPlan();
+
+		plan.setTemplate(true);
+
+		return plan;
+	}
+
+	@Override
 	protected Plan randomPlan() {
 		return new Plan() {
 			{
@@ -38,10 +47,10 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 				externalType = "JSON";
 				externalURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
 				internalClassName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				template = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
@@ -63,7 +72,11 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 
 	@Override
 	protected Plan testPatchPlan_addPlan() throws Exception {
-		return _addPlan();
+		Plan plan = randomPlan();
+
+		plan.setTemplate(true);
+
+		return planResource.postPlan(plan);
 	}
 
 	@Override

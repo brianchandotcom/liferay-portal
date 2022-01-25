@@ -46,16 +46,12 @@ public class HeaderResponseImplTest {
 
 	@Test
 	public void testAddDependencyScriptDataTemplate() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<script id=\"dt\" type=\"data/template\">");
-		sb.append("<p>foo</p><p>bar</p>");
-		sb.append("</script>");
-
 		try {
 			ReflectionTestUtil.invoke(
 				new HeaderResponseImpl(), "_validateParsedElements",
-				new Class<?>[] {String.class}, sb.toString());
+				new Class<?>[] {String.class},
+				"<script id=\"dt\" type=\"data/template\">+<p>foo</p><p>bar" +
+					"</p></script>");
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.fail(
@@ -63,16 +59,12 @@ public class HeaderResponseImplTest {
 					"multiple child elements");
 		}
 
-		sb = new StringBuilder();
-
-		sb.append("<script id=\"dt\" type=\"text/javascript\">");
-		sb.append("<p>foo</p><p>bar</p>");
-		sb.append("</script>");
-
 		try {
 			ReflectionTestUtil.invoke(
 				new HeaderResponseImpl(), "_validateParsedElements",
-				new Class<?>[] {String.class}, sb.toString());
+				new Class<?>[] {String.class},
+				"<script id=\"dt\" type=\"text/javascript\"><p>foo</p><p>bar" +
+					"</p></script>");
 
 			Assert.fail(
 				"Was able to add a <script type=\"text-javascript\"> with " +

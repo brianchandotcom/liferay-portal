@@ -534,9 +534,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Depot");
 	}
 
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
@@ -568,9 +566,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Depot");
 	}
 
 	@description = "This ensures that a user can use a structure stored in AL to create a template on a connected site."
@@ -759,9 +755,7 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "Web Content Text",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(webContentContent = "Web Content Text");
 	}
 
 	@description = "This ensures that a user can see information of WC structure from more iframe about which AL owns it."

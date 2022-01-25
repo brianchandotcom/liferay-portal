@@ -1020,7 +1020,7 @@ definition {
 
 		WebContentDisplayPortlet.viewContent(
 			imageFileName = "Document_1.png",
-			webContentTitle = "Web Content Title");
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "5"

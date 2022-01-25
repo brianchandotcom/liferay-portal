@@ -686,7 +686,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{subtotal}.format($P{locale})]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="17b7027d-fa62-43ee-9d37-04f88bd8aa62" width="70" x="470" y="100">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895dde53-9a59-4aea-90ff-211d1966faf4" />
 				</reportElement>
@@ -695,7 +695,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{shippingAmount}.format($P{locale})]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="7383ef75-8ba5-41eb-a828-a23eee31b245" width="70" x="470" y="120">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895dde53-9a59-4aea-90ff-211d1966faf4" />
 				</reportElement>

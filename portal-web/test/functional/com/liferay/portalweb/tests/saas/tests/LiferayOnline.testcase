@@ -1,6 +1,7 @@
 @component-name = "portal-lol"
 definition {
 
+	property osgi.modules.includes = "site-initializer-team-extranet";
 	property database.types = "mysql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
@@ -22,6 +23,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			PortalSettings.tearDownCP();
+
 			PagesAdmin.tearDownCP();
 
 			WebContent.tearDownCP();
@@ -128,19 +131,19 @@ definition {
 	@description = "This is a test for LPS-143786. Create a Team Extranet Virtual Instance by API"
 	@priority = "4"
 	test CreateTeamExtranetVirtualInstanceByAPI {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.team-extranet.com";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "LiferayOnline#CreateTeamExtranetVirtualInstanceByAPI";
 
 		task ("Create Virtual Instance by Json") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
-				domain = "team-extranet.com",
-				portalInstanceId = "teamextranet",
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
 				siteInitializerKey = "com.liferay.site.initializer.team.extranet",
-				virtualHost = "www.team-extranet.com");
+				virtualHost = "www.able.com");
 		}
 
 		task ("Go to the Virtual Instance Created and Assert the Team Extranet Logo") {
-			Navigator.openSpecificURL(url = "http://www.team-extranet.com:8080");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 			AssertElementPresent(
 				key_title = "Welcome to the team!",

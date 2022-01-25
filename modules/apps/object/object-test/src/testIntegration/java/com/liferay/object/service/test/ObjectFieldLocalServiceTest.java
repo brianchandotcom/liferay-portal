@@ -72,7 +72,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					0, "LongText", null, "Blob", true, false, "", "", "able",
+					0, "LargeFile", null, "Blob", true, false, "", "", "able",
 					false));
 
 			Assert.fail();
@@ -99,7 +99,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					"Text", "STRING", "Able", "able"));
+					"", "STRING", "Able", "able"));
 
 			Assert.fail();
 		}

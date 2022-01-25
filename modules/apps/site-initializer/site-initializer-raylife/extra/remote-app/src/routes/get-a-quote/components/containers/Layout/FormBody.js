@@ -58,9 +58,11 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				} else if (stepBasicName === 'business-type') {
+				}
+				else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				} else {
+				}
+				else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;

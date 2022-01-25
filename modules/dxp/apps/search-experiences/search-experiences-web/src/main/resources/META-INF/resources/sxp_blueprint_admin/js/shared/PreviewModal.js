@@ -15,6 +15,7 @@ import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
+import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {openSuccessToast} from '../utils/toasts';
 import CodeMirrorEditor from './CodeMirrorEditor';
 
@@ -60,7 +61,7 @@ export function PreviewModalWithCopyDownload({
 				<>
 					<ClayButton.Group spaced>
 						<ClayButton
-							className="sxp-copy-button"
+							className={COPY_BUTTON_CSS_CLASS}
 							data-clipboard-text={text}
 							displayType="secondary"
 							small

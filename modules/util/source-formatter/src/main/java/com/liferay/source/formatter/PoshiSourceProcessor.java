@@ -55,7 +55,7 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String content,
 			Set<String> modifiedMessages)
 		throws Exception {
-		
+
 		if (SourceUtil.isXML(content) || fileName.endsWith(".path")) {
 			return content;
 		}

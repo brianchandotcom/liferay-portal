@@ -22,6 +22,7 @@ import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -62,7 +63,8 @@ public class SiteCommerceChannelTypeDisplayContext
 		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionManager workflowDefinitionManager,
-		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
+		CPTaxCategoryLocalService cpTaxCategoryLocalService,
+		DLAppLocalService dlAppLocalService) {
 
 		super(
 			commerceChannelModelResourcePermission,
@@ -70,10 +72,12 @@ public class SiteCommerceChannelTypeDisplayContext
 			commerceChannelTypeRegistry, commerceCurrencyService,
 			commercePaymentMethodRegistry, configurationProvider,
 			httpServletRequest, portal, workflowDefinitionLinkLocalService,
-			workflowDefinitionManager, cpTaxCategoryLocalService);
+			workflowDefinitionManager, cpTaxCategoryLocalService, itemSelector,
+			dlAppLocalService);
 
 		_groupLocalService = groupLocalService;
 		_itemSelector = itemSelector;
+		_dlAppLocalService = dlAppLocalService;
 	}
 
 	public Group getChannelSite() throws PortalException {
@@ -104,6 +108,7 @@ public class SiteCommerceChannelTypeDisplayContext
 		return itemSelectorURL.toString();
 	}
 
+	private final DLAppLocalService _dlAppLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ItemSelector _itemSelector;
 

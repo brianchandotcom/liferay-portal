@@ -69,12 +69,12 @@ definition {
 		task ("Assert that console outputs a different X-Request-ID than invalid inputted X-Request-ID") {
 			Navigator.openURL(baseUrl = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-			var invalidXRequestId = "invalidXRID";
+			var invalidXrequestId = "invalidXRID";
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXrequestId}' ''';
 			var userId = JSONCurlUtil.get("${curl}");
 
-			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
+			AssertConsoleTextNotPresent(value1 = "${invalidXrequestId}");
 
 			AssertConsoleTextPresent(value1 = "xRequestId");
 		}
@@ -94,12 +94,12 @@ definition {
 		task ("Assert that console outputs the same X-Request-ID as inputted X-Request-ID") {
 			Navigator.openURL(baseUrl = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-			var validXRequestId = StringUtil.randomString("40");
+			var validXrequestId = StringUtil.randomString("40");
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXrequestId}' ''';
 			var userId = JSONCurlUtil.get("${curl}");
 
-			AssertConsoleTextPresent(value1 = "${validXRequestId}");
+			AssertConsoleTextPresent(value1 = "${validXrequestId}");
 		}
 	}
 

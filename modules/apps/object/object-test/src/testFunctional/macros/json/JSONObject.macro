@@ -133,12 +133,12 @@ definition {
 	macro addObjectRelationship {
 		var portalUrl = JSONCompany.getPortalURL();
 
-		var objectID_1 = JSONObject.getObjectId(
+		var objectId_1 = JSONObject.getObjectId(
 			objectName = "${objectName_1}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
-		var objectID_2 = JSONObject.getObjectId(
+		var objectId_2 = JSONObject.getObjectId(
 			objectName = "${objectName_2}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
@@ -156,7 +156,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/object-admin/v1.0/object-definitions/${objectID_1}/object-relationships \
+			${portalUrl}/o/object-admin/v1.0/object-definitions/${objectId_1}/object-relationships \
 			-H 'Content-Type: application/json' \
 			-u ${userEmailAddress}:${userPassword} \
 			-d '{
@@ -165,8 +165,8 @@ definition {
 			  "en_US": "${relationshipLabel}"
 			},
 			"name": "${relationshipName}",
-			"objectDefinitionId1": ${objectID_1},
-			"objectDefinitionId2": ${objectID_2},
+			"objectDefinitionId1": ${objectId_1},
+			"objectDefinitionId2": ${objectId_2},
 			"objectDefinitionName2": "${objectName_2}",
 			"type": "${relationshipType}"
 			}'

@@ -282,17 +282,17 @@ definition {
 					vocabularyName = "Size");
 			}
 
-			var 90inchId = JSONCategory.addCategory(
+			var inch90Id = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "9 inch",
 				vocabularyName = "Size");
 
-			var 95inchId = JSONCategory.addCategory(
+			var inch95Id = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "9.5 inch",
 				vocabularyName = "Size");
 
-			var 100inchId = JSONCategory.addCategory(
+			var inch100Id = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "10 inch",
 				vocabularyName = "Size");
@@ -324,7 +324,7 @@ definition {
 
 		task ("Add the first web content with 10 inch and United States") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${100inchId},${usId}",
+				assetCategoryIds = "${inch100Id},${usId}",
 				content = "Air Force 1",
 				groupName = "Test Site Name",
 				title = "Air Force 1");
@@ -332,7 +332,7 @@ definition {
 
 		task ("Add the second web content with 9.5 inch and China") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${95inchId},${cnId}",
+				assetCategoryIds = "${inch95Id},${cnId}",
 				content = "Air Jordan 1",
 				groupName = "Test Site Name",
 				title = "Air Jordan 1");
@@ -340,7 +340,7 @@ definition {
 
 		task ("Add the third web content with 9 inch and United States") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${90inchId},${usId}",
+				assetCategoryIds = "${inch90Id},${usId}",
 				content = "Air Max 1",
 				groupName = "Test Site Name",
 				title = "Air Max 1");
@@ -348,7 +348,7 @@ definition {
 
 		task ("Add the fourth web content with 10 inch and Spain") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${100inchId},${esId}",
+				assetCategoryIds = "${inch100Id},${esId}",
 				content = "LeBron VIII",
 				groupName = "Test Site Name",
 				title = "LeBron VIII");
@@ -1106,14 +1106,14 @@ definition {
 		}
 
 		task ("Add a category in Vocabulary A") {
-			var categoryAId = JSONCategory.addCategory(
+			var categoryAid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category A",
 				vocabularyName = "Vocabulary A");
 		}
 
 		task ("Add a category in Vocabulary B") {
-			var categoryBId = JSONCategory.addCategory(
+			var categoryBid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category B",
 				vocabularyName = "Vocabulary B");
@@ -1121,7 +1121,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Category A") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				content = "Web Content Content With Category A",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Category A");
@@ -1129,7 +1129,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Category A and Category B") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				content = "Web Content Content With Both Categories",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Both Categories");
@@ -1137,7 +1137,7 @@ definition {
 
 		task ("Add a blogs entry with Category A") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				content = "Blogs Entry Content With Category A",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Category A");
@@ -1145,7 +1145,7 @@ definition {
 
 		task ("Add a blogs entry with Both Categories") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				content = "Blogs Entry Content With Both Categories",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Both Categories");
@@ -1153,7 +1153,7 @@ definition {
 
 		task ("Add a document with Category A") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				dmDocumentTitle = "Document Title With Category A",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1162,7 +1162,7 @@ definition {
 
 		task ("Add a document with Both Categories") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				dmDocumentTitle = "Document Title With Both Categories",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1415,19 +1415,19 @@ definition {
 		}
 
 		task ("Add three subcategories in category") {
-			var subcategoryAId = JSONCategory.addSubcategory(
+			var subcategoryAid = JSONCategory.addSubcategory(
 				groupName = "Test Site Name",
 				parentCategoryName = "Category Name",
 				title = "Subcategory A",
 				vocabularyName = "Vocabulary Name");
 
-			var subcategoryBId = JSONCategory.addSubcategory(
+			var subcategoryBid = JSONCategory.addSubcategory(
 				groupName = "Test Site Name",
 				parentCategoryName = "Category Name",
 				title = "Subcategory B",
 				vocabularyName = "Vocabulary Name");
 
-			var subcategoryCId = JSONCategory.addSubcategory(
+			var subcategoryCid = JSONCategory.addSubcategory(
 				groupName = "Test Site Name",
 				parentCategoryName = "Category Name",
 				title = "Subcategory C",
@@ -1443,7 +1443,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Subcategory A") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${subcategoryAId}",
+				assetCategoryIds = "${subcategoryAid}",
 				content = "Web Content Content With Subcategory",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Subcategory");
@@ -1458,7 +1458,7 @@ definition {
 
 		task ("Add a blogs entry with Subcategory B") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${subcategoryBId}",
+				assetCategoryIds = "${subcategoryBid}",
 				content = "Blogs Entry Content With Subcategory",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Subcategory");
@@ -1474,7 +1474,7 @@ definition {
 
 		task ("Add a document with Subcategory C") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${subcategoryCId}",
+				assetCategoryIds = "${subcategoryCid}",
 				dmDocumentTitle = "Document Title With Subcategory",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1973,14 +1973,14 @@ definition {
 		}
 
 		task ("Add a category in Vocabulary A") {
-			var categoryAId = JSONCategory.addCategory(
+			var categoryAid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category A",
 				vocabularyName = "Vocabulary A");
 		}
 
 		task ("Add a category in Vocabulary B") {
-			var categoryBId = JSONCategory.addCategory(
+			var categoryBid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category B",
 				vocabularyName = "Vocabulary B");
@@ -1988,7 +1988,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Category A") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				content = "Web Content Content With Category A",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Category A");
@@ -1996,7 +1996,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Category A and Category B") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				content = "Web Content Content With Both Categories",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Both Categories");
@@ -2004,7 +2004,7 @@ definition {
 
 		task ("Add a blogs entry with Category A") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				content = "Blogs Entry Content With Category A",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Category A");
@@ -2012,7 +2012,7 @@ definition {
 
 		task ("Add a blogs entry with Both Categories") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				content = "Blogs Entry Content With Both Categories",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Both Categories");
@@ -2020,7 +2020,7 @@ definition {
 
 		task ("Add a document with Category A") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				dmDocumentTitle = "Document Title With Category A",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -2029,7 +2029,7 @@ definition {
 
 		task ("Add a document with Both Categories") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryAId},${categoryBId}",
+				assetCategoryIds = "${categoryAid},${categoryBid}",
 				dmDocumentTitle = "Document Title With Both Categories",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -2299,17 +2299,17 @@ definition {
 		}
 
 		task ("Add three categories") {
-			var categoryAId = JSONCategory.addCategory(
+			var categoryAid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category A",
 				vocabularyName = "Vocabulary Name");
 
-			var categoryBId = JSONCategory.addCategory(
+			var categoryBid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category B",
 				vocabularyName = "Vocabulary Name");
 
-			var categoryCId = JSONCategory.addCategory(
+			var categoryCid = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category C",
 				vocabularyName = "Vocabulary Name");
@@ -2324,7 +2324,7 @@ definition {
 
 		task ("Add a web content based on Basic Web Content with Category A") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryAId}",
+				assetCategoryIds = "${categoryAid}",
 				content = "Web Content Content With Category",
 				groupName = "Test Site Name",
 				title = "Web Content Title With Category");
@@ -2339,7 +2339,7 @@ definition {
 
 		task ("Add a blogs entry with Category B") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryBId}",
+				assetCategoryIds = "${categoryBid}",
 				content = "Blogs Entry Content With Category",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title With Category");
@@ -2355,7 +2355,7 @@ definition {
 
 		task ("Add a document with Category C") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryCId}",
+				assetCategoryIds = "${categoryCid}",
 				dmDocumentTitle = "Document Title With Category",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",

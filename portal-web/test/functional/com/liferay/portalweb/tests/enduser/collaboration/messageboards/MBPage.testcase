@@ -920,7 +920,7 @@ definition {
 
 		MessageboardsThread.viewMBThreadVisualStatePG(
 			threadSubject = "MB Thread Message Subject 2",
-			unReadMBthread = "true");
+			unReadMbThread = "true");
 	}
 
 	@priority = "4"

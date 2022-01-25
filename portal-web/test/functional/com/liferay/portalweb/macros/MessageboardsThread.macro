@@ -1493,7 +1493,7 @@ definition {
 	macro viewMBThreadVisualStatePG {
 		var key_threadSubject = "${threadSubject}";
 
-		if (isSet(unReadMBthread)) {
+		if (isSet(unReadMbThread)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD_UNREAD",
 				value1 = "${threadSubject}");

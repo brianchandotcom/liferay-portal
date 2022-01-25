@@ -922,7 +922,7 @@ definition {
 		}
 
 		task ("Check the info is correct in Analytics Cloud") {
-			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+			ABTest.checkAnalyticsCloudInfo(abTestTitle = "AB test title");
 		}
 
 		task ("Go back to DXP") {
@@ -965,7 +965,7 @@ definition {
 		}
 
 		task ("Check the info is correct in Analytics Cloud") {
-			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+			ABTest.checkAnalyticsCloudInfo(abTestTitle = "AB test title");
 		}
 
 		task ("Go back to DXP") {

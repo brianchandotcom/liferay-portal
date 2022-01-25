@@ -98,6 +98,24 @@
 			]
 		}
 	],
+	"objectViews": [
+		{
+			"defaultObjectView": true,
+			"name": {
+				"en_US": "View"
+			},
+			"objectViewColumns": [
+				{
+					"objectFieldName": "textField1",
+					"priority": 0
+				},
+				{
+					"objectFieldName": "textField2",
+					"priority": 1
+				}
+			]
+		}
+	],
 	"panelCategoryKey": "",
 	"pluralLabel": {
 		"en_US": "Object Definitions"

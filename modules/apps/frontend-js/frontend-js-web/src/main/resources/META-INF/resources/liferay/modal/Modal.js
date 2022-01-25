@@ -31,6 +31,7 @@ const Modal = ({
 		className: 'cadmin',
 	},
 	customEvents,
+	disableAutoClose,
 	footerCssClass,
 	headerCssClass,
 	headerHTML,
@@ -177,6 +178,7 @@ const Modal = ({
 				<ClayModal
 					className="liferay-modal"
 					containerProps={{...containerProps}}
+					disableAutoClose={disableAutoClose}
 					id={id}
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}

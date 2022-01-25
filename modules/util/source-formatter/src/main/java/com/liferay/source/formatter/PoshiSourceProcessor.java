@@ -51,22 +51,14 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected File format(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (SourceUtil.isXML(content)) {
-			return file;
-		}
-
-		return super.format(file, fileName, absolutePath, content);
-	}
-
-	@Override
 	protected String parse(
 			File file, String fileName, String content,
 			Set<String> modifiedMessages)
 		throws Exception {
+		
+		if (SourceUtil.isXML(content) || fileName.endsWith(".path")) {
+			return content;
+		}
 
 		_populateFunctionAndMacroFiles();
 
@@ -144,7 +136,7 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/*.function", "**/*.macro", "**/*.testcase"
+		"**/*.function", "**/*.macro", "**/*.path", "**/*.testcase"
 	};
 
 	private static final String[] _SKIP_DIR_NAMES = {

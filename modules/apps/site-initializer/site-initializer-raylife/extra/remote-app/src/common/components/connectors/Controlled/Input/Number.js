@@ -16,7 +16,7 @@ import React from 'react';
 
 import {ControlledInputWithMask} from './WithMask';
 
-export function NumberControlledInput({...props}) {
+export function NumberControlledInput(props) {
 	return (
 		<ControlledInputWithMask
 			{...props}

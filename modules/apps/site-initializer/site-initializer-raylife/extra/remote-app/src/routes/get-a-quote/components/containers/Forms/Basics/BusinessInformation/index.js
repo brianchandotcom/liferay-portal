@@ -22,7 +22,7 @@ import {PhoneControlledInput} from '../../../../../../../common/components/conne
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
 import useMobileContainer from '../../../../../hooks/useMobileContainer';
-import {MOBILE_SUBSECTION_KEYS} from '../../../../../utils/constants';
+import {SUBSECTION_KEYS} from '../../../../../utils/constants';
 import MobileContainer from '../../../../mobile/MobileContainer';
 
 import {BusinessInformationAddress} from './Address';
@@ -36,7 +36,7 @@ export function FormBasicBusinessInformation({form, isMobile}) {
 		PHONE,
 		PHYSICAL_ADDRESS,
 		YOUR_NAME,
-	} = MOBILE_SUBSECTION_KEYS;
+	} = SUBSECTION_KEYS;
 
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 	const {getMobileSubSection, mobileContainerProps} = useMobileContainer();

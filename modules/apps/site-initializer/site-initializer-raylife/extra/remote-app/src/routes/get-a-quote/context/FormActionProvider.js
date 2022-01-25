@@ -34,6 +34,7 @@ const FormActionProvider = ({children, form}) => {
 
 	const {
 		state: {
+			activeMobileSubSection,
 			dimensions: {deviceSize},
 			selectedStep: {index: currentStepIndex = 0},
 			steps,
@@ -72,6 +73,9 @@ const FormActionProvider = ({children, form}) => {
 					onPrevious,
 					onSave,
 					onSaveDisabled: !email || emailHasError || loading,
+					showContinueButton: activeMobileSubSection?.hideContinueButton
+						? false
+						: true,
 					showSaveAndExit: onNext && currentStepIndex >= 2,
 				},
 				errorModal,

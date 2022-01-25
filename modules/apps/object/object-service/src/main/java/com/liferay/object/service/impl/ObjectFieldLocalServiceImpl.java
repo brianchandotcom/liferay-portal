@@ -24,9 +24,12 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -152,6 +155,15 @@ public class ObjectFieldLocalServiceImpl
 
 		_objectLayoutColumnPersistence.removeByObjectFieldId(
 			objectField.getObjectFieldId());
+
+		List<ObjectView> objectViews =
+			_objectViewPersistence.findByObjectDefinitionId(
+				objectField.getObjectDefinitionId());
+
+		for (ObjectView objectView : objectViews) {
+			_objectViewColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+		}
 
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
@@ -408,6 +420,12 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
+
+	@Reference
+	private ObjectViewColumnPersistence _objectViewColumnPersistence;
+
+	@Reference
+	private ObjectViewPersistence _objectViewPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
 		"companyid", "createdate", "groupid", "id", "lastpublishdate",

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>SORT_ANALYSIS</td>
-	<td>//div[text()='${key_attributeName}']//ancestor::button//*[contains(@class,'lexicon-icon-order-arrow')]</td>
+	<td>//th[@class='table-head-title']//div[text()='${key_attributeName}']</td>
 	<td></td>
 </tr>
 </tbody>

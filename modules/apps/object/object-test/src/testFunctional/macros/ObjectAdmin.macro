@@ -453,6 +453,13 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
 	}
 
+	macro assertObjectActionsNotPresent {
+		AssertElementNotPresent(
+			key_actionActive = "${actionActive}",
+			key_actionName = "${actionName}",
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
+	}
+
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
 
@@ -635,6 +642,14 @@ definition {
 			value1 = "${name}");
 
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
+	}
+
+	macro deleteActionViaUI {
+		Click(
+			key_objectLabel = "${actionName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
 	macro deleteAllCustomObjectsViaAPI {

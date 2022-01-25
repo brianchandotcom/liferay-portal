@@ -135,6 +135,10 @@ public class LiferayJWTBearerGrantHandler
 
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
+
+		_jwsSignatureVerifiers.put(
+			CompanyConstants.SYSTEM, Collections.emptyMap());
+		_userAuthTypes.put(CompanyConstants.SYSTEM, Collections.emptyMap());
 	}
 
 	@Override

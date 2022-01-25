@@ -42,8 +42,7 @@ public class PortalDirTest {
 		File portalWebInfDir = new File(
 			PropsValues.LIFERAY_WEB_PORTAL_DIR, "WEB-INF");
 
-		Assert.assertTrue(
-			portalWebInfDir.isDirectory());
+		Assert.assertTrue(portalWebInfDir.isDirectory());
 
 		Assert.assertTrue(
 			PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR.endsWith(

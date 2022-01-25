@@ -70,6 +70,8 @@ components:
                     type: array
                 taskItemDelegateName:
                     type: string
+                template:
+                    type: boolean
             type: object
         Policy:
             properties:

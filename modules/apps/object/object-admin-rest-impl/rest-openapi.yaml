@@ -78,6 +78,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectRelationship"
                     type: array
+                objectViews:
+                    items:
+                        $ref: "#/components/schemas/ObjectView"
+                    type: array
                 panelAppOrder:
                     type: string
                 panelCategoryKey:
@@ -337,7 +341,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.object.admin.rest.client', and version '1.0.11'."
+        'com.liferay.object.admin.rest.client', and version '1.0.12'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

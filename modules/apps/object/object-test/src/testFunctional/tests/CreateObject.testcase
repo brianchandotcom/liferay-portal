@@ -5719,7 +5719,6 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObject {
-
 		ObjectAdmin.openObjectAdmin();
 
 		Search.searchCP(searchTerm = "Object X");
@@ -5727,7 +5726,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"

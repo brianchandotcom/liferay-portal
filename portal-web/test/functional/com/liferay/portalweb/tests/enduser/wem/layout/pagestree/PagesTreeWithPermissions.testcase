@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Remove view permission from Test Child Page 1 on Site Member and Guest") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.expandPageTree(depth = "2");
 

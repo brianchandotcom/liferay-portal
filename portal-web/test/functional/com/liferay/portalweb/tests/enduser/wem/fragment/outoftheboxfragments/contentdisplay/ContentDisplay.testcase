@@ -248,7 +248,7 @@ definition {
 		}
 
 		task ("Add a fragment with item selector") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 

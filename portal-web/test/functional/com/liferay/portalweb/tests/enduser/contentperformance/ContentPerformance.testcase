@@ -8,9 +8,9 @@ definition {
 
 	setUp {
 		task ("Open Analytics Cloud") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+			var analyticsCloudUrl = PropsUtil.get("analytics.cloud.url");
 
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			Navigator.openURL(baseUrl = "${analyticsCloudUrl}");
 		}
 
 		task ("Take token from Analytics Cloud") {
@@ -275,7 +275,7 @@ definition {
 	@priority = "5"
 	test LanguageSelector {
 		task ("Add a translation for that page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -283,12 +283,12 @@ definition {
 
 			PagesAdmin.addLocalizedFriendlyURL(
 				friendlyUrlLocalizedList = "pt-BR",
-				localizedFriendlyURLList = "",
+				localizedFriendlyUrlList = "",
 				localizedNameList = "Pagina principal");
 		}
 
 		task ("Set a custom page as canonical URL and go to Content Performance") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay.com.br");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay.com.br");
 		}
 
 		task ("Open Content Performance and Assert if element is not present") {
@@ -323,7 +323,7 @@ definition {
 	@priority = "3"
 	test LanguageSelectorUserLanguage {
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay.com.br");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay.com.br");
 		}
 
 		task ("Open Content Performance and Assert if element is not present") {
@@ -455,7 +455,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -538,7 +538,7 @@ definition {
 		}
 
 		task ("Create a default Display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -650,7 +650,7 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -742,7 +742,7 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -828,7 +828,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -912,7 +912,7 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",

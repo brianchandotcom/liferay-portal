@@ -216,7 +216,7 @@ definition {
 		}
 
 		task ("Add an Asset Publisher widget to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -1608,7 +1608,7 @@ definition {
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1620,7 +1620,7 @@ definition {
 			pageName = "Asset Publisher Page",
 			pageType = "Public Pages");
 
-		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
+		WebContent.editFriendlyURL(webContentFriendlyUrl = "webcontentenglish");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
@@ -1628,7 +1628,7 @@ definition {
 			webContentContent = "WC WebContent German Content",
 			webContentTitle = "WC WebContent German Title");
 
-		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentgerman");
+		WebContent.editFriendlyURL(webContentFriendlyUrl = "webcontentgerman");
 
 		PortletEntry.publish();
 

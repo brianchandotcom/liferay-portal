@@ -56,7 +56,7 @@ function DisplayPageItemContextualSidebar({
 
 	const {
 		eventName,
-		getItemTypeURL,
+		getItemDetailsURL,
 		itemSelectorURL,
 		modalTitle,
 	} = chooseItemProps;
@@ -96,7 +96,7 @@ function DisplayPageItemContextualSidebar({
 						infoItem
 					);
 
-					fetch(getItemTypeURL, {
+					fetch(getItemDetailsURL, {
 						body: objectToFormData(namespacedInfoItem),
 						method: 'POST',
 					})

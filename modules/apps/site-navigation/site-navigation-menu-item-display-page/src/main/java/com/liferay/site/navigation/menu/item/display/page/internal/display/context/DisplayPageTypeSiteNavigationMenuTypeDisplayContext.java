@@ -107,7 +107,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			"eventName",
 			liferayPortletResponse.getNamespace() + "selectInfoItem"
 		).put(
-			"getItemTypeURL", getItemTypeURL(liferayPortletResponse)
+			"getItemDetailsURL", getItemDetailsURL(liferayPortletResponse)
 		).put(
 			"itemSelectorURL",
 			() -> {
@@ -242,6 +242,18 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale());
 	}
 
+	public String getItemDetailsURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		LiferayPortletURL itemDetailsURL =
+			(LiferayPortletURL)liferayPortletResponse.createResourceURL();
+
+		itemDetailsURL.setCopyCurrentRenderParameters(false);
+		itemDetailsURL.setResourceID("/navigation_menu/get_item_details");
+
+		return itemDetailsURL.toString();
+	}
+
 	public String getItemSubtype() {
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_displayPageTypeContext.getInfoItemFormVariationsProvider();
@@ -271,18 +283,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public String getItemType() {
 		return _displayPageTypeContext.getLabel(_themeDisplay.getLocale());
-	}
-
-	public String getItemTypeURL(
-		LiferayPortletResponse liferayPortletResponse) {
-
-		LiferayPortletURL itemTypeURL =
-			(LiferayPortletURL)liferayPortletResponse.createResourceURL();
-
-		itemTypeURL.setCopyCurrentRenderParameters(false);
-		itemTypeURL.setResourceID("/navigation_menu/get_item_details");
-
-		return itemTypeURL.toString();
 	}
 
 	public JSONObject getLocalizedNamesJSONObject() throws JSONException {

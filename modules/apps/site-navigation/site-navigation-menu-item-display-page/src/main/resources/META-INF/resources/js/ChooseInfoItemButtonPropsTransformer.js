@@ -15,7 +15,12 @@
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {eventName, getItemTypeURL, itemSelectorURL, modalTitle},
+	additionalProps: {
+		eventName,
+		getItemDetailsURL,
+		itemSelectorURL,
+		modalTitle,
+	},
 	portletNamespace,
 	...props
 }) {
@@ -99,7 +104,7 @@ export default function propsTransformer({
 							infoItem
 						);
 
-						fetch(getItemTypeURL, {
+						fetch(getItemDetailsURL, {
 							body: objectToFormData(namespacedInfoItem),
 							method: 'POST',
 						})

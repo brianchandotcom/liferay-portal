@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -82,7 +83,11 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		long classTypeId = ParamUtil.getLong(resourceRequest, "classTypeId");
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = JSONUtil.put(
+				"hasDisplayPage",
+				AssetDisplayPageUtil.hasAssetDisplayPage(
+					themeDisplay.getScopeGroupId(), classNameId, classPK,
+					classTypeId));
 
 			String itemType = _getItemType(classNameId, themeDisplay);
 

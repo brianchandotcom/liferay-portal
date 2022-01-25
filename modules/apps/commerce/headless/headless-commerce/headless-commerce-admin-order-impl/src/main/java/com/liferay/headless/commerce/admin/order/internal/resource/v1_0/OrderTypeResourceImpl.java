@@ -19,8 +19,11 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.term.model.CommerceTermEntryRel;
+import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderTypeEntityModel;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
@@ -157,6 +160,19 @@ public class OrderTypeResourceImpl
 			sorts,
 			document -> _toOrderType(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@NestedField(parentClass = TermOrderType.class, value = "orderType")
+	@Override
+	public OrderType getTermOrderTypeOrderType(Long id) throws Exception {
+		CommerceTermEntryRel commerceTermEntryRel =
+			_commerceTermEntryRelService.getCommerceTermEntryRel(id);
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.getCommerceOrderType(
+				commerceTermEntryRel.getClassPK());
+
+		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
 	}
 
 	@Override
@@ -318,6 +334,9 @@ public class OrderTypeResourceImpl
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private CommerceTermEntryRelService _commerceTermEntryRelService;
 
 	@Reference
 	private COREntryRelService _corEntryRelService;

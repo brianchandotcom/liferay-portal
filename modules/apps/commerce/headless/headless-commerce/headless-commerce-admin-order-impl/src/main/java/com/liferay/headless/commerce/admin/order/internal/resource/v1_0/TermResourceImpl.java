@@ -14,12 +14,18 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.model.CommerceTermEntryRel;
+import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.TermDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.TermEntityModel;
+import com.liferay.headless.commerce.admin.order.internal.util.v1_0.TermOrderTypeUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -179,19 +185,23 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			term.getExpirationDate(), serviceContext.getTimeZone());
 
-		return _commerceTermEntryService.addCommerceTermEntry(
-			term.getExternalReferenceCode(),
-			GetterUtil.getBoolean(term.getActive()),
-			LanguageUtils.getLocalizedMap(term.getDescription()),
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
-			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
-			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
-			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
-			GetterUtil.getBoolean(term.getNeverExpire(), true),
-			LanguageUtils.getLocalizedMap(term.getLabel()), term.getName(),
-			GetterUtil.getDouble(term.getPriority()), term.getType(),
-			term.getTypeSettings(), serviceContext);
+		CommerceTermEntry commerceTermEntry =
+			_commerceTermEntryService.addCommerceTermEntry(
+				term.getExternalReferenceCode(),
+				GetterUtil.getBoolean(term.getActive()),
+				LanguageUtils.getLocalizedMap(term.getDescription()),
+				displayDateConfig.getMonth(), displayDateConfig.getDay(),
+				displayDateConfig.getYear(), displayDateConfig.getHour(),
+				displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+				expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+				expirationDateConfig.getHour(),
+				expirationDateConfig.getMinute(),
+				GetterUtil.getBoolean(term.getNeverExpire(), true),
+				LanguageUtils.getLocalizedMap(term.getLabel()), term.getName(),
+				GetterUtil.getDouble(term.getPriority()), term.getType(),
+				term.getTypeSettings(), serviceContext);
+
+		return _updateNestedResources(commerceTermEntry, term);
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -237,6 +247,35 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 				contextUriInfo, contextUser));
 	}
 
+	private CommerceTermEntry _updateNestedResources(
+			CommerceTermEntry commerceTermEntry, Term term)
+		throws Exception {
+
+		// Term order types
+
+		TermOrderType[] termOrderTypes = term.getTermOrderType();
+
+		if (termOrderTypes != null) {
+			for (TermOrderType termOrderType : termOrderTypes) {
+				CommerceTermEntryRel commerceTermEntryRel =
+					_commerceTermEntryRelService.fetchCommerceTermEntryRel(
+						CommerceOrderType.class.getName(),
+						termOrderType.getTermId(),
+						commerceTermEntry.getCommerceTermEntryId());
+
+				if (commerceTermEntryRel != null) {
+					continue;
+				}
+
+				TermOrderTypeUtil.addCommerceTermEntryCommerceOrderTypeRel(
+					_commerceOrderTypeService, commerceTermEntry,
+					_commerceTermEntryRelService, termOrderType);
+			}
+		}
+
+		return commerceTermEntry;
+	}
+
 	private CommerceTermEntry _updateTerm(
 			CommerceTermEntry commerceTermEntry, Term term)
 		throws Exception {
@@ -261,7 +300,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			labelMap = commerceTermEntry.getLanguageIdToLabelMap();
 		}
 
-		return _commerceTermEntryService.updateCommerceTermEntry(
+		commerceTermEntry = _commerceTermEntryService.updateCommerceTermEntry(
 			commerceTermEntry.getCommerceTermEntryId(),
 			GetterUtil.getBoolean(
 				term.getActive(), commerceTermEntry.isActive()),
@@ -279,15 +318,23 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			GetterUtil.get(
 				term.getTypeSettings(), commerceTermEntry.getTypeSettings()),
 			serviceContext);
+
+		return _updateNestedResources(commerceTermEntry, term);
 	}
 
 	private static final EntityModel _entityModel = new TermEntityModel();
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
 	)
 	private ModelResourcePermission<CommerceTermEntry>
 		_commerceTermEntryModelResourcePermission;
+
+	@Reference
+	private CommerceTermEntryRelService _commerceTermEntryRelService;
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;

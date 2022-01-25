@@ -1016,49 +1016,6 @@ public class PoshiValidation {
 		}
 	}
 
-	protected static void validateMethodElement(
-		Element element, String filePath) {
-
-		String methodValue = element.attributeValue("method");
-
-		if ((methodValue != null) && methodValue.contains("selenium")) {
-			Matcher matcher = _seleniumPattern.matcher(methodValue);
-
-			while (matcher.find()) {
-				String seleniumMethodName = matcher.group(1);
-
-				if (seleniumMethodName.equals("getCurrentUrl")) {
-					continue;
-				}
-
-				int parameterCount = PoshiContext.getSeleniumParameterCount(
-					seleniumMethodName);
-
-				List<String> parameters =
-					PoshiScriptParserUtil.getMethodParameters(matcher.group(2));
-
-				if (parameters.size() != parameterCount) {
-					_exceptions.add(
-						new ValidationException(
-							element, "Incorrect parameter count", "\n",
-							filePath));
-				}
-
-				for (String parameter : parameters) {
-					Matcher exceptionMatcher = _seleniumErrorPattern.matcher(
-						parameter);
-
-					if (exceptionMatcher.find()) {
-						_exceptions.add(
-							new ValidationException(
-								element, "Remove locator|value 1-3", "\n",
-								filePath));
-					}
-				}
-			}
-		}
-	}
-
 	protected static void validateMethodExecuteElement(
 		Element element, String filePath) {
 
@@ -1467,6 +1424,46 @@ public class PoshiValidation {
 		}
 	}
 
+	protected static void validateSeleniumMethodAttributeValue(
+		Element element, String methodAttributeValue, String filePath) {
+
+		Matcher seleniumGetterMethodMatcher =
+			_seleniumGetterMethodPattern.matcher(methodAttributeValue);
+
+		seleniumGetterMethodMatcher.find();
+
+		String seleniumMethodName = seleniumGetterMethodMatcher.group(
+			"methodName");
+
+		if (seleniumMethodName.equals("getCurrentUrl")) {
+			return;
+		}
+
+		int seleniumParameterCount = PoshiContext.getSeleniumParameterCount(
+			seleniumMethodName);
+
+		List<String> methodParameters =
+			PoshiScriptParserUtil.getMethodParameters(
+				seleniumGetterMethodMatcher.group("methodParameters"));
+
+		if (methodParameters.size() != seleniumParameterCount) {
+			_exceptions.add(
+				new ValidationException(
+					element, "Incorrect parameter count", "\n", filePath));
+		}
+
+		for (String methodParameter : methodParameters) {
+			Matcher exceptionMatcher = _invalidMethodParameterPattern.matcher(
+				methodParameter);
+
+			if (exceptionMatcher.find()) {
+				_exceptions.add(
+					new ValidationException(
+						element, "Remove locator|value 1-3", "\n", filePath));
+			}
+		}
+	}
+
 	protected static void validateTakeScreenshotElement(
 		Element element, String filePath) {
 
@@ -1674,8 +1671,6 @@ public class PoshiValidation {
 		validateRequiredAttributeNames(
 			element, Arrays.asList("name"), filePath);
 
-		validateMethodElement(element, filePath);
-
 		List<Attribute> attributes = element.attributes();
 
 		int minimumAttributeSize = 2;
@@ -1721,11 +1716,16 @@ public class PoshiValidation {
 			element, possibleAttributeNames, filePath);
 
 		if (Validator.isNotNull(element.attributeValue("method"))) {
-			String methodAttribute = element.attributeValue("method");
+			String methodAttributeValue = element.attributeValue("method");
 
-			int x = methodAttribute.indexOf("#");
+			int x = methodAttributeValue.indexOf("#");
 
-			String className = methodAttribute.substring(0, x);
+			String className = methodAttributeValue.substring(0, x);
+
+			if (className.equals("selenium")) {
+				validateSeleniumMethodAttributeValue(
+					element, methodAttributeValue, filePath);
+			}
 
 			try {
 				validateUtilityClassName(element, filePath, className);
@@ -1832,11 +1832,12 @@ public class PoshiValidation {
 	}
 
 	private static final Set<Exception> _exceptions = new HashSet<>();
+	private static final Pattern _invalidMethodParameterPattern =
+		Pattern.compile("^(locator|value)");
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
-	private static final Pattern _seleniumErrorPattern = Pattern.compile(
-		"^(locator|value)");
-	private static final Pattern _seleniumPattern = Pattern.compile(
-		"^selenium#(get[A-z]+)(?:\\((.*|)\\))?$");
+	private static final Pattern _seleniumGetterMethodPattern = Pattern.compile(
+		"^selenium#(?<methodName>get[A-z]+)" +
+			"(?:\\((?<methodParameters>.*|)\\))?$");
 
 	private static class ValidationException extends Exception {
 

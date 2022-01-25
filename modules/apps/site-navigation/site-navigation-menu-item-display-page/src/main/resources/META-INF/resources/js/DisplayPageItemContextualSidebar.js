@@ -12,9 +12,11 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -25,6 +27,7 @@ import '../css/main.scss';
 function DisplayPageItemContextualSidebar({
 	chooseItemProps,
 	defaultLanguageId,
+	hasDisplayPage: initiallyHasDisplayPage,
 	item,
 	itemSubtype,
 	itemType,
@@ -37,6 +40,9 @@ function DisplayPageItemContextualSidebar({
 	const [customNameEnabled, setCustomNameEnabled] = useState(useCustomName);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [selectedItem, setSelectedItem] = useState(item);
+	const [hasDisplayPage, setItemHasDisplayPage] = useState(
+		initiallyHasDisplayPage
+	);
 
 	const [type, setType] = useState(itemType);
 	const [subtype, setSubtype] = useState(itemSubtype);
@@ -105,6 +111,7 @@ function DisplayPageItemContextualSidebar({
 							setType(jsonResponse.itemType);
 							setSubtype(jsonResponse.itemSubtype);
 							setItemData(jsonResponse.data);
+							setItemHasDisplayPage(jsonResponse.hasDisplayPage);
 						})
 						.catch(() => {});
 				}
@@ -171,7 +178,9 @@ function DisplayPageItemContextualSidebar({
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group
+				className={classNames({'has-warning': !hasDisplayPage})}
+			>
 				<label htmlFor={`${namespace}_itemInput`}>
 					{Liferay.Language.get('item')}
 				</label>
@@ -182,7 +191,6 @@ function DisplayPageItemContextualSidebar({
 							className="text-secondary"
 							id={`${namespace}_itemInput`}
 							onClick={openChooseItemModal}
-							readOnly
 							type="text"
 							value={selectedItem.title}
 						/>
@@ -198,6 +206,23 @@ function DisplayPageItemContextualSidebar({
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
+
+				{!hasDisplayPage && (
+					<>
+						<ClayAlert
+							className="mt-1"
+							displayType="warning"
+							title={Liferay.Language.get('no-display-page')}
+							variant="feedback"
+						/>
+
+						<p className="small text-secondary">
+							{Liferay.Language.get(
+								'items-without-display-page-do-not-have-links-and-are-hidden-from-menus'
+							)}
+						</p>
+					</>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group className="pt-2">
@@ -246,6 +271,7 @@ function DisplayPageItemContextualSidebar({
 DisplayPageItemContextualSidebar.propTypes = {
 	chooseItemProps: PropTypes.object.isRequired,
 	defaultLanguageId: PropTypes.string.isRequired,
+	hasDisplayPage: PropTypes.bool.isRequired,
 	item: PropTypes.shape({
 		classNameId: PropTypes.string,
 		classPK: PropTypes.string,

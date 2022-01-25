@@ -12445,6 +12445,69 @@ if (ppstate.equals("normal")) {
 		<record-git-commit-portal />
 	</target>
 
+	<target name="record-job-summary">
+		<fail message="Please set the property ${test.suite.name}." unless="test.suite.name" />
+
+		<condition else="test-portal-acceptance-pullrequest(${git.working.branch.name})" property="job.name" value="${job.name}">
+			<isset property="job.name" />
+		</condition>
+
+		<beanshell>
+			<![CDATA[
+				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+				import com.liferay.jenkins.results.parser.Job;
+				import com.liferay.jenkins.results.parser.JobFactory;
+
+				public Job.BuildProfile getBuildProfile() {
+					String testPortalBuildProfile = project.getProperty("build.profile");
+
+					if ((testPortalBuildProfile != null) && testPortalBuildProfile.equals("dxp")) {
+						return Job.BuildProfile.DXP;
+					}
+
+					return Job.BuildProfile.PORTAL;
+				}
+
+				public String getJobName() {
+					return project.getProperty("job.name");
+				}
+
+				public String getRepositoryName() {
+					String upstreamBranchName = getUpstreamBranchName();
+
+					if (upstreamBranchName.equals("master")) {
+						return "liferay-portal";
+					}
+
+					return "liferay-portal-ee";
+				}
+
+				public File getSummaryDir() {
+					File summaryDir = new File("job/summary");
+
+					summaryDir.mkdirs();
+
+					return JenkinsResultsParserUtil.getCanonicalFile(summaryDir);
+				}
+
+				public String getTestSuiteName() {
+					return project.getProperty("test.suite.name");
+				}
+
+				public String getUpstreamBranchName() {
+					return project.getProperty("git.working.branch.name");
+				}
+
+				Job job = JobFactory.newJob(getJobName(), getTestSuiteName(), getUpstreamBranchName(), getRepositoryName(), getBuildProfile());
+
+				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
+
+				System.out.println("Generated job summary file " + new File(getSummaryDir(), "index.html"));
+			]]>
+		</beanshell>
+	</target>
+
 	<target name="record-test-case-method-names">
 		<setup-libs />
 

@@ -5732,7 +5732,6 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObjectField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -5748,7 +5747,7 @@ definition {
 		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
-		
+
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.goToFieldsTab();
@@ -5758,7 +5757,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"

@@ -853,7 +853,7 @@ definition {
 		Form.viewSubmitButtonText(key_buttonText = "Submit for Publication");
 	}
 
-	@description = "Verify that with Single Approver Workflow enabled and after the user Submit for Publication, the form entry will have a pending label"
+	@description = "This is a use case for LPS-103694. Verify that with Single Approver Workflow enabled and after the user Submit for Publication, the form entry will have a pending label and the admin is notified of form submission"
 	@priority = "5"
 	test WorkflowSubmissionChangesLabelToPending {
 		property portal.acceptance = "true";
@@ -874,7 +874,11 @@ definition {
 
 		Form.publishForm();
 
-		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishFormURL = Form.getPublishedFormPublicURL();
+
+		Navigator.openSpecificURL(url = "${publishFormURL}");
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -895,6 +899,26 @@ definition {
 		FormsAdminNavigator.gotoViewEntries();
 
 		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openSpecificURL(url = "${publishFormURL}");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text1");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Publication");
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextPresent(value1 = "Test Test sent you a Form Record for review in the workflow.");
 	}
 
 }

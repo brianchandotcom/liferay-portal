@@ -1224,6 +1224,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consisteny in code style." />
 		</check>
+		<check name="PoshiVariableNameCheck">
+			<category name="Styling" />
+			<description name="Checks variable names for correct use of `camelCase`." />
+		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="PropertiesCommentsCheck">

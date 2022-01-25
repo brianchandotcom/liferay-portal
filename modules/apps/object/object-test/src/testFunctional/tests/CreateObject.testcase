@@ -5730,11 +5730,34 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateNoResultObjectField {
 
-		// TODO LPS-141640 EmptyStateNoResultObjectField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+		
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToFieldsTab();
+
+		Search.searchCP(searchTerm = "CustomObject X");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
 
 	}
 
@@ -5748,7 +5771,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.gotoRelationshipsTab();
 

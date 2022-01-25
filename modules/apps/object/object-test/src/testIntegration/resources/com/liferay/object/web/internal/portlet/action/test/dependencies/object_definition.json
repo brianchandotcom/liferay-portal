@@ -28,6 +28,7 @@
 	"objectFields": [
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -40,6 +41,7 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",

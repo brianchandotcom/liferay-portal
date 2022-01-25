@@ -134,6 +134,7 @@ public class ObjectDefinitionResourceTest
 			new ObjectField[] {
 				new ObjectField() {
 					{
+						setBusinessType(BusinessType.TEXT);
 						setDBType(ObjectField.DBType.create("String"));
 						setLabel(Collections.singletonMap("en_US", "Column"));
 						setName("column");

@@ -203,17 +203,11 @@ definition {
 
 		Blueprints.addElement(element = "Text Match Over Multiple Fields");
 
-		PortletEntry.save();
+		Blueprints.searchBlueprintsPreview(searchTerm = "Liferay");
 
-		Search.openSearchPage();
-
-		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Liferay");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Liferay Test",
-			searchAssetType = "Web Content Article");
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Liferay");
 	}
 
 	test BoostCustomLiferayObjectType {

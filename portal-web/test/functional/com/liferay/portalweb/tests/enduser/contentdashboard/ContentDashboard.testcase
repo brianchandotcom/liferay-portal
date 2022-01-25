@@ -3623,23 +3623,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-133181 When Filter by Author 'Me', displays content where the current user is the last editor of the approved version."
+	@description = "LPS-133181 When the user selects the option Filter by Author: Me in the 'Filter and Order' dropdown, the list of contents displays content where the user is the creator"
 	@priority = "5"
 	test ShowOnlyContentCreatedByUser {
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
 		task ("Create and configure second user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -3661,7 +3647,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",
-				title = "WC Title");
+				title = "WC Title 1");
 		}
 
 		task ("Change to second user") {
@@ -3670,16 +3656,37 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("Go to Content Dashboard and Edit web content") {
-			ContentDashboard.goToContentDashboard();
+		task ("Add a Web Content using second user") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
 
-			ContentDashboard.editAsset(assetTitle = "WC Title Edit");
+		task ("Edit Web Content created by Test user") {
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 1");
+
+			WebContent.editCP(
+				webContentTitle = "WC Title 1",
+				webContentTitleEdit = "WC Title Edit");
+		}
+
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Filter by author Me and assert asset displayed") {
 			ContentDashboard.filterByAuthorMe(filterOption = "Me");
 
 			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 2");
+
+			AssertTextNotPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title Edit");
 		}

@@ -75,6 +75,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		'.add-layout-action-option',
 		(event) => {
 			Liferay.Util.openModal({
+				disableAutoClose: true,
 				height: '60vh',
 				id: '<portlet:namespace />addLayoutDialog',
 				size: 'md',

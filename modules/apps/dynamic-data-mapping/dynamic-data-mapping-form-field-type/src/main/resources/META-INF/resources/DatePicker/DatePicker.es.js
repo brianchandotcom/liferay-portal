@@ -209,13 +209,20 @@ export default function DatePicker({
 			inputRef.current.focus();
 		}
 
+		/**
+		 * TO DO: When Clay change their implementation of the default time
+		 * value to '--:--' remember to change the code bellow of formattedTime
+		 */
+
 		let formattedDate = value;
 		if (isDateTime) {
 			const firstSpace = value.indexOf(' ');
 			formattedDate = value.substring(0, firstSpace);
-			const formattedTime = value
-				.substring(firstSpace)
-				.replaceAll('-', '_');
+			let formattedTime = value.substring(firstSpace);
+			formattedTime =
+				use12Hours && formattedTime === ' 00:00'
+					? ' 12:00 AM'
+					: formattedTime.replaceAll('-', '_');
 			formattedDate = `${formattedDate}${formattedTime}`;
 		}
 		const nextState = {
@@ -223,7 +230,7 @@ export default function DatePicker({
 			rawDate: '',
 		};
 
-		const date = moment(value, momentFormat, true);
+		const date = moment(formattedDate, momentFormat, true);
 		if (date.isValid()) {
 			nextState.rawDate = date.locale('en').format(serverFormat);
 			nextState.years = {end: date.year() + 5, start: date.year() - 5};

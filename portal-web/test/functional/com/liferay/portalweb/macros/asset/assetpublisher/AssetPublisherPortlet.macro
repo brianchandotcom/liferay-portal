@@ -430,9 +430,10 @@ definition {
 		SelectFrame(locator1 = "IFrame#SELECT_STRUCTURE_FIELD");
 
 		if (isSet(fieldFilter)) {
-			Check(
-				key_fieldName = "${fieldFilter}",
-				locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
+			Select(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${fieldFilter}");
 		}
 
 		if (isSet(fieldValue)) {
@@ -442,10 +443,7 @@ definition {
 				value1 = "${fieldValue}");
 		}
 
-		AssertClick(
-			key_fieldName = "${fieldFilter}",
-			locator1 = "Button#FIELD_FILTER_APPLY",
-			value1 = "Apply");
+		Button.clickApply();
 
 		SelectFrame(value1 = "relative=top");
 
@@ -1484,11 +1482,10 @@ definition {
 			SelectFrame(locator1 = "IFrame#SELECT_STRUCTURE_FIELD");
 
 			for (var assetSubtypeField : list "${assetSubtypeFields}") {
-				var key_fieldName = "${assetSubtypeField}";
-
-				AssertTextEquals(
-					locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_FIELD_NAME",
-					value1 = "${assetSubtypeField}");
+				AssertElementPresent(
+					key_fieldLabel = "Select",
+					key_value = "${assetSubtypeField}",
+					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}
 

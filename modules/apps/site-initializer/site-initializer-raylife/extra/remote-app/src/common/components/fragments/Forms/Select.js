@@ -12,8 +12,6 @@
  * details.
  */
 
-import {ClaySelect} from '@clayui/form';
-
 import React from 'react';
 import {InputAreaWithError} from './InputArea/WithError';
 import {Label} from './Label';
@@ -40,15 +38,16 @@ export const Select = React.forwardRef(
 					</Label>
 				)}
 
-				<ClaySelect
+				<select
 					{...props}
+					className="form-control"
 					id={name}
 					name={name}
 					ref={ref}
 					required={required}
 				>
 					{children}
-				</ClaySelect>
+				</select>
 			</InputAreaWithError>
 		);
 	}

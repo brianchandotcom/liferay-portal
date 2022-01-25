@@ -109,6 +109,31 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					<aui:validator name="number" />
 					<aui:validator name="min">0</aui:validator>
 				</aui:input>
+
+				<%
+				FileEntry fileEntry = commerceChannelDisplayContext.fetchFileEntry();
+				%>
+
+				<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />
+
+				<portlet:actionURL name="/commerce_channels/upload_jrxml_template" var="uploadJRXMLTemplateURL" />
+
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="fileEntryId" type="hidden" />
+
+				<label>Print Order Template</label>
+
+				<p class="text-default">
+					<span class="<%= (fileEntry != null) ? "" : "hide" %>" id="<portlet:namespace />fileEntryRemoveIcon" role="button">
+						<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					</span>
+					<span id="<portlet:namespace />fileEntryNameInput"><a><%= (fileEntry != null) ? fileEntry.getFileName() : "" %></a></span>
+				</p>
+
+				<aui:button name="selectFileButton" value="Select File" />
+
+				<liferay-ui:error exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
 			</commerce-ui:panel>
 		</div>
 
@@ -242,3 +267,12 @@ if (shippingTaxCategory != null) {
 		},
 	});
 </aui:script>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"itemSelectorURL", commerceChannelDisplayContext.getImageItemSelectorUrl()
+		).build()
+	%>'
+	module="js/jrxml"
+/>

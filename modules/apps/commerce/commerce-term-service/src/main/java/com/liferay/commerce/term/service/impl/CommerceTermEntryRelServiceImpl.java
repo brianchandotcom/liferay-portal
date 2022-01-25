@@ -108,6 +108,32 @@ public class CommerceTermEntryRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceTermEntryRel> getCommerceOrderTypeCommerceTermEntryRels(
+			long commerceTermEntryId, String keywords, int start, int end)
+		throws PortalException {
+
+		_commerceTermEntryModelResourcePermission.check(
+			getPermissionChecker(), commerceTermEntryId, ActionKeys.VIEW);
+
+		return commerceTermEntryRelLocalService.
+			getCommerceOrderTypeCommerceTermEntryRels(
+				commerceTermEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			long commerceTermEntryId, String keywords)
+		throws PortalException {
+
+		_commerceTermEntryModelResourcePermission.check(
+			getPermissionChecker(), commerceTermEntryId, ActionKeys.VIEW);
+
+		return commerceTermEntryRelLocalService.
+			getCommerceOrderTypeCommerceTermEntryRelsCount(
+				commerceTermEntryId, keywords);
+	}
+
+	@Override
 	public CommerceTermEntryRel getCommerceTermEntryRel(
 			long commerceTermEntryRelId)
 		throws PortalException {

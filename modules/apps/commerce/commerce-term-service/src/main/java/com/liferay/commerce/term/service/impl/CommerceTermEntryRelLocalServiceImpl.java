@@ -14,10 +14,23 @@
 
 package com.liferay.commerce.term.service.impl;
 
+import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceOrderTypeTable;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
+import com.liferay.commerce.term.model.CommerceTermEntryRelTable;
+import com.liferay.commerce.term.model.CommerceTermEntryTable;
 import com.liferay.commerce.term.service.base.CommerceTermEntryRelLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -25,10 +38,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -141,6 +156,39 @@ public class CommerceTermEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceTermEntryRel> getCommerceOrderTypeCommerceTermEntryRels(
+		long corEntryId, String keywords, int start, int end) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceTermEntryRelTable.INSTANCE),
+				CommerceOrderTypeTable.INSTANCE,
+				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId.eq(
+					CommerceTermEntryRelTable.INSTANCE.classPK),
+				corEntryId, CommerceOrderType.class.getName(), keywords,
+				CommerceOrderTypeTable.INSTANCE.name
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+		long corEntryId, String keywords) {
+
+		return dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceTermEntryRelTable.INSTANCE.commerceTermEntryRelId),
+				CommerceOrderTypeTable.INSTANCE,
+				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId.eq(
+					CommerceTermEntryRelTable.INSTANCE.classPK),
+				corEntryId, CommerceOrderType.class.getName(), keywords,
+				CommerceOrderTypeTable.INSTANCE.name));
+	}
+
+	@Override
 	public List<CommerceTermEntryRel> getCommerceTermEntryRels(
 		long commerceTermEntryId) {
 
@@ -171,5 +219,44 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 		indexer.reindex(CommerceTermEntry.class.getName(), commerceTermEntryId);
 	}
+
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, Table innerJoinTable, Predicate innerJoinPredicate,
+		Long corEntryId, String className, String keywords,
+		Expression<String> keywordsPredicateExpression) {
+
+		JoinStep joinStep = fromStep.from(
+			CommerceTermEntryRelTable.INSTANCE
+		).innerJoinON(
+			CommerceTermEntryTable.INSTANCE,
+			CommerceTermEntryTable.INSTANCE.commerceTermEntryId.eq(
+				CommerceTermEntryRelTable.INSTANCE.commerceTermEntryId)
+		).innerJoinON(
+			innerJoinTable, innerJoinPredicate
+		);
+
+		return joinStep.where(
+			() -> CommerceTermEntryRelTable.INSTANCE.commerceTermEntryId.eq(
+				corEntryId
+			).and(
+				CommerceTermEntryRelTable.INSTANCE.classNameId.eq(
+					classNameLocalService.getClassNameId(className))
+			).and(
+				() -> {
+					if (Validator.isNotNull(keywords)) {
+						return Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									keywordsPredicateExpression),
+								_customSQL.keywords(keywords, true)));
+					}
+
+					return null;
+				}
+			));
+	}
+
+	@Reference
+	private CustomSQL _customSQL;
 
 }

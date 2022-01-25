@@ -55,12 +55,13 @@ public class PortalClassPathUtilTest {
 		ProcessConfig processConfig =
 			PortalClassPathUtil.getPortalProcessConfig();
 
-		List<String> boostrapClassPathEntries = StringUtil.split(
-			processConfig.getBootstrapClassPath(), File.pathSeparatorChar);
+		Set<String> liferayReleaseApps = new HashSet<>();
 
-		Set<String> headerEntries = new HashSet<>();
+		for (String bootstrapClassPathEntry :
+				StringUtil.split(
+					processConfig.getBootstrapClassPath(),
+					File.pathSeparatorChar)) {
 
-		for (String bootstrapClassPathEntry : boostrapClassPathEntries) {
 			try (JarFile jarFile = new JarFile(
 					new File(bootstrapClassPathEntry))) {
 
@@ -73,7 +74,7 @@ public class PortalClassPathUtilTest {
 				Attributes attributes = manifest.getMainAttributes();
 
 				if (attributes.containsKey("Liferay-Releng-App-Title")) {
-					headerEntries.add(bootstrapClassPathEntry);
+					liferayReleaseApps.add(bootstrapClassPathEntry);
 				}
 			}
 			catch (IOException ioException) {
@@ -85,9 +86,10 @@ public class PortalClassPathUtilTest {
 		}
 
 		Assert.assertTrue(
-			"Bootstrap packages should not contain" +
-				" header entries in their Manifest.MF file: " + headerEntries,
-			headerEntries.isEmpty());
+			"Bootstrap class path should not contain jars with " +
+				"'Liferay-Releng-App' headers in Manifest.MF" +
+					liferayReleaseApps,
+			liferayReleaseApps.isEmpty());
 	}
 
 	@Test
@@ -95,19 +97,20 @@ public class PortalClassPathUtilTest {
 		ProcessConfig processConfig =
 			PortalClassPathUtil.getPortalProcessConfig();
 
-		List<String> boostrapClassPathEntries = StringUtil.split(
-			processConfig.getBootstrapClassPath(), File.pathSeparatorChar);
-
 		Set<String> nonpetraEntries = new HashSet<>();
 
-		for (String bootstrapClassPathEntry : boostrapClassPathEntries) {
+		for (String bootstrapClassPathEntry :
+				StringUtil.split(
+					processConfig.getBootstrapClassPath(),
+					File.pathSeparatorChar)) {
+
 			if (!bootstrapClassPathEntry.contains("petra")) {
 				nonpetraEntries.add(bootstrapClassPathEntry);
 			}
 		}
 
 		Assert.assertTrue(
-			"Bootstrap packages should only contain petra packages: " +
+			"Bootstrap class path should not contain non-petra jars " +
 				nonpetraEntries,
 			nonpetraEntries.isEmpty());
 	}

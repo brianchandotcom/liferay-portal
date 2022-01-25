@@ -31,6 +31,7 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleResource
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.TermOrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -79,6 +80,8 @@ public class ServletDataImpl implements ServletData {
 			_shippingAddressResourceComponentServiceObjects);
 		Mutation.setTermResourceComponentServiceObjects(
 			_termResourceComponentServiceObjects);
+		Mutation.setTermOrderTypeResourceComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects);
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
@@ -112,6 +115,8 @@ public class ServletDataImpl implements ServletData {
 			_shippingAddressResourceComponentServiceObjects);
 		Query.setTermResourceComponentServiceObjects(
 			_termResourceComponentServiceObjects);
+		Query.setTermOrderTypeResourceComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -180,6 +185,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TermResource>
 		_termResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TermOrderTypeResource>
+		_termOrderTypeResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountResource>

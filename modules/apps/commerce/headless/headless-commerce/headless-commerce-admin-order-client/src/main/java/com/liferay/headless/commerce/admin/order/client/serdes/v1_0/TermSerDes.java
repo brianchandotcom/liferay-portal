@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -199,6 +201,26 @@ public class TermSerDes {
 			sb.append(term.getPriority());
 		}
 
+		if (term.getTermOrderType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"termOrderType\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < term.getTermOrderType().length; i++) {
+				sb.append(String.valueOf(term.getTermOrderType()[i]));
+
+				if ((i + 1) < term.getTermOrderType().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (term.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -209,6 +231,20 @@ public class TermSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(term.getType()));
+
+			sb.append("\"");
+		}
+
+		if (term.getTypeLocalized() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLocalized\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(term.getTypeLocalized()));
 
 			sb.append("\"");
 		}
@@ -350,11 +386,25 @@ public class TermSerDes {
 			map.put("priority", String.valueOf(term.getPriority()));
 		}
 
+		if (term.getTermOrderType() == null) {
+			map.put("termOrderType", null);
+		}
+		else {
+			map.put("termOrderType", String.valueOf(term.getTermOrderType()));
+		}
+
 		if (term.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put("type", String.valueOf(term.getType()));
+		}
+
+		if (term.getTypeLocalized() == null) {
+			map.put("typeLocalized", null);
+		}
+		else {
+			map.put("typeLocalized", String.valueOf(term.getTypeLocalized()));
 		}
 
 		if (term.getTypeSettings() == null) {
@@ -460,9 +510,26 @@ public class TermSerDes {
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "termOrderType")) {
+				if (jsonParserFieldValue != null) {
+					term.setTermOrderType(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> TermOrderTypeSerDes.toDTO((String)object)
+						).toArray(
+							size -> new TermOrderType[size]
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					term.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeLocalized")) {
+				if (jsonParserFieldValue != null) {
+					term.setTypeLocalized((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {

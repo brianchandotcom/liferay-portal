@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
@@ -39,6 +40,7 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleResource
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.TermOrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -170,6 +172,14 @@ public class Mutation {
 
 		_termResourceComponentServiceObjects =
 			termResourceComponentServiceObjects;
+	}
+
+	public static void setTermOrderTypeResourceComponentServiceObjects(
+		ComponentServiceObjects<TermOrderTypeResource>
+			termOrderTypeResourceComponentServiceObjects) {
+
+		_termOrderTypeResourceComponentServiceObjects =
+			termOrderTypeResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -1172,6 +1182,78 @@ public class Mutation {
 			termResource -> termResource.patchTerm(id, term));
 	}
 
+	@GraphQLField
+	public boolean deleteTermOrderType(
+			@GraphQLName("termOrderTypeId") Long termOrderTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termOrderTypeResource -> termOrderTypeResource.deleteTermOrderType(
+				termOrderTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteTermOrderTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termOrderTypeResource ->
+				termOrderTypeResource.deleteTermOrderTypeBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public TermOrderType createTermByExternalReferenceCodeTermOrderType(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("termOrderType") TermOrderType termOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termOrderTypeResource ->
+				termOrderTypeResource.
+					postTermByExternalReferenceCodeTermOrderType(
+						externalReferenceCode, termOrderType));
+	}
+
+	@GraphQLField
+	public TermOrderType createTermIdTermOrderType(
+			@GraphQLName("id") Long id,
+			@GraphQLName("termOrderType") TermOrderType termOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termOrderTypeResource ->
+				termOrderTypeResource.postTermIdTermOrderType(
+					id, termOrderType));
+	}
+
+	@GraphQLField
+	public Response createTermIdTermOrderTypeBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termOrderTypeResource ->
+				termOrderTypeResource.postTermIdTermOrderTypeBatch(
+					id, callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -1400,6 +1482,21 @@ public class Mutation {
 		termResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			TermOrderTypeResource termOrderTypeResource)
+		throws Exception {
+
+		termOrderTypeResource.setContextAcceptLanguage(_acceptLanguage);
+		termOrderTypeResource.setContextCompany(_company);
+		termOrderTypeResource.setContextHttpServletRequest(_httpServletRequest);
+		termOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		termOrderTypeResource.setContextUriInfo(_uriInfo);
+		termOrderTypeResource.setContextUser(_user);
+		termOrderTypeResource.setGroupLocalService(_groupLocalService);
+		termOrderTypeResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<BillingAddressResource>
 		_billingAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderResource>
@@ -1426,6 +1523,8 @@ public class Mutation {
 		_shippingAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TermResource>
 		_termResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TermOrderTypeResource>
+		_termOrderTypeResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

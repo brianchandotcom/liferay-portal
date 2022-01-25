@@ -836,6 +836,69 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testGetTermOrderTypeOrderType() throws Exception {
+		OrderType postOrderType = testGetTermOrderTypeOrderType_addOrderType();
+
+		OrderType getOrderType = orderTypeResource.getTermOrderTypeOrderType(
+			null);
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testGetTermOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetTermOrderTypeOrderType() throws Exception {
+		OrderType orderType = testGraphQLOrderType_addOrderType();
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"termOrderTypeOrderType",
+								new HashMap<String, Object>() {
+									{
+										put("termOrderTypeId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/termOrderTypeOrderType"))));
+	}
+
+	@Test
+	public void testGraphQLGetTermOrderTypeOrderTypeNotFound()
+		throws Exception {
+
+		Long irrelevantTermOrderTypeId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"termOrderTypeOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"termOrderTypeId",
+									irrelevantTermOrderTypeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

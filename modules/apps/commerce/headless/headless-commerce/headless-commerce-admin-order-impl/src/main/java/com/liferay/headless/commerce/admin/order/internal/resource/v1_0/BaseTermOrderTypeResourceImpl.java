@@ -14,9 +14,8 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
-import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.TermOrderTypeResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -64,111 +63,44 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseOrderTypeResourceImpl
-	implements EntityModelResource, OrderTypeResource,
-			   VulcanBatchEngineTaskItemDelegate<OrderType> {
+public abstract class BaseTermOrderTypeResourceImpl
+	implements EntityModelResource, TermOrderTypeResource,
+			   VulcanBatchEngineTaskItemDelegate<TermOrderType> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rule-order-types/{orderRuleOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/term-order-types/{termOrderTypeId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "orderRuleOrderTypeId"
+				name = "termOrderTypeId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/order-rule-order-types/{orderRuleOrderTypeId}/order-type"
-	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/term-order-types/{termOrderTypeId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType getOrderRuleOrderTypeOrderType(
+	public void deleteTermOrderType(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("orderRuleOrderTypeId")
-			Long orderRuleOrderTypeId)
+			@javax.ws.rs.PathParam("termOrderTypeId")
+			Long termOrderTypeId)
 		throws Exception {
-
-		return new OrderType();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/order-types")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<OrderType> getOrderTypesPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types' -d $'{"active": ___, "customFields": ___, "description": ___, "displayDate": ___, "displayOrder": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderTypeChannels": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/order-types")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public OrderType postOrderType(OrderType orderType) throws Exception {
-		return new OrderType();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/term-order-types/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -179,188 +111,16 @@ public abstract class BaseOrderTypeResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/order-types/batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postOrderTypeBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				OrderType.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
 		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteOrderTypeByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public OrderType getOrderTypeByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new OrderType();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "customFields": ___, "description": ___, "displayDate": ___, "displayOrder": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderTypeChannels": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public OrderType patchOrderTypeByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			OrderType orderType)
-		throws Exception {
-
-		return new OrderType();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/order-types/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteOrderType(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/order-types/batch")
+	@javax.ws.rs.Path("/term-order-types/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response deleteOrderTypeBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id,
+	public Response deleteTermOrderTypeBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -379,123 +139,238 @@ public abstract class BaseOrderTypeResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				OrderType.class.getName(), callbackURL, object)
+				TermOrderType.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/order-types/{id}")
+	@javax.ws.rs.Path(
+		"/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType getOrderType(
+	public Page<TermOrderType> getTermByExternalReferenceCodeTermOrderTypesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
-		return new OrderType();
+		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}' -d $'{"active": ___, "customFields": ___, "description": ___, "displayDate": ___, "displayOrder": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderTypeChannels": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types' -d $'{"orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "termExternalReferenceCode": ___, "termId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public TermOrderType postTermByExternalReferenceCodeTermOrderType(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			TermOrderType termOrderType)
+		throws Exception {
+
+		return new TermOrderType();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/{id}/term-order-types'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "id"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/order-types/{id}")
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/terms/{id}/term-order-types")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType patchOrderType(
+	public Page<TermOrderType> getTermIdTermOrderTypesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
-			OrderType orderType)
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
-		return new OrderType();
+		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/term-order-types/{termOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/{id}/term-order-types' -d $'{"orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "termExternalReferenceCode": ___, "termId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "termOrderTypeId"
+				name = "id"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/term-order-types/{termOrderTypeId}/order-type")
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/terms/{id}/term-order-types")
+	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType getTermOrderTypeOrderType(
+	public TermOrderType postTermIdTermOrderType(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("termOrderTypeId")
-			Long termOrderTypeId)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id,
+			TermOrderType termOrderType)
 		throws Exception {
 
-		return new OrderType();
+		return new TermOrderType();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/term-order-types/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TermOrderType")
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/terms/term-order-types/batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postTermIdTermOrderTypeBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				TermOrderType.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<TermOrderType> termOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
-
-		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer =
-			orderType -> postOrderType(orderType);
-
-		for (OrderType orderType : orderTypes) {
-			orderTypeUnsafeConsumer.accept(orderType);
-		}
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<TermOrderType> termOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderType orderType : orderTypes) {
-			deleteOrderType(orderType.getId());
+		for (TermOrderType termOrderType : termOrderTypes) {
+			deleteTermOrderType(termOrderType.getTermOrderTypeId());
 		}
 	}
 
@@ -515,12 +390,12 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	@Override
-	public Page<OrderType> read(
+	public Page<TermOrderType> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getOrderTypesPage(search, filter, pagination, sorts);
+		return null;
 	}
 
 	@Override
@@ -547,7 +422,7 @@ public abstract class BaseOrderTypeResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<TermOrderType> termOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -720,6 +595,6 @@ public abstract class BaseOrderTypeResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseOrderTypeResourceImpl.class);
+		LogFactoryUtil.getLog(BaseTermOrderTypeResourceImpl.class);
 
 }

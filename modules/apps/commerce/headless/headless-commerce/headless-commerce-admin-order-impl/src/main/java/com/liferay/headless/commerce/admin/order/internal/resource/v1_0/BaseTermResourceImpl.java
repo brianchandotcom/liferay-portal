@@ -119,7 +119,7 @@ public abstract class BaseTermResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "termOrderType": ___, "type": ___, "typeLocalized": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Term")}
@@ -238,7 +238,7 @@ public abstract class BaseTermResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "termOrderType": ___, "type": ___, "typeLocalized": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -377,7 +377,7 @@ public abstract class BaseTermResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/{id}' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/{id}' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "termOrderType": ___, "type": ___, "typeLocalized": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

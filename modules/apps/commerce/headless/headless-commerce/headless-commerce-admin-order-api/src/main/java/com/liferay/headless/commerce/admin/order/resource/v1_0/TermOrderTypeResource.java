@@ -14,8 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
-import com.liferay.portal.kernel.search.Sort;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -52,48 +51,35 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface OrderTypeResource {
+public interface TermOrderTypeResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public OrderType getOrderRuleOrderTypeOrderType(Long orderRuleOrderTypeId)
+	public void deleteTermOrderType(Long termOrderTypeId) throws Exception;
+
+	public Response deleteTermOrderTypeBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<OrderType> getOrderTypesPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+	public Page<TermOrderType> getTermByExternalReferenceCodeTermOrderTypesPage(
+			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderType postOrderType(OrderType orderType) throws Exception;
-
-	public Response postOrderTypeBatch(String callbackURL, Object object)
+	public TermOrderType postTermByExternalReferenceCodeTermOrderType(
+			String externalReferenceCode, TermOrderType termOrderType)
 		throws Exception;
 
-	public void deleteOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<TermOrderType> getTermIdTermOrderTypesPage(
+			Long id, String search, Pagination pagination)
 		throws Exception;
 
-	public OrderType getOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
+	public TermOrderType postTermIdTermOrderType(
+			Long id, TermOrderType termOrderType)
 		throws Exception;
 
-	public OrderType patchOrderTypeByExternalReferenceCode(
-			String externalReferenceCode, OrderType orderType)
-		throws Exception;
-
-	public void deleteOrderType(Long id) throws Exception;
-
-	public Response deleteOrderTypeBatch(
+	public Response postTermIdTermOrderTypeBatch(
 			Long id, String callbackURL, Object object)
-		throws Exception;
-
-	public OrderType getOrderType(Long id) throws Exception;
-
-	public OrderType patchOrderType(Long id, OrderType orderType)
-		throws Exception;
-
-	public OrderType getTermOrderTypeOrderType(Long termOrderTypeId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -153,7 +139,7 @@ public interface OrderTypeResource {
 	@ProviderType
 	public interface Builder {
 
-		public OrderTypeResource build();
+		public TermOrderTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

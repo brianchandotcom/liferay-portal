@@ -284,7 +284,11 @@ public abstract class BaseOrderRuleOrderTypeResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderRuleOrderType")
+		}
+	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/order-rules/{id}/order-rule-order-types")
 	@javax.ws.rs.POST
@@ -317,7 +321,11 @@ public abstract class BaseOrderRuleOrderTypeResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderRuleOrderType")
+		}
+	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.Path("/order-rules/order-rule-order-types/batch")
 	@javax.ws.rs.POST

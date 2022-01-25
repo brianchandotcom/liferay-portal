@@ -113,6 +113,8 @@ public class OpenAPIResourceImpl {
 
 			add(TermResourceImpl.class);
 
+			add(TermOrderTypeResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

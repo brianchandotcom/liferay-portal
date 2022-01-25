@@ -189,6 +189,7 @@ public abstract class BaseTermResourceTestCase {
 		term.setExternalReferenceCode(regex);
 		term.setName(regex);
 		term.setType(regex);
+		term.setTypeLocalized(regex);
 		term.setTypeSettings(regex);
 
 		String json = TermSerDes.toJSON(term);
@@ -200,6 +201,7 @@ public abstract class BaseTermResourceTestCase {
 		Assert.assertEquals(regex, term.getExternalReferenceCode());
 		Assert.assertEquals(regex, term.getName());
 		Assert.assertEquals(regex, term.getType());
+		Assert.assertEquals(regex, term.getTypeLocalized());
 		Assert.assertEquals(regex, term.getTypeSettings());
 	}
 
@@ -907,8 +909,24 @@ public abstract class BaseTermResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("termOrderType", additionalAssertFieldName)) {
+				if (term.getTermOrderType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (term.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLocalized", additionalAssertFieldName)) {
+				if (term.getTypeLocalized() == null) {
 					valid = false;
 				}
 
@@ -1138,8 +1156,28 @@ public abstract class BaseTermResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("termOrderType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getTermOrderType(), term2.getTermOrderType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(term1.getType(), term2.getType())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLocalized", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getTypeLocalized(), term2.getTypeLocalized())) {
+
 					return false;
 				}
 
@@ -1410,9 +1448,22 @@ public abstract class BaseTermResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("termOrderType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			sb.append("'");
 			sb.append(String.valueOf(term.getType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("typeLocalized")) {
+			sb.append("'");
+			sb.append(String.valueOf(term.getTypeLocalized()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1486,6 +1537,8 @@ public abstract class BaseTermResourceTestCase {
 				neverExpire = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeLocalized = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				typeSettings = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

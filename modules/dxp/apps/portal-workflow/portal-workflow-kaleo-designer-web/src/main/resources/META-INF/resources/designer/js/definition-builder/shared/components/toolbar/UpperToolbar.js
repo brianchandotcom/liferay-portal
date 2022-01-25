@@ -124,6 +124,8 @@ export default function UpperToolbar({
 		}).then((response) => {
 			if (response.ok) {
 				setShowSuccessAlert(true);
+
+				window.history.back();
 			}
 		});
 	};

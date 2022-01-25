@@ -74,7 +74,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		_parsePoshiElements(
 			fileName, StringPool.BLANK, document.getRootElement());
 
-		return poshiElement.toPoshiScript();
+		return content;
 	}
 
 	private void _checkVariableName(

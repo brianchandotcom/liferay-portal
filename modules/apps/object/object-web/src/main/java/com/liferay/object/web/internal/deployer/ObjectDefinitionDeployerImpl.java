@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.deployer;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -43,6 +44,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.web.internal.asset.model.ObjectEntryAssetRendererFactory;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemCapabilitiesProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemDetailsProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFieldValuesProvider;
@@ -99,6 +101,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinition objectDefinition) {
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
+			_bundleContext.registerService(
+				AssetRendererFactory.class,
+				new ObjectEntryAssetRendererFactory(
+					objectDefinition, _objectEntryDisplayContextFactory,
+					_objectEntryService, _servletContext),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).build()),
 			_bundleContext.registerService(
 				FDSView.class,
 				new ObjectEntriesTableFDSView(

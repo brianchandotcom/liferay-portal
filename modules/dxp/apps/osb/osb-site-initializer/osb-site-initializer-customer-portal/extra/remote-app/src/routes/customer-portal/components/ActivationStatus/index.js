@@ -152,8 +152,8 @@ const ActivationStatus = ({
 						accountSubscriptionTerm.startDate
 				);
 
-				const earliestStartDate = new Date(Math.max(...endDates));
-				const farthestEndDate = new Date(Math.max(...startDates));
+				const earliestStartDate = new Date(Math.max(...startDates));
+				const farthestEndDate = new Date(Math.max(...endDates));
 				setActivationStatusDate(
 					`${getCurrentEndDate(
 						earliestStartDate

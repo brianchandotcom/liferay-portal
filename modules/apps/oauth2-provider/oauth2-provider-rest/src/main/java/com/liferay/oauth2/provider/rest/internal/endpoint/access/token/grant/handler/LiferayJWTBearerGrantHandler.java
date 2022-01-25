@@ -214,14 +214,9 @@ public class LiferayJWTBearerGrantHandler
 
 	private void _rebuildHelper(long companyId) {
 
-		_jwsSignatureVerifiers.put(companyId, new HashMap<>());
-
-		_userAuthTypes.put(companyId, new HashMap<>());
-
 		Map<String, Map<String, JwsSignatureVerifier>> jwsSignatureVerifiers =
-			_jwsSignatureVerifiers.get(companyId);
-
-		Map<String, String> userAuthTypes = _userAuthTypes.get(companyId);
+			new HashMap<>();
+		Map<String, String> userAuthTypes = new HashMap<>();
 
 		for (Dictionary<String, ?> properties :
 				_configurationPidsProperties.values()) {
@@ -296,6 +291,9 @@ public class LiferayJWTBearerGrantHandler
 					JwsUtils.getSignatureVerifier(jsonWebKey));
 			}
 		}
+
+		_jwsSignatureVerifiers.put(companyId, jwsSignatureVerifiers);
+		_userAuthTypes.put(companyId, userAuthTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

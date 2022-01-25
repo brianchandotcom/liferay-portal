@@ -8,6 +8,8 @@ create table AccountEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	defaultBillingAddressId LONG,
+	defaultDeliveryCTermEntryId LONG,
+	defaultPaymentCTermEntryId LONG,
 	defaultShippingAddressId LONG,
 	parentAccountEntryId LONG,
 	description STRING null,

@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,10 @@ public class AccountEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", defaultBillingAddressId=");
 		sb.append(defaultBillingAddressId);
+		sb.append(", defaultDeliveryCTermEntryId=");
+		sb.append(defaultDeliveryCTermEntryId);
+		sb.append(", defaultPaymentCTermEntryId=");
+		sb.append(defaultPaymentCTermEntryId);
 		sb.append(", defaultShippingAddressId=");
 		sb.append(defaultShippingAddressId);
 		sb.append(", parentAccountEntryId=");
@@ -163,6 +167,10 @@ public class AccountEntryCacheModel
 		}
 
 		accountEntryImpl.setDefaultBillingAddressId(defaultBillingAddressId);
+		accountEntryImpl.setDefaultDeliveryCTermEntryId(
+			defaultDeliveryCTermEntryId);
+		accountEntryImpl.setDefaultPaymentCTermEntryId(
+			defaultPaymentCTermEntryId);
 		accountEntryImpl.setDefaultShippingAddressId(defaultShippingAddressId);
 		accountEntryImpl.setParentAccountEntryId(parentAccountEntryId);
 
@@ -240,6 +248,10 @@ public class AccountEntryCacheModel
 
 		defaultBillingAddressId = objectInput.readLong();
 
+		defaultDeliveryCTermEntryId = objectInput.readLong();
+
+		defaultPaymentCTermEntryId = objectInput.readLong();
+
 		defaultShippingAddressId = objectInput.readLong();
 
 		parentAccountEntryId = objectInput.readLong();
@@ -284,6 +296,10 @@ public class AccountEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(defaultBillingAddressId);
+
+		objectOutput.writeLong(defaultDeliveryCTermEntryId);
+
+		objectOutput.writeLong(defaultPaymentCTermEntryId);
 
 		objectOutput.writeLong(defaultShippingAddressId);
 
@@ -352,6 +368,8 @@ public class AccountEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long defaultBillingAddressId;
+	public long defaultDeliveryCTermEntryId;
+	public long defaultPaymentCTermEntryId;
 	public long defaultShippingAddressId;
 	public long parentAccountEntryId;
 	public String description;

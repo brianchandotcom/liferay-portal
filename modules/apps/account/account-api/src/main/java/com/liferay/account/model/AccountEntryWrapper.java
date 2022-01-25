@@ -52,6 +52,10 @@ public class AccountEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("defaultBillingAddressId", getDefaultBillingAddressId());
 		attributes.put(
+			"defaultDeliveryCTermEntryId", getDefaultDeliveryCTermEntryId());
+		attributes.put(
+			"defaultPaymentCTermEntryId", getDefaultPaymentCTermEntryId());
+		attributes.put(
 			"defaultShippingAddressId", getDefaultShippingAddressId());
 		attributes.put("parentAccountEntryId", getParentAccountEntryId());
 		attributes.put("description", getDescription());
@@ -123,6 +127,20 @@ public class AccountEntryWrapper
 
 		if (defaultBillingAddressId != null) {
 			setDefaultBillingAddressId(defaultBillingAddressId);
+		}
+
+		Long defaultDeliveryCTermEntryId = (Long)attributes.get(
+			"defaultDeliveryCTermEntryId");
+
+		if (defaultDeliveryCTermEntryId != null) {
+			setDefaultDeliveryCTermEntryId(defaultDeliveryCTermEntryId);
+		}
+
+		Long defaultPaymentCTermEntryId = (Long)attributes.get(
+			"defaultPaymentCTermEntryId");
+
+		if (defaultPaymentCTermEntryId != null) {
+			setDefaultPaymentCTermEntryId(defaultPaymentCTermEntryId);
 		}
 
 		Long defaultShippingAddressId = (Long)attributes.get(
@@ -252,6 +270,26 @@ public class AccountEntryWrapper
 	@Override
 	public long getDefaultBillingAddressId() {
 		return model.getDefaultBillingAddressId();
+	}
+
+	/**
+	 * Returns the default delivery c term entry ID of this account entry.
+	 *
+	 * @return the default delivery c term entry ID of this account entry
+	 */
+	@Override
+	public long getDefaultDeliveryCTermEntryId() {
+		return model.getDefaultDeliveryCTermEntryId();
+	}
+
+	/**
+	 * Returns the default payment c term entry ID of this account entry.
+	 *
+	 * @return the default payment c term entry ID of this account entry
+	 */
+	@Override
+	public long getDefaultPaymentCTermEntryId() {
+		return model.getDefaultPaymentCTermEntryId();
 	}
 
 	@Override
@@ -487,6 +525,28 @@ public class AccountEntryWrapper
 	@Override
 	public void setDefaultBillingAddressId(long defaultBillingAddressId) {
 		model.setDefaultBillingAddressId(defaultBillingAddressId);
+	}
+
+	/**
+	 * Sets the default delivery c term entry ID of this account entry.
+	 *
+	 * @param defaultDeliveryCTermEntryId the default delivery c term entry ID of this account entry
+	 */
+	@Override
+	public void setDefaultDeliveryCTermEntryId(
+		long defaultDeliveryCTermEntryId) {
+
+		model.setDefaultDeliveryCTermEntryId(defaultDeliveryCTermEntryId);
+	}
+
+	/**
+	 * Sets the default payment c term entry ID of this account entry.
+	 *
+	 * @param defaultPaymentCTermEntryId the default payment c term entry ID of this account entry
+	 */
+	@Override
+	public void setDefaultPaymentCTermEntryId(long defaultPaymentCTermEntryId) {
+		model.setDefaultPaymentCTermEntryId(defaultPaymentCTermEntryId);
 	}
 
 	/**

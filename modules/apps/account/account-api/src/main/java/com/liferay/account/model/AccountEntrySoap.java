@@ -43,6 +43,10 @@ public class AccountEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDefaultBillingAddressId(
 			model.getDefaultBillingAddressId());
+		soapModel.setDefaultDeliveryCTermEntryId(
+			model.getDefaultDeliveryCTermEntryId());
+		soapModel.setDefaultPaymentCTermEntryId(
+			model.getDefaultPaymentCTermEntryId());
 		soapModel.setDefaultShippingAddressId(
 			model.getDefaultShippingAddressId());
 		soapModel.setParentAccountEntryId(model.getParentAccountEntryId());
@@ -180,6 +184,24 @@ public class AccountEntrySoap implements Serializable {
 		_defaultBillingAddressId = defaultBillingAddressId;
 	}
 
+	public long getDefaultDeliveryCTermEntryId() {
+		return _defaultDeliveryCTermEntryId;
+	}
+
+	public void setDefaultDeliveryCTermEntryId(
+		long defaultDeliveryCTermEntryId) {
+
+		_defaultDeliveryCTermEntryId = defaultDeliveryCTermEntryId;
+	}
+
+	public long getDefaultPaymentCTermEntryId() {
+		return _defaultPaymentCTermEntryId;
+	}
+
+	public void setDefaultPaymentCTermEntryId(long defaultPaymentCTermEntryId) {
+		_defaultPaymentCTermEntryId = defaultPaymentCTermEntryId;
+	}
+
 	public long getDefaultShippingAddressId() {
 		return _defaultShippingAddressId;
 	}
@@ -277,6 +299,8 @@ public class AccountEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _defaultBillingAddressId;
+	private long _defaultDeliveryCTermEntryId;
+	private long _defaultPaymentCTermEntryId;
 	private long _defaultShippingAddressId;
 	private long _parentAccountEntryId;
 	private String _description;

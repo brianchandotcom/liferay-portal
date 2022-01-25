@@ -54,6 +54,14 @@ public class AccountEntryTable extends BaseTable<AccountEntryTable> {
 		createColumn(
 			"defaultBillingAddressId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, Long> defaultDeliveryCTermEntryId =
+		createColumn(
+			"defaultDeliveryCTermEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, Long> defaultPaymentCTermEntryId =
+		createColumn(
+			"defaultPaymentCTermEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, Long> defaultShippingAddressId =
 		createColumn(
 			"defaultShippingAddressId", Long.class, Types.BIGINT,

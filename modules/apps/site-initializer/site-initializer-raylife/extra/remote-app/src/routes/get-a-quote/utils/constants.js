@@ -136,7 +136,7 @@ export const AVAILABLE_STEPS = {
 			},
 			{
 				active: false,
-				hideContinueButton: false,
+				hideContinueButton: true,
 				hideInputLabel: true,
 				title: SUBSECTION_KEYS.DO_YOU_SELL_PRODUCTS_UNDER_OWN_BRAND,
 			},

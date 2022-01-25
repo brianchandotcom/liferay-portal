@@ -213,6 +213,7 @@ export function FormBusiness({form}) {
 						control={control}
 						label="Do you sell products under your own brand or label?"
 						name={setFormPath('hasSellProductsUnderOwnBrand')}
+						onSelect={nextStep}
 						rules={{required: true}}
 					/>
 				</MobileContainer>

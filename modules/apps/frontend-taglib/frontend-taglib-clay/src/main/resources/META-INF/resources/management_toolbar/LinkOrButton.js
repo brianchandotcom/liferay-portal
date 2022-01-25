@@ -45,6 +45,7 @@ const LinkOrButton = ({
 					'nav-btn-monospaced': showDesignImprovements && responsive,
 					'pl-4 pr-4': wide && !symbol,
 				})}
+				disabled={disabled}
 				href={href}
 				{...otherProps}
 				title={symbol && title}
@@ -58,6 +59,7 @@ const LinkOrButton = ({
 					className={classNames(className, 'd-md-flex d-none', {
 						'pl-4 pr-4': wide,
 					})}
+					disabled={disabled}
 					href={href}
 					{...otherProps}
 				>

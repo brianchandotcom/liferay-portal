@@ -93,7 +93,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			if (isAttributeValue(
 					_CHECK_REST_CLIENT_DEPENDENCIES_KEY, absolutePath)) {
 
-				_checkRestClientDependencies(fileName, dependencies);
+				_checkRestClientDependencies(fileName, content, dependencies);
 			}
 		}
 
@@ -151,7 +151,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	}
 
 	private void _checkRestClientDependencies(
-		String fileName, String dependencies) {
+		String fileName, String content, String dependencies) {
 
 		Matcher matcher = _restClientPattern.matcher(dependencies);
 
@@ -159,7 +159,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Project dependencies '.*-rest-client' can only be used for " +
-					"'testIntegrationCompile'");
+					"'testIntegrationCompile'",
+				SourceUtil.getLineNumber(
+					content, content.indexOf(matcher.group())));
 		}
 	}
 

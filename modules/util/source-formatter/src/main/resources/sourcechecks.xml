@@ -1227,6 +1227,7 @@
 		<check name="PoshiVariableNameCheck">
 			<category name="Styling" />
 			<description name="Checks variable names for correct use of `camelCase`." />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">

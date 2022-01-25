@@ -624,13 +624,13 @@ definition {
 			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
 
 			Select(
-				key_fieldFieldLabel = "Select from List",
-				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				key_fieldLabel = "Select from List",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Option 2");
 
 			AssertSelectedLabel(
-				key_fieldFieldLabel = "Select from List",
-				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				key_fieldLabel = "Select from List",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Option 2");
 
 			Button.click(button = "Apply");

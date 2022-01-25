@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Shared Dependencies Netty
+Bundle-SymbolicName: com.liferay.shared.dependencies.netty
+Bundle-Version: 1.0.0
+Import-Package: !com.aayushatharva.brotli4j.*
+-exportcontents: io.netty.*

@@ -197,7 +197,7 @@ public class ObjectEntryLocalServiceTest {
 						"Number of Books Written", "numberOfBooksWritten",
 						false),
 					ObjectFieldUtil.createObjectField(
-						"LongText", "Blob", false, false, null, "Portrait",
+						"LargeFile", "Blob", false, false, null, "Portrait",
 						"portrait", false),
 					ObjectFieldUtil.createObjectField(
 						"LongText", "Clob", false, false, null, "Script",

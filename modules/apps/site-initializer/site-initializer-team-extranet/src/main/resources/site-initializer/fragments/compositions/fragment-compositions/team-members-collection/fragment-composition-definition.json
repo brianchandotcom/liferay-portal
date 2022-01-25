@@ -1,0 +1,244 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"borderWidth": "0",
+			"textAlign": ""
+		},
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"collectionConfig": {
+					"collectionReference": {
+						"className": "com.liferay.asset.list.model.AssetListEntry",
+						"classPK": "[$ASSET_LIST_ENTRY_ID:TEAM-MEMBERS$]"
+					},
+					"collectionType": "Collection"
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 4,
+				"numberOfItems": 8,
+				"numberOfItemsPerPage": 8,
+				"showAllItems": false,
+				"templateKey": ""
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"collectionItemConfig": {
+						}
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "member-card"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "image",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"mapping": {
+														"fieldKey": "Image",
+														"itemReference": {
+															"contextSource": "CollectionItem"
+														}
+													}
+												}
+											},
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"mapping": {
+															"fieldKey": "displayPageURL",
+															"itemReference": {
+																"contextSource": "CollectionItem"
+															}
+														}
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "role",
+										"value": {
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "Role",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "socialTwitterLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "#"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "memberShortDescription",
+										"value": {
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "ShortDescription",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "socialInstagram",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"value_i18n": {
+													}
+												}
+											},
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "name",
+										"value": {
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											},
+											"text": {
+												"mapping": {
+													"fieldKey": "Name",
+													"itemReference": {
+														"contextSource": "CollectionItem"
+													}
+												}
+											}
+										}
+									},
+									{
+										"id": "socialLinkedinLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "#"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "socialTwitter",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"value_i18n": {
+													}
+												}
+											},
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "socialInstagramLink",
+										"value": {
+											"fragmentLink": {
+												"value": {
+													"href": {
+														"value": "#"
+													}
+												},
+												"value_i18n": {
+												}
+											}
+										}
+									},
+									{
+										"id": "socialLinkedin",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"value_i18n": {
+													}
+												}
+											},
+											"fragmentLink": {
+												"value_i18n": {
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "4",
+									"textAlign": ""
+								},
+								"fragmentViewports": [
+									{
+										"fragmentViewportStyle": {
+											"marginBottom": "2"
+										},
+										"id": "tablet"
+									}
+								]
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "CollectionItem"
+				}
+			],
+			"type": "Collection"
+		}
+	],
+	"type": "Section"
+}

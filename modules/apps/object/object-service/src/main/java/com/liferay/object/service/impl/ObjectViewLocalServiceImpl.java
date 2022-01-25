@@ -116,6 +116,20 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		return objectView;
 	}
 
+	@Override
+	public List<ObjectView> getObjectViews(long objectDefinitionId) {
+		List<ObjectView> objectViews =
+			objectViewPersistence.findByObjectDefinitionId(objectDefinitionId);
+
+		for (ObjectView objectView : objectViews) {
+			objectView.setObjectViewColumns(
+				_objectViewColumnPersistence.findByObjectViewId(
+					objectView.getObjectViewId()));
+		}
+
+		return objectViews;
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectView updateObjectView(

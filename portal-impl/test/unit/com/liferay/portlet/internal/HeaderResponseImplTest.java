@@ -46,18 +46,11 @@ public class HeaderResponseImplTest {
 
 	@Test
 	public void testAddDependencyScriptDataTemplate() {
-		try {
-			ReflectionTestUtil.invoke(
-				new HeaderResponseImpl(), "_validateParsedElements",
-				new Class<?>[] {String.class},
-				"<script id=\"dt\" type=\"data/template\">+<p>foo</p><p>bar" +
-					"</p></script>");
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.fail(
-				"Unable to add a <script type=\"data-template\"> with " +
-					"multiple child elements");
-		}
+		ReflectionTestUtil.invoke(
+			new HeaderResponseImpl(), "_validateParsedElements",
+			new Class<?>[] {String.class},
+			"<script id=\"dt\" type=\"data/template\">+<p>foo</p><p>bar</p>" +
+				"</script>");
 
 		try {
 			ReflectionTestUtil.invoke(

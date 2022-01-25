@@ -80,7 +80,7 @@ function ErrorListItem({item, onFocusSXPElement}) {
 
 	const _isCollapsible = () => {
 		return Object.keys(item).some(
-			(property) => !ERROR_OMIT_KEYS.includes(property)
+			(property) => item[property] && !ERROR_OMIT_KEYS.includes(property)
 		);
 	};
 
@@ -124,6 +124,7 @@ function ErrorListItem({item, onFocusSXPElement}) {
 				<ClayAlert.Footer>
 					{Object.keys(item).map(
 						(property) =>
+							item[property] &&
 							!ERROR_OMIT_KEYS.includes(property) && (
 								<ClayLayout.Row justify="start" key={property}>
 									<ClayLayout.Col

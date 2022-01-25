@@ -444,10 +444,6 @@ definition {
 	@description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
 	@priority = "4"
 	test StylebookOneIsDefaultAndIncludesAThumbnail {
-		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
-		}
-
 		task ("Go to Style Books and Assert the Stylebook One Card") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-team-extranet");
 

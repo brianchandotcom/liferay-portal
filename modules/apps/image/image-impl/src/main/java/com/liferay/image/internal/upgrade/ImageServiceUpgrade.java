@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.image.internal.upgrade.v1_0_0.ImageStorageUpgradeProcess;
 import com.liferay.image.upgrade.ImageCompanyIdUpgradeProcess;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -52,9 +50,6 @@ public class ImageServiceUpgrade implements UpgradeStepRegistrator {
 				_ddmTemplateLocalService::getActionableDynamicQuery,
 				DDMTemplate::getCompanyId, DDMTemplate::getSmallImageId),
 			new ImageCompanyIdUpgradeProcess<>(
-				_journalArticleLocalService::getActionableDynamicQuery,
-				JournalArticle::getCompanyId, JournalArticle::getSmallImageId),
-			new ImageCompanyIdUpgradeProcess<>(
 				_layoutLocalService::getActionableDynamicQuery,
 				Layout::getCompanyId, Layout::getIconImageId),
 			new ImageCompanyIdUpgradeProcess<>(
@@ -77,9 +72,6 @@ public class ImageServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

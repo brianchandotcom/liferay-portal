@@ -41,7 +41,7 @@ export const Switch = React.forwardRef(
 					</Label>
 				)}
 
-				<div className="align-items-center d-flex flex-row justify-content-start mb-5">
+				<div className="align-items-center d-flex flex-row justify-content-center justify-content-lg-start justify-content-md-start mb-5">
 					<ClayButton
 						className={classNames(
 							'btn-ghost btn-style-primary mr-2 pl-5 pr-5 rounded-pill switch',

@@ -155,7 +155,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		Matcher matcher = _restClientPattern.matcher(dependencies);
 
-		if (matcher.find()) {
+		while (matcher.find()) {
 			addMessage(
 				fileName,
 				"Project dependencies '.*-rest-client' can only be used for " +

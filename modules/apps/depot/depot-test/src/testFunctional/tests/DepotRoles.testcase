@@ -237,7 +237,9 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
+		AssertElementNotPresent(
+			key_content = "[normalize-space(text())='WC WebContent Depot']",
+			locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

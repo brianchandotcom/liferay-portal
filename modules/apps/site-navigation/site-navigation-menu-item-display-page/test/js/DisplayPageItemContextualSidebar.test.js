@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import DisplayPageItemContextualSidebar from '../../src/main/resources/META-INF/resources/js/DisplayPageItemContextualSidebar';
@@ -34,6 +34,7 @@ const LOCALES = [
 ];
 
 const renderContextualSidebar = ({
+	hasDisplayPage = true,
 	item = {},
 	localizedNames = {},
 	subtype,
@@ -44,6 +45,7 @@ const renderContextualSidebar = ({
 		<DisplayPageItemContextualSidebar
 			chooseItemProps={{}}
 			defaultLanguageId={DEFAULT_LANGUAGE_ID}
+			hasDisplayPage={hasDisplayPage}
 			item={item}
 			itemSubtype={subtype}
 			itemType={type}
@@ -56,8 +58,6 @@ const renderContextualSidebar = ({
 };
 
 describe('DisplayPageItemContextualSidebar', () => {
-	afterEach(cleanup);
-
 	it('renders name input disabled if custom name is disabled', () => {
 		renderContextualSidebar({useCustomName: false});
 
@@ -111,5 +111,11 @@ describe('DisplayPageItemContextualSidebar', () => {
 			expect(screen.getByText(title)).toBeInTheDocument();
 			expect(screen.getByText(value)).toBeInTheDocument();
 		});
+	});
+
+	it('renders feedback message when item does not have display page', () => {
+		renderContextualSidebar({hasDisplayPage: false});
+
+		expect(screen.getByRole('alert')).toBeInTheDocument();
 	});
 });

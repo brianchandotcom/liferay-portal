@@ -426,6 +426,25 @@ html#{$cadmin-selector} {
 				&.panel-heading {
 					border-bottom-width: 0;
 				}
+
+				.panel-header-link,
+				.panel-toggler {
+					display: block;
+					margin: -12px -20px;
+					padding: 12px 20px;
+					text-decoration: none;
+
+					&:focus {
+						box-shadow: none;
+
+						&::before {
+							bottom: 8px;
+							left: 8px;
+							right: 8px;
+							top: 8px;
+						}
+					}
+				}
 			}
 
 			.panel-header-link:focus {
@@ -459,7 +478,7 @@ html#{$cadmin-selector} {
 				&.collapsible-icon {
 					position: absolute;
 					right: 46px;
-					top: 9px;
+					top: 11px;
 				}
 
 				z-index: 1;

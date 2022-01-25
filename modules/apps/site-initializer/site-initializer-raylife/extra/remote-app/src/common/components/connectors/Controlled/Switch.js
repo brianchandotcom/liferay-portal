@@ -22,6 +22,7 @@ export function ControlledSwitch({
 	label,
 	control,
 	rules,
+	onSelect = () => {},
 	moreInfoProps = undefined,
 	inputProps = {},
 	defaultValue = '',
@@ -37,6 +38,11 @@ export function ControlledSwitch({
 					{...field}
 					error={fieldState.error}
 					label={label}
+					onChange={(value) => {
+						field.onChange(value);
+
+						onSelect();
+					}}
 					renderActions={
 						moreInfoProps && <MoreInfoButton {...moreInfoProps} />
 					}

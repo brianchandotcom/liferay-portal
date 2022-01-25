@@ -14,19 +14,19 @@
 
 import {useCallback, useContext} from 'react';
 import {DEVICES} from '../../../common/utils/constants';
-import {AppContext} from '../context/AppContextProvider';
+import {ActionTypes, AppContext} from '../context/AppContextProvider';
 
 const useMobileContainer = () => {
 	const {
+		dispatch,
 		state: {
 			dimensions,
+			activeMobileSubSection,
 			selectedStep: {mobileSubSections = []},
 		},
 	} = useContext(AppContext);
 
 	const isMobile = dimensions.deviceSize === DEVICES.PHONE;
-
-	const activeMobileSubSection = mobileSubSections.find(({active}) => active);
 
 	const mobileContainerProps = {
 		activeMobileSubSection,
@@ -42,6 +42,14 @@ const useMobileContainer = () => {
 	return {
 		getMobileSubSection,
 		mobileContainerProps,
+		nextStep: () => {
+			setTimeout(() => {
+				dispatch({
+					payload: {nextStep: true},
+					type: ActionTypes.SET_MOBILE_SUBSECTION_ACTIVE,
+				});
+			}, 500);
+		},
 	};
 };
 

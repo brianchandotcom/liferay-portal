@@ -40,6 +40,14 @@ public class EditableFragmentEntryProcessorUtil {
 			element -> editableTypes.put(
 				getElementId(element), getElementType(element)));
 
+		Elements backgroundImageElements = document.select(
+			"*[data-lfr-background-image-id]");
+
+		backgroundImageElements.forEach(
+			element -> editableTypes.put(
+				element.attr("data-lfr-background-image-id"),
+				"background-image"));
+
 		return editableTypes;
 	}
 

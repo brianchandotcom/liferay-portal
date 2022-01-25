@@ -265,10 +265,6 @@
 					</aui:form>
 
 					<aui:script use="aui-base,aui-loading-mask-deprecated,io">
-						var adminEmailAddress = A.one('#<portlet:namespace />adminEmailAddress');
-						var adminFirstName = A.one('#<portlet:namespace />adminFirstName');
-						var adminLastName = A.one('#<portlet:namespace />adminLastName');
-						var companyName = A.one('#<portlet:namespace />companyName');
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
 						var databaseSelector = A.one('#databaseType');
@@ -381,50 +377,48 @@
 						var updateConfiguration = function(event) {
 							var form = document.fm;
 
-							if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != '')) && (companyName && (companyName.val() != '')) && (jdbcDefaultDriverClassName && (jdbcDefaultDriverClassName.val() != '')) && (jdbcDefaultURL && (jdbcDefaultURL.val() != ''))) {
-								if (defaultDatabase.val() == 'true') {
-									startInstall();
+							if (defaultDatabase.val() == 'true') {
+								startInstall();
 
-									command.val('<%= Constants.UPDATE %>');
+								command.val('<%= Constants.UPDATE %>');
 
-									submitForm(form);
-								}
-								else {
-									command.val('<%= Constants.TEST %>');
+								submitForm(form);
+							}
+							else {
+								command.val('<%= Constants.TEST %>');
 
-									startInstall();
+								startInstall();
 
-									Liferay.Util.fetch(
-										form.action,
-										{
-											body: new FormData(form),
-											method: 'POST'
-										}
-									).then(
-										function(response) {
-											return response.json();
-										}
-									).then(
-										function(responseData) {
-											command.val('<%= Constants.UPDATE %>');
+								Liferay.Util.fetch(
+									form.action,
+									{
+										body: new FormData(form),
+										method: 'POST'
+									}
+								).then(
+									function(response) {
+										return response.json();
+									}
+								).then(
+									function(responseData) {
+										command.val('<%= Constants.UPDATE %>');
 
-											if (!responseData.success) {
-												updateMessage(responseData.message);
+										if (!responseData.success) {
+											updateMessage(responseData.message);
 
-												loadingMask.hide();
-											}
-											else {
-												submitForm(form);
-											}
-										}
-									).catch(
-										function() {
 											loadingMask.hide();
-
-											updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>');
 										}
-									);
-								}
+										else {
+											submitForm(form);
+										}
+									}
+								).catch(
+									function() {
+										loadingMask.hide();
+
+										updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>');
+									}
+								);
 							}
 						};
 					</aui:script>

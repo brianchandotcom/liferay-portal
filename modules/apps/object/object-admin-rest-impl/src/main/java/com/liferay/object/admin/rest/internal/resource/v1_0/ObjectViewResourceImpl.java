@@ -16,19 +16,19 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectViewUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,8 +97,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 			_objectViewService.addObjectView(
 				objectDefinitionId,
 				GetterUtil.getBoolean(objectView.getDefaultObjectView()),
-				com.liferay.portal.vulcan.util.LocalizedMapUtil.getLocalizedMap(
-					objectView.getName()),
+				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn)));
@@ -111,8 +110,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 		return _toObjectView(
 			_objectViewService.updateObjectView(
 				objectViewId, objectView.getDefaultObjectView(),
-				com.liferay.portal.vulcan.util.LocalizedMapUtil.getLocalizedMap(
-					objectView.getName()),
+				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn)));
@@ -121,46 +119,27 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 	private ObjectView _toObjectView(
 		com.liferay.object.model.ObjectView serviceBuilderObjectView) {
 
-		if (serviceBuilderObjectView == null) {
-			return null;
-		}
-
-		return new ObjectView() {
-			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteObjectView",
-						ObjectDefinition.class.getName(),
-						serviceBuilderObjectView.getObjectDefinitionId())
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, "getObjectView",
-						ObjectDefinition.class.getName(),
-						serviceBuilderObjectView.getObjectDefinitionId())
-				).put(
-					"update",
-					addAction(
-						ActionKeys.UPDATE, "putObjectView",
-						ObjectDefinition.class.getName(),
-						serviceBuilderObjectView.getObjectDefinitionId())
-				).build();
-				dateCreated = serviceBuilderObjectView.getCreateDate();
-				dateModified = serviceBuilderObjectView.getModifiedDate();
-				defaultObjectView =
-					serviceBuilderObjectView.getDefaultObjectView();
-				id = serviceBuilderObjectView.getObjectViewId();
-				name = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderObjectView.getNameMap());
-				objectDefinitionId =
-					serviceBuilderObjectView.getObjectDefinitionId();
-				objectViewColumns = TransformUtil.transformToArray(
-					serviceBuilderObjectView.getObjectViewColumns(),
-					objectViewColumn -> _toObjectViewColumn(objectViewColumn),
-					ObjectViewColumn.class);
-			}
-		};
+		return ObjectViewUtil.toObjectView(
+			HashMapBuilder.put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectView",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectView.getObjectDefinitionId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectView",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectView.getObjectDefinitionId())
+			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, "putObjectView",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectView.getObjectDefinitionId())
+			).build(),
+			serviceBuilderObjectView);
 	}
 
 	private com.liferay.object.model.ObjectViewColumn _toObjectViewColumn(
@@ -176,24 +155,6 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 			objectViewColumn.getPriority());
 
 		return serviceBuilderObjectViewColumn;
-	}
-
-	private ObjectViewColumn _toObjectViewColumn(
-		com.liferay.object.model.ObjectViewColumn
-			serviceBuilderObjectViewColumn) {
-
-		if (serviceBuilderObjectViewColumn == null) {
-			return null;
-		}
-
-		return new ObjectViewColumn() {
-			{
-				id = serviceBuilderObjectViewColumn.getObjectViewColumnId();
-				objectFieldName =
-					serviceBuilderObjectViewColumn.getObjectFieldName();
-				priority = serviceBuilderObjectViewColumn.getPriority();
-			}
-		};
 	}
 
 	@Reference

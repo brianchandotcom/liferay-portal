@@ -240,6 +240,27 @@ public class Plan implements Cloneable, Serializable {
 
 	protected String taskItemDelegateName;
 
+	public Boolean getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Boolean template) {
+		this.template = template;
+	}
+
+	public void setTemplate(
+		UnsafeSupplier<Boolean, Exception> templateUnsafeSupplier) {
+
+		try {
+			template = templateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean template;
+
 	@Override
 	public Plan clone() throws CloneNotSupportedException {
 		return (Plan)super.clone();

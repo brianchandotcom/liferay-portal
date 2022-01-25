@@ -336,6 +336,34 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taskItemDelegateName;
 
+	@Schema
+	public Boolean getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Boolean template) {
+		this.template = template;
+	}
+
+	@JsonIgnore
+	public void setTemplate(
+		UnsafeSupplier<Boolean, Exception> templateUnsafeSupplier) {
+
+		try {
+			template = templateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean template;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -501,6 +529,16 @@ public class Plan implements Serializable {
 			sb.append(_escape(taskItemDelegateName));
 
 			sb.append("\"");
+		}
+
+		if (template != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"template\": ");
+
+			sb.append(template);
 		}
 
 		sb.append("}");

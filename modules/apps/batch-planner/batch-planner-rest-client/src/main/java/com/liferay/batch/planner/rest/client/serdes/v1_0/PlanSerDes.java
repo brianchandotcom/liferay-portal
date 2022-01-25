@@ -196,6 +196,16 @@ public class PlanSerDes {
 			sb.append("\"");
 		}
 
+		if (plan.getTemplate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"template\": ");
+
+			sb.append(plan.getTemplate());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -288,6 +298,13 @@ public class PlanSerDes {
 				String.valueOf(plan.getTaskItemDelegateName()));
 		}
 
+		if (plan.getTemplate() == null) {
+			map.put("template", null);
+		}
+		else {
+			map.put("template", String.valueOf(plan.getTemplate()));
+		}
+
 		return map;
 	}
 
@@ -372,6 +389,11 @@ public class PlanSerDes {
 
 				if (jsonParserFieldValue != null) {
 					plan.setTaskItemDelegateName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "template")) {
+				if (jsonParserFieldValue != null) {
+					plan.setTemplate((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

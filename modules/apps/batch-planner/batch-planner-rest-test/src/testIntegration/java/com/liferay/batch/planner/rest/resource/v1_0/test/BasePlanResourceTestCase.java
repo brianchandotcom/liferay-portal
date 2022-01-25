@@ -486,6 +486,14 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("template", additionalAssertFieldName)) {
+				if (plan.getTemplate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -674,6 +682,16 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("template", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						plan1.getTemplate(), plan2.getTemplate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -836,6 +854,11 @@ public abstract class BasePlanResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("template")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -892,6 +915,7 @@ public abstract class BasePlanResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				taskItemDelegateName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				template = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

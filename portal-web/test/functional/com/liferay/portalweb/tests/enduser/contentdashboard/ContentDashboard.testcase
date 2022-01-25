@@ -3623,6 +3623,71 @@ definition {
 		}
 	}
 
+	@description = "When the user selects one or more authors in the item selector, the list of contents displays content where the selected users are the creators"
+	@priority = "5"
+	test ShowAllContentsCreatedByUsers {
+		task ("Create and configure second user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Web Content authored by Test Test") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
+
+		task ("Change to second user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Create a Web Content authored by userfn userln") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Filter by both authors and assert both assets are displayed") {
+			ContentDashboard.filterByAuthorTable(
+				authorNameList = "Test,userfn",
+				filterOption = "Author");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 2");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
+	}
+
 	@description = "LPS-133181 When the user selects the option Filter by Author: Me in the 'Filter and Order' dropdown, the list of contents displays content where the user is the creator"
 	@priority = "5"
 	test ShowOnlyContentCreatedByUser {

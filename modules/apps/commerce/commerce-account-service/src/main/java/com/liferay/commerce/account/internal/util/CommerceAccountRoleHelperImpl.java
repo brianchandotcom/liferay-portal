@@ -142,14 +142,14 @@ public class CommerceAccountRoleHelperImpl
 					AccountActionKeys.VIEW_ADDRESSES
 				});
 			resourceActionIds.put(
+				"com.liferay.commerce.model.CommerceOrderType",
+				new String[] {ActionKeys.VIEW});
+			resourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
 					"ADD_COMMERCE_ORDER", "CHECKOUT_OPEN_COMMERCE_ORDERS",
 					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
 				});
-			resourceActionIds.put(
-				"com.liferay.commerce.model.CommerceOrderType",
-				new String[] {ActionKeys.VIEW});
 		}
 		else if (name.equals(
 					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {

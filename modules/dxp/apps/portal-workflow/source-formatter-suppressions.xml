@@ -8,5 +8,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-kaleo-designer-web/package\.json" />
+		<suppress checks="PoshiVariableNameCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/tests/Kaleodesigner\.testcase" />
 	</source-check>
 </suppressions>

@@ -260,6 +260,384 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	@description = "This ensures that an image can be added to asset library folder by a user with permissions via MG on a connected site."
+	@priority = "5"
+	test CanAddImageToFolderViaMG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_2.jpg");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.configureShowAllPG();
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/media-gallery-page");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_2.jpg");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "Add an image to the folder of asset library",
+			mgDocumentFile = "Document_1.jpg",
+			mgDocumentTitle = "Document_1.jpg");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
+	@description = "This ensures that an image stored in asset library folder can be deleted by a user with permissions via MG on a connected site."
+	@priority = "5"
+	test CanDeleteImageInMG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(
+			roleKey = "Remove MG Role",
+			roleTitle = "Remove MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Remove MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Remove MG Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Remove MG Role",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_2.jpg");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,User");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.configureShowAllPG();
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/media-gallery-page");
+
+		DMDocument.deletePGViaMG(mgDocumentTitle = "Document_2.jpg");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This ensures that an image stored in asset library folder can be edited by a user with permissions via MG on a connected site."
+	@priority = "5"
+	test CanEditImageInMG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(
+			roleKey = "Update MG Role",
+			roleTitle = "Update MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Update MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Update MG Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Update MG Role",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_2.jpg");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,User");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.configureShowAllPG();
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/media-gallery-page");
+
+		DMDocument.editPGViaMG(
+			mgDocumentDescription = "DM Image Description",
+			mgDocumentDescriptionEdit = "DM Image Description Edit",
+			mgDocumentTitle = "Document_2.jpg",
+			mgDocumentTitleEdit = "DM Image Title Edit");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Image Title Edit");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Image Title Edit");
+	}
+
+	@description = "This ensures that an image stored in asset library folder cannot be viewed by a guest without permissions via MG on a connected site."
+	@priority = "4"
+	test CannotViewImageInMGAsGuest {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_2.jpg");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/media-gallery-page");
+
+		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_2.jpg");
+	}
+
 	@description = "This ensures that user can perform CRUD operations to depots with all permissions."
 	@priority = "5"
 	@refactorneeded

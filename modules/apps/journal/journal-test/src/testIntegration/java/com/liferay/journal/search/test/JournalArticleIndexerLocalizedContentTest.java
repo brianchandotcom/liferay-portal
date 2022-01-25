@@ -195,10 +195,10 @@ public class JournalArticleIndexerLocalizedContentTest {
 			});
 
 		assertSearchOneDocumentOneField(
-			"alpha", LocaleUtil.HUNGARY, "content", "content_en_US");
+			"alpha", LocaleUtil.HUNGARY, "content_", "content_en_US");
 
 		assertSearchOneDocumentOneField(
-			"gamma", LocaleUtil.HUNGARY, "title", "title_en_US");
+			"gamma", LocaleUtil.HUNGARY, "title_", "title_en_US");
 	}
 
 	@Test
@@ -336,10 +336,10 @@ public class JournalArticleIndexerLocalizedContentTest {
 					searchTerm, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
-					titleStrings, "title", document, searchTerm);
+					titleStrings, "title_", document, searchTerm);
 
 				FieldValuesAssert.assertFieldValues(
-					contentStrings, "content", document, searchTerm);
+					contentStrings, "content_", document, searchTerm);
 
 				FieldValuesAssert.assertFieldValues(
 					localizedTitleStrings, "localized_title", document,
@@ -400,7 +400,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 					searchTerm, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
-					titleStrings, "title", document, searchTerm);
+					titleStrings, "title_", document, searchTerm);
 			}
 		);
 	}

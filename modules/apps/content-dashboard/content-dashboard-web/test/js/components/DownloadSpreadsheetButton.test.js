@@ -19,7 +19,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {act} from 'react-dom/test-utils';
 
 import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton/DownloadSpreadsheetButton';
-import * as utils from '../../../src/main/resources/META-INF/resources/js/utils/downloadSpreadsheetUtils';
+import * as utils from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton/downloadSpreadsheetUtils';
 
 const getComponent = (fileURL = 'demo-file-url') => {
 	return <DownloadSpreadsheetButton {...{fileURL, total: 12}} />;

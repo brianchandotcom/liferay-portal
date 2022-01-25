@@ -25,7 +25,7 @@ import {
 	getSelectedNodeObject,
 	selectedDataOutputTransfomer,
 	visit,
-} from '../utils/tree-utils';
+} from './treeUtils';
 
 const SEARCH_QUERY_MIN_LENGHT = 2;
 const SEARCH_INPUT_DEBOUNCE = 300;

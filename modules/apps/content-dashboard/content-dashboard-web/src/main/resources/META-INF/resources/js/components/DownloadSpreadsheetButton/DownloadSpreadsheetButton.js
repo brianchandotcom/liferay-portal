@@ -21,11 +21,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {
-	downloadFileFromBlob,
-	fetchFile,
-} from '../../utils/downloadSpreadsheetUtils';
 import DownloadSpreadsheetModal from './DownloadSpreadsheetModal';
+import {downloadFileFromBlob, fetchFile} from './downloadSpreadsheetUtils';
 
 const initialToastState = {
 	content: null,

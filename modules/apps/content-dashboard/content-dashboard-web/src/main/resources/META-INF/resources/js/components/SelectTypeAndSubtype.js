@@ -15,8 +15,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {nodeTreeArrayMapper} from '../utils/tree-utils';
-import TreeFilter from './TreeFilter';
+import TreeFilter from './TreeFilter/TreeFilter';
+import {nodeTreeArrayMapper} from './TreeFilter/treeUtils';
 
 const SelectTypeAndSubtype = ({
 	contentDashboardItemTypes,

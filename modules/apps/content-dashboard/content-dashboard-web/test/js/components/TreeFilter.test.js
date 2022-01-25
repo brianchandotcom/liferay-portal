@@ -17,7 +17,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import TreeFilter from '../../../src/main/resources/META-INF/resources/js/components/TreeFilter';
+import TreeFilter from '../../../src/main/resources/META-INF/resources/js/components/TreeFilter/TreeFilter';
 import {
 	mockEmptyTreeProps,
 	mockExtensionsProps,

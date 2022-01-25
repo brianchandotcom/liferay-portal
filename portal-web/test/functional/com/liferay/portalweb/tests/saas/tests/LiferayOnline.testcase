@@ -128,6 +128,7 @@ definition {
 	test CreateTeamExtranetVirtualInstanceByAPI {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.team-extranet.com";
 		property test.name.skip.portal.instance = "LiferayOnline#CreateTeamExtranetVirtualInstanceByAPI";
+		property osgi.modules.includes = "site.initializer.team.extranet";
 
 		task ("Create Virtual Instance by Json") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(

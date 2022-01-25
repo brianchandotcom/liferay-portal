@@ -77,6 +77,23 @@ public class CommerceTermEntryRelServiceUtil {
 			className, classPK, commerceTermEntryId);
 	}
 
+	public static List<CommerceTermEntryRel>
+			getCommerceOrderTypeCommerceTermEntryRels(
+				long commerceTermEntryId, String keywords, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypeCommerceTermEntryRels(
+			commerceTermEntryId, keywords, start, end);
+	}
+
+	public static int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			long commerceTermEntryId, String keywords)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypeCommerceTermEntryRelsCount(
+			commerceTermEntryId, keywords);
+	}
+
 	public static CommerceTermEntryRel getCommerceTermEntryRel(
 			long commerceTermEntryRelId)
 		throws PortalException {

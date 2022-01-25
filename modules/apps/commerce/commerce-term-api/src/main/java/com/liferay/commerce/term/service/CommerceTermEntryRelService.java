@@ -73,6 +73,16 @@ public interface CommerceTermEntryRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntryRel> getCommerceOrderTypeCommerceTermEntryRels(
+			long commerceTermEntryId, String keywords, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			long commerceTermEntryId, String keywords)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTermEntryRel getCommerceTermEntryRel(
 			long commerceTermEntryRelId)
 		throws PortalException;

@@ -85,6 +85,27 @@ public class CommerceTermEntryRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntryRel>
+			getCommerceOrderTypeCommerceTermEntryRels(
+				long commerceTermEntryId, String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryRelService.
+			getCommerceOrderTypeCommerceTermEntryRels(
+				commerceTermEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			long commerceTermEntryId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryRelService.
+			getCommerceOrderTypeCommerceTermEntryRelsCount(
+				commerceTermEntryId, keywords);
+	}
+
+	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntryRel
 			getCommerceTermEntryRel(long commerceTermEntryRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {

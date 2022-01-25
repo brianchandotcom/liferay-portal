@@ -251,6 +251,94 @@ public class CommerceTermEntryRelServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.term.model.CommerceTermEntryRel>
+				getCommerceOrderTypeCommerceTermEntryRels(
+					HttpPrincipal httpPrincipal, long commerceTermEntryId,
+					String keywords, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceTermEntryRelServiceUtil.class,
+				"getCommerceOrderTypeCommerceTermEntryRels",
+				_getCommerceOrderTypeCommerceTermEntryRelsParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceTermEntryId, keywords, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.term.model.CommerceTermEntryRel>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			HttpPrincipal httpPrincipal, long commerceTermEntryId,
+			String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceTermEntryRelServiceUtil.class,
+				"getCommerceOrderTypeCommerceTermEntryRelsCount",
+				_getCommerceOrderTypeCommerceTermEntryRelsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceTermEntryId, keywords);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.term.model.CommerceTermEntryRel
 			getCommerceTermEntryRel(
 				HttpPrincipal httpPrincipal, long commerceTermEntryRelId)
@@ -260,7 +348,7 @@ public class CommerceTermEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryRelServiceUtil.class,
 				"getCommerceTermEntryRel",
-				_getCommerceTermEntryRelParameterTypes5);
+				_getCommerceTermEntryRelParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryRelId);
@@ -304,7 +392,7 @@ public class CommerceTermEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryRelServiceUtil.class,
 				"getCommerceTermEntryRels",
-				_getCommerceTermEntryRelsParameterTypes6);
+				_getCommerceTermEntryRelsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryId);
@@ -353,7 +441,7 @@ public class CommerceTermEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryRelServiceUtil.class,
 				"getCommerceTermEntryRels",
-				_getCommerceTermEntryRelsParameterTypes7);
+				_getCommerceTermEntryRelsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryId, start, end, orderByComparator);
@@ -396,7 +484,7 @@ public class CommerceTermEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryRelServiceUtil.class,
 				"getCommerceTermEntryRelsCount",
-				_getCommerceTermEntryRelsCountParameterTypes8);
+				_getCommerceTermEntryRelsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryId);
@@ -445,17 +533,23 @@ public class CommerceTermEntryRelServiceHttp {
 			new Class[] {long.class};
 	private static final Class<?>[] _fetchCommerceTermEntryRelParameterTypes4 =
 		new Class[] {String.class, long.class, long.class};
-	private static final Class<?>[] _getCommerceTermEntryRelParameterTypes5 =
+	private static final Class<?>[]
+		_getCommerceOrderTypeCommerceTermEntryRelsParameterTypes5 =
+			new Class[] {long.class, String.class, int.class, int.class};
+	private static final Class<?>[]
+		_getCommerceOrderTypeCommerceTermEntryRelsCountParameterTypes6 =
+			new Class[] {long.class, String.class};
+	private static final Class<?>[] _getCommerceTermEntryRelParameterTypes7 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommerceTermEntryRelsParameterTypes6 =
+	private static final Class<?>[] _getCommerceTermEntryRelsParameterTypes8 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommerceTermEntryRelsParameterTypes7 =
+	private static final Class<?>[] _getCommerceTermEntryRelsParameterTypes9 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCommerceTermEntryRelsCountParameterTypes8 = new Class[] {
+		_getCommerceTermEntryRelsCountParameterTypes10 = new Class[] {
 			long.class
 		};
 

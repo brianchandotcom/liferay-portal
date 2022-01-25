@@ -293,6 +293,25 @@ public class CommerceTermEntryRelLocalServiceWrapper
 		return _commerceTermEntryRelLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntryRel>
+		getCommerceOrderTypeCommerceTermEntryRels(
+			long corEntryId, String keywords, int start, int end) {
+
+		return _commerceTermEntryRelLocalService.
+			getCommerceOrderTypeCommerceTermEntryRels(
+				corEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+		long corEntryId, String keywords) {
+
+		return _commerceTermEntryRelLocalService.
+			getCommerceOrderTypeCommerceTermEntryRelsCount(
+				corEntryId, keywords);
+	}
+
 	/**
 	 * Returns the commerce term entry rel with the primary key.
 	 *

@@ -229,6 +229,14 @@ public interface CommerceTermEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntryRel> getCommerceOrderTypeCommerceTermEntryRels(
+		long corEntryId, String keywords, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
+		long corEntryId, String keywords);
+
 	/**
 	 * Returns the commerce term entry rel with the primary key.
 	 *

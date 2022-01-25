@@ -256,6 +256,21 @@ public class CommerceTermEntryRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CommerceTermEntryRel>
+		getCommerceOrderTypeCommerceTermEntryRels(
+			long corEntryId, String keywords, int start, int end) {
+
+		return getService().getCommerceOrderTypeCommerceTermEntryRels(
+			corEntryId, keywords, start, end);
+	}
+
+	public static int getCommerceOrderTypeCommerceTermEntryRelsCount(
+		long corEntryId, String keywords) {
+
+		return getService().getCommerceOrderTypeCommerceTermEntryRelsCount(
+			corEntryId, keywords);
+	}
+
 	/**
 	 * Returns the commerce term entry rel with the primary key.
 	 *

@@ -148,6 +148,47 @@ public class CommerceTermEntryRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.term.model.CommerceTermEntryRelSoap[]
+			getCommerceOrderTypeCommerceTermEntryRels(
+				long commerceTermEntryId, String keywords, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.term.model.CommerceTermEntryRel>
+				returnValue =
+					CommerceTermEntryRelServiceUtil.
+						getCommerceOrderTypeCommerceTermEntryRels(
+							commerceTermEntryId, keywords, start, end);
+
+			return com.liferay.commerce.term.model.CommerceTermEntryRelSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderTypeCommerceTermEntryRelsCount(
+			long commerceTermEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceTermEntryRelServiceUtil.
+					getCommerceOrderTypeCommerceTermEntryRelsCount(
+						commerceTermEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.term.model.CommerceTermEntryRelSoap
 			getCommerceTermEntryRel(long commerceTermEntryRelId)
 		throws RemoteException {

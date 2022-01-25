@@ -59,17 +59,16 @@ public class PortalClassPathUtil {
 
 		File[] files = _listClassPathFiles(classes);
 
-		StringBundler sb = new StringBundler((files.length * 2) + 1);
-
-		if (files.length > 0) {
-			for (File file : files) {
-				sb.append(file.getAbsolutePath());
-				sb.append(File.pathSeparator);
-			}
-		}
-		else {
+		if (files.length == 0) {
 			throw new IllegalStateException(
 				"Class path files could not be loaded");
+		}
+
+		StringBundler sb = new StringBundler((files.length * 2) + 1);
+
+		for (File file : files) {
+			sb.append(file.getAbsolutePath());
+			sb.append(File.pathSeparator);
 		}
 
 		sb.append(_portalProcessConfig.getBootstrapClassPath());
@@ -138,25 +137,24 @@ public class PortalClassPathUtil {
 			ServletException.class, CentralizedThreadLocal.class,
 			shieldedContainerInitializerClass);
 
+		if (files.length == 0) {
+			throw new IllegalStateException(
+				"Class path files could not be loaded");
+		}
+
 		StringBundler runtimeClassPathSB = new StringBundler(
 			(files.length * 2) + 3);
 		StringBundler bootstrapClassPathSB = new StringBundler(
 			files.length * 2);
 
-		if (files.length > 0) {
-			for (File file : files) {
-				if (_isPetraJar(file)) {
-					bootstrapClassPathSB.append(file.getAbsolutePath());
-					bootstrapClassPathSB.append(File.pathSeparator);
-				}
-
-				runtimeClassPathSB.append(file.getAbsolutePath());
-				runtimeClassPathSB.append(File.pathSeparator);
+		for (File file : files) {
+			if (_isPetraJar(file)) {
+				bootstrapClassPathSB.append(file.getAbsolutePath());
+				bootstrapClassPathSB.append(File.pathSeparator);
 			}
-		}
-		else {
-			throw new IllegalStateException(
-				"Class path files could not be loaded");
+
+			runtimeClassPathSB.append(file.getAbsolutePath());
+			runtimeClassPathSB.append(File.pathSeparator);
 		}
 
 		runtimeClassPathSB.setIndex(runtimeClassPathSB.index() - 1);

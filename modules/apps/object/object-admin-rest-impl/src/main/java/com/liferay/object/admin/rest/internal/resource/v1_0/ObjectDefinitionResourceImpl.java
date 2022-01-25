@@ -18,10 +18,12 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectViewUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -30,6 +32,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -243,6 +246,11 @@ public class ObjectDefinitionResourceImpl
 					objectLayout -> ObjectLayoutUtil.toObjectLayout(
 						null, objectLayout),
 					ObjectLayout.class);
+				objectViews = transformToArray(
+					_objectViewLocalService.getObjectViews(
+						objectDefinition.getObjectDefinitionId()),
+					objectView -> ObjectViewUtil.toObjectView(null, objectView),
+					ObjectView.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
@@ -280,5 +288,8 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;
+
+	@Reference
+	private ObjectViewLocalService _objectViewLocalService;
 
 }

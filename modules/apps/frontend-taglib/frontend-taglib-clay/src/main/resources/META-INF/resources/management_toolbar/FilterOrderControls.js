@@ -27,52 +27,46 @@ const FilterOrderControls = ({
 	filterDropdownItems,
 	onFilterDropdownItemClick,
 	onOrderDropdownItemClick,
-	orderDropdownItems,
+	orderDropdownItems = [],
 	sortingOrder,
 	sortingURL,
 }) => {
 	const {showDesignImprovements} = useContext(FeatureFlagContext);
 
-	const hasOnlyOneOrderDropdownItem =
-		orderDropdownItems && orderDropdownItems.length === 1;
-	const hasNoOrderDropdownItems =
-		!orderDropdownItems || orderDropdownItems.length === 0;
 	const showOrderToggle =
-		sortingURL && (hasOnlyOneOrderDropdownItem || hasNoOrderDropdownItems);
+		!orderDropdownItems || orderDropdownItems.length <= 1;
 
 	return (
 		<>
 			{filterDropdownItems && (
 				<ClayManagementToolbar.Item>
 					<ClayDropDownWithItems
-						items={filterDropdownItems.map((item) => {
-							if (item.items) {
-								return {
-									...item,
-									items: item.items.map((childItem) => {
-										return {
-											...childItem,
-											onClick(event) {
-												onFilterDropdownItemClick(
-													event,
-													{
-														item: childItem,
-													}
-												);
-											},
-										};
-									}),
-								};
-							}
-
-							return {
-								...item,
-								onClick: (event) =>
-									onFilterDropdownItemClick(event, {
-										item,
-									}),
-							};
-						})}
+						items={filterDropdownItems.map((item) =>
+							item.items
+								? {
+										...item,
+										items: item.items.map((childItem) => {
+											return {
+												...childItem,
+												onClick(event) {
+													onFilterDropdownItemClick(
+														event,
+														{
+															item: childItem,
+														}
+													);
+												},
+											};
+										}),
+								  }
+								: {
+										...item,
+										onClick: (event) =>
+											onFilterDropdownItemClick(event, {
+												item,
+											}),
+								  }
+						)}
 						trigger={
 							<ClayButton
 								className={classNames('nav-link', {
@@ -119,75 +113,44 @@ const FilterOrderControls = ({
 				</ClayManagementToolbar.Item>
 			)}
 
-			{showDesignImprovements &&
-				orderDropdownItems &&
-				orderDropdownItems.length > 1 && (
-					<ClayManagementToolbar.Item>
-						<ClayDropDownWithItems
-							items={[
-								...orderDropdownItems.map((item) => {
-									return {
-										...item,
-										onClick: (event) => {
-											onOrderDropdownItemClick(event, {
-												item,
-											});
-										},
-									};
-								}),
-								{type: 'divider'},
-								{
-									active: sortingOrder === 'asc',
-									href:
-										sortingOrder === 'asc'
-											? null
-											: sortingURL,
-									label: Liferay.Language.get('ascending'),
-									type: 'item',
-								},
-								{
-									active: sortingOrder !== 'asc',
-									href:
-										sortingOrder !== 'asc'
-											? null
-											: sortingURL,
-									label: Liferay.Language.get('descending'),
-									type: 'item',
-								},
-							]}
-							trigger={
-								<ClayButton
-									className="ml-2 mr-2 nav-link"
-									disabled={disabled}
-									displayType="unstyled"
-								>
-									<span className="navbar-breakpoint-down-d-none">
-										<span className="inline-item inline-item-before">
-											<ClayIcon
-												symbol={
-													sortingOrder === 'desc'
-														? 'order-list-down'
-														: 'order-list-up'
-												}
-											/>
-										</span>
-
-										<span className="navbar-text-truncate">
-											{Liferay.Language.get('order')}
-										</span>
-
-										<ClayIcon
-											className="inline-item inline-item-after"
-											symbol="caret-bottom"
-										/>
-									</span>
-
-									<span
-										className="navbar-breakpoint-d-none"
-										title={Liferay.Language.get(
-											'show-order-options'
-										)}
-									>
+			{showDesignImprovements && !showOrderToggle && (
+				<ClayManagementToolbar.Item>
+					<ClayDropDownWithItems
+						items={[
+							...orderDropdownItems.map((item) => {
+								return {
+									...item,
+									onClick: (event) => {
+										onOrderDropdownItemClick(event, {
+											item,
+										});
+									},
+								};
+							}),
+							{type: 'divider'},
+							{
+								active: sortingOrder === 'asc',
+								href:
+									sortingOrder === 'asc' ? null : sortingURL,
+								label: Liferay.Language.get('ascending'),
+								type: 'item',
+							},
+							{
+								active: sortingOrder !== 'asc',
+								href:
+									sortingOrder !== 'asc' ? null : sortingURL,
+								label: Liferay.Language.get('descending'),
+								type: 'item',
+							},
+						]}
+						trigger={
+							<ClayButton
+								className="ml-2 mr-2 nav-link"
+								disabled={disabled}
+								displayType="unstyled"
+							>
+								<span className="navbar-breakpoint-down-d-none">
+									<span className="inline-item inline-item-before">
 										<ClayIcon
 											symbol={
 												sortingOrder === 'desc'
@@ -196,14 +159,39 @@ const FilterOrderControls = ({
 											}
 										/>
 									</span>
-								</ClayButton>
-							}
-						/>
-					</ClayManagementToolbar.Item>
-				)}
+
+									<span className="navbar-text-truncate">
+										{Liferay.Language.get('order')}
+									</span>
+
+									<ClayIcon
+										className="inline-item inline-item-after"
+										symbol="caret-bottom"
+									/>
+								</span>
+
+								<span
+									className="navbar-breakpoint-d-none"
+									title={Liferay.Language.get(
+										'show-order-options'
+									)}
+								>
+									<ClayIcon
+										symbol={
+											sortingOrder === 'desc'
+												? 'order-list-down'
+												: 'order-list-up'
+										}
+									/>
+								</span>
+							</ClayButton>
+						}
+					/>
+				</ClayManagementToolbar.Item>
+			)}
 
 			{((!showDesignImprovements && sortingURL) ||
-				(showDesignImprovements && showOrderToggle)) && (
+				(showDesignImprovements && sortingURL && showOrderToggle)) && (
 				<ClayManagementToolbar.Item>
 					<LinkOrButton
 						className="nav-link nav-link-monospaced"

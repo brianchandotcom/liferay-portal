@@ -941,16 +941,15 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("</span></button></div></li>");
 		}
 
-		Boolean hasOneOrderDropdownItem =
-			(orderDropdownItems != null) && (orderDropdownItems.size() == 1);
-
-		Boolean hasNoOrderDropdownItems = ListUtil.isEmpty(orderDropdownItems);
+		Boolean showOrderToggle =
+			((orderDropdownItems != null) &&
+			 (orderDropdownItems.size() == 1)) ||
+			ListUtil.isEmpty(orderDropdownItems);
 
 		if ((!FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
 			 (getSortingURL() != null)) ||
 			(FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
-			 (getSortingURL() != null) &&
-			 (hasOneOrderDropdownItem || hasNoOrderDropdownItems))) {
+			 (getSortingURL() != null) && showOrderToggle)) {
 
 			jspWriter.write("<li class=\"nav-item\">");
 

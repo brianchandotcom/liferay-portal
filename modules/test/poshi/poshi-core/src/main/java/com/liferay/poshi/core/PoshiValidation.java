@@ -1833,7 +1833,7 @@ public class PoshiValidation {
 
 	private static final Set<Exception> _exceptions = new HashSet<>();
 	private static final Pattern _invalidMethodParameterPattern =
-		Pattern.compile("^(locator|value)");
+		Pattern.compile("(?<invalidSyntax>(?:locator|value)[1-3][\\s]*=)");
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static final Pattern _seleniumGetterMethodPattern = Pattern.compile(
 		"^selenium#(?<methodName>get[A-z]+)" +

@@ -1416,7 +1416,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137508. View the Masterclass Stylebook Classic Theme"
-	@ignore = "true"
+	@priority = "4"
 	test ViewMasterclassClassicStylebook {
 		task ("Go to Masterclass Stylebook") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-masterclass-name");

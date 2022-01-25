@@ -29,12 +29,17 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -67,7 +72,9 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
-			"initialLabel", _getInitialLabel(ddmFormFieldRenderingContext)
+			"initialLabel",
+			_getInitialLabel(
+				ddmFormField, ddmFormFieldRenderingContext.getValue())
 		).put(
 			"inputName", ddmFormField.getName()
 		).put(
@@ -98,7 +105,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 	protected String getValue(String valueString) {
 		try {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
 
 			return GetterUtil.getString(jsonArray.get(0));
 		}
@@ -171,26 +178,25 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 	}
 
-	private String _getInitialLabel(
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+	private String _getInitialLabel(DDMFormField ddmFormField, String value) {
+		String initialLabel = GetterUtil.getString(
+			ddmFormField.getProperty("initialLabel"));
 
-		if (!Validator.isBlank(ddmFormFieldRenderingContext.getValue())) {
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()));
-
-			if (objectEntry != null) {
-				try {
-					return objectEntry.getTitleValue();
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException, portalException);
-					}
-				}
-			}
+		if (Validator.isNotNull(initialLabel)) {
+			return initialLabel;
 		}
 
-		return ddmFormFieldRenderingContext.getValue();
+		if (Validator.isBlank(value)) {
+			return StringPool.BLANK;
+		}
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
+
+		if ((objectDefinition != null) && objectDefinition.isSystem()) {
+			return _getPersistedModelValue(objectDefinition, value);
+		}
+
+		return _getObjectEntryTitleValue(value);
 	}
 
 	private String _getLabelKey(DDMFormField ddmFormField) {
@@ -225,8 +231,70 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 						ddmFormField.getProperty("objectDefinitionId")))));
 	}
 
+	private String _getObjectEntryTitleValue(String value) {
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			GetterUtil.getLong(value));
+
+		if (objectEntry != null) {
+			try {
+				return objectEntry.getTitleValue();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+			}
+		}
+
+		return value;
+	}
+
+	private String _getObjectFieldDBColumnName(
+		ObjectDefinition objectDefinition) {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getTitleObjectFieldId());
+
+		if (objectField != null) {
+			return objectField.getDBColumnName();
+		}
+
+		return objectDefinition.getPKObjectFieldDBColumnName();
+	}
+
+	private String _getPersistedModelValue(
+		ObjectDefinition objectDefinition, String value) {
+
+		try {
+			PersistedModelLocalService persistedModelLocalService =
+				_persistedModelLocalServiceRegistry.
+					getPersistedModelLocalService(
+						objectDefinition.getClassName());
+
+			PersistedModel persistedModel =
+				persistedModelLocalService.getPersistedModel(
+					GetterUtil.getLong(value));
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_jsonFactory.looseSerialize(persistedModel));
+
+			return jsonObject.getString(
+				_getObjectFieldDBColumnName(objectDefinition));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return value;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipDDMFormFieldTemplateContextContributor.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -239,6 +307,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -282,7 +282,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Forms");
 
-		Form.deleteCP(formName = "Created Form Name");
+		FormsAdmin.deleteForm(formName = "Created Form Name");
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 

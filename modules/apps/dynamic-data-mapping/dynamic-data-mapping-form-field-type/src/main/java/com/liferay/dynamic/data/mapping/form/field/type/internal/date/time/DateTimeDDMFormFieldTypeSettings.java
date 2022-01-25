@@ -77,7 +77,14 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface DateTimeDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(type = "date_time")
+	@DDMFormField(
+		label = "%predefined-value",
+		properties = {
+			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered",
+			"visualProperty=true"
+		},
+		type = "date_time"
+	)
 	@Override
 	public LocalizedValue predefinedValue();
 

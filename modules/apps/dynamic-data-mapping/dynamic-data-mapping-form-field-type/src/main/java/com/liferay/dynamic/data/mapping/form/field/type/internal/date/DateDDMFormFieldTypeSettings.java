@@ -94,7 +94,11 @@ public interface DateDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%predefined-value",
-		properties = "visualProperty=true", type = "date"
+		properties = {
+			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered",
+			"visualProperty=true"
+		},
+		type = "date"
 	)
 	@Override
 	public LocalizedValue predefinedValue();

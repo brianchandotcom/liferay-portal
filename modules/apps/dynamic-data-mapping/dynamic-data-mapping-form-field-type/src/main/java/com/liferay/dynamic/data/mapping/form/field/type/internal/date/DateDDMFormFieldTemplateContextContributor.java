@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,6 +60,8 @@ public class DateDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
+
 		return HashMapBuilder.<String, Object>put(
 			"firstDayOfWeek", _getFirstDayOfWeek()
 		).put(
@@ -69,8 +72,11 @@ public class DateDDMFormFieldTemplateContextContributor
 		).put(
 			"predefinedValue",
 			DDMFormFieldTypeUtil.getPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
-				"predefinedValue")
+				ddmFormField, locale, "predefinedValue")
+		).put(
+			"tooltip",
+			DDMFormFieldTypeUtil.getPropertyValue(
+				ddmFormField, locale, "tooltip")
 		).put(
 			"weekdaysShort",
 			Stream.of(

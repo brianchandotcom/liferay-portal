@@ -43,7 +43,9 @@ const MobileContainer = ({
 
 	return (
 		<div className="flex flex-column">
-			<h3 className="mx-auto text-dark">{mobileSubSection.title}</h3>
+			<h2 className="mx-auto text-center text-dark">
+				{mobileSubSection.title}
+			</h2>
 
 			<div
 				className={classNames('mt-4', {

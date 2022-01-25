@@ -24,6 +24,7 @@ export function ActionDesktop({
 	onNext,
 	onPrevious,
 	onSaveDisabled,
+	showContinueButton,
 	showSaveAndExit,
 }) {
 	return (
@@ -54,7 +55,7 @@ export function ActionDesktop({
 					</ClayButton>
 				)}
 
-				{onNext && (
+				{onNext && showContinueButton && (
 					<ClayButton
 						className={classNames(
 							'btn-solid btn-style-secondary continue font-weight-bolder text-paragraph text-small-caps',

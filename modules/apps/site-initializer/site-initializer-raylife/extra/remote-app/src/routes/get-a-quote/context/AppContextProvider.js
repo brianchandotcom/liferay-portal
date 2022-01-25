@@ -37,6 +37,7 @@ const initialState = {
 export const ActionTypes = {
 	SET_DIMENSIONS: 'SET_DIMENSIONS',
 	SET_MOBILE_SUBSECTION_ACTIVE: 'SET_MOBILE_SUBSECTION_ACTIVE',
+	SET_MOBILE_SUBSECTION_DISABLE: 'SET_MOBILE_SUBSECTION_DISABLE',
 	SET_PERCENTAGE: 'SET_PERCENTAGE',
 	SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
 	SET_SELECTED_TRIGGER: 'SET_SELECTED_TRIGGER',
@@ -81,6 +82,16 @@ function AppContextReducer(state, action) {
 							({active}) => active
 						);
 
+						// const prevIndex = mobileSubSections.findIndex(
+						// 	({active, blocked = false}, index) =>
+						// 		!active && !blocked && index < currentIndex
+						// );
+
+						// const nextIndex = mobileSubSections.findIndex(
+						// 	({active, blocked = false}, index) =>
+						// 		!active && !blocked && index > currentIndex
+						// );
+
 						const _currentIndex = action.payload.nextStep
 							? currentIndex + 1
 							: currentIndex - 1;
@@ -92,6 +103,33 @@ function AppContextReducer(state, action) {
 									...mobileSubSection,
 									active: index === _currentIndex,
 								})
+							),
+						};
+					}
+
+					return step;
+				}),
+			};
+
+		case ActionTypes.SET_MOBILE_SUBSECTION_DISABLE:
+			const disableSections = action.payload;
+
+			return {
+				...state,
+				steps: state.steps.map((step) => {
+					const mobileSubSections = step.mobileSubSections;
+
+					if (Array.isArray(mobileSubSections)) {
+						return {
+							...step,
+							mobileSubSections: mobileSubSections.filter(
+								(mobileSubSection) =>
+									!(Array.isArray(disableSections)
+										? disableSections.includes(
+												mobileSubSection.title
+										  )
+										: disableSections ===
+										  mobileSubSection.title)
 							),
 						};
 					}
@@ -127,6 +165,8 @@ export const AppContext = createContext({});
 export function AppContextProvider({children}) {
 	const dimensions = useWindowDimensions();
 	const [state, dispatch] = useReducer(AppContextReducer, initialState);
+
+	const selectedStep = state.steps.find(({active}) => active);
 
 	useEffect(() => {
 		const onDismiss = () =>
@@ -164,7 +204,10 @@ export function AppContextProvider({children}) {
 				dispatch,
 				state: {
 					...state,
-					selectedStep: state.steps.find(({active}) => active),
+					activeMobileSubSection: selectedStep.mobileSubSections?.find(
+						({active, blocked = false}) => active && !blocked
+					),
+					selectedStep,
 				},
 			}}
 		>

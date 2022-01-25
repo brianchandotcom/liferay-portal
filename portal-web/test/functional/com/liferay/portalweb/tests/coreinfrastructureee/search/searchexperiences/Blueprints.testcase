@@ -191,25 +191,6 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_LOCALE_DROPDOWN");
 	}
 
-	test AssertLocalizedFieldsReturnResults {
-		JSONWebcontent.addWebContent(
-			content = "",
-			groupName = "Guest",
-			title = "Liferay Test");
-
-		Blueprints.openBlueprintsAdmin();
-
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		Blueprints.addElement(element = "Text Match Over Multiple Fields");
-
-		Blueprints.searchBlueprintsPreview(searchTerm = "Liferay");
-
-		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
-			resultTitle = "Liferay");
-	}
-
 	test BoostCustomLiferayObjectType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1191,6 +1172,26 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "empty");
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_EMPTY");
+	}
+
+	@description = "This is a use case for LPS-145977."
+	test SearchWithUsersLanguageOption {
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Liferay Test");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Text Match Over Multiple Fields");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "Liferay");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Liferay");
 	}
 
 	test ViewBlueprintEditTitle {

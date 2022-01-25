@@ -858,6 +858,7 @@ public class BundleSiteInitializerTest {
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);
 
+		Assert.assertEquals("Test URL", siteNavigationMenuItem2.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.URL,
 			siteNavigationMenuItem2.getType());
@@ -865,6 +866,7 @@ public class BundleSiteInitializerTest {
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			siteNavigationMenuItems.get(2);
 
+		Assert.assertEquals("Other Links", siteNavigationMenuItem3.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.NODE,
 			siteNavigationMenuItem3.getType());

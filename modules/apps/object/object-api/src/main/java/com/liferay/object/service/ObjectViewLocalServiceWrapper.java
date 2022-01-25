@@ -334,6 +334,13 @@ public class ObjectViewLocalServiceWrapper
 		return _objectViewLocalService.getObjectViews(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectView> getObjectViews(
+		long objectDefinitionId) {
+
+		return _objectViewLocalService.getObjectViews(objectDefinitionId);
+	}
+
 	/**
 	 * Returns the number of object views.
 	 *

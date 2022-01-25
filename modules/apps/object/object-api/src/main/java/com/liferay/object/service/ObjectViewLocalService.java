@@ -272,6 +272,9 @@ public interface ObjectViewLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectView> getObjectViews(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectView> getObjectViews(long objectDefinitionId);
+
 	/**
 	 * Returns the number of object views.
 	 *

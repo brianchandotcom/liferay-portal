@@ -484,6 +484,161 @@ public interface ObjectViewColumnPersistence
 	public int countByObjectViewId(long objectViewId);
 
 	/**
+	 * Returns all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @return the matching object view columns
+	 */
+	public java.util.List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName);
+
+	/**
+	 * Returns a range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @return the range of matching object view columns
+	 */
+	public java.util.List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object view columns
+	 */
+	public java.util.List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object view columns
+	 */
+	public java.util.List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object view column
+	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
+	 */
+	public ObjectViewColumn findByOVI_OFN_First(
+			long objectViewId, String objectFieldName,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+				orderByComparator)
+		throws NoSuchObjectViewColumnException;
+
+	/**
+	 * Returns the first object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object view column, or <code>null</code> if a matching object view column could not be found
+	 */
+	public ObjectViewColumn fetchByOVI_OFN_First(
+		long objectViewId, String objectFieldName,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+			orderByComparator);
+
+	/**
+	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object view column
+	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
+	 */
+	public ObjectViewColumn findByOVI_OFN_Last(
+			long objectViewId, String objectFieldName,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+				orderByComparator)
+		throws NoSuchObjectViewColumnException;
+
+	/**
+	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
+	 */
+	public ObjectViewColumn fetchByOVI_OFN_Last(
+		long objectViewId, String objectFieldName,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+			orderByComparator);
+
+	/**
+	 * Returns the object view columns before and after the current object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewColumnId the primary key of the current object view column
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object view column
+	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
+	 */
+	public ObjectViewColumn[] findByOVI_OFN_PrevAndNext(
+			long objectViewColumnId, long objectViewId, String objectFieldName,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
+				orderByComparator)
+		throws NoSuchObjectViewColumnException;
+
+	/**
+	 * Removes all the object view columns where objectViewId = &#63; and objectFieldName = &#63; from the database.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 */
+	public void removeByOVI_OFN(long objectViewId, String objectFieldName);
+
+	/**
+	 * Returns the number of object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @return the number of matching object view columns
+	 */
+	public int countByOVI_OFN(long objectViewId, String objectFieldName);
+
+	/**
 	 * Caches the object view column in the entity cache if it is enabled.
 	 *
 	 * @param objectViewColumn the object view column

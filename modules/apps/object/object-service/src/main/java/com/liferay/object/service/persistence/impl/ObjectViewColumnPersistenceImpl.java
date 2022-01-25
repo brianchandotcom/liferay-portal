@@ -1722,6 +1722,594 @@ public class ObjectViewColumnPersistenceImpl
 	private static final String _FINDER_COLUMN_OBJECTVIEWID_OBJECTVIEWID_2 =
 		"objectViewColumn.objectViewId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByOVI_OFN;
+	private FinderPath _finderPathWithoutPaginationFindByOVI_OFN;
+	private FinderPath _finderPathCountByOVI_OFN;
+
+	/**
+	 * Returns all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @return the matching object view columns
+	 */
+	@Override
+	public List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName) {
+
+		return findByOVI_OFN(
+			objectViewId, objectFieldName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @return the range of matching object view columns
+	 */
+	@Override
+	public List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end) {
+
+		return findByOVI_OFN(objectViewId, objectFieldName, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object view columns
+	 */
+	@Override
+	public List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end,
+		OrderByComparator<ObjectViewColumn> orderByComparator) {
+
+		return findByOVI_OFN(
+			objectViewId, objectFieldName, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param start the lower bound of the range of object view columns
+	 * @param end the upper bound of the range of object view columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object view columns
+	 */
+	@Override
+	public List<ObjectViewColumn> findByOVI_OFN(
+		long objectViewId, String objectFieldName, int start, int end,
+		OrderByComparator<ObjectViewColumn> orderByComparator,
+		boolean useFinderCache) {
+
+		objectFieldName = Objects.toString(objectFieldName, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByOVI_OFN;
+				finderArgs = new Object[] {objectViewId, objectFieldName};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByOVI_OFN;
+			finderArgs = new Object[] {
+				objectViewId, objectFieldName, start, end, orderByComparator
+			};
+		}
+
+		List<ObjectViewColumn> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectViewColumn>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectViewColumn objectViewColumn : list) {
+					if ((objectViewId != objectViewColumn.getObjectViewId()) ||
+						!objectFieldName.equals(
+							objectViewColumn.getObjectFieldName())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTVIEWCOLUMN_WHERE);
+
+			sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTVIEWID_2);
+
+			boolean bindObjectFieldName = false;
+
+			if (objectFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_3);
+			}
+			else {
+				bindObjectFieldName = true;
+
+				sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectViewColumnModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectViewId);
+
+				if (bindObjectFieldName) {
+					queryPos.add(objectFieldName);
+				}
+
+				list = (List<ObjectViewColumn>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object view column
+	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
+	 */
+	@Override
+	public ObjectViewColumn findByOVI_OFN_First(
+			long objectViewId, String objectFieldName,
+			OrderByComparator<ObjectViewColumn> orderByComparator)
+		throws NoSuchObjectViewColumnException {
+
+		ObjectViewColumn objectViewColumn = fetchByOVI_OFN_First(
+			objectViewId, objectFieldName, orderByComparator);
+
+		if (objectViewColumn != null) {
+			return objectViewColumn;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectViewId=");
+		sb.append(objectViewId);
+
+		sb.append(", objectFieldName=");
+		sb.append(objectFieldName);
+
+		sb.append("}");
+
+		throw new NoSuchObjectViewColumnException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object view column, or <code>null</code> if a matching object view column could not be found
+	 */
+	@Override
+	public ObjectViewColumn fetchByOVI_OFN_First(
+		long objectViewId, String objectFieldName,
+		OrderByComparator<ObjectViewColumn> orderByComparator) {
+
+		List<ObjectViewColumn> list = findByOVI_OFN(
+			objectViewId, objectFieldName, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object view column
+	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
+	 */
+	@Override
+	public ObjectViewColumn findByOVI_OFN_Last(
+			long objectViewId, String objectFieldName,
+			OrderByComparator<ObjectViewColumn> orderByComparator)
+		throws NoSuchObjectViewColumnException {
+
+		ObjectViewColumn objectViewColumn = fetchByOVI_OFN_Last(
+			objectViewId, objectFieldName, orderByComparator);
+
+		if (objectViewColumn != null) {
+			return objectViewColumn;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectViewId=");
+		sb.append(objectViewId);
+
+		sb.append(", objectFieldName=");
+		sb.append(objectFieldName);
+
+		sb.append("}");
+
+		throw new NoSuchObjectViewColumnException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
+	 */
+	@Override
+	public ObjectViewColumn fetchByOVI_OFN_Last(
+		long objectViewId, String objectFieldName,
+		OrderByComparator<ObjectViewColumn> orderByComparator) {
+
+		int count = countByOVI_OFN(objectViewId, objectFieldName);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectViewColumn> list = findByOVI_OFN(
+			objectViewId, objectFieldName, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object view columns before and after the current object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewColumnId the primary key of the current object view column
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object view column
+	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
+	 */
+	@Override
+	public ObjectViewColumn[] findByOVI_OFN_PrevAndNext(
+			long objectViewColumnId, long objectViewId, String objectFieldName,
+			OrderByComparator<ObjectViewColumn> orderByComparator)
+		throws NoSuchObjectViewColumnException {
+
+		objectFieldName = Objects.toString(objectFieldName, "");
+
+		ObjectViewColumn objectViewColumn = findByPrimaryKey(
+			objectViewColumnId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectViewColumn[] array = new ObjectViewColumnImpl[3];
+
+			array[0] = getByOVI_OFN_PrevAndNext(
+				session, objectViewColumn, objectViewId, objectFieldName,
+				orderByComparator, true);
+
+			array[1] = objectViewColumn;
+
+			array[2] = getByOVI_OFN_PrevAndNext(
+				session, objectViewColumn, objectViewId, objectFieldName,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectViewColumn getByOVI_OFN_PrevAndNext(
+		Session session, ObjectViewColumn objectViewColumn, long objectViewId,
+		String objectFieldName,
+		OrderByComparator<ObjectViewColumn> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTVIEWCOLUMN_WHERE);
+
+		sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTVIEWID_2);
+
+		boolean bindObjectFieldName = false;
+
+		if (objectFieldName.isEmpty()) {
+			sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_3);
+		}
+		else {
+			bindObjectFieldName = true;
+
+			sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectViewColumnModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(objectViewId);
+
+		if (bindObjectFieldName) {
+			queryPos.add(objectFieldName);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						objectViewColumn)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectViewColumn> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the object view columns where objectViewId = &#63; and objectFieldName = &#63; from the database.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 */
+	@Override
+	public void removeByOVI_OFN(long objectViewId, String objectFieldName) {
+		for (ObjectViewColumn objectViewColumn :
+				findByOVI_OFN(
+					objectViewId, objectFieldName, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(objectViewColumn);
+		}
+	}
+
+	/**
+	 * Returns the number of object view columns where objectViewId = &#63; and objectFieldName = &#63;.
+	 *
+	 * @param objectViewId the object view ID
+	 * @param objectFieldName the object field name
+	 * @return the number of matching object view columns
+	 */
+	@Override
+	public int countByOVI_OFN(long objectViewId, String objectFieldName) {
+		objectFieldName = Objects.toString(objectFieldName, "");
+
+		FinderPath finderPath = _finderPathCountByOVI_OFN;
+
+		Object[] finderArgs = new Object[] {objectViewId, objectFieldName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTVIEWCOLUMN_WHERE);
+
+			sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTVIEWID_2);
+
+			boolean bindObjectFieldName = false;
+
+			if (objectFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_3);
+			}
+			else {
+				bindObjectFieldName = true;
+
+				sb.append(_FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectViewId);
+
+				if (bindObjectFieldName) {
+					queryPos.add(objectFieldName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_OVI_OFN_OBJECTVIEWID_2 =
+		"objectViewColumn.objectViewId = ? AND ";
+
+	private static final String _FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_2 =
+		"objectViewColumn.objectFieldName = ?";
+
+	private static final String _FINDER_COLUMN_OVI_OFN_OBJECTFIELDNAME_3 =
+		"(objectViewColumn.objectFieldName IS NULL OR objectViewColumn.objectFieldName = '')";
+
 	public ObjectViewColumnPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2344,6 +2932,25 @@ public class ObjectViewColumnPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectViewId",
 			new String[] {Long.class.getName()}, new String[] {"objectViewId"},
 			false);
+
+		_finderPathWithPaginationFindByOVI_OFN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOVI_OFN",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"objectViewId", "objectFieldName"}, true);
+
+		_finderPathWithoutPaginationFindByOVI_OFN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOVI_OFN",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"objectViewId", "objectFieldName"}, true);
+
+		_finderPathCountByOVI_OFN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVI_OFN",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"objectViewId", "objectFieldName"}, false);
 
 		_setObjectViewColumnUtilPersistence(this);
 	}

@@ -44,5 +44,5 @@ create index IX_11DAE1F1 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$], compa
 create index IX_6AF6C9EA on ObjectView (objectDefinitionId, defaultObjectView);
 create index IX_C771CDE on ObjectView (uuid_[$COLUMN_LENGTH:75$], companyId);
 
-create index IX_8DCAF153 on ObjectViewColumn (objectViewId);
+create index IX_B7B14E3 on ObjectViewColumn (objectViewId, objectFieldName[$COLUMN_LENGTH:75$]);
 create index IX_F3077A54 on ObjectViewColumn (uuid_[$COLUMN_LENGTH:75$], companyId);

@@ -297,6 +297,10 @@ public class ObjectViewLocalServiceUtil {
 		return getService().getObjectViews(start, end);
 	}
 
+	public static List<ObjectView> getObjectViews(long objectDefinitionId) {
+		return getService().getObjectViews(objectDefinitionId);
+	}
+
 	/**
 	 * Returns the number of object views.
 	 *

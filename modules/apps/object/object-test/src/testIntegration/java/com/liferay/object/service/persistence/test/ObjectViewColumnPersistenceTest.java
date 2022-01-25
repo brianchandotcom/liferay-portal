@@ -204,6 +204,15 @@ public class ObjectViewColumnPersistenceTest {
 	}
 
 	@Test
+	public void testCountByOVI_OFN() throws Exception {
+		_persistence.countByOVI_OFN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByOVI_OFN(0L, "null");
+
+		_persistence.countByOVI_OFN(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectViewColumn newObjectViewColumn = addObjectViewColumn();
 

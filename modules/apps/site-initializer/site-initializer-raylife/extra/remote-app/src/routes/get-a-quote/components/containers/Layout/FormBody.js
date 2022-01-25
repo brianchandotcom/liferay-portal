@@ -33,16 +33,18 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 
 	useEffect(() => {
 		if (backToEdit) {
-			loadSections();
+			return loadSections();
 		}
-		else {
-			setLoadedSections(true);
-		}
+
+		setLoadedSections(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loaded]);
 
+	// eslint-disable-next-line no-unused-vars
 	const loadSections = () => {
-		const sectionFormKeys = Object.keys(form);
+		const sectionFormKeys = Object.keys(form).filter(
+			(section) => section !== 'raylife-form-input'
+		);
 
 		const stepName = sectionFormKeys[
 			sectionFormKeys.length - 1
@@ -56,11 +58,9 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				}
-				else if (stepBasicName === 'business-type') {
+				} else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				}
-				else {
+				} else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;

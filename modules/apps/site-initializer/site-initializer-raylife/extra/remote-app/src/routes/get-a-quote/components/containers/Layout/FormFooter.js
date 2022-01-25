@@ -49,6 +49,7 @@ const FormFooterDesktop = ({
 		<div
 			className={classNames({
 				'col-12 mt-5 px-0': isMobileDevice,
+				'hide': !actionProps.showContinueButton && isMobileDevice,
 			})}
 		>
 			<WarningMessage

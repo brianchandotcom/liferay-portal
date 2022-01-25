@@ -46,7 +46,7 @@ export function FormBasicBusinessType({form}) {
 		<div className="d-flex flex-column mb-5">
 			<BusinessTypeSearch
 				form={form}
-				isMobileDevice={state.dimensions.device.IsMobile}
+				isMobileDevice={state.dimensions.device.isMobile}
 				setNewSelectedProduct={(value) => {
 					setNewSelectedProduct(value);
 

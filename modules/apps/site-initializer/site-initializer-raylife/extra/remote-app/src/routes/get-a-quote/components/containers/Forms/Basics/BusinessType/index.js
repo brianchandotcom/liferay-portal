@@ -18,7 +18,6 @@ import {
 	STORAGE_KEYS,
 	Storage,
 } from '../../../../../../../common/services/liferay/storage';
-import {DEVICES} from '../../../../../../../common/utils/constants';
 import {
 	ActionTypes,
 	AppContext,
@@ -31,8 +30,6 @@ export function FormBasicBusinessType({form}) {
 	const [newSelectedProduct, setNewSelectedProduct] = useState(
 		Storage.getItem(STORAGE_KEYS.SELECTED_PRODUCT)
 	);
-
-	const isMobileDevice = state.dimensions.deviceSize === DEVICES.PHONE;
 
 	useEffect(() => {
 		if (state.selectedProduct !== newSelectedProduct) {
@@ -49,7 +46,7 @@ export function FormBasicBusinessType({form}) {
 		<div className="d-flex flex-column mb-5">
 			<BusinessTypeSearch
 				form={form}
-				isMobileDevice={isMobileDevice}
+				isMobileDevice={state.dimensions.device.IsMobile}
 				setNewSelectedProduct={(value) => {
 					setNewSelectedProduct(value);
 

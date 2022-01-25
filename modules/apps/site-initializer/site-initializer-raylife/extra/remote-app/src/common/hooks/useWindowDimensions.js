@@ -43,8 +43,15 @@ function getDeviceSize(currentWidth) {
 function getWindowDimensions(dimensions = {}) {
 	const {innerHeight: height, innerWidth: width} = window;
 
+	const deviceSize = getDeviceSize(width, dimensions);
+
 	return {
-		deviceSize: getDeviceSize(width, dimensions),
+		device: {
+			isDesktop: deviceSize === DEVICES.DESKTOP,
+			isMobile: deviceSize === DEVICES.PHONE,
+			isTablet: deviceSize === DEVICES.TABLET,
+		},
+		deviceSize,
 		height,
 		width,
 	};

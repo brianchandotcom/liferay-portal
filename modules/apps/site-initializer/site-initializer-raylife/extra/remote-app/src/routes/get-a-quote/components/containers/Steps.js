@@ -23,19 +23,24 @@ import {AppContext} from '../../context/AppContextProvider';
 import {useStepWizard} from '../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../utils/constants';
 
-export function Steps({isMobileDevice}) {
+export function Steps() {
 	const {
 		selectedStep: {section},
 		setSection,
 	} = useStepWizard();
 	const {
-		state: {percentage},
+		state: {
+			dimensions: {
+				device: {isMobile},
+			},
+			percentage,
+		},
 	} = useContext(AppContext);
 
 	return (
 		<StepList>
 			<StepItem
-				isMobileDevice={isMobileDevice}
+				isMobile={isMobile}
 				onClick={() => {
 					Storage.setItem(STORAGE_KEYS.BASIC_STEP_CLICKED, true);
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
@@ -51,7 +56,7 @@ export function Steps({isMobileDevice}) {
 			</StepItem>
 
 			<StepItem
-				isMobileDevice={isMobileDevice}
+				isMobile={isMobile}
 				onClick={() => setSection(AVAILABLE_STEPS.BUSINESS)}
 				percentage={percentage[AVAILABLE_STEPS.BUSINESS.section]}
 				selected={section === AVAILABLE_STEPS.BUSINESS.section}
@@ -60,7 +65,7 @@ export function Steps({isMobileDevice}) {
 			</StepItem>
 
 			<StepItem
-				isMobileDevice={isMobileDevice}
+				isMobile={isMobile}
 				onClick={() => setSection(AVAILABLE_STEPS.EMPLOYEES)}
 				percentage={percentage[AVAILABLE_STEPS.EMPLOYEES.section]}
 				selected={section === AVAILABLE_STEPS.EMPLOYEES.section}
@@ -69,7 +74,7 @@ export function Steps({isMobileDevice}) {
 			</StepItem>
 
 			<StepItem
-				isMobileDevice={isMobileDevice}
+				isMobile={isMobile}
 				onClick={() => setSection(AVAILABLE_STEPS.PROPERTY)}
 				percentage={percentage[AVAILABLE_STEPS.PROPERTY.section]}
 				selected={section === AVAILABLE_STEPS.PROPERTY.section}

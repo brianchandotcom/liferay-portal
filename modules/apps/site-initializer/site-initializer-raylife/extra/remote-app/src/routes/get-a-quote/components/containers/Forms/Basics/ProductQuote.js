@@ -17,7 +17,6 @@ import React, {useCallback, useContext, useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
 import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
-import {DEVICES} from '../../../../../../common/utils/constants';
 
 import {TIP_EVENT} from '../../../../../../common/utils/events';
 import {AppContext} from '../../../../context/AppContextProvider';
@@ -29,10 +28,12 @@ export function FormBasicProductQuote({form}) {
 	const {control, setValue} = useFormContext();
 	const productQuoteId = form?.basics?.productQuote;
 	const {
-		state: {dimensions},
+		state: {
+			dimensions: {
+				device: {isMobile},
+			},
+		},
 	} = useContext(AppContext);
-
-	const isMobileDevice = dimensions.deviceSize === DEVICES.PHONE;
 
 	useEffect(() => {
 		if (productQuoteId && productQuotes.length) {
@@ -62,14 +63,14 @@ export function FormBasicProductQuote({form}) {
 			<div className="col-12 d-flex flex-wrap p-0">
 				<div
 					className={classNames('mb-4 d-flex col-12', {
-						'd-flex justify-content-start': !isMobileDevice,
-						'justify-content-sm-center justify-content-center': isMobileDevice,
+						'd-flex justify-content-start': !isMobile,
+						'justify-content-sm-center justify-content-center': isMobile,
 					})}
 				>
 					<label
 						className={classNames('d-flex font-weight-bolder', {
-							'text-paragraph justify-content-start': !isMobileDevice,
-							'text-paragraph-lg justify-content-sm-center justify-content-center': isMobileDevice,
+							'text-paragraph justify-content-start': !isMobile,
+							'text-paragraph-lg justify-content-sm-center justify-content-center': isMobile,
 						})}
 					>
 						Select a product to quote.

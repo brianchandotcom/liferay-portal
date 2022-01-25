@@ -20,7 +20,9 @@ import {getTaxonomyVocabularies} from '../services/TaxonomyVolucabularies';
 import {AVAILABLE_STEPS, STEP_ORDERED} from '../utils/constants';
 
 const initialState = {
-	dimensions: {},
+	dimensions: {
+		device: {},
+	},
 	percentage: {
 		[AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.section]: 0,
 		[AVAILABLE_STEPS.BUSINESS.section]: 0,
@@ -81,16 +83,6 @@ function AppContextReducer(state, action) {
 						const currentIndex = mobileSubSections.findIndex(
 							({active}) => active
 						);
-
-						// const prevIndex = mobileSubSections.findIndex(
-						// 	({active, blocked = false}, index) =>
-						// 		!active && !blocked && index < currentIndex
-						// );
-
-						// const nextIndex = mobileSubSections.findIndex(
-						// 	({active, blocked = false}, index) =>
-						// 		!active && !blocked && index > currentIndex
-						// );
 
 						const _currentIndex = action.payload.nextStep
 							? currentIndex + 1

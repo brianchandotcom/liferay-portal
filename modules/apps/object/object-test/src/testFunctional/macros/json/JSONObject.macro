@@ -82,6 +82,7 @@ definition {
 			-u ${userEmailAddress}:${userPassword} \
 			-d '{
 			"DBType": "${fieldType}",
+			"businessType": "${fieldBusinessType}",
 			"indexed": ${indexed},
 			"indexedAsKeyword": ${indexedAsKeyword},
 			"label": {

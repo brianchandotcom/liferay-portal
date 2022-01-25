@@ -33,6 +33,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -92,6 +93,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Number",
 			fieldName = "integer",
 			fieldType = "Integer",
@@ -99,6 +101,7 @@ definition {
 			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
@@ -139,6 +142,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -163,6 +167,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",

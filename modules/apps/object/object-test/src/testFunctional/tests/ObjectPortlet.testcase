@@ -31,6 +31,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "PrecisionDecimal",
 			fieldLabelName = "BigDecimal",
 			fieldName = "customObjectField",
 			fieldType = "BigDecimal",
@@ -58,6 +59,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Boolean",
 			fieldLabelName = "Boolean",
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
@@ -85,6 +87,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -147,6 +150,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "PrecisionDecimal",
 			fieldLabelName = "BigDecimal",
 			fieldName = "customObjectField",
 			fieldType = "BigDecimal",
@@ -173,6 +177,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Boolean",
 			fieldLabelName = "Boolean",
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
@@ -199,6 +204,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Date",
 			fieldName = "customObjectField",
 			fieldType = "Date",
@@ -225,6 +231,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Double",
 			fieldName = "customObjectField",
 			fieldType = "Double",
@@ -255,6 +262,7 @@ definition {
 			scope = "site");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -347,6 +355,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Integer",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
@@ -373,6 +382,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
 			fieldLabelName = "Long",
 			fieldName = "customObjectField",
 			fieldType = "Long",
@@ -399,6 +409,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -536,6 +547,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Name",
 			fieldName = "name",
 			fieldType = "String",
@@ -564,6 +576,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "String",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -599,6 +612,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -625,6 +639,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -659,6 +674,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -690,6 +706,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
@@ -721,6 +738,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -814,6 +832,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "PrecisionDecimal",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "BigDecimal",
@@ -849,6 +868,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Boolean",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
@@ -882,6 +902,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Date",
@@ -917,6 +938,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Double",
@@ -952,6 +974,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
@@ -987,6 +1010,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Long",
@@ -1073,6 +1097,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1110,6 +1135,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1170,6 +1196,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1248,6 +1275,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1328,6 +1356,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1406,6 +1435,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1471,6 +1501,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1508,6 +1539,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
@@ -1544,6 +1576,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1573,6 +1606,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1626,6 +1660,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -1725,6 +1760,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "PrecisionDecimal",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "BigDecimal",
@@ -1756,6 +1792,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Boolean",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
@@ -1787,6 +1824,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Date",
@@ -1818,6 +1856,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Double",
@@ -1849,6 +1888,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
@@ -1880,6 +1920,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "Long",
@@ -1911,6 +1952,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2036,6 +2078,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2069,6 +2112,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2102,6 +2146,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2133,6 +2178,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Date",
 			fieldName = "customObjectField",
 			fieldType = "Date",
@@ -2160,6 +2206,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Double",
 			fieldName = "customObjectField",
 			fieldType = "Double",
@@ -2187,6 +2234,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2215,6 +2263,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2244,6 +2293,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2273,6 +2323,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2295,6 +2346,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Integer",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
@@ -2322,6 +2374,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
 			fieldLabelName = "Long",
 			fieldName = "customObjectField",
 			fieldType = "Long",
@@ -2351,6 +2404,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2378,6 +2432,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -2419,6 +2474,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
 			fieldType = "String",

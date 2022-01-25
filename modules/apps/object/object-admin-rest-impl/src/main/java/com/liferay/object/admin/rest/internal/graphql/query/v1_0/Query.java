@@ -183,7 +183,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){actions, active, dateCreated, dateModified, id, label, name, objectActions, objectFields, objectLayouts, objectRelationships, panelAppOrder, panelCategoryKey, pluralLabel, portlet, scope, status, system, titleObjectFieldId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){actions, active, dateCreated, dateModified, id, label, name, objectActions, objectFields, objectLayouts, objectRelationships, objectViews, panelAppOrder, panelCategoryKey, pluralLabel, portlet, scope, status, system, titleObjectFieldId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectDefinition objectDefinition(
@@ -421,35 +421,6 @@ public class Query {
 		}
 
 		private ObjectLayoutColumn _objectLayoutColumn;
-
-	}
-
-	@GraphQLTypeExtension(ObjectDefinition.class)
-	public class GetObjectDefinitionObjectViewsPageTypeExtension {
-
-		public GetObjectDefinitionObjectViewsPageTypeExtension(
-			ObjectDefinition objectDefinition) {
-
-			_objectDefinition = objectDefinition;
-		}
-
-		@GraphQLField
-		public ObjectViewPage objectViews(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_objectViewResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				objectViewResource -> new ObjectViewPage(
-					objectViewResource.getObjectDefinitionObjectViewsPage(
-						_objectDefinition.getId(), search,
-						Pagination.of(page, pageSize))));
-		}
-
-		private ObjectDefinition _objectDefinition;
 
 	}
 

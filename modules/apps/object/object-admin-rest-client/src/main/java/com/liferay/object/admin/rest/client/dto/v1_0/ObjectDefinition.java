@@ -267,6 +267,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectRelationship[] objectRelationships;
 
+	public ObjectView[] getObjectViews() {
+		return objectViews;
+	}
+
+	public void setObjectViews(ObjectView[] objectViews) {
+		this.objectViews = objectViews;
+	}
+
+	public void setObjectViews(
+		UnsafeSupplier<ObjectView[], Exception> objectViewsUnsafeSupplier) {
+
+		try {
+			objectViews = objectViewsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectView[] objectViews;
+
 	public String getPanelAppOrder() {
 		return panelAppOrder;
 	}

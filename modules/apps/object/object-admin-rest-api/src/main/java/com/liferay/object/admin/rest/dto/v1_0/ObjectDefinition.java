@@ -377,6 +377,35 @@ public class ObjectDefinition implements Serializable {
 	protected ObjectRelationship[] objectRelationships;
 
 	@Schema
+	@Valid
+	public ObjectView[] getObjectViews() {
+		return objectViews;
+	}
+
+	public void setObjectViews(ObjectView[] objectViews) {
+		this.objectViews = objectViews;
+	}
+
+	@JsonIgnore
+	public void setObjectViews(
+		UnsafeSupplier<ObjectView[], Exception> objectViewsUnsafeSupplier) {
+
+		try {
+			objectViews = objectViewsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectView[] objectViews;
+
+	@Schema
 	public String getPanelAppOrder() {
 		return panelAppOrder;
 	}
@@ -788,6 +817,26 @@ public class ObjectDefinition implements Serializable {
 				sb.append(String.valueOf(objectRelationships[i]));
 
 				if ((i + 1) < objectRelationships.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (objectViews != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectViews\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectViews.length; i++) {
+				sb.append(String.valueOf(objectViews[i]));
+
+				if ((i + 1) < objectViews.length) {
 					sb.append(", ");
 				}
 			}

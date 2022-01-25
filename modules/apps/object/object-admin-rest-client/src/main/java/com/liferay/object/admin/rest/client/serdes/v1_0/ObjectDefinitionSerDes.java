@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -247,6 +248,26 @@ public class ObjectDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (objectDefinition.getObjectViews() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectViews\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectDefinition.getObjectViews().length; i++) {
+				sb.append(String.valueOf(objectDefinition.getObjectViews()[i]));
+
+				if ((i + 1) < objectDefinition.getObjectViews().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (objectDefinition.getPanelAppOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -452,6 +473,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectRelationships()));
 		}
 
+		if (objectDefinition.getObjectViews() == null) {
+			map.put("objectViews", null);
+		}
+		else {
+			map.put(
+				"objectViews",
+				String.valueOf(objectDefinition.getObjectViews()));
+		}
+
 		if (objectDefinition.getPanelAppOrder() == null) {
 			map.put("panelAppOrder", null);
 		}
@@ -627,6 +657,18 @@ public class ObjectDefinitionSerDes {
 								(String)object)
 						).toArray(
 							size -> new ObjectRelationship[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "objectViews")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setObjectViews(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ObjectViewSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ObjectView[size]
 						));
 				}
 			}

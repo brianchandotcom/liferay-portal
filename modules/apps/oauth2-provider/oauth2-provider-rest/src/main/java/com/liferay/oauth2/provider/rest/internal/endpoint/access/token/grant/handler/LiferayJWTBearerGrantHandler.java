@@ -371,11 +371,8 @@ public class LiferayJWTBearerGrantHandler
 		public UserSubject createUserSubject(
 			long companyId, String issuer, String subject) {
 
-			Map<String, String> userAuthTypes = _userAuthTypes.get(companyId);
-
-			if (userAuthTypes == null) {
-				userAuthTypes = _userAuthTypes.get(CompanyConstants.SYSTEM);
-			}
+			Map<String, String> userAuthTypes = _userAuthTypes.getOrDefault(
+				companyId, _userAuthTypes.get(CompanyConstants.SYSTEM));
 
 			String userAuthType = userAuthTypes.get(issuer);
 
@@ -405,12 +402,9 @@ public class LiferayJWTBearerGrantHandler
 			long companyId, JwsHeaders jwsHeaders, JwtClaims jwtClaims) {
 
 			Map<String, Map<String, JwsSignatureVerifier>>
-				jwsSignatureVerifiers = _jwsSignatureVerifiers.get(companyId);
-
-			if (jwsSignatureVerifiers == null) {
-				jwsSignatureVerifiers = _jwsSignatureVerifiers.get(
-					CompanyConstants.SYSTEM);
-			}
+				jwsSignatureVerifiers = _jwsSignatureVerifiers.getOrDefault(
+					companyId,
+					_jwsSignatureVerifiers.get(CompanyConstants.SYSTEM));
 
 			Map<String, JwsSignatureVerifier> kidsJWSSignatureVerifiers =
 				jwsSignatureVerifiers.get(jwtClaims.getIssuer());

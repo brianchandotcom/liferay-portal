@@ -172,4 +172,115 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106110. Pages are not shown when users are not allowed to view certain pages."
+	@priority = "4"
+	test CannotViewChildPageWhenRemovingSiblingPagePermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(
+				roleKey = "Regular Role Name",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Define the permissions of new role") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.definePermissionCmdCP(
+				permissionDefinitionKeys = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
+				permissionDefinitionValue = "Access in Site and Asset Library Administration",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Assign the regular role to new user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("Add two children pages for Test Page Name 1") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Child Page ${i}",
+					parentLayoutName = "Test Page Name 1");
+			}
+		}
+
+		task ("Remove view permission from Test Child Page 1 on Site Member and Guest") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.expandPageTree(depth = "2");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Child Page 1");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "guest");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "site-member");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View page via Page Tree panel") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			for (var i : list "1,2") {
+				PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name ${i}");
+			}
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Child Page 2");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Child Page 1",
+				locator1 = "PagesFinder#PAGE_NAME");
+		}
+	}
+
 }

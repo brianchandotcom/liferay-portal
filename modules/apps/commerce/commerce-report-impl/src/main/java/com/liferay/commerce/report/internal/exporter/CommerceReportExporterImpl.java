@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collection;
@@ -44,27 +45,32 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 
 	@Override
 	public byte[] export(
-		Collection<?> beanCollection, Map<String, Object> parameters) {
+			Collection<?> beanCollection, Map<String, Object> parameters)
+		throws IOException {
 
 		return export(beanCollection, parameters, null);
 	}
 
 	@Override
 	public byte[] export(
-		Collection<?> beanCollection, Map<String, Object> parameters,
-		FileEntry fileEntry) {
+			Collection<?> beanCollection, Map<String, Object> parameters,
+			FileEntry fileEntry)
+		throws IOException {
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		Class<?> clazz = getClass();
 
+		InputStream inputStream = null;
+
 		try {
-			InputStream inputStream = clazz.getResourceAsStream(
-				"dependencies/commerce_order.jrxml");
 
 			if (fileEntry != null) {
 				inputStream = fileEntry.getContentStream();
+			} else {
+				inputStream = clazz.getResourceAsStream(
+					"dependencies/commerce_order.jrxml");
 			}
 
 			JasperExportManager.exportReportToPdfStream(
@@ -76,6 +82,9 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+		}
+		finally {
+			inputStream.close();
 		}
 
 		return byteArrayOutputStream.toByteArray();

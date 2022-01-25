@@ -41,6 +41,9 @@ definition {
 	}
 
 	test AddElementToQueryBuilder {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

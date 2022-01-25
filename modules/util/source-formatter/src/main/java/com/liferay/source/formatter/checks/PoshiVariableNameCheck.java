@@ -55,7 +55,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 
 			// TODO Auto SF End
 
-			/*Matcher matcher = _referenceVariablePattern.matcher(content);
+			/*Matcher matcher = _variableReferencePattern.matcher(content);
 
 			while (matcher.find()) {
 				_checkVariableName(fileName, "", "" , matcher.group(2));

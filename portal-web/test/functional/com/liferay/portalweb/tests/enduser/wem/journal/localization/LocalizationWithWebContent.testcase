@@ -282,7 +282,7 @@ definition {
 	@description = "This is a use case for LPS-114001. The placeholder values are the same as the default Language's value."
 	@priority = "4"
 	test AssertPlaceholderValuesSameAsTheDefaultLanguage {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 

@@ -508,6 +508,171 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 	}
 
+	@description = "The user could display web content audio in Web Content Display."
+	@priority = "5"
+	test DisplayWebContentAudio {
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WebContentDisplay#ViewWebContentAudio";
+		property testray.component.names = "Training,Web Content Administration";
+
+		task ("Enable the FFMPEG Audio Converter in System Settings") {
+			DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
+
+			FormFields.enableCheckbox(fieldName = "enabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add an audio to a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "audio/mpeg",
+				sourceFileName = "Document_1.mp3");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Get latest URL version") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title");
+
+			DMNavigator.gotoURLDetail();
+
+			var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
+		}
+
+		task ("Upload an audio in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.uploadAudio(
+				dmDocumentURL = "${dmDocumentURL}",
+				navTab = "URL");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select the web content article in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View audio is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				audioFileName = "Document_1.mp3",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
+	@description = "The user could display web content image in Web Content Display."
+	@priority = "5"
+	test DisplayWebContentImage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training,Web Content Administration";
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Upload an image in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			ItemSelector.uploadFile(
+				navTab = "Documents and Media",
+				uploadFileName = "Document_3.png");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select the web content article in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View image is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				imageFileName = "Document_3.png",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
+	@description = "The user could display web content video in Web Content Display."
+	@priority = "4"
+	test DisplayWebContentVideo {
+		property dummy.socket.proxy.disabled = "true";
+		property testray.component.names = "Web Content Administration";
+
+		task ("Add an external video shortcut") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			VideoShortcut.addCP(
+				videoShortcutTitle = "Liferay Digital Experience Platform",
+				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Upload a video in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.uploadVideo(
+				navTab = "Documents and Media",
+				videoShortcutTitle = "Liferay Digital Experience Platform");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select the web content article in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View video is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				videoShortcutTitle = "Liferay Digital Experience Platform",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-130033. Display web content with Geolocation field in Web Content Display."
 	@priority = "4"
 	test DisplayWebContentWithGeolocationField {
@@ -1388,171 +1553,6 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		task ("View an error is shown in Web Content Display") {
 			AssertTextPresent(value1 = "An error occurred while processing the template.");
-		}
-	}
-
-	@description = "View web content's audio is shown via Web Content Display widget."
-	@priority = "5"
-	test ViewWebContentAudio {
-		property dummy.socket.proxy.disabled = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewWebContentAudio";
-		property testray.component.names = "Training,Web Content Administration";
-
-		task ("Enable the FFMPEG Audio Converter in System Settings") {
-			DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
-
-			FormFields.enableCheckbox(fieldName = "enabled");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Add an audio to a document") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "Document Description",
-				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
-				mimeType = "audio/mpeg",
-				sourceFileName = "Document_1.mp3");
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Get latest URL version") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title");
-
-			DMNavigator.gotoURLDetail();
-
-			var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
-		}
-
-		task ("Upload an audio in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.uploadAudio(
-				dmDocumentURL = "${dmDocumentURL}",
-				navTab = "URL");
-
-			PortletEntry.publish();
-		}
-
-		task ("Select the web content article in Web Content Display") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View audio is shown in Web Content Display") {
-			WebContentDisplayPortlet.viewContent(
-				audioFileName = "Document_1.mp3",
-				webContentTitle = "Web Content Title");
-		}
-	}
-
-	@description = "View web content's image is shown via Web Content Display widget."
-	@priority = "5"
-	test ViewWebContentImage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Upload an image in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			ItemSelector.gotoItemSelectorViaCKEditor();
-
-			ItemSelector.uploadFile(
-				navTab = "Documents and Media",
-				uploadFileName = "Document_3.png");
-
-			PortletEntry.publish();
-		}
-
-		task ("Select the web content article in Web Content Display") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View image is shown in Web Content Display") {
-			WebContentDisplayPortlet.viewContent(
-				imageFileName = "Document_3.png",
-				webContentTitle = "Web Content Title");
-		}
-	}
-
-	@description = "View web content's video is shown via Web Content Display widget."
-	@priority = "4"
-	test ViewWebContentVideo {
-		property dummy.socket.proxy.disabled = "true";
-		property testray.component.names = "Web Content Administration";
-
-		task ("Add an external video shortcut") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			VideoShortcut.addCP(
-				videoShortcutTitle = "Liferay Digital Experience Platform",
-				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Upload a video in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.uploadVideo(
-				navTab = "Documents and Media",
-				videoShortcutTitle = "Liferay Digital Experience Platform");
-
-			PortletEntry.publish();
-		}
-
-		task ("Select the web content article in Web Content Display") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View video is shown in Web Content Display") {
-			WebContentDisplayPortlet.viewContent(
-				videoShortcutTitle = "Liferay Digital Experience Platform",
-				webContentTitle = "Web Content Title");
 		}
 	}
 

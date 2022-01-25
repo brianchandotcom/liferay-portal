@@ -1249,6 +1249,51 @@ definition {
 		}
 	}
 
+	@description = "The user could set as the Default Asset Publisher for This Page."
+	@priority = "5"
+	test SetAsDefaultAssetPublisherForThisPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training,Web Content Administration";
+
+		task ("Set the Asset Publisher as default for this page") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select a display page in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Asset Publisher Page",
+				pageType = "Public Pages",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("View web content is shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "View assets filter by tag or category in Asset Publisher."
 	@priority = "4"
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {
@@ -2314,51 +2359,6 @@ catch (Exception e) {
 			WebContent.viewLinkedAssetPGViaAP(
 				webContentContent = "WC WebContent Content",
 				webContentTitle = "WC WebContent Title");
-		}
-	}
-
-	@description = "The user could set as the Default Asset Publisher for This Page."
-	@priority = "5"
-	test SetAsDefaultAssetPublisherForThisPage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
-
-		task ("Set the Asset Publisher as default for this page") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Select a display page in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Asset Publisher Page",
-				pageType = "Public Pages",
-				webContentTitle = "Web Content Title");
-
-			PortletEntry.publish();
-		}
-
-		task ("View web content is shown in Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			WebContent.viewPGViaAP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
 		}
 	}
 

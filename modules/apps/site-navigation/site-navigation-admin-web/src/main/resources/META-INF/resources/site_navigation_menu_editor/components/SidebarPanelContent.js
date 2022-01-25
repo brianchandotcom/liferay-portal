@@ -177,7 +177,7 @@ class SidebarBody extends React.Component {
 function confirmUnsavedChanges() {
 	const form = document.querySelector(`.sidebar-body form`);
 
-	const error = form ? form.querySelector('[role="alert"]') : null;
+	const error = form ? form.querySelector('.has-error') : null;
 
 	let confirmChanged;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.util;
 import com.liferay.petra.function.UnsafeConsumer;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -51,6 +52,12 @@ public class EntityExtensionUtil {
 				Collectors.toMap(Field::getName, Function.identity()));
 
 		for (Field baseEntityField : baseEntityClass.getDeclaredFields()) {
+			int modifiers = baseEntityField.getModifiers();
+
+			if (Modifier.isStatic(modifiers) || Modifier.isFinal(modifiers)) {
+				continue;
+			}
+
 			Field extendedEntityField = extendedEntityFieldsMap.get(
 				baseEntityField.getName());
 

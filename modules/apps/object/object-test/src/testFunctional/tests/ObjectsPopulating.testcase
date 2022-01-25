@@ -31,6 +31,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Integer",
 			fieldName = "integer",
 			fieldType = "Integer",
@@ -38,6 +39,7 @@ definition {
 			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
@@ -108,6 +110,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "PrecisionDecimal",
 			fieldLabelName = "Not Required Field",
 			fieldName = "bigDecimal",
 			fieldType = "BigDecimal",
@@ -164,6 +167,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Boolean",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
@@ -216,6 +220,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Not Required Field",
 			fieldName = "date",
 			fieldType = "Date",
@@ -268,6 +273,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Not Required Field",
 			fieldName = "double",
 			fieldType = "Double",
@@ -324,6 +330,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
 			fieldLabelName = "Not Required Field",
 			fieldName = "integer",
 			fieldType = "Integer",
@@ -376,6 +383,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
 			fieldLabelName = "Not Required Field",
 			fieldName = "long",
 			fieldType = "Long",
@@ -497,6 +505,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Not Required Field",
 			fieldName = "text",
 			fieldType = "String",
@@ -549,6 +558,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "String",
 			fieldName = "stringField",
 			fieldType = "String",
@@ -556,6 +566,7 @@ definition {
 			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
 			fieldLabelName = "Double",
 			fieldName = "doubleField",
 			fieldType = "Double",
@@ -622,6 +633,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -678,6 +690,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
 			fieldLabelName = "Not Required Field",
 			fieldName = "dueDate",
 			fieldType = "Date",

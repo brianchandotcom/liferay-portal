@@ -18,9 +18,11 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitiontUtil;
@@ -198,6 +200,9 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		_importObjectLayouts(
 			objectDefinitionJSONObject, postObjectDefinition, themeDisplay);
+
+		_importObjectViews(
+			objectDefinition, postObjectDefinition, themeDisplay);
 	}
 
 	private void _importObjectLayouts(
@@ -248,6 +253,24 @@ public class ImportObjectDefinitionMVCActionCommand
 		}
 	}
 
+	private void _importObjectViews(
+			ObjectDefinition objectDefinition,
+			ObjectDefinition postObjectDefinition, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		ObjectViewResource.Builder objectViewResourcedBuilder =
+			_objectViewResourceFactory.create();
+
+		ObjectViewResource objectViewResource = objectViewResourcedBuilder.user(
+			themeDisplay.getUser()
+		).build();
+
+		for (ObjectView objectView : objectDefinition.getObjectViews()) {
+			objectViewResource.postObjectDefinitionObjectView(
+				postObjectDefinition.getId(), objectView);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportObjectDefinitionMVCActionCommand.class);
 
@@ -259,6 +282,9 @@ public class ImportObjectDefinitionMVCActionCommand
 
 	@Reference
 	private ObjectLayoutResource.Factory _objectLayoutResourceFactory;
+
+	@Reference
+	private ObjectViewResource.Factory _objectViewResourceFactory;
 
 	@Reference
 	private Portal _portal;

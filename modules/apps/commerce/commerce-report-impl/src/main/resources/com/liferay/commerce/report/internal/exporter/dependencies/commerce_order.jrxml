@@ -103,6 +103,7 @@
 	<parameter class="java.lang.String" name="billingPhone" />
 	<parameter class="java.lang.String" name="shippingPhone" />
 	<parameter class="java.util.Locale" name="locale" />
+	<parameter class="java.util.Date" name="deliveryDate" />
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -362,7 +363,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{shippingAddressStreet1}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="2627cc77-9461-46c1-91cf-775c38c7569e" width="76" x="354" y="210">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
@@ -370,6 +371,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
+				<textFieldExpression><![CDATA[$P{deliveryDate}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement height="60" uuid="f50717a6-bcf6-4732-9fbd-e19e325c64c1" width="556" x="0" y="300" />

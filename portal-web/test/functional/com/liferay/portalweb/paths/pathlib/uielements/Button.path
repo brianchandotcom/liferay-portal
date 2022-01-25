@@ -386,11 +386,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_FILTER_APPLY</td>
-	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER_EFFECT</td>
 	<td>//a[contains(@class,'btn') and (@data-control='effects')][*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>

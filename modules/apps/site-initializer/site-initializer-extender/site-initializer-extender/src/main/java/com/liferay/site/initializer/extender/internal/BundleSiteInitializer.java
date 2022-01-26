@@ -961,9 +961,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			for (int x = 0; x < cpInstancePropertiesJSONArray.length(); x++) {
+			for (int j = 0; j < cpInstancePropertiesJSONArray.length(); j++) {
 				JSONObject cpInstancePropertiesJSONObject =
-					cpInstancePropertiesJSONArray.getJSONObject(x);
+					cpInstancePropertiesJSONArray.getJSONObject(j);
 
 				CPInstance cpInstance =
 					_commerceReferencesHolder.cpInstanceLocalService.

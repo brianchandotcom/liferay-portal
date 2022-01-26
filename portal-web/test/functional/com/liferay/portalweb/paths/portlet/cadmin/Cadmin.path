@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Cadmin</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Cadmin</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>BODY</td>
+	<td>//body[contains(@class,"${key_class}")]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

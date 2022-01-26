@@ -163,3 +163,16 @@
 		}
 	}
 }
+
+.lfr-asset-anchor {
+	display: block;
+	height: 10px;
+	margin-top: -10px;
+	position: relative;
+	z-index: -1;
+
+	.has-control-menu & {
+		height: 74px;
+		margin-top: -74px;
+	}
+}

@@ -11,14 +11,15 @@
 
 import {fetch} from 'frontend-js-web';
 
-const baseURL = '/o/headless-admin-workflow/v1.0';
+const userBaseURL = '/o/headless-admin-user/v1.0';
+const workflowBaseURL = '/o/headless-admin-workflow/v1.0';
 
 const headers = {
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 };
 
 function publishDefinitionRequest(requestBody) {
-	return fetch(`${baseURL}/workflow-definitions/deploy`, {
+	return fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
 		body: JSON.stringify(requestBody),
 		headers: {
 			...headers,
@@ -28,15 +29,25 @@ function publishDefinitionRequest(requestBody) {
 	});
 }
 
-function retrieveDefinitionRequest(definitionId) {
-	return fetch(`${baseURL}/workflow-definitions/by-name/${definitionId}`, {
+function retrieveAccountRoles(accountId) {
+	return fetch(`${userBaseURL}/accounts/${accountId}/account-roles`, {
 		headers,
 		method: 'GET',
 	});
 }
 
+function retrieveDefinitionRequest(definitionId) {
+	return fetch(
+		`${workflowBaseURL}/workflow-definitions/by-name/${definitionId}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+}
+
 function saveDefinitionRequest(requestBody) {
-	return fetch(`${baseURL}/workflow-definitions/save`, {
+	return fetch(`${workflowBaseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
 		headers: {
 			...headers,
@@ -47,9 +58,11 @@ function saveDefinitionRequest(requestBody) {
 }
 
 export {
-	baseURL,
 	headers,
+	userBaseURL,
+	workflowBaseURL,
 	publishDefinitionRequest,
+	retrieveAccountRoles,
 	retrieveDefinitionRequest,
 	saveDefinitionRequest,
 };

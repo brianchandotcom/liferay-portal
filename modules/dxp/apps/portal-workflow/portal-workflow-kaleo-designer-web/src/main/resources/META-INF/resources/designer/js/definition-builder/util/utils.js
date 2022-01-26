@@ -44,6 +44,16 @@ function replaceTabSpaces(string) {
 	return string.replace(/\t/g, ' ').trimStart().trimEnd();
 }
 
+function titleCase(string) {
+	return string
+		.toLowerCase()
+		.split(' ')
+		.map((word) => {
+			return word.charAt(0).toUpperCase() + word.slice(1);
+		})
+		.join(' ');
+}
+
 function uncamelize(string, separator) {
 	if (!separator) {
 		separator = '_';
@@ -61,5 +71,6 @@ export {
 	removeNewLine,
 	repeatSymbol,
 	replaceTabSpaces,
+	titleCase,
 	uncamelize,
 };

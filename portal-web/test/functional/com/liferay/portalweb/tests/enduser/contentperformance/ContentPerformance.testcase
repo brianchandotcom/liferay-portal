@@ -234,15 +234,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
-	@ignore = "true"
-	@priority = "3"
-	test DontShowButton {
-
-		// TODO LPS-139239 DontShowButton pending implementation
-
-	}
-
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons ARE NOT displayed when AC is enabled"
 	@priority = "3"
 	test FreeTrialButtonNotPresent {
@@ -263,15 +254,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
-	@ignore = "true"
-	@priority = "5"
-	test FreeTrialButtonPresent {
-
-		// TODO LPS-139217 FreeTrialButtonPresent pending implementation
-
-	}
-
 	@description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
 	@priority = "3"
 	test GraphicLineNoViewsReads {
@@ -281,15 +263,6 @@ definition {
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}
-	}
-
-	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
-	@ignore = "true"
-	@priority = "5"
-	test HideContentPerformancePanel {
-
-		// TODO LPS-139239 HideContentPerformancePanel pending implementation
-
 	}
 
 	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the date interval selector is shown in the content performance panel, with 7 days selected as default"
@@ -479,24 +452,6 @@ definition {
 				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
 				value1 = "0");
 		}
-	}
-
-	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
-	@ignore = "true"
-	@priority = "4"
-	test MetricsInContentDashboardACDisabled {
-
-		// TODO LPS-139257 MetricsInContentDashboardACDisabled pending implementation
-
-	}
-
-	@description = "LPS-118006: When the DXP is connected to AC after the user has clicked the Don't show me this again button, the Metrics option is shown again, and the sidebar panel with instructions to sync, and without the Dont show me this again button shows up when the user clicks on it"
-	@ignore = "true"
-	@priority = "4"
-	test MetricsInContentDashboardACEnabled {
-
-		// TODO LPS-139257 MetricsInContentDashboardACEnabled pending implementation
-
 	}
 
 	@description = "LPS-113910: When the user selects the info option while the Content performance panel is open, the side panel shows the Info panel"
@@ -1030,15 +985,6 @@ definition {
 				locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
 				value1 = "0");
 		}
-	}
-
-	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
-	@ignore = "true"
-	@priority = "3"
-	test NotSyncedPanel {
-
-		// TODO LPS-139239 NotSyncedPanel pending implementation
-
 	}
 
 	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the name, the URL of the page and the language selector are shown in the content performance panel"

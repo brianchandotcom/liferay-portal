@@ -24,6 +24,7 @@ import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -116,15 +117,19 @@ public class PreviewFragmentCollectionDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		return ResourceURLBuilder.createResourceURL(
+		String url = ResourceURLBuilder.createResourceURL(
 			PortalUtil.getLiferayPortletResponse(portletResponse)
-		).setParameter(
-			"groupId", groupId
-		).setParameter(
-			"fragmentEntryKey", fragmentEntryKey
 		).setResourceID(
 			"/style_book/render_fragment_entry_link"
 		).buildString();
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			getStyleBookPortletNamespace());
+
+		url = HttpUtil.addParameter(url, portletNamespace + "groupId", groupId);
+
+		return HttpUtil.addParameter(
+			url, portletNamespace + "fragmentEntryKey", fragmentEntryKey);
 	}
 
 	private long _getGroupId() {

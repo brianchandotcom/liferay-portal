@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Simulation",
 		"javax.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.version=3.0"
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )

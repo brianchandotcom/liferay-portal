@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
@@ -494,15 +495,20 @@ public class EditStyleBookEntryDisplayContext {
 	private String _getPreviewFragmentCollectionURL(
 		String fragmentCollectionKey, long groupId) {
 
-		return ResourceURLBuilder.createResourceURL(
+		String url = ResourceURLBuilder.createResourceURL(
 			_renderResponse
-		).setParameter(
-			"fragmentCollectionKey", fragmentCollectionKey
-		).setParameter(
-			"groupId", groupId
 		).setResourceID(
 			"/style_book/preview_fragment_collection"
 		).buildString();
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			StyleBookPortletKeys.STYLE_BOOK);
+
+		url = HttpUtil.addParameter(url, portletNamespace + "groupId", groupId);
+
+		return HttpUtil.addParameter(
+			url, portletNamespace + "fragmentCollectionKey",
+			fragmentCollectionKey);
 	}
 
 	private long _getPreviewItemsGroupId() {

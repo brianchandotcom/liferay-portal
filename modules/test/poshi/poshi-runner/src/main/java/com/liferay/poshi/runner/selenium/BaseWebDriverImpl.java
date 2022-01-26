@@ -900,42 +900,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void dragAndDrop(String locator, String coordinatePairs) {
-		try {
-			Matcher matcher = _coordinatePairsPattern.matcher(coordinatePairs);
-
-			if (!matcher.matches()) {
-				throw new Exception(
-					"Coordinate pairs \"" + coordinatePairs +
-						"\" do not match pattern \"" +
-							_coordinatePairsPattern.pattern() + "\"");
-			}
-
-			WebElement webElement = getWebElement(locator);
-
-			Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-			actions.clickAndHold(webElement);
-
-			actions.pause(1500);
-
-			for (String coordinatePair : coordinatePairs.split("\\|")) {
-				String[] coordinates = coordinatePair.split(",");
-
-				actions.moveByOffset(
-					GetterUtil.getInteger(coordinates[0]),
-					GetterUtil.getInteger(coordinates[1]));
-			}
-
-			actions.pause(1500);
-
-			actions.release();
-
-			Action action = actions.build();
-
-			action.perform();
-		}
-		catch (Exception exception) {
-		}
+		dragAtAndDrop(locator, null, coordinatePairs);
 	}
 
 	@Override
@@ -967,21 +932,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String locator, String coordString, String coordinatePairs) {
 
 		try {
-			WebDriver webDriver = getWrappedWebDriver(locator);
-
-			Actions actions = new Actions(webDriver);
-
-			String[] coords = coordString.split(",");
-
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
-
-			actions.moveToElement(webElement, x, y);
-
-			actions.clickAndHold();
-
-			actions.pause(1500);
-
 			Matcher matcher = _coordinatePairsPattern.matcher(coordinatePairs);
 
 			if (!matcher.matches()) {
@@ -990,6 +940,26 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 						"\" do not match pattern \"" +
 							_coordinatePairsPattern.pattern() + "\"");
 			}
+
+			WebElement webElement = getWebElement(locator);
+
+			Actions actions = new Actions(getWrappedWebDriver(webElement));
+
+			if (Validator.isNotNull(coordString)) {
+				String[] coords = coordString.split(",");
+
+				int x = GetterUtil.getInteger(coords[0]);
+				int y = GetterUtil.getInteger(coords[1]);
+
+				actions.moveToElement(webElement, x, y);
+
+				actions.clickAndHold();
+			}
+			else {
+				actions.clickAndHold(webElement);
+			}
+
+			actions.pause(1500);
 
 			for (String coordinatePair : coordinatePairs.split("\\|")) {
 				String[] coordinates = coordinatePair.split(",");

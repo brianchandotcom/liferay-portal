@@ -61,7 +61,9 @@ export function AppLayout({
 		<>
 			<div className="bg-white component-tbar tbar">
 				<div className="container-fluid container-fluid-max-xl">
-					<div className="px-1 tbar-nav">{toolbarChildren}</div>
+					<div className="cadmin px-1 tbar-nav">
+						{toolbarChildren}
+					</div>
 				</div>
 			</div>
 

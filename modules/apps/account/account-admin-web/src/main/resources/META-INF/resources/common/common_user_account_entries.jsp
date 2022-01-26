@@ -119,16 +119,16 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 	</liferay-portlet:renderURL>
 
 	<aui:script use="liferay-search-container">
-		var deleteAccountEntryIds = [];
+		var deleteAccountEntryIdsSet = new Set();
 		var searchContainer = Liferay.SearchContainer.get(
 			'<portlet:namespace />accountEntries'
 		);
 
 		function updateData() {
 			document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value = searchContainer.getData();
-			document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = deleteAccountEntryIds.join(
-				','
-			);
+			document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = Array.from(
+				deleteAccountEntryIdsSet
+			).join(',');
 		}
 
 		var searchContainerContentBox = searchContainer.get('contentBox');
@@ -144,7 +144,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 				searchContainer.deleteRow(tr, rowId);
 
-				deleteAccountEntryIds.push(rowId);
+				deleteAccountEntryIdsSet.add(rowId);
 
 				updateData();
 			},
@@ -179,10 +179,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 								entityId
 							);
 
-							deleteAccountEntryIds.splice(
-								deleteAccountEntryIds.indexOf(entityId),
-								1
-							);
+							deleteAccountEntryIdsSet.delete(entityId);
 						}
 
 						updateData();

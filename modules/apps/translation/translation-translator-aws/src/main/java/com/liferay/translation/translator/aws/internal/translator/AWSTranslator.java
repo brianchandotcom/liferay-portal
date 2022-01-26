@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -101,15 +102,25 @@ public class AWSTranslator implements Translator {
 		_awsTranslatorConfiguration = ConfigurableUtil.createConfigurable(
 			AWSTranslatorConfiguration.class, properties);
 
-		_translateClient = TranslateClient.builder(
-		).credentialsProvider(
-			StaticCredentialsProvider.create(
-				AwsBasicCredentials.create(
-					_awsTranslatorConfiguration.accessKey(),
-					_awsTranslatorConfiguration.secretKey()))
-		).region(
-			Region.of(_awsTranslatorConfiguration.region())
-		).build();
+		if (_awsTranslatorConfiguration.enabled()) {
+			_translateClient = TranslateClient.builder(
+			).credentialsProvider(
+				StaticCredentialsProvider.create(
+					AwsBasicCredentials.create(
+						_awsTranslatorConfiguration.accessKey(),
+						_awsTranslatorConfiguration.secretKey()))
+			).region(
+				Region.of(_awsTranslatorConfiguration.region())
+			).build();
+		}
+		else {
+			_translateClient = null;
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_translateClient = null;
 	}
 
 	private String _getLanguageCode(String languageId) {

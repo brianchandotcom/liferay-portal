@@ -22,22 +22,14 @@ const defaultProperties = {
 	supportLink: '',
 };
 
-export const ApplicationPropertiesContext = createContext(defaultProperties);
+export const AppContext = createContext(defaultProperties);
 
-/**
- * @description The Context contains all properties settled on Web Component
- * @param {Object} Props -> Contains object with Properties of Application
- * Inserted from index.html properties for Web Component
- */
-
-const ApplicationContextProvider = ({children, properties}) => (
-	<ApplicationPropertiesContext.Provider value={properties}>
-		{children}
-	</ApplicationPropertiesContext.Provider>
+const AppContextProvider = ({children, properties}) => (
+	<AppContext.Provider value={properties}>{children}</AppContext.Provider>
 );
 
-export default ApplicationContextProvider;
+export default AppContextProvider;
 
-const useApplicationProvider = () => useContext(ApplicationPropertiesContext);
+const useApplicationProvider = () => useContext(AppContext);
 
 export {useApplicationProvider};

@@ -946,11 +946,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		WebElement objectToBeDraggedWebElement = getWebElement(
 			locatorOfObjectToBeDragged);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)objectToBeDraggedWebElement;
+		WebDriver wrappedWebDriver = getWrappedWebDriver(
+			objectToBeDraggedWebElement);
 
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
+		Actions actions = new Actions(wrappedWebDriver);
 
 		WebElement dragDestinationObjectWebElement = getWebElement(
 			locatorOfDragDestinationObject);
@@ -968,11 +967,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String locator, String coordString, String coordinatePairs) {
 
 		try {
-			WebElement webElement = getWebElement(locator);
-
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
+			WebDriver webDriver = getWrappedWebDriver(locator);
 
 			Actions actions = new Actions(webDriver);
 
@@ -1904,13 +1899,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			if (isValidKeycode(keycode)) {
 				Keys keys = Keys.valueOf(keycode);
 
-				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
 				if (keycode.equals("ALT") || keycode.equals("COMMAND") ||
 					keycode.equals("CONTROL") || keycode.equals("SHIFT")) {
 
 					Actions actions = new Actions(
-						wrapsDriver.getWrappedDriver());
+						getWrappedWebDriver(webElement));
 
 					actions.keyDown(webElement, keys);
 					actions.keyUp(webElement, keys);
@@ -2620,13 +2613,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void setWindowSize(String coordString) {
-		WebElement bodyWebElement = getWebElement("//body");
+		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
 
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		WebDriver.Options options = webDriver.manage();
+		WebDriver.Options options = wrappedWebDriver.manage();
 
 		WebDriver.Window window = options.window();
 
@@ -4430,11 +4419,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected WebDriver getWrappedWebDriver(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		return wrapsDriver.getWrappedDriver();
+		return getWrappedWebDriver(getWebElement(locator));
 	}
 
 	protected WebDriver getWrappedWebDriver(WebElement webElement) {
@@ -4444,10 +4429,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected boolean isObscured(WebElement webElement) {
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
+			(JavascriptExecutor)getWrappedWebDriver(webElement);
 
 		StringBuilder sb = new StringBuilder();
 

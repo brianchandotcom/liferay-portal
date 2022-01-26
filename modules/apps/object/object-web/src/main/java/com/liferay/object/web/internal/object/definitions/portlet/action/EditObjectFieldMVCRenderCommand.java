@@ -15,10 +15,12 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,8 +69,10 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
+					_ffObjectFieldBusinessTypeConfigurationActivator,
 					_portal.getHttpServletRequest(renderRequest),
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_objectFieldBusinessTypeServicesTracker));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -78,6 +82,10 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
+	private FFObjectFieldBusinessTypeConfigurationActivator
+		_ffObjectFieldBusinessTypeConfigurationActivator;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
@@ -85,6 +93,10 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFieldBusinessTypeServicesTracker
+		_objectFieldBusinessTypeServicesTracker;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

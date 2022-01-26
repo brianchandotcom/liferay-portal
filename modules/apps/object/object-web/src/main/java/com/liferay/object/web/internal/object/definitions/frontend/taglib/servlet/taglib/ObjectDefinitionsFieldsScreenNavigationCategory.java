@@ -16,7 +16,9 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -78,15 +80,25 @@ public class ObjectDefinitionsFieldsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
-				httpServletRequest, _objectDefinitionModelResourcePermission));
+				_ffObjectFieldBusinessTypeConfigurationActivator,
+				httpServletRequest, _objectDefinitionModelResourcePermission,
+				_objectFieldBusinessTypeServicesTracker));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private FFObjectFieldBusinessTypeConfigurationActivator
+		_ffObjectFieldBusinessTypeConfigurationActivator;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFieldBusinessTypeServicesTracker
+		_objectFieldBusinessTypeServicesTracker;
 
 }

@@ -13,13 +13,13 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
-import BaseButton from '../../../../../common/components/BaseButton';
-import {useApplicationProvider} from '../../../../../common/context/ApplicationPropertiesProvider';
+import {Button} from '../../../../../common/components';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
-import {fetchDeveloperKeysLicense} from '../../../../../common/services/liferay/raysource-api';
-import {downloadFromBlob} from '../../../../../common/utils';
+import {getDevelopmentLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import getDownloadFromBlob from '../../../../../common/utils/getDownloadFromBlob';
 import {
-	EXTENSIONS_FILE_TYPE,
+	EXTENSION_FILE_TYPES,
 	LIST_TYPES,
 	STATUS_CODE,
 } from '../../../utils/constants';
@@ -63,7 +63,7 @@ const DevelopersKeysInputs = ({
 	}, [dxpVersion]);
 
 	const handleClick = async () => {
-		const license = await fetchDeveloperKeysLicense(
+		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			licenseKeyDownloadURL,
 			sessionId,
@@ -72,10 +72,10 @@ const DevelopersKeysInputs = ({
 
 		if (license.status === STATUS_CODE.SUCCESS) {
 			const contentType = license.headers.get('content-type');
-			const extensionFile = EXTENSIONS_FILE_TYPE[contentType] || '.txt';
+			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+			return getDownloadFromBlob(licenseBlob, `license${extensionFile}`);
 		}
 	};
 
@@ -86,7 +86,7 @@ const DevelopersKeysInputs = ({
 			</p>
 
 			<div className="align-items-baseline d-flex">
-				<label className="developer-keys-label mb-3 mr-3">
+				<label className="cp-developer-keys-label mb-3 mr-3">
 					<div className="position-relative">
 						<ClayIcon
 							className="select-icon"
@@ -114,14 +114,14 @@ const DevelopersKeysInputs = ({
 					</div>
 				</label>
 
-				<BaseButton
-					className="btn btn-outline-primary developer-keys-button py-1"
+				<Button
+					className="btn btn-outline-primary cp-developer-keys-button py-1"
 					onClick={handleClick}
 					prependIcon="download"
 					type="button"
 				>
 					Download Key
-				</BaseButton>
+				</Button>
 			</div>
 
 			<p className="text-neutral-7">

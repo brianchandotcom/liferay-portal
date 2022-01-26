@@ -802,15 +802,14 @@ public class BundleSiteInitializerTest {
 		RemoteAppEntry remoteAppEntry =
 			_remoteAppEntryLocalService.
 				fetchRemoteAppEntryByExternalReferenceCode(
-					group.getCompanyId(), "TEST001");
+					group.getCompanyId(), "ERC001");
 
 		Assert.assertNotNull(remoteAppEntry);
 
 		Assert.assertEquals(
 			"category.remote-apps", remoteAppEntry.getPortletCategoryName());
-
 		Assert.assertEquals(
-			"liferay-remote-app-test",
+			"liferay-test-remote-app",
 			remoteAppEntry.getCustomElementHTMLElementName());
 	}
 

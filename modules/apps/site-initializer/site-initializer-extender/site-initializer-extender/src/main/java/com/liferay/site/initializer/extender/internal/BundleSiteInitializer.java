@@ -401,6 +401,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						listTypeDefinitionIdsStringUtilReplaceValues,
 						serviceContext, siteNavigationMenuItemSettingsBuilder));
 
+			_invoke(() -> _addSiteConfiguration(serviceContext));
+
 			_invoke(
 				() -> _addCPDefinitions(
 					documentsStringUtilReplaceValues,
@@ -690,16 +692,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".model-resource-permissions.json"),
 			serviceContext);
-
-		Group group = _groupLocalService.getGroup(
-			serviceContext.getScopeGroupId());
-
-		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
-		group.setManualMembership(true);
-		group.setMembershipRestriction(
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
-
-		_groupLocalService.updateGroup(group);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -2334,6 +2326,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_toMap(jsonObject.getString("title_i18n")), serviceContext);
 			}
 		}
+	}
+
+	private void _addSiteConfiguration(ServiceContext serviceContext)
+		throws Exception {
+
+		String resourcePath = "site-initializer/site-configuration.json";
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		Group group = _groupLocalService.getGroup(
+			serviceContext.getScopeGroupId());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		group.setType(jsonObject.getInt("typeSite"));
+		group.setManualMembership(jsonObject.getBoolean("manualMembership"));
+		group.setMembershipRestriction(
+			jsonObject.getInt("membershipRestriction"));
+
+		_groupLocalService.updateGroup(group);
 	}
 
 	private void _addSiteNavigationMenu(

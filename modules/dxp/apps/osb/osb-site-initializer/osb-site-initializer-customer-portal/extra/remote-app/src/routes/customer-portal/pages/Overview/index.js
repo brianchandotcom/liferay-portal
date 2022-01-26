@@ -19,7 +19,7 @@ import SubscriptionsNavbar from '../../components/SubscriptionsNavbar';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
-import {getWebContents} from '../../utils/webContentsGenerator';
+import {getWebContents} from '../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
 
 const Overview = ({project, subscriptionGroups}) => {
@@ -135,7 +135,7 @@ const Overview = ({project, subscriptionGroups}) => {
 				/>
 			</div>
 
-			<div className="d-flex flex-wrap mt-4 overview-cards-subscription">
+			<div className="cp-overview-cards-subscription d-flex flex-wrap mt-4">
 				{accountSubscriptions.length ? (
 					accountSubscriptions.map((accountSubscription, index) => (
 						<CardSubscription

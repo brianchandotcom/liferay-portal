@@ -10,7 +10,7 @@
  */
 
 import ProjectContacts from '../../components/ProjectContacts';
-import QuickLinksPanel from '../../components/QuickLinksPanel';
+import QuickLinksPanel from '../../containers/QuickLinksPanel';
 
 const OverviewSkeleton = () => {
 	return (

@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import DeveloperKeysLayouts from '../../components/DeveloperKeysLayout';
+import DeveloperKeysLayouts from '../../layouts/DeveloperKeysLayout';
 
 const DXP = ({project, sessionId}) => {
 	return (

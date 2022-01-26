@@ -96,8 +96,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			long[] classPKs = _getClassPKs(
-				className, segmentsExperienceIds, translationRequestHelper);
+			Set<Long> classPKs = SetUtil.fromArray(
+				_getClassPKs(
+					className, segmentsExperienceIds,
+					translationRequestHelper));
 
 			for (long classPK : classPKs) {
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
@@ -117,8 +119,6 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				}
 			}
 
-			Set<Long> differentClassPKs = SetUtil.fromArray(classPKs);
-
 			try (InputStream inputStream = new FileInputStream(
 					zipWriter.getFile())) {
 
@@ -130,7 +130,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						LanguageUtil.get(
 							_portal.getLocale(resourceRequest),
 							"model.resource." + className),
-						differentClassPKs.size(), sourceLanguageId,
+						classPKs.size(), sourceLanguageId,
 						_portal.getLocale(resourceRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}

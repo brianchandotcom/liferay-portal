@@ -28,7 +28,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_TOKEN_FAILED_TO_MERGE) ||
+		if (!consoleText.contains(_TOKEN_COULD_NOT_APPLY) ||
 			!consoleText.contains(_TOKEN_UNABLE_TO_REBASE)) {
 
 			return null;
@@ -38,7 +38,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		int end = consoleText.indexOf(_TOKEN_FAILED_TO_MERGE, start);
+		int end = consoleText.indexOf(_TOKEN_COULD_NOT_APPLY, start);
 
 		end = consoleText.indexOf("\n", end);
 
@@ -54,8 +54,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getConsoleTextSnippetElement(consoleText, false, start, end)));
 	}
 
-	private static final String _TOKEN_FAILED_TO_MERGE =
-		"Failed to merge in the changes";
+	private static final String _TOKEN_COULD_NOT_APPLY = "Could not apply";
 
 	private static final String _TOKEN_UNABLE_TO_REBASE = "Unable to rebase";
 

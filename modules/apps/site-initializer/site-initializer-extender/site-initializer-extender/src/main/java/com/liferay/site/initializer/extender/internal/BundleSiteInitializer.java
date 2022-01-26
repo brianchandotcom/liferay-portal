@@ -965,72 +965,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONObject cpInstancePropertiesJSONObject =
 					cpInstancePropertiesJSONArray.getJSONObject(j);
 
-				CPInstance cpInstance =
-					_commerceReferencesHolder.cpInstanceLocalService.
-						getCPInstance(
-							cpDefinition.getCPDefinitionId(),
-							cpInstancePropertiesJSONObject.getString(
-								"cpInstanceSKu"));
-
-				if (cpInstance == null) {
-					continue;
-				}
-
-				if (StringUtil.equals(
-						cpInstancePropertiesJSONObject.getString(
-							"propertyType"),
-						"UPDATE_PRICE")) {
-
-					cpInstance.setPrice(
-						BigDecimal.valueOf(
-							cpInstancePropertiesJSONObject.getLong(
-								"skuPrice")));
-					cpInstance.setPromoPrice(
-						BigDecimal.valueOf(
-							cpInstancePropertiesJSONObject.getLong(
-								"skuPromoPrice")));
-
-					_commerceReferencesHolder.cpInstanceLocalService.
-						updateCPInstance(cpInstance);
-				}
-				else if (StringUtil.equals(
-							cpInstancePropertiesJSONObject.getString(
-								"propertyType"),
-							"CREATE_SUBSCRIPTION")) {
-
-					JSONObject subscriptionTypeSettingsJSONObject =
-						cpInstancePropertiesJSONObject.getJSONObject(
-							"subscriptionTypeSettings");
-
-					UnicodeProperties unicodeProperties = new UnicodeProperties(
-						JSONUtil.toStringMap(
-							subscriptionTypeSettingsJSONObject),
-						true);
-
-					_commerceReferencesHolder.cpInstanceLocalService.
-						updateSubscriptionInfo(
-							cpInstance.getCPInstanceId(),
-							cpInstancePropertiesJSONObject.getBoolean(
-								"overrideSubscriptionInfo"),
-							cpInstancePropertiesJSONObject.getBoolean(
-								"subscriptionEnabled"),
-							cpInstancePropertiesJSONObject.getInt(
-								"subscriptionLength"),
-							cpInstancePropertiesJSONObject.getString(
-								"subscriptionType"),
-							unicodeProperties,
-							cpInstancePropertiesJSONObject.getLong(
-								"maxSubscriptionCycles"),
-							cpInstancePropertiesJSONObject.getBoolean(
-								"deliverySubscriptionEnabled"),
-							cpInstancePropertiesJSONObject.getInt(
-								"deliverySubscriptionLength"),
-							cpInstancePropertiesJSONObject.getString(
-								"deliverySubscriptionType"),
-							new UnicodeProperties(),
-							cpInstancePropertiesJSONObject.getLong(
-								"deliveryMaxSubscriptionCycles"));
-				}
+				_updateCPInstanceProperties(
+					cpDefinition, cpInstancePropertiesJSONObject);
 			}
 		}
 	}
@@ -3012,6 +2948,70 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return map;
+	}
+
+	private void _updateCPInstanceProperties(
+			CPDefinition cpDefinition,
+			JSONObject cpInstancePropertiesJSONObject)
+		throws Exception {
+
+		CPInstance cpInstance =
+			_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
+				cpDefinition.getCPDefinitionId(),
+				cpInstancePropertiesJSONObject.getString("cpInstanceSKu"));
+
+		if (cpInstance == null) {
+			return;
+		}
+
+		if (StringUtil.equals(
+				cpInstancePropertiesJSONObject.getString("propertyType"),
+				"UPDATE_PRICE")) {
+
+			cpInstance.setPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPrice")));
+			cpInstance.setPromoPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
+
+			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
+				cpInstance);
+		}
+		else if (StringUtil.equals(
+					cpInstancePropertiesJSONObject.getString("propertyType"),
+					"CREATE_SUBSCRIPTION")) {
+
+			JSONObject subscriptionTypeSettingsJSONObject =
+				cpInstancePropertiesJSONObject.getJSONObject(
+					"subscriptionTypeSettings");
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties(
+				JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject), true);
+
+			_commerceReferencesHolder.cpInstanceLocalService.
+				updateSubscriptionInfo(
+					cpInstance.getCPInstanceId(),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"overrideSubscriptionInfo"),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"subscriptionEnabled"),
+					cpInstancePropertiesJSONObject.getInt("subscriptionLength"),
+					cpInstancePropertiesJSONObject.getString(
+						"subscriptionType"),
+					unicodeProperties,
+					cpInstancePropertiesJSONObject.getLong(
+						"maxSubscriptionCycles"),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"deliverySubscriptionEnabled"),
+					cpInstancePropertiesJSONObject.getInt(
+						"deliverySubscriptionLength"),
+					cpInstancePropertiesJSONObject.getString(
+						"deliverySubscriptionType"),
+					new UnicodeProperties(),
+					cpInstancePropertiesJSONObject.getLong(
+						"deliveryMaxSubscriptionCycles"));
+		}
 	}
 
 	private Layout _updateDraftLayout(

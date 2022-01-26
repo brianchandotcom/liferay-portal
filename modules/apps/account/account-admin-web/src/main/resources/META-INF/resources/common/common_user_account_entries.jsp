@@ -120,7 +120,6 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 	<aui:script use="liferay-search-container">
 		var deleteAccountEntryIds = [];
-
 		var searchContainer = Liferay.SearchContainer.get(
 			'<portlet:namespace />accountEntries'
 		);

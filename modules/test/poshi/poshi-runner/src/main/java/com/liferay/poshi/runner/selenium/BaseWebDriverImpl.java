@@ -777,42 +777,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			open(url);
 		}
 		else {
-			WebElement webElement = getWebElement(locator);
-
-			try {
-				webElement.click();
-			}
-			catch (Exception exception) {
-				scrollWebElementIntoView(webElement);
-
-				webElement.click();
-			}
+			clickAt(locator, null);
 		}
 	}
 
 	@Override
 	public void clickAt(String locator, String offset) {
-		int x = 0;
-		int y = 0;
+		WebElement webElement = getWebElement(locator);
 
 		if (Validator.isNotNull(offset) && offset.contains(",")) {
-			String[] offsetCoordinates = offset.split(",");
-
-			x = GetterUtil.getInteger(offsetCoordinates[0]);
-			y = GetterUtil.getInteger(offsetCoordinates[1]);
-		}
-
-		if ((x == 0) && (y == 0)) {
-			click(locator);
-		}
-		else {
-			WebElement webElement = getWebElement(locator);
-
 			scrollWebElementIntoView(webElement);
 
 			Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 
 			actions.pause(1500);
 
@@ -821,6 +799,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			Action action = actions.build();
 
 			action.perform();
+		}
+		else {
+			try {
+				webElement.click();
+			}
+			catch (Exception exception) {
+				scrollWebElementIntoView(webElement);
+
+				webElement.click();
+			}
 		}
 	}
 
@@ -862,15 +850,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void doubleClick(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-		actions.doubleClick(webElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		doubleClickAt(locator, null);
 	}
 
 	@Override
@@ -1923,19 +1903,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void mouseDown(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		scrollWebElementIntoView(webElement);
-
-		Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-		actions.moveToElement(webElement);
-
-		actions.clickAndHold(webElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		mouseDownAt(locator, null);
 	}
 
 	@Override
@@ -1964,17 +1932,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void mouseMove(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		scrollWebElementIntoView(webElement);
-
-		Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-		actions.moveToElement(webElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		mouseMoveAt(locator, null);
 	}
 
 	@Override
@@ -2041,17 +1999,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void mouseUp(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		scrollWebElementIntoView(webElement);
-
-		Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-		actions.release(webElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		mouseUpAt(locator, null);
 	}
 
 	@Override

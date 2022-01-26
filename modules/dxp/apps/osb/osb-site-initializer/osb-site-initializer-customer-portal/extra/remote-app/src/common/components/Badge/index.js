@@ -11,8 +11,6 @@
 
 import ClayIcon from '@clayui/icon';
 
-
-
 const Badge = ({children, ...props}) => {
 	return (
 		<div

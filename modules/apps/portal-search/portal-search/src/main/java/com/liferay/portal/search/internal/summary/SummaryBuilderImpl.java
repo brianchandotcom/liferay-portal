@@ -77,21 +77,23 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 			return _buildContentHighlighted();
 		}
 
-		return _buildContentPlain();
+		return _buildContentPlain(_content);
 	}
 
 	private String _buildContentHighlighted() {
 		return _escapeAndHighlight(_content);
 	}
 
-	private String _buildContentPlain() {
-		if ((_maxContentLength <= 0) ||
-			(_content.length() <= _maxContentLength)) {
-
-			return _content;
+	private String _buildContentPlain(String text) {
+		if (_escape) {
+			text = _html.escape(text);
 		}
 
-		return StringUtil.shorten(_content, _maxContentLength);
+		if ((_maxContentLength <= 0) || (text.length() <= _maxContentLength)) {
+			return text;
+		}
+
+		return StringUtil.shorten(text, _maxContentLength);
 	}
 
 	private String _buildTitle() {
@@ -101,6 +103,10 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 
 		if (_highlight) {
 			return _buildTitleHighlighted();
+		}
+
+		if (_escape) {
+			return _html.escape(_title);
 		}
 
 		return _title;

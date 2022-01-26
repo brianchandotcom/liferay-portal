@@ -17,9 +17,9 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarDelta;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarLabels;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -73,11 +73,10 @@ public class PaginationBarTag extends BaseContainerTag {
 				TagResourceBundleUtil.getResourceBundle(pageContext);
 
 			paginationBarLabels.setPaginationResults(
-				StringBundler.concat(
-					LanguageUtil.get(resourceBundle, "showing"), " {0} ",
-					StringUtil.toLowerCase(
-						LanguageUtil.get(resourceBundle, "to")),
-					" {1} ", LanguageUtil.get(resourceBundle, "of"), " {2}"));
+				LanguageUtil.format(
+					PortalUtil.getLocale(getRequest()),
+					"showing-x-to-x-of-x-entries",
+					new String[] {"{0}", "{1}", "{2}"}));
 
 			String perPageItems =
 				"{0} " + LanguageUtil.get(resourceBundle, "items");

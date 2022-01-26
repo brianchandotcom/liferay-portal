@@ -13,16 +13,17 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
-import BaseButton from '../../../../../common/components/BaseButton';
-import {useApplicationProvider} from '../../../../../common/context/ApplicationPropertiesProvider';
+import {Button} from '../../../../../common/components';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {
 	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
-import {fetchLicense} from '../../../../../common/services/liferay/raysource-api';
-import {downloadFromBlob, getCurrentEndDate} from '../../../../../common/utils';
-import {getYearlyTerms} from '../../../utils';
-import {EXTENSIONS_FILE_TYPE, STATUS_CODE} from '../../../utils/constants';
+import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import getDownloadFromBlob from '../../../../../common/utils/getDownloadFromBlob';
+import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
+import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 
 const ActivationKeysInputs = ({
 	accountKey,
@@ -108,7 +109,7 @@ const ActivationKeysInputs = ({
 	}, [selectDateInterval, selectedAccountSubscriptionName]);
 
 	const handleClick = async () => {
-		const license = await fetchLicense(
+		const license = await getCommonLicenseKey(
 			accountKey,
 			selectDateInterval.endDate.toISOString(),
 			selectDateInterval.startDate.toISOString(),
@@ -118,12 +119,12 @@ const ActivationKeysInputs = ({
 			sessionId
 		);
 
-		if (license.status === STATUS_CODE.SUCCESS) {
+		if (license.status === STATUS_CODE.sucess) {
 			const contentType = license.headers.get('content-type');
-			const extensionFile = EXTENSIONS_FILE_TYPE[contentType] || '.txt';
+			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+			return getDownloadFromBlob(licenseBlob, `license${extensionFile}`);
 		}
 
 		setLicenseDownloadError(true);
@@ -137,7 +138,7 @@ const ActivationKeysInputs = ({
 			</p>
 
 			<div className="d-flex mb-3">
-				<label className="mr-3" id="subscription-select">
+				<label className="cp-subscription-select mr-3">
 					Subscription
 					<div className="position-relative">
 						<ClayIcon
@@ -166,7 +167,7 @@ const ActivationKeysInputs = ({
 					</div>
 				</label>
 
-				<label id="subscription-term-select">
+				<label className="cp-subscription-term-select">
 					Subscription Term
 					<div className="position-relative">
 						<ClayIcon
@@ -206,7 +207,7 @@ const ActivationKeysInputs = ({
 				</label>
 			</div>
 
-			<BaseButton
+			<Button
 				className="btn btn-outline-primary"
 				disabled={
 					hasLicenseDownloadError ||
@@ -217,7 +218,7 @@ const ActivationKeysInputs = ({
 				type="button"
 			>
 				Download Key
-			</BaseButton>
+			</Button>
 
 			{hasLicenseDownloadError && (
 				<p className="mt-3 text-neutral-7 text-paragraph">

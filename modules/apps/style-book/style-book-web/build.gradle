@@ -1,4 +1,6 @@
 dependencies {
+	compileInclude group: "com.liferay", name: "org.jsoup", version: "1.10.2.LIFERAY-PATCHED-3"
+
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -8,6 +10,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
+	compileOnly project(":apps:fragment:fragment-api")
+	compileOnly project(":apps:fragment:fragment-collection-item-selector-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
@@ -28,6 +32,7 @@ dependencies {
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

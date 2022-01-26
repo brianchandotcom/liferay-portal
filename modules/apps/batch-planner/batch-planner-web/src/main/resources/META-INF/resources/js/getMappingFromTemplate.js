@@ -14,10 +14,7 @@
 
 import {fetch, openToast} from 'frontend-js-web';
 
-import {
-	FILE_MAPPED_FIELDS
-} from './constants';
-
+import {FILE_MAPPED_FIELDS} from './constants';
 
 function getMappingFromTemplate(template) {
 	const {mappings} = template;
@@ -29,7 +26,13 @@ function getMappingFromTemplate(template) {
 	}, {});
 }
 
-export async function fireTemplateSelectionEvent(templateId, NULL_TEMPLATE_VALUE, TEMPLATE_SELECTED_EVENT, HEADLESS_BATCH_PLANNER_URL, HEADLESS_ENDPOINT_POLICY_NAME) {
+export async function fireTemplateSelectionEvent(
+	templateId,
+	NULL_TEMPLATE_VALUE,
+	TEMPLATE_SELECTED_EVENT,
+	HEADLESS_BATCH_PLANNER_URL,
+	HEADLESS_ENDPOINT_POLICY_NAME
+) {
 	if (templateId === NULL_TEMPLATE_VALUE) {
 		return Liferay.fire(TEMPLATE_SELECTED_EVENT, {
 			template: null,
@@ -49,13 +52,12 @@ export async function fireTemplateSelectionEvent(templateId, NULL_TEMPLATE_VALUE
 		}
 
 		const templateRequest = await request.json();
-        
 
 		const headlessEndpoint = templateRequest.policies.find(
 			(policy) => policy?.name === HEADLESS_ENDPOINT_POLICY_NAME
 		);
 
-        Liferay.fire(FILE_MAPPED_FIELDS, {
+		Liferay.fire(FILE_MAPPED_FIELDS, {
 			fields: getMappingFromTemplate(templateRequest),
 		});
 
@@ -68,7 +70,7 @@ export async function fireTemplateSelectionEvent(templateId, NULL_TEMPLATE_VALUE
 			},
 		});
 
-        return templateRequest
+		return templateRequest;
 	}
 	catch (error) {
 		openToast({

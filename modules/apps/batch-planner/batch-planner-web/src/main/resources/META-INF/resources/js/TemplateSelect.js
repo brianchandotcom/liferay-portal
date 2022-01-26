@@ -13,12 +13,10 @@
  */
 
 import ClayForm, {ClaySelect} from '@clayui/form';
-import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {
-	FILE_MAPPED_FIELDS,
 	HEADLESS_BATCH_PLANNER_URL,
 	HEADLESS_ENDPOINT_POLICY_NAME,
 	NULL_TEMPLATE_VALUE,
@@ -47,7 +45,13 @@ const TemplateSelect = ({
 				{label: name, value: batchPlannerPlanId},
 				...options,
 			]);
-			fireTemplateSelectionEvent(batchPlannerPlanId, NULL_TEMPLATE_VALUE, TEMPLATE_SELECTED_EVENT, HEADLESS_BATCH_PLANNER_URL, HEADLESS_ENDPOINT_POLICY_NAME);
+			fireTemplateSelectionEvent(
+				batchPlannerPlanId,
+				NULL_TEMPLATE_VALUE,
+				TEMPLATE_SELECTED_EVENT,
+				HEADLESS_BATCH_PLANNER_URL,
+				HEADLESS_ENDPOINT_POLICY_NAME
+			);
 		}
 
 		Liferay.on(TEMPLATE_CREATED, handleTemplateCreated);
@@ -78,7 +82,13 @@ const TemplateSelect = ({
 	const onChange = (event) => {
 		const newTemplateId = event.target.value;
 		setTemplate(newTemplateId);
-		fireTemplateSelectionEvent(newTemplateId, NULL_TEMPLATE_VALUE, TEMPLATE_SELECTED_EVENT, HEADLESS_BATCH_PLANNER_URL, HEADLESS_ENDPOINT_POLICY_NAME);
+		fireTemplateSelectionEvent(
+			newTemplateId,
+			NULL_TEMPLATE_VALUE,
+			TEMPLATE_SELECTED_EVENT,
+			HEADLESS_BATCH_PLANNER_URL,
+			HEADLESS_ENDPOINT_POLICY_NAME
+		);
 	};
 
 	const selectId = `${portletNamespace}templateName`;
@@ -114,7 +124,5 @@ TemplateSelect.propTypes = {
 	selectedTemplateMapping: PropTypes.object,
 	templatesOptions: PropTypes.arrayOf(PropTypes.object),
 };
-
-
 
 export default TemplateSelect;

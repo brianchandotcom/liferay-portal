@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '.';
+import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
 
-export function getLiferaySiteName() {
-	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-	const pathSplit = pathname.split('/').filter(Boolean);
+export async function getCurrentSession(oktaSessionURL) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(oktaSessionURL, {
+		credentials: 'include',
+	});
+	const responseContentType = response.headers.get('content-type');
 
-	return `${(pathSplit.length > 2
-		? pathSplit.slice(0, pathSplit.length - 1)
-		: pathSplit
-	).join('/')}`;
+	return responseContentType === CONTENT_TYPES.json ? response.json() : null;
 }

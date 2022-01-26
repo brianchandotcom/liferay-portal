@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-const fetchLicense = async (
+export async function getCommonLicenseKey(
 	accountKey,
 	dateEnd,
 	dateStart,
@@ -17,7 +17,7 @@ const fetchLicense = async (
 	licenseKeyDownloadURL,
 	productName,
 	sessionId
-) => {
+) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
@@ -29,14 +29,14 @@ const fetchLicense = async (
 	);
 
 	return response;
-};
+}
 
-const fetchDeveloperKeysLicense = async (
+export async function getDevelopmentLicenseKey(
 	accountKey,
 	licenseKeyDownloadURL,
 	sessionId,
 	selectedVersion
-) => {
+) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/DXP/product-version/${selectedVersion}/development-license-key`,
@@ -49,6 +49,4 @@ const fetchDeveloperKeysLicense = async (
 	);
 
 	return response;
-};
-
-export {fetchLicense, fetchDeveloperKeysLicense};
+}

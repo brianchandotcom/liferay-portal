@@ -2228,7 +2228,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.put(
 					"primKey", String.valueOf(serviceContext.getCompanyId()));
 			}
-			else if (jsonObject.getInt("scope") == ResourceConstants.SCOPE_GROUP) {
+			else if (jsonObject.getInt("scope") ==
+						ResourceConstants.SCOPE_GROUP) {
+
 				jsonObject.put(
 					"primKey",
 					String.valueOf(serviceContext.getScopeGroupId()));

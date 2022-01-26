@@ -47,7 +47,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
 		_countryService = countryService;
 
-		_commercePaymentMethodRequestHelper =
+		commercePaymentMethodRequestHelper =
 			new CommercePaymentMethodRequestHelper(httpServletRequest);
 	}
 
@@ -61,7 +61,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		}
 
 		return ParamUtil.getLong(
-			_commercePaymentMethodRequestHelper.getRequest(),
+			commercePaymentMethodRequestHelper.getRequest(),
 			"commerceChannelId");
 	}
 
@@ -79,7 +79,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		}
 
 		return ParamUtil.getString(
-			_commercePaymentMethodRequestHelper.getRequest(),
+			commercePaymentMethodRequestHelper.getRequest(),
 			"commercePaymentMethodEngineKey");
 	}
 
@@ -122,16 +122,17 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 	public int getCountriesCount() throws PortalException {
 		return _countryService.getCompanyCountriesCount(
-			_commercePaymentMethodRequestHelper.getCompanyId());
+			commercePaymentMethodRequestHelper.getCompanyId());
 	}
+
+	protected final CommercePaymentMethodRequestHelper
+		commercePaymentMethodRequestHelper;
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
 	private final CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-	private final CommercePaymentMethodRequestHelper
-		_commercePaymentMethodRequestHelper;
 	private final CountryService _countryService;
 
 }

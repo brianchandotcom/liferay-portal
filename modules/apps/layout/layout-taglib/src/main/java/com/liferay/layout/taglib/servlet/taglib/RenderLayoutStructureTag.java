@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -526,8 +527,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		Layout layout = themeDisplay.getLayout();
 
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
+			LayoutTypePortlet layoutTypePortlet = _updateLayoutTemplate(
+				layout, themeDisplay.getLayoutTypePortlet(),
+				themeDisplay.getThemeId());
 
 			String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
 
@@ -828,6 +830,34 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 
 		jspWriter.write("</div>");
+	}
+
+	private LayoutTypePortlet _updateLayoutTemplate(
+			Layout layout, LayoutTypePortlet layoutTypePortlet, String themeId)
+		throws Exception {
+
+		String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
+
+		if (Validator.isNull(layoutTemplateId)) {
+			return layoutTypePortlet;
+		}
+
+		LayoutTemplate layoutTemplate =
+			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+				layoutTemplateId, false, themeId);
+
+		if (layoutTemplate != null) {
+			return layoutTypePortlet;
+		}
+
+		layoutTypePortlet.setLayoutTemplateId(
+			layout.getUserId(), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+		layout = LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
+		return (LayoutTypePortlet)layout.getLayoutType();
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";

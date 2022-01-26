@@ -21,6 +21,7 @@ import {
 } from '../../../common/services/liferay/graphql/queries';
 import {searchParams} from '../../../common/services/liferay/searchParams';
 import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
+import {ROLE_TYPES, SEARCH_PARAMS_KEYS} from '../../../common/utils/constants';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {CUSTOM_EVENT_TYPES} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
@@ -90,10 +91,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(
-						({name}) =>
-							name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
-					);
+					?.roleBriefs?.find(({name}) => name === ROLE_TYPES.admin);
 
 				const userAccount = {
 					...data.userAccount,
@@ -187,7 +185,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 		const fetchData = async () => {
 			const projectExternalReferenceCode = searchParams.get(
-				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+				SEARCH_PARAMS_KEYS.accountKey
 			);
 			const user = await getUser(projectExternalReferenceCode);
 

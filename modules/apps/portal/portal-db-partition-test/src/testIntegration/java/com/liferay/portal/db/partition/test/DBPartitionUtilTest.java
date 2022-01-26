@@ -36,6 +36,8 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -147,11 +149,34 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testForEachCompanyId() throws Exception {
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+		try {
+			addDBPartition();
 
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> Assert.assertEquals(
-				companyId, CompanyThreadLocal.getCompanyId()));
+			insertCompanyAndDefaultUser();
+
+			Set<Long> threadIds = new ConcurrentSkipListSet<>();
+			Set<Long> companyIds = new ConcurrentSkipListSet<>();
+
+			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					Assert.assertEquals(
+						companyId, CompanyThreadLocal.getCompanyId());
+
+					companyIds.add(companyId);
+
+					Thread thread = Thread.currentThread();
+
+					threadIds.add(thread.getId());
+				});
+
+			Assert.assertEquals(threadIds.toString(), 2, threadIds.size());
+			Assert.assertEquals(companyIds.toString(), 2, companyIds.size());
+		}
+		finally {
+			deleteCompanyAndDefaultUser();
+		}
 	}
 
 	@Test

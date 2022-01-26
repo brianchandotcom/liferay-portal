@@ -7819,19 +7819,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/wsdl4j.jar</file-name>
-				<version>1.6.3</version>
-				<project-name>WSDL4J</project-name>
-				<project-url>http://sourceforge.net/projects/wsdl4j</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Public License 1.0</license-name>
-						<license-url>http://opensource.org/licenses/cpl1.0.php</license-url>
-						<copyright-notice>Copyright (c) IBM Corp 2001, 2005</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/wstx.jar</file-name>
 				<version>3.2.8</version>
 				<project-name>Woodstox</project-name>

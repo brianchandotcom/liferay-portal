@@ -15,7 +15,11 @@
 package com.liferay.headless.commerce.admin.channel.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,6 +54,24 @@ public class Mutation {
 
 		_channelResourceComponentServiceObjects =
 			channelResourceComponentServiceObjects;
+	}
+
+	public static void
+		setPaymentMethodGroupRelOrderTypeResourceComponentServiceObjects(
+			ComponentServiceObjects<PaymentMethodGroupRelOrderTypeResource>
+				paymentMethodGroupRelOrderTypeResourceComponentServiceObjects) {
+
+		_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects =
+			paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
+	}
+
+	public static void
+		setPaymentMethodGroupRelTermResourceComponentServiceObjects(
+			ComponentServiceObjects<PaymentMethodGroupRelTermResource>
+				paymentMethodGroupRelTermResourceComponentServiceObjects) {
+
+		_paymentMethodGroupRelTermResourceComponentServiceObjects =
+			paymentMethodGroupRelTermResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -181,6 +203,104 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean deletePaymentMethodGroupRelOrderType(
+			@GraphQLName("paymentMethodGroupRelOrderTypeId") Long
+				paymentMethodGroupRelOrderTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelOrderTypeResource ->
+				paymentMethodGroupRelOrderTypeResource.
+					deletePaymentMethodGroupRelOrderType(
+						paymentMethodGroupRelOrderTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deletePaymentMethodGroupRelOrderTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelOrderTypeResource ->
+				paymentMethodGroupRelOrderTypeResource.
+					deletePaymentMethodGroupRelOrderTypeBatch(
+						callbackURL, object));
+	}
+
+	@GraphQLField
+	public PaymentMethodGroupRelOrderType
+			createPaymentMethodGroupRelIdPaymentMethodGroupRelOrderType(
+				@GraphQLName("id") Long id,
+				@GraphQLName("paymentMethodGroupRelOrderType")
+					PaymentMethodGroupRelOrderType
+						paymentMethodGroupRelOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelOrderTypeResource ->
+				paymentMethodGroupRelOrderTypeResource.
+					postPaymentMethodGroupRelIdPaymentMethodGroupRelOrderType(
+						id, paymentMethodGroupRelOrderType));
+	}
+
+	@GraphQLField
+	public boolean deletePaymentMethodGroupRelTerm(
+			@GraphQLName("paymentMethodGroupRelTermId") Long
+				paymentMethodGroupRelTermId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelTermResource ->
+				paymentMethodGroupRelTermResource.
+					deletePaymentMethodGroupRelTerm(
+						paymentMethodGroupRelTermId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deletePaymentMethodGroupRelTermBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelTermResource ->
+				paymentMethodGroupRelTermResource.
+					deletePaymentMethodGroupRelTermBatch(callbackURL, object));
+	}
+
+	@GraphQLField
+	public PaymentMethodGroupRelTerm
+			createPaymentMethodGroupRelIdPaymentMethodGroupRelTerm(
+				@GraphQLName("id") Long id,
+				@GraphQLName("paymentMethodGroupRelTerm")
+					PaymentMethodGroupRelTerm paymentMethodGroupRelTerm)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelTermResource ->
+				paymentMethodGroupRelTermResource.
+					postPaymentMethodGroupRelIdPaymentMethodGroupRelTerm(
+						id, paymentMethodGroupRelTerm));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -232,8 +352,52 @@ public class Mutation {
 		channelResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			PaymentMethodGroupRelOrderTypeResource
+				paymentMethodGroupRelOrderTypeResource)
+		throws Exception {
+
+		paymentMethodGroupRelOrderTypeResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		paymentMethodGroupRelOrderTypeResource.setContextCompany(_company);
+		paymentMethodGroupRelOrderTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		paymentMethodGroupRelOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		paymentMethodGroupRelOrderTypeResource.setContextUriInfo(_uriInfo);
+		paymentMethodGroupRelOrderTypeResource.setContextUser(_user);
+		paymentMethodGroupRelOrderTypeResource.setGroupLocalService(
+			_groupLocalService);
+		paymentMethodGroupRelOrderTypeResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			PaymentMethodGroupRelTermResource paymentMethodGroupRelTermResource)
+		throws Exception {
+
+		paymentMethodGroupRelTermResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		paymentMethodGroupRelTermResource.setContextCompany(_company);
+		paymentMethodGroupRelTermResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		paymentMethodGroupRelTermResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		paymentMethodGroupRelTermResource.setContextUriInfo(_uriInfo);
+		paymentMethodGroupRelTermResource.setContextUser(_user);
+		paymentMethodGroupRelTermResource.setGroupLocalService(
+			_groupLocalService);
+		paymentMethodGroupRelTermResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<PaymentMethodGroupRelOrderTypeResource>
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PaymentMethodGroupRelTermResource>
+		_paymentMethodGroupRelTermResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

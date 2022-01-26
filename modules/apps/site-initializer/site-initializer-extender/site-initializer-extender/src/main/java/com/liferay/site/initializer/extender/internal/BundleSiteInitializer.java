@@ -2224,11 +2224,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-			if (jsonObject.getInt("scope") == 1) {
+			if (jsonObject.getInt("scope") == ResourceConstants.SCOPE_COMPANY) {
 				jsonObject.put(
 					"primKey", String.valueOf(serviceContext.getCompanyId()));
 			}
-			else if (jsonObject.getInt("scope") == 2) {
+			else if (jsonObject.getInt("scope") == ResourceConstants.SCOPE_GROUP) {
 				jsonObject.put(
 					"primKey",
 					String.valueOf(serviceContext.getScopeGroupId()));

@@ -33,7 +33,8 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 				SEARCH_PARAMS_KEYS.accountKey
 			}=${project.accountKey}`;
@@ -56,12 +57,13 @@ const Pages = () => {
 					handlePage={(isSuccess) => {
 						if (isSuccess) {
 							dispatch({
-								payload: steps.successDxpCloud,
+								payload: ONBOARDING_STEP_TYPES.successDxpCloud,
 								type: actionTypes.CHANGE_STEP,
 							});
-						} else {
+						}
+						else {
 							window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
-								PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+								SEARCH_PARAMS_KEYS.accountKey
 							}=${project.accountKey}`;
 						}
 					}}

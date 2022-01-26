@@ -10,7 +10,6 @@
  */
 
 export * from './apiBaseUrl';
-export * from './rolePermissionTypes';
 export * from './roleTypes';
 export * from './routeTypes';
 export * from './searchParamsKeys';

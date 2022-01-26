@@ -14,6 +14,7 @@ import {Liferay} from '../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../components/ActivationStatus/index';
 import DeveloperKeysLayouts from '../../layouts/DeveloperKeysLayout';
+import {PRODUCT_TYPES} from '../../utils/constants';
 
 const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
@@ -47,7 +48,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 				project={project}
 				subscriptionGroupDXPCloud={subscriptionGroups.find(
 					(subscriptionGroup) =>
-						subscriptionGroup.name === PRODUCTS.dxp_cloud
+						subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
 				)}
 				userAccount={userAccount}
 			/>

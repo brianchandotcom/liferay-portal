@@ -19,7 +19,11 @@ import {
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
 import {searchParams} from '../../../common/services/liferay/searchParams';
-import {ROUTE_TYPES} from '../../../common/utils/constants';
+import {
+	ROLE_TYPES,
+	ROUTE_TYPES,
+	SEARCH_PARAMS_KEYS,
+} from '../../../common/utils/constants';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {PRODUCT_TYPES} from '../../customer-portal/utils/constants';
 import {ONBOARDING_STEP_TYPES} from '../utils/constants';
@@ -53,10 +57,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(
-						({name}) =>
-							name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
-					);
+					?.roleBriefs?.find(({name}) => name === ROLE_TYPES.admin);
 
 				const userAccount = {
 					...data.userAccount,
@@ -111,7 +112,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 
 		const fetchData = async () => {
 			const projectExternalReferenceCode = searchParams.get(
-				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+				SEARCH_PARAMS_KEYS.accountKey
 			);
 
 			const user = await getUser(projectExternalReferenceCode);

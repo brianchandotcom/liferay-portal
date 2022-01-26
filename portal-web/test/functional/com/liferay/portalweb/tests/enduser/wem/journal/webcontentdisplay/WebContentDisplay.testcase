@@ -201,7 +201,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content with a portlet URL") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -320,7 +320,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@priority = "4"
 	test ChangeTemplate {
 		task ("Add a web content template with three content fields") {
-			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+			WebContentTemplates.openWebContentTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			WebContentTemplates.addCP(
 				structureName = "Basic Web Content",
@@ -541,7 +541,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Get latest URL version") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title");
 
@@ -551,7 +551,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Upload an audio in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -593,7 +593,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Upload an image in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -630,7 +630,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		property testray.component.names = "Web Content Administration";
 
 		task ("Add an external video shortcut") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			VideoShortcut.addCP(
 				videoShortcutTitle = "Liferay Digital Experience Platform",
@@ -645,7 +645,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Upload a video in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -977,7 +977,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@priority = "5"
 	test ValidateRemoteCodeViaTemplatesCannotCauseOutOfMemoryErrors {
 		task ("Add a text field to web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1036,7 +1036,7 @@ ${company.getKeyObj()}
 	@priority = "5"
 	test ValidateTemplateRCEReturnsNoRuntimeClasses {
 		task ("Add a text field to web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1180,7 +1180,7 @@ ${runtimeInstance}
 		}
 
 		task ("Add a Spanish translation to first web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
@@ -1320,7 +1320,7 @@ ${runtimeInstance}
 		}
 
 		task ("Remove View permission for guest role in Web Content Admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Web Content Title",
@@ -1376,7 +1376,7 @@ ${runtimeInstance}
 		}
 
 		task ("Expire the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.expireSpecificVersionCP(webContentTitle = "Web Content Title");
 		}
@@ -1496,7 +1496,7 @@ ${runtimeInstance}
 	@priority = "5"
 	test ViewNoFileSystemAccessViaJournalTemplates {
 		task ("Add a web content structure with a text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 

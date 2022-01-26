@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import ProjectContacts from '../ProjectContacts';
-import QuickLinksPanel from '../QuickLinksPanel';
+import ProjectContacts from '../../components/ProjectContacts';
+import QuickLinksPanel from '../../containers/QuickLinksPanel';
 
 const Layout = ({children, hasProjectContact, hasQuickLinks, project}) => {
 	return (

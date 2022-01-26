@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -264,11 +265,17 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		InfoItemFieldValues infoItemFieldValues =
 			translationSnapshot.getInfoItemFieldValues();
 
-		_translationEntryService.addOrUpdateTranslationEntry(
-			groupId,
-			_language.getLanguageId(translationSnapshot.getTargetLocale()),
-			infoItemFieldValues.getInfoItemReference(), infoItemFieldValues,
-			ServiceContextFactory.getInstance(actionRequest));
+		try {
+			_translationEntryService.addOrUpdateTranslationEntry(
+				groupId,
+				_language.getLanguageId(translationSnapshot.getTargetLocale()),
+				infoItemFieldValues.getInfoItemReference(), infoItemFieldValues,
+				ServiceContextFactory.getInstance(actionRequest));
+		}
+		catch (InfoItemPermissionException infoItemPermissionException) {
+			throw new XLIFFFileException.MustHaveValidModel(
+				infoItemPermissionException.getMessage());
+		}
 	}
 
 	private void _processUploadedFile(

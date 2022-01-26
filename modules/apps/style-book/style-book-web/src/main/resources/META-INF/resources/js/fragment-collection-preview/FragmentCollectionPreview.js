@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import React from 'react';
 
 import {FragmentPreview} from './FragmentPreview';
@@ -21,13 +22,19 @@ import '../../css/FragmentCollectionPreview.scss';
 export default function FragmentCollectionPreview({fragments, namespace}) {
 	return (
 		<>
-			{fragments.map((fragment) => (
-				<FragmentPreview
-					fragment={fragment}
-					key={fragment.name}
-					namespace={namespace}
-				/>
-			))}
+			{fragments.length ? (
+				fragments.map((fragment) => (
+					<FragmentPreview
+						fragment={fragment}
+						key={fragment.name}
+						namespace={namespace}
+					/>
+				))
+			) : (
+				<ClayAlert className="m-3" displayType="info">
+					{Liferay.Language.get('there-are-no-fragments')}
+				</ClayAlert>
+			)}
 		</>
 	);
 }

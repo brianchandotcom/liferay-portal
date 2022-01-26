@@ -66,6 +66,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -184,6 +185,7 @@ public class BundleSiteInitializerTest {
 			_assertPermissions(group);
 			_assertRemoteApp(group);
 			_assertSAPEntries(group);
+			_assertSiteConfiguration(group.getGroupId());
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
@@ -893,6 +895,16 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			allowedServiceSignaturesList2.toString(), 5,
 			allowedServiceSignaturesList2.size());
+	}
+
+	private void _assertSiteConfiguration(Long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, group.getType());
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			group.getMembershipRestriction());
+		Assert.assertTrue(group.isManualMembership());
 	}
 
 	private void _assertSiteNavigationMenu(Group group) {

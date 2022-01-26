@@ -7,9 +7,15 @@ definition {
 	property testray.main.component.name = "Look And Feel";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -18,72 +24,92 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
 	}
 
+	@description = "The user could define the look and feel of widgets."
 	@priority = "5"
-	test ConfigureCustomStylesViaLookAndFeelPG {
+	test ConfigureLookAndFeelOfWidget {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page Name",
-			widgetName = "Sign In");
+		task ("Add a Sign In widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Sign In");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page Name",
-			widgetName = "Web Content Display");
+		task ("Define a custom text style in Sign In widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoPage(pageName = "Test Page Name");
+			Portlet.gotoPortletOptions(
+				portletName = "Sign In",
+				portletOption = "Look and Feel Configuration");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Sign In",
-			portletOption = "Look and Feel Configuration");
+			IFrame.selectConfigurationFrame();
 
-		IFrame.selectConfigurationFrame();
+			Portlet.configureCustomStylesViaLookandfeelPG();
 
-		Portlet.configureCustomStylesViaLookandfeelPG();
+			PortletEntry.save();
 
-		PortletEntry.save();
+			Refresh();
+		}
 
-		Navigator.gotoPage(pageName = "Test Page Name");
+		task ("View custom styles are shown") {
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "font-family",
+				value1 = "Verdana");
 
-		Portlet.viewCustomStylesViaLookandfeelPG();
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "font-size",
+				value1 = "28px");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration");
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "border-top-width",
+				value1 = "1px");
+		}
 
-		IFrame.selectConfigurationFrame();
+		task ("Select decorate as application decorators to Sign In without save") {
+			Portlet.gotoPortletOptions(
+				portletName = "Sign In",
+				portletOption = "Look and Feel Configuration");
 
-		Portlet.configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = "Decorate");
+			IFrame.selectConfigurationFrame();
 
-		Button.clickCancel();
+			Portlet.configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = "Decorate");
 
-		Navigator.gotoPage(pageName = "Test Page Name");
+			Button.clickCancel();
+		}
 
-		Portlet.viewApplicationDecorator(decorator = "Borderless");
+		task ("View barebone is still shwon as application decorators") {
+			Portlet.viewApplicationDecorator(decorator = "Borderless");
+		}
 
-		Portlet.configureApplicationDecorator(
-			decorator = "Decorate",
-			portletName = "Web Content Display");
+		task ("View decorate and borderless are shown after selected in application decorators") {
+			for (var decoratorName : list "Decorate,Barebone") {
+				Portlet.configureApplicationDecorator(
+					decorator = "${decoratorName}",
+					portletName = "Sign In");
 
-		Navigator.gotoPage(pageName = "Test Page Name");
+				IFrame.closeFrame();
 
-		Portlet.viewApplicationDecorator(decorator = "Decorate");
-
-		Portlet.configureApplicationDecorator(
-			decorator = "Barebone",
-			portletName = "Web Content Display");
-
-		Navigator.gotoPage(pageName = "Test Page Name");
-
-		Portlet.viewApplicationDecorator(decorator = "Barebone");
+				Portlet.viewApplicationDecorator(decorator = "${decoratorName}");
+			}
+		}
 	}
 
 }

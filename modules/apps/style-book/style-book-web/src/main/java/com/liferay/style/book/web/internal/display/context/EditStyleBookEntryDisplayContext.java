@@ -15,6 +15,7 @@
 package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
+import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -85,6 +87,9 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)renderRequest.getAttribute(
+				StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
@@ -492,6 +497,8 @@ public class EditStyleBookEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());
 
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;

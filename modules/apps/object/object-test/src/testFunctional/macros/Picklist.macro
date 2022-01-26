@@ -94,6 +94,20 @@ definition {
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
+	macro assertItemNameAndItemKeyOnModal {
+		AssertElementPresent(
+			key_itemName = "${itemName}",
+			locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME");
+
+		AssertElementPresent(
+			key_labelName = "${itemName}",
+			locator1 = "ObjectAdmin#VIEW_SIMPLE_TEXT_GENERIC");
+
+		AssertElementPresent(
+			key_itemKey = "${itemKey}",
+			locator1 = "Picklist#VIEW_PICKLIST_ITEM_KEY");
+	}
+
 	macro assertPicklist {
 		var key_picklistName = "${picklistName}";
 

@@ -535,6 +535,11 @@
 		<td>//div[contains(@class,'dnd-tr') and contains (.,'${key_actionName}') and contains (.,'${key_actionActive}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_SIMPLE_TEXT_GENERIC</td>
+		<td>//div[contains(text(),'${key_labelName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

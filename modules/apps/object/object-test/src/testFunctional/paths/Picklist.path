@@ -140,6 +140,16 @@
 		<td>//div[(@class='form-builder-select-field input-group-container')and contains(.,'${key_selectField}')]/div[@class='form-control results-chosen select-field-trigger']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_ITEM_NAME</td>
+		<td>//input[@id=('locale') and @value=('${key_itemName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_ITEM_KEY</td>
+		<td>//input[@id=('listTypeEntryKey') and @value=('${key_itemKey}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

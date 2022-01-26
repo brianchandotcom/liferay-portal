@@ -16,6 +16,8 @@ package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
@@ -24,12 +26,14 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -47,6 +51,7 @@ import com.liferay.portal.util.PortalImpl;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +59,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,6 +86,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		browserSnifferUtil.setBrowserSniffer(new BrowserSnifferImpl());
 
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -86,9 +97,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResource() throws Exception {
-		ContentDashboardItem<?> contentDashboardItem = _getContentDashboardItem(
-			"assetCategory", "assetTag", "className", 12345L);
-
 		User user = Mockito.mock(User.class);
 
 		Mockito.when(
@@ -102,6 +110,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		).thenReturn(
 			"portraitURL"
 		);
+
+		ContentDashboardItem<?> contentDashboardItem = _getContentDashboardItem(
+			"className", 12345L, user);
 
 		_initGetContentDashboardItemInfoMVCResourceCommand(
 			contentDashboardItem, user);
@@ -122,13 +133,26 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			new String(byteArrayOutputStream.toByteArray()));
 
-		JSONArray categoriesJSONArray = jsonObject.getJSONArray("categories");
+		JSONObject vocabulariesJSONObject = jsonObject.getJSONObject(
+			"vocabularies");
 
-		Assert.assertEquals(
-			JSONUtil.put(
-				"assetCategory"
-			).toString(),
-			categoriesJSONArray.toString());
+		List<AssetCategory> assetCategories =
+			contentDashboardItem.getAssetCategories();
+
+		for (AssetCategory assetCategory : assetCategories) {
+			JSONObject vocabularyDataJSONObject =
+				vocabulariesJSONObject.getJSONObject(
+					String.valueOf(assetCategory.getVocabularyId()));
+
+			JSONArray categoriesJSONArray =
+				vocabularyDataJSONObject.getJSONArray("categories");
+
+			Assert.assertEquals(1, categoriesJSONArray.length());
+
+			Assert.assertEquals(
+				assetCategory.getTitle(LocaleUtil.getSiteDefault()),
+				categoriesJSONArray.getString(0));
+		}
 
 		InfoItemReference infoItemReference =
 			contentDashboardItem.getInfoItemReference();
@@ -141,9 +165,19 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 
+		List<AssetTag> assetTags = contentDashboardItem.getAssetTags();
+
+		Stream<AssetTag> stream = assetTags.stream();
+
 		Assert.assertEquals(
-			JSONUtil.put(
-				"assetTag"
+			JSONUtil.putAll(
+				stream.map(
+					AssetTag::getName
+				).collect(
+					Collectors.toList()
+				).toArray(
+					new String[0]
+				)
 			).toString(),
 			tagsJSONArray.toString());
 
@@ -171,10 +205,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
 		Assert.assertEquals(
-			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
-		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
+		Assert.assertEquals(
+			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
 		Assert.assertEquals("portraitURL", userJSONObject.getString("url"));
 
 		List<ContentDashboardItem.Version> versions =
@@ -196,7 +230,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	@Test
 	public void testServeResourceWithoutUser() throws Exception {
 		ContentDashboardItem<?> contentDashboardItem = _getContentDashboardItem(
-			"assetCategory", "assetTag", "className", 12345L);
+			"className", 12345L, null);
 
 		_initGetContentDashboardItemInfoMVCResourceCommand(
 			contentDashboardItem, null);
@@ -218,33 +252,85 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
 		Assert.assertEquals(
-			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
-		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
+		Assert.assertEquals(
+			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
 	}
 
 	private ContentDashboardItem _getContentDashboardItem(
-		String assetCategoryTitle, String assetTagName, String className,
-		long classPK) {
+		String className, long classPK, User user) {
 
-		String userName = RandomTestUtil.randomString();
-		long userId = RandomTestUtil.randomInt();
+		String userName = Optional.ofNullable(
+			user
+		).map(
+			u -> u.getFirstName()
+		).orElseGet(
+			RandomTestUtil::randomString
+		);
+
+		long userId = Optional.ofNullable(
+			user
+		).map(
+			u -> u.getUserId()
+		).orElseGet(
+			RandomTestUtil::randomLong
+		);
+
+		AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory1.getName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetCategory1.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetCategory1.getVocabularyId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		AssetCategory assetCategory2 = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory2.getName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetCategory2.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetCategory2.getVocabularyId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		AssetTag assetTag = Mockito.mock(AssetTag.class);
+
+		Mockito.when(
+			assetTag.getName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
 
 		return new ContentDashboardItem() {
 
 			@Override
 			public List<AssetCategory> getAssetCategories() {
-				AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
-
-				Mockito.when(
-					assetCategory.getTitle(Mockito.any(Locale.class))
-				).thenReturn(
-					assetCategoryTitle
-				);
-
-				return Collections.singletonList(assetCategory);
+				return Arrays.asList(assetCategory1, assetCategory2);
 			}
 
 			@Override
@@ -254,15 +340,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 			@Override
 			public List<AssetTag> getAssetTags() {
-				AssetTag assetCategory = Mockito.mock(AssetTag.class);
-
-				Mockito.when(
-					assetCategory.getName()
-				).thenReturn(
-					assetTagName
-				);
-
-				return Collections.singletonList(assetCategory);
+				return Collections.singletonList(assetTag);
 			}
 
 			@Override
@@ -428,11 +506,37 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	private void _initGetContentDashboardItemInfoMVCResourceCommand(
-			ContentDashboardItem contentDashboardItem, User user)
-		throws Exception {
+		ContentDashboardItem<?> contentDashboardItem, User user) {
 
 		_getContentDashboardItemInfoMVCResourceCommand =
 			new GetContentDashboardItemInfoMVCResourceCommand();
+
+		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
+			AssetVocabularyLocalService.class);
+
+		for (AssetCategory assetCategory :
+				contentDashboardItem.getAssetCategories()) {
+
+			AssetVocabulary assetVocabulary = Mockito.mock(
+				AssetVocabulary.class);
+
+			Mockito.when(
+				assetVocabulary.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			Mockito.when(
+				assetVocabularyLocalService.fetchAssetVocabulary(
+					assetCategory.getVocabularyId())
+			).thenReturn(
+				assetVocabulary
+			);
+		}
+
+		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand,
+			"_assetVocabularyLocalService", assetVocabularyLocalService);
 
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand,
@@ -474,6 +578,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 			});
+
+		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand,
+			"_groupLocalService", Mockito.mock(GroupLocalService.class));
 
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_http",

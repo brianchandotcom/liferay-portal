@@ -11,10 +11,10 @@
 
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
+import ModalCardSubscription from '../../containers/ModalCardSubscription';
 import {useCustomerPortal} from '../../context';
-import {status as statusCard} from '../../utils/constants';
-import getDateCustomFormat from '../../utils/dateCustomFormat';
-import ModalCardSubscription from '../ModalCardSubscription';
+import {STATUS_TAG_TYPES} from '../../utils/constants';
+import getDateCustomFormat from '../../utils/getDateCustomFormat';
 import StatusTag from '../StatusTag';
 
 const dateFormat = {
@@ -63,7 +63,7 @@ const CardSubscription = ({
 				/>
 			)}
 			<div
-				className="border border-light card-subscription p-4 rounded"
+				className="border border-light cp-card-subscription p-4 rounded"
 				onClick={() => setVisible(true)}
 			>
 				<div className="text-center">
@@ -100,7 +100,7 @@ const CardSubscription = ({
 
 					<div className="d-flex justify-content-center">
 						<StatusTag
-							currentStatus={statusCard[subscriptionStatus]}
+							currentStatus={STATUS_TAG_TYPES[subscriptionStatus]}
 						/>
 					</div>
 				</div>

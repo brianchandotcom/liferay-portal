@@ -15,17 +15,15 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
-import BaseButton from '../../../../common/components/BaseButton';
-import SetupDXPCloud from '../../../../common/components/onboarding/SetupDXPCloud';
+import {Button} from '../../../../common/components';
+import SetupDXPCloud from '../../../../common/containers/setup-forms/SetupDXPCloudForm';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
 } from '../../../../common/services/liferay/graphql/queries';
-import {getCurrentEndDate} from '../../../../common/utils/';
-import {ACTIVATION_STATUS_DXP_CLOUD} from '../../../../common/utils/constants';
+import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
-import {status} from '../../utils/constants';
 import StatusTag from '../StatusTag';
 
 const SetupDXPCloudModal = ({
@@ -113,14 +111,14 @@ const ActivationStatus = ({
 		},
 		[ACTIVATION_STATUS_DXP_CLOUD.notActivated]: {
 			buttonLink: userAccount.isAdmin && (
-				<BaseButton
+				<Button
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"
 					displayType="link"
 					onClick={() => setVisible(true)}
 				>
 					Finish Activation
-				</BaseButton>
+				</Button>
 			),
 			id: status.notActivated,
 			subtitle:

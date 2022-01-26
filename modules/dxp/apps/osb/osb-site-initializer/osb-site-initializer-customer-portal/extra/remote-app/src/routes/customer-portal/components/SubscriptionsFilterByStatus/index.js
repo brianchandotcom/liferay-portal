@@ -47,7 +47,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				active={active}
 				closeOnClickOutside
 				menuElementAttrs={{
-					className: 'subscription-status-filter',
+					className: 'cp-subscription-status-filter',
 				}}
 				onActiveChange={setActive}
 				trigger={

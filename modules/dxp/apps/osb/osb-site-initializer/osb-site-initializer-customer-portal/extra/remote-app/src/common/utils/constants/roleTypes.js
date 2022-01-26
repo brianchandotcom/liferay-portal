@@ -9,56 +9,25 @@
  * distribution rights of the Software.
  */
 
-export const ROUTES = {
-	ONBOARDING: 'onboarding',
-	OVERVIEW: 'overview',
-};
-
-export const ROLES_PERMISSIONS = {
-	ACCOUNT_ADMINISTRATOR: 'Account Administrator',
-};
-
-export const roles = {
-	ADMIN: {
+export const ROLE_TYPES = {
+	admin: {
 		key: 'Account Administrator',
 		name: 'Administrator',
 	},
-	MEMBER: {
+	member: {
 		key: 'Account Member',
 		name: 'User',
 	},
-	PARTNER_MANAGER: {
+	partnerManager: {
 		key: 'Partner Manager',
 		name: 'Partner Manager',
 	},
-	PARTNER_MEMBER: {
+	partnerMember: {
 		key: 'Partner Member',
 		name: 'Partner Member',
 	},
-	REQUESTOR: {
+	requestor: {
 		key: 'Requestor',
 		name: 'Requestor',
 	},
-};
-
-export function getInitialDxpAdmin() {
-	return {
-		email: '',
-		firstName: '',
-		github: '',
-		lastName: '',
-	};
-}
-
-export function getInitialInvite(roleId = '') {
-	return {
-		email: '',
-		roleId,
-	};
-}
-
-export const ACTIVATION_STATUS_DXP_CLOUD = {
-	active: 'Active',
-	inProgress: 'In Progress',
-	notActivated: 'Not Activated',
 };

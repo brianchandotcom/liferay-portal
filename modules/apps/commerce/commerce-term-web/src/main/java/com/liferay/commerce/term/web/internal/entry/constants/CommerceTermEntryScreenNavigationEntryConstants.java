@@ -15,13 +15,16 @@
 package com.liferay.commerce.term.web.internal.entry.constants;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
  */
-public class CommerceTermEntryClayDataSetDisplayNames {
+public class CommerceTermEntryScreenNavigationEntryConstants {
 
-	public static final String COMMERCE_TERM_ENTRIES = "commerceTermEntries";
+	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String COMMERCE_TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
-		"commerceTermEntryQualifierCommerceOrderTypes";
+	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_TERM_ENTRY_GENERAL =
+			"commerce.term.entry.general";
 
 }

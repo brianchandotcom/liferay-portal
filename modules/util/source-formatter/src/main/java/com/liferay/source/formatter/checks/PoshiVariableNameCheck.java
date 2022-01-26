@@ -469,7 +469,10 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String[][] _ALL_CAPS_STRINGS = {{"URL", "Url"}};
+	private static final String[][] _ALL_CAPS_STRINGS = {
+		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"},
+		{"URL", "Url"}
+	};
 
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
 		"((?:<var name|<isset var|for param|return name)=\")(.+?)(\")");

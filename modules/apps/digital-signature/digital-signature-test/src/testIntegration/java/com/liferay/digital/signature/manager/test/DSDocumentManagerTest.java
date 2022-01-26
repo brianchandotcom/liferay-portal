@@ -15,24 +15,30 @@
 package com.liferay.digital.signature.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.manager.DSDocumentManager;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,6 +56,52 @@ public class DSDocumentManagerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_configurationProvider.saveCompanyConfiguration(
+			DigitalSignatureConfiguration.class, TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"accountBaseURI",
+				TestPropsUtil.get("digital.signature.account.base.uri")
+			).put(
+				"apiAccountId",
+				TestPropsUtil.get("digital.signature.api.accountId")
+			).put(
+				"apiUsername",
+				TestPropsUtil.get("digital.signature.api.username")
+			).put(
+				"enabled", true
+			).put(
+				"integrationKey",
+				TestPropsUtil.get("digital.signature.integration.key")
+			).put(
+				"rsaPrivateKey",
+				TestPropsUtil.get("digital.signature.rsa.private.key")
+			).put(
+				"siteSettingsStrategy",
+				TestPropsUtil.get("digital.signature.site.settings.strategy")
+			).build());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_configurationProvider.saveCompanyConfiguration(
+			DigitalSignatureConfiguration.class, TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"accountBaseURI", ""
+			).put(
+				"apiAccountId", ""
+			).put(
+				"apiUsername", ""
+			).put(
+				"enabled", false
+			).put(
+				"integrationKey", ""
+			).put(
+				"rsaPrivateKey", ""
+			).build());
+	}
 
 	@Test
 	public void testGetDSDocumentsAsBytes() throws Exception {
@@ -92,6 +144,9 @@ public class DSDocumentManagerTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			dsEnvelope.getDSEnvelopeId());
 	}
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private DSDocumentManager _dsDocumentManager;

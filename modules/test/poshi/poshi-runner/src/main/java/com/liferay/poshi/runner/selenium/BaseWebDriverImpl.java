@@ -931,56 +931,51 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void dragAtAndDrop(
 		String locator, String offset, String destinationOffsets) {
 
-		try {
-			Matcher matcher = _coordinatePairsPattern.matcher(
-				destinationOffsets);
+		Matcher matcher = _coordinatePairsPattern.matcher(destinationOffsets);
 
-			if (!matcher.matches()) {
-				throw new Exception(
-					"Coordinate pairs \"" + destinationOffsets +
-						"\" do not match pattern \"" +
-							_coordinatePairsPattern.pattern() + "\"");
-			}
-
-			WebElement webElement = getWebElement(locator);
-
-			Actions actions = new Actions(getWrappedWebDriver(webElement));
-
-			if (Validator.isNotNull(offset)) {
-				String[] offsetCoordinates = offset.split(",");
-
-				int x = GetterUtil.getInteger(offsetCoordinates[0]);
-				int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-				actions.moveToElement(webElement, x, y);
-
-				actions.clickAndHold();
-			}
-			else {
-				actions.clickAndHold(webElement);
-			}
-
-			actions.pause(1500);
-
-			for (String destinationOffset : destinationOffsets.split("\\|")) {
-				String[] destinationOffsetCoordinates = destinationOffset.split(
-					",");
-
-				actions.moveByOffset(
-					GetterUtil.getInteger(destinationOffsetCoordinates[0]),
-					GetterUtil.getInteger(destinationOffsetCoordinates[1]));
-			}
-
-			actions.pause(1500);
-
-			actions.release();
-
-			Action action = actions.build();
-
-			action.perform();
+		if (!matcher.matches()) {
+			throw new IllegalArgumentException(
+				"Coordinate pairs \"" + destinationOffsets +
+					"\" do not match pattern \"" +
+						_coordinatePairsPattern.pattern() + "\"");
 		}
-		catch (Exception exception) {
+
+		WebElement webElement = getWebElement(locator);
+
+		Actions actions = new Actions(getWrappedWebDriver(webElement));
+
+		if (Validator.isNotNull(offset)) {
+			String[] offsetCoordinates = offset.split(",");
+
+			int x = GetterUtil.getInteger(offsetCoordinates[0]);
+			int y = GetterUtil.getInteger(offsetCoordinates[1]);
+
+			actions.moveToElement(webElement, x, y);
+
+			actions.clickAndHold();
 		}
+		else {
+			actions.clickAndHold(webElement);
+		}
+
+		actions.pause(1500);
+
+		for (String destinationOffset : destinationOffsets.split("\\|")) {
+			String[] destinationOffsetCoordinates = destinationOffset.split(
+				",");
+
+			actions.moveByOffset(
+				GetterUtil.getInteger(destinationOffsetCoordinates[0]),
+				GetterUtil.getInteger(destinationOffsetCoordinates[1]));
+		}
+
+		actions.pause(1500);
+
+		actions.release();
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override

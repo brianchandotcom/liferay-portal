@@ -384,7 +384,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 						FIELD_NAMES, delimiter, enclosingCharacter,
 						new Object[][] {
 							{
-								createDateString, "hey, here is a comma inside,
+								createDateString, "hey, here is a comma inside",
 								1, "sample name", "naziv"
 							}
 						})) {

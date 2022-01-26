@@ -38,7 +38,6 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 	>
 		<span class="heading-end">
 			<liferay-ui:icon
-				cssClass="modify-link"
 				id="selectAccountLink"
 				label="<%= true %>"
 				linkCssClass="btn btn-secondary btn-sm"
@@ -103,7 +102,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
-					<a class="modify-link" data-rowId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:;"><%= removeAccountEntryIcon %></a>
+					<a class="remove-link" data-rowId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:;"><%= removeAccountEntryIcon %></a>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -150,7 +149,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 				updateData();
 			},
-			'.modify-link'
+			'.remove-link'
 		);
 
 		var selectAccountLink = document.getElementById(
@@ -174,7 +173,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 								[
 									selectedItem.entityname,
 									'',
-									'<a class="modify-link" data-rowId="' +
+									'<a class="remove-link" data-rowId="' +
 										entityId +
 										'" href="javascript:;"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
 								],

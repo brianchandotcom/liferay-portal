@@ -34,8 +34,6 @@ const Overview = ({project, subscriptionGroups}) => {
 		SUBSCRIPTIONS_STATUS.future,
 	]);
 
-	const [allSubscriptions, setAllSubscriptions] = useState([]);
-
 	const [
 		subscriptionGroupsWithSubscriptions,
 		setSubscriptionGroupsWithSubscriptions,
@@ -45,22 +43,14 @@ const Overview = ({project, subscriptionGroups}) => {
 		return subscriptionName.toLowerCase().replace(' ', '-');
 	};
 
-	useEffect(() => {
-		const subscriptionsToRender = allSubscriptions
-			.filter(
-				(subscription) =>
-					subscription.accountSubscriptionGroupERC.replace(
-						`${project.accountKey}_`,
-						''
-					) ===
-					parseAccountSubscriptionGroupERC(selectedSubscriptionGroup)
-			)
-			.filter((subscription) =>
-				selectedStatus.includes(subscription.subscriptionStatus)
-			);
-
-		setAccountSubscriptions(subscriptionsToRender);
-	}, [allSubscriptions, project, selectedStatus, selectedSubscriptionGroup]);
+	const subscriptionsCards = accountSubscriptions.filter(
+		(subscription) =>
+			subscription.accountSubscriptionGroupERC.replace(
+				`${project.accountKey}_`,
+				''
+			) === parseAccountSubscriptionGroupERC(selectedSubscriptionGroup) &&
+			selectedStatus.includes(subscription.subscriptionStatus)
+	);
 
 	useEffect(() => {
 		const getAllSubscriptions = async (accountKey) => {
@@ -89,7 +79,7 @@ const Overview = ({project, subscriptionGroups}) => {
 						)
 				);
 
-				setAllSubscriptions(dataAllSubscriptions);
+				setAccountSubscriptions(dataAllSubscriptions);
 
 				setSubscriptionGroupsWithSubscriptions(
 					accountSubscriptionGroups
@@ -144,8 +134,8 @@ const Overview = ({project, subscriptionGroups}) => {
 					</div>
 
 					<div className="d-flex flex-wrap mt-4 overview-cards-subscription">
-						{accountSubscriptions.length ? (
-							accountSubscriptions.map(
+						{subscriptionsCards.length ? (
+							subscriptionsCards.map(
 								(accountSubscription, index) => (
 									<CardSubscription
 										cardSubscriptionData={

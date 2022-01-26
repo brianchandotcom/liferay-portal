@@ -130,8 +130,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						LanguageUtil.get(
 							_portal.getLocale(resourceRequest),
 							"model.resource." + className),
-						classPKs.size(), sourceLanguageId,
-						_portal.getLocale(resourceRequest)),
+						_isMultipleModels(classPKs, segmentsExperienceIds),
+						sourceLanguageId, _portal.getLocale(resourceRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 
@@ -233,9 +233,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 	private String _getPrefixName(
 		long classPK, String classNameTitle,
-		Optional<String> infoItemTitleOptional, int size, Locale locale) {
+		Optional<String> infoItemTitleOptional, boolean multipleModels,
+		Locale locale) {
 
-		if (size > 1) {
+		if (multipleModels) {
 			return classNameTitle + StringPool.SPACE +
 				LanguageUtil.get(locale, "translations");
 		}
@@ -256,8 +257,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private String _getZipFileName(
-			String className, long classPK, String classNameTitle, int size,
-			String sourceLanguageId, Locale locale)
+			String className, long classPK, String classNameTitle,
+			boolean multipleModels, String sourceLanguageId, Locale locale)
 		throws NoSuchInfoItemException {
 
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
@@ -267,12 +268,23 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
 
 		String prefixName = _getPrefixName(
-			classPK, classNameTitle, infoItemTitleOptional, size, locale);
+			classPK, classNameTitle, infoItemTitleOptional, multipleModels,
+			locale);
 
 		return StringBundler.concat(
 			StringUtil.removeSubstrings(
 				prefixName, PropsValues.DL_CHAR_BLACKLIST),
 			StringPool.DASH, sourceLanguageId, ".zip");
+	}
+
+	private boolean _isMultipleModels(
+		Set<Long> classPKs, long[] segmentsExperienceIds) {
+
+		if ((segmentsExperienceIds.length < 1) && (classPKs.size() > 1)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

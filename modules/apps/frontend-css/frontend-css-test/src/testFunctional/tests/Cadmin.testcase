@@ -59,15 +59,8 @@ definition {
 				value1 = "rgba(0, 0, 0, 0)");
 		}
 
-		task ("Upload test-theme.war") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "App Manager");
-
-			AppManager.uploadApp(
-				appName = "test-theme",
-				warFileName = "test-theme.war");
+		task ("Deploy test-theme.war") {
+			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 		}
 
 		task ("Apply theme to test page") {

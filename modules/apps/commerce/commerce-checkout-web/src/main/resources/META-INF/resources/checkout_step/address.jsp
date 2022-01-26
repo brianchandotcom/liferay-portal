@@ -42,13 +42,15 @@ if (commerceOrder.isGuestOrder()) {
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
 CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+boolean hasEditAddressesPermission = baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.MANAGE_ADDRESSES);
 %>
 
 <div class="form-group-autofit">
 	<c:if test="<%= !commerceOrder.isGuestOrder() %>">
 		<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.VIEW_ADDRESSES) %>">
 			<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
-				<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.MANAGE_ADDRESSES) %>">
+				<c:if test="<%= hasEditAddressesPermission %>">
 					<aui:option label="add-new-address" value="0" />
 				</c:if>
 
@@ -93,15 +95,15 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 <div class="address-fields">
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street1" placeholder="address" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="street1" placeholder="address" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="countryId" placeholder="country" title="country" wrapperCssClass="form-group-item">
+		<aui:select disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="countryId" placeholder="country" title="country" wrapperCssClass="form-group-item">
 			<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-a-valid-country") %>' name="min">1</aui:validator>
 		</aui:select>
 	</div>
@@ -109,34 +111,34 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 	<c:choose>
 		<c:when test="<%= (commerceAddressId > 0) && (!Validator.isBlank(currentCommerceAddress.getStreet2()) || !Validator.isBlank(currentCommerceAddress.getStreet3())) %>">
 			<div class="form-group-autofit">
-				<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street2" placeholder="address-2" wrapperCssClass="form-group-item" />
+				<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="street2" placeholder="address-2" wrapperCssClass="form-group-item" />
 
-				<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street3" placeholder="address-3" wrapperCssClass="form-group-item" />
+				<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="street3" placeholder="address-3" wrapperCssClass="form-group-item" />
 			</div>
 		</c:when>
 		<c:otherwise>
 			<div class="add-street-link form-group-autofit">
-				<aui:a disabled="<%= commerceAddressId > 0 %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
+				<aui:a disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
 			</div>
 
 			<div class="add-street-fields form-group-autofit hide">
-				<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street2" placeholder="address-2" wrapperCssClass="form-group-item" />
+				<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="street2" placeholder="address-2" wrapperCssClass="form-group-item" />
 
-				<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street3" placeholder="address-3" wrapperCssClass="form-group-item" />
+				<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="street3" placeholder="address-3" wrapperCssClass="form-group-item" />
 			</div>
 		</c:otherwise>
 	</c:choose>
 
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="regionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
+		<aui:select disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" label="" name="regionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdInput" label="" name="regionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" id="commerceRegionIdInput" label="" name="regionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdName" label="" name="regionId" placeholder="regionName" title="region" wrapperCssClass="d-none form-group-item" />
+		<aui:input disabled="<%= (commerceAddressId > 0) || !hasEditAddressesPermission %>" id="commerceRegionIdName" label="" name="regionId" placeholder="regionName" title="region" wrapperCssClass="d-none form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">

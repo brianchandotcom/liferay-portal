@@ -880,12 +880,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(offset) && offset.contains(",")) {
-			String[] offsetCoordinates = offset.split(",");
-
-			int x = GetterUtil.getInteger(offsetCoordinates[0]);
-			int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 
 			actions.doubleClick();
 		}
@@ -945,12 +940,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(offset)) {
-			String[] offsetCoordinates = offset.split(",");
-
-			int x = GetterUtil.getInteger(offsetCoordinates[0]);
-			int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 
 			actions.clickAndHold();
 		}
@@ -1957,12 +1947,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(offset) && offset.contains(",")) {
-			String[] offsetCoordinates = offset.split(",");
-
-			int x = GetterUtil.getInteger(offsetCoordinates[0]);
-			int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 
 			actions.clickAndHold();
 		}
@@ -2001,12 +1986,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(offset) && offset.contains(",")) {
-			String[] offsetCoordinates = offset.split(",");
-
-			int x = GetterUtil.getInteger(offsetCoordinates[0]);
-			int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 		}
 		else {
 			actions.moveToElement(webElement);
@@ -2083,12 +2063,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
 		if (Validator.isNotNull(offset) && offset.contains(",")) {
-			String[] offsetCoordinates = offset.split(",");
-
-			int x = GetterUtil.getInteger(offsetCoordinates[0]);
-			int y = GetterUtil.getInteger(offsetCoordinates[1]);
-
-			actions.moveToElement(webElement, x, y);
+			moveToElement(actions, webElement, offset);
 
 			actions.release();
 		}
@@ -4427,6 +4402,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		return false;
+	}
+
+	protected void moveToElement(
+		Actions actions, WebElement webElement, String offset) {
+
+		String[] offsetCoordinates = offset.split(",");
+
+		int x = GetterUtil.getInteger(offsetCoordinates[0]);
+		int y = GetterUtil.getInteger(offsetCoordinates[1]);
+
+		actions.moveToElement(webElement, x, y);
 	}
 
 	protected void ocularConfig() {

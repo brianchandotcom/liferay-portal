@@ -103,10 +103,19 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			return;
 		}
 
-		String fixedVariableName = variableName;
+		String expectedVariableName = _getExpectedVariableName(variableName);
 
-		String[] words = StringUtil.split(
-			fixedVariableName, StringPool.UNDERLINE);
+		if (!variableName.equals(expectedVariableName)) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Rename variable '", variableName, "' to '",
+					expectedVariableName, "' in '", message));
+
+			return;
+		}
+
+		String[] words = StringUtil.split(variableName, StringPool.UNDERLINE);
 
 		for (String word : words) {
 			if (!word.matches(_CAMEL_CASE_PATTERN)) {
@@ -116,8 +125,39 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 						"Variable '", variableName, "' in '", message,
 						"' must match camelCase pattern '", _CAMEL_CASE_PATTERN,
 						"'"));
+
+				return;
 			}
 		}
+	}
+
+	private String _getExpectedVariableName(String variableName) {
+		for (String[] array : _ALL_CAPS_STRINGS) {
+			String s = array[1];
+
+			int x = -1;
+
+			while (true) {
+				x = variableName.indexOf(s, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				int y = x + s.length();
+
+				if ((y != variableName.length()) &&
+					!Character.isUpperCase(variableName.charAt(y))) {
+
+					continue;
+				}
+
+				return variableName.substring(0, x) + array[0] +
+					variableName.substring(y);
+			}
+		}
+
+		return variableName;
 	}
 
 	private void _parsePoshiElements(
@@ -177,6 +217,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			_parsePoshiElements(fileName, commandName, element);
 		}
 	}
+
+	private static final String[][] _ALL_CAPS_STRINGS = {{"URL", "Url"}};
 
 	private static final String _CAMEL_CASE_PATTERN = "([a-z0-9]+([A-Z])?)+";
 

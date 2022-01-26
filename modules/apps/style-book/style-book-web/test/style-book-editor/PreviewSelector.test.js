@@ -98,6 +98,20 @@ jest.mock(
 					},
 					type: 'displayPageTemplate',
 				},
+				{
+					data: {
+						itemSelectorURL: 'fragment-collection-selector-url',
+						recentLayouts: [
+							{
+								name: 'Fragment Collection 1',
+								private: false,
+								url: 'fragment-collection-1-url',
+							},
+						],
+						totalLayouts: 1,
+					},
+					type: 'fragmentCollection',
+				},
 			],
 		},
 	})

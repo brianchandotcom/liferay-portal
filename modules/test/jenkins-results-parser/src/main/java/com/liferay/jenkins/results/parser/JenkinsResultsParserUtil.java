@@ -1870,6 +1870,32 @@ public class JenkinsResultsParserUtil {
 		return gitDirectoryJSONObject.getString("branch");
 	}
 
+	public static File getGitWorkingDir(File file) {
+		if (file == null) {
+			return null;
+		}
+
+		File canonicalFile = getCanonicalFile(file);
+
+		File parentFile = canonicalFile.getParentFile();
+
+		if ((parentFile == null) || !parentFile.exists()) {
+			return file;
+		}
+
+		if (!canonicalFile.isDirectory()) {
+			return getGitWorkingDir(parentFile);
+		}
+
+		File gitDir = new File(canonicalFile, ".git");
+
+		if (!gitDir.exists()) {
+			return getGitWorkingDir(parentFile);
+		}
+
+		return canonicalFile;
+	}
+
 	public static String[] getGlobsFromProperty(String globProperty) {
 		List<String> curlyBraceExpansionList = new ArrayList<>();
 

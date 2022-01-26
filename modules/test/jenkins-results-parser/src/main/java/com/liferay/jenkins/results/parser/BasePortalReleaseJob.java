@@ -35,24 +35,22 @@ public abstract class BasePortalReleaseJob
 
 	public BasePortalReleaseJob(
 		String jobName, BuildProfile buildProfile, String portalBranchName,
-		String testSuiteName) {
+		String testSuiteName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		super(jobName, buildProfile);
 
 		_portalBranchName = portalBranchName;
 		_testSuiteName = testSuiteName;
 
-		_jenkinsGitWorkingDirectory =
-			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
-
-		jobPropertiesFiles.add(
-			new File(
-				_jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/build.properties"));
-
-		_portalGitWorkingDirectory =
-			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-				portalBranchName);
+		if (portalGitWorkingDirectory != null) {
+			_portalGitWorkingDirectory = portalGitWorkingDirectory;
+		}
+		else {
+			_portalGitWorkingDirectory =
+				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+					portalBranchName);
+		}
 
 		jobPropertiesFiles.add(
 			new File(
@@ -138,7 +136,6 @@ public abstract class BasePortalReleaseJob
 		return getSetFromString(jobProperty.getValue());
 	}
 
-	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
 	private final String _portalBranchName;
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 	private final String _testSuiteName;

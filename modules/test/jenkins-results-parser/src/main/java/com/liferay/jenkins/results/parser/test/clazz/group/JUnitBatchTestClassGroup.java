@@ -16,8 +16,8 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
-import com.liferay.jenkins.results.parser.CentralMergePullRequestJob;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -214,8 +214,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		if (portalTestClassJob instanceof CentralMergePullRequestJob) {
-			_includeUnstagedTestClassFiles = true;
+		if (portalTestClassJob instanceof PortalAcceptancePullRequestJob) {
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				(PortalAcceptancePullRequestJob)portalTestClassJob;
+
+			_includeUnstagedTestClassFiles =
+				portalAcceptancePullRequestJob.isCentralMergePullRequest();
 		}
 		else {
 			_includeUnstagedTestClassFiles = false;

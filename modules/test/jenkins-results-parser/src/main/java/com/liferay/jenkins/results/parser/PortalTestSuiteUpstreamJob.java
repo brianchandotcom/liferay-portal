@@ -21,9 +21,12 @@ public class PortalTestSuiteUpstreamJob extends PortalAcceptancePullRequestJob {
 
 	public PortalTestSuiteUpstreamJob(
 		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName) {
+		String branchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, testSuiteName, branchName);
+		super(
+			jobName, buildProfile, testSuiteName, branchName,
+			portalGitWorkingDirectory);
 	}
 
 }

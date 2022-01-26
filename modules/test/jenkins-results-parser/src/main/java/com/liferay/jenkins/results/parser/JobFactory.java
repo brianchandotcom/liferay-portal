@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
@@ -34,7 +35,7 @@ public class JobFactory {
 			topLevelBuild.getBaseGitRepositoryName(),
 			topLevelBuild.getBuildProfile(),
 			_getPortalUpstreamBranchName(topLevelBuild),
-			topLevelBuild.getProjectNames());
+			topLevelBuild.getProjectNames(), null);
 	}
 
 	public static Job newJob(BuildData buildData) {
@@ -47,21 +48,24 @@ public class JobFactory {
 		}
 
 		return _newJob(
-			buildData.getJobName(), null, upstreamBranchName, null, null);
+			buildData.getJobName(), null, upstreamBranchName, null, null, null,
+			null, null);
 	}
 
 	public static Job newJob(String jobName) {
-		return _newJob(jobName, null, null, null, null);
+		return _newJob(jobName, null, null, null, null, null, null, null);
 	}
 
 	public static Job newJob(String jobName, String testSuiteName) {
-		return _newJob(jobName, testSuiteName, null, null, null);
+		return _newJob(
+			jobName, testSuiteName, null, null, null, null, null, null);
 	}
 
 	public static Job newJob(
 		String jobName, String testSuiteName, String branchName) {
 
-		return _newJob(jobName, testSuiteName, branchName, null, null);
+		return _newJob(
+			jobName, testSuiteName, branchName, null, null, null, null, null);
 	}
 
 	public static Job newJob(
@@ -69,7 +73,8 @@ public class JobFactory {
 		String repositoryName) {
 
 		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, null);
+			jobName, testSuiteName, branchName, repositoryName, null, null,
+			null, null);
 	}
 
 	public static Job newJob(
@@ -77,7 +82,18 @@ public class JobFactory {
 		String repositoryName, Job.BuildProfile buildProfile) {
 
 		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, buildProfile);
+			jobName, testSuiteName, branchName, repositoryName, buildProfile,
+			null, null, null);
+	}
+
+	public static Job newJob(
+		String jobName, String testSuiteName, String branchName,
+		String repositoryName, Job.BuildProfile buildProfile,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		return _newJob(
+			jobName, testSuiteName, branchName, repositoryName, buildProfile,
+			null, null, portalGitWorkingDirectory);
 	}
 
 	private static String _getPortalUpstreamBranchName(
@@ -93,38 +109,11 @@ public class JobFactory {
 		return portalUpstreamBranchName;
 	}
 
-	private static boolean _isCentralMergePullRequest(
-		GitWorkingDirectory gitWorkingDirectory) {
-
-		List<File> currentBranchModifiedFiles =
-			gitWorkingDirectory.getModifiedFilesList();
-
-		if (currentBranchModifiedFiles.size() == 1) {
-			File modifiedFile = currentBranchModifiedFiles.get(0);
-
-			String modifiedFileName = modifiedFile.getName();
-
-			if (modifiedFileName.equals("ci-merge")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static Job _newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName, Job.BuildProfile buildProfile) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null, null);
-	}
-
 	private static Job _newJob(
 		String jobName, String testSuiteName, String branchName,
 		String repositoryName, Job.BuildProfile buildProfile,
-		String portalUpstreamBranchName, List<String> projectNames) {
+		String portalUpstreamBranchName, List<String> projectNames,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
 			portalUpstreamBranchName = branchName;
@@ -151,73 +140,39 @@ public class JobFactory {
 		if (jobName.equals("js-test-csv-report") ||
 			jobName.equals("junit-test-csv-report")) {
 
-			PortalAcceptanceTestSuiteJob portalAcceptanceTestSuiteJob =
-				new PortalAcceptanceTestSuiteJob(
-					jobName, buildProfile, testSuiteName, branchName) {
+			if (portalGitWorkingDirectory == null) {
+				File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(
+					new File(System.getProperty("user.dir")));
 
-					@Override
-					protected GitWorkingDirectory getNewGitWorkingDirectory() {
-						File workingDirectory = _getWorkingDirectory(
-							new File(System.getProperty("user.dir")));
+				Properties buildProperties =
+					JenkinsResultsParserUtil.getProperties(
+						new File(gitWorkingDir, "build.properties"));
 
-						return GitWorkingDirectoryFactory.
-							newGitWorkingDirectory(
-								getBranchName(),
-								JenkinsResultsParserUtil.getCanonicalPath(
-									workingDirectory));
-					}
+				String upstreamBranchName =
+					JenkinsResultsParserUtil.getProperty(
+						buildProperties, "git.working.branch.name");
 
-					@Override
-					protected void init() {
-						gitWorkingDirectory = getNewGitWorkingDirectory();
+				String gitRepositoryName = "liferay-portal";
 
-						setGitRepositoryDir(
-							gitWorkingDirectory.getWorkingDirectory());
+				if (!upstreamBranchName.equals("master")) {
+					gitRepositoryName += "-ee";
+				}
 
-						checkGitRepositoryDir();
+				GitWorkingDirectory gitWorkingDirectory =
+					GitWorkingDirectoryFactory.newGitWorkingDirectory(
+						upstreamBranchName, gitWorkingDir, gitRepositoryName);
 
-						jobPropertiesFiles.add(
-							new File(
-								gitRepositoryDir,
-								"tools/sdk/build.properties"));
+				if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+					portalGitWorkingDirectory =
+						(PortalGitWorkingDirectory)gitWorkingDirectory;
+				}
+			}
 
-						jobPropertiesFiles.add(
-							new File(gitRepositoryDir, "build.properties"));
-
-						jobPropertiesFiles.add(
-							new File(gitRepositoryDir, "test.properties"));
-					}
-
-					private File _getWorkingDirectory(File file) {
-						if (file == null) {
-							return null;
-						}
-
-						File canonicalFile =
-							JenkinsResultsParserUtil.getCanonicalFile(file);
-
-						File parentFile = canonicalFile.getParentFile();
-
-						if ((parentFile == null) || !parentFile.exists()) {
-							return file;
-						}
-
-						if (!canonicalFile.isDirectory()) {
-							return _getWorkingDirectory(parentFile);
-						}
-
-						File gitDir = new File(canonicalFile, ".git");
-
-						if (!gitDir.exists()) {
-							return _getWorkingDirectory(parentFile);
-						}
-
-						return canonicalFile;
-					}
-
-				};
-
-			_jobs.put(jobKey, portalAcceptanceTestSuiteJob);
+			_jobs.put(
+				jobKey,
+				new PortalAcceptancePullRequestJob(
+					jobName, buildProfile, testSuiteName, branchName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}
@@ -298,27 +253,21 @@ public class JobFactory {
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest(")) {
-			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+			_jobs.put(
+				jobKey,
 				new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, branchName);
+					jobName, buildProfile, testSuiteName, branchName,
+					portalGitWorkingDirectory));
 
-			if (_isCentralMergePullRequest(
-					portalAcceptancePullRequestJob.getGitWorkingDirectory())) {
-
-				portalAcceptancePullRequestJob = new CentralMergePullRequestJob(
-					jobName, buildProfile, branchName);
-			}
-
-			_jobs.put(jobKey, portalAcceptancePullRequestJob);
-
-			return portalAcceptancePullRequestJob;
+			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-upstream")) {
 			_jobs.put(
 				jobKey,
 				new PortalAcceptanceUpstreamJob(
-					jobName, buildProfile, testSuiteName, branchName));
+					jobName, buildProfile, testSuiteName, branchName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}
@@ -368,7 +317,8 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalFixpackReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName));
+					jobName, buildProfile, branchName, testSuiteName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}
@@ -377,7 +327,8 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalHotfixReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName));
+					jobName, buildProfile, branchName, testSuiteName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}
@@ -386,26 +337,28 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName));
+					jobName, buildProfile, branchName, testSuiteName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}
 
 		if (jobName.equals("test-portal-source-format")) {
-			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+			_jobs.put(
+				jobKey,
 				new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, "sf", branchName);
+					jobName, buildProfile, "sf", branchName,
+					portalGitWorkingDirectory));
 
-			_jobs.put(jobKey, portalAcceptancePullRequestJob);
-
-			return portalAcceptancePullRequestJob;
+			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream(")) {
 			_jobs.put(
 				jobKey,
 				new PortalTestSuiteUpstreamJob(
-					jobName, buildProfile, testSuiteName, branchName));
+					jobName, buildProfile, testSuiteName, branchName,
+					portalGitWorkingDirectory));
 
 			return _jobs.get(jobKey);
 		}

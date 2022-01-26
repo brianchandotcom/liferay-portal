@@ -21,9 +21,12 @@ public class PortalAcceptanceUpstreamJob extends PortalAcceptanceTestSuiteJob {
 
 	public PortalAcceptanceUpstreamJob(
 		String jobName, BuildProfile buildProfile, String testSuite,
-		String branchName) {
+		String branchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, testSuite, branchName);
+		super(
+			jobName, buildProfile, testSuite, branchName,
+			portalGitWorkingDirectory);
 	}
 
 }

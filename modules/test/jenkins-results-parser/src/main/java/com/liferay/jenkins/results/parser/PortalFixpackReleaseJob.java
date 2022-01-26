@@ -21,9 +21,12 @@ public class PortalFixpackReleaseJob extends BasePortalReleaseJob {
 
 	public PortalFixpackReleaseJob(
 		String jobName, BuildProfile buildProfile, String portalBranchName,
-		String testSuiteName) {
+		String testSuiteName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, portalBranchName, testSuiteName);
+		super(
+			jobName, buildProfile, portalBranchName, testSuiteName,
+			portalGitWorkingDirectory);
 	}
 
 }

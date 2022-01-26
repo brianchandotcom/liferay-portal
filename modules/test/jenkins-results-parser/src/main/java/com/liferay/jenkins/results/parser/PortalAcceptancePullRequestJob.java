@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -27,9 +28,39 @@ public class PortalAcceptancePullRequestJob
 
 	public PortalAcceptancePullRequestJob(
 		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName) {
+		String branchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, testSuiteName, branchName);
+		super(
+			jobName, buildProfile, testSuiteName, branchName,
+			portalGitWorkingDirectory);
+	}
+
+	public boolean isCentralMergePullRequest() {
+		if (_centralMergePullRequest != null) {
+			return _centralMergePullRequest;
+		}
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		List<File> currentBranchModifiedFiles =
+			gitWorkingDirectory.getModifiedFilesList();
+
+		if (currentBranchModifiedFiles.size() == 1) {
+			File modifiedFile = currentBranchModifiedFiles.get(0);
+
+			String modifiedFileName = modifiedFile.getName();
+
+			if (modifiedFileName.equals("ci-merge")) {
+				_centralMergePullRequest = true;
+
+				return _centralMergePullRequest;
+			}
+		}
+
+		_centralMergePullRequest = false;
+
+		return _centralMergePullRequest;
 	}
 
 	@Override
@@ -83,5 +114,7 @@ public class PortalAcceptancePullRequestJob
 
 		return testSuiteName.equals("relevant");
 	}
+
+	private Boolean _centralMergePullRequest;
 
 }

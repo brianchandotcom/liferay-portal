@@ -31,9 +31,10 @@ public abstract class PortalAcceptanceTestSuiteJob
 
 	public PortalAcceptanceTestSuiteJob(
 		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName) {
+		String branchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, branchName);
+		super(jobName, buildProfile, branchName, portalGitWorkingDirectory);
 
 		if (testSuiteName == null) {
 			testSuiteName = "default";

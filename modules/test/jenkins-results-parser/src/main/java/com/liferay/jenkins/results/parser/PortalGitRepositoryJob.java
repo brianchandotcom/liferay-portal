@@ -36,32 +36,23 @@ public abstract class PortalGitRepositoryJob
 	protected PortalGitRepositoryJob(
 		String jobName, BuildProfile buildProfile) {
 
-		this(jobName, buildProfile, null);
+		this(jobName, buildProfile, null, null);
 	}
 
 	protected PortalGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String branchName) {
+		String jobName, BuildProfile buildProfile, String branchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		super(jobName, buildProfile, branchName);
 
-		init();
-	}
-
-	protected GitWorkingDirectory getNewGitWorkingDirectory() {
-		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			getBranchName());
-	}
-
-	protected void init() {
-		GitWorkingDirectory jenkinsGitWorkingDirectory =
-			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
-
-		jobPropertiesFiles.add(
-			new File(
-				jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/build.properties"));
-
-		gitWorkingDirectory = getNewGitWorkingDirectory();
+		if (portalGitWorkingDirectory != null) {
+			gitWorkingDirectory = portalGitWorkingDirectory;
+		}
+		else {
+			gitWorkingDirectory =
+				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+					getBranchName());
+		}
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 

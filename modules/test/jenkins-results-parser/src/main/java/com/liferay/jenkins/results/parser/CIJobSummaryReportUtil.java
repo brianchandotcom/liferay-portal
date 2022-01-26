@@ -53,7 +53,7 @@ public class CIJobSummaryReportUtil {
 	private static final String _JOB_SUMMARY_RESOURCE_URL =
 		JenkinsResultsParserUtil.combine(
 			"https://cdn.jsdelivr.net/gh/liferay/liferay-portal@",
-			"011dbd665f46df51172dd579150de60ef9d732c2",
+			"2d820727967128fdd91bd7e3a54bdad6507c738f",
 			"/modules/test/jenkins-results-parser/src/main/resources/com",
 			"/liferay/jenkins/results/parser/dependencies/job/summary");
 

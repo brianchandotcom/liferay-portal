@@ -791,18 +791,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void clickAt(String locator, String coordString) {
-		int offsetX = 0;
-		int offsetY = 0;
+	public void clickAt(String locator, String offset) {
+		int x = 0;
+		int y = 0;
 
-		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
-			String[] coords = coordString.split(",");
+		if (Validator.isNotNull(offset) && offset.contains(",")) {
+			String[] offsetCoordinates = offset.split(",");
 
-			offsetX = GetterUtil.getInteger(coords[0]);
-			offsetY = GetterUtil.getInteger(coords[1]);
+			x = GetterUtil.getInteger(offsetCoordinates[0]);
+			y = GetterUtil.getInteger(offsetCoordinates[1]);
 		}
 
-		if ((offsetX == 0) && (offsetY == 0)) {
+		if ((x == 0) && (y == 0)) {
 			click(locator);
 		}
 		else {
@@ -812,7 +812,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-			actions.moveToElement(webElement, offsetX, offsetY);
+			actions.moveToElement(webElement, x, y);
 
 			actions.pause(1500);
 
@@ -874,16 +874,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void doubleClickAt(String locator, String coordString) {
+	public void doubleClickAt(String locator, String offset) {
 		WebElement webElement = getWebElement(locator);
 
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
-			String[] coords = coordString.split(",");
+		if (Validator.isNotNull(offset) && offset.contains(",")) {
+			String[] offsetCoordinates = offset.split(",");
 
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
+			int x = GetterUtil.getInteger(offsetCoordinates[0]);
+			int y = GetterUtil.getInteger(offsetCoordinates[1]);
 
 			actions.moveToElement(webElement, x, y);
 
@@ -929,14 +929,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void dragAtAndDrop(
-		String locator, String coordString, String coordinatePairs) {
+		String locator, String offset, String destinationOffsets) {
 
 		try {
-			Matcher matcher = _coordinatePairsPattern.matcher(coordinatePairs);
+			Matcher matcher = _coordinatePairsPattern.matcher(
+				destinationOffsets);
 
 			if (!matcher.matches()) {
 				throw new Exception(
-					"Coordinate pairs \"" + coordinatePairs +
+					"Coordinate pairs \"" + destinationOffsets +
 						"\" do not match pattern \"" +
 							_coordinatePairsPattern.pattern() + "\"");
 			}
@@ -945,11 +946,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-			if (Validator.isNotNull(coordString)) {
-				String[] coords = coordString.split(",");
+			if (Validator.isNotNull(offset)) {
+				String[] offsetCoordinates = offset.split(",");
 
-				int x = GetterUtil.getInteger(coords[0]);
-				int y = GetterUtil.getInteger(coords[1]);
+				int x = GetterUtil.getInteger(offsetCoordinates[0]);
+				int y = GetterUtil.getInteger(offsetCoordinates[1]);
 
 				actions.moveToElement(webElement, x, y);
 
@@ -961,12 +962,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			actions.pause(1500);
 
-			for (String coordinatePair : coordinatePairs.split("\\|")) {
-				String[] coordinates = coordinatePair.split(",");
+			for (String destinationOffset : destinationOffsets.split("\\|")) {
+				String[] destinationOffsetCoordinates = destinationOffset.split(
+					",");
 
 				actions.moveByOffset(
-					GetterUtil.getInteger(coordinates[0]),
-					GetterUtil.getInteger(coordinates[1]));
+					GetterUtil.getInteger(destinationOffsetCoordinates[0]),
+					GetterUtil.getInteger(destinationOffsetCoordinates[1]));
 			}
 
 			actions.pause(1500);
@@ -1952,18 +1954,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void mouseDownAt(String locator, String coordString) {
+	public void mouseDownAt(String locator, String offset) {
 		WebElement webElement = getWebElement(locator);
 
 		scrollWebElementIntoView(webElement);
 
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
-			String[] coords = coordString.split(",");
+		if (Validator.isNotNull(offset) && offset.contains(",")) {
+			String[] offsetCoordinates = offset.split(",");
 
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
+			int x = GetterUtil.getInteger(offsetCoordinates[0]);
+			int y = GetterUtil.getInteger(offsetCoordinates[1]);
 
 			actions.moveToElement(webElement, x, y);
 
@@ -1996,18 +1998,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void mouseMoveAt(String locator, String coordString) {
+	public void mouseMoveAt(String locator, String offset) {
 		WebElement webElement = getWebElement(locator);
 
 		scrollWebElementIntoView(webElement);
 
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
-			String[] coords = coordString.split(",");
+		if (Validator.isNotNull(offset) && offset.contains(",")) {
+			String[] offsetCoordinates = offset.split(",");
 
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
+			int x = GetterUtil.getInteger(offsetCoordinates[0]);
+			int y = GetterUtil.getInteger(offsetCoordinates[1]);
 
 			actions.moveToElement(webElement, x, y);
 		}
@@ -2078,18 +2080,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void mouseUpAt(String locator, String coordString) {
+	public void mouseUpAt(String locator, String offset) {
 		WebElement webElement = getWebElement(locator);
 
 		scrollWebElementIntoView(webElement);
 
 		Actions actions = new Actions(getWrappedWebDriver(webElement));
 
-		if (Validator.isNotNull(coordString) && coordString.contains(",")) {
-			String[] coords = coordString.split(",");
+		if (Validator.isNotNull(offset) && offset.contains(",")) {
+			String[] offsetCoordinates = offset.split(",");
 
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
+			int x = GetterUtil.getInteger(offsetCoordinates[0]);
+			int y = GetterUtil.getInteger(offsetCoordinates[1]);
 
 			actions.moveToElement(webElement, x, y);
 
@@ -2305,12 +2307,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void scrollBy(String coordString) {
+	public void scrollBy(String offset) {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)getWrappedWebDriver("//html");
 
-		javascriptExecutor.executeScript(
-			"window.scrollBy(" + coordString + ");");
+		javascriptExecutor.executeScript("window.scrollBy(" + offset + ");");
 	}
 
 	@Override
@@ -2582,17 +2583,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void setWindowSize(String coordString) {
+	public void setWindowSize(String size) {
 		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
 
 		WebDriver.Options options = wrappedWebDriver.manage();
 
 		WebDriver.Window window = options.window();
 
-		String[] screenResolution = StringUtil.split(coordString, ",");
+		String[] sizeCoordinates = StringUtil.split(size, ",");
 
-		int x = GetterUtil.getInteger(screenResolution[0]);
-		int y = GetterUtil.getInteger(screenResolution[1]);
+		int x = GetterUtil.getInteger(sizeCoordinates[0]);
+		int y = GetterUtil.getInteger(sizeCoordinates[1]);
 
 		window.setSize(new Dimension(x, y));
 	}
@@ -2661,7 +2662,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void sikuliDragAndDrop(String image, String coordString)
+	public void sikuliDragAndDrop(String image, String offset)
 		throws Exception {
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
@@ -2680,12 +2681,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		robot.delay(2000);
 
-		String[] coords = coordString.split(",");
+		String[] offsetCoordinates = offset.split(",");
 
 		Location location = screenRegion.getCenter();
 
-		int x = location.getX() + GetterUtil.getInteger(coords[0]);
-		int y = location.getY() + GetterUtil.getInteger(coords[1]);
+		int x = location.getX() + GetterUtil.getInteger(offsetCoordinates[0]);
+		int y = location.getY() + GetterUtil.getInteger(offsetCoordinates[1]);
 
 		robot.mouseMove(x, y);
 

@@ -195,12 +195,13 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for Picklist"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeavePicklistNameFieldEmpty {
+		Picklist.gotoPicklists();
 
-		// TODO LPS-145703 CannotLeavePicklistNameFieldEmpty pending implementation
+		Picklist.addPicklistViaUI(picklistName = "");
 
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"

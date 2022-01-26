@@ -249,6 +249,25 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/apply"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	},
 																	"value_i18n": {
 																	}
 																}
@@ -1956,6 +1975,25 @@
 									"id": "link",
 									"value": {
 										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/apply"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																}
+															]
+														}
+													}
+												}
+											},
 											"value_i18n": {
 											}
 										}

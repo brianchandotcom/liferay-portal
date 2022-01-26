@@ -6,20 +6,15 @@ definition {
 	property testray.main.component.name = "Sitemap";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page Name");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Site Page Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -33,22 +28,36 @@ definition {
 		}
 	}
 
+	@description = "View private parend and child page via Site Map widget."
 	@priority = "4"
-	test DisplayPrivatePageWithChildPage {
-		JSONLayout.addWidgetToPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Page Name",
-			widgetName = "Site Map");
+	test DisplayPrivateParentAndChildPage {
+		task ("Add a parent private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		Navigator.openPrivateSitePageURL(
-			pageName = "Child Page Name",
-			siteName = "Test Site Name");
+		task ("Add a child private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name",
+				parentLayoutName = "Test Page Name");
+		}
 
-		Portlet.viewSpecificPG(portletName = "Site Map");
+		task ("Add a Site Map widget to private child page") {
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name",
+				widgetName = "Site Map");
+		}
 
-		SiteMapPortlet.viewDefaultPG(
-			listChildPageName = "Child Page Name",
-			listPageName = "Site Page Name");
+		task ("View private pages are shown in Site Map") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Child Page Name",
+				siteName = "Test Site Name");
+
+			SiteMapPortlet.viewPagePG(pageNameList = "Test Page Name,Child Page Name");
+		}
 	}
 
 }

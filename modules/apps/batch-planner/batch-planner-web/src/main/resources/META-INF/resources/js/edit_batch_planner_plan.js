@@ -17,10 +17,17 @@ import {fetch, openToast} from 'frontend-js-web';
 
 import TemplateSelect from './TemplateSelect';
 import {
+	HEADLESS_BATCH_PLANNER_URL,
+	HEADLESS_ENDPOINT_POLICY_NAME,
+	NULL_TEMPLATE_VALUE,
 	SCHEMA_SELECTED_EVENT,
+	TEMPLATE_CREATED,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED,
 } from './constants';
+import {fireTemplateSelectionEvent} from './getMappingFromTemplate';
+
+
 
 const HEADERS = new Headers({
 	'content-type': 'application/json',
@@ -244,6 +251,22 @@ export default function ({
 			console.error(`Failed to fetch ${error}`);
 		}
 	}
+
+	setTimeout(()=>{
+		const templateSelect = document.getElementById(`${namespace}templateName`)
+		const templateSelectValue = templateSelect.options[templateSelect.selectedIndex].value;
+
+		fireTemplateSelectionEvent(templateSelectValue, NULL_TEMPLATE_VALUE, TEMPLATE_SELECTED_EVENT, HEADLESS_BATCH_PLANNER_URL, HEADLESS_ENDPOINT_POLICY_NAME)
+
+		// .then(response => response.json())
+  		// .then(data => {
+		// 	  console.log(data.mappings)
+		//   })
+
+		// 		Liferay.on(FILE_MAPPED_FIELDS, 
+
+	},300)
+
 
 	let initialTemplate;
 

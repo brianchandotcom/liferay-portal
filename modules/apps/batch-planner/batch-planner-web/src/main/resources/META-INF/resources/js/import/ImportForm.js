@@ -18,10 +18,11 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
+	FILE_MAPPED_FIELDS,
 	FILE_SCHEMA_EVENT,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
-	TEMPLATE_SOILED,
+	TEMPLATE_SOILED
 } from '../constants';
 import getFieldsFromSchema from '../getFieldsFromSchema';
 import ImportMappingItem from './ImportMappingItem';
@@ -32,7 +33,8 @@ function ImportForm({
 	formDataQuerySelector,
 	formImportURL,
 	formSaveAsTemplateURL,
-	portletNamespace,
+	handleTemplateSelectData,
+	portletNamespace
 }) {
 	const [fileFields, setFileFields] = useState();
 	const [dbFields, setDbFields] = useState();
@@ -83,6 +85,16 @@ function ImportForm({
 				useTemplateMappingRef.current = false;
 			}
 		}
+		function handleMappedFields(event) {
+			const {fields} = event;
+			
+			const savedFileFileds = Object.values(fields);
+
+			setFileFields(savedFileFileds);
+
+			// setDbFields(fields)
+
+		}
 
 		const handleTemplateDirty = () => {
 			useTemplateMappingRef.current = false;
@@ -92,12 +104,17 @@ function ImportForm({
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 		Liferay.on(TEMPLATE_SOILED, handleTemplateDirty);
+		Liferay.on(FILE_MAPPED_FIELDS, handleMappedFields);
+
+		
 
 		return () => {
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 			Liferay.detach(TEMPLATE_SOILED, handleTemplateDirty);
+			Liferay.detach(FILE_MAPPED_FIELDS, handleMappedFields);
+
 		};
 	}, []);
 
@@ -113,11 +130,14 @@ function ImportForm({
 		(selection) => selection !== null
 	);
 
-	const disableButtons = !(hasSelectedField && dbFields && fileFields);
+	const disableButtons = !(hasSelectedField && dbFields && fileFields );
+
+	console.log({dbFields}, {fileFields})
+
 
 	return (
 		<>
-			{fileFields && dbFields && (
+			{fileFields && (dbFields || fileFields) && (
 				<div className="card import-mapping-table">
 					<h4 className="card-header">
 						{Liferay.Language.get('import-mappings')}

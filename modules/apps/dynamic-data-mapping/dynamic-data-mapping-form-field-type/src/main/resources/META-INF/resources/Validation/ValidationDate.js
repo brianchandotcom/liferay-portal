@@ -48,7 +48,11 @@ const getDateOptionsByType = (label, name) => ({
 	],
 });
 
-const getSelectedParameter = (value, selectedParameterName) => {
+function getFromParameter(parameter, key, getLocalizedValue) {
+
+	/* TODO: remove the localization from parameter */
+	let value = getLocalizedValue(parameter) ?? parameter;
+
 	if (value && typeof value === 'string') {
 		try {
 			value = JSON.parse(value);
@@ -56,8 +60,8 @@ const getSelectedParameter = (value, selectedParameterName) => {
 		catch (error) {}
 	}
 
-	return value?.[selectedParameterName];
-};
+	return value?.[key];
+}
 
 const parameters = {
 	dateRange: [
@@ -68,7 +72,7 @@ const parameters = {
 	pastDates: [getDateOptionsByType(endsOnLabel, 'endsOn')],
 };
 
-const ValidationDate = ({
+export default function ValidationDate({
 	dispatch,
 	errorMessage,
 	localizationMode,
@@ -82,12 +86,9 @@ const ValidationDate = ({
 	transformSelectedValidation,
 	validations,
 	visible,
-}) => {
-	const startDate = getSelectedParameter(
-		localizedValue(parameter),
-		'startsFrom'
-	);
-	const endDate = getSelectedParameter(localizedValue(parameter), 'endsOn');
+}) {
+	const startDate = getFromParameter(parameter, 'startsFrom', localizedValue);
+	const endDate = getFromParameter(parameter, 'endsOn', localizedValue);
 
 	const selectedParameter = parameters[selectedValidation.name];
 
@@ -244,6 +245,4 @@ const ValidationDate = ({
 			</label>
 		</>
 	);
-};
-
-export default ValidationDate;
+}

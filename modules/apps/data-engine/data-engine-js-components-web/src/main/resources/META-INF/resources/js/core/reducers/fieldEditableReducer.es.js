@@ -71,6 +71,57 @@ export function deleteField({
 	});
 }
 
+function updateFieldAffectedByActivatingRepeatable({
+	defaultLanguageId,
+	editingLanguageId,
+	field,
+	fieldNameGenerator,
+	generateFieldNameUsingFieldLabel,
+	repeatableFieldName,
+}) {
+	if (
+		field.type === 'date' &&
+		field.validation.parameter.includes(repeatableFieldName)
+	) {
+		const {endsOn, startsFrom} = JSON.parse(field.validation.parameter);
+
+		const removeDateField = (validation) => {
+			if (repeatableFieldName !== validation.dateFieldName) {
+				return;
+			}
+
+			if (validation.type === 'dateField') {
+				validation.type = 'responseDate';
+			}
+			delete validation.dateFieldName;
+		};
+		removeDateField(endsOn);
+		removeDateField(startsFrom);
+
+		const validation = {
+			...field.validation,
+			parameter: JSON.stringify({
+				endsOn,
+				startsFrom,
+			}),
+		};
+
+		return updateField(
+			{
+				defaultLanguageId,
+				editingLanguageId,
+				fieldNameGenerator,
+				generateFieldNameUsingFieldLabel,
+			},
+			field,
+			'validation',
+			validation
+		);
+	}
+
+	return field;
+}
+
 const updateFieldProperty = ({
 	defaultLanguageId,
 	editingLanguageId,
@@ -298,6 +349,16 @@ export default function fieldEditableReducer(state, action, config) {
 					(field) => {
 						if (field.fieldName === newFocusedField.fieldName) {
 							return newFocusedField;
+						}
+						if (propertyValue && propertyName === 'repeatable') {
+							return updateFieldAffectedByActivatingRepeatable({
+								defaultLanguageId,
+								editingLanguageId,
+								field,
+								fieldNameGenerator,
+								generateFieldNameUsingFieldLabel,
+								repeatableFieldName: newFocusedField.fieldName,
+							});
 						}
 
 						return field;

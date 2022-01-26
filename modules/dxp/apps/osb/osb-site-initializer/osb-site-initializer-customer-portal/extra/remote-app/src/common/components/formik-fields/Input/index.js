@@ -9,17 +9,18 @@
  * distribution rights of the Software.
  */
 
-import ClayForm, {ClaySelect} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useField} from 'formik';
-import {required, validate} from '../utils/validations.form';
-import WarningBadge from './WarningBadge';
+import {Badge} from '../..';
+import {required, validate} from '../../../utils/validations.form';
 
-const Select = ({
+const Input = ({
+	disableError,
 	groupStyle,
 	helper,
 	label,
-	options,
 	validations,
 	...props
 }) => {
@@ -34,19 +35,13 @@ const Select = ({
 		validate: (value) => validate(validations, value),
 	});
 
-	const getStyleStatus = () => {
-		if (meta.touched) {
-			return meta.error ? ' has-error' : ' has-success';
-		}
-
-		return '';
-	};
-
 	return (
 		<ClayForm.Group
-			className={`w-100${getStyleStatus()} ${
-				groupStyle ? groupStyle : ''
-			}`}
+			className={classNames('w-100', {
+				groupStyle,
+				'has-error': meta.touched && meta.error,
+				'has-success': meta.touched && !meta.error,
+			})}
 		>
 			<label>
 				{`${label} `}
@@ -57,31 +52,22 @@ const Select = ({
 					</span>
 				)}
 
-				<div className="position-relative">
-					<ClayIcon className="select-icon" symbol="caret-bottom" />
-
-					<ClaySelect {...field} {...props}>
-						{options.map(({disabled, label, value}) => (
-							<ClaySelect.Option
-								disabled={disabled}
-								key={value}
-								label={label}
-								value={value}
-							/>
-						))}
-					</ClaySelect>
-				</div>
+				<ClayInput {...field} {...props} />
 			</label>
 
-			{meta.touched && meta.error && props.required && (
-				<WarningBadge>
+			{meta.error && meta.touched && !disableError ? (
+				<Badge>
 					<span className="pl-1">{meta.error}</span>
-				</WarningBadge>
+				</Badge>
+			) : (
+				helper && (
+					<div className="ml-3 pl-3 text-neutral-6 text-paragraph-sm">
+						{helper}
+					</div>
+				)
 			)}
-
-			{helper && <div>{helper}</div>}
 		</ClayForm.Group>
 	);
 };
 
-export default Select;
+export default Input;

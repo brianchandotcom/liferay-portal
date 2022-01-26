@@ -10,7 +10,7 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {getIconSpriteMap} from '../../providers/ClayProvider';
+import {getIconSpriteMap} from '../../../providers/ClayProvider';
 
 const TablePagination = ({
 	activeDelta = 5,

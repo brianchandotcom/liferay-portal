@@ -9,19 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
-
-const WarningBadge = ({children, ...props}) => {
-	return (
-		<div
-			{...props}
-			className="alert alert-danger ml-3 mr-3 p-sm-2 text-danger text-paragraph-sm"
-		>
-			<ClayIcon symbol="exclamation-full" />
-
-			{children}
-		</div>
-	);
-};
-
-export default WarningBadge;
+export {default as Badge} from './Badge';
+export {default as Button} from './Button';
+export {default as Input} from './formik-fields/Input';
+export {default as Select} from './formik-fields/Select';
+export {default as Skeleton} from './Skeleton';
+export {default as Table} from './Table';

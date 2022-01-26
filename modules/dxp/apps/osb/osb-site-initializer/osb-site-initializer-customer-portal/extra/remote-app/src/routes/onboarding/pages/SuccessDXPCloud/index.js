@@ -9,16 +9,18 @@
  * distribution rights of the Software.
  */
 
-import BaseButton from '../../../../common/components/BaseButton';
-import Layout from '../../../../common/components/onboarding/components/Layout';
-import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
-import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
-import {API_BASE_URL} from '../../../../common/utils';
+import {Button} from '../../../../common/components';
+import Layout from '../../../../common/containers/setup-forms/Layout';
+import {
+	API_BASE_URL,
+	SEARCH_PARAMS_KEYS,
+} from '../../../../common/utils/constants';
+import getLiferaySiteName from '../../../../common/utils/getLiferaySiteName';
 
 const SuccessDXPCloud = ({project}) => {
 	const onClickDone = () => {
 		window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
-			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+			SEARCH_PARAMS_KEYS.accountKey
 		}=${project.accountKey}`;
 	};
 
@@ -26,9 +28,9 @@ const SuccessDXPCloud = ({project}) => {
 		<Layout
 			footerProps={{
 				middleButton: (
-					<BaseButton displayType="primary" onClick={onClickDone}>
+					<Button displayType="primary" onClick={onClickDone}>
 						Done
-					</BaseButton>
+					</Button>
 				),
 			}}
 			headerProps={{

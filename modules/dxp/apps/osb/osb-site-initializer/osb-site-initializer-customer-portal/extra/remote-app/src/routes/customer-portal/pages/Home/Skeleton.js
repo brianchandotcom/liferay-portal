@@ -15,7 +15,7 @@ const HomeSkeleton = () => {
 	return (
 		<div className="col-8 mx-auto pl-6">
 			<div className="d-flex flex-column">
-				<div className="d-flex flex-wrap home-projects">
+				<div className="cp-home-projects d-flex flex-wrap">
 					<ProjectCard.Skeleton />
 
 					<ProjectCard.Skeleton />

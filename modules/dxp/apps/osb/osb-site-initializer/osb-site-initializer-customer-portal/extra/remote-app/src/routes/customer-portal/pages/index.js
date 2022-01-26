@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import Layout from '../components/Layout';
 import {useCustomerPortal} from '../context';
-import {pages} from '../utils/constants';
+import Layout from '../layouts/BaseLayout';
+import {PAGE_TYPES} from '../utils/constants';
 import ActivationKeys from './ActivationKeys';
 import DXP from './DXP';
 import DXPCloud from './DXPCloud';
@@ -25,7 +25,7 @@ const Pages = () => {
 	] = useCustomerPortal();
 
 	const PageLayout = {
-		[pages.COMMERCE]: {
+		[PAGE_TYPES.commerce]: {
 			Component: (
 				<ActivationKeys.Commerce
 					accountKey={project?.accountKey}
@@ -34,11 +34,11 @@ const Pages = () => {
 			),
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
-		[pages.DXP]: {
+		[PAGE_TYPES.dxp]: {
 			Component: <DXP project={project} sessionId={sessionId} />,
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
-		[pages.DXP_CLOUD]: {
+		[PAGE_TYPES.dxpCloud]: {
 			Component: (
 				<DXPCloud
 					project={project}
@@ -49,7 +49,7 @@ const Pages = () => {
 			),
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
-		[pages.ENTERPRISE_SEARCH]: {
+		[PAGE_TYPES.enterpriseSearch]: {
 			Component: (
 				<ActivationKeys.EnterpriseSearch
 					accountKey={project?.accountKey}
@@ -58,11 +58,11 @@ const Pages = () => {
 			),
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
-		[pages.HOME]: {
+		[PAGE_TYPES.home]: {
 			Component: <Home userAccount={userAccount} />,
 			Skeleton: <Home.Skeleton />,
 		},
-		[pages.OVERVIEW]: {
+		[PAGE_TYPES.overview]: {
 			Component: (
 				<Overview
 					project={project}
@@ -71,21 +71,22 @@ const Pages = () => {
 			),
 			Skeleton: <Overview.Skeleton />,
 		},
-		[pages.TEAM_MEMBERS]: {
+		[PAGE_TYPES.teamMembers]: {
 			Component: <TeamMembers project={project} />,
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
 	};
 
 	if (
-		((project && subscriptionGroups && sessionId) || page === pages.HOME) &&
+		((project && subscriptionGroups && sessionId) ||
+			page === PAGE_TYPES.home) &&
 		userAccount
 	) {
 		return (
 			<Layout
-				hasProjectContact={page === pages.OVERVIEW}
+				hasProjectContact={page === PAGE_TYPES.overview}
 				hasQuickLinks={
-					page !== pages.TEAM_MEMBERS && page !== pages.HOME
+					page !== PAGE_TYPES.teamMembers && page !== PAGE_TYPES.home
 				}
 				project={project}
 			>

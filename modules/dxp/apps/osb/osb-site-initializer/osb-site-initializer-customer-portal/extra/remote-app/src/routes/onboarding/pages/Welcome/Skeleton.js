@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import Skeleton from '../../../../common/components/Skeleton';
-import Layout from '../../../../common/components/onboarding/components/Layout';
+import {Skeleton} from '../../../../common/components';
+import Layout from '../../../../common/containers/setup-forms/Layout';
 
 const WelcomeSkeleton = () => {
 	return (

@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 
 import './common/styles/global.scss';
 import apolloClient from './apolloClient';
-import ApplicationContextProvider from './common/context/ApplicationPropertiesProvider';
+import AppContextProvider from './common/context/AppPropertiesProvider';
 import ClayProvider from './common/providers/ClayProvider';
 import CustomerPortal from './routes/customer-portal';
 import Onboarding from './routes/onboarding';
@@ -49,13 +49,13 @@ class CustomerPortalWebComponent extends HTMLElement {
 		ReactDOM.render(
 			<ClayProvider>
 				<ApolloProvider client={apolloClient}>
-					<ApplicationContextProvider properties={properties}>
+					<AppContextProvider properties={properties}>
 						<CustomerPortalApplication
 							liferaywebdavurl={properties.liferaywebdavurl}
 							page={properties.page}
 							route={properties.route}
 						/>
-					</ApplicationContextProvider>
+					</AppContextProvider>
 				</ApolloProvider>
 			</ClayProvider>,
 			this

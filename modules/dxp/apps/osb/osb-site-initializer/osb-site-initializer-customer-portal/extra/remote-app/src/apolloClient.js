@@ -11,7 +11,7 @@
 
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {Liferay} from './common/services/liferay';
-import {API_BASE_URL} from './common/utils';
+import {API_BASE_URL} from './common/utils/constants';
 
 const client = new ApolloClient({
 	cache: new InMemoryCache(),

@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import BaseButton from '../../../../common/components/BaseButton';
-import Layout from '../../../../common/components/onboarding/components/Layout';
+import {Button} from '../../../../common/components';
+import Layout from '../../../../common/containers/setup-forms/Layout';
 import {useOnboarding} from '../../context';
 import {actionTypes} from '../../context/reducer';
-import {steps} from '../../utils/constants';
+import {ONBOARDING_STEP_TYPES} from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
 const Welcome = () => {
@@ -24,17 +24,17 @@ const Welcome = () => {
 			className="align-items-center d-flex flex-column pt-6 px-6"
 			footerProps={{
 				middleButton: (
-					<BaseButton
+					<Button
 						displayType="primary"
 						onClick={() =>
 							dispatch({
-								payload: steps.invites,
+								payload: ONBOARDING_STEP_TYPES.invites,
 								type: actionTypes.CHANGE_STEP,
 							})
 						}
 					>
 						Start Project Setup
-					</BaseButton>
+					</Button>
 				),
 			}}
 			headerProps={{

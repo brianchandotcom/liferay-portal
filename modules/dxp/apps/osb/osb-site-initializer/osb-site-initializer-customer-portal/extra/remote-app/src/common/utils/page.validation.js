@@ -9,24 +9,20 @@
  * distribution rights of the Software.
  */
 
-import {API_BASE_URL} from '.';
 import client from '../../apolloClient';
 import {getAccountFlags} from '../services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../services/liferay/search-params';
-import {getLiferaySiteName} from '../services/liferay/utils';
-import {ROUTES} from './constants';
-
-const {PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE} = PARAMS_KEYS;
+import getLiferaySiteName from '../utils/getLiferaySiteName';
+import {API_BASE_URL, ROUTE_TYPES, SEARCH_PARAMS_KEYS} from './constants';
 
 const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
 
 const getHomeLocation = () => BASE_API;
 
 const getOnboardingLocation = (externalReferenceCode) =>
-	`${BASE_API}/onboarding?${PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`;
+	`${BASE_API}/onboarding?${SEARCH_PARAMS_KEYS.accountKey}=${externalReferenceCode}`;
 
 const getOverviewLocation = (externalReferenceCode) => {
-	return `${BASE_API}/overview?${PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`;
+	return `${BASE_API}/overview?${SEARCH_PARAMS_KEYS.accountKey}=${externalReferenceCode}`;
 };
 
 const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
@@ -45,7 +41,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 	const {data} = await client.query({
 		query: getAccountFlags,
 		variables: {
-			filter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTES.ONBOARDING}' and finished eq true`,
+			filter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTE_TYPES.onboarding}' and finished eq true`,
 		},
 	});
 
@@ -80,11 +76,10 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 			return true;
 		}
 
-		if (pageKey === ROUTES.OVERVIEW) {
+		if (pageKey === ROUTE_TYPES.overview) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			}
-			else if (!hasAccountFlags && isAccountAdministrator) {
+			} else if (!hasAccountFlags && isAccountAdministrator) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

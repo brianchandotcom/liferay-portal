@@ -11,13 +11,13 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import BaseButton from '../../../../common/components/BaseButton';
-import Invites from '../../../../common/components/onboarding/Invites';
+import {Button} from '../../../../common/components';
+import InviteTeamMembersForm from '../../../../common/containers/setup-forms/InviteTeamMembersForm';
 
 const InvitesModal = ({observer, onClose, project}) => {
 	return (
 		<ClayModal center observer={observer}>
-			<Invites
+			<InviteTeamMembersForm
 				handlePage={onClose}
 				leftButton="Cancel"
 				project={project}
@@ -35,7 +35,7 @@ const TeamMembers = ({project}) => {
 	return (
 		<>
 			{visible && <InvitesModal {...modalProps} project={project} />}
-			<div className="mr-8 team-members-overview">
+			<div className="cp-team-members-overview mr-8">
 				<div className="align-items-center d-flex justify-content-between">
 					<div>
 						<h1 className="m-0">Team Members</h1>
@@ -46,13 +46,13 @@ const TeamMembers = ({project}) => {
 						</p>
 					</div>
 
-					<BaseButton
+					<Button
 						className="btn-outline-primary invite-button"
 						onClick={() => setVisible(true)}
 						prependIcon="plus"
 					>
 						Invite
-					</BaseButton>
+					</Button>
 				</div>
 			</div>
 		</>

@@ -11,22 +11,18 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
-import {useApplicationProvider} from '../../../common/context/ApplicationPropertiesProvider';
+import {useApplicationProvider} from '../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../common/services/liferay';
-import {fetchSession} from '../../../common/services/liferay/api';
 import {
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {
-	PARAMS_KEYS,
-	SearchParams,
-} from '../../../common/services/liferay/search-params';
-import {ROLES_PERMISSIONS} from '../../../common/utils/constants';
+import {searchParams} from '../../../common/services/liferay/searchParams';
+import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
 import {isValidPage} from '../../../common/utils/page.validation';
-import {CUSTOM_EVENTS} from '../utils/constants';
+import {CUSTOM_EVENT_TYPES} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
@@ -46,11 +42,11 @@ const EVENT_OPTION = {
 const AppContextProvider = ({assetsPath, children, page}) => {
 	const {oktaSessionURL} = useApplicationProvider();
 	const eventUserAccount = Liferay.publish(
-		CUSTOM_EVENTS.USER_ACCOUNT,
+		CUSTOM_EVENT_TYPES.userAccount,
 		EVENT_OPTION
 	);
 	const eventSubscriptionGroups = Liferay.publish(
-		CUSTOM_EVENTS.SUBSCRIPTION_GROUPS,
+		CUSTOM_EVENT_TYPES.subscriptionGroups,
 		EVENT_OPTION
 	);
 
@@ -73,9 +69,9 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				type: actionTypes.UPDATE_PAGE,
 			});
 
-		Liferay.on(CUSTOM_EVENTS.MENU_PAGE, handler);
+		Liferay.on(CUSTOM_EVENT_TYPES.menuPage, handler);
 
-		return () => Liferay.detach(CUSTOM_EVENTS.MENU_PAGE, handler);
+		return () => Liferay.detach(CUSTOM_EVENT_TYPES.menuPage, handler);
 	}, []);
 
 	useEffect(() => {
@@ -160,7 +156,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		};
 
 		const getSessionId = async () => {
-			const session = await fetchSession(oktaSessionURL);
+			const session = await getCurrentSession(oktaSessionURL);
 
 			if (session) {
 				dispatch({
@@ -190,7 +186,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		};
 
 		const fetchData = async () => {
-			const projectExternalReferenceCode = SearchParams.get(
+			const projectExternalReferenceCode = searchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
 			const user = await getUser(projectExternalReferenceCode);

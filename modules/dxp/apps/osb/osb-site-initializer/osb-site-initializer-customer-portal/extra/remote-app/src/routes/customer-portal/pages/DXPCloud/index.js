@@ -13,8 +13,7 @@ import client from '../../../../apolloClient';
 import {Liferay} from '../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../components/ActivationStatus/index';
-import DeveloperKeysLayouts from '../../components/DeveloperKeysLayout';
-import {PRODUCTS} from '../../utils/constants';
+import DeveloperKeysLayouts from '../../layouts/DeveloperKeysLayout';
 
 const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();

@@ -31,17 +31,10 @@ definition {
 
 	@priority = "5"
 	test StagingOrganizations {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
+		property test.name.skip.portal.instance = "StagingUsecaseWithOrganization#StagingOrganizations";
 		property testray.component.names = "Training";
-
-		SiteTemplates.addCP(
-			disableChanges = "true",
-			siteTemplateName = "Site Template Name");
-
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Site Page Name",
-			siteTemplateName = "Site Template Name");
 
 		User.openUsersAdmin();
 
@@ -53,9 +46,11 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			orgName = "Staging Organization Name",
-			siteTemplateName = "Site Template Name");
+		Organization.addSiteCP(orgName = "Staging Organization Name");
+
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+
+		PagesAdmin.addPublicPage(pageName = "Site Page Name");
 
 		JSONUser.addUser(
 			allowManualMembershipManagement = "true",
@@ -63,6 +58,11 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
@@ -72,15 +72,11 @@ definition {
 			organizationName = "Staging Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
-		User.openUsersAdmin();
+		User.logoutPG();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",

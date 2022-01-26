@@ -24,6 +24,7 @@ import {
 import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
+import {STATUS_TAG_TYPES} from '../../utils/constants';
 import StatusTag from '../StatusTag';
 
 const SetupDXPCloudModal = ({
@@ -88,7 +89,7 @@ const ActivationStatus = ({
 	};
 
 	const currentActivationStatus = {
-		[ACTIVATION_STATUS_DXP_CLOUD.active]: {
+		[STATUS_TAG_TYPES.active]: {
 			buttonLink: (
 				<a
 					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
@@ -100,16 +101,16 @@ const ActivationStatus = ({
 					<ClayIcon className="ml-1" symbol="order-arrow-right" />
 				</a>
 			),
-			id: status.active,
+			id: STATUS_TAG_TYPES.active,
 			subtitle:
 				'Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.',
 		},
-		[ACTIVATION_STATUS_DXP_CLOUD.inProgress]: {
-			id: status.inProgress,
+		[STATUS_TAG_TYPES.inProgress]: {
+			id: STATUS_TAG_TYPES.inProgress,
 			subtitle:
 				'Your DXP Cloud environments are being set up and will be available soon.',
 		},
-		[ACTIVATION_STATUS_DXP_CLOUD.notActivated]: {
+		[STATUS_TAG_TYPES.notActivated]: {
 			buttonLink: userAccount.isAdmin && (
 				<Button
 					appendIcon="order-arrow-right"
@@ -120,7 +121,7 @@ const ActivationStatus = ({
 					Finish Activation
 				</Button>
 			),
-			id: status.notActivated,
+			id: STATUS_TAG_TYPES.notActivated,
 			subtitle:
 				'Almost there! Setup DXP Cloud by finishing the activation form.',
 		},
@@ -192,10 +193,10 @@ const ActivationStatus = ({
 										{
 											'in-progress':
 												subscriptionGroupActivationStatus ===
-												ACTIVATION_STATUS_DXP_CLOUD.inProgress,
+												STATUS_TAG_TYPES.inProgress,
 											'not-active':
 												subscriptionGroupActivationStatus ===
-													ACTIVATION_STATUS_DXP_CLOUD.notActivated ||
+													STATUS_TAG_TYPES.notActivated ||
 												!subscriptionGroupActivationStatus,
 										}
 									)}

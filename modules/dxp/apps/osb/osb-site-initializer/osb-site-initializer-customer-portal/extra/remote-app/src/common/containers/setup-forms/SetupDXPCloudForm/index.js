@@ -21,6 +21,7 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
+import {STATUS_TAG_TYPES} from '../../../../routes/customer-portal/utils/constants/statusTagTypes';
 import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import Layout from '../Layout';
@@ -121,8 +122,7 @@ const SetupDXPCloudPage = ({
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
-							activationStatus:
-								ACTIVATION_STATUS_DXP_CLOUD.inProgress,
+							activationStatus: STATUS_TAG_TYPES.inProgress,
 						},
 						id: subscriptionGroupId,
 					},
@@ -235,7 +235,7 @@ const SetupDXPCloudPage = ({
 	);
 };
 
-const SetupDXPCloud = (props) => {
+const SetupDXPCloudForm = (props) => {
 	return (
 		<Formik
 			initialValues={{
@@ -253,4 +253,4 @@ const SetupDXPCloud = (props) => {
 	);
 };
 
-export default SetupDXPCloud;
+export default SetupDXPCloudForm;

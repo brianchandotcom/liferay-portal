@@ -799,11 +799,9 @@ definition {
 
 	macro assertFileNameFromTempFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
-		var documentFileName = FileUtil.getFileName("${tempDir}/${downloadedFileName}");
+		var downloadedFile = FileUtil.exists("${tempDir}/${fileName}");
 
-		echo("## downloadedFileName: ${documentFileName}");
-
-		if ("${downloadedFileName}" == "${documentFileName}") {
+		if ("${downloadedFile}" == "true") {
 			echo("This is a correct file name.");
 		}
 		else {

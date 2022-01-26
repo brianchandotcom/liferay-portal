@@ -51,7 +51,9 @@ export function VariationPreview({
 
 	return (
 		<article className="d-flex flex-column-reverse">
-			<h4 className="mb-0 mt-2 text-secondary">{label}</h4>
+			<div className="cadmin">
+				<h4 className="mb-0 mt-2 text-secondary">{label}</h4>
+			</div>
 
 			<div
 				className="align-items-center d-flex flex-grow-1 justify-content-center overflow-hidden p-4 variation-preview__content"

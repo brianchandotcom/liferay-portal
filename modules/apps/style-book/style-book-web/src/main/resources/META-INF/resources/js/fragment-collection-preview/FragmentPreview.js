@@ -24,7 +24,9 @@ export function FragmentPreview({fragment, namespace}) {
 
 	return (
 		<section className="fragment-preview p-5">
-			<h3>{fragment.name}</h3>
+			<div className="cadmin">
+				<h3 className="mb-3">{fragment.name}</h3>
+			</div>
 
 			<div className="fragment-preview__list">
 				{variations.map((variation) => {

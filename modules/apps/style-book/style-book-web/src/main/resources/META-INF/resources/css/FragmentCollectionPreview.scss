@@ -1,3 +1,5 @@
+@import 'cadmin-variables';
+
 body.page-maximized {
 	background-color: var(--body-bg);
 }
@@ -17,6 +19,13 @@ body.page-maximized {
 		grid-auto-rows: 1fr;
 		grid-template-columns: repeat(auto-fill, minmax(40ch, 1fr));
 		justify-content: center;
+	}
+}
+
+html#{$cadmin-selector} {
+	.cadmin h4 {
+		font-size: 0.875rem;
+		font-weight: 600;
 	}
 }
 

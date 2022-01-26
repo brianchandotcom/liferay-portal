@@ -19,7 +19,7 @@ import SubscriptionsNavbar from '../../components/SubscriptionsNavbar';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
-import {getWebContents} from '../../utils/webContentsGenerator';
+import {getWebContents} from '../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
 
 const Overview = ({project, subscriptionGroups}) => {

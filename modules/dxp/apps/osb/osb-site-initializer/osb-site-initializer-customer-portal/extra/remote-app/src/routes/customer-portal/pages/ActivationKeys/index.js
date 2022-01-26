@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ActivationKeysSkeleton from '../../components/ActivationKeysLayout/Skeleton';
+import ActivationKeysSkeleton from '../../layouts/ActivationKeysLayout/Skeleton';
 import Commerce from './Commerce';
 import EnterpriseSearch from './EnterpriseSearch';
 

@@ -9,14 +9,16 @@
  * distribution rights of the Software.
  */
 
-import Invites from '../../../common/components/onboarding/Invites';
-import SetupDXPCloud from '../../../common/components/onboarding/SetupDXPCloud';
-import {PARAMS_KEYS} from '../../../common/services/liferay/search-params';
-import {getLiferaySiteName} from '../../../common/services/liferay/utils';
-import {API_BASE_URL} from '../../../common/utils';
+import InviteTeamMembersForm from '../../../common/containers/setup-forms/InviteTeamMembersForm';
+import SetupDXPCloud from '../../../common/containers/setup-forms/SetupDXPCloudForm';
+import {
+	API_BASE_URL,
+	SEARCH_PARAMS_KEYS,
+} from '../../../common/utils/constants';
+import getLiferaySiteName from '../../../common/utils/getLiferaySiteName';
 import {useOnboarding} from '../context';
 import {actionTypes} from '../context/reducer';
-import {steps} from '../utils/constants';
+import {ONBOARDING_STEP_TYPES} from '../utils/constants';
 import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
@@ -28,28 +30,27 @@ const Pages = () => {
 
 		if (hasSubscriptionsDXPCloud) {
 			dispatch({
-				payload: steps.dxpCloud,
+				payload: ONBOARDING_STEP_TYPES.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
-				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+				SEARCH_PARAMS_KEYS.accountKey
 			}=${project.accountKey}`;
 		}
 	};
 
 	const StepsLayout = {
-		[steps.invites]: {
+		[ONBOARDING_STEP_TYPES.invites]: {
 			Component: (
-				<Invites
+				<InviteTeamMembersForm
 					handlePage={invitesPageHandle}
 					leftButton="Skip for now"
 					project={project}
 				/>
 			),
 		},
-		[steps.dxpCloud]: {
+		[ONBOARDING_STEP_TYPES.dxpCloud]: {
 			Component: (
 				<SetupDXPCloud
 					handlePage={(isSuccess) => {
@@ -58,8 +59,7 @@ const Pages = () => {
 								payload: steps.successDxpCloud,
 								type: actionTypes.CHANGE_STEP,
 							});
-						}
-						else {
+						} else {
 							window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 								PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 							}=${project.accountKey}`;
@@ -74,10 +74,10 @@ const Pages = () => {
 				/>
 			),
 		},
-		[steps.successDxpCloud]: {
+		[ONBOARDING_STEP_TYPES.successDxpCloud]: {
 			Component: <SuccessDXPCloud project={project} />,
 		},
-		[steps.welcome]: {
+		[ONBOARDING_STEP_TYPES.welcome]: {
 			Component: <Welcome />,
 			Skeleton: <Welcome.Skeleton />,
 		},
@@ -87,7 +87,7 @@ const Pages = () => {
 		return StepsLayout[step].Component;
 	}
 
-	return StepsLayout[steps.welcome].Skeleton;
+	return StepsLayout[ONBOARDING_STEP_TYPES.welcome].Skeleton;
 };
 
 export default Pages;

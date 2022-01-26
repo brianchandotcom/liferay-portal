@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -72,6 +74,19 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 		}
 
 		return objectFieldBusinessTypes;
+	}
+
+	@Override
+	public Set<String> getObjectFieldDBTypes() {
+		Set<String> objectFieldDBTypes = new HashSet<>();
+
+		for (ObjectFieldBusinessType objectFieldBusinessType :
+				_objectFieldBusinessTypeServiceTrackerMap.values()) {
+
+			objectFieldDBTypes.add(objectFieldBusinessType.getDBType());
+		}
+
+		return objectFieldDBTypes;
 	}
 
 	@Activate

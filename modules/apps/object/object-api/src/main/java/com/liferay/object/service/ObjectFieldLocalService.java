@@ -352,6 +352,4 @@ public interface ObjectFieldLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField updateObjectField(ObjectField objectField);
 
-	public void validateDBType(String dbType) throws PortalException;
-
 }

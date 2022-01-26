@@ -411,10 +411,6 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().updateObjectField(objectField);
 	}
 
-	public static void validateDBType(String dbType) throws PortalException {
-		getService().validateDBType(dbType);
-	}
-
 	public static ObjectFieldLocalService getService() {
 		return _service;
 	}

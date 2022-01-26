@@ -9,11 +9,9 @@
  * distribution rights of the Software.
  */
 
-const steps = {
+export const ONBOARDING_STEP_TYPES = {
 	dxpCloud: 2,
 	invites: 1,
 	successDxpCloud: 3,
 	welcome: 0,
 };
-
-export {steps};

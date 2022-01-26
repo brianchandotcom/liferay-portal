@@ -12,10 +12,20 @@
  * details.
  */
 
-export const LAYOUT_TYPES = {
-	displayPageTemplate: 'displayPageTemplate',
-	fragmentCollection: 'fragmentCollection',
-	master: 'master',
-	page: 'page',
-	pageTemplate: 'pageTemplate',
-};
+import {config} from '../config';
+
+export function itemSelectorValueFromFragmentCollection(value) {
+	const url = new URL(config.fragmentCollectionPreviewURL);
+
+	url.searchParams.set(
+		`${config.namespace}fragmentCollectionKey`,
+		value.fragmentCollectionKey
+	);
+	url.searchParams.set(`${config.namespace}groupId`, value.groupId);
+
+	return {
+		name: value.name,
+		private: false,
+		url: url.toString(),
+	};
+}

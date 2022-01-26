@@ -12,10 +12,14 @@
  * details.
  */
 
-export const LAYOUT_TYPES = {
-	displayPageTemplate: 'displayPageTemplate',
-	fragmentCollection: 'fragmentCollection',
-	master: 'master',
-	page: 'page',
-	pageTemplate: 'pageTemplate',
-};
+export function itemSelectorValueFromLayout(value) {
+	const url = new URL(value.previewURL);
+
+	url.searchParams.set('styleBookEntryPreview', 'true');
+
+	return {
+		name: value.name,
+		private: value.private,
+		url: url.toString(),
+	};
+}

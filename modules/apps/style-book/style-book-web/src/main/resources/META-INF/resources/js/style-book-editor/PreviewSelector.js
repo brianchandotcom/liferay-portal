@@ -21,9 +21,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
+import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
+import {itemSelectorValueFromLayout} from './item_selector_value/itemSelectorValueFromLayout';
 import openItemSelector from './openItemSelector';
 
 const LAYOUT_TYPES_OPTIONS = [
+	{
+		label: Liferay.Language.get('fragments'),
+		type: LAYOUT_TYPES.fragmentCollection,
+	},
 	{
 		label: Liferay.Language.get('masters'),
 		type: LAYOUT_TYPES.master,
@@ -161,15 +167,16 @@ export function LayoutSelector({layoutType}) {
 	const handleMoreButtonClick = () => {
 		openItemSelector({
 			callback: (item) => {
-				const data = JSON.parse(item.value);
+				const value = JSON.parse(item.value);
 
-				const layout = {
-					name: data.name,
-					private: data.private,
-					url: urlWithPreviewParameter(data.previewURL),
-				};
-
-				selectPreviewLayout(layout);
+				if (layoutType === LAYOUT_TYPES.fragmentCollection) {
+					selectPreviewLayout(
+						itemSelectorValueFromFragmentCollection(value)
+					);
+				}
+				else {
+					selectPreviewLayout(itemSelectorValueFromLayout(value));
+				}
 			},
 			itemSelectorURL,
 		});
@@ -278,12 +285,4 @@ function getNextRecentLayouts(recentLayouts, selectedLayout) {
 	];
 
 	return nextRecentLayouts;
-}
-
-function urlWithPreviewParameter(url) {
-	const nextURL = new URL(url);
-
-	nextURL.searchParams.set('styleBookEntryPreview', true);
-
-	return nextURL.href;
 }

@@ -950,7 +950,6 @@ function EditSXPBlueprintForm({
 				responseString={previewInfo.results.responseString}
 				totalHits={previewInfo.results.searchHits?.totalHits}
 				visible={openSidebar === SIDEBARS.PREVIEW}
-				warnings={previewInfo.results.warnings}
 			/>
 
 			<div

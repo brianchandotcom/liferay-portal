@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
@@ -47,7 +46,6 @@ function PreviewSidebar({
 	responseString = '',
 	totalHits,
 	visible,
-	warnings = [],
 }) {
 	const [activeDelta, setActiveDelta] = useState(10);
 	const [activePage, setActivePage] = useState(1);
@@ -263,21 +261,6 @@ function PreviewSidebar({
 			</nav>
 
 			<div className="sidebar-body">
-				{!!warnings.length && (
-					<div className="warning-container">
-						{warnings.map((warning, index) => (
-							<ClayAlert
-								displayType="warning"
-								key={index}
-								title={Liferay.Language.get('warning')}
-								variant="stripe"
-							>
-								{warning.msg}
-							</ClayAlert>
-						))}
-					</div>
-				)}
-
 				{!!errors.length && _renderErrors()}
 
 				{isDefined(totalHits) && _renderResultsManagementBar()}
@@ -290,7 +273,6 @@ function PreviewSidebar({
 							<ClayEmptyState description="" />
 						</div>
 					) : (
-						!warnings.length &&
 						!errors.length && (
 							<div className="search-message">
 								{Liferay.Language.get(
@@ -337,7 +319,6 @@ PreviewSidebar.propTypes = {
 	responseString: PropTypes.string,
 	totalHits: PropTypes.number,
 	visible: PropTypes.bool,
-	warnings: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default React.memo(PreviewSidebar);

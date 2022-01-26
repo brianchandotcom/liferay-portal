@@ -15,7 +15,13 @@
 package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
+import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -37,6 +43,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -49,9 +56,11 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,6 +152,11 @@ public class EditStyleBookEntryDisplayContext {
 					"type", "displayPageTemplate"
 				),
 				JSONUtil.put(
+					"data", _getFragmentCollectionOptionJSONObject()
+				).put(
+					"type", "fragmentCollection"
+				),
+				JSONUtil.put(
 					"data",
 					_getOptionJSONObject(
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)
@@ -187,6 +201,119 @@ public class EditStyleBookEntryDisplayContext {
 		).setActionName(
 			actionName
 		).buildString();
+	}
+
+	private String _getFragmentCollectionItemSelectorURL() {
+		FragmentCollectionItemSelectorCriterion
+			fragmentCollectionItemSelectorCriterion =
+				new FragmentCollectionItemSelectorCriterion();
+
+		fragmentCollectionItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new FragmentCollectionItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			_renderResponse.getNamespace() + "selectPreviewItem",
+			fragmentCollectionItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	private JSONObject _getFragmentCollectionOptionJSONObject() {
+		int fragmentCollectionsCount = _getFragmentCollectionsCount();
+
+		return JSONUtil.put(
+			"itemSelectorURL", _getFragmentCollectionItemSelectorURL()
+		).put(
+			"recentLayouts",
+			() -> {
+				List<FragmentCollection> fragmentCollections =
+					FragmentCollectionServiceUtil.getFragmentCollections(
+						new long[] {
+							_themeDisplay.getSiteGroupId(),
+							_themeDisplay.getCompanyGroupId()
+						},
+						0, Math.min(fragmentCollectionsCount, 4),
+						new FragmentCollectionCreateDateComparator(false));
+
+				JSONObject[] fragmentCollectionContributorJSONObjects =
+					new JSONObject[0];
+
+				if (fragmentCollections.size() < 4) {
+					List<FragmentCollectionContributor>
+						fragmentCollectionContributors =
+							_fragmentCollectionContributorTracker.
+								getFragmentCollectionContributors();
+
+					List<FragmentCollectionContributor>
+						filteredFragmentCollectionContributors =
+							ListUtil.subList(
+								fragmentCollectionContributors, 0,
+								4 - fragmentCollections.size());
+
+					Stream<FragmentCollectionContributor>
+						fragmentCollectionContributorsStream =
+							filteredFragmentCollectionContributors.stream();
+
+					fragmentCollectionContributorJSONObjects =
+						fragmentCollectionContributorsStream.map(
+							fragmentCollectionContributor -> JSONUtil.put(
+								"name", fragmentCollectionContributor.getName()
+							).put(
+								"url",
+								_getPreviewFragmentCollectionURL(
+									fragmentCollectionContributor.
+										getFragmentCollectionKey(),
+									CompanyConstants.SYSTEM)
+							)
+						).toArray(
+							JSONObject[]::new
+						);
+				}
+
+				Stream<FragmentCollection> fragmentCollectionsStream =
+					fragmentCollections.stream();
+
+				return JSONUtil.putAll(
+					ArrayUtil.append(
+						fragmentCollectionsStream.map(
+							fragmentCollection -> JSONUtil.put(
+								"name", fragmentCollection.getName()
+							).put(
+								"url",
+								_getPreviewFragmentCollectionURL(
+									fragmentCollection.
+										getFragmentCollectionKey(),
+									fragmentCollection.getGroupId())
+							)
+						).toArray(
+							JSONObject[]::new
+						),
+						fragmentCollectionContributorJSONObjects));
+			}
+		).put(
+			"totalLayouts", fragmentCollectionsCount
+		);
+	}
+
+	private int _getFragmentCollectionsCount() {
+		int fragmentCollectionsCount =
+			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+				new long[] {
+					_themeDisplay.getSiteGroupId(),
+					_themeDisplay.getCompanyGroupId()
+				});
+
+		if (_fragmentCollectionContributorTracker == null) {
+			return fragmentCollectionsCount;
+		}
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributors();
+
+		return fragmentCollectionsCount + fragmentCollectionContributors.size();
 	}
 
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
@@ -355,6 +482,20 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"totalLayouts", total
 		);
+	}
+
+	private String _getPreviewFragmentCollectionURL(
+		String fragmentCollectionKey, long groupId) {
+
+		return ResourceURLBuilder.createResourceURL(
+			_renderResponse
+		).setParameter(
+			"fragmentCollectionKey", fragmentCollectionKey
+		).setParameter(
+			"groupId", groupId
+		).setResourceID(
+			"/style_book/preview_fragment_collection"
+		).buildString();
 	}
 
 	private long _getPreviewItemsGroupId() {

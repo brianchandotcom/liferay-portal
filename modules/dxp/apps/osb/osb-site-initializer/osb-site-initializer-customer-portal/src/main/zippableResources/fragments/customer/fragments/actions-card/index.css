@@ -3,12 +3,7 @@
 	width: 343px;
 }
 
-.link-body {
+.cp-link-body {
 	background: var(--color-action-primary-lighten-1, rgba(250, 251, 255, 1));
 	border: 1px solid rgba(0, 74, 215, 0.1);
-}
-
-.card-title {
-	align-items: center;
-	display: flex;
 }

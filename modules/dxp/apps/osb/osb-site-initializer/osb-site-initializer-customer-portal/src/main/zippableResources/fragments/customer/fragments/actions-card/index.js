@@ -28,7 +28,7 @@ function setDynamicWebContent(htmlBody, customData = {}) {
 	});
 	html = html.replace(sanitizeEmptyKeysRegex, '');
 	const htmlElement = (elementName, html) => {
-		return `<div class="card-container bg-white card-body link-body mb-3 rounded-lg ${elementName}">${html}</div>`;
+		return `<div class="card-container bg-white card-body cp-link-body mb-3 rounded-lg ${elementName}">${html}</div>`;
 	};
 	fragmentContainer.innerHTML += htmlElement(elementName, html);
 }
@@ -74,8 +74,7 @@ function CPFragmentInteractiveListener(templateId, structuredContents) {
 		subscriptionGroupsItems.forEach((item) =>
 			fetchWebContent(getStructuredContentIdByName(item), templateId)
 		);
-	}
-	else {
+	} else {
 		console.warn(`Structure ${subscriptionGroupsItems} not found`);
 	}
 }

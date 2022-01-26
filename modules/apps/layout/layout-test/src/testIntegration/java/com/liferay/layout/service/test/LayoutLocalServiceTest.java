@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,6 +43,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -116,6 +118,45 @@ public class LayoutLocalServiceTest {
 			layout2,
 			_layoutLocalService.getFriendlyURLLayout(
 				_group.getGroupId(), true, friendlyURL1));
+	}
+
+	@Test
+	public void testGetLayoutWithOldFriendlyURLWhenNewLayoutWithSameNameIsCreated()
+		throws Exception {
+
+		String friendlyURL1 = "/friendly-url-1";
+
+		Layout layout1 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), false,
+			Collections.singletonMap(LocaleUtil.getDefault(), "friendly url 1"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
+
+		layout1 = _layoutLocalService.updateLayout(
+			layout1.getGroupId(), layout1.isPrivateLayout(),
+			layout1.getLayoutId(), layout1.getParentLayoutId(),
+			layout1.getNameMap(), layout1.getTitleMap(),
+			layout1.getDescriptionMap(), layout1.getKeywordsMap(),
+			layout1.getRobotsMap(), layout1.getType(), layout1.isHidden(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "/friendly-url-2"
+			).build(),
+			false, null, layout1.getMasterLayoutPlid(),
+			layout1.getStyleBookEntryId(), new ServiceContext());
+
+		Layout layout2 = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "friendly url 1", null,
+			RandomTestUtil.randomString(), LayoutConstants.TYPE_PORTLET, false,
+			false, null, new ServiceContext());
+
+		Assert.assertEquals(
+			layout1,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), false, friendlyURL1));
+		Assert.assertNotEquals(
+			layout2,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), false, friendlyURL1));
 	}
 
 	@Test
@@ -319,6 +360,44 @@ public class LayoutLocalServiceTest {
 			publicLayout,
 			_layoutLocalService.getFriendlyURLLayout(
 				_group.getGroupId(), false, friendlyURL));
+	}
+
+	@Test
+	public void testUpdateDraftLayoutAfterOriginalLayoutUpdatesWithNewFriendlyURL()
+		throws Exception {
+
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
+			HashMapBuilder.put(
+				LocaleUtil.US, "name"
+			).build(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
+			new HashMap<>(), 0, new ServiceContext());
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "/friendly-url-2"
+			).build(),
+			false, null, layout.getMasterLayoutPlid(),
+			layout.getStyleBookEntryId(), new ServiceContext());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutLocalService.updateLayout(
+			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
+			draftLayout.getNameMap(), draftLayout.getTitleMap(),
+			draftLayout.getDescriptionMap(), draftLayout.getKeywordsMap(),
+			draftLayout.getRobotsMap(), draftLayout.getType(),
+			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
+			null, draftLayout.getMasterLayoutPlid(),
+			draftLayout.getStyleBookEntryId(), new ServiceContext());
 	}
 
 	private void _testDeleteLayouts(boolean system) throws Exception {

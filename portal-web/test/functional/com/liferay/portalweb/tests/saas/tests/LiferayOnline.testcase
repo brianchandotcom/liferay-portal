@@ -34,7 +34,6 @@ definition {
 	@priority = "5"
 	test AddVirtualInstanceWithDefaultInitializer {
 		property portal.acceptance = "true";
-
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithDefaultInitializer";
 
@@ -61,7 +60,6 @@ definition {
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
 		property portal.acceptance = "true";
-
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 

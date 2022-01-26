@@ -197,6 +197,18 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId, map);
 	}
 
+	protected void populateContentLength(
+			FileEntry fileEntry, Map<String, String> map)
+		throws Exception {
+
+		String contentLength = "5";
+
+		String key = "contentLength_ja_JP";
+
+		map.put(key, contentLength);
+		map.put(key.concat("_sortable"), contentLength);
+	}
+
 	protected void populateDates(FileEntry fileEntry, Map<String, String> map) {
 		indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, fileEntry.getCreateDate(), map);
@@ -268,6 +280,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			populateHttpHeaders(fileEntry, map);
 		}
 
+		populateVersionCount(fileEntry, map);
+		populateContentLength(fileEntry, map);
 		populateLocalizedTitles(fileEntry, map);
 		populateViewCount(fileEntry, map);
 
@@ -376,6 +390,15 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			map.put(key, title);
 			map.put(key.concat("_sortable"), title);
 		}
+	}
+
+	protected void populateVersionCount(
+		FileEntry fileEntry, Map<String, String> map) {
+
+		String version = fileEntry.getVersion();
+
+		map.put("versionCount", String.valueOf(version));
+		map.put("versionCount_sortable", String.valueOf(version));
 	}
 
 	protected void populateViewCount(

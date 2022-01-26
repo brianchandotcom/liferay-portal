@@ -19,6 +19,8 @@
 
 		<!-- Other fields -->
 
+		<column name="bundledAppType" type="String" />
+		<column name="bundledAppURL" type="String" />
 		<column name="customElementCSSURLs" type="String" />
 		<column name="customElementHTMLElementName" type="String" />
 		<column name="customElementURLs" type="String" />
@@ -38,6 +40,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateRemoteAppEntryExternalReferenceCode</exception>
+		<exception>RemoteAppEntryBundledAppURL</exception>
 		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
 		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
 		<exception>RemoteAppEntryCustomElementURLs</exception>

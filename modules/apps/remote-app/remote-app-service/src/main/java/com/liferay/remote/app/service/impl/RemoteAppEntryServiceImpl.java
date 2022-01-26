@@ -42,6 +42,23 @@ import org.osgi.service.component.annotations.Reference;
 public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 	@Override
+	public RemoteAppEntry addBundledAppRemoteAppEntry(
+			String externalReferenceCode, String bundledAppURL,
+			String description, String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
+
+		return remoteAppEntryLocalService.addBundledAppRemoteAppEntry(
+			externalReferenceCode, getUserId(), bundledAppURL, description,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
+	}
+
+	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,

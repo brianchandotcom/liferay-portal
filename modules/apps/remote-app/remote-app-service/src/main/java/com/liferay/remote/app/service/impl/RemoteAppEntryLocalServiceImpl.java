@@ -20,6 +20,9 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -50,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
+import com.liferay.remote.app.exception.RemoteAppEntryBundledAppURLException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
@@ -58,7 +63,12 @@ import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,6 +100,59 @@ public class RemoteAppEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public RemoteAppEntry addBundledAppRemoteAppEntry(
+			String externalReferenceCode, long userId, String bundledAppURL,
+			String description, String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
+		throws PortalException {
+
+		bundledAppURL = StringUtil.trim(bundledAppURL);
+
+		_validateBundledApp(bundledAppURL);
+
+		JSONObject manifestJSONObject = _getManifestJSONObject(bundledAppURL);
+
+		String type = manifestJSONObject.getString("type");
+
+		RemoteAppEntry remoteAppEntry;
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			JSONArray cssURLsJSONArray = manifestJSONObject.getJSONArray(
+				"cssURLs");
+			String htmlElementName = manifestJSONObject.getString(
+				"htmlElementName");
+			JSONArray urlsJSONArray = manifestJSONObject.getJSONArray("urls");
+
+			remoteAppEntry = _createCustomElementRemoteAppEntry(
+				externalReferenceCode, userId,
+				cssURLsJSONArray.join(StringPool.COMMA), htmlElementName,
+				urlsJSONArray.join(StringPool.COMMA), description,
+				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			String url = manifestJSONObject.getString("url");
+
+			remoteAppEntry = _createIFrameRemoteAppEntry(
+				userId, description, friendlyURLMapping, url, instanceable,
+				nameMap, portletCategoryName, properties, sourceCodeURL);
+		}
+		else {
+			throw new PortalException("Invalid Bundled App type " + type);
+		}
+
+		remoteAppEntry.setBundledAppURL(bundledAppURL);
+
+		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		_addResources(remoteAppEntry);
+
+		return _startWorkflowInstance(userId, remoteAppEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
@@ -99,50 +162,11 @@ public class RemoteAppEntryLocalServiceImpl
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
-		long remoteAppEntryId = counterLocalService.increment();
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(remoteAppEntryId);
-		}
-
-		User user = _userLocalService.getUser(userId);
-
-		_validateExternalReferenceCode(
-			user.getCompanyId(), externalReferenceCode);
-
-		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
-		customElementHTMLElementName = StringUtil.trim(
-			customElementHTMLElementName);
-		customElementURLs = StringUtil.trim(customElementURLs);
-
-		_validateCustomElement(
-			customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs);
-
-		_validateFriendlyURLMapping(friendlyURLMapping);
-
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			remoteAppEntryId);
-
-		remoteAppEntry.setExternalReferenceCode(externalReferenceCode);
-		remoteAppEntry.setCompanyId(user.getCompanyId());
-		remoteAppEntry.setUserId(user.getUserId());
-		remoteAppEntry.setUserName(user.getFullName());
-		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
-		remoteAppEntry.setCustomElementHTMLElementName(
-			customElementHTMLElementName);
-		remoteAppEntry.setCustomElementURLs(customElementURLs);
-		remoteAppEntry.setDescription(description);
-		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
-		remoteAppEntry.setInstanceable(instanceable);
-		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
-		remoteAppEntry.setProperties(properties);
-		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
-		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
-		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
-		remoteAppEntry.setStatusByUserId(userId);
-		remoteAppEntry.setStatusDate(new Date());
+		RemoteAppEntry remoteAppEntry = _createCustomElementRemoteAppEntry(
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -159,33 +183,9 @@ public class RemoteAppEntryLocalServiceImpl
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
-		_validateFriendlyURLMapping(friendlyURLMapping);
-
-		iFrameURL = StringUtil.trim(iFrameURL);
-
-		_validateIFrameURL(iFrameURL);
-
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
-
-		remoteAppEntry.setCompanyId(user.getCompanyId());
-		remoteAppEntry.setUserId(user.getUserId());
-		remoteAppEntry.setUserName(user.getFullName());
-
-		remoteAppEntry.setDescription(description);
-		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
-		remoteAppEntry.setIFrameURL(iFrameURL);
-		remoteAppEntry.setInstanceable(instanceable);
-		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
-		remoteAppEntry.setProperties(properties);
-		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
-		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
-		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
-		remoteAppEntry.setStatusByUserId(userId);
-		remoteAppEntry.setStatusDate(new Date());
+		RemoteAppEntry remoteAppEntry = _createIFrameRemoteAppEntry(
+			userId, description, friendlyURLMapping, iFrameURL, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -487,6 +487,121 @@ public class RemoteAppEntryLocalServiceImpl
 		return searchContext;
 	}
 
+	private RemoteAppEntry _createCustomElementRemoteAppEntry(
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
+			String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
+		throws PortalException {
+
+		long remoteAppEntryId = counterLocalService.increment();
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(remoteAppEntryId);
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
+		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
+		customElementHTMLElementName = StringUtil.trim(
+			customElementHTMLElementName);
+		customElementURLs = StringUtil.trim(customElementURLs);
+
+		_validateCustomElement(
+			customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs);
+
+		_validateFriendlyURLMapping(friendlyURLMapping);
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
+			remoteAppEntryId);
+
+		remoteAppEntry.setExternalReferenceCode(externalReferenceCode);
+		remoteAppEntry.setCompanyId(user.getCompanyId());
+		remoteAppEntry.setUserId(user.getUserId());
+		remoteAppEntry.setUserName(user.getFullName());
+		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
+		remoteAppEntry.setCustomElementHTMLElementName(
+			customElementHTMLElementName);
+		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setDescription(description);
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
+		remoteAppEntry.setInstanceable(instanceable);
+		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
+		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
+
+		return remoteAppEntry;
+	}
+
+	private RemoteAppEntry _createIFrameRemoteAppEntry(
+			long userId, String description, String friendlyURLMapping,
+			String iFrameURL, boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
+		throws PortalException {
+
+		_validateFriendlyURLMapping(friendlyURLMapping);
+
+		iFrameURL = StringUtil.trim(iFrameURL);
+
+		_validateIFrameURL(iFrameURL);
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		remoteAppEntry.setCompanyId(user.getCompanyId());
+		remoteAppEntry.setUserId(user.getUserId());
+		remoteAppEntry.setUserName(user.getFullName());
+
+		remoteAppEntry.setDescription(description);
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
+		remoteAppEntry.setIFrameURL(iFrameURL);
+		remoteAppEntry.setInstanceable(instanceable);
+		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
+		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
+
+		return remoteAppEntry;
+	}
+
+	private JSONObject _getManifestJSONObject(String bundledAppURL)
+		throws PortalException {
+
+		try {
+			URL url = new URL(bundledAppURL + "/manifest.json");
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			try (InputStream inputStream = url.openStream()) {
+				StreamUtil.transfer(inputStream, byteArrayOutputStream);
+			}
+
+			return _jsonFactory.createJSONObject(
+				byteArrayOutputStream.toString("UTF-8"));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
+	}
+
 	private List<RemoteAppEntry> _getRemoteAppEntries(Hits hits)
 		throws PortalException {
 
@@ -521,6 +636,20 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntries;
 	}
 
+	private String _joinJSONArray(JSONArray jsonArray) {
+		StringBundler sb = new StringBundler((2 * jsonArray.length()) - 1);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (i > 0) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(jsonArray.getString(i));
+		}
+
+		return sb.toString();
+	}
+
 	private RemoteAppEntry _startWorkflowInstance(
 			long userId, RemoteAppEntry remoteAppEntry)
 		throws PortalException {
@@ -545,6 +674,15 @@ public class RemoteAppEntryLocalServiceImpl
 				).orElse(
 					remoteAppEntry.getIFrameURL()
 				)));
+	}
+
+	private void _validateBundledApp(String bundledAppURL)
+		throws PortalException {
+
+		if (!Validator.isUrl(bundledAppURL)) {
+			throw new RemoteAppEntryBundledAppURLException(
+				"Invalid Bundled App URL " + bundledAppURL);
+		}
 	}
 
 	private void _validateCustomElement(
@@ -671,6 +809,9 @@ public class RemoteAppEntryLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private RemoteAppEntryDeployer _remoteAppEntryDeployer;

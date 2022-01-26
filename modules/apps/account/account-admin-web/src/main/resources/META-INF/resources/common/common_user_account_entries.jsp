@@ -153,10 +153,12 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 			'.modify-link'
 		);
 
-		var selectAccountLink = A.one('#<portlet:namespace />selectAccountLink');
+		var selectAccountLink = document.getElementById(
+			'<portlet:namespace />selectAccountLink'
+		);
 
 		if (selectAccountLink) {
-			selectAccountLink.on('click', (event) => {
+			selectAccountLink.addEventListener('click', (event) => {
 				Liferay.Util.openSelectionModal({
 					id: '<portlet:namespace />selectAccountEntry',
 					multiple: !<%= singleSelect %>,

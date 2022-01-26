@@ -1,0 +1,108 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Cadmin";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Cadmin Test Page");
+
+			FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
+		}
+	}
+
+	@description = "LPS-146034. Verifies admin component displays it's default theme after applying a theme"
+	@priority = "5"
+	test CanDisplayDefaultTheme {
+		task ("Add cadmin portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Cadmin Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Cadmin Test Page",
+				widgetName = "CSS Cadmin Sample");
+
+			Navigator.gotoPage(pageName = "Cadmin Test Page");
+		}
+
+		task ("Assert classic theme background color") {
+			AssertCssValue(
+				key_class = "test",
+				locator1 = "Cadmin#BODY",
+				locator2 = "background-color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+
+		task ("Assert cadmin default theme background color") {
+			AssertCssValue(
+				key_class = "cadmin",
+				locator1 = "Cadmin#BODY",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 0, 0)");
+		}
+
+		task ("Upload test-theme.war") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "App Manager");
+
+			AppManager.uploadApp(
+				appName = "test-theme",
+				warFileName = "test-theme.war");
+		}
+
+		task ("Apply theme to test page") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.changeWidgetPageCurrentTheme(
+				pageName = "Cadmin Test Page",
+				themeName = "test-theme-7-4");
+
+			Navigator.openSitePage(
+				pageName = "Cadmin Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Assert test theme background color") {
+			AssertCssValue(
+				key_class = "test",
+				locator1 = "Cadmin#BODY",
+				locator2 = "background-color",
+				value1 = "rgba(255, 165, 0, 1)");
+		}
+
+		task ("Assert cadmin default theme background color") {
+			AssertCssValue(
+				key_class = "cadmin",
+				locator1 = "Cadmin#BODY",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 0, 0)");
+
+			takeScreenshot();
+		}
+	}
+
+}

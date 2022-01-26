@@ -10,9 +10,9 @@
  */
 
 import {
-	PRODUCTS,
+	PRODUCT_TYPES,
 	SLA_NAMES,
-	WEB_CONTENTS_BY_LIFERAY_VERSION,
+	WEB_CONTENT_DXP_VERSION_TYPES,
 } from './constants';
 
 export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
@@ -21,50 +21,58 @@ export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
 	if (
 		subscriptionGroups.some(
 			({name}) =>
-				name === PRODUCTS.dxp ||
-				name === PRODUCTS.portal ||
-				name === PRODUCTS.commerce
+				name === PRODUCT_TYPES.dxp ||
+				name === PRODUCT_TYPES.portal ||
+				name === PRODUCT_TYPES.commerce
 		) ||
 		!subscriptionGroups.some(
 			({name}) =>
-				name === PRODUCTS.partnership || name === PRODUCTS.dxp_cloud
+				name === PRODUCT_TYPES.partnership ||
+				name === PRODUCT_TYPES.dxpCloud
 		)
 	) {
 		webContents.push('WEB-CONTENT-ACTION-01');
 	}
 	if (
-		!subscriptionGroups.some(({name}) => name === PRODUCTS.partnership) &&
-		slaCurrent !== SLA_NAMES.limited_subscription
+		!subscriptionGroups.some(
+			({name}) => name === PRODUCT_TYPES.partnership
+		) &&
+		slaCurrent !== SLA_NAMES.limitedSubscription
 	) {
 		webContents.push('WEB-CONTENT-ACTION-02');
 	}
 	if (
 		subscriptionGroups.some(
-			({name}) => name === PRODUCTS.dxp || name === PRODUCTS.dxp_cloud
+			({name}) =>
+				name === PRODUCT_TYPES.dxp || name === PRODUCT_TYPES.dxpCloud
 		)
 	) {
 		webContents.push('WEB-CONTENT-ACTION-03');
 	}
 	if (
 		subscriptionGroups.some(
-			({name}) => name === PRODUCTS.dxp || name === PRODUCTS.dxp_cloud
+			({name}) =>
+				name === PRODUCT_TYPES.dxp || name === PRODUCT_TYPES.dxpCloud
 		)
 	) {
 		webContents.push(
 			dxpVersion
-				? WEB_CONTENTS_BY_LIFERAY_VERSION[dxpVersion]
-				: WEB_CONTENTS_BY_LIFERAY_VERSION['7.4']
+				? WEB_CONTENT_DXP_VERSION_TYPES[dxpVersion]
+				: WEB_CONTENT_DXP_VERSION_TYPES['7.4']
 		);
 	}
 	if (
 		!subscriptionGroups.some(
-			({name}) => name === PRODUCTS.analytics_cloud
+			({name}) => name === PRODUCT_TYPES.analytics_cloud
 		) &&
-		(!subscriptionGroups.some(({name}) => name === PRODUCTS.portal) ||
-			(subscriptionGroups.some(({name}) => name === PRODUCTS.portal) &&
+		(!subscriptionGroups.some(({name}) => name === PRODUCT_TYPES.portal) ||
+			(subscriptionGroups.some(
+				({name}) => name === PRODUCT_TYPES.portal
+			) &&
 				subscriptionGroups.some(
 					({name}) =>
-						name === PRODUCTS.dxp || name === PRODUCTS.dxp_cloud
+						name === PRODUCT_TYPES.dxp ||
+						name === PRODUCT_TYPES.dxpCloud
 				)))
 	) {
 		webContents.push('WEB-CONTENT-ACTION-09');

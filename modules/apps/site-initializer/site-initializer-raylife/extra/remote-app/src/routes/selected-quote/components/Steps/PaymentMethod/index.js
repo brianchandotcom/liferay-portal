@@ -43,10 +43,25 @@ const PaymentMethod = () => {
 	] = useContext(SelectedQuoteContext);
 
 	const productPrice = Number(product.price);
+	const productPriceParcel = productPrice / 2;
 	const promoPrice = productPrice * PRODUCT_DISCOUNT;
 	const productDiscount = productPrice - promoPrice;
 
 	const checkedMethod = methods.find(({checked}) => checked);
+
+	function setPaymentFormat(value) {
+		const currency = {
+			currency: 'USD',
+			style: 'currency',
+		};
+
+		return value.toLocaleString(
+			'en-US',
+			value % 1 === 0
+				? Object.assign(currency, {maximumFractionDigits: 0})
+				: currency
+		);
+	}
 
 	const setPaymentMethods = async () => {
 		const getSkuByName = (name) =>
@@ -65,9 +80,7 @@ const PaymentMethod = () => {
 				options: [
 					{
 						checked: true,
-						description: `Save $${promoPrice.toLocaleString(
-							'en-US'
-						)}`,
+						description: `Save ${setPaymentFormat(promoPrice)}`,
 						id: 0,
 						orderItem: {
 							discountAmount: promoPrice,
@@ -76,8 +89,8 @@ const PaymentMethod = () => {
 							skuId: fullPriceSKU.id,
 							unitPrice: productDiscount,
 						},
-						title: `Pay in full – $${productDiscount.toLocaleString(
-							'en-US'
+						title: `Pay in full - ${setPaymentFormat(
+							productDiscount
 						)}`,
 					},
 					{
@@ -85,14 +98,14 @@ const PaymentMethod = () => {
 						description: '',
 						id: 1,
 						orderItem: {
-							finalPrice: product.price / 2,
+							finalPrice: productPriceParcel,
 							quantity: 1,
 							skuId: installmentSKU.id,
-							unitPrice: product.price / 2,
+							unitPrice: productPriceParcel,
 						},
-						title: `2 payments of $${Number(
-							product.price / 2
-						).toLocaleString('en-US')}`,
+						title: `2 payments of ${setPaymentFormat(
+							productPriceParcel
+						)}`,
 					},
 				],
 				title: item.name,

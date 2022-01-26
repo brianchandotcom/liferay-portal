@@ -149,8 +149,16 @@ definition {
 	}
 
 	macro gotoBulkExportTranslation {
-		for (var exportTranslationEntry : list "${exportTranslationEntry}") {
-			LexiconEntry.selectEntry(rowEntry = "${exportTranslationEntry}");
+		if (contains("${exportTranslationEntry}", "Page")) {
+			for (var exportTranslationEntry : list "${exportTranslationEntry}") {
+				PagesAdmin.selectPageItem(pageName = "${exportTranslationEntry}");
+			}
+		}
+		else {
+			for (var exportTranslationEntry : list "${exportTranslationEntry}") {
+				LexiconEntry.selectEntry(rowEntry = "${exportTranslationEntry}");
+			}
+
 		}
 
 		if (isSet(options)) {

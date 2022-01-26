@@ -83,7 +83,15 @@ public class OpenAPIResourceImpl {
 		{
 			add(ChannelResourceImpl.class);
 
+			add(OrderTypeResourceImpl.class);
+
+			add(PaymentMethodGroupRelOrderTypeResourceImpl.class);
+
+			add(PaymentMethodGroupRelTermResourceImpl.class);
+
 			add(TaxCategoryResourceImpl.class);
+
+			add(TermResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

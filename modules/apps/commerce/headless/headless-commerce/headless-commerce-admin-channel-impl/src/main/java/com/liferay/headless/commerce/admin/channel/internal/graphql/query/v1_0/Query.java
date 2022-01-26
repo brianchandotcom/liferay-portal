@@ -15,9 +15,17 @@
 package com.liferay.headless.commerce.admin.channel.internal.graphql.query.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.OrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -57,12 +65,46 @@ public class Query {
 			channelResourceComponentServiceObjects;
 	}
 
+	public static void setOrderTypeResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTypeResource>
+			orderTypeResourceComponentServiceObjects) {
+
+		_orderTypeResourceComponentServiceObjects =
+			orderTypeResourceComponentServiceObjects;
+	}
+
+	public static void
+		setPaymentMethodGroupRelOrderTypeResourceComponentServiceObjects(
+			ComponentServiceObjects<PaymentMethodGroupRelOrderTypeResource>
+				paymentMethodGroupRelOrderTypeResourceComponentServiceObjects) {
+
+		_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects =
+			paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
+	}
+
+	public static void
+		setPaymentMethodGroupRelTermResourceComponentServiceObjects(
+			ComponentServiceObjects<PaymentMethodGroupRelTermResource>
+				paymentMethodGroupRelTermResourceComponentServiceObjects) {
+
+		_paymentMethodGroupRelTermResourceComponentServiceObjects =
+			paymentMethodGroupRelTermResourceComponentServiceObjects;
+	}
+
 	public static void setTaxCategoryResourceComponentServiceObjects(
 		ComponentServiceObjects<TaxCategoryResource>
 			taxCategoryResourceComponentServiceObjects) {
 
 		_taxCategoryResourceComponentServiceObjects =
 			taxCategoryResourceComponentServiceObjects;
+	}
+
+	public static void setTermResourceComponentServiceObjects(
+		ComponentServiceObjects<TermResource>
+			termResourceComponentServiceObjects) {
+
+		_termResourceComponentServiceObjects =
+			termResourceComponentServiceObjects;
 	}
 
 	/**
@@ -126,6 +168,91 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentMethodGroupRelOrderTypeOrderType(paymentMethodGroupRelOrderTypeId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderType paymentMethodGroupRelOrderTypeOrderType(
+			@GraphQLName("paymentMethodGroupRelOrderTypeId") Long
+				paymentMethodGroupRelOrderTypeId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.getPaymentMethodGroupRelOrderTypeOrderType(
+					paymentMethodGroupRelOrderTypeId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentMethodGroupRelIdPaymentMethodGroupRelOrderTypes(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public PaymentMethodGroupRelOrderTypePage
+			paymentMethodGroupRelIdPaymentMethodGroupRelOrderTypes(
+				@GraphQLName("id") Long id,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelOrderTypeResource ->
+				new PaymentMethodGroupRelOrderTypePage(
+					paymentMethodGroupRelOrderTypeResource.
+						getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+							id, search,
+							_filterBiFunction.apply(
+								paymentMethodGroupRelOrderTypeResource,
+								filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								paymentMethodGroupRelOrderTypeResource,
+								sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentMethodGroupRelIdPaymentMethodGroupRelTerms(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public PaymentMethodGroupRelTermPage
+			paymentMethodGroupRelIdPaymentMethodGroupRelTerms(
+				@GraphQLName("id") Long id,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentMethodGroupRelTermResource ->
+				new PaymentMethodGroupRelTermPage(
+					paymentMethodGroupRelTermResource.
+						getPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage(
+							id, search,
+							_filterBiFunction.apply(
+								paymentMethodGroupRelTermResource,
+								filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								paymentMethodGroupRelTermResource,
+								sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxCategories(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -158,6 +285,24 @@ public class Query {
 			taxCategoryResource -> taxCategoryResource.getTaxCategory(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentMethodGroupRelTermTerm(paymentMethodGroupRelTermId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Term paymentMethodGroupRelTermTerm(
+			@GraphQLName("paymentMethodGroupRelTermId") Long
+				paymentMethodGroupRelTermId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.getPaymentMethodGroupRelTermTerm(
+				paymentMethodGroupRelTermId));
+	}
+
 	@GraphQLName("ChannelPage")
 	public class ChannelPage {
 
@@ -176,6 +321,109 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Channel> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("OrderTypePage")
+	public class OrderTypePage {
+
+		public OrderTypePage(Page orderTypePage) {
+			actions = orderTypePage.getActions();
+
+			items = orderTypePage.getItems();
+			lastPage = orderTypePage.getLastPage();
+			page = orderTypePage.getPage();
+			pageSize = orderTypePage.getPageSize();
+			totalCount = orderTypePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<OrderType> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PaymentMethodGroupRelOrderTypePage")
+	public class PaymentMethodGroupRelOrderTypePage {
+
+		public PaymentMethodGroupRelOrderTypePage(
+			Page paymentMethodGroupRelOrderTypePage) {
+
+			actions = paymentMethodGroupRelOrderTypePage.getActions();
+
+			items = paymentMethodGroupRelOrderTypePage.getItems();
+			lastPage = paymentMethodGroupRelOrderTypePage.getLastPage();
+			page = paymentMethodGroupRelOrderTypePage.getPage();
+			pageSize = paymentMethodGroupRelOrderTypePage.getPageSize();
+			totalCount = paymentMethodGroupRelOrderTypePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<PaymentMethodGroupRelOrderType> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PaymentMethodGroupRelTermPage")
+	public class PaymentMethodGroupRelTermPage {
+
+		public PaymentMethodGroupRelTermPage(
+			Page paymentMethodGroupRelTermPage) {
+
+			actions = paymentMethodGroupRelTermPage.getActions();
+
+			items = paymentMethodGroupRelTermPage.getItems();
+			lastPage = paymentMethodGroupRelTermPage.getLastPage();
+			page = paymentMethodGroupRelTermPage.getPage();
+			pageSize = paymentMethodGroupRelTermPage.getPageSize();
+			totalCount = paymentMethodGroupRelTermPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<PaymentMethodGroupRelTerm> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -224,6 +472,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("TermPage")
+	public class TermPage {
+
+		public TermPage(Page termPage) {
+			actions = termPage.getActions();
+
+			items = termPage.getItems();
+			lastPage = termPage.getLastPage();
+			page = termPage.getPage();
+			pageSize = termPage.getPageSize();
+			totalCount = termPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Term> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -256,6 +537,58 @@ public class Query {
 		channelResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(OrderTypeResource orderTypeResource)
+		throws Exception {
+
+		orderTypeResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTypeResource.setContextCompany(_company);
+		orderTypeResource.setContextHttpServletRequest(_httpServletRequest);
+		orderTypeResource.setContextHttpServletResponse(_httpServletResponse);
+		orderTypeResource.setContextUriInfo(_uriInfo);
+		orderTypeResource.setContextUser(_user);
+		orderTypeResource.setGroupLocalService(_groupLocalService);
+		orderTypeResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			PaymentMethodGroupRelOrderTypeResource
+				paymentMethodGroupRelOrderTypeResource)
+		throws Exception {
+
+		paymentMethodGroupRelOrderTypeResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		paymentMethodGroupRelOrderTypeResource.setContextCompany(_company);
+		paymentMethodGroupRelOrderTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		paymentMethodGroupRelOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		paymentMethodGroupRelOrderTypeResource.setContextUriInfo(_uriInfo);
+		paymentMethodGroupRelOrderTypeResource.setContextUser(_user);
+		paymentMethodGroupRelOrderTypeResource.setGroupLocalService(
+			_groupLocalService);
+		paymentMethodGroupRelOrderTypeResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			PaymentMethodGroupRelTermResource paymentMethodGroupRelTermResource)
+		throws Exception {
+
+		paymentMethodGroupRelTermResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		paymentMethodGroupRelTermResource.setContextCompany(_company);
+		paymentMethodGroupRelTermResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		paymentMethodGroupRelTermResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		paymentMethodGroupRelTermResource.setContextUriInfo(_uriInfo);
+		paymentMethodGroupRelTermResource.setContextUser(_user);
+		paymentMethodGroupRelTermResource.setGroupLocalService(
+			_groupLocalService);
+		paymentMethodGroupRelTermResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			TaxCategoryResource taxCategoryResource)
 		throws Exception {
@@ -270,10 +603,32 @@ public class Query {
 		taxCategoryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(TermResource termResource)
+		throws Exception {
+
+		termResource.setContextAcceptLanguage(_acceptLanguage);
+		termResource.setContextCompany(_company);
+		termResource.setContextHttpServletRequest(_httpServletRequest);
+		termResource.setContextHttpServletResponse(_httpServletResponse);
+		termResource.setContextUriInfo(_uriInfo);
+		termResource.setContextUser(_user);
+		termResource.setGroupLocalService(_groupLocalService);
+		termResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<PaymentMethodGroupRelOrderTypeResource>
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PaymentMethodGroupRelTermResource>
+		_paymentMethodGroupRelTermResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaxCategoryResource>
 		_taxCategoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TermResource>
+		_termResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

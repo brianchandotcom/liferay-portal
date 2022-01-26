@@ -17,7 +17,11 @@ package com.liferay.headless.commerce.admin.channel.internal.graphql.servlet.v1_
 import com.liferay.headless.commerce.admin.channel.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.channel.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.OrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -41,11 +45,24 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
+		Mutation.
+			setPaymentMethodGroupRelOrderTypeResourceComponentServiceObjects(
+				_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects);
+		Mutation.setPaymentMethodGroupRelTermResourceComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
+		Query.setOrderTypeResourceComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects);
+		Query.setPaymentMethodGroupRelOrderTypeResourceComponentServiceObjects(
+			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects);
+		Query.setPaymentMethodGroupRelTermResourceComponentServiceObjects(
+			_paymentMethodGroupRelTermResourceComponentServiceObjects);
 		Query.setTaxCategoryResourceComponentServiceObjects(
 			_taxCategoryResourceComponentServiceObjects);
+		Query.setTermResourceComponentServiceObjects(
+			_termResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -68,7 +85,23 @@ public class ServletDataImpl implements ServletData {
 		_channelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PaymentMethodGroupRelOrderTypeResource>
+		_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PaymentMethodGroupRelTermResource>
+		_paymentMethodGroupRelTermResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaxCategoryResource>
 		_taxCategoryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TermResource>
+		_termResourceComponentServiceObjects;
 
 }

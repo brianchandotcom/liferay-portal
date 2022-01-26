@@ -48,13 +48,20 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		throws DocumentException, IOException, PoshiScriptParserException {
 
 		if (fileName.endsWith(".path")) {
-			Matcher matcher = _variableReferencePattern.matcher(content);
+
+			// TODO Auto SF Start
+
+			return _fixVariableNameInPath(content);
+
+			// TODO Auto SF End
+
+			/*Matcher matcher = _variableReferencePattern.matcher(content);
 
 			while (matcher.find()) {
 				_checkVariableName(fileName, "", "", matcher.group(2));
 			}
 
-			return content;
+			return content;*/
 		}
 
 		if (SourceUtil.isXML(content)) {
@@ -68,6 +75,18 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 				FileUtil.getURL(file));
 
 		String poshiElementSyntax = Dom4JUtil.format(poshiElement);
+
+		// TODO Auto SF Start
+
+		poshiElementSyntax = _fixVariableNameInPoshiScript(
+			file, poshiElement, poshiElementSyntax.trim(),
+			_variableReferencePattern);
+
+		poshiElementSyntax = _fixVariableNameInPoshiScript(
+			file, poshiElement, poshiElementSyntax.trim(),
+			_variableDefinitionPattern);
+
+		// TODO Auto SF End
 
 		Document document = SourceUtil.readXML(poshiElementSyntax);
 
@@ -129,6 +148,215 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 				return;
 			}
 		}
+	}
+
+	private String _fixVariableNameInPath(String content) {
+		Matcher matcher1 = _variableReferencePattern.matcher(content);
+
+		StringBuffer sb1 = new StringBuffer();
+
+		while (matcher1.find()) {
+			String newVar = matcher1.group(2);
+
+			String expectedVariableName = _getExpectedVariableName(newVar);
+
+			if (!newVar.equals(expectedVariableName)) {
+				matcher1.appendReplacement(
+					sb1, "\\$\\{" + expectedVariableName + "\\}");
+
+				continue;
+			}
+
+			/*if (newVar.startsWith("OSGi")) {
+				newVar = StringUtil.replace(newVar, "OSGi", "osgi");
+			}
+
+			if (newVar.matches("[A-Z]+")) {
+				newVar = StringUtil.toLowerCase(newVar);
+			}
+
+			Pattern pattern = Pattern.compile("([A-Z])([A-Z]+)([A-Z][a-z]|$)");
+
+			Matcher matcher2 = pattern.matcher(newVar);
+
+			StringBuffer sb2 = new StringBuffer();
+
+			while (matcher2.find()) {
+				matcher2.appendReplacement(
+					sb2,
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase() + matcher2.group(3));
+			}
+
+			matcher2.appendTail(sb2);
+
+			newVar = sb2.toString();
+
+			pattern = Pattern.compile("(_)([A-Z])");
+
+			matcher2 = pattern.matcher(newVar);
+
+			while (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase());
+			}
+
+			pattern = Pattern.compile("^([A-Z])([a-z])(.*)$");
+
+			matcher2 = pattern.matcher(newVar);
+
+			if (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(
+						1
+					).toLowerCase() + matcher2.group(2) + matcher2.group(3));
+			}
+
+			pattern = Pattern.compile("([A-Z])([A-Z]+)(\\d)");
+
+			matcher2 = pattern.matcher(newVar);
+
+			if (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase() + matcher2.group(3));
+			}*/
+
+			matcher1.appendReplacement(sb1, "\\$\\{" + newVar + "\\}");
+		}
+
+		matcher1.appendTail(sb1);
+
+		return sb1.toString();
+	}
+
+	private String _fixVariableNameInPoshiScript(
+			File file, PoshiElement poshiElement, String poshiElementSyntax,
+			Pattern pattern)
+		throws IOException, PoshiScriptParserException {
+
+		Matcher matcher1 = pattern.matcher(poshiElementSyntax);
+
+		StringBuffer sb1 = new StringBuffer();
+
+		while (matcher1.find()) {
+			String newVar = matcher1.group(2);
+
+			String expectedVariableName = _getExpectedVariableName(newVar);
+
+			if (!newVar.equals(expectedVariableName)) {
+				String p = pattern.toString();
+
+				if (p.startsWith("(\\$\\{)")) {
+					matcher1.appendReplacement(
+						sb1, "\\$\\{" + expectedVariableName + "\\}");
+				}
+				else {
+					matcher1.appendReplacement(
+						sb1,
+						matcher1.group(1) + expectedVariableName +
+							matcher1.group(3));
+				}
+
+				continue;
+			}
+
+			/*if (newVar.startsWith("OSGi")) {
+				newVar = StringUtil.replace(newVar, "OSGi", "osgi");
+			}
+
+			if (newVar.matches("[A-Z]+")) {
+				newVar = StringUtil.toLowerCase(newVar);
+			}
+
+			Pattern pattern1 = Pattern.compile("([A-Z])([A-Z]+)([A-Z][a-z]|$)");
+
+			Matcher matcher2 = pattern1.matcher(newVar);
+
+			StringBuffer sb2 = new StringBuffer();
+
+			while (matcher2.find()) {
+				matcher2.appendReplacement(
+					sb2,
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase() + matcher2.group(3));
+			}
+
+			matcher2.appendTail(sb2);
+
+			newVar = sb2.toString();
+
+			pattern1 = Pattern.compile("(_)([A-Z])");
+
+			matcher2 = pattern1.matcher(newVar);
+
+			while (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase());
+			}
+
+			pattern1 = Pattern.compile("^([A-Z])([a-z])(.*)$");
+
+			matcher2 = pattern1.matcher(newVar);
+
+			if (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(
+						1
+					).toLowerCase() + matcher2.group(2) + matcher2.group(3));
+			}
+
+			pattern1 = Pattern.compile("([A-Z])([A-Z]+)(\\d)");
+
+			matcher2 = pattern1.matcher(newVar);
+
+			if (matcher2.find()) {
+				newVar = newVar.replaceFirst(
+					matcher2.group(),
+					matcher2.group(1) +
+						matcher2.group(
+							2
+						).toLowerCase() + matcher2.group(3));
+			}*/
+
+			String p = pattern.toString();
+
+			if (p.startsWith("(\\$\\{)")) {
+				matcher1.appendReplacement(sb1, "\\$\\{" + newVar + "\\}");
+			}
+			else {
+				matcher1.appendReplacement(
+					sb1, matcher1.group(1) + newVar + matcher1.group(3));
+			}
+		}
+
+		matcher1.appendTail(sb1);
+
+		FileUtil.write(file, sb1.toString());
+
+		poshiElement = (PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
+			FileUtil.getURL(file));
+
+		FileUtil.write(file, poshiElement.toPoshiScript());
+
+		return sb1.toString();
 	}
 
 	private String _getExpectedVariableName(String variableName) {
@@ -222,6 +450,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 
 	private static final String _CAMEL_CASE_PATTERN = "([a-z0-9]+([A-Z])?)+";
 
+	private static final Pattern _variableDefinitionPattern = Pattern.compile(
+		"((?:<var name|<isset var|for param|return name)=\")(.+?)(\")");
 	private static final Pattern _variableReferencePattern = Pattern.compile(
 		"(\\$\\{)([a-zA-Z0-9_]+?)(\\})");
 

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
+import com.liferay.fragment.renderer.react.internal.util.FragmentEntryFragmentRendererReactUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
@@ -175,8 +176,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			new ComponentDescriptor(
 				ModuleNameUtil.getModuleResolvedId(
 					_jsPackage,
-					"fragmentEntryLink/" +
-						fragmentEntryLink.getFragmentEntryLinkId()),
+					FragmentEntryFragmentRendererReactUtil.getModuleName(
+						fragmentEntryLink)),
 				"fragment" + fragmentEntryLink.getFragmentEntryLinkId(),
 				Collections.emptyList(), true),
 			data, httpServletRequest, writer);

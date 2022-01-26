@@ -17,9 +17,9 @@ package com.liferay.fragment.renderer.react.internal.model.listener;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.react.internal.util.FragmentEntryFragmentRendererReactUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
@@ -56,8 +56,10 @@ public class FragmentEntryLinkModelListener
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
 		npmRegistryUpdate.registerJSModule(
-			_jsPackage, _getModuleName(fragmentEntryLink), _dependencies,
-			_getJs(fragmentEntryLink), null);
+			_jsPackage,
+			FragmentEntryFragmentRendererReactUtil.getModuleName(
+				fragmentEntryLink),
+			_dependencies, _getJs(fragmentEntryLink), null);
 
 		npmRegistryUpdate.finish();
 	}
@@ -71,7 +73,9 @@ public class FragmentEntryLinkModelListener
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
 		npmRegistryUpdate.unregisterJSModule(
-			_jsPackage.getJSModule(_getModuleName(fragmentEntryLink)));
+			_jsPackage.getJSModule(
+				FragmentEntryFragmentRendererReactUtil.getModuleName(
+					fragmentEntryLink)));
 
 		npmRegistryUpdate.finish();
 	}
@@ -87,11 +91,16 @@ public class FragmentEntryLinkModelListener
 
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
-		JSModule jsModule = _jsPackage.getJSModule(
-			_getModuleName(fragmentEntryLink));
+		npmRegistryUpdate.unregisterJSModule(
+			_jsPackage.getJSModule(
+				FragmentEntryFragmentRendererReactUtil.getModuleName(
+					originalFragmentEntryLink)));
 
-		npmRegistryUpdate.updateJSModule(
-			jsModule, _dependencies, _getJs(fragmentEntryLink), null);
+		npmRegistryUpdate.registerJSModule(
+			_jsPackage,
+			FragmentEntryFragmentRendererReactUtil.getModuleName(
+				fragmentEntryLink),
+			_dependencies, _getJs(fragmentEntryLink), null);
 
 		npmRegistryUpdate.finish();
 	}
@@ -109,8 +118,10 @@ public class FragmentEntryLinkModelListener
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			npmRegistryUpdate.registerJSModule(
-				_jsPackage, _getModuleName(fragmentEntryLink), _dependencies,
-				_getJs(fragmentEntryLink), null);
+				_jsPackage,
+				FragmentEntryFragmentRendererReactUtil.getModuleName(
+					fragmentEntryLink),
+				_dependencies, _getJs(fragmentEntryLink), null);
 		}
 
 		npmRegistryUpdate.finish();
@@ -129,7 +140,9 @@ public class FragmentEntryLinkModelListener
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			npmRegistryUpdate.unregisterJSModule(
-				_jsPackage.getJSModule(_getModuleName(fragmentEntryLink)));
+				_jsPackage.getJSModule(
+					FragmentEntryFragmentRendererReactUtil.getModuleName(
+						fragmentEntryLink)));
 		}
 
 		npmRegistryUpdate.finish();
@@ -146,7 +159,9 @@ public class FragmentEntryLinkModelListener
 				StringBundler.concat(
 					StringPool.APOSTROPHE,
 					ModuleNameUtil.getModuleResolvedId(
-						_jsPackage, _getModuleName(fragmentEntryLink)),
+						_jsPackage,
+						FragmentEntryFragmentRendererReactUtil.getModuleName(
+							fragmentEntryLink)),
 					StringPool.APOSTROPHE),
 				StringBundler.concat(
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
@@ -155,11 +170,6 @@ public class FragmentEntryLinkModelListener
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
 					StringPool.APOSTROPHE)
 			});
-	}
-
-	private String _getModuleName(FragmentEntryLink fragmentEntryLink) {
-		return "fragmentEntryLink/" +
-			fragmentEntryLink.getFragmentEntryLinkId();
 	}
 
 	private boolean _isReactFragmentEntry(long fragmentEntryId) {

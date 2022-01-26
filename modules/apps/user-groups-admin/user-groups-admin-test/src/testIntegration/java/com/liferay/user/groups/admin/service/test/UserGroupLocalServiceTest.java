@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -85,6 +86,42 @@ public class UserGroupLocalServiceTest {
 
 		GroupLocalServiceUtil.addRoleGroup(
 			_role.getRoleId(), _userGroup1.getGroupId());
+	}
+
+	@Test
+	public void testAddOrUpdateUserGroup() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		Assert.assertNull(
+			_userGroupLocalService.fetchUserGroup(
+				TestPropsValues.getCompanyId(), name));
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupLocalService.addOrUpdateUserGroup(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), name, RandomTestUtil.randomString(),
+			null);
+
+		UserGroup userGroup1 = _userGroupLocalService.fetchUserGroup(
+			TestPropsValues.getCompanyId(), name);
+
+		Assert.assertNotNull(userGroup1);
+
+		name = RandomTestUtil.randomString();
+
+		_userGroupLocalService.addOrUpdateUserGroup(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), name, RandomTestUtil.randomString(),
+			null);
+
+		UserGroup userGroup2 = _userGroupLocalService.fetchUserGroup(
+			TestPropsValues.getCompanyId(), name);
+
+		Assert.assertNotNull(userGroup2);
+
+		Assert.assertEquals(
+			userGroup1.getUserGroupId(), userGroup2.getUserGroupId());
 	}
 
 	@Test

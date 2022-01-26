@@ -166,8 +166,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			String testClassFileRelativePath =
 				JenkinsResultsParserUtil.getPathRelativeTo(
-					portalGitWorkingDirectory.getWorkingDirectory(),
-					testClassFile);
+					testClassFile,
+					portalGitWorkingDirectory.getWorkingDirectory());
 
 			String className = testClassFile.getName();
 

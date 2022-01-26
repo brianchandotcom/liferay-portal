@@ -8,15 +8,13 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
 import {useQuery} from '@apollo/client';
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
-import Table from '../../../../common/components/Table';
-import {fetchHeadless} from '../../../../common/services/liferay/api';
-import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
-import ActivationKeysLayout from '../../components/ActivationKeysLayout';
-
+import {Table} from '../../../../../common/components';
+import {fetchHeadless} from '../../../../../common/services/liferay/api';
+import {getKoroneikiAccounts} from '../../../../../common/services/liferay/graphql/queries';
+import ActivationKeysLayout from '../../../layouts/ActivationKeysLayout';
 const Commerce = ({accountKey, sessionId}) => {
 	const [
 		ActivationInstructionsData,
@@ -130,7 +128,7 @@ const Commerce = ({accountKey, sessionId}) => {
 				/>
 			) : (
 				<Table
-					className="activation-keys-commerce-table mt-4"
+					className="cp-activation-keys-commerce-table mt-4"
 					columns={columns}
 					isLoading={isLoadingActivationInstructions}
 					itemsPerPage={3}

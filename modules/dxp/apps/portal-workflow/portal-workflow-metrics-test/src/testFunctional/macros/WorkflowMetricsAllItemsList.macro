@@ -92,4 +92,10 @@ definition {
 		}
 	}
 
+	macro viewTrackWorkflowLinkProcessStatus {
+		AssertTextPresent(
+			locator1 = "WorkflowMetricsAllItemsList#VIEW_TRACK_WORKFLOW_LINK_PROCESS_STATUS",
+			value1 = "Track Workflow");
+	}
+
 }

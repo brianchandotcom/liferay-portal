@@ -682,9 +682,7 @@ definition {
 
 		Button.clickCancel();
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
@@ -1450,9 +1448,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
@@ -5723,9 +5719,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Object X");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
@@ -5753,9 +5747,7 @@ definition {
 
 		Search.searchCP(searchTerm = "CustomObject X");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
@@ -5772,9 +5764,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"

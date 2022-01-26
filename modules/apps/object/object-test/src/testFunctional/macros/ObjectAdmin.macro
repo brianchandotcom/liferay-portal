@@ -434,6 +434,12 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
 	}
 
+	macro assertNoItemsWereFound {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
+	}
+
 	macro assertNotPossibleAddFieldOnBlockWithoutChooseOptionField {
 		Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
 
@@ -856,12 +862,6 @@ definition {
 			key_name = "${name}",
 			key_system = "Yes",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
-	macro assertNoItemsWereFound {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
 	}
 
 }

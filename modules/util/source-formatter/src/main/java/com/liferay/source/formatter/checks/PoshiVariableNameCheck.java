@@ -122,31 +122,26 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			return;
 		}
 
-		String expectedVariableName = _getExpectedVariableName(variableName);
+		String allCapsName = _getAllCapsName(variableName);
 
-		if (!variableName.equals(expectedVariableName)) {
+		if (!variableName.equals(allCapsName)) {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Rename variable '", variableName, "' to '",
-					expectedVariableName, "' in '", message));
+					"Rename variable '", variableName, "' to '", allCapsName,
+					"' in '", message));
 
 			return;
 		}
 
-		String[] words = StringUtil.split(variableName, StringPool.UNDERLINE);
+		String expectedName = _getExpectedName(variableName);
 
-		for (String word : words) {
-			if (!word.matches(_CAMEL_CASE_PATTERN)) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Variable '", variableName, "' in '", message,
-						"' must match camelCase pattern '", _CAMEL_CASE_PATTERN,
-						"'"));
-
-				return;
-			}
+		if (!variableName.equals(expectedName)) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Rename variable '", variableName, "' to '", expectedName,
+					"' in '", message));
 		}
 	}
 
@@ -158,11 +153,10 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		while (matcher1.find()) {
 			String newVar = matcher1.group(2);
 
-			String expectedVariableName = _getExpectedVariableName(newVar);
+			String allCapsName = _getAllCapsName(newVar);
 
-			if (!newVar.equals(expectedVariableName)) {
-				matcher1.appendReplacement(
-					sb1, "\\$\\{" + expectedVariableName + "\\}");
+			if (!newVar.equals(allCapsName)) {
+				matcher1.appendReplacement(sb1, "\\$\\{" + allCapsName + "\\}");
 
 				continue;
 			}
@@ -252,23 +246,22 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		while (matcher1.find()) {
 			String newVar = matcher1.group(2);
 
-			String expectedVariableName = _getExpectedVariableName(newVar);
+			String allCapsName = _getAllCapsName(newVar);
 
-			if (!newVar.equals(expectedVariableName)) {
+			if (Validator.isNotNull(allCapsName) &&
+				!newVar.equals(allCapsName)) {
+
 				String p = pattern.toString();
 
 				if (p.startsWith("(\\$\\{)")) {
 					matcher1.appendReplacement(
-						sb1, "\\$\\{" + expectedVariableName + "\\}");
+						sb1, "\\$\\{" + allCapsName + "\\}");
 				}
 				else {
 					matcher1.appendReplacement(
 						sb1,
-						matcher1.group(1) + expectedVariableName +
-							matcher1.group(3));
+						matcher1.group(1) + allCapsName + matcher1.group(3));
 				}
-
-				continue;
 			}
 
 			/*if (newVar.startsWith("OSGi")) {
@@ -334,7 +327,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 						matcher2.group(
 							2
 						).toLowerCase() + matcher2.group(3));
-			}*/
+			}
 
 			String p = pattern.toString();
 
@@ -344,7 +337,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			else {
 				matcher1.appendReplacement(
 					sb1, matcher1.group(1) + newVar + matcher1.group(3));
-			}
+			}*/
 		}
 
 		matcher1.appendTail(sb1);
@@ -359,7 +352,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		return sb1.toString();
 	}
 
-	private String _getExpectedVariableName(String variableName) {
+	private String _getAllCapsName(String variableName) {
 		for (String[] array : _ALL_CAPS_STRINGS) {
 			String s = array[1];
 
@@ -386,6 +379,36 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		}
 
 		return variableName;
+	}
+
+	private String _getExpectedName(String variableName) {
+		String[] words = StringUtil.split(variableName, StringPool.UNDERLINE);
+
+		String expectedName = StringPool.BLANK;
+
+		for (String word : words) {
+			char firstChar = word.charAt(0);
+
+			if (!Character.isUpperCase(firstChar)) {
+				expectedName = expectedName + word + StringPool.UNDERLINE;
+
+				continue;
+			}
+
+			char secondChar = word.charAt(1);
+
+			if (!Character.isUpperCase(secondChar)) {
+				expectedName = StringBundler.concat(
+					expectedName, Character.toLowerCase(firstChar),
+					word.substring(1), StringPool.UNDERLINE);
+
+				continue;
+			}
+
+			expectedName = expectedName + word + StringPool.UNDERLINE;
+		}
+
+		return expectedName.substring(0, expectedName.length() - 1);
 	}
 
 	private void _parsePoshiElements(
@@ -447,8 +470,6 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 	}
 
 	private static final String[][] _ALL_CAPS_STRINGS = {{"URL", "Url"}};
-
-	private static final String _CAMEL_CASE_PATTERN = "([a-z0-9]+([A-Z])?)+";
 
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
 		"((?:<var name|<isset var|for param|return name)=\")(.+?)(\")");

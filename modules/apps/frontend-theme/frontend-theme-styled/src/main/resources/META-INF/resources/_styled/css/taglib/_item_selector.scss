@@ -106,4 +106,9 @@
 			box-shadow: $focus-box-shadow;
 		}
 	}
+
+	.item-selector-list-row:hover {
+		background-color: $primary-l3;
+		cursor: pointer;
+	}
 }

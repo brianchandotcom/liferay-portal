@@ -17,6 +17,7 @@ package com.liferay.object.field.business.type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Marcela Cunha
@@ -27,5 +28,7 @@ public interface ObjectFieldBusinessTypeServicesTracker {
 
 	public List<HashMap<String, String>> getObjectFieldBusinessTypes(
 		Locale locale);
+
+	public Set<String> getObjectFieldDBTypes();
 
 }

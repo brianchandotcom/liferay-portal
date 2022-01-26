@@ -473,13 +473,6 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
-	public void validateDBType(String dbType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_objectFieldLocalService.validateDBType(dbType);
-	}
-
-	@Override
 	public ObjectFieldLocalService getWrappedService() {
 		return _objectFieldLocalService;
 	}

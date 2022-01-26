@@ -63,39 +63,120 @@ definition {
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a blog's display page, the author's field is NOT shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test AuthorNotShowInBlogDisplayPage {
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
 
-		// TODO LPS-128194 AuthorNotShowInBlogDisplayPage pending implementation
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Open Content Performance panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Assert author is not displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a content page, the author's field is NOT shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test AuthorNotShowInContentPage {
+		task ("Create and go to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				type = "content");
 
-		// TODO LPS-128194 AuthorNotShowInContentPage pending implementation
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+		}
 
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Assert author is not displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a document's display page, the author's field is NOT shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test AuthorNotShowInDocumentDisplayPage {
+		task ("Create a Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
 
-		// TODO LPS-128194 AuthorNotShowInDocumentDisplayPage pending implementation
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Open Content Performance panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Assert author is not displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a widget page, the author's field is NOT shown in the content performance panel"
-	@ignore = "true"
 	@priority = "3"
 	test AuthorNotShowInWidgetPage {
+		task ("Create and go to Widget Page") {
+			PagesAdmin.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
 
-		// TODO LPS-128194 AuthorNotShowInWidgetPage pending implementation
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
 
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Assert author is not displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
 	}
 
 	@description = "LPS-126044: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_AUTHOR</td>
+	<td>//div[contains(@class,'text-secondary') and contains (text(),'Authored by ${key_author}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_VIEW_METRICS</td>
 	<td>//button[contains(@label,'View Metrics')]</td>
 	<td></td>

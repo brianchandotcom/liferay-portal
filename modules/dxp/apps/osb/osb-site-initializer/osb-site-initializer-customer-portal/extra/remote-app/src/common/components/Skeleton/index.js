@@ -17,7 +17,7 @@ const Skeleton = ({align, count = 1, height, width, ...props}) => {
 			{[...new Array(count)].map((_, index) => (
 				<div
 					className={classNames(
-						'rounded skeleton',
+						'skeleton rounded',
 						{
 							'ml-auto': align === 'right',
 							'mr-auto': align === 'left',

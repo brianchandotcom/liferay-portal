@@ -9,27 +9,21 @@
  * distribution rights of the Software.
  */
 
-import {Button} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 
-const BaseButton = ({appendIcon, children, prependIcon, ...props}) => {
+
+
+const Badge = ({children, ...props}) => {
 	return (
-		<Button {...props}>
-			{prependIcon && (
-				<span className="inline-item inline-item-before">
-					<ClayIcon symbol={prependIcon} />
-				</span>
-			)}
+		<div
+			{...props}
+			className="alert alert-danger ml-3 mr-3 p-sm-2 text-danger text-paragraph-sm"
+		>
+			<ClayIcon symbol="exclamation-full" />
 
 			{children}
-
-			{appendIcon && (
-				<span className="inline-item inline-item-after">
-					<ClayIcon symbol={appendIcon} />
-				</span>
-			)}
-		</Button>
+		</div>
 	);
 };
 
-export default BaseButton;
+export default Badge;

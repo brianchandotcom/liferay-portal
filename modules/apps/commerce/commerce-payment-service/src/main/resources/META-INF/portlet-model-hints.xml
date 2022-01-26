@@ -17,4 +17,16 @@
 		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 	</model>
+	<model name="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier">
+		<field name="mvccVersion" type="long" />
+		<field name="commercePaymentMethodGroupRelQualifierId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="CommercePaymentMethodGroupRelId" type="long" />
+	</model>
 </model-hints>

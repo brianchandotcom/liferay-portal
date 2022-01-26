@@ -2,11 +2,6 @@
 	{
 		"menuItems": [
 			{
-				"friendlyURL": "/courses",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
 				"menuItems": [
 					{
 						"key": "/site-initializer/journal-articles/courses/course_design.json",

@@ -89,7 +89,7 @@ const ImportObjectDefinitionModal = ({
 
 					<ClayForm.Group>
 						<label htmlFor={nameInputId}>
-							{Liferay.Language.get('name')}
+							{Liferay.Language.get('object-name')}
 						</label>
 
 						<ClayInput

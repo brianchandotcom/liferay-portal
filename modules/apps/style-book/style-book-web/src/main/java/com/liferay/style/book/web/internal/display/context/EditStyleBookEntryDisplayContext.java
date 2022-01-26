@@ -112,6 +112,13 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"fragmentCollectionPreviewURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setResourceID(
+				"/style_book/preview_fragment_collection"
+			).buildString()
+		).put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
 			"frontendTokensValues",

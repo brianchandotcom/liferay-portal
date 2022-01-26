@@ -87,16 +87,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteEntry(AssetEntry entry) throws PortalException {
 
+		// Links
+
+		_assetLinkLocalService.deleteLinks(entry.getEntryId());
+
 		// Entry
 
 		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
 			entry.getEntryId());
 
 		assetEntryPersistence.remove(entry);
-
-		// Links
-
-		_assetLinkLocalService.deleteLinks(entry.getEntryId());
 
 		// Tags
 

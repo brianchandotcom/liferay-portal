@@ -13,16 +13,13 @@ import ClayForm, {ClaySelect} from '@clayui/form';
 import React, {useState} from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
-import Role from '../assignments/select-assignment/Role';
 import AssetCreator from './select-assignment/AssetCreator';
 import ResourceActions from './select-assignment/ResourceActions';
+import Role from './select-assignment/Role';
+import RoleType from './select-assignment/RoleType';
 import User from './select-assignment/User';
 
 const options = [
-	{
-		label: '',
-		value: '',
-	},
 	{
 		label: Liferay.Language.get('asset-creator'),
 		value: 'assetCreator',
@@ -40,7 +37,6 @@ const options = [
 		value: 'user',
 	},
 	{
-		disabled: true,
 		label: Liferay.Language.get('role-type'),
 		value: 'roleType',
 	},
@@ -55,6 +51,7 @@ const AssignmentSectionComponents = {
 	assetCreator: AssetCreator,
 	resourceActions: ResourceActions,
 	role: Role,
+	roleType: RoleType,
 	user: User,
 };
 

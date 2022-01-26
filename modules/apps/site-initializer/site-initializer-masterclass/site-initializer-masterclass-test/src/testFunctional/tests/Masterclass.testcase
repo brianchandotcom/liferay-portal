@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-137508. Create a Site with the Masterclass Site initializer"
 	@priority = "5"
 	test AddMasterclassSite {
+		property portal.acceptance = "true";
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -990,6 +992,8 @@ definition {
 	@description = "This is a test for LPS-141750. Masterclass Sign In"
 	@priority = "5"
 	test MasterclassSignIn {
+		property portal.acceptance = "true";
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -1690,6 +1694,8 @@ definition {
 	@description = "This is a test for LPS-141750. View the Sign In page elements"
 	@priority = "5"
 	test ViewSignInPageElements {
+		property portal.acceptance = "true";
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}

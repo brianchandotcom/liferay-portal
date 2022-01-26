@@ -31,8 +31,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135077. I can create a Virtual Instance with Default Initializer"
-	@priority = "4"
+	@priority = "5"
 	test AddVirtualInstanceWithDefaultInitializer {
+		property portal.acceptance = "true";
+
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithDefaultInitializer";
 
@@ -58,6 +60,8 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a New Virtual Instance with the initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
+		property portal.acceptance = "true";
+
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 
@@ -228,6 +232,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property liferay.online.smoke = "true";
+		property portal.acceptance = "true";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
 
@@ -351,6 +356,8 @@ definition {
 	@description = "This is a test for LPS-143786. Verify Remote Apps presence in Liferay Online"
 	@priority = "5"
 	test VerifyRemoteAppsInLiferayOnline {
+		property portal.acceptance = "true";
+
 		task ("Go to Remote Apps Portlet") {
 			RemoteApps.goToRemoteAppsPortlet();
 		}

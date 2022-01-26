@@ -39,6 +39,8 @@ definition {
 	@description = "This is a test for LPS-142641. Create a Site based on Team-Extranet"
 	@priority = "5"
 	test AddTeamExtranetSite {
+		property portal.acceptance = "true";
+
 		task ("Go to Team Extranet Site") {
 			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
 		}

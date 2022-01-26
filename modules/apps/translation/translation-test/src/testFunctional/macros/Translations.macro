@@ -32,20 +32,6 @@ definition {
 		}
 	}
 
-	macro assertUnzippedFileNameFromTempFolder {
-		var tempDir = PropsUtil.get("output.dir.name");
-		var unzippedTranslationFileName = FileUtil.getFileName("${tempDir}/${translationFileName}.xlf");
-
-		echo("## translationFileName: ${translationFileName}");
-
-		if (contains("${unzippedTranslationFileName}", "${translationFileName}")) {
-			echo("This is a translation file.");
-		}
-		else {
-			fail("FAIL!");
-		}
-	}
-
 	macro changeBaseLocale {
 		Portlet.waitForForm();
 

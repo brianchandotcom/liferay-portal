@@ -12,12 +12,11 @@
 import {useQuery} from '@apollo/client';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
-import BaseButton from '../../../../common/components/BaseButton';
-import Table from '../../../../common/components/Table';
+import {Button, Table} from '../../../../common/components';
 import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
-import {status} from '../../utils/constants';
-import getDateCustomFormat from '../../utils/dateCustomFormat';
-import StatusTag from '../StatusTag';
+import StatusTag from '../../components/StatusTag';
+import {STATUS_TAG_TYPES} from '../../utils/constants';
+import getDateCustomFormat from '../../utils/getDateCustomFormat';
 
 const dateFormat = {
 	day: '2-digit',
@@ -115,7 +114,7 @@ const ModalCardSubscription = ({
 						<h2 className="text-neutral-10">{`${subscriptionGroup} ${subscriptionName}`}</h2>
 					</div>
 
-					<BaseButton
+					<Button
 						appendIcon="times"
 						aria-label="close"
 						className="align-self-start"
@@ -159,7 +158,7 @@ const ModalCardSubscription = ({
 									(subscriptionTermStatus && (
 										<StatusTag
 											currentStatus={
-												status[
+												STATUS_TAG_TYPES[
 													`${subscriptionTermStatus.toLowerCase()}`
 												]
 											}

@@ -5564,7 +5564,7 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-db2115">
-		<run-legacy-database-dump database.db2.version="11.5.6" database.type="db2"  />
+		<run-legacy-database-dump database.db2.version="11.5.6" database.type="db2" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-mariadb102">

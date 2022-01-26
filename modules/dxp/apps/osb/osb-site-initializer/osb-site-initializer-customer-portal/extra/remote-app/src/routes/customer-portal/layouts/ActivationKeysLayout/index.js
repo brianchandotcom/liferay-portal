@@ -14,7 +14,7 @@ import ActivationKeysSkeleton from './Skeleton';
 
 const ActivationKeysLayout = ({children}) => {
 	return (
-		<div>
+		<div className="mr-4">
 			<h1 className="m-0 py-4">Activation Keys</h1>
 
 			{children}

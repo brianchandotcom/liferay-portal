@@ -52,4 +52,50 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_CREATION_DATE");
 	}
 
+	macro viewDetailsModal {
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		AssertElementPresent(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+	}
+
+	macro selectWorkflowInstanceId{
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+	}
+
+	macro selectSingleApproverWorkflow {
+		Click(
+			key_workflowDefinitionTitle = "${key_workflowDefinitionTitle}",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+
+	}
+
+	macro gotoTrackWorkflowlink {
+		Click(
+			locator1 = "WorkflowMetricsAllItemsList#SELECT_TRACK_WORKFLOW_LINK_PROCESS_STATUS");
+
+	}
+
+	macro viewNodesDisplayed {
+		for (var nodesTrackWorkflow : list "${nodesTrackWorkflow}") {
+			AssertTextEquals(
+				locator1 = "WorkflowMetricsAllItemsList#NODES_MODAL_TRACK_WORKFLOW",
+			    value1 = "${nodesTrackWorkflow}");
+		}
+
+	} 
+
+	macro selectAndChangeNodeName {
+		KaleoDesigner.selectNode(nodeNodeLabel = "${nodeNodeLabel}");
+
+		KaleoDesigner.editNodeName(nodeName = "${nodeName}");
+
+		Click.mouseDownMouseUp(
+			key_text = "${key_text}",
+			locator1 = "Button#ANY");
+			
+	}   
+
 }

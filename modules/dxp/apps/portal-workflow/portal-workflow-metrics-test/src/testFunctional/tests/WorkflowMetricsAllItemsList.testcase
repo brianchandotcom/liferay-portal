@@ -2488,12 +2488,63 @@ definition {
 	}
 
 	@description = "Verify that when the user make changes in the Workflow, the Track Approval displays the correct version"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TrackApprovalDisplayCorrectVersionAfterChange {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-72398 TrackApprovalDisplayCorrectVersionAfterChange pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",		
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
+
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow ="Created,Review,Update,Approved");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		WorkflowMetricsAllItemsList.selectSingleApproverWorkflow(
+			key_workflowDefinitionTitle = "Single Approver",
+			menuItem = "Edit");
+
+		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+			nodeNodeLabel = "review",
+			nodeName = "Review changed",
+			key_text = "Update");
+		
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",		
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+		
+		WorkflowMetricsAllItemsList.selectWorkflowInstanceId();
+		
+		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
+
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow ="Created,Review changed,Update,Approved");
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"

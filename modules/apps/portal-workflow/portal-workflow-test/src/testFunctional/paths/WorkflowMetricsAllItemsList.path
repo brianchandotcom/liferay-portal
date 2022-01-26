@@ -20,6 +20,21 @@
 	<td>//p[span[contains(text(),'${key_rowName}')] and contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_TRACK_WORKFLOW_LINK_PROCESS_STATUS</td>
+	<td>//a[contains(@class, 'ml-1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_MODAL_TRACK_WORKFLOW</td>
+	<td>//span[contains(@class, 'truncate-container') and contains(text(),'${nodesTrackWorkflow}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_NODE_WORKFLOW</td>
+	<td>//span[contains(@class, 'diagram-builder-connector-name') and contains(text(), '${nodeName}' )]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

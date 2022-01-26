@@ -7,18 +7,28 @@ definition {
 	property testray.main.component.name = "IFrame Portlet";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "IFrame Page");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "IFrame Page",
-			widgetName = "IFrame");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an IFrame widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "IFrame");
+		}
 	}
 
 	tearDown {
@@ -27,15 +37,23 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
 	}
 
+	@description = "View IFrame widget is shown on the page."
 	@priority = "3"
-	test ViewIFramePortlet {
-		Navigator.gotoPage(pageName = "IFrame Page");
+	test ViewIFrameWidget {
+		task ("View IFrame widget is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.viewPG(
-			portletBody = "Please configure this portlet to make it visible to all users.",
-			portletName = "IFrame");
+			Portlet.viewPG(
+				portletBody = "Please configure this portlet to make it visible to all users.",
+				portletName = "IFrame");
+		}
 	}
 
 }

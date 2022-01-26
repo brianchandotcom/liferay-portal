@@ -115,6 +115,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_OTHERS_LABEL</td>
+	<td>//*[contains(@data-qa-id, 'row')] //*[contains(@class, 'category-label') and contains(@class, 'btn')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'${tagName}')]</td>
 	<td></td>

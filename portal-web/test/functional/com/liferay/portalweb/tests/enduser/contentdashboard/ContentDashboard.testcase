@@ -389,7 +389,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-117341 Create a label for one of the categories and add another one with the text "..." and tooltip or popover with all theF categories left"
+	@description = "LPS-131936 Given the Content Dashboard
+    When there is an asset with more than one category per vocabulary
+    Then the table will show a label with the first of the categories and another one with a + and the number of remaining categories"
 	@priority = "5"
 	test CheckForMoreCategories {
 		property portal.acceptance = "true";
@@ -422,9 +424,9 @@ definition {
 		task ("Nagigate to Content Dashboard and check if there's a label with '...' indicating 'more categories' ") {
 			ContentDashboard.goToContentDashboard();
 
-			AssertElementPresent(
-				locator1 = "ContentDashboard#AUDIENCE_LIST_DASHBOARD",
-				value = "...");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#CATEGORY_OTHERS_LABEL",
+				value1 = "+ 2");
 		}
 	}
 

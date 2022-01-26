@@ -147,10 +147,10 @@ public class ObjectEntryAssetRenderer
 		httpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
 		httpServletRequest.setAttribute(
+			"objectEntryId", _objectEntry.getObjectEntryId());
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_objectEntryDisplayContextFactory.create(httpServletRequest, true));
-		httpServletRequest.setAttribute(
-			"objectEntryId", _objectEntry.getObjectEntryId());
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}

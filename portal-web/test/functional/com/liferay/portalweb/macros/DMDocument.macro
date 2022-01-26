@@ -811,6 +811,19 @@ definition {
 		}
 	}
 
+	macro assertNoFileNameFromTempFolder {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var exportedFile = FileUtil.exists("${tempDir}/${fileName}");
+
+		if ("${exportedFile}" == "true") {
+			fail("FAIL! There is a file named ${fileName}.");
+		}
+		else {
+			echo("This is no file named ${fileName}.");
+		}
+	}
+
 	macro cancelCheckoutCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

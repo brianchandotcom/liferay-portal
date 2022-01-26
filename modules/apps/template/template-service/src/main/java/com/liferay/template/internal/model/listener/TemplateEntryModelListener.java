@@ -18,7 +18,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -101,10 +100,7 @@ public class TemplateEntryModelListener
 		ActionableDynamicQuery actionableDynamicQuery =
 			_templateEntryLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"companyId", company.getCompanyId())));
+		actionableDynamicQuery.setCompanyId(company.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
 			(TemplateEntry templateEntry) -> serviceRegistrations.put(
 				templateEntry.getTemplateEntryId(),

@@ -32,8 +32,7 @@ const WelcomeDescriptionElement = fragmentElement.querySelector(
 				WelcomeDescriptionElement.classList.toggle('skeleton');
 			}
 		);
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

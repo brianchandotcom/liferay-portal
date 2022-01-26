@@ -37,8 +37,7 @@ const eventName = 'customer-portal-project-loading';
 			contactName.innerHTML = project.liferayContactName;
 			contactRole.innerHTML = project.liferayContactRole;
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

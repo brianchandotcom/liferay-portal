@@ -12,13 +12,12 @@
 import {useLazyQuery} from '@apollo/client';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useState} from 'react';
+import {Input, Select} from '../../../../components';
 import useDebounce from '../../../../hooks/useDebounce';
 import {getBannedEmailDomains} from '../../../../services/liferay/graphql/queries';
 import {isValidEmail} from '../../../../utils/validations.form';
-import Input from '../../../Input';
-import Select from '../../../Select';
 
-const InvitesInputs = ({
+const TeamMemberInputs = ({
 	disableError,
 	id,
 	invite,
@@ -78,4 +77,4 @@ const InvitesInputs = ({
 	);
 };
 
-export default InvitesInputs;
+export default TeamMemberInputs;

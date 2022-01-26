@@ -12,10 +12,10 @@
 import {useLazyQuery} from '@apollo/client';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useEffect, useState} from 'react';
+import {Input} from '../../../../components';
 import useDebounce from '../../../../hooks/useDebounce';
 import {getBannedEmailDomains} from '../../../../services/liferay/graphql/queries';
 import {isValidEmail} from '../../../../utils/validations.form';
-import Input from '../../../Input';
 
 const AdminInputs = ({admin, id}) => {
 	const debouncedEmail = useDebounce(admin?.email, 500);

@@ -14,17 +14,17 @@ import ClayForm from '@clayui/form';
 import {Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
-import {useApplicationProvider} from '../../../context/ApplicationPropertiesProvider';
+import {Badge, Button} from '../../../components';
+import {useApplicationProvider} from '../../../context/AppPropertiesProvider';
 import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
 	getAccountRoles,
 } from '../../../services/liferay/graphql/queries';
-import {getInitialInvite, roles} from '../../../utils/constants';
-import BaseButton from '../../BaseButton';
-import WarningBadge from '../../WarningBadge';
-import InvitesInputs from '../components/InvitesInputs';
-import Layout from '../components/Layout';
+import {ROLE_TYPES} from '../../../utils/constants';
+import getInitialInvite from '../../../utils/getInitialInvite';
+import Layout from '../Layout';
+import TeamMemberInputs from './TeamMemberInputs';
 
 const MAXIMUM_INVITES_COUNT = 10;
 
@@ -102,8 +102,7 @@ const InvitesPage = ({
 			if (!error) {
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -115,7 +114,7 @@ const InvitesPage = ({
 	const disableAdminOptions = (isDisabled) => {
 		setAccountRoles((prevAccountRoles) => {
 			const requestorRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.REQUESTOR.key
+				({value}) => value === ROLE_TYPES.requestor.key
 			);
 
 			if (requestorRoleIndex !== -1) {
@@ -126,7 +125,7 @@ const InvitesPage = ({
 			}
 
 			const adminRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.ADMIN.key
+				({value}) => value === ROLE_TYPES.admin.key
 			);
 
 			if (adminRoleIndex !== -1) {
@@ -151,42 +150,48 @@ const InvitesPage = ({
 				SLA_CURRENT?.includes(SLA.platinum)
 			) {
 				const requestorIndex = filterRoles.findIndex(
-					(label) => label === roles.REQUESTOR.key
+					(label) => label === ROLE_TYPES.requestor.key
 				);
 
 				if (requestorIndex === -1) {
-					filterRoles = [...filterRoles, roles.REQUESTOR.key];
+					filterRoles = [...filterRoles, ROLE_TYPES.requestor.key];
 				}
 			}
 
 			if (isPartner) {
 				const partnerManagerIndex = filterRoles.findIndex(
-					(label) => label === roles.PARTNER_MANAGER.key
+					(label) => label === ROLE_TYPES.partnerManager.key
 				);
 				const partnerMemberIndex = filterRoles.findIndex(
-					(label) => label === roles.PARTNER_MEMBER.key
+					(label) => label === ROLE_TYPES.partnerMember.key
 				);
 
 				if (partnerManagerIndex === -1) {
-					filterRoles = [...filterRoles, roles.PARTNER_MANAGER.key];
+					filterRoles = [
+						...filterRoles,
+						ROLE_TYPES.partnerManager.key,
+					];
 				}
 
 				if (partnerMemberIndex === -1) {
-					filterRoles = [...filterRoles, roles.PARTNER_MEMBER.key];
+					filterRoles = [
+						...filterRoles,
+						ROLE_TYPES.partnerMember.key,
+					];
 				}
 			}
 
 			setFieldValue(
 				'invites[0].roleId',
 				maxRequestors === 1
-					? roles.MEMBER.key
+					? ROLE_TYPES.member.key
 					: filterRoles.find(
-							(role) => role === roles.REQUESTOR.key
-					  ) || roles.ADMIN.key
+							(role) => role === ROLE_TYPES.requestor.key
+					  ) || ROLE_TYPES.admin.key
 			);
 
 			const mapRolesName = filterRoles.sort().map((role) => {
-				const roleProperty = Object.values(roles).find(
+				const roleProperty = Object.values(ROLE_TYPES).find(
 					({key}) => key === role
 				);
 
@@ -206,8 +211,8 @@ const InvitesPage = ({
 			const totalAdmins = values.invites.reduce(
 				(totalInvites, currentInvite) => {
 					if (
-						currentInvite.roleId === roles.REQUESTOR.key ||
-						currentInvite.roleId === roles.ADMIN.key
+						currentInvite.roleId === ROLE_TYPES.requestor.key ||
+						currentInvite.roleId === ROLE_TYPES.admin.key
 					) {
 						const total = totalInvites + 1;
 
@@ -232,8 +237,7 @@ const InvitesPage = ({
 			const sucessfullyEmails = totalEmails - failedEmails;
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		}
-		else if (touched['invites']?.some((field) => field.email)) {
+		} else if (touched['invites']?.some((field) => field.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -243,18 +247,18 @@ const InvitesPage = ({
 		<Layout
 			footerProps={{
 				leftButton: (
-					<BaseButton borderless onClick={handlePage}>
+					<Button borderless onClick={handlePage}>
 						{leftButton}
-					</BaseButton>
+					</Button>
 				),
 				middleButton: (
-					<BaseButton
+					<Button
 						disabled={baseButtonDisabled}
 						displayType="primary"
 						onClick={handleSubmit}
 					>
 						Send Invitations
-					</BaseButton>
+					</Button>
 				),
 			}}
 			headerProps={{
@@ -264,12 +268,12 @@ const InvitesPage = ({
 			}}
 		>
 			{hasInitialError && (
-				<WarningBadge>
+				<Badge>
 					<span className="pl-1">
 						Add at least one user&apos;s email to send an
 						invitation.
 					</span>
-				</WarningBadge>
+				</Badge>
 			)}
 
 			<div className="invites-form overflow-auto px-3">
@@ -283,7 +287,7 @@ const InvitesPage = ({
 
 				<ClayForm.Group className="m-0">
 					{values.invites.map((invite, index) => (
-						<InvitesInputs
+						<TeamMemberInputs
 							disableError={hasInitialError}
 							id={index}
 							invite={invite}
@@ -297,21 +301,21 @@ const InvitesPage = ({
 				</ClayForm.Group>
 
 				{values.invites.length < MAXIMUM_INVITES_COUNT && (
-					<BaseButton
+					<Button
 						borderless
 						className="mb-3 ml-3 mt-2 text-brand-primary"
 						onClick={() => {
 							setBaseButtonDisabled(false);
 							setFieldValue('invites', [
 								...values.invites,
-								getInitialInvite(roles.MEMBER.key),
+								getInitialInvite(ROLE_TYPES.member.key),
 							]);
 						}}
 						prependIcon="plus"
 						small
 					>
 						Add More Members
-					</BaseButton>
+					</Button>
 				)}
 			</div>
 
@@ -321,8 +325,8 @@ const InvitesPage = ({
 						{`${
 							project?.slaCurrent?.includes(SLA.gold) ||
 							project?.slaCurrent?.includes(SLA.platinum)
-								? roles.REQUESTOR.name
-								: roles.ADMIN.name
+								? ROLE_TYPES.requestor.name
+								: ROLE_TYPES.admin.name
 						}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
 					</h5>
 
@@ -354,8 +358,8 @@ const Invites = (props) => {
 			initialValues={{
 				invites: [
 					getInitialInvite(),
-					getInitialInvite(roles.MEMBER.key),
-					getInitialInvite(roles.MEMBER.key),
+					getInitialInvite(ROLE_TYPES.member.key),
+					getInitialInvite(ROLE_TYPES.member.key),
 				],
 			}}
 			validateOnChange

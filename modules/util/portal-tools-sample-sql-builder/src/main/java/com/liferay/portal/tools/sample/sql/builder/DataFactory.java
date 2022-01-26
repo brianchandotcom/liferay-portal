@@ -381,14 +381,13 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
-		int totalInstanceCount =
-			BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1;
+		int totalCompanyCount = BenchmarksPropsValues.MAX_COMPANY_COUNT + 1;
 
 		int groupCount =
 			BenchmarksPropsValues.MAX_GROUP_COUNT +
 				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 
-		int totalGroupCount = groupCount * totalInstanceCount;
+		int totalGroupCount = groupCount * totalCompanyCount;
 
 		_counter = new SimpleCounter(totalGroupCount + 1);
 
@@ -471,7 +470,7 @@ public class DataFactory {
 		if (_assetCategoryCounters == null) {
 			_assetCategoryCounters =
 				(Map<Long, SimpleCounter>[])new HashMap<?, ?>
-					[(BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1) *
+					[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
 						BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
@@ -514,7 +513,7 @@ public class DataFactory {
 
 		if (_assetTagCounters == null) {
 			_assetTagCounters = (Map<Long, SimpleCounter>[])new HashMap<?, ?>
-				[(BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1) *
+				[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
 					BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
@@ -2108,13 +2107,11 @@ public class DataFactory {
 
 	public List<CompanyModel> newCompanyModels() {
 		List<CompanyModel> companyModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1);
+			BenchmarksPropsValues.MAX_COMPANY_COUNT + 1);
 
 		companyModels.add(_newCompanyModel("liferay.com"));
 
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT;
-			 i++) {
-
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMPANY_COUNT; i++) {
 			companyModels.add(
 				_newCompanyModel(StringBundler.concat("liferay", i, ".com")));
 		}
@@ -5459,7 +5456,7 @@ public class DataFactory {
 			userCount = BenchmarksPropsValues.MAX_USER_COUNT;
 		}
 		else {
-			userCount = BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_USER_COUNT;
+			userCount = BenchmarksPropsValues.MAX_COMPANY_USER_COUNT;
 		}
 
 		List<UserModel> userModels = new ArrayList<>(userCount);
@@ -7325,7 +7322,7 @@ public class DataFactory {
 	private final Map<Long, List<AssetCategoryModel>>[]
 		_assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])new HashMap<?, ?>
-				[(BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1) *
+				[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
 					BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
@@ -7335,7 +7332,7 @@ public class DataFactory {
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
 	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
 		(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
-			[(BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1) *
+			[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
 				BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();

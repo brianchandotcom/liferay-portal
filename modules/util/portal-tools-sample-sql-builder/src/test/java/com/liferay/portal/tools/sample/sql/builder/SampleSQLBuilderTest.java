@@ -195,9 +195,8 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
-		properties.put(BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_COUNT, "2");
-		properties.put(
-			BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_USER_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_COMPANY_COUNT, "2");
+		properties.put(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_PAGE_COMMENT_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_PAGE_COUNT, "1");

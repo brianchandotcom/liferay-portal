@@ -141,6 +141,12 @@ public class BenchmarksPropsValues {
 				BenchmarksPropsKeys.
 					MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT));
 
+	public static final int MAX_COMPANY_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_COUNT));
+
+	public static final int MAX_COMPANY_USER_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT));
+
 	public static final int MAX_CONTENT_LAYOUT_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT));
 
@@ -224,14 +230,6 @@ public class BenchmarksPropsValues {
 
 	public static final int MAX_USER_TO_GROUP_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT));
-
-	public static final int MAX_VIRTUAL_INSTANCE_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_COUNT));
-
-	public static final int MAX_VIRTUAL_INSTANCE_USER_COUNT =
-		GetterUtil.getInteger(
-			PropertiesHolder._get(
-				BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_USER_COUNT));
 
 	public static final int MAX_WIKI_NODE_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT));

@@ -84,7 +84,7 @@ public class JournalArticleInfoItemPermissionProvider
 				Objects.equals(
 					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
-				return _journalArticleLocalService.fetchLatestArticle(classPK);
+				return _journalArticleLocalService.getLatestArticle(classPK);
 			}
 			else if (Objects.equals(
 						version, InfoItemIdentifier.VERSION_LATEST)) {
@@ -93,7 +93,7 @@ public class JournalArticleInfoItemPermissionProvider
 					_journalArticleResourceLocalService.getArticleResource(
 						classPK);
 
-				return _journalArticleLocalService.fetchLatestArticle(
+				return _journalArticleLocalService.getLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),
 					WorkflowConstants.STATUS_ANY);

@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,11 +62,18 @@ public class CommerceUtil {
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		if (commerceAccount == null) {
-			return CommerceAccountConstants.ACCOUNT_ID_GUEST;
+		if (commerceAccount != null) {
+			return commerceAccount.getCommerceAccountId();
 		}
 
-		return commerceAccount.getCommerceAccountId();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isSignedIn()) {
+			return 0;
+		}
+
+		return CommerceAccountConstants.ACCOUNT_ID_GUEST;
 	}
 
 	public static OrderByComparator<CommerceAddress>

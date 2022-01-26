@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortalInstances;
 
-import java.sql.Statement;
-
 import java.util.Arrays;
 
 import org.junit.After;
@@ -53,7 +51,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_deleteCompanyAndDefaultUser();
+		deleteCompanyAndDefaultUser();
 
 		dropSchema();
 
@@ -218,16 +216,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		private long[] _companyIds = new long[0];
 
-	}
-
-	private static void _deleteCompanyAndDefaultUser() throws Exception {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(
-				"delete from Company where companyId = " + COMPANY_ID);
-
-			statement.execute(
-				"delete from User_ where companyId = " + COMPANY_ID);
-		}
 	}
 
 }

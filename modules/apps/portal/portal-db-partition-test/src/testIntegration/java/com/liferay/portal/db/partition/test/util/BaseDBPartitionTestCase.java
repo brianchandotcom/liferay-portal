@@ -110,6 +110,16 @@ public abstract class BaseDBPartitionTestCase {
 				" (testColumn)"));
 	}
 
+	protected static void deleteCompanyAndDefaultUser() throws Exception {
+		try (Statement statement = connection.createStatement()) {
+			statement.execute(
+				"delete from Company where companyId = " + COMPANY_ID);
+
+			statement.execute(
+				"delete from User_ where companyId = " + COMPANY_ID);
+		}
+	}
+
 	protected static void disableDBPartition() {
 		DataAccess.cleanUp(connection);
 
@@ -230,6 +240,29 @@ public abstract class BaseDBPartitionTestCase {
 			preparedStatement2.setString(7, "UTC");
 
 			preparedStatement2.executeUpdate();
+		}
+	}
+
+	protected static void removeDBPartition(boolean migrate) throws Exception {
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> connection;
+
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
+				migrate);
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			DBPartitionUtil.removeDBPartition(COMPANY_ID);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
 		}
 	}
 

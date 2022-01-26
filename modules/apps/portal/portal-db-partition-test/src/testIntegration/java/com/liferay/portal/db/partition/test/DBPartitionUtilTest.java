@@ -19,13 +19,10 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -167,7 +164,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		int tablesCount = _getTablesCount();
 
-		_removeDBPartition(true);
+		removeDBPartition(true);
 
 		Assert.assertEquals(tablesCount + viewNames.size(), _getTablesCount());
 		Assert.assertEquals(0, _getViewsCount());
@@ -194,7 +191,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			createAndPopulateControlTable(fullTestTableName);
 
 			try {
-				_removeDBPartition(true);
+				removeDBPartition(true);
 
 				Assert.fail("Should throw an exception");
 			}
@@ -212,7 +209,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testRemoveDBPartition() throws Exception {
 		addDBPartition();
 
-		_removeDBPartition(false);
+		removeDBPartition(false);
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -280,29 +277,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		List<String> viewNames = _getObjectNames("VIEW");
 
 		return viewNames.size();
-	}
-
-	private void _removeDBPartition(boolean migrate) throws Exception {
-		CurrentConnection defaultCurrentConnection =
-			CurrentConnectionUtil.getCurrentConnection();
-
-		try {
-			CurrentConnection currentConnection = dataSource -> connection;
-
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				migrate);
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				currentConnection);
-
-			DBPartitionUtil.removeDBPartition(COMPANY_ID);
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				defaultCurrentConnection);
-		}
 	}
 
 }

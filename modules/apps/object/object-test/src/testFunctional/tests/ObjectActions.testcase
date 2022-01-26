@@ -23,12 +23,26 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is possible to cancel the creation of an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145715 CanCancelAction pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
+
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-139008 - Verify it is possible to cancel the update of an Action"

@@ -858,4 +858,10 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
+	macro assertNoItemsWereFound {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
+	}
+
 }

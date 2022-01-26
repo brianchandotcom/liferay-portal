@@ -114,7 +114,7 @@ const QuickLinksPanel = ({accountKey}) => {
 									type:
 										actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
 								});
-								Storage.setItem(
+								storage.setItem(
 									STORAGE_KEYS.quickLinksExpanded,
 									JSON.stringify(!isQuickLinksExpanded)
 								);

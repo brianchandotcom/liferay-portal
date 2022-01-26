@@ -37,37 +37,52 @@ const columns = [
 	{
 		accessor: 'start-end-date',
 		align: 'center',
+		bodyClass: 'border-0',
 		expanded: true,
 		header: {
-			name: 'Start-End Date',
+			name: 'Start - End Date',
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
 	},
 	{
 		accessor: 'provisioned',
 		align: 'center',
+		bodyClass: 'border-0',
 		header: {
 			name: 'Provisioned',
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
 	},
 	{
 		accessor: 'quantity',
 		align: 'center',
+		bodyClass: 'border-0',
 		header: {
 			name: 'Purchased',
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
 	},
 	{
 		accessor: 'instance-size',
 		align: 'center',
+		bodyClass: 'border-0',
 		header: {
 			name: 'Instance Size',
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
 	},
 	{
 		accessor: 'subscription-term-status',
 		align: 'center',
+		bodyClass: 'border-0',
 		header: {
 			name: 'Status',
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
 	},
 ];
@@ -134,7 +149,6 @@ const ModalCardSubscription = ({
 								: columnsWithoutProvisioned(columns)
 						}
 						hasPagination
-						itemsPerPage={5}
 						rows={dataAccountSubscriptionTerms.map(
 							({
 								endDate,

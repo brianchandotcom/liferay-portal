@@ -129,7 +129,7 @@ const ActivationStatus = ({
 
 	const activationStatus =
 		currentActivationStatus[
-			subscriptionGroupActivationStatus || 'Not Activated'
+			subscriptionGroupActivationStatus || STATUS_TAG_TYPES.notActivated
 		];
 
 	useEffect(() => {
@@ -184,12 +184,12 @@ const ActivationStatus = ({
 				</p>
 
 				<div>
-					<ClayCard className="activation-status-container border border-light m-0 rounded shadow-none">
+					<ClayCard className="border border-light cp-activation-status-container m-0 rounded shadow-none">
 						<ClayCard.Body className="px-4 py-3">
 							<div className="align-items-center d-flex position-relative">
 								<img
 									className={classNames(
-										'ml-2 mr-4 img-activation-status',
+										'ml-2 mr-4 cp-img-activation-status',
 										{
 											'in-progress':
 												subscriptionGroupActivationStatus ===
@@ -223,7 +223,7 @@ const ActivationStatus = ({
 
 								<div className="d-flex justify-content-between ml-auto">
 									<ClayCard.Description
-										className="label-activation-status position-absolute"
+										className="cp-label-activation-status position-absolute"
 										displayType="text"
 										tag="div"
 										title={null}

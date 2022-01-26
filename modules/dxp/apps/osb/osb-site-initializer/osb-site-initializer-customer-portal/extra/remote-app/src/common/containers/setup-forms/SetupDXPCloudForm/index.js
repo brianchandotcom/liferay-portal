@@ -21,15 +21,10 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
-import {
-	ACTIVATION_STATUS_DXP_CLOUD,
-	getInitialDxpAdmin,
-} from '../../../utils/constants';
-import BaseButton from '../../BaseButton';
-import Input from '../../Input';
-import Select from '../../Select';
-import AdminInputs from '../components/AdminInputs';
-import Layout from '../components/Layout';
+import {Button, Input, Select} from '../../../components';
+import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
+import Layout from '../Layout';
+import AdminInputs from './AdminInputs';
 
 const SetupDXPCloudPage = ({
 	errors,
@@ -143,18 +138,18 @@ const SetupDXPCloudPage = ({
 			className="pt-1 px-3"
 			footerProps={{
 				leftButton: (
-					<BaseButton borderless onClick={() => handlePage()}>
+					<Button borderless onClick={() => handlePage()}>
 						{leftButton}
-					</BaseButton>
+					</Button>
 				),
 				middleButton: (
-					<BaseButton
+					<Button
 						disabled={baseButtonDisabled}
 						displayType="primary"
 						onClick={() => sendEmail()}
 					>
 						Submit
-					</BaseButton>
+					</Button>
 				),
 			}}
 			headerProps={{
@@ -221,13 +216,13 @@ const SetupDXPCloudPage = ({
 				))}
 			</ClayForm.Group>
 
-			<BaseButton
+			<Button
 				borderless
 				className="ml-3 my-2 text-brand-primary"
 				onClick={() => {
 					setFieldValue('dxp.admins', [
 						...values.dxp.admins,
-						getInitialDxpAdmin(),
+						getInitialDXPAdmin(),
 					]);
 					setBaseButtonDisabled(true);
 				}}
@@ -235,7 +230,7 @@ const SetupDXPCloudPage = ({
 				small
 			>
 				Add Another Admin
-			</BaseButton>
+			</Button>
 		</Layout>
 	);
 };
@@ -245,7 +240,7 @@ const SetupDXPCloud = (props) => {
 		<Formik
 			initialValues={{
 				dxp: {
-					admins: [getInitialDxpAdmin()],
+					admins: [getInitialDXPAdmin()],
 					dataCenterRegion: '',
 					disasterDataCenterRegion: '',
 					projectId: '',

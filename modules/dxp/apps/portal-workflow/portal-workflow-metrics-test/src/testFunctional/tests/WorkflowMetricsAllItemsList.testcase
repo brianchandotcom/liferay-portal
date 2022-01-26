@@ -2506,7 +2506,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
-			workflowFilterOption = "PENDING",		
+			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
@@ -2514,7 +2514,7 @@ definition {
 
 		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
 
-		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow ="Created,Review,Update,Approved");
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2526,25 +2526,25 @@ definition {
 			menuItem = "Edit");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
-			nodeNodeLabel = "review",
+			key_text = "Update",
 			nodeName = "Review changed",
-			key_text = "Update");
-		
+			nodeNodeLabel = "review");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
-			workflowFilterOption = "PENDING",		
+			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
-		
+
 		WorkflowMetricsAllItemsList.selectWorkflowInstanceId();
-		
+
 		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
 
-		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow ="Created,Review changed,Update,Approved");
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review changed,Update,Approved");
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"

@@ -10,33 +10,33 @@
  */
 
 import ClayLabel from '@clayui/label';
-import {status} from '../../utils/constants';
+import {STATUS_TAG_TYPES} from '../../utils/constants';
 
 const labelProps = {
-	[status.active]: {
+	[STATUS_TAG_TYPES.active]: {
 		displayType: 'success',
 		label: 'Active',
 	},
-	[status.expired]: {
+	[STATUS_TAG_TYPES.expired]: {
 		displayType: 'danger',
 		label: 'Expired',
 	},
-	[status.future]: {
+	[STATUS_TAG_TYPES.future]: {
 		displayType: 'info',
 		label: 'Future',
 	},
-	[status.inProgress]: {
+	[STATUS_TAG_TYPES.inProgress]: {
 		displayType: 'warning',
 		label: 'In Progress',
 	},
-	[status.notActivated]: {
+	[STATUS_TAG_TYPES.notActivated]: {
 		displayType: 'dark',
 		label: 'Not Activated',
 	},
 };
 
 const StatusTag = ({currentStatus}) => {
-	if (Object.values(status).includes(currentStatus)) {
+	if (Object.values(STATUS_TAG_TYPES).includes(currentStatus)) {
 		const labelProp = labelProps[currentStatus];
 
 		return (

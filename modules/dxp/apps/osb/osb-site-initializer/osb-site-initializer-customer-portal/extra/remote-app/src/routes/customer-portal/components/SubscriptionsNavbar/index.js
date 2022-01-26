@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import {Button, DropDown} from '@clayui/core';
+import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
-import BaseButton from '../../../../common/components/BaseButton';
+import {Button} from '../../../../common/components';
 import {useCustomerPortal} from '../../context';
 
 const SubscriptionDropDownMenu = ({
@@ -24,7 +24,7 @@ const SubscriptionDropDownMenu = ({
 	const [active, setActive] = useState(false);
 
 	return (
-		<div className="align-items-center d-flex mt-4 pb-3 subscription-navbar-dropdown">
+		<div className="align-items-center d-flex mt-4 pb-3">
 			<h6>Type:</h6>
 
 			<DropDown
@@ -125,12 +125,11 @@ const SubscriptionsNavbar = ({
 							{!showDropDown && (
 								<div
 									className="bg-neutral-1 border border-light btn-group rounded-pill"
-									id="subscription-navbar"
 									role="group"
 								>
 									{subscriptionGroups.map(
 										(subscriptionGroup) => (
-											<BaseButton
+											<Button
 												className={classNames(
 													'btn px-4 py-1 rounded-pill',
 													{
@@ -154,7 +153,7 @@ const SubscriptionsNavbar = ({
 												value={subscriptionGroup.name}
 											>
 												{subscriptionGroup.name}
-											</BaseButton>
+											</Button>
 										)
 									)}
 								</div>

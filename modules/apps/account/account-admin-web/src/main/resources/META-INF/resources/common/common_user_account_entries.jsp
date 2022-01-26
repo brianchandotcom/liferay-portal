@@ -136,11 +136,11 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 		searchContainerContentBox.delegate(
 			'click',
 			(event) => {
-				var link = event.currentTarget;
+				var link = event.currentTarget.getDOMNode();
 
-				var rowId = link.attr('data-rowId');
+				var rowId = link.dataset.rowid;
 
-				var tr = link.ancestor('tr');
+				var tr = link.closest('tr');
 
 				searchContainer.deleteRow(tr, rowId);
 

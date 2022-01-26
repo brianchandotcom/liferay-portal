@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {DropDown} from '@clayui/core';
+import {Button as ClayButton, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
@@ -35,14 +35,14 @@ const SubscriptionDropDownMenu = ({
 				}}
 				onActiveChange={setActive}
 				trigger={
-					<Button
+					<ClayButton
 						className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
 						displayType="unstyled"
 					>
 						{selectedSubscriptionGroup}
 
 						<ClayIcon symbol="caret-bottom" />
-					</Button>
+					</ClayButton>
 				}
 			>
 				{subscriptionGroups.map((subscriptionGroup) => (
@@ -52,6 +52,11 @@ const SubscriptionDropDownMenu = ({
 							setSelectedSubscriptionGroup(event.target.value);
 							setActive(false);
 						}}
+						symbolRight={
+							subscriptionGroup.name === selectedSubscriptionGroup
+								? 'check'
+								: ''
+						}
 						value={subscriptionGroup.name}
 					>
 						{subscriptionGroup.name}
@@ -85,8 +90,9 @@ const SubscriptionsNavbar = ({
 	useEffect(() => {
 		const updateShowDropDown = () => {
 			setShowDropDown(
-				subscriptionNavbarRef.current.offsetWidth <
-					(isQuickLinksExpanded ? 500 : 570)
+				subscriptionNavbarRef?.current &&
+					subscriptionNavbarRef.current.offsetWidth <
+						(isQuickLinksExpanded ? 500 : 570)
 			);
 		};
 

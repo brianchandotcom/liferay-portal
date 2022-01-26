@@ -38,4 +38,7 @@ public interface CacheControlConfiguration {
 	@Meta.AD(deflt = "0", name = "max-age-name", required = false)
 	public int maxAge();
 
+	@Meta.AD(name = "no-cacheable-mime-types", required = false)
+	public String[] noCacheableMimeTypes();
+
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Map;
 
@@ -68,6 +69,13 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 
 	private String _getHttpHeaderValue(FileEntry fileEntry, String currentValue)
 		throws PortalException {
+
+		if (ArrayUtil.contains(
+				_cacheControlConfiguration.noCacheableMimeTypes(),
+				fileEntry.getMimeType())) {
+
+			return HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
+		}
 
 		Company company = _companyLocalService.getCompany(
 			fileEntry.getCompanyId());

@@ -39,7 +39,7 @@ function Edge(props) {
 		targetX,
 		targetY,
 	} = props;
-	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
 	let edgeLabel = label[defaultLanguageId];
@@ -105,12 +105,51 @@ function Edge(props) {
 		targetNode
 	);
 
+	const hasCollidingNode = elements.filter(
+		(element) =>
+			element.source === props.target && element.target === props.source
+	).length;
+
+	let newSourceX = sx;
+	let newTargetX = tx;
+
+	if (hasCollidingNode) {
+		const currentTransitionIndex = elements.findIndex(
+			(element) => element.id === props.id
+		);
+
+		const collidedTransitionIndex = elements.findIndex(
+			(element) =>
+				element.source === props.target &&
+				element.target === props.source
+		);
+
+		newSourceX =
+			currentTransitionIndex > collidedTransitionIndex
+				? newSourceX + 40
+				: newSourceX - 40;
+		newTargetX =
+			currentTransitionIndex > collidedTransitionIndex
+				? newTargetX + 40
+				: newTargetX - 40;
+
+		labelPositionX =
+			currentTransitionIndex > collidedTransitionIndex
+				? newSourceX + 40
+				: newSourceX - 40;
+
+		labelPositionY =
+			labelPositionY === targetY || labelPositionY === sourceY
+				? labelPositionY + Math.abs(sourceY - targetY)
+				: labelPositionY;
+	}
+
 	const drawn = getBezierPath({
 		sourcePosition: sourcePos,
-		sourceX: sx,
+		sourceX: newSourceX,
 		sourceY: sy,
 		targetPosition: targetPos,
-		targetX: tx,
+		targetX: newTargetX,
 		targetY: ty,
 	});
 

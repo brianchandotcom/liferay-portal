@@ -14,10 +14,8 @@ import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
-import {
-	STORAGE_KEYS,
-	Storage,
-} from '../../../../common/services/liferay/storage';
+import {storage} from '../../../../common/services/liferay/storage';
+import {STORAGE_KEYS} from '../../../../common/utils/constants';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import QuickLinksSkeleton from './Skeleton';
@@ -37,8 +35,8 @@ const QuickLinksPanel = ({accountKey}) => {
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
 	useEffect(() => {
-		const quickLinksExpandedStorage = Storage.getItem(
-			STORAGE_KEYS.QUICK_LINKS_EXPANDED
+		const quickLinksExpandedStorage = storage.getItem(
+			STORAGE_KEYS.quickLinksExpanded
 		);
 
 		if (quickLinksExpandedStorage) {
@@ -93,7 +91,7 @@ const QuickLinksPanel = ({accountKey}) => {
 			{quickLinksContents.length ? (
 				<div
 					className={classNames(
-						'link-body quick-links-container rounded',
+						'cp-link-body quick-links-container rounded',
 						{
 							'p-4': isQuickLinksExpanded,
 							'position-absolute px-3 py-4': !isQuickLinksExpanded,
@@ -117,7 +115,7 @@ const QuickLinksPanel = ({accountKey}) => {
 										actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
 								});
 								Storage.setItem(
-									STORAGE_KEYS.QUICK_LINKS_EXPANDED,
+									STORAGE_KEYS.quickLinksExpanded,
 									JSON.stringify(!isQuickLinksExpanded)
 								);
 							}}
@@ -135,7 +133,7 @@ const QuickLinksPanel = ({accountKey}) => {
 						<div>
 							{quickLinksContents.map((quickLinkContent) => (
 								<div
-									className="bg-white link-body my-3 p-3 quick-links-card rounded-lg"
+									className="bg-white cp-link-body my-3 p-3 quick-links-card rounded-lg"
 									dangerouslySetInnerHTML={{
 										__html: DOMPurify.sanitize(
 											quickLinkContent,

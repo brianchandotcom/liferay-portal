@@ -6769,7 +6769,10 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mariadb" />
 					<not>
-						<available file="${test.app.server.lib.portal.dir}/${jdbc.mariadb.driver}" />
+						<or>
+							<available file="${app.server.lib.global.dir}/${jdbc.mariadb.driver}" />
+							<available file="${test.app.server.lib.portal.dir}/${jdbc.mariadb.driver}" />
+						</or>
 					</not>
 				</and>
 				<then>
@@ -6787,7 +6790,10 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mysql" />
 					<not>
-						<available file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" />
+						<or>
+							<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />
+							<available file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" />
+						</or>
 					</not>
 				</and>
 				<then>
@@ -6823,7 +6829,10 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="postgresql" />
 					<not>
-						<available file="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" />
+						<or>
+							<available file="${app.server.lib.global.dir}/${jdbc.postgresql.driver}" />
+							<available file="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" />
+						</or>
 					</not>
 				</and>
 				<then>

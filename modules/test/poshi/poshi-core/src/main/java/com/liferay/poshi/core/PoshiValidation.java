@@ -1449,23 +1449,23 @@ public class PoshiValidation {
 		if (methodParameters.size() != seleniumParameterCount) {
 			_exceptions.add(
 				new ValidationException(
-					methodAttributeValue + "\n",
-					"Incorrect parameter count, number of parameters: " +
-						seleniumParameterCount,
-					"\n", filePath));
+					element, "Expected ", seleniumParameterCount,
+					" parameter(s) for method \"", seleniumMethodName,
+					"\" but found ", seleniumParameterCount, "\n", filePath));
 		}
 
 		for (String methodParameter : methodParameters) {
-			Matcher exceptionMatcher = _invalidMethodParameterPattern.matcher(
-				methodParameter);
+			Matcher invalidMethodParameterMatcher =
+				_invalidMethodParameterPattern.matcher(methodParameter);
 
-			if (exceptionMatcher.find()) {
+			if (invalidMethodParameterMatcher.find()) {
+				String invalidSyntax = invalidMethodParameterMatcher.group(
+					"invalidSyntax");
+
 				_exceptions.add(
 					new ValidationException(
-						methodAttributeValue + "\n",
-						"Remove incorrect paramter syntax: " +
-							exceptionMatcher.group("invalidSyntax"),
-						"\n", filePath));
+						element, "Invalid parameter syntax \"", invalidSyntax,
+						"\"\n", filePath));
 			}
 		}
 	}

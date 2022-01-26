@@ -51,7 +51,9 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+		Translations.gotoBulkExportTranslation(
+			exportTranslationEntry = "TranslationContentPage",
+			toolbarOptions = "true");
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",

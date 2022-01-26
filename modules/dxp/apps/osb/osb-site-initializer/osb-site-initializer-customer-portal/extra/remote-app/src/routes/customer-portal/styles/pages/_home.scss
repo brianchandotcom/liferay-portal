@@ -1,4 +1,4 @@
-.home-projects {
+.cp-home-projects {
 	column-gap: var(--spacer-5);
 	row-gap: 2rem;
 
@@ -7,7 +7,7 @@
 	}
 }
 
-.project-cards-container {
+.cp-project-cards-container {
 	max-width: 1217px;
 
 	@media screen and (min-width: 1441px) {

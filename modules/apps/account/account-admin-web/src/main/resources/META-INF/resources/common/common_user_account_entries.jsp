@@ -119,8 +119,8 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 	</liferay-portlet:renderURL>
 
 	<aui:script use="liferay-search-container">
-		var deleteAccountEntryIdsSet = new Set();
-		var searchContainer = Liferay.SearchContainer.get(
+		const deleteAccountEntryIdsSet = new Set();
+		const searchContainer = Liferay.SearchContainer.get(
 			'<portlet:namespace />accountEntries'
 		);
 
@@ -131,16 +131,16 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 			).join(',');
 		}
 
-		var searchContainerContentBox = searchContainer.get('contentBox');
+		const searchContainerContentBox = searchContainer.get('contentBox');
 
 		searchContainerContentBox.delegate(
 			'click',
 			(event) => {
-				var link = event.currentTarget.getDOMNode();
+				const link = event.currentTarget.getDOMNode();
 
-				var rowId = link.dataset.rowid;
+				const rowId = link.dataset.rowid;
 
-				var tr = link.closest('tr');
+				const tr = link.closest('tr');
 
 				searchContainer.deleteRow(tr, rowId);
 
@@ -151,7 +151,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 			'.remove-link'
 		);
 
-		var selectAccountLink = document.getElementById(
+		const selectAccountLink = document.getElementById(
 			'<portlet:namespace />selectAccountLink'
 		);
 

@@ -38,7 +38,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
 
@@ -71,7 +71,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
 
@@ -104,7 +104,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -124,7 +124,7 @@ definition {
 
 		Button.clickPublish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
@@ -161,7 +161,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
 

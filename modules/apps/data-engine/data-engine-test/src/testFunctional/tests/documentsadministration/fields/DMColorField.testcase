@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
 

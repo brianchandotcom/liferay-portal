@@ -60,7 +60,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
-				feedUrlLink = "rss2.0.xml");
+				feedURLLink = "rss2.0.xml");
 
 			IFrame.closeFrame();
 		}
@@ -82,7 +82,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Technology",
 				feedType = "file",
-				feedUrlLink = "Technology.xml");
+				feedURLLink = "Technology.xml");
 
 			IFrame.closeFrame();
 		}
@@ -93,7 +93,7 @@ definition {
 				feedRowIndexNumber = "1",
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
-				feedUrlLink = "rss2.0.xml");
+				feedURLLink = "rss2.0.xml");
 
 			IFrame.closeFrame();
 		}
@@ -104,7 +104,7 @@ definition {
 				feedRowIndexNumber = "2",
 				feedTitle = "Reuters : Sports News",
 				feedType = "file",
-				feedUrlLink = "reuters_sports_news.xml");
+				feedURLLink = "reuters_sports_news.xml");
 
 			IFrame.closeFrame();
 		}
@@ -127,7 +127,7 @@ definition {
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
 				feedTitle = "General Announcement",
-				feedUrlLink = "www.theverge.com/rss/index.xml",
+				feedURLLink = "www.theverge.com/rss/index.xml",
 				viewWarningMessage = "The following are invalid URLs: www.theverge.com/rss/index.xml.");
 
 			IFrame.closeFrame();
@@ -142,7 +142,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "General Announcement",
 				feedType = "file",
-				feedUrlLink = "theverge.xml");
+				feedURLLink = "theverge.xml");
 
 			IFrame.closeFrame();
 		}
@@ -256,7 +256,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Technology",
 				feedType = "file",
-				feedUrlLink = "Technology.xml");
+				feedURLLink = "Technology.xml");
 
 			IFrame.closeFrame();
 		}
@@ -307,7 +307,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Technology",
 				feedType = "file",
-				feedUrlLink = "Technology.xml");
+				feedURLLink = "Technology.xml");
 
 			IFrame.closeFrame();
 		}
@@ -318,7 +318,7 @@ definition {
 				feedRowIndexNumber = "1",
 				feedTitle = "NBA",
 				feedType = "file",
-				feedUrlLink = "nba.xml");
+				feedURLLink = "nba.xml");
 		}
 
 		task ("View order of RSS Feeds") {
@@ -374,7 +374,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
-				feedUrlLink = "rss2.0.xml");
+				feedURLLink = "rss2.0.xml");
 
 			IFrame.closeFrame();
 		}
@@ -435,7 +435,7 @@ definition {
 				feedRowIndexNumber = "0",
 				feedTitle = "Technology",
 				feedType = "file",
-				feedUrlLink = "Technology.xml");
+				feedURLLink = "Technology.xml");
 
 			IFrame.closeFrame();
 		}
@@ -512,7 +512,7 @@ definition {
 		}
 
 		task ("Get the RSS Feed url") {
-			var rssFeedUrl = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
+			var rssFeedURL = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
 		}
 
 		task ("Add a RSS Feed based on AP RSS Url") {
@@ -523,7 +523,7 @@ definition {
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
 				feedTitle = "Web Asset Publisher",
-				feedUrlLink = "${rssFeedUrl}");
+				feedURLLink = "${rssFeedURL}");
 
 			IFrame.closeFrame();
 		}

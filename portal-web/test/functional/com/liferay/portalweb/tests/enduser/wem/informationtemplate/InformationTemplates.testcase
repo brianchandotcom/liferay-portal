@@ -115,7 +115,7 @@ definition {
 	@uitest
 	test AddInformationTemplateViaScriptFile {
 		task ("Navigate to the Information Templates admin") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add an information template for Blogs Entry") {
@@ -162,7 +162,7 @@ definition {
 	@uitest
 	test CopyInformationTemplate {
 		task ("Add an information template for Asset") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -221,7 +221,7 @@ definition {
 		}
 
 		task ("Add an information template for Object and User") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -280,7 +280,7 @@ definition {
 	@uitest
 	test DeleteInformationTemplate {
 		task ("Add an information template for Document and Basic Document") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -323,7 +323,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add an information template for Category") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -433,7 +433,7 @@ definition {
 		}
 
 		task ("Navigate to the Information Templates admin") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add an information template for Web Content Article and Basic Web Content") {
@@ -609,7 +609,7 @@ definition {
 		}
 
 		task ("Navigate to the Information Templates admin") {
-			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add an information template for Web Content Article and Basic Web Content") {
@@ -665,7 +665,7 @@ definition {
 		}
 
 		task ("Select the blogs entry under manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",

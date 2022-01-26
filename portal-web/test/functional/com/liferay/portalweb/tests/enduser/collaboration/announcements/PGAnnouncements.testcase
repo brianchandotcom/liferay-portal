@@ -38,7 +38,7 @@ definition {
 		else {
 			JSONAnnouncement.deleteAnnouncement(
 				groupName = "Guest",
-				siteUrlKey = "guest");
+				siteURLKey = "guest");
 
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
@@ -52,18 +52,18 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com");
+			announcementURL = "http://www.liferay.com");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryUrl = "http://www.liferay.com");
+			entryURL = "http://www.liferay.com");
 	}
 
 	@priority = "4"
@@ -72,14 +72,14 @@ definition {
 	test CanAddAnnouncementsEntryFutureDate {
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.addEntryWithFutureDate(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryUrl = "http://www.liferay.com");
+			entryURL = "http://www.liferay.com");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 
@@ -91,7 +91,7 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryUrl = "http://www.liferay.com");
+			entryURL = "http://www.liferay.com");
 	}
 
 	@priority = "4"
@@ -100,12 +100,12 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com",
+			announcementURL = "http://www.liferay.com",
 			priority = "Important");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewPG(
@@ -123,11 +123,11 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com");
+			announcementURL = "http://www.liferay.com");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.deletePG(entryTitle = "Announcements Entry Title");
@@ -143,11 +143,11 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com");
+			announcementURL = "http://www.liferay.com");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.editPG(
@@ -156,7 +156,7 @@ definition {
 			entryContentEdit = "Announcements Entry Content Edit",
 			entryTitle = "Announcements Entry Title",
 			entryTitleEdit = "Announcements Entry Title Edit",
-			entryUrlEdit = "http://www.alloyui.com");
+			entryURLEdit = "http://www.alloyui.com");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
@@ -170,27 +170,27 @@ definition {
 	test CannotAddAnnouncementsEntryPastExpirationDate {
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.addPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryUrl = "http://www.liferay.com",
+			entryURL = "http://www.liferay.com",
 			expirationDate = "12/31/2013",
 			pastDate = "true");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 
 		AnnouncementsNavigator.opentoAdmin(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AnnouncementsEntry.viewNoAdmin();
 	}
@@ -203,13 +203,13 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com");
+			announcementURL = "http://www.liferay.com");
 
 		AnnouncementsEntry.markAsReadPG(
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewReadPG(

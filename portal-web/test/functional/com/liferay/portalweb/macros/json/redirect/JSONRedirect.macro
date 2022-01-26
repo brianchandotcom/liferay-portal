@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a redirect entry"
 	macro addRedirect {
-		Variables.assertDefined(parameterList = "${sourceUrl},${destinationUrl}");
+		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -12,9 +12,9 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
-		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
+		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
 
 		if (!(isSet(expirationDate))) {
 			var expirationDate = "2100-01-01";
@@ -33,20 +33,20 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/redirect.redirectentry/add-redirect-entry \
+			${portalURL}/api/jsonws/redirect.redirectentry/add-redirect-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId} \
-			-d destinationURL=${destinationUrl} \
+			-d destinationURL=${destinationURL} \
 			-d expirationDate=${expirationDate} \
 			-d permanent=${permanent} \
-			-d sourceURL=${sourceUrl}
+			-d sourceURL=${sourceURL}
 		''';
 
 		echo("## Adding a 'Redirection' with the following info using JSONWS:");
 
-		echo("## * SourceURL: ${sourceUrl}");
+		echo("## * SourceURL: ${sourceURL}");
 
-		echo("## * DestinationURL: ${destinationUrl}");
+		echo("## * DestinationURL: ${destinationURL}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
@@ -54,10 +54,10 @@ definition {
 	@summary = "This calls the JSON WS API to delete an entry"
 	macro deleteEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			destinationUrl = "${destinationUrl}",
+			destinationURL = "${destinationURL}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -68,7 +68,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
+			${portalURL}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
 				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
 		''';
@@ -78,21 +78,21 @@ definition {
 
 	@summary = "This calls the JSON WS API to get the redirectEntryId"
 	macro getRedirectEntryId {
-		Variables.assertDefined(parameterList = "${destinationUrl},${groupName}");
+		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/redirect.redirectentry/get-redirect-entries \
+			${portalURL}/api/jsonws/redirect.redirectentry/get-redirect-entries \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d "start=-1" \
 			-d "end=-1" \
 			-d -orderByComparator=
 		''';
-		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationUrl}')]['redirectEntryId']");
+		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationURL}')]['redirectEntryId']");
 
 		if ("${redirectEntryId}" == "") {
 			fail("FAIL. Cannot find category.");
@@ -104,12 +104,12 @@ definition {
 	@summary = "This calls the JSON WS API to update an entry"
 	macro updateEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			destinationUrl = "${destinationUrl}",
+			destinationURL = "${destinationURL}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
-		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
+		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
 
 		if (!(isSet(expirationDate))) {
 			var expirationDate = "2100-01-01";
@@ -128,13 +128,13 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/redirect.redirectentry/update-redirect-entry \
+			${portalURL}/api/jsonws/redirect.redirectentry/update-redirect-entry \
 				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
-				-d destinationURL=${destinationUrl} \
+				-d destinationURL=${destinationURL} \
 				-d expirationDate=${expirationDate} \
 				-d permanent=${permanent} \
-				-d sourceURL=${sourceUrl}
+				-d sourceURL=${sourceURL}
 
 		''';
 

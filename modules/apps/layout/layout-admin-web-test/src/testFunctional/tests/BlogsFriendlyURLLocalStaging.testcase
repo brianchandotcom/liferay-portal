@@ -42,7 +42,7 @@ definition {
 	@description = "This ensures that the friendlyURL in Blogs can be published when local staging is enabled."
 	@priority = "5"
 	test CanPublishFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -54,11 +54,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
@@ -66,17 +66,17 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.viewActiveURL(activeUrl = "custom-url");
+		BlogsEntry.viewActiveURL(activeURL = "custom-url");
 
-		BlogsEntry.viewOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
+		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -84,7 +84,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/custom-url");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/custom-url");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -94,7 +94,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be removed and published when local staging is enabled."
 	@priority = "4"
 	test CanPublishRemovedOldFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -106,11 +106,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
@@ -118,17 +118,17 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.removeOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
+		BlogsEntry.removeOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -136,11 +136,11 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
 
 		Alert.viewErrorMessage(errorMessage = "The entry could not be found.");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/custom-url");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/custom-url");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -150,7 +150,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be restored and published when local staging is enabled."
 	@priority = "4"
 	test CanPublishRestoredOldFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -162,11 +162,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
@@ -174,20 +174,20 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
 		BlogsEntry.restoreOldFriendlyURL(
-			activeUrl = "custom-url",
-			oldFriendlyUrl = "blogs-entry-title",
-			restoredUrl = "blogs-entry-title");
+			activeURL = "custom-url",
+			oldFriendlyURL = "blogs-entry-title",
+			restoredURL = "blogs-entry-title");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -195,7 +195,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

@@ -131,9 +131,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/search-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
 		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
@@ -159,7 +159,7 @@ definition {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
 		}
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/search-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
 		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
@@ -216,7 +216,7 @@ definition {
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "Search#AssertPaginationURLforHTTPS";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -253,11 +253,11 @@ definition {
 
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "https://")) || !(contains("${currentUrl}", "start=2"))) {
+		if (!(contains("${currentURL}", "https://")) || !(contains("${currentURL}", "start=2"))) {
 			fail("URL of second search results page should contain HTTPS.");
 		}
 	}
@@ -283,11 +283,11 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "4");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta=4")) || contains("${currentUrl}", "start")) {
+		if (!(contains("${currentURL}", "delta=4")) || contains("${currentURL}", "start")) {
 			fail("URL should preserve delta, but not contain start.");
 		}
 
@@ -295,11 +295,11 @@ definition {
 
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta=4")) || !(contains("${currentUrl}", "start=2"))) {
+		if (!(contains("${currentURL}", "delta=4")) || !(contains("${currentURL}", "start=2"))) {
 			fail("URL should preserve delta and add start.");
 		}
 
@@ -307,21 +307,21 @@ definition {
 
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta=4")) && !(contains("${currentUrl}", "start=3"))) {
+		if (!(contains("${currentURL}", "delta=4")) && !(contains("${currentURL}", "start=3"))) {
 			fail("URL should preserve delta and modify start.");
 		}
 
 		Pagination.changePagination(itemsPerPage = "8");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta")) && !(contains("${currentUrl}", "start"))) {
+		if (!(contains("${currentURL}", "delta")) && !(contains("${currentURL}", "start"))) {
 			fail("Delta and start should be removed from URL.");
 		}
 
@@ -329,11 +329,11 @@ definition {
 
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta")) && contains("${currentUrl}", "start=2")) {
+		if (!(contains("${currentURL}", "delta")) && contains("${currentURL}", "start=2")) {
 			fail("URL should preserve abscence of delta and start should be added.");
 		}
 
@@ -341,11 +341,11 @@ definition {
 
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("Current URL: ${currentUrl} ");
+		echo("Current URL: ${currentURL} ");
 
-		if (!(contains("${currentUrl}", "delta")) && contains("${currentUrl}", "start=1")) {
+		if (!(contains("${currentURL}", "delta")) && contains("${currentURL}", "start=1")) {
 			fail("URL should preserve abscence of delta and modify start.");
 		}
 	}
@@ -488,9 +488,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Federated Search Page");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/federated-search-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/federated-search-page");
 
 		for (var column : list "1,2") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -748,15 +748,15 @@ definition {
 
 		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation(value1 = "${portalUrl}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry");
+		AssertLocation(value1 = "${portalURL}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry");
 
-		var searchUrl = selenium.getCurrentUrl();
+		var searchURL = selenium.getCurrentUrl();
 
 		Navigator.openURL();
 
-		Navigator.openSpecificURL(url = "${searchUrl}");
+		Navigator.openSpecificURL(url = "${searchURL}");
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
@@ -1301,7 +1301,7 @@ definition {
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -1487,7 +1487,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Test Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1728,9 +1728,9 @@ definition {
 
 		SearchFacetPortlet.checkFacet(facetValueName = "userfn userln");
 
-		var currentUrl = selenium.getLocation();
+		var currentURL = selenium.getLocation();
 
-		if (!(contains("${currentUrl}", "username"))) {
+		if (!(contains("${currentURL}", "username"))) {
 			fail("User parameter name failed to change.");
 		}
 
@@ -2600,7 +2600,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "New Site");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "New Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2703,7 +2703,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
 			facetValueName = "Web Content Article",
 			searchPage = "${searchPage}",
@@ -2715,10 +2715,10 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
 			facetValueName = "Blogs Entry",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
@@ -2726,10 +2726,10 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.uncheckFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "type",
 			facetValueName = "Web Content Article",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry",
@@ -2737,25 +2737,25 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.clearAllFacetsAndViewURL(searchUrl = "${testSearchUrl}");
+		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
-		var testSearchUrl = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPortlets.getSearchTermURL(
 			searchPage = "${searchPage}",
 			searchTerm = "test");
 
-		AssertLocation(value1 = "${testSearchUrl}");
+		AssertLocation(value1 = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "category",
 			facetValue = "${organicCategoryId}",
 			facetValueName = "organic",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
@@ -2763,10 +2763,10 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "user",
 			facetValueName = "userfn userln",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Document",
@@ -2774,10 +2774,10 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.uncheckFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "user",
 			facetValueName = "userfn userln",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
@@ -2785,23 +2785,23 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.clearAllFacetsAndViewURL(searchUrl = "${testSearchUrl}");
+		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
-		var testSearchUrl = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPortlets.getSearchTermURL(
 			searchPage = "${searchPage}",
 			searchTerm = "test");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
 			facetValueName = "sweet",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
 			facetValueName = "fresh",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
@@ -2815,21 +2815,21 @@ definition {
 
 		var siteName = TestCase.getSiteName();
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",
 			facetValue = "${liferaySiteId}",
 			facetValueName = "${siteName}",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		var newSiteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "New Site",
 			site = "true");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",
 			facetValue = "${newSiteId}",
 			facetValueName = "New Site",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
@@ -2837,11 +2837,11 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.uncheckFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "site",
 			facetValue = "${newSiteId}",
 			facetValueName = "New Site",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Document,orange/Web Content Article",
@@ -2853,11 +2853,11 @@ definition {
 			folderName = "${webContentFolderName2}",
 			groupName = "Guest");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
 			facetValueName = "${webContentFolderName2}",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
@@ -2865,10 +2865,10 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
 			facetValueName = "ripe",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
@@ -2876,16 +2876,16 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
-		var testSearchUrl = SearchFacetPortlet.uncheckFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
 			facetValueName = "${webContentFolderName2}",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.uncheckFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "tag",
 			facetValueName = "fresh",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
@@ -2893,50 +2893,50 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchUrl = SearchFacetPortlet.clearAllFacetsAndViewURL(searchUrl = "${testSearchUrl}");
+		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
 		SearchPortlets.searchWidget(searchTerm = "organic");
 
-		var testSearchUrl = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPortlets.getSearchTermURL(
 			searchPage = "${searchPage}",
 			searchTerm = "organic");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "category",
 			facetValue = "${organicCategoryId}",
 			facetValueName = "organic",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		var webContentFolderId1 = JSONWebcontent.getFolderIdByFolderName(
 			folderName = "${webContentFolderName1}",
 			groupName = "Guest");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId1}",
 			facetValueName = "${webContentFolderName1}",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",
 			facetValue = "${liferaySiteId}",
 			facetValueName = "${siteName}",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
 			facetValueName = "ripe",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
 			facetValueName = "Web Content Article",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
-		var testSearchUrl = SearchFacetPortlet.checkFacetAndViewURL(
+		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "user",
 			facetValueName = "test test",
-			searchUrl = "${testSearchUrl}");
+			searchURL = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
@@ -3009,7 +3009,7 @@ definition {
 	test ViewStagedAndLiveContentInSearchResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(
 			inheritChanges = "disable",
@@ -3022,7 +3022,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContent.addArticleCP(
 			webContentContent = "WC Content",
@@ -3058,10 +3058,10 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContent.deleteCP(
-			siteUrlKey = "site-name-staging",
+			siteURLKey = "site-name-staging",
 			webContentTitle = "Apple");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");

@@ -34,7 +34,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoTemplates();
 
@@ -53,11 +53,11 @@ definition {
 			templateFile = "carousel_display_template.ftl",
 			templateName = "Carousel Display");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		LAR.exportPortlet(larFileName = "content-display-templates.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -75,7 +75,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Content List");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.importPortlet(larFileName = "content-display-templates.lar");
 
@@ -96,7 +96,7 @@ definition {
 		}
 
 		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavItem(navItem = "Templates");
 
@@ -111,7 +111,7 @@ definition {
 	test ExportLARWithNestedWebContent {
 		property testray.component.names = "Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -130,7 +130,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -140,7 +140,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Basic Web Content");
 
@@ -151,7 +151,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -166,7 +166,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 	}
@@ -174,7 +174,7 @@ definition {
 	@description = "This is a use case for LPS-95441."
 	@priority = "3"
 	test ExportWebContentWithEditedStructure {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -192,7 +192,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
@@ -217,7 +217,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 	}
@@ -229,7 +229,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoStructures();
 
@@ -260,7 +260,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoTemplates();
 
@@ -270,15 +270,15 @@ definition {
 			templateFile = "frontpage_3_column_with_images_template.ftl",
 			templateName = "Frontpage 3 Column with Images Template");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		LAR.exportPortlet(larFileName = "structure-templates.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		LAR.importPortlet(larFileName = "structure-templates.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "3 Column with Images");
 
@@ -325,7 +325,7 @@ definition {
 	test ImportLAR {
 		property testray.component.names = "Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -339,7 +339,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -349,7 +349,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -363,7 +363,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet2.lar");
 
@@ -371,17 +371,17 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet2.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -395,7 +395,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -412,7 +412,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -426,7 +426,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Test Structure");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -435,7 +435,7 @@ definition {
 			templateDescription = "Test Template Description",
 			templateName = "Test Template");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
 
@@ -453,7 +453,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		LAR.importPortlet(
 			larFileName = "WebContent_portlet.lar",
@@ -472,7 +472,7 @@ definition {
 			groupName = "Site Name 1",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-1");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-1");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
@@ -483,7 +483,7 @@ definition {
 			groupName = "Site Name 2",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 
@@ -497,7 +497,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoStructures();
 
@@ -516,7 +516,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoStructures();
 
@@ -543,7 +543,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
@@ -556,7 +556,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
@@ -569,7 +569,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
@@ -582,7 +582,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
@@ -597,7 +597,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
@@ -612,7 +612,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-2");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
@@ -639,11 +639,11 @@ definition {
 			folderName = "Events",
 			groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.importPortlet(larFileName = "space-web-content.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight,Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
 			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
@@ -657,7 +657,7 @@ definition {
 			folderName = "Events",
 			webContentArticlesList = "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "News",
@@ -667,7 +667,7 @@ definition {
 			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "Events",
@@ -691,7 +691,7 @@ definition {
 		}
 
 		task ("Add a web content structure with all fields") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -733,7 +733,7 @@ definition {
 		}
 
 		task ("Export the web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			LAR.exportPortlet(larFileName = "WebContentPortlet.lar");
 		}
@@ -743,7 +743,7 @@ definition {
 		}
 
 		task ("Import the web content in new site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			LAR.importPortlet(larFileName = "WebContentPortlet.lar");
 		}
@@ -756,7 +756,7 @@ definition {
 		}
 
 		task ("Edit the default values of imported web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			NavItem.gotoStructures();
 

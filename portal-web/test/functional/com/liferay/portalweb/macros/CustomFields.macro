@@ -119,13 +119,13 @@ definition {
 
 	macro openCustomFieldAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet");
 	}
 
 	macro openToAddResourceCustomField {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet&_com_liferay_expando_web_portlet_ExpandoPortlet_mvcPath=%2Fedit%2Fselect_field_type.jsp&_com_liferay_expando_web_portlet_ExpandoPortlet_modelResource=${modelResource}");
 	}
 

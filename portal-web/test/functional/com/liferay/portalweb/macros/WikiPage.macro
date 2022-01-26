@@ -42,11 +42,11 @@ definition {
 	}
 
 	macro addAttachmentViaPageEdit {
-		if (isSet(layoutUrlKey)) {
+		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiPageTitle = "${wikiPageTitle}");
 		}
@@ -176,10 +176,10 @@ definition {
 	}
 
 	macro addCP {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}");
 		}
 		else {
@@ -203,7 +203,7 @@ definition {
 		if (isSet(contentImageName)) {
 			WikiPage.addInlineImage(
 				contentImageName = "${contentImageName}",
-				imageSourceUrl = "${imageSourceUrl}",
+				imageSourceURL = "${imageSourceURL}",
 				navTab = "${navTab}",
 				wikiAdmin = "${wikiAdmin}");
 		}
@@ -212,11 +212,11 @@ definition {
 	}
 
 	macro addFrontPageChildPageInvalidTitle {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddChildPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiParentPageTitle = "${wikiParentPageTitle}");
 		}
@@ -300,11 +300,11 @@ definition {
 				value1 = "${wikiNodeName}");
 		}
 
-		if (isSet(layoutUrlKey)) {
+		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiPageTitle = "${wikiPageTitle}");
 		}
@@ -367,7 +367,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceUrl = "${imageSourceUrl}",
+			imageSourceURL = "${imageSourceURL}",
 			navTab = "${navTab}",
 			wikiAdmin = "${wikiAdmin}");
 
@@ -455,11 +455,11 @@ definition {
 	}
 
 	macro addPG {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}");
 		}
 		else {
@@ -498,7 +498,7 @@ definition {
 		if (isSet(contentImageName)) {
 			WikiPage.addInlineImage(
 				contentImageName = "${contentImageName}",
-				imageSourceUrl = "${imageSourceUrl}",
+				imageSourceURL = "${imageSourceURL}",
 				navTab = "${navTab}",
 				wikiAdmin = "${wikiAdmin}");
 		}
@@ -619,7 +619,7 @@ definition {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
 		WikiNavigator.openToWikiPage(
-			siteUrlKey = "${siteUrlKey}",
+			siteURLKey = "${siteURLKey}",
 			wikiNodeName = "${wikiNodeName}",
 			wikiPageTitle = "${wikiPageTitle}");
 
@@ -882,10 +882,10 @@ definition {
 	}
 
 	macro editPageCP {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiPageTitle = "${wikiPageTitle}");
 		}
@@ -909,11 +909,11 @@ definition {
 	macro editPagePG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiPageTitle = "${wikiPageTitle}");
 		}
@@ -1236,11 +1236,11 @@ definition {
 		var key_attachmentFileName = "${attachmentFileName}";
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		if (isSet(layoutUrlKey)) {
+		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = "${groupName}",
-				layoutUrlKey = "${layoutUrlKey}",
-				siteUrlKey = "${siteUrlKey}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
 				wikiNodeName = "${wikiNodeName}",
 				wikiPageTitle = "${wikiPageTitle}");
 		}

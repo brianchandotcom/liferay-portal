@@ -240,7 +240,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Site Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -290,7 +290,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "subscribe-site");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "subscribe-site");
 
 		WebContent.subscribeToCurrentFolderCP();
 
@@ -301,7 +301,7 @@ definition {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Subscribe Site (Staging)",
 			site = "false",
-			siteUrlKey = "subscribe-site-staging");
+			siteURLKey = "subscribe-site-staging");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
@@ -314,7 +314,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Subscribe Site (Staging)",
 			site = "false",
-			siteUrlKey = "subscribe-site-staging",
+			siteURLKey = "subscribe-site-staging",
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.editCP(
@@ -361,7 +361,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.subscribeToCurrentFolderCP();
 
@@ -376,7 +376,7 @@ definition {
 		WebContentNavigator.openToAddBasicArticle(
 			folderName = "WC Folder Name",
 			groupName = "Test Site Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",

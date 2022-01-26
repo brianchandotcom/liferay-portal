@@ -275,7 +275,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.selectDocumentTypeFrame();
 

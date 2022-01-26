@@ -43,7 +43,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "Translation Content Page");
 
@@ -72,7 +72,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "Translation Content Page");
 
@@ -107,7 +107,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -127,7 +127,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-ja_JP",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -135,7 +135,7 @@ definition {
 			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "ja-JP",
@@ -199,7 +199,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -272,7 +272,7 @@ definition {
 				layoutName = "TranslationContentPage${num}");
 		}
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage1");
 
@@ -319,7 +319,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -336,7 +336,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -346,7 +346,7 @@ definition {
 			save = "true",
 			successMessage = "1 File Saved");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -412,7 +412,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -431,7 +431,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -439,7 +439,7 @@ definition {
 			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -503,7 +503,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -522,7 +522,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -587,7 +587,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "ContentPage");
 
@@ -633,7 +633,7 @@ definition {
 			translationFileName = "ContentPage-en_US-ja_JP",
 			translationZipFileName = "ContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
@@ -646,7 +646,7 @@ definition {
 			successFileName2 = "ContentPage-en_US-zh_CN.xlf",
 			successFileNumber = "2 Files Saved");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewNoTranslationEntry(title = "Translation of ContentPage to es_ES");
 

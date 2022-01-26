@@ -713,7 +713,7 @@ definition {
 
 		Navigator.openURL();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "guest");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Custom Object",

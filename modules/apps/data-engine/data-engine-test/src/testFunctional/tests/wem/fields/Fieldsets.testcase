@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -121,7 +121,7 @@ definition {
 		var numericValue = "Numeric";
 		var structureTitle = "WC Structure Name";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

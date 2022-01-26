@@ -1,9 +1,9 @@
 definition {
 
 	macro _deleteRemoteAppAPI {
-		var currentUrl = Navigator.getCurrentURL();
+		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
+		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		JSONRemoteApp.deleteIFrameRemoteAppEntry(remoteAppEntryId = "${remoteAppEntryIdValue}");
@@ -14,7 +14,7 @@ definition {
 
 		RemoteAppsEntry.addEntry(
 			entryName = "${entryName}",
-			entryUrl = "${entryUrl}");
+			entryURL = "${entryURL}");
 
 		PortletEntry.publish();
 	}
@@ -29,7 +29,7 @@ definition {
 		RemoteAppsEntry.addCustomElement(
 			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
-			entryUrl = "${entryUrl}");
+			entryURL = "${entryURL}");
 
 		PortletEntry.publish();
 	}
@@ -46,7 +46,7 @@ definition {
 			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
 			entryProperties = "${entryProperties}",
-			entryUrl = "${entryUrl}");
+			entryURL = "${entryURL}");
 
 		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
 
@@ -76,7 +76,7 @@ definition {
 
 		RemoteAppsEntry.addEntry(
 			entryName = "Test Remote App",
-			entryUrl = "http://www.liferay.com");
+			entryURL = "http://www.liferay.com");
 
 		RemoteAppsEntry.addPortletCategory(categoryName = "Collaboration");
 
@@ -97,10 +97,10 @@ definition {
 			value1 = "${entryHtmlName}");
 
 		AssertTextEquals(
-			custom_entryUrl = "${entryUrl}",
+			custom_entryURL = "${entryURL}",
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 
 		AssertTextEquals(
 			custom_entryCssurl = "${entryCssurl}",
@@ -211,9 +211,9 @@ definition {
 			key_tableEntryName = "Vanilla Counter",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
-		var currentUrl = Navigator.getCurrentURL();
+		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
+		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		return "${remoteAppEntryIdValue}";
@@ -278,9 +278,9 @@ definition {
 
 	macro viewTableEntryURL {
 		AssertTextEquals(
-			key_tableEntryUrl = "${entryUrl}",
+			key_tableEntryURL = "${entryURL}",
 			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 	}
 
 }

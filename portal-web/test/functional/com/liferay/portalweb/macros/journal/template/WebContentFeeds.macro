@@ -9,7 +9,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TARGET_PAGE_FRIENDLY_URL",
-			value1 = "${pageFriendlyUrl}");
+			value1 = "${pageFriendlyURL}");
 
 		Panel.expandPanel(panel = "Web Content Constraints");
 

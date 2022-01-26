@@ -240,7 +240,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(
-			defaultUrl = "false",
+			defaultURL = "false",
 			portletName = "IFrame");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
@@ -282,7 +282,7 @@ definition {
 			value1 = "Page2 Name");
 
 		Portlet.addPG(
-			defaultUrl = "false",
+			defaultURL = "false",
 			portletName = "IFrame");
 
 		Navigator.gotoSitePage(
@@ -468,7 +468,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -489,9 +489,9 @@ definition {
 			siteName = "${siteName}",
 			siteTemplateName = "Template Site");
 
-		var page2Url = Navigator.getCurrentURL();
+		var page2URL = Navigator.getCurrentURL();
 
-		var entryExternalUrl = StringUtil.replace("${page2Url}", "http://", "");
+		var entryExternalURL = StringUtil.replace("${page2URL}", "http://", "");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -502,8 +502,8 @@ definition {
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		CKEditor.addEntryExternalURL(
-			displayText = "${page2Url}",
-			entryExternalUrl = "${entryExternalUrl}",
+			displayText = "${page2URL}",
+			entryExternalURL = "${entryExternalURL}",
 			fieldLabel = "content");
 
 		PortletEntry.publish();
@@ -537,15 +537,15 @@ definition {
 			siteName = "Site Name");
 
 		WebContentDisplayPortlet.viewContent(
-			displayText = "${page2Url}",
-			url = "${portalUrl}/web/site-name/page2-name",
+			displayText = "${page2URL}",
+			url = "${portalURL}/web/site-name/page2-name",
 			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a use case for LPS-74081."
 	@priority = "4"
 	test ViewImportedSitePageWithNumericFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -713,7 +713,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(
-			defaultUrl = "false",
+			defaultURL = "false",
 			portletName = "Web Content Display");
 
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
@@ -750,7 +750,7 @@ definition {
 			pageName = "Page2 Name",
 			siteTemplateName = "Site Template Name");
 
-		NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "${siteTemplateId}");
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "${siteTemplateId}");
 
 		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 

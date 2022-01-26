@@ -318,9 +318,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		AssertElementPresent(
 			key_bodyName = "Test",

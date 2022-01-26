@@ -5,12 +5,12 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
+			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
 				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d accountEntryId=${accountEntryId} \
 				-d creatorUserId=${userId} \

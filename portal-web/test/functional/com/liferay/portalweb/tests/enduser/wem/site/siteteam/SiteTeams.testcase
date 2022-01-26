@@ -37,7 +37,7 @@ definition {
 		property testray.component.names = "Site Administration";
 
 		task ("Add a site team in new site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -65,7 +65,7 @@ definition {
 		}
 
 		task ("Assign user to created site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -74,7 +74,7 @@ definition {
 		}
 
 		task ("Add a site team in site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("View user assigned to created site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewMemberCP(
 				membershipType = "User",
@@ -105,7 +105,7 @@ definition {
 		property testray.component.names = "Site Administration,User Groups";
 
 		task ("Add a site team in site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -125,13 +125,13 @@ definition {
 		}
 
 		task ("Assign user group to the site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 		}
 
 		task ("Assign user group to the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.assignUserGroups(
 				teamName = "Site Team Name",
@@ -139,7 +139,7 @@ definition {
 		}
 
 		task ("View user group assiged to the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewMemberCP(
 				membershipType = "User Group",
@@ -161,7 +161,7 @@ definition {
 		}
 
 		task ("Add thress site teams in site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team1 Description",
@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("Add a site team in site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -225,7 +225,7 @@ definition {
 		}
 
 		task ("View user assigned to the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewMemberCP(
 				membershipType = "User",
@@ -235,7 +235,7 @@ definition {
 		}
 
 		task ("Remove user from the created site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.removeMemberCP(
 				membershipType = "User",
@@ -245,7 +245,7 @@ definition {
 		}
 
 		task ("View user removed from the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewNoMembersCP(teamName = "Site Team Name");
 		}
@@ -258,7 +258,7 @@ definition {
 		property testray.component.names = "Site Administration,User Groups";
 
 		task ("Add a site team in site") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -278,13 +278,13 @@ definition {
 		}
 
 		task ("Assign user group to the site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 		}
 
 		task ("Assign user group to the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.assignUserGroups(
 				teamName = "Site Team Name",
@@ -292,7 +292,7 @@ definition {
 		}
 
 		task ("View user group assigned to the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewMemberCP(
 				membershipType = "User Group",
@@ -301,7 +301,7 @@ definition {
 		}
 
 		task ("Remove user group from the created site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.removeMemberCP(
 				membershipType = "User Group",
@@ -310,7 +310,7 @@ definition {
 		}
 
 		task ("View user group removed from the site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.viewNoMembersCP(teamName = "Site Team Name");
 		}
@@ -327,14 +327,14 @@ definition {
 
 				UserGroup.addCP(userGroupName = "User Group Name ${n}");
 
-				Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+				Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 				Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name ${n}");
 			}
 		}
 
 		task ("Add a user group") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -342,7 +342,7 @@ definition {
 		}
 
 		task ("Assign user group to site team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.assignUserGroups(
 				teamName = "Site Team Name",
@@ -350,7 +350,7 @@ definition {
 		}
 
 		task ("Search the 2 user groups in site team, assert only the user group assigned displays") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
@@ -378,7 +378,7 @@ definition {
 					userLastName = "userln${n}",
 					userScreenName = "usersn${n}");
 
-				Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+				Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 				Site.assignUserAsMemberCP(
 					userFirstName = "userfn${n}",
@@ -388,7 +388,7 @@ definition {
 		}
 
 		task ("Add a site team and assign user to it") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -400,7 +400,7 @@ definition {
 		}
 
 		task ("Search the 2 users in site team, assert only the user assigned displays") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
@@ -427,7 +427,7 @@ definition {
 		property testray.component.names = "Site Administration";
 
 		task ("Add a site team and delete it") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -451,7 +451,7 @@ definition {
 		property testray.component.names = "Site Administration";
 
 		task ("Add a site team and edit it") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -479,7 +479,7 @@ definition {
 		task ("Add a site team and a public page basing on Search page template") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Search Page Template",
@@ -532,13 +532,13 @@ definition {
 		}
 
 		task ("Add a site team and assign the first user to it") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
 				teamName = "Site Team Name");
 
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.assignMembersCP(
 				teamName = "Site Team Name",
@@ -635,7 +635,7 @@ definition {
 		}
 
 		task ("Add a site team with alert") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 			Team.addCP(
 				teamDescription = '''<script>alert(123);</script>''',
@@ -643,7 +643,7 @@ definition {
 		}
 
 		task ("Assign site team to site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');
 		}

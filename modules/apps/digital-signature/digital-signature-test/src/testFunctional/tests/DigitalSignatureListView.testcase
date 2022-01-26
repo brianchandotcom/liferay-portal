@@ -111,11 +111,11 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECENT_CREATE_DATE");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
 
@@ -191,11 +191,11 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
 

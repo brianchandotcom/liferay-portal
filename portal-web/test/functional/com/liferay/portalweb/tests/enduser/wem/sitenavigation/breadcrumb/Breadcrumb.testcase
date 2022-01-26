@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Add a widget template for Breadcrumb widget") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtType = "Breadcrumb",
@@ -428,7 +428,7 @@ definition {
 	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {
 		property test.name.skip.portal.instance = "Breadcrumb#ViewBreadcrumbWhenNavigateToPageViaIPAddress";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a Breadcrumb widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -460,7 +460,7 @@ definition {
 
 			Breadcrumb.viewPG(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
 
-			var key_url = "${portalUrl}";
+			var key_url = "${portalURL}";
 
 			AssertElementNotPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE_LINK");
 

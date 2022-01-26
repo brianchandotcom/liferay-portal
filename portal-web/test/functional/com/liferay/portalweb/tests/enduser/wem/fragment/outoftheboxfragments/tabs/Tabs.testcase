@@ -101,7 +101,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a Tabs fragment to custom master footer") {
@@ -243,7 +243,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a Tabs fragment to custom master footer") {
@@ -274,7 +274,7 @@ definition {
 		}
 
 		task ("Add a page basing on custom master") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -336,7 +336,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a Tabs fragment to custom master footer") {
@@ -356,7 +356,7 @@ definition {
 		}
 
 		task ("Add a page basing on custom master") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",

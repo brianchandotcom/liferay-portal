@@ -46,7 +46,7 @@ definition {
 
 		Staging.publishToLive(publicationName = "summCheck");
 
-		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			dateRestrictionOption = "From Last Publish Date",
@@ -83,7 +83,7 @@ definition {
 			publicationName = "summCheck",
 			remoteStaging = "true");
 
-		Staging.openStagingAdmin(siteUrlKey = "site-name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.viewPublicationSummary(publicationTitle = "summCheck");
 	}
@@ -93,7 +93,7 @@ definition {
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.addArticleCP(
 			webContentContent = "Web Content Content",
@@ -101,7 +101,7 @@ definition {
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteUrlKey = "site-name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(
 			recycleBinNotification = "true",

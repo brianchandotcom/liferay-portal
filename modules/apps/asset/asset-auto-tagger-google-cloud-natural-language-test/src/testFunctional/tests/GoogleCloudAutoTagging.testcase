@@ -136,7 +136,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Liferay",
 			layoutName = "test-autotagging-page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Liferay",
@@ -170,7 +170,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
@@ -196,7 +196,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Commerce_Black",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
@@ -223,7 +223,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name",
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			webContentTitle = "liferay");
 
 		Panel.expandPanel(panel = "Categorization");
@@ -259,7 +259,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Liferay",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -270,7 +270,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Liferay",
 			layoutName = "test-autotagging-page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewNoTag(
 			entryTitle = "Liferay",
@@ -298,7 +298,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_1",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -311,7 +311,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1");
 
@@ -336,7 +336,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Commerce_Black",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -349,7 +349,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Commerce_Black",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "Commerce_Black");
 
@@ -375,7 +375,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name",
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			webContentTitle = "Liferay");
 
 		Panel.expandPanel(panel = "Categorization");
@@ -386,7 +386,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewNoTagsFromInfoPanel(
 			tagNameList = "electronics,programming",
@@ -430,7 +430,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Liferay",
 			layoutName = "test-autotagging-page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Liferay",
@@ -468,7 +468,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewTagInfo(tagName = "computers");
 	}
@@ -501,7 +501,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Commerce_Black",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		for (var tagName : list "sleeve,t-shirt,pattern") {
 			DMDocument.viewTagInfo(tagName = "${tagName}");
@@ -536,7 +536,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewTagFromInfoPanel(
 			tagName = "programming",

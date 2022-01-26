@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("Select the Blogs Entry and Document as Relate Assets in Web Content Article") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -351,7 +351,7 @@ definition {
 		}
 
 		task ("Add an Asset Publisher to widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -398,7 +398,7 @@ definition {
 		}
 
 		task ("Add an Asset Publisher to content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -446,7 +446,7 @@ definition {
 		}
 
 		task ("Add an Asset Publisher to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -488,7 +488,7 @@ definition {
 		}
 
 		task ("Add an Asset Publisher to master page") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 

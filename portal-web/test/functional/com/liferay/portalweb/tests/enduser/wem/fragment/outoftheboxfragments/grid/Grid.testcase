@@ -187,7 +187,7 @@ definition {
 		}
 
 		task ("Add a Grid to content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -219,7 +219,7 @@ definition {
 		}
 
 		task ("Add a Grid to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 

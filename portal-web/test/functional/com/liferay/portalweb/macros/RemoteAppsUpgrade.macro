@@ -18,10 +18,10 @@ definition {
 			value1 = "${upgradeHtmlName}");
 
 		AssertTextEquals(
-			custom_entryUrl = "${upgradeUrl}",
+			custom_entryURL = "${upgradeURL}",
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${upgradeUrl}");
+			value1 = "${upgradeURL}");
 
 		AssertTextEquals(
 			custom_entryCssurl = "${upgradeCssurl}",
@@ -50,10 +50,10 @@ definition {
 			value1 = "${upgradeName}");
 
 		AssertTextEquals(
-			custom_entryUrl = "${upgradeUrl}",
+			custom_entryURL = "${upgradeURL}",
 			key_id = "iFrameURL",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${upgradeUrl}");
+			value1 = "${upgradeURL}");
 	}
 
 }

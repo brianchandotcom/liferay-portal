@@ -1891,8 +1891,8 @@ definition {
 
 	@summary = "Log into Liferay via '${userScreenName}' using URL navigation"
 	macro firstLoginByScreenNamePG {
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -1901,16 +1901,16 @@ definition {
 		UserBar.signOut();
 
 		JSONUser.agreeToTermsAndAnswerReminderQueryByScreenName(
-			portalUrl = "${virtualHostsUrl}",
+			portalURL = "${virtualHostsURL}",
 			userScreenName = "${userScreenName}");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userScreenName}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
@@ -1929,8 +1929,8 @@ definition {
 
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -1939,16 +1939,16 @@ definition {
 		UserBar.signOut();
 
 		JSONUser.agreeToTermsAndAnswerReminderQuery(
-			portalUrl = "${virtualHostsUrl}",
+			portalURL = "${virtualHostsURL}",
 			userEmailAddress = "${userEmailAddress}");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
@@ -1969,7 +1969,7 @@ definition {
 				idpName = "${idpName}",
 				password = "${password}",
 				rememberMeChecked = "${rememberMeChecked}",
-				specificUrl = "${virtualHostsUrl}",
+				specificURL = "${virtualHostsURL}",
 				userEmailAddress = "${userEmailAddress}",
 				userScreenName = "${userScreenName}");
 		}
@@ -1980,8 +1980,8 @@ definition {
 
 	@summary = "Log into Liferay using the UI"
 	macro firstLoginUI {
-		if (isSet(specificUrl)) {
-			Navigator.openSpecificURL(url = "${specificUrl}");
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = "${specificURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -2101,16 +2101,16 @@ definition {
 	macro loginByScreenNamePG {
 		JSONUser.agreeToTermsAndAnswerReminderQueryByScreenName(
 			creatorPassword = "${password}",
-			portalUrl = "${virtualHostsUrl}",
+			portalURL = "${virtualHostsURL}",
 			userScreenName = "${userScreenName}");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userScreenName}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userScreenName}");
 		}
 		else {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userScreenName}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
@@ -2130,21 +2130,21 @@ definition {
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'"
 	macro loginPG {
 		JSONUser.agreeToTermsAndAnswerReminderQuery(
-			portalUrl = "${virtualHostsUrl}",
+			portalURL = "${virtualHostsURL}",
 			userEmailAddress = "${userEmailAddress}");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else if (isSet(nodePort)) {
-			var baseUrl = "http://localhost:${nodePort}";
+			var baseURL = "http://localhost:${nodePort}";
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
@@ -2165,7 +2165,7 @@ definition {
 				idpName = "${idpName}",
 				password = "${password}",
 				rememberMeChecked = "${rememberMeChecked}",
-				specificUrl = "${virtualHostsUrl}",
+				specificURL = "${virtualHostsURL}",
 				userEmailAddress = "${userEmailAddress}",
 				userScreenName = "${userScreenName}");
 		}
@@ -2331,7 +2331,7 @@ definition {
 
 	macro loginUserWithOpenIDConnectEnabledPG {
 		OpenIDConnect.accountSignIn(
-			specificUrl = "${specificUrl}",
+			specificURL = "${specificURL}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
@@ -2389,7 +2389,7 @@ definition {
 
 	@description = "Log into OpenAM as ${userScreenName} using the password ${password}."
 	macro loginUserWithOpenSSOEnabledPG {
-		Navigator.openSpecificURL(url = "${hostsUrl}");
+		Navigator.openSpecificURL(url = "${hostsURL}");
 
 		Navigator.gotoLoginPage();
 
@@ -2420,8 +2420,8 @@ definition {
 
 	@description = "Log out of Liferay Portal."
 	macro logoutPG {
-		if (isSet(specificUrl)) {
-			Navigator.openSpecificURL(url = "${specificUrl}");
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = "${specificURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -2440,7 +2440,7 @@ definition {
 
 	macro openUsersAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 	}
 
@@ -2787,13 +2787,13 @@ definition {
 	macro verifyEmail {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#EMAIL_VERIFICATION_CODE")) {
 			var bodySpecificText = MockMock.getBodySpecificText(
-				asset = "${portalUrl}: Email Address Verification",
-				content = "Please verify your email address for ${portalUrl}",
+				asset = "${portalURL}: Email Address Verification",
+				content = "Please verify your email address for ${portalURL}",
 				extractFirstText = "&",
 				recipient = "${recipient}",
 				sender = "Joe Bloggs",
 				specificText = "ticketKey=",
-				subject = "${portalUrl}: Email Address Verification");
+				subject = "${portalURL}: Email Address Verification");
 
 			Navigator.openURL();
 

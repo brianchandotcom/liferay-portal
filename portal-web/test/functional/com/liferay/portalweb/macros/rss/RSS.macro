@@ -9,11 +9,11 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		AssertLocation.assertPartialLocation(value1 = "${rssUrl}/rss");
+		AssertLocation.assertPartialLocation(value1 = "${rssURL}/rss");
 	}
 
 	macro viewFeed {
-		RSS.gotoFeed(rssUrl = "${rssUrl}");
+		RSS.gotoFeed(rssURL = "${rssURL}");
 
 		RSS.viewFeedTitle(
 			feedSubtitle = "${feedSubtitle}",

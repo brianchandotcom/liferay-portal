@@ -255,7 +255,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
@@ -588,7 +588,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
@@ -670,7 +670,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -938,7 +938,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Site DM Document Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "Site DM Document Title");
 

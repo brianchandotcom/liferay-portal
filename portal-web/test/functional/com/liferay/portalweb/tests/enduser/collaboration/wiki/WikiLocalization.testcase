@@ -44,15 +44,15 @@ definition {
 	test CanViewEntryInArabic {
 		WikiPage.addPG(
 			groupName = "Guest",
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContent = "محتوى صفحة ويكي",
 			wikiPageTitle = "عنوان صفحة ويكي");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "عنوان صفحة ويكي");
 
@@ -66,15 +66,15 @@ definition {
 	test CanViewEntryInJapanese {
 		WikiPage.addPG(
 			groupName = "Guest",
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wikiページのコンテンツ",
 			wikiPageTitle = "Wikiページのタイトル");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wikiページのタイトル");
 

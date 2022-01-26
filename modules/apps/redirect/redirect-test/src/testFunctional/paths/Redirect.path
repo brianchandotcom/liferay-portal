@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>FLOATING_TOOLTIP_URL</td>
-	<td>//div[contains(@class,'tooltip')]//div[contains(.,'${key_redirectUrl}')]</td>
+	<td>//div[contains(@class,'tooltip')]//div[contains(.,'${key_redirectURL}')]</td>
 	<td></td>
 </tr>
 </tbody>

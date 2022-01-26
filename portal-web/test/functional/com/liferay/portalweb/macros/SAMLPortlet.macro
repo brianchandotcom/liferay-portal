@@ -30,7 +30,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-			value1 = "${idpMetadataUrl}");
+			value1 = "${idpMetadataURL}");
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
@@ -68,10 +68,10 @@ definition {
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
 		}
 
-		if (isSet(idpKeepAliveUrl)) {
+		if (isSet(idpKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "${idpKeepAliveUrl}");
+				value1 = "${idpKeepAliveURL}");
 		}
 
 		PortletEntry.save();
@@ -178,7 +178,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-			value1 = "${spMetadataUrl}");
+			value1 = "${spMetadataURL}");
 
 		if (!(isSet(nameIdentifierAttributeName))) {
 			var nameIdentifierAttributeName = "emailAddress";
@@ -202,10 +202,10 @@ definition {
 				value1 = "${spAttributes}");
 		}
 
-		if (isSet(spKeepAliveUrl)) {
+		if (isSet(spKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "${spKeepAliveUrl}");
+				value1 = "${spKeepAliveURL}");
 		}
 
 		PortletEntry.save();

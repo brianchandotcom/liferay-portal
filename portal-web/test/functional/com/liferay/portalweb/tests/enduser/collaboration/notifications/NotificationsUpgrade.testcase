@@ -12,9 +12,9 @@ definition {
 	setUp {
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation(value1 = "${portalUrl}/web/guest?SM_USER=user@liferay.com");
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=user@liferay.com");
 
 		SearchAdministration.executeReindex();
 	}

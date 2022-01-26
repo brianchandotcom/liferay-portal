@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("Publish to Live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -152,7 +152,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin in live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible") {
@@ -187,7 +187,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible") {
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Configure the Staging Public Pages in site configuration") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-staging");
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-staging");
 
 			Site.addVirtualHostsURLCP(stagingPublicPages = "www.able.com");
 		}
@@ -302,7 +302,7 @@ definition {
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -355,7 +355,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -542,7 +542,7 @@ definition {
 	@priority = "2"
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
 		task ("Add a web content structure with an Image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			NavItem.gotoStructures();
 
@@ -753,13 +753,13 @@ definition {
 		}
 
 		task ("Publish to Live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to the Pages admin in live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible") {
@@ -794,7 +794,7 @@ definition {
 		}
 
 		task ("Preview the draft content page via Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
@@ -842,7 +842,7 @@ definition {
 		}
 
 		task ("Discard the draft content page via Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
@@ -931,7 +931,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -969,7 +969,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -997,7 +997,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -1049,7 +1049,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -1128,7 +1128,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}

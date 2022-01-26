@@ -460,7 +460,7 @@ definition {
 		}
 
 		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -867,7 +867,7 @@ definition {
 		}
 
 		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 

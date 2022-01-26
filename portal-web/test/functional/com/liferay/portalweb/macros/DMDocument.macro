@@ -12,12 +12,12 @@ definition {
 	}
 
 	macro addCP {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "${documentTypeName}",
 				folderName = "${folderName}",
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
@@ -459,7 +459,7 @@ definition {
 	}
 
 	macro addImageField {
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -716,12 +716,12 @@ definition {
 	}
 
 	macro addPGViaMG {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			DMNavigator.openToAddEntry(
 				groupName = "${groupName}",
 				layoutName = "${layoutName}",
 				mediaGallery = "${mediaGallery}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			Portlet.clickPortletPlusIconPG(portletName = "Media Gallery");
@@ -830,7 +830,7 @@ definition {
 				locator1 = "Message#CHECKOUT_SUCCESS",
 				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
@@ -1064,7 +1064,7 @@ definition {
 	}
 
 	macro configureDocumentEmailTemplate {
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "${siteUrlKey}");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${siteURLKey}");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -1528,12 +1528,12 @@ definition {
 	macro editPG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			DMNavigator.openToEditEntryInSite(
 				dmDocumentTitle = "${dmDocumentTitle}",
 				folderName = "${folderName}",
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			AssertClick(
@@ -1690,7 +1690,7 @@ definition {
 	}
 
 	macro getDMLatestVersionURL {
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "${siteUrlKey}");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${siteURLKey}");
 
 		if (isSet(dmFolderName)) {
 			DMNavigator.gotoFolder(dmFolderName = "${dmFolderName}");
@@ -1700,13 +1700,13 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var portalUrl = PropsUtil.get("portal.url");
-		var dmLatestVersionUrl = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
-		var dmDocumentUrl = StringUtil.extractLast("${dmLatestVersionUrl}", "${portalUrl}");
+		var portalURL = PropsUtil.get("portal.url");
+		var dmLatestVersionURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var dmDocumentURL = StringUtil.extractLast("${dmLatestVersionURL}", "${portalURL}");
 
-		echo("## * Document URL: ${dmDocumentUrl}");
+		echo("## * Document URL: ${dmDocumentURL}");
 
-		return "${dmDocumentUrl}";
+		return "${dmDocumentURL}";
 	}
 
 	macro gotoEntry {
@@ -1729,7 +1729,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceUrl = "${dmDocumentUrl}",
+			imageSourceURL = "${dmDocumentURL}",
 			navTab = "${navTab}");
 
 		AssertElementPresent(locator1 = "CKEditor#CONTENT_IMAGE_LINK_IMAGE");
@@ -1909,7 +1909,7 @@ definition {
 	}
 
 	macro openDocumentsAndMediaAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
 	macro previewImage {
@@ -2976,16 +2976,16 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_URL",
 			value1 = "Latest Version URL");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (isSet(remoteStaging)) {
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", ":9080");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", ":9080");
 		}
 
-		var latestVersionUrl = "${portalUrl}/documents/${siteId}/0/${dmDocumentFileName}";
+		var latestVersionURL = "${portalURL}/documents/${siteId}/0/${dmDocumentFileName}";
 
 		AssertElementPresent(
-			key_latestVersionUrl = "${latestVersionUrl}",
+			key_latestVersionURL = "${latestVersionURL}",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_LATEST_VERSION_URL");
 	}
 
@@ -3611,13 +3611,13 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_WEBDAV_URL",
 			value1 = "WebDAV URL");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (isSet(remoteStaging)) {
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", ":9080");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", ":9080");
 		}
 
-		var webDavurl = "${portalUrl}/webdav/${siteName}/document_library/${dmDocumentFileName}";
+		var webDavurl = "${portalURL}/webdav/${siteName}/document_library/${dmDocumentFileName}";
 
 		AssertElementPresent(
 			key_webDavurl = "${webDavurl}",

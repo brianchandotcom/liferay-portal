@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content fragment to the first display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
@@ -72,7 +72,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content fragment to the second display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
 
@@ -97,7 +97,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content fragment to the third display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
 
@@ -121,7 +121,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content fragment to the fourth display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
 
@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("Add the Display Page type items in navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -369,13 +369,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to Navigation Menus admin in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Assert the navigation menu is editable in the staging site") {
@@ -391,7 +391,7 @@ definition {
 		}
 
 		task ("Navigate to Navigation Menus admin in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the navigation menu is not editable in the live site") {
@@ -450,19 +450,19 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("View the navigation menu shown in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.viewEntryName(rowEntry = "Navigation Menu Name");
 		}
 
 		task ("Navigate to Navigation Menus admin in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Delete the navigation menu") {
@@ -482,7 +482,7 @@ definition {
 		}
 
 		task ("View the navigation menu not shown in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.viewNoEntry(rowEntry = "Navigation Menu Name");
 		}
@@ -543,7 +543,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -559,7 +559,7 @@ definition {
 		}
 
 		task ("Navigate to the navigation menu in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 		}
@@ -605,7 +605,7 @@ definition {
 		}
 
 		task ("Publish the site to live and flag the 'Replicate Individual Deletions' checkbox while publishing") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoAdd();
 
@@ -696,7 +696,7 @@ definition {
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
@@ -716,7 +716,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -732,7 +732,7 @@ definition {
 		}
 
 		task ("Navigate to the navigation menu in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 		}
@@ -778,7 +778,7 @@ definition {
 		}
 
 		task ("Publish the site to live and flag the 'Replicate Individual Deletions' checkbox while publishing") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoAdd();
 
@@ -897,13 +897,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to Navigation Menus admin in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("View the navigation menu shown in the live site") {
@@ -993,13 +993,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to Pages admin in the live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Delete the third page from the live site") {
@@ -1007,7 +1007,7 @@ definition {
 		}
 
 		task ("Publish to live without the third page") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoAdd();
 
@@ -1094,7 +1094,7 @@ definition {
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
@@ -1114,13 +1114,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("View the primary navigation menu shown in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_rowEntry = "Navigation Menu Name",
@@ -1196,7 +1196,7 @@ definition {
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Configure the Navigation Menu widget to use Primary Navigation") {
@@ -1218,13 +1218,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to pages admin in the live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Delete the third page from the live site") {
@@ -1232,7 +1232,7 @@ definition {
 		}
 
 		task ("Publish to live without the third page") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoAdd();
 
@@ -1340,7 +1340,7 @@ definition {
 		}
 
 		task ("Add all categories from each vocabulary into Navigation Menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1424,7 +1424,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}

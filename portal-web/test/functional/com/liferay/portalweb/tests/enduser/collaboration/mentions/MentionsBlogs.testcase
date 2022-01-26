@@ -66,12 +66,12 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
 			mentionsUserScreenName = "usersn",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Mentions.viewMentionTagLink(
 			mentionsUserFullName = "userfn userln",
@@ -88,7 +88,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Mentions.addMentionViaComments(
 			entryComment = "Comment mentioning",
@@ -116,7 +116,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Mentions.addMentionViaComments(
 			entryComment = "Comment mentioning",
@@ -148,7 +148,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Comments.edit(
 			addMention = "true",

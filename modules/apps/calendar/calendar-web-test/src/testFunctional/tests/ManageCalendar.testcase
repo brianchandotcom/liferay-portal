@@ -713,7 +713,7 @@ definition {
 			calendarName = "Site Name",
 			siteName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editCP(
 			siteName = "Site Name",

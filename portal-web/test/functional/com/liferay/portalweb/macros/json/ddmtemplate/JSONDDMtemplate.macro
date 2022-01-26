@@ -18,17 +18,17 @@ definition {
 		var nameMap = JSONDDMtemplateSetter.setNameMap(title = "${name}");
 
 		if (("${itemType}" == "Asset") || ("${itemType}" == "Blogs Entry") || ("${itemType}" == "Category") || ("${itemSubtype}" == "Basic Document")) {
-			var classPk = "0";
+			var classPK = "0";
 		}
 		else if ("${itemType}" == "Web Content Article") {
 			if ("${itemSubtype}" == "Basic Web Content") {
-				var classPk = JSONDDMstructure._getStructureId(
+				var classPK = JSONDDMstructure._getStructureId(
 					classNameId = "${classNameId}",
 					groupId = "${globalGroupId}",
 					structureName = "Basic Web Content");
 			}
 			else {
-				var classPk = JSONDDMstructure._getStructureId(
+				var classPK = JSONDDMstructure._getStructureId(
 					classNameId = "${classNameId}",
 					groupId = "${groupId}",
 					structureName = "${itemSubtype}");
@@ -36,23 +36,23 @@ definition {
 		}
 		else if ("${itemType}" == "Document") {
 			if ("${itemSubtype}" == "Basic Web Content") {
-				var classPk = JSONDLfileentrytype._getFileEntryTypeId(
+				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
 					fileEntryTypeName = "Google Drive Shortcut",
 					groupId = "${globalGroupId}");
 			}
 			else {
-				var classPk = JSONDLfileentrytype._getFileEntryTypeId(
+				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
 					fileEntryTypeName = "${itemSubtype}",
 					groupId = "${groupId}");
 			}
 		}
 		else if ("${itemType}" == "Object") {
-			var classPk = JSONObject.getObjectDefinitionId(name = "${itemSubtype}");
+			var classPK = JSONObject.getObjectDefinitionId(name = "${itemSubtype}");
 		}
 
 		var templateKey = JSONDDMtemplateAPI._addInformationTemplate(
 			classNameId = "${classNameId}",
-			classPk = "${classPk}",
+			classPK = "${classPK}",
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			language = "${language}",

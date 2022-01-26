@@ -34,7 +34,7 @@ definition {
 	test CanPreviewAfterReplacingImage {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -46,7 +46,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -58,8 +58,8 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_1.png",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -71,8 +71,8 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_2.jpeg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_1.png");
 
@@ -82,8 +82,8 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_2.jpeg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_1.png");
 	}
@@ -94,7 +94,7 @@ definition {
 	test CanPreviewInheritedSEO {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -106,7 +106,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "SEO",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		SERPPreview.addGeneralSettings(
 			description = "Page Description",
@@ -120,8 +120,8 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description",
@@ -137,12 +137,12 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Page HTML Title - Test Site Name - ${siteName}","og:description" content="Page Description"''');
 	}
@@ -151,7 +151,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanPreviewWithEscapeCharacters {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -161,7 +161,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = '''description@#$%^&amp;*()~`1234567890''',
@@ -173,7 +173,7 @@ definition {
 			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalUrl = "${portalUrl}");
+			portalURL = "${portalURL}");
 
 		Button.click(button = "Save");
 
@@ -182,7 +182,7 @@ definition {
 			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalUrl = "${portalUrl}");
+			portalURL = "${portalURL}");
 	}
 
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
@@ -191,7 +191,7 @@ definition {
 	test CanPreviewWithLongInputs {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -201,7 +201,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Long Test Page Name To Check The URL",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
@@ -213,10 +213,10 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name",
 			truncatedHtmlTitle = "true",
-			truncatedUrl = "true");
+			truncatedURL = "true");
 
 		Button.click(button = "Save");
 
@@ -224,10 +224,10 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name",
 			truncatedHtmlTitle = "true",
-			truncatedUrl = "true");
+			truncatedURL = "true");
 	}
 
 	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
@@ -236,7 +236,7 @@ definition {
 	test CanReturnToDefault {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -248,7 +248,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description",
@@ -263,8 +263,8 @@ definition {
 		Page.viewPreview(
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewDescription();
 	}
@@ -275,7 +275,7 @@ definition {
 	test CanViewArabicTranslation {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -285,7 +285,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.changeLocale(
 			fieldName = "openGraphTitleBoundingBox",
@@ -301,8 +301,8 @@ definition {
 			htmlTitle = "عنوان الاختبار",
 			locale = "ar-SA",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 	}
 
 	@description = "This ensures that the user can customize OG tags."
@@ -312,7 +312,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -324,7 +324,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "Custom Description",
@@ -339,8 +339,8 @@ definition {
 			htmlTitle = "Custom Title",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		Button.click(button = "Save");
 
@@ -349,8 +349,8 @@ definition {
 			htmlTitle = "Custom Title",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 	}
 
 	@description = "This test covers LPS-106118. It ensures that the special images can be uploaded and previewed."
@@ -359,7 +359,7 @@ definition {
 	test CanViewSpecialImages {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -371,7 +371,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		for (var imageName : list "Document_1.svg,high_resolution_photo.jpg") {
 			OpenGraph.configureOpenGraph(
@@ -383,8 +383,8 @@ definition {
 				htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 				key_imageName = "${imageName}",
 				openGraph = "true",
-				portalUrl = "${portalUrl}",
-				siteNameUrl = "test-site-name");
+				portalURL = "${portalURL}",
+				siteNameURL = "test-site-name");
 		}
 	}
 
@@ -394,7 +394,7 @@ definition {
 	test CanViewTranslatedLanguages {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -406,7 +406,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page",
 			portlet = "SEO",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		SERPPreview.addGeneralSettings(
 			description = "Page Description",
@@ -434,8 +434,8 @@ definition {
 			description = "テスト記述",
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		Button.clickSave();
 
@@ -447,8 +447,8 @@ definition {
 			description = "テスト記述",
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
@@ -461,8 +461,8 @@ definition {
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		OpenGraph.changeLocale(
 			fieldName = "openGraphTitleBoundingBox",
@@ -473,8 +473,8 @@ definition {
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 	}
 
 	@description = "This test ensures that OG shows default translated language when switching to unsaved translations."
@@ -483,7 +483,7 @@ definition {
 	test CanViewUntranslatedLanguage {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -495,7 +495,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page",
 			portlet = "SEO",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		SERPPreview.addGeneralSettings(
 			description = "Page Description",
@@ -522,8 +522,8 @@ definition {
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			locale = "fr-FR",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 	}
 
 }

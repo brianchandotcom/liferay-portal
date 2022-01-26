@@ -224,18 +224,18 @@ definition {
 
 	macro openAdaptiveMediaAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view");
 	}
 
 	macro openToAddImageResolution {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");
 	}
 
 	macro selectAdaptiveMediaImage {

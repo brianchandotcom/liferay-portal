@@ -80,7 +80,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 	}
@@ -117,7 +117,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry2 Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "AssetRelatedAssets#HEADER");
 	}
@@ -202,14 +202,14 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -311,7 +311,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "${entryContent}",
@@ -333,7 +333,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -502,7 +502,7 @@ definition {
 		}
 
 		task ("Publish the blog entry then view it in AP") {
-			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			Blogs.publishDraftCP(
 				entryContent = "Blogs Entry Content Edit",
@@ -616,7 +616,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -728,7 +728,7 @@ definition {
 
 			Button.clickSave();
 
-			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -752,7 +752,7 @@ definition {
 
 			BlogsConfiguration.viewDefaultConfiguration();
 
-			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			Portlet.gotoPortletOptions(portletOption = "Configuration");
 

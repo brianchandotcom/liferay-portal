@@ -481,7 +481,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -493,7 +493,7 @@ definition {
 		}
 
 		task ("Add a web content article and select the display page template") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -533,11 +533,11 @@ definition {
 				navItem = "Web Content",
 				panel = "General");
 
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			AssertVisible(
 				key_append = "//img",
-				key_url = "${baseUrl}/web/test-site-name/w/web-content-title",
+				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.clickPublish();
@@ -550,12 +550,12 @@ definition {
 
 			AssertVisible(
 				key_append = "/img",
-				key_url = "${baseUrl}/web/test-site-name/w/web-content-title",
+				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
 				key_append = "/img",
-				key_url = "${baseUrl}/web/test-site-name/w/web-content-title",
+				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
@@ -674,7 +674,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content structure with an Image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -690,7 +690,7 @@ definition {
 		}
 
 		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -702,7 +702,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -764,7 +764,7 @@ definition {
 		}
 
 		task ("Add a web content structure with an Image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -794,7 +794,7 @@ definition {
 		}
 
 		task ("Add a Container to content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -822,7 +822,7 @@ definition {
 		}
 
 		task ("Add a content page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -849,7 +849,7 @@ definition {
 	@priority = "2"
 	test MapWebContentImageToBackgroundImageOfContainerInDisplayPageTemplate {
 		task ("Add a web content structure with an Image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -863,7 +863,7 @@ definition {
 		}
 
 		task ("Add a display page template with Web Content Article and WC Structure Name") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -887,7 +887,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -907,7 +907,7 @@ definition {
 		}
 
 		task ("View Content in display page template") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Web Content Title",

@@ -46,37 +46,37 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom&");
+		BlogsEntry.addCustomURL(customURL = "custom&");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-",
+			friendlyURL = "custom-",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
-		BlogsEntry.editCustomURL(customUrl = "custom-url");
+		BlogsEntry.editCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-url",
+			friendlyURL = "custom-url",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
 		BlogsEntry.viewOldFriendlyURL(
-			lastOldFriendlyUrl = "blogs-entry-title",
-			oldFriendlyUrl = "custom-");
+			lastOldFriendlyURL = "blogs-entry-title",
+			oldFriendlyURL = "custom-");
 
-		BlogsEntry.viewActiveURL(activeUrl = "custom-url");
+		BlogsEntry.viewActiveURL(activeURL = "custom-url");
 	}
 
 	@description = "This ensures that a duplicate URL title cannot be used even if it is an old friendly URL."
@@ -90,17 +90,17 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content 2nd",
@@ -108,7 +108,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "blogs-entry-title");
+		BlogsEntry.addCustomURL(customURL = "blogs-entry-title");
 
 		Button.clickPublish();
 
@@ -120,7 +120,7 @@ definition {
 	@description = "This ensures that an old friendlyURL can be removed from the history."
 	@priority = "5"
 	test CanRemoveOldFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -130,27 +130,27 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-url",
+			friendlyURL = "custom-url",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.removeOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
+		BlogsEntry.removeOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
 
 		PortletEntry.publish();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
 
 		Alert.viewErrorMessage(errorMessage = "The entry could not be found.");
 	}
@@ -158,7 +158,7 @@ definition {
 	@description = "This ensures that an old friendlyURL can be restored from the history."
 	@priority = "5"
 	test CanRestoreOldFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -168,30 +168,30 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "custom-url");
+		BlogsEntry.addCustomURL(customURL = "custom-url");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-url",
+			friendlyURL = "custom-url",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
 		BlogsEntry.restoreOldFriendlyURL(
-			activeUrl = "custom-url",
-			oldFriendlyUrl = "blogs-entry-title",
-			restoredUrl = "blogs-entry-title");
+			activeURL = "custom-url",
+			oldFriendlyURL = "blogs-entry-title",
+			restoredURL = "blogs-entry-title");
 
 		PortletEntry.publish();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -201,7 +201,7 @@ definition {
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test CanViewFriendlyURLs {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -211,29 +211,29 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(
-			customUrl = "hola-adiós",
+			customURL = "hola-adiós",
 			viewNoHistory = "true");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "hola-adi%C3%B3s",
+			friendlyURL = "hola-adi%C3%B3s",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsNavigator.gotoFriendlyURLHistory();
 
-		BlogsEntry.viewActiveURL(activeUrl = "hola-adiós");
+		BlogsEntry.viewActiveURL(activeURL = "hola-adiós");
 
-		BlogsEntry.viewOldFriendlyURL(oldFriendlyUrl = "blogs-entry-title");
+		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/blogs-page/-/blogs/hola-adi%C3%B3s");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/hola-adi%C3%B3s");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

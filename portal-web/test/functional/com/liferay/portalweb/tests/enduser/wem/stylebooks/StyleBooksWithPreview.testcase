@@ -65,7 +65,7 @@ definition {
 		}
 
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -133,7 +133,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -156,7 +156,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -174,7 +174,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
@@ -205,7 +205,7 @@ definition {
 		}
 
 		task ("View the empty state in style book editor") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("Publish the master page") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -223,7 +223,7 @@ definition {
 		}
 
 		task ("Edit the inline text of Heading in master page without publish") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -234,7 +234,7 @@ definition {
 		}
 
 		task ("Publish the content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -244,7 +244,7 @@ definition {
 		}
 
 		task ("Edit the inline text of Heading in content page template without publish") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -257,7 +257,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
@@ -265,7 +265,7 @@ definition {
 		}
 
 		task ("Edit the inline text of Heading in display page template without publish") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
@@ -293,7 +293,7 @@ definition {
 		}
 
 		task ("Navigate to the style book editor") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBook(styleBookName = "Test Style Book Name");
 		}
@@ -377,7 +377,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT 1");
 
@@ -402,7 +402,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT 2");
 
@@ -426,7 +426,7 @@ definition {
 				displayPageTemplateEntryName = "Blogs Entry DPT",
 				groupName = "Test Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
 
@@ -451,7 +451,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Document");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
 
@@ -475,7 +475,7 @@ definition {
 				displayPageTemplateEntryName = "Category DPT",
 				groupName = "Test Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
 
@@ -500,7 +500,7 @@ definition {
 		}
 
 		task ("View the Display Page Templates is shown in preview type selector") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
@@ -668,7 +668,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -688,7 +688,7 @@ definition {
 		}
 
 		task ("View the Masters is shown in preview type selector") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
@@ -817,7 +817,7 @@ definition {
 		}
 
 		task ("View the Pages is shown in preview type selector") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
@@ -1000,7 +1000,7 @@ definition {
 				layoutPageTemplateStatus = "Approved",
 				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1019,7 +1019,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1039,7 +1039,7 @@ definition {
 		}
 
 		task ("View the Page Templates is shown in preview type selector") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
@@ -1239,7 +1239,7 @@ definition {
 	@priority = "4"
 	test ViewEmptyStateWhenNoPagesAndPageTemplatesInSite {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}

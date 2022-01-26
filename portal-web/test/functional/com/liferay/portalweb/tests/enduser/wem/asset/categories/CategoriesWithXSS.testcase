@@ -65,7 +65,7 @@ definition {
 		var structureName = '''<script>alert(456)</script>''';
 
 		task ("Add a document type with XSS name") {
-			DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",
@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("Add a web content structure with XSS name") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -95,7 +95,7 @@ definition {
 		}
 
 		task ("View no alert shown when create a vocabulary") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -108,7 +108,7 @@ definition {
 	@uitest
 	test SelectCategoryWithXSSNameInAccountSettings {
 		task ("Add a global category with XSS name in Topic") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			Category.addCP(
 				categoryName = '''><img src=x onerror=alert()>''',
@@ -151,7 +151,7 @@ definition {
 		var categoryName = '''><img src=xss onerror=alert(1)>''';
 
 		task ("Add a global category with XSS name in Topic") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			Category.addCP(
 				categoryName = "${categoryName}",
@@ -165,7 +165,7 @@ definition {
 		}
 
 		task ("Select the category in page configuration") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

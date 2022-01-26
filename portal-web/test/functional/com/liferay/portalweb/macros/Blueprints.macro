@@ -142,10 +142,10 @@ definition {
 			groupName = "Global",
 			site = "true");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-				${portalUrl}/o/search-experiences-rest/v1.0/sxp-blueprints \
+				${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints \
 				-H 'accept: application/json' \
 				-u test@liferay.com:test
 		''';
@@ -163,11 +163,11 @@ definition {
 	}
 
 	macro openBlueprintsAdmin {
-		if (!(isSet(siteUrlKey))) {
-			var siteUrlKey = "guest";
+		if (!(isSet(siteURLKey))) {
+			var siteURLKey = "guest";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet");
 	}
 
 	macro openEntryMenu {
@@ -210,7 +210,7 @@ definition {
 	macro viewCopiedContent {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 

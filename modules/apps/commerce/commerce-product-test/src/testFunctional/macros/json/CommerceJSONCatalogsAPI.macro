@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllNoSystemCommerceCatalogs {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var catalogIds = CommerceJSONCatalogsAPI._getCommerceNoSystemCatalogIds();
@@ -12,7 +12,7 @@ definition {
 		if ("${catalogIds}" != "") {
 			for (var catalogId : list "${catalogIds}") {
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -28,11 +28,11 @@ definition {
 	macro _getCommerceCatalogIdByName {
 		Variables.assertDefined(parameterList = "${catalogName}");
 
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 		var masterCatalogName = "Master";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(catalogCount)) {
@@ -43,7 +43,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -56,11 +56,11 @@ definition {
 	}
 
 	macro _getCommerceNoSystemCatalogIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 		var masterCatalogName = "Master";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(catalogCount)) {
@@ -71,7 +71,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

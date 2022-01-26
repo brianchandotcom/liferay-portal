@@ -3,14 +3,14 @@ definition {
 	macro _enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupId},${branchingPublic},${branchingPrivate}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var attributes = JSONStagingSetter.setAttributes(unCheckedContent = "${unCheckedContent}");
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = "${attributes}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/staging/enable-local-staging \
+			${portalURL}/api/jsonws/staging/enable-local-staging \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d branchingPublic=${branchingPublic} \
@@ -24,14 +24,14 @@ definition {
 	macro _enableRemoteStaging {
 		Variables.assertDefined(parameterList = "${groupId},${remoteGroupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var attributes = JSONStagingSetter.setAttributes();
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = "${attributes}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/staging/enable-remote-staging \
+			${portalURL}/api/jsonws/staging/enable-remote-staging \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d branchingPublic=${branchingPublic} \

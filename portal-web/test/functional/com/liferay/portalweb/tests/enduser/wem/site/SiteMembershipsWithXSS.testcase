@@ -102,7 +102,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.approveJoinSiteRestrictedViaMySitesPG(
 				memebershipComment = "<html><script>alert('test');</script></html>",

@@ -112,7 +112,7 @@ definition {
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${videoUrl}");
+			value1 = "${videoURL}");
 
 		Pause(locator1 = "5000");
 

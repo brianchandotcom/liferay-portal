@@ -35,7 +35,7 @@ definition {
 			categoryName = "اسم الفئة",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Navigator.ensureLocaleURL(locale = "ar");
 
@@ -54,7 +54,7 @@ definition {
 			categoryName = "種別名",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Navigator.ensureLocaleURL(locale = "ja");
 
@@ -73,7 +73,7 @@ definition {
 			threadBody = "نص رسالة الموضوع",
 			threadSubject = "موضوع رسالة الموضوع");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Navigator.ensureLocaleURL(locale = "ar");
 
@@ -92,7 +92,7 @@ definition {
 			threadBody = "メッセージボードのネジ本体",
 			threadSubject = "スレッドメッセージの件名");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Navigator.ensureLocaleURL(locale = "ja");
 

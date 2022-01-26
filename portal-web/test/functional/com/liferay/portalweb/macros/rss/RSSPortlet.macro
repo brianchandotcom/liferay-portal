@@ -24,7 +24,7 @@ definition {
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
 				value1 = "file:////");
 
-			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedUrlLink}");
+			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedURLLink}");
 
 			UploadFile(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
@@ -33,7 +33,7 @@ definition {
 		else {
 			Type(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "${feedUrlLink}");
+				value1 = "${feedURLLink}");
 		}
 
 		if (isSet(viewWarningMessage)) {

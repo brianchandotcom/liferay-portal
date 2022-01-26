@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Add a Dropdown fragment as header in custom master page") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -70,7 +70,7 @@ definition {
 		}
 
 		task ("Add a page based on custom master page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -139,7 +139,7 @@ definition {
 		}
 
 		task ("Add a Dropdown fragment as header in custom master page") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -185,7 +185,7 @@ definition {
 		}
 
 		task ("Add a page based on custom master page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("Define the Display on Hover as displayed behavior") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -337,7 +337,7 @@ definition {
 		}
 
 		task ("Add a Grid element above the Drop Zone") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -419,7 +419,7 @@ definition {
 		}
 
 		task ("Add a Dropdown fragment as header in custom master page") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -449,7 +449,7 @@ definition {
 		}
 
 		task ("Add a page based on custom master page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",

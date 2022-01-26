@@ -39,7 +39,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -75,7 +75,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a fragment collection") {
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Add a page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 		}
@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {
@@ -179,7 +179,7 @@ definition {
 		}
 
 		task ("Navigate to the Fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Copy the Button fragment to new fragment collection") {
@@ -193,7 +193,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -223,7 +223,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -235,7 +235,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -265,7 +265,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -275,7 +275,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("Navigate to the fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Delete the fragment collection") {
@@ -306,7 +306,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the fragment collection is not present") {
@@ -327,7 +327,7 @@ definition {
 		}
 
 		task ("Add a fragment with the Button fragment codes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -349,7 +349,7 @@ definition {
 		}
 
 		task ("Edit the fragment with the Title fragment codes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("Edit the new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -533,7 +533,7 @@ definition {
 		}
 
 		task ("Add the new fragment to content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -557,7 +557,7 @@ definition {
 		}
 
 		task ("Edit the new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -587,7 +587,7 @@ definition {
 		}
 
 		task ("View the edited inline text of new fragment at edit mode") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -622,7 +622,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -638,7 +638,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -655,7 +655,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View the Button fragment of Basic Components collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 

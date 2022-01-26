@@ -48,7 +48,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Staging Organization Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		PagesAdmin.addPublicPage(pageName = "Site Page Name");
 

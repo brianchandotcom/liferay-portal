@@ -4,7 +4,7 @@ definition {
 	macro _addBlogEntry {
 		Variables.assertDefined(parameterList = "${content},${groupId},${title}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -62,7 +62,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalUrl}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
+				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \

@@ -10,7 +10,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
 			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
@@ -25,7 +25,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbarticle/get-kb-articles \
+			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentResourcePrimKey=${parentResourcePrimKey} \
@@ -63,10 +63,10 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbarticle/get-kb-articles \
+			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentResourcePrimKey=${folderId} \
@@ -87,7 +87,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB article"
 	macro addkBArticle {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
@@ -114,7 +114,7 @@ definition {
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -141,7 +141,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB child article"
 	macro addkBChildArticle {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -158,7 +158,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -184,7 +184,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB folder"
 	macro addkBFolder {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentFolderName)) {
 			Variables.assertDefined(parameterList = "${parentFolderName},${groupName}");
@@ -212,7 +212,7 @@ definition {
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbfolder/add-kb-folder \
+			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
 				-d externalReferenceCode= \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -233,7 +233,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB grandchild article"
 	macro addkBGrandchildArticle {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -252,7 +252,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -278,10 +278,10 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB template"
 	macro addkBTemplate {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbtemplate/add-kb-template \
+			${portalURL}/api/jsonws/kb.kbtemplate/add-kb-template \
 				-u test@liferay.com:test \
 				-d portletId=0 \
 				-d title=${kbTemplateTitle} \
@@ -307,10 +307,10 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/kb.kbfolder/get-kb-folders \
+			${portalURL}/api/jsonws/kb.kbfolder/get-kb-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentKBFolderId=0 \

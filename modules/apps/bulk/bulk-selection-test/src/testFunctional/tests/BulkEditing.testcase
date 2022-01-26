@@ -409,7 +409,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -430,14 +430,14 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Default Workflow");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

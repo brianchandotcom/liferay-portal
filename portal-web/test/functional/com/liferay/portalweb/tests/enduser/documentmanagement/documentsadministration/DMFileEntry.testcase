@@ -40,7 +40,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -75,7 +75,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description1",
@@ -103,7 +103,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.doc",
@@ -148,14 +148,14 @@ definition {
 	test CanAddWithDocumentTypeViaMultipleUpload {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Date",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(
 			dateValue = "01/01/2022",
@@ -163,7 +163,7 @@ definition {
 			documentType = "DM Document Type Name");
 
 		for (var dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
@@ -194,7 +194,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -229,7 +229,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
@@ -241,7 +241,7 @@ definition {
 		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -250,7 +250,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			validateFileNameRestriction = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -261,7 +261,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertTextEquals(
 			key_fieldLabel = "File Name",
@@ -300,7 +300,7 @@ definition {
 	test CanChangeDocumentType {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -317,13 +317,13 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "Document_1.txt",
 			dmDocumentType = "Basic Document");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_1.txt",
@@ -332,13 +332,13 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "Document_1.txt",
 			dmDocumentType = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -383,7 +383,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_2.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Pagination.changePagination(itemsPerPage = "4");
 
@@ -399,7 +399,7 @@ definition {
 
 		MenuItem.click(menuItem = "Checkout");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementPresent(
@@ -415,7 +415,7 @@ definition {
 
 		DMDocument.checkinManagementBar(allFiles = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementNotPresent(
@@ -436,7 +436,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -455,7 +455,7 @@ definition {
 			dmDocumentTitle = "Check in as current version",
 			revision = "Current");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Check in as current version",
@@ -478,7 +478,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -490,7 +490,7 @@ definition {
 			dmDocumentTitle = "Check in as major version",
 			revision = "Major");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Check in as major version",
@@ -513,7 +513,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -525,7 +525,7 @@ definition {
 			dmDocumentTitle = "Check in as minor version",
 			revision = "Minor");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Check in as minor version",
@@ -548,19 +548,19 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as current version");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.checkinManagementBar(
 			dmDocumentTitle = "Check in as current version",
 			revision = "Current");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Check in as current version",
@@ -595,7 +595,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		PortletEntry.selectAll();
 
@@ -670,7 +670,7 @@ definition {
 	test CanDownloadDocumentMovedBetweenFolders {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder 1 Description",
@@ -690,7 +690,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder 1 Name");
 
@@ -698,7 +698,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder 2 Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder 2 Name");
 
@@ -724,7 +724,7 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site_1");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site_1");
 
 		DMDocument.downloadMultipleCP(dmDocumentTitleList = "Document_1.jpg,Document_2.jpg");
 
@@ -739,7 +739,7 @@ definition {
 	test CanDownloadThroughURLWithFileName {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -752,7 +752,7 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/Document_1.mp4");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/Document_1.mp4");
 
 		DownloadTempFile();
 
@@ -767,7 +767,7 @@ definition {
 	test CanDownloadThroughURLWithTitle {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -780,7 +780,7 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/Document_1");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/Document_1");
 
 		DownloadTempFile();
 
@@ -795,7 +795,7 @@ definition {
 	test CanDownloadThroughURLWithUpdatedFileName {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -807,14 +807,14 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentFileName = "Document_3.doc",
 			dmDocumentFileNameEdit = "Document_3Edit.doc",
 			dmDocumentTitle = "Document_3");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/Document_3Edit.doc");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/Document_3Edit.doc");
 
 		DownloadTempFile();
 
@@ -829,7 +829,7 @@ definition {
 	test CanDownloadThroughURLWithUpdatedTitle {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -841,13 +841,13 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_3",
 			dmDocumentTitleEdit = "Document_3Edit");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/Document_3Edit");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/Document_3Edit");
 
 		DownloadTempFile();
 
@@ -862,7 +862,7 @@ definition {
 	test CanDownloadWithCustomFileName {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -870,7 +870,7 @@ definition {
 			dmDocumentFileName = "document_1_Edit.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.downloadCP(dmDocumentTitle = "DM Document Title");
 
@@ -911,7 +911,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -925,7 +925,7 @@ definition {
 			dmDocumentSize = "259 B",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description",
@@ -957,7 +957,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -999,7 +999,7 @@ definition {
 
 		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		ManagementBar.setFilterAndOrder(
 			filterBy = "Recent",
@@ -1031,13 +1031,13 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LAR.importPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
@@ -1061,13 +1061,13 @@ definition {
 
 		DMDocument.updateMaximumVersions(fieldValue = "2");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Edit this document two times",
 			dmDocumentTitleEdit = "First edit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "First edit",
@@ -1076,7 +1076,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Second edit",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		for (var versionNumber : list "1.2,1.1") {
 			AssertElementPresent(
@@ -1101,7 +1101,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.moveToRecycleBinCP(
 			assetType = "Document",
@@ -1355,7 +1355,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertVisible(
 			key_title = "File too big to preview",
@@ -1369,7 +1369,7 @@ definition {
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentFile = "Document_5.txt",
@@ -1386,7 +1386,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CannotViewExpiredDocumentAsGuest";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		DMDocument.updateCheckInterval(fieldValue = "2");
 
@@ -1400,7 +1400,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_3.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
@@ -1414,15 +1414,15 @@ definition {
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
 			dmDocumentTitle = "Document_3.txt");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/documents-and-media-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/documents-and-media-page");
 
 		DMDocument.viewDefault();
 	}
@@ -1443,7 +1443,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		for (var emptyStateInfo : list "No preview available,Hmm... looks like this item does not have a preview we can show you.") {
 			AssertTextEquals.assertPartialText(
@@ -1458,7 +1458,7 @@ definition {
 	test CanPreviewImageThroughURL {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -1470,11 +1470,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/Document_1");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/Document_1");
 
-		var key_imageSourceUrl = "${portalUrl}/documents/${siteId}/0/Document_1";
+		var key_imageSourceURL = "${portalURL}/documents/${siteId}/0/Document_1";
 
 		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
@@ -1495,7 +1495,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertVisible(
 			key_dmDocumentFileName = "Document_1.jpg",
@@ -1521,7 +1521,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "large_file.pdf",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		while (IsElementPresent(key_infoMessage = "Generating preview will take a few minutes.", locator1 = "Message#INFO")) {
 			Pause(locator1 = "10000");
@@ -1550,7 +1550,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.png",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertVisible(
 			key_dmDocumentFileName = "Document_1.png",
@@ -1577,7 +1577,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.svg",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertVisible(
 			key_dmDocumentFileName = "Document_1.svg",
@@ -1632,7 +1632,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
@@ -1683,7 +1683,7 @@ definition {
 			folderName = "DM Folder Name",
 			groupName = "Guest");
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "DM Folder Name",
@@ -1697,7 +1697,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "NoSuchFolderException");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
@@ -1720,14 +1720,14 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentFile = "${dmDocumentTitle}",
@@ -1769,7 +1769,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title Version 2",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.revertPG(
 			dmDocumentTitle = "DM Document Title",
@@ -1803,7 +1803,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.setReviewDate(increaseMinutes = "2");
 
@@ -1832,7 +1832,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "Document_5.txt",
@@ -1858,7 +1858,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.setReviewDate(
 			enableReviewDate = "true",
@@ -1887,7 +1887,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			disabledReviewDate = "true",
@@ -1905,7 +1905,7 @@ definition {
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -1937,7 +1937,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_2.txt",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "Document_2.txt",
@@ -1960,7 +1960,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "WriteLimitReachedException");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Search.searchCP(searchTerm = "gJybWNXR76fTX0TlIu8mFP2dNVtTGdq");
 
@@ -1978,7 +1978,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Search.searchCP(searchTerm = "DM");
 
@@ -1993,21 +1993,21 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
 			displayPageName = "Display Page Template Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
@@ -2017,7 +2017,7 @@ definition {
 
 		Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "Display Page Template Name",
@@ -2031,7 +2031,7 @@ definition {
 
 		Button.clickPublish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -2045,7 +2045,7 @@ definition {
 			entryTitle = "Document_1.jpg",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		var dmFileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
@@ -2090,7 +2090,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -2103,7 +2103,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCategories(categoryNameList = "Apple,Dragon Fruit");
 	}
@@ -2118,7 +2118,7 @@ definition {
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -2143,7 +2143,7 @@ definition {
 			contentBody = "Document_1.txt",
 			user = "Test Test");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
@@ -2175,7 +2175,7 @@ definition {
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentFile = "Document_5.txt",
@@ -2237,7 +2237,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_2.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -2313,7 +2313,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Document_1.doc",
@@ -2347,7 +2347,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_1.txt",
@@ -2364,7 +2364,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewFileSizeByVersion(
 			dmDocumentSize = "259 B",
@@ -2385,7 +2385,7 @@ definition {
 			mimeType = "audio/x-mpeg",
 			sourceFileName = "Document_1.mp3");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LAR.exportPortlet(larFileName = "DM.portlet.lar");
 
@@ -2393,7 +2393,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LAR._gotoExportImport();
 

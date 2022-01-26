@@ -46,7 +46,7 @@ definition {
 	@priority = "4"
 	test ApplyMasterclassModernStyleBook {
 		task ("Go to Masterclass Stylebook and set Masterclass Moderns as Default") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-masterclass-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
 			StyleBooksAdmin.markStyleBookAsDefault(
 				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
@@ -628,7 +628,7 @@ definition {
 		task ("Sign In the New Account and Assert the User Name") {
 			User.firstLoginUI(
 				password = "user",
-				specificUrl = "http://localhost:8080/web/test-masterclass-name/sign-in",
+				specificURL = "http://localhost:8080/web/test-masterclass-name/sign-in",
 				userEmailAddress = "usera@liferay.com");
 
 			User.resetPassword();
@@ -1403,7 +1403,7 @@ definition {
 	@priority = "3"
 	test ViewMasterclassCategories {
 		task ("Go to Masterclass Categories") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-masterclass-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the Categories are present") {
@@ -1419,7 +1419,7 @@ definition {
 	@ignore = "true"
 	test ViewMasterclassClassicStylebook {
 		task ("Go to Masterclass Stylebook") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-masterclass-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the Stylebook Classic Theme and Modern Theme are present") {
@@ -1453,7 +1453,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassDocuments {
 		task ("Go to Masterclass Documents") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-masterclass-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the 29 Documents are present") {
@@ -1471,7 +1471,7 @@ definition {
 	@priority = "3"
 	test ViewMasterclassFragmentsCollections {
 		task ("Go to Masterclass Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-masterclass-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the Fragments Collections are present") {
@@ -1487,7 +1487,7 @@ definition {
 	@priority = "3"
 	test ViewMasterclassModernStyleBookonPage {
 		task ("Go to Masterclass Stylebook and set Masterclass Moderns as Default") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-masterclass-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
 			StyleBooksAdmin.markStyleBookAsDefault(
 				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
@@ -1521,7 +1521,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassPages {
 		task ("Go to Masterclass Pages") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-masterclass-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the Masterclass Pages are present") {
@@ -1537,7 +1537,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassPageTemplates {
 		task ("Go to Master Page Templates in Masterclass Site") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-masterclass-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert Master Page Templates are present") {
@@ -1547,7 +1547,7 @@ definition {
 		}
 
 		task ("Go to Display Page Templates in Masterclass Site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-masterclass-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert Display Page Templates are present") {
@@ -1561,7 +1561,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassWebContent {
 		task ("Go to Masterclass Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-masterclass-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the 5 Teachers in Web Content are present") {
@@ -1575,7 +1575,7 @@ definition {
 		}
 
 		task ("Assert the 3 Courses in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-masterclass-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-masterclass-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "Courses",
@@ -1587,7 +1587,7 @@ definition {
 		}
 
 		task ("Assert the 3 Classrooms in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-masterclass-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-masterclass-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "Classrooms",
@@ -1599,7 +1599,7 @@ definition {
 		}
 
 		task ("Assert the 9 Blog Entries in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-masterclass-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-masterclass-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "Blog Entries",

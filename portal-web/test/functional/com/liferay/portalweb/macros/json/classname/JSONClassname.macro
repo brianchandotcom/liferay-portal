@@ -4,10 +4,10 @@ definition {
 	macro _getClassNameId {
 		Variables.assertDefined(parameterList = "${value}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/classname/fetch-class-name \
+			${portalURL}/api/jsonws/classname/fetch-class-name \
 			  -u test@liferay.com:test \
 			  -d value=${value}
 		''';

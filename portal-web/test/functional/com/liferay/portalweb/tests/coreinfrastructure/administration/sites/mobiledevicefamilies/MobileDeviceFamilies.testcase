@@ -21,7 +21,7 @@ definition {
 
 	@priority = "4"
 	test DeleteMobileDeviceFamily {
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.addDeviceFamilyCP(
 			deviceDescription = "This is Test Family",
@@ -34,13 +34,13 @@ definition {
 
 	@priority = "4"
 	test DeleteMobileDeviceFamilyClassificationRule {
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.addDeviceFamilyCP(
 			deviceDescription = "This is Test Family",
 			deviceFamilyName = "Test Family Name");
 
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
 
@@ -58,7 +58,7 @@ definition {
 
 	@priority = "4"
 	test EditMobileDeviceFamily {
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.addDeviceFamilyCP(
 			deviceDescription = "Test Family Description",
@@ -77,13 +77,13 @@ definition {
 
 	@priority = "4"
 	test EditMobileDeviceFamilyClassificationRule {
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.addDeviceFamilyCP(
 			deviceDescription = "This is Test Family",
 			deviceFamilyName = "Test Family Name");
 
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
 
@@ -115,7 +115,7 @@ definition {
 			deviceDescription = "This is Test Family",
 			deviceFamilyName = "Test Family Name");
 
-		MobileDevice.openMobileDeviceAdmin(siteUrlKey = "guest");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
 

@@ -39,7 +39,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test DeleteKBArticleViaKBArticle {
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -61,7 +61,7 @@ definition {
 			deleteViaKbArticle = "true",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}

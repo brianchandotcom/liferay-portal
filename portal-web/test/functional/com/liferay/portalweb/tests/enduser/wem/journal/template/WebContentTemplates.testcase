@@ -29,7 +29,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -43,7 +43,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -53,7 +53,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("Assert Add FreeMarker button doesn't present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -118,7 +118,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a template for Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -152,7 +152,7 @@ definition {
 		property test.name.skip.portal.instance = "WebContentTemplates#SaveChangesInExistingTemplateWhenDisableTemplateCreation";
 
 		task ("Add a template for Basic Web Content Structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("Assert can save changes in existing template") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -213,7 +213,7 @@ definition {
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Template based on a Structure with all possible fields."
 	@priority = "4"
 	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStructure {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -263,7 +263,7 @@ definition {
 		property test.name.skip.portal.instance = "WebContentTemplates#ViewTemplateCreationFailureWhenDisableTemplateCreation";
 
 		task ("Add a template for Basic Web Content structure but not save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 

@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllWarehouseItems {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var warehouseIds = CommerceJSONWarehousesAndInventoriesAPI._getCommerceWarehouseIds();
@@ -14,7 +14,7 @@ definition {
 				echo("Get warehouseItems for warehouseId: ${warehouseId}");
 
 				var curl = '''
-						${baseUrl}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
+						${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
 						-u test@liferay.com:test \
 						-H 'accept: application/json' \
 					''';
@@ -25,7 +25,7 @@ definition {
 						echo("Deleting Commerce warehouseItem with id: ${warehouseItemId}");
 
 						var curl = '''
-								${baseUrl}/o/headless-commerce-admin-inventory/v1.0/warehouseItems/${warehouseItemId} \
+								${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouseItems/${warehouseItemId} \
 								-u test@liferay.com:test \
 								-H 'accept: application/json' \
 							''';
@@ -38,7 +38,7 @@ definition {
 
 				if ("${warehouseId}" != "") {
 					var curl = '''
-							${baseUrl}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId} \
+							${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId} \
 							-u test@liferay.com:test \
 							-H 'accept: application/json' \
 						''';
@@ -53,10 +53,10 @@ definition {
 	}
 
 	macro _getCommerceWarehouseIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(warehouseCount)) {
@@ -67,7 +67,7 @@ definition {
 		}
 
 		var curl = '''
-				${baseUrl}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
+				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 			''';
@@ -77,14 +77,14 @@ definition {
 	}
 
 	macro _getCommerceWarehousesCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-				${baseUrl}/o/headless-commerce-admin-inventory/v1.0/warehouses \
+				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 			''';

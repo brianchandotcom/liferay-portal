@@ -26,7 +26,7 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate into numeric fields."
 	@priority = "5"
 	test CanTranslateCustomizedWCWithNumericFields {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -45,7 +45,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -54,7 +54,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -106,14 +106,14 @@ definition {
 			webContentNumber = "200",
 			webContentTitle = "WC WebContent Título");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			description = "WC WebContent Descripción",
@@ -131,7 +131,7 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate into custom rich text."
 	@priority = "5"
 	test CanTranslateCustomizedWCWithRichText {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -145,7 +145,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -154,7 +154,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -195,14 +195,14 @@ definition {
 			webContentHtml = "Este es un título HTML",
 			webContentTitle = "WC WebContent Título");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			description = "WC WebContent Descripción",
@@ -215,7 +215,7 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
 	@priority = "5"
 	test CanTranslateCustomizedWCWithTextFields {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -234,7 +234,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -243,7 +243,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -295,14 +295,14 @@ definition {
 			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			description = "WC WebContent Descripción",
@@ -329,7 +329,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -392,7 +392,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -410,7 +410,7 @@ definition {
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトル");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -426,7 +426,7 @@ definition {
 	@description = "This test covers LPS-142169. It ensures that translate side by side shows the duplicate fields."
 	@priority = "4"
 	test CanViewDuplicateFields {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -442,7 +442,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -451,7 +451,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -485,7 +485,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -504,7 +504,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -513,7 +513,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -525,7 +525,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 

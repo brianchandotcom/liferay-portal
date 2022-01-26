@@ -71,7 +71,7 @@ definition {
 	test AddUserAfterPublishContentPageWithAP {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -196,7 +196,7 @@ definition {
 			threadBody = "MB Thread Message Body as Admin",
 			threadSubject = "MB Thread Message Subject as Admin");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content as Admin",
@@ -1023,7 +1023,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -1050,9 +1050,9 @@ definition {
 		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
 
 		MockMock.openBodyLink(
-			asset = "${portalUrl}: Reset Your Password",
-			content = "You can reset your password for ${portalUrl}",
-			subject = "${portalUrl}: Reset Your Password");
+			asset = "${portalURL}: Reset Your Password",
+			content = "You can reset your password for ${portalURL}",
+			subject = "${portalURL}: Reset Your Password");
 
 		User.setPasswordByResetLink(
 			newPassword1 = "Password1",
@@ -1846,7 +1846,7 @@ definition {
 	test LogoutUserViaURL {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1865,7 +1865,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		User.viewLoggedOutPG();
 	}
@@ -2134,7 +2134,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -2168,9 +2168,9 @@ definition {
 		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
 
 		MockMock.openBodyLink(
-			asset = "${portalUrl}: Reset Your Password",
-			content = "You can reset your password for ${portalUrl}",
-			subject = "${portalUrl}: Reset Your Password");
+			asset = "${portalURL}: Reset Your Password",
+			content = "You can reset your password for ${portalURL}",
+			subject = "${portalURL}: Reset Your Password");
 
 		User.setPasswordByResetLink(
 			newPassword1 = "Password1",
@@ -2435,7 +2435,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -2458,11 +2458,11 @@ definition {
 			userScreenName = "usersn");
 
 		MockMock.viewMail(
-			asset = "${portalUrl}: Your New Account",
-			content = "Your can setup your password here: ${portalUrl}/c/portal/update_password?",
+			asset = "${portalURL}: Your New Account",
+			content = "Your can setup your password here: ${portalURL}/c/portal/update_password?",
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
-			subject = "${portalUrl}: Your New Account");
+			subject = "${portalURL}: Your New Account");
 	}
 
 	@priority = "4"
@@ -2562,7 +2562,7 @@ definition {
 	test ViewLoginForDeactivatedUserViaDeactivateButton {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2732,15 +2732,15 @@ definition {
 			groupName = "My Site",
 			layoutName = "First Page");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "my-site");
+		Site.openSiteSettingsAdmin(siteURLKey = "my-site");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostUrl = "www.able.com",
+			publicPageVirtualHostURL = "www.able.com",
 			publicVirtualHosts = "true");
 
 		Navigator.gotoBack();
 
-		Site.editFriendlyURLCP(siteFriendlyUrlEdit = "/www.able");
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/www.able");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 

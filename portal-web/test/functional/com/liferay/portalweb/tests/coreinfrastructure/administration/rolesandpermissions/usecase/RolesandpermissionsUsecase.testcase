@@ -423,7 +423,7 @@ definition {
 
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark1 Name",
-			bookmarkUrl = "https://www.liferay.com",
+			bookmarkURL = "https://www.liferay.com",
 			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
@@ -455,7 +455,7 @@ definition {
 
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark2 Name",
-			bookmarkUrl = "https://www.google.com",
+			bookmarkURL = "https://www.google.com",
 			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoSitePage(
@@ -514,11 +514,11 @@ definition {
 
 		Bookmark.gotoPG(
 			bookmarkName = "Test Bookmark1 Name",
-			bookmarkUrl = "https://www.liferay.com");
+			bookmarkURL = "https://www.liferay.com");
 
 		Bookmark.viewEntry(
 			bookmarkName = "Test Bookmark1 Name",
-			bookmarkUrl = "https://www.liferay.com");
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
@@ -526,7 +526,7 @@ definition {
 
 		Bookmark.viewNoPG(
 			bookmarkName = "Test Bookmark2 Name",
-			bookmarkUrl = "https://www.google.com");
+			bookmarkURL = "https://www.google.com");
 
 		User.logoutPG();
 
@@ -612,7 +612,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(
-			defaultUrl = "false",
+			defaultURL = "false",
 			portletName = "Message Boards");
 
 		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
@@ -996,7 +996,7 @@ definition {
 
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkUrl = "https://www.liferay.com",
+			bookmarkURL = "https://www.liferay.com",
 			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
@@ -1033,7 +1033,7 @@ definition {
 
 		Bookmark.viewNoPG(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkUrl = "https://www.liferay.com");
+			bookmarkURL = "https://www.liferay.com");
 
 		User.logoutPG();
 
@@ -1060,7 +1060,7 @@ definition {
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkUrl = "https://www.liferay.com");
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -1108,7 +1108,7 @@ definition {
 
 		Navigator.openURL();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1128,7 +1128,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn1");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -1,7 +1,7 @@
 definition {
 
 	macro configureAnonymousPostingCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -18,7 +18,7 @@ definition {
 	}
 
 	macro configureGeneralCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -32,7 +32,7 @@ definition {
 	}
 
 	macro configureMessageAddedEmail {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -99,7 +99,7 @@ definition {
 	}
 
 	macro configureMessageFormat {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -120,7 +120,7 @@ definition {
 	}
 
 	macro configureMessageUpdatedEmail {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -215,7 +215,7 @@ definition {
 	}
 
 	macro viewAnonymousPostingConfigurationCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -230,7 +230,7 @@ definition {
 	}
 
 	macro viewBannedUserCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_BANNED_USERS",
@@ -257,7 +257,7 @@ definition {
 
 			Pause(locator1 = "60000");
 
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 			AssertClick(
 				locator1 = "MessageBoards#NAVIGATION_BANNED_USERS",
@@ -284,7 +284,7 @@ definition {
 	}
 
 	macro viewDefaultEmailFromCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "${siteUrlKey}");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 

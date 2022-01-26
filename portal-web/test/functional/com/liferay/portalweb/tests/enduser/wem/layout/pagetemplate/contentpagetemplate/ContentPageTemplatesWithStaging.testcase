@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment to the page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -82,7 +82,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Assert content page templates admin is accessible in the staging site") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteUrlKey = "test-site-name-staging");
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name-staging");
 
 			AssertVisible(
 				key_navItem = "Page Templates",
@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("Assert content page templates admin is not accessible in the live site") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
 
 			AssertElementNotPresent(
 				key_navItem = "Page Templates",
@@ -104,7 +104,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a content page that uses the page template") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -145,7 +145,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -175,9 +175,9 @@ definition {
 	@priority = "4"
 	test UndoChangesOfContentPageTemplateInStagingSite {
 		task ("View Undo button is disabled when no changes") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

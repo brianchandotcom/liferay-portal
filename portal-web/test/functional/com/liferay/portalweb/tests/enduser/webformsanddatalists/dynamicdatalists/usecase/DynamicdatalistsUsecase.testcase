@@ -823,7 +823,7 @@ definition {
 	test AddSelectFieldWithTranslationAndViewInSpreadsheetView {
 		property portal.upstream = "quarantine";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
 
@@ -917,7 +917,7 @@ definition {
 			ddlRecordRow = "1",
 			fieldName = "Select");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/ja/");
+		Navigator.openSpecificURL(url = "${portalURL}/ja/");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -1269,7 +1269,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var adminViewUrl = Navigator.getCurrentURL(adminViewUrl = "${adminViewUrl}");
+		var adminViewURL = Navigator.getCurrentURL(adminViewURL = "${adminViewURL}");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1277,7 +1277,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var adminEditUrl = Navigator.getCurrentURL(adminEditUrl = "${adminEditUrl}");
+		var adminEditURL = Navigator.getCurrentURL(adminEditURL = "${adminEditURL}");
 
 		User.logoutPG();
 
@@ -1299,7 +1299,7 @@ definition {
 
 		Portlet.viewCannotEdit();
 
-		Navigator.openSpecificURL(url = "${adminEditUrl}");
+		Navigator.openSpecificURL(url = "${adminEditURL}");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
@@ -1307,7 +1307,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		Navigator.openSpecificURL(url = "${adminEditUrl}");
+		Navigator.openSpecificURL(url = "${adminEditURL}");
 
 		DDLRecord.viewTranslationNotAvailable(localizedLanguage = "Spanish (Spain)");
 
@@ -1318,19 +1318,19 @@ definition {
 
 		Portlet.viewCannotPublish();
 
-		Navigator.openSpecificURL(url = "${adminEditUrl}");
+		Navigator.openSpecificURL(url = "${adminEditURL}");
 
 		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
 			fieldName = "Document",
 			userRole = "Guest");
 
-		Navigator.openSpecificURL(url = "${adminEditUrl}");
+		Navigator.openSpecificURL(url = "${adminEditURL}");
 
 		DDLRecord.clearFieldDocumentsAndMedia(fieldName = "Document");
 
 		Portlet.viewCannotPublish();
 
-		Navigator.openSpecificURL(url = "${adminEditUrl}");
+		Navigator.openSpecificURL(url = "${adminEditURL}");
 
 		Portlet.viewCannotSaveAsDraft();
 	}

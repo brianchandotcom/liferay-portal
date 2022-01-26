@@ -216,7 +216,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "IFrame");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain)",
@@ -245,10 +245,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostUrl = "www.able.com",
+			publicPageVirtualHostURL = "www.able.com",
 			publicVirtualHosts = "true");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
@@ -269,7 +269,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=3";
 		property test.name.skip.portal.instance = "Locale#PrependFriendlyURLStyle";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -288,7 +288,7 @@ definition {
 			locale = "es-ES",
 			textIcon = "español-España");
 
-		AssertLocation(value1 = "${portalUrl}/es/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
 
 		Portlet.shutdownServer();
 
@@ -306,7 +306,7 @@ definition {
 			locale = "es-ES",
 			textIcon = "español-España");
 
-		AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page");
 
 		Portlet.shutdownServer();
 
@@ -324,13 +324,13 @@ definition {
 			locale = "es-ES",
 			textIcon = "español-España");
 
-		AssertLocation(value1 = "${portalUrl}/es/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en-US",
 			textIcon = "english-United States");
 
-		AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page");
 
 		Portlet.shutdownServer();
 
@@ -348,13 +348,13 @@ definition {
 			locale = "es-ES",
 			textIcon = "español-España");
 
-		AssertLocation(value1 = "${portalUrl}/es/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en-US",
 			textIcon = "english-United States");
 
-		AssertLocation(value1 = "${portalUrl}/en/web/test-site-name/test-page");
+		AssertLocation(value1 = "${portalURL}/en/web/test-site-name/test-page");
 	}
 
 	@priority = "4"
@@ -423,7 +423,7 @@ definition {
 		}
 
 		task ("View the default locale is es-ES in web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");
 
@@ -608,7 +608,7 @@ definition {
 	test ViewDefaultEnabledLocales {
 		User.firstLoginPG();
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Click(
 			key_itemName = "Localization",
@@ -620,7 +620,7 @@ definition {
 				locator1 = "SiteSettingsDisplaySettings#LANGUAGES_RADIO");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -670,7 +670,7 @@ definition {
 			localizedAnswer = "Risposta",
 			localizedSaveButton = "Salva",
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 	}
 
@@ -684,7 +684,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
@@ -713,7 +713,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -788,7 +788,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Asset Publisher");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",

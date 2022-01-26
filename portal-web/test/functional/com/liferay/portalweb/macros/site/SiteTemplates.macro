@@ -357,10 +357,10 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var currentUrl = Navigator.getCurrentURL();
+		var currentURL = Navigator.getCurrentURL();
 
-		var siteTemplateUrl = StringUtil.extractFirst("${currentUrl}", "/~/");
-		var siteTemplateId = StringUtil.extractLast("${siteTemplateUrl}", "/");
+		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
+		var siteTemplateId = StringUtil.extractLast("${siteTemplateURL}", "/");
 
 		echo("siteTemplateID: ${siteTemplateId}");
 

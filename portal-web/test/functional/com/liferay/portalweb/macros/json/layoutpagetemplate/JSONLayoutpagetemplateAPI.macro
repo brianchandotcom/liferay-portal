@@ -4,10 +4,10 @@ definition {
 	macro _addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=0 \
@@ -26,10 +26,10 @@ definition {
 	macro _addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layoutprototype/add-layout-prototype \
+			${portalURL}/api/jsonws/layoutprototype/add-layout-prototype \
 			  -u test@liferay.com:test \
 			  -d nameMap=${nameMap} \
 			  -d descriptionMap=${descriptionMap} \
@@ -44,10 +44,10 @@ definition {
 	macro _addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
+			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${layoutPageTemplateCollectionName} \
@@ -62,10 +62,10 @@ definition {
 	macro _addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
@@ -83,10 +83,10 @@ definition {
 	macro _addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=0 \
@@ -103,10 +103,10 @@ definition {
 	macro _deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${layoutPageTemplateEntryId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d layoutPageTemplateEntryId=${layoutPageTemplateEntryId}
 		''';
@@ -118,10 +118,10 @@ definition {
 	macro _getLayoutPageTemplateCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
+			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -138,10 +138,10 @@ definition {
 	macro _getLayoutPageTemplateEntryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d type=${type} \
@@ -162,10 +162,10 @@ definition {
 	macro _getMasterLayoutPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d type=3 \

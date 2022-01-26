@@ -74,18 +74,18 @@ definition {
 					navTab = "${navTab}",
 					videoShortcutTitle = "${videoShortcutTitle}");
 			}
-			else if (isSet(videoUrl)) {
+			else if (isSet(videoURL)) {
 				ItemSelector.addVideo(
 					extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
 					videoShortcutDescription = "${videoShortcutDescription}",
 					videoShortcutPreview = "${videoShortcutPreview}",
 					videoShortcutTitle = "${videoShortcutTitle}",
-					videoUrl = "${videoUrl}");
+					videoURL = "${videoURL}");
 			}
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",
-					videoSourceUrl = "${embedVideo}");
+					videoSourceURL = "${embedVideo}");
 			}
 		}
 
@@ -224,7 +224,7 @@ definition {
 
 		Type(
 			locator1 = "WCEditWebContent#FEATURED_IMAGE_URL_INPUT",
-			value1 = "${imageSourceUrl}");
+			value1 = "${imageSourceURL}");
 	}
 
 	macro addLocalizedPGViaWCD {
@@ -473,7 +473,7 @@ definition {
 		Type.typePause(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyUrl}");
+			value1 = "${friendlyURL}");
 
 		PortletEntry.publish();
 	}
@@ -1048,11 +1048,11 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "${depotName}");
 		}
 		else {
-			RecycleBin.openRecycleBinAdmin(siteUrlKey = "${siteUrlKey}");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "${siteURLKey}");
 
 			RecycleBin.emptyCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "${siteUrlKey}");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}");
 		}
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
@@ -1205,7 +1205,7 @@ definition {
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",
-					videoSourceUrl = "${embedVideo}");
+					videoSourceURL = "${embedVideo}");
 			}
 		}
 
@@ -1336,7 +1336,7 @@ definition {
 		Type.typePause(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${webContentFriendlyUrl}");
+			value1 = "${webContentFriendlyURL}");
 	}
 
 	macro editInReview {
@@ -1977,7 +1977,7 @@ definition {
 		Click(locator1 = "CKEditor#TOOLBAR_AUDIO_BUTTON");
 
 		ItemSelector.addAudioFromURL(
-			audioSourceUrl = "${dmDocumentUrl}",
+			audioSourceURL = "${dmDocumentURL}",
 			navTab = "${navTab}");
 
 		SelectFrame.selectFrameNoLoading(
@@ -1995,7 +1995,7 @@ definition {
 		if ("${navTab}" == "URL") {
 			ItemSelector.addVideoFromURL(
 				navTab = "${navTab}",
-				videoSourceUrl = "${dmDocumentUrl}");
+				videoSourceURL = "${dmDocumentURL}");
 		}
 		else if ("${navTab}" == "Documents and Media") {
 			ItemSelector.addVideoFromDM(
@@ -2316,7 +2316,7 @@ definition {
 		AssertTextEquals(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyUrl}");
+			value1 = "${friendlyURL}");
 	}
 
 	macro viewLinkedAssetPGViaAP {

@@ -44,7 +44,7 @@ definition {
 	test CannotPublishUnapprovedDraft {
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
@@ -53,7 +53,7 @@ definition {
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Blogs.assertNoPublishOption(entryTitle = "Blogs Entry Title");
 	}
@@ -83,7 +83,7 @@ definition {
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		AssertElementNotPresent(
 			key_menuItem = "Share",
@@ -97,7 +97,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -125,7 +125,7 @@ definition {
 	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
 	@priority = "3"
 	test CanPublishBlogWithLayoutReference {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
@@ -133,7 +133,7 @@ definition {
 			groupName = "Site Name-staging",
 			site = "false");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name-staging");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -165,7 +165,7 @@ definition {
 
 		ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-		AssertLocation(value1 = "${portalUrl}/web/site-name/b/blogs-entry-title");
+		AssertLocation(value1 = "${portalURL}/web/site-name/b/blogs-entry-title");
 	}
 
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
@@ -194,7 +194,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site name");
+			siteURLKey = "site name");
 
 		BlogsEntry.viewEntryPG(
 			entryTitle = "Blogs Entry Title",
@@ -204,7 +204,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.removeCoverImage(coverImageName = "Document_1.jpg");
 
@@ -217,7 +217,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site name");
+			siteURLKey = "site name");
 
 		AssertElementNotPresent(
 			key_uploadFileName = "Document_1",
@@ -227,7 +227,7 @@ definition {
 	@description = "This is a test for LPS-136793 and LPS-139452. It checks that a custom friendly URL for Blogs can be deleted and republished."
 	@priority = "4"
 	test CanPublishDeletedCustomFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -239,7 +239,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
-			newFriendlyUrl = "custom-url",
+			newFriendlyURL = "custom-url",
 			site = "false");
 
 		Navigator.gotoStagedSitePage(
@@ -250,7 +250,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/custom-url");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/custom-url");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -258,14 +258,14 @@ definition {
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom url",
+			friendlyURL = "custom url",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.editCustomURL(customUrl = "");
+		BlogsEntry.editCustomURL(customURL = "");
 
 		PortletEntry.publish();
 
@@ -273,7 +273,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/blogs-entry-title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -297,7 +297,7 @@ definition {
 
 		IFrame.saveConfiguration();
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -319,7 +319,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.removeExternalLink(entryContent = "Blogs Entry Content");
 
@@ -358,7 +358,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Navigator.gotoNavTab(navTab = "Images");
 
@@ -377,7 +377,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Navigator.gotoNavTab(navTab = "Images");
 
@@ -401,7 +401,7 @@ definition {
 
 		IFrame.saveConfiguration();
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -425,7 +425,7 @@ definition {
 
 		BlogsEntry.viewEntryEmbeddedImage(
 			entryContent = "Blogs Entry Content",
-			imageSourceUrl = "Document_1.jpg");
+			imageSourceURL = "Document_1.jpg");
 	}
 
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
@@ -440,7 +440,7 @@ definition {
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -451,7 +451,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -489,7 +489,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -613,7 +613,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPublishSmallImage {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -648,7 +648,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPublishSmallImageDeletion {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		// Can explore how to add Blog with small image via JSON
 
@@ -674,7 +674,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_3.jpg");
 
@@ -688,7 +688,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -702,12 +702,12 @@ definition {
 	@description = "This is a test for LPS-136794. It checks that an updated custom friendly URL for Blogs can be published."
 	@priority = "4"
 	test CanPublishUpdatedCustomFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-url",
+			friendlyURL = "custom-url",
 			groupName = "Site Name (Staging)",
 			site = "false");
 
@@ -719,7 +719,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/custom-url");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/custom-url");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -728,9 +728,9 @@ definition {
 		JSONBlog.updateEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			friendlyUrl = "custom-url",
+			friendlyURL = "custom-url",
 			groupName = "Site Name (Staging)",
-			newFriendlyUrl = "new-custom-url",
+			newFriendlyURL = "new-custom-url",
 			site = "false");
 
 		Navigator.gotoStagedSitePage(
@@ -741,7 +741,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/site-name/staging-blogs-page/-/blogs/new-custom-url");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/staging-blogs-page/-/blogs/new-custom-url");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -805,7 +805,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title Edit",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
@@ -815,7 +815,7 @@ definition {
 	@description = "This is a test for LPS-136804. It checks that a small image can be update and published through the normal publication flow."
 	@priority = "4"
 	test CanPublishUpdatedSmallImage {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -839,7 +839,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.addSmallImage(
 			browseImage = "true",
@@ -897,7 +897,7 @@ definition {
 			groupName = "Site Name (Staging)",
 			site = "false");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
 		Blogs.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish to live?",
@@ -906,7 +906,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site name");
+			siteURLKey = "site name");
 
 		BlogsEntry.viewEntryPG(
 			entryTitle = "Blogs Entry Title",
@@ -916,7 +916,7 @@ definition {
 	@description = "This is a test for LPS-136800. It checks that an updated inline image can be published and does not appear in live."
 	@priority = "4"
 	test CanRepublishInlineImageViaSAP {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -938,7 +938,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.addContentWithInlineImage(
 			entryContent = "New Blogs Entry Content",
@@ -953,7 +953,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewNoInlineImage(uploadFileName = "Document_1");
 
@@ -963,7 +963,7 @@ definition {
 	@description = "This is a test for LPS-136803. It checks that the small image can be updated and republished using the SAP."
 	@priority = "4"
 	test CanRepublishSmallImageViaSAP {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -987,7 +987,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.addSmallImage(
 			browseImage = "true",
@@ -1031,7 +1031,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteUrlKey = "site-name-staging");
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			embedVideo = "https://www.twitch.tv/videos/806178790",
@@ -1048,7 +1048,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "twitch",

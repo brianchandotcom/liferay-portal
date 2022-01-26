@@ -27,7 +27,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		if ("${sitePageType}" == "Embedded") {
-			PagesAdmin._addPageTypeEmbedded(pageTypeUrl = "${pageTypeUrl}");
+			PagesAdmin._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
 		}
 		else if ("${sitePageType}" == "Full Page Application") {
 			if (isSet(portlet)) {
@@ -55,7 +55,7 @@ definition {
 		else if ("${sitePageType}" == "Link to URL") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${pageTypeUrl}");
+				value1 = "${pageTypeURL}");
 		}
 		else if ("${sitePageType}" == "Panel") {
 			if (isSet(componentName)) {
@@ -105,7 +105,7 @@ definition {
 	macro _addPageTypeEmbedded {
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${pageTypeUrl}");
+			value1 = "${pageTypeURL}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PagesAdmin#PAGE_TYPE_DESCRIPTION",
@@ -157,7 +157,7 @@ definition {
 
 	macro _configurePage {
 		if ("${sitePageType}" == "Embedded") {
-			PagesAdmin._addPageTypeEmbedded(pageTypeUrl = "${pageTypeUrl}");
+			PagesAdmin._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
 		}
 		else if ("${sitePageType}" == "Panel") {
 			PagesAdmin._addPageTypePanel(componentName = "${componentName}");
@@ -260,19 +260,19 @@ definition {
 		}
 
 		var list1 = ListUtil.newListFromString("${localeList}");
-		var list2 = ListUtil.newListFromString("${localizedCanonicalUrlList}");
+		var list2 = ListUtil.newListFromString("${localizedCanonicalURLList}");
 		var size = ListUtil.size("${list1}");
 		var i = "0";
 
 		while ("${i}" != "${size}") {
 			var locale = ListUtil.get("${list1}", "${i}");
-			var localizedCanonicalUrl = ListUtil.get("${list2}", "${i}");
+			var localizedCanonicalURL = ListUtil.get("${list2}", "${i}");
 
 			PortletEntry.changeLocale(locale = "${locale}");
 
 			Type(
 				locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-				value1 = "${localizedCanonicalUrl}");
+				value1 = "${localizedCanonicalURL}");
 
 			PortletEntry.save();
 
@@ -282,25 +282,25 @@ definition {
 	}
 
 	macro addLocalizedFriendlyURL {
-		var list1 = ListUtil.newListFromString("${friendlyUrlLocalizedList}");
-		var list2 = ListUtil.newListFromString("${localizedFriendlyUrlList}");
+		var list1 = ListUtil.newListFromString("${friendlyURLLocalizedList}");
+		var list2 = ListUtil.newListFromString("${localizedFriendlyURLList}");
 		var list3 = ListUtil.newListFromString("${localizedNameList}");
 		var size = ListUtil.size("${list1}");
 		var i = "0";
 
 		while ("${i}" != "${size}") {
-			var friendlyUrlLocalized = ListUtil.get("${list1}", "${i}");
-			var localizedFriendlyUrl = ListUtil.get("${list2}", "${i}");
+			var friendlyURLLocalized = ListUtil.get("${list1}", "${i}");
+			var localizedFriendlyURL = ListUtil.get("${list2}", "${i}");
 			var localizedName = ListUtil.get("${list3}", "${i}");
 
 			PortletEntry.changeLocale(
 				fieldName = "Friendly URL",
-				locale = "${friendlyUrlLocalized}");
+				locale = "${friendlyURLLocalized}");
 
 			Type(
 				inputFieldId = "friendlyURL",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${localizedFriendlyUrl}");
+				value1 = "${localizedFriendlyURL}");
 
 			if ("${localizedName}" != "-") {
 				PortletEntry.inputName(name = "${localizedName}");
@@ -434,7 +434,7 @@ definition {
 			openGraph = "${openGraph}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
-			pageTypeUrl = "${pageTypeUrl}",
+			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}",
 			vocabularyName = "${vocabularyName}");
@@ -549,7 +549,7 @@ definition {
 			columnName = "${columnName}",
 			componentName = "${componentName}",
 			layoutPageTemplateName = "${layoutPageTemplateName}",
-			pageTypeUrl = "${pageTypeUrl}",
+			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}");
 
@@ -573,7 +573,7 @@ definition {
 			columnName = "${columnName}",
 			componentName = "${componentName}",
 			layoutPageTemplateName = "${layoutPageTemplateName}",
-			pageTypeUrl = "${pageTypeUrl}",
+			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}");
 
@@ -662,7 +662,7 @@ definition {
 		Type(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyUrlEdit}");
+			value1 = "${friendlyURLEdit}");
 
 		PortletEntry.save();
 	}
@@ -715,16 +715,16 @@ definition {
 	}
 
 	macro getFriendlyURL {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var key_friendlyUrl = "";
-		var friendlyUrl = selenium.getElementValue("PagesAdmin#FRIENDLY_URL");
+		var key_friendlyURL = "";
+		var friendlyURL = selenium.getElementValue("PagesAdmin#FRIENDLY_URL");
 
-		return "${baseUrl}/web/guest${friendlyUrl}";
+		return "${baseURL}/web/guest${friendlyURL}";
 	}
 
 	@summary = "Go to the page creation form through the empty-result-message taglib"
@@ -789,7 +789,7 @@ definition {
 		else if ("${actionType}" == "Redirect to URL") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${actionUrl}");
+				value1 = "${actionURL}");
 		}
 		else {
 			Check(
@@ -830,45 +830,45 @@ definition {
 	}
 
 	macro openPagesAdmin {
-		var siteUrlKey = StringUtil.replace("${siteUrlKey}", " ", "-");
-		var siteUrlKey = StringUtil.lowerCase("${siteUrlKey}");
+		var siteURLKey = StringUtil.replace("${siteURLKey}", " ", "-");
+		var siteURLKey = StringUtil.lowerCase("${siteURLKey}");
 
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
-			urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
+			baseURL = "${baseURL}",
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
 	macro removeOldFriendlyURL {
 		AssertVisible(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		MouseOver(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
 
 		AssertElementNotPresent(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro restoreOldFriendlyURL {
 		MouseOver(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
 
 		AssertVisible(
-			key_activeUrl = "${restoredUrl}",
+			key_activeURL = "${restoredURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
 		AssertVisible(
-			key_oldFriendlyUrl = "${activeUrl}",
+			key_oldFriendlyURL = "${activeURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -876,7 +876,7 @@ definition {
 		AssertVisible(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyUrlEdit}");
+			value1 = "${friendlyURLEdit}");
 
 		PortletEntry.save();
 	}
@@ -916,7 +916,7 @@ definition {
 
 	@summary = "Delete all pages except the Welcome and Search Page"
 	macro tearDownCP {
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Pause(locator1 = "5000");
 
@@ -1017,7 +1017,7 @@ definition {
 
 	macro viewActiveURL {
 		AssertVisible(
-			key_activeUrl = "${activeUrl}",
+			key_activeURL = "${activeURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 	}
 
@@ -1052,14 +1052,14 @@ definition {
 	macro viewBaseFriendlyURL {
 		AssertTextEquals(
 			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",
-			value1 = "${siteFriendlyUrl}");
+			value1 = "${siteFriendlyURL}");
 	}
 
 	macro viewFriendlyURL {
-		if (isSet(localizedFriendlyUrl)) {
+		if (isSet(localizedFriendlyURL)) {
 			PortletEntry.changeLocale(
 				fieldName = "Friendly URL",
-				locale = "${localizedFriendlyUrl}");
+				locale = "${localizedFriendlyURL}");
 		}
 
 		AssertTextEquals(
@@ -1069,21 +1069,21 @@ definition {
 	}
 
 	macro viewOldFriendlyURL {
-		if (isSet(lastOldFriendlyUrl)) {
+		if (isSet(lastOldFriendlyURL)) {
 			AssertVisible(
-				key_oldFriendlyUrl = "${lastOldFriendlyUrl}",
+				key_oldFriendlyURL = "${lastOldFriendlyURL}",
 				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM_LAST");
 		}
 
 		AssertVisible(
-			key_oldFriendlyUrl = "${oldFriendlyUrl}",
+			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro viewOldFriendlyURLNotPresent {
-		for (var oldFriendlyUrl : list "${oldFriendlyUrlList}") {
+		for (var oldFriendlyURL : list "${oldFriendlyURLList}") {
 			AssertElementNotPresent(
-				key_oldFriendlyUrl = "${oldFriendlyUrl}",
+				key_oldFriendlyURL = "${oldFriendlyURL}",
 				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 		}
 	}

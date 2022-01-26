@@ -114,7 +114,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "私の好きな日本料理は寿司とすき焼きです",
 			layoutName = "questions-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tagLocatorList = "いち,に,さん,し,ご",
 			titleField = "あなたの好きな日本料理は何ですか",
 			topicName = "質問トピック");
@@ -169,7 +169,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
@@ -214,7 +214,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピック");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
@@ -240,7 +240,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
@@ -275,7 +275,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピック");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
@@ -326,7 +326,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピック");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
@@ -359,7 +359,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Questions.viewTagsFilterResults(
 			position = "1",
@@ -391,12 +391,12 @@ definition {
 			categoryName = "質問トピック",
 			categoryNameEdit = "質問トピックを編集する",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "質問トピックを編集する");
 
 		AssertTextEquals(
@@ -419,7 +419,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "私の好きな日本料理は寿司とすき焼きです",
 			layoutName = "questions-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tagLocatorList = "おおさか,とうきょう",
 			titleField = "あなたの好きな日本料理は何ですか",
 			topicName = "質問トピック");

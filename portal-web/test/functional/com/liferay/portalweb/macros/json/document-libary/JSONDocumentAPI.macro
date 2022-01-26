@@ -4,7 +4,7 @@ definition {
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
@@ -13,7 +13,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlapp/get-folder \
+			${portalURL}/api/jsonws/dlapp/get-folder \
 				-u test@liferay.com:test \
 				-d repositoryId=${repositoryId} \
 				-d parentFolderId=${parentFolderId} \
@@ -37,14 +37,14 @@ definition {
 			var site = "true";
 		}
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
 			site = "${site}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
 				-u test@liferay.com:test \
 				-d groupIds=${groupId}
 		''';

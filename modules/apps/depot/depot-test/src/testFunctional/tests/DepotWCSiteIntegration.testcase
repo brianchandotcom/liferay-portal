@@ -128,7 +128,7 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -146,10 +146,10 @@ definition {
 			structureName = "WC Structure Name",
 			webContentHasReference = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.deleteCP(
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			webContentTitle = "Web Content Title");
 	}
 
@@ -196,7 +196,7 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -231,10 +231,10 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.deleteCP(
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			webContentTitle = "Web Content Title");
 	}
 
@@ -263,7 +263,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -275,7 +275,7 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC Depot WebContent");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.addPublicPage(
 			collectionName = "Page Template Collection",
@@ -309,7 +309,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -321,7 +321,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -333,7 +333,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -385,7 +385,7 @@ definition {
 			depotName = "Test Fragment Depot Name",
 			groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -423,7 +423,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Web Content Article",
@@ -443,7 +443,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -518,7 +518,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -551,7 +551,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Web Content Article",
@@ -596,7 +596,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
@@ -656,7 +656,7 @@ definition {
 		}
 
 		for (var count : list "1,2") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name${count}");
 
@@ -722,13 +722,13 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		AssertElementNotPresent(
 			key_tableEntry = "WC Structure Name",
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -806,7 +806,7 @@ definition {
 		}
 
 		for (var i : list "4,5,6,7,8") {
-			WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
@@ -819,7 +819,7 @@ definition {
 			WebContentStructures.saveCP(structureName = "WC Structure Name${i}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 10");
 

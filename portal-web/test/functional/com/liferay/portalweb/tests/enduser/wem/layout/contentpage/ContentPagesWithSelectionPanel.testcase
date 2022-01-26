@@ -309,7 +309,7 @@ definition {
 		}
 
 		task ("Add a fragment with drop zone and data-lfr-priority attribute") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -384,7 +384,7 @@ definition {
 		}
 
 		task ("Add a fragment with editable fields and data-lfr-priority attribute") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 

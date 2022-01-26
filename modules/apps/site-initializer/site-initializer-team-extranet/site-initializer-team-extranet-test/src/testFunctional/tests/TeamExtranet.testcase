@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("Go to Style Books and Assert the Stylebook One Card") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-team-extranet");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-team-extranet");
 
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Stylebook One");
 		}
@@ -74,7 +74,7 @@ definition {
 	@priority = "3"
 	test ViewTeamExtranetCategories {
 		task ("Go to Team Extranet Categories") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-team-extranet");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the Regions Categories are present") {
@@ -102,7 +102,7 @@ definition {
 	@priority = "3"
 	test ViewTeamExtranetCollections {
 		task ("Go to Team Extranet Collections") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-team-extranet");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the Collections are present") {
@@ -118,7 +118,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetDocumentsAndMedia {
 		task ("Go to Team Extranet Documents and Media") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-team-extranet");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the 22 Documents are present") {
@@ -136,7 +136,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetFragments {
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-team-extranet");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the Fragments Collections are present") {
@@ -152,7 +152,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetPages {
 		task ("Go to Team Extranet Pages") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-team-extranet");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the Team Extranet Pages are present") {
@@ -168,7 +168,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetPageTemplates {
 		task ("Go to Masters Page Templates in Team Extranet Site") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-team-extranet");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert Masters Page Templates are present") {
@@ -178,7 +178,7 @@ definition {
 		}
 
 		task ("Go to Display Page Templates in Team Extranet Site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-team-extranet");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert Display Page Templates are present") {
@@ -192,7 +192,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetWebContent {
 		task ("Go to Team Extranet Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-team-extranet");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the 8 Team Members in Web Content are present") {
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Assert the 9 Job Positions in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-team-extranet");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
 
 			WebContentFolder.gotoCP(
 				folderName = "Job Positions",
@@ -218,7 +218,7 @@ definition {
 		}
 
 		task ("Assert the 9 Blog Entries in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-team-extranet");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
 
 			WebContentFolder.gotoCP(
 				folderName = "Blog Entries",

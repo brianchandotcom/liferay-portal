@@ -34,7 +34,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -53,11 +53,11 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.deletePage(pageName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Page.viewNoPG(pageName = "Test Page");
 
@@ -91,7 +91,7 @@ definition {
 			groupName = "Guest",
 			name = "Collection Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "Guest");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "Guest");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -113,7 +113,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPrivatePage(pageName = "Test Page");
 
@@ -246,13 +246,13 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		PagesAdmin.editFriendlyURL(friendlyUrlEdit = "/test-page-edited");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
 
 		AssertTextEquals(
 			key_text = "Friendly URL",
@@ -270,7 +270,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -285,7 +285,7 @@ definition {
 
 		Publications.revertPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

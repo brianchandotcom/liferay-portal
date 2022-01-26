@@ -1013,7 +1013,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは日本語のファイルです",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",

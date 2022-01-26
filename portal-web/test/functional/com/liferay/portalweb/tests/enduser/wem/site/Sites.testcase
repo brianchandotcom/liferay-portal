@@ -50,15 +50,15 @@ definition {
 		}
 
 		task ("Inactive the created site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.inactivateCP(siteName = "Site Name");
 		}
 
 		task ("View Inactive Request Message") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/site-name");
+			Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
 
 			Page.viewInactiveRequestMessage(resource = "site");
 		}
@@ -123,10 +123,10 @@ definition {
 		}
 
 		task ("Add a virtual host to the public page") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.addVirtualHostsURLCP(
-				publicPageVirtualHostUrl = "www.able.com",
+				publicPageVirtualHostURL = "www.able.com",
 				publicVirtualHosts = "true");
 		}
 
@@ -136,7 +136,7 @@ definition {
 			Site.viewVirtualHostsURLPG(
 				pageName = "Site Page",
 				siteName = "Site Name",
-				sitePageUrl = "http://www.able.com:8080/site-page");
+				sitePageURL = "http://www.able.com:8080/site-page");
 		}
 	}
 
@@ -200,9 +200,9 @@ definition {
 		}
 
 		task ("Edit friendly URL to null") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-			Site.editFriendlyURLCP(siteFriendlyUrlEdit = "");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 		}
 
 		task ("View the the end of firend URL changes to site ID") {
@@ -246,7 +246,7 @@ definition {
 		}
 
 		task ("Edit site name") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.editCP(
 				siteName = "Site Name",
@@ -263,7 +263,7 @@ definition {
 	@description = "Could edit friendly URL and access by it."
 	@priority = "4"
 	test EditSiteFriendlyURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -280,9 +280,9 @@ definition {
 		}
 
 		task ("Edit friendly URL to alpha") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-			Site.editFriendlyURLCP(siteFriendlyUrlEdit = "alpha");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
 		}
 
 		task ("Access public page via edited friendly URL") {
@@ -291,7 +291,7 @@ definition {
 			Site.viewSiteFriendlyURLPG(
 				pageName = "Public Page",
 				siteName = "Site Name",
-				sitePageUrl = "${portalUrl}/web/alpha");
+				sitePageURL = "${portalURL}/web/alpha");
 		}
 
 		task ("Access private page via edited friendly URL") {
@@ -300,7 +300,7 @@ definition {
 			Site.viewSiteFriendlyURLPG(
 				pageName = "Private Page",
 				siteName = "Site Name",
-				sitePageUrl = "${portalUrl}/group/alpha");
+				sitePageURL = "${portalURL}/group/alpha");
 		}
 	}
 
@@ -310,7 +310,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Sites#EditSiteFriendlyURLInvalid";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site and a public page in it") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -321,22 +321,22 @@ definition {
 		}
 
 		task ("Edit friendly URL to have 2 slashes") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.editFriendlyURLCP(
-				friendlyUrlInvalid = "true",
-				siteFriendlyUrl = "/site-name",
-				siteFriendlyUrlEdit = "/alpha/alpha");
+				friendlyURLInvalid = "true",
+				siteFriendlyURL = "/site-name",
+				siteFriendlyURLEdit = "/alpha/alpha");
 		}
 
 		task ("View friendly URL doesn't change") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Site Page");
 
-			PagesAdmin.viewBaseFriendlyURL(siteFriendlyUrl = "${portalUrl}/web/site-name");
+			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/site-name");
 		}
 	}
 
@@ -357,7 +357,7 @@ definition {
 	test SiteCannotBeItsOwnParent {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
@@ -388,7 +388,7 @@ definition {
 		}
 
 		task ("Assert could not select its own site as parent site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.selectParentSite(
 				chooseButtonAvailable = "false",
@@ -401,7 +401,7 @@ definition {
 	test ViewDefaultGlobalScopeLandingPage {
 		property testray.component.names = "Site Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		ProductMenuHelper.openProductMenu();
 

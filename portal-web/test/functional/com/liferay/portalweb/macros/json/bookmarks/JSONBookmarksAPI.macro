@@ -4,7 +4,7 @@ definition {
 	macro _addBookmarks {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -14,7 +14,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/bookmarks.bookmarksentry/add-entry \
+			${portalURL}/api/jsonws/bookmarks.bookmarksentry/add-entry \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
@@ -32,7 +32,7 @@ definition {
 	macro _addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderDescription)) {
 			var description = "${folderDescription}";
@@ -42,7 +42,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/bookmarks.bookmarksfolder/add-folder \
+			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/add-folder \
 				-u test@liferay.com:test \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${folderName} \
@@ -57,10 +57,10 @@ definition {
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/bookmarks.bookmarksfolder/get-folders \
+			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/get-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';

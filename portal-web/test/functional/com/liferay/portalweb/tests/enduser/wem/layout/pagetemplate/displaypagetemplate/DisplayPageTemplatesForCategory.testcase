@@ -34,7 +34,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to Display Page Template admin") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a display page template for Category") {
@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Add a category in vocabulary") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "Category Name",
@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("Add a Button fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
@@ -160,7 +160,7 @@ definition {
 		}
 
 		task ("Add a category and select the first display page template as specific display page template") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryDescription = "This is a description",
@@ -193,7 +193,7 @@ definition {
 		}
 
 		task ("Add a Button fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
@@ -219,7 +219,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
@@ -244,7 +244,7 @@ definition {
 		}
 
 		task ("Add a category in vocabulary and select the display page template as Specific") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "Category Name",
@@ -296,7 +296,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -480,7 +480,7 @@ definition {
 		}
 
 		task ("Add a Button fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -505,7 +505,7 @@ definition {
 		}
 
 		task ("Add a category in vocabulary and select the display page template as Specific") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "Category Name",
@@ -549,7 +549,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -585,7 +585,7 @@ definition {
 		}
 
 		task ("Add a category and select the display page template as specific display page template") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "Category Name",
@@ -627,7 +627,7 @@ definition {
 		}
 
 		task ("View the mapped content in display page template") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -665,7 +665,7 @@ definition {
 		}
 
 		task ("Add a Banner Center fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Add a category and select the display page template as specific display page template") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "Category Name",
@@ -728,7 +728,7 @@ definition {
 		}
 
 		task ("View the mapped content in display page template") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 

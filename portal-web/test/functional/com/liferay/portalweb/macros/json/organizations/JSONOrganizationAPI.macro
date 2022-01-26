@@ -23,10 +23,10 @@ definition {
 			var organizationType = "organization";
 		}
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/add-organization \
+			${portalURL}/api/jsonws/organization/add-organization \
 				-u test@liferay.com:test \
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
@@ -44,10 +44,10 @@ definition {
 	macro _addOrganizationToSite {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/add-group-organizations/group-id/${groupId}/organization-ids/${organizationId} \
+			${portalURL}/api/jsonws/organization/add-group-organizations/group-id/${groupId}/organization-ids/${organizationId} \
 				-u test@liferay.com:test
 		''';
 
@@ -57,10 +57,10 @@ definition {
 	macro _assignPasswordPolicyToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/add-password-policy-organizations \
+			${portalURL}/api/jsonws/organization/add-password-policy-organizations \
 				-u test@liferay.com:test \
 				-d organizationIds=${organizationId} \
 				-d passwordPolicyId=${passwordPolicyId}
@@ -72,10 +72,10 @@ definition {
 	macro _assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/user/add-organization-users \
+			${portalURL}/api/jsonws/user/add-organization-users \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId} \
 				-d userIds=${userId}
@@ -87,10 +87,10 @@ definition {
 	macro _deleteOrganization {
 		Variables.assertDefined(parameterList = "${organizationId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/delete-organization \
+			${portalURL}/api/jsonws/organization/delete-organization \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId}
 		''';

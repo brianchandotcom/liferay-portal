@@ -4,7 +4,7 @@ definition {
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var groupId = JSONLayoutSetter.setGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
@@ -26,7 +26,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		var plid = JSONLayoutAPI._addLayout(
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
@@ -41,7 +41,7 @@ definition {
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var groupId = JSONLayoutSetter.setGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
@@ -63,7 +63,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		var plid = JSONLayoutAPI._addLayout(
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
@@ -181,7 +181,7 @@ definition {
 
 		var groupId = JSONLayoutSetter.setGroupId(
 			groupName = "${groupName}",
-			portalUrl = "${portalUrl}",
+			portalURL = "${portalURL}",
 			site = "${site}");
 
 		if (!(isSet(privateLayout))) {
@@ -191,7 +191,7 @@ definition {
 		JSONLayoutAPI._getPlidByName(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			portalUrl = "${portalUrl}",
+			portalURL = "${portalURL}",
 			privateLayout = "${privateLayout}");
 	}
 

@@ -4,10 +4,10 @@ definition {
 	macro _addAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetlist.assetlistentry/add-asset-list-entry \
+			${portalURL}/api/jsonws/assetlist.assetlistentry/add-asset-list-entry \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d title=${title} \
@@ -22,7 +22,7 @@ definition {
 	macro _addDynamicAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
@@ -33,7 +33,7 @@ definition {
 			selectionType = "dynamic");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetlist.assetlistentry/add-dynamic-asset-list-entry \
+			${portalURL}/api/jsonws/assetlist.assetlistentry/add-dynamic-asset-list-entry \
 			-u test@liferay.com:test \
 			-d userId=${userId} \
 			-d groupId=${groupId} \
@@ -69,10 +69,10 @@ definition {
 	macro _updateAssetListEntryTypeSettings {
 		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetlist.assetlistentry/update-asset-list-entry-type-settings \
+			${portalURL}/api/jsonws/assetlist.assetlistentry/update-asset-list-entry-type-settings \
 			-u test@liferay.com:test \
 			-d assetListEntryId=${assetListEntryId} \
 			-d segmentsEntryId=${segmentsEntryId} \

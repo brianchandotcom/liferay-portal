@@ -23,7 +23,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.raylife.com:8080",
+				specificURL = "http://www.raylife.com:8080",
 				userEmailAddress = "test@raylife.com");
 		}
 	}

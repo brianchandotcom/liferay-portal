@@ -157,7 +157,7 @@ definition {
 			RemoteApps.addCustomElement(
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
-				entryUrl = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
 		}
 
 		task ("On Table Entries, Assert the New Remote App Presence") {
@@ -172,7 +172,7 @@ definition {
 	test RemoteAppsCanBeDeletedInLiferayOnline {
 		task ("Create a New Remote App with JSON") {
 			JSONRemoteApp.addIFrameRemoteAppEntry(
-				iFrameUrl = "http://www.liferay.com/my_new_remote_app",
+				iFrameURL = "http://www.liferay.com/my_new_remote_app",
 				name = "My New Remote App");
 		}
 
@@ -205,7 +205,7 @@ definition {
 			RemoteApps.addCustomElement(
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
-				entryUrl = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
@@ -238,7 +238,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@liferay.com");
 
 		Smoke.viewWelcomeContentPage();

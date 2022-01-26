@@ -36,7 +36,7 @@ definition {
 				sourceFileName = "Document_${num}.jpg");
 		}
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -92,7 +92,7 @@ definition {
 				sourceFileName = "${documentTitle}.jpg");
 		}
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -146,10 +146,10 @@ definition {
 		property portal.acceptance = "true";
 
 		Blogs.addImageToBlogImages(
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			uploadFileNames = "Document_1.jpg");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 

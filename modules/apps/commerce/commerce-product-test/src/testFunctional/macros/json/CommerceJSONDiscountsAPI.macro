@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllCommerceDiscounts {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var discountsCount = CommerceJSONDiscountsAPI._getCommerceDiscountsCount();
@@ -16,7 +16,7 @@ definition {
 				echo("Deleting Commerce discount with id: ${discountId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+					${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -30,10 +30,10 @@ definition {
 	}
 
 	macro _getCommerceDiscountIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(discountCount)) {
@@ -44,7 +44,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -54,14 +54,14 @@ definition {
 	}
 
 	macro _getCommerceDiscountsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-pricing/v2.0/discounts \
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

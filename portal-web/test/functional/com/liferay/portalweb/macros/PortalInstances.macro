@@ -85,11 +85,11 @@ definition {
 	}
 
 	macro openVirtualInstancesAdmin {
-		if (isSet(baseUrl)) {
-			var baseUrl = "${baseUrl}";
+		if (isSet(baseURL)) {
+			var baseURL = "${baseURL}";
 
 			Navigator.openWithAppendToBaseURL(
-				baseUrl = "${baseUrl}",
+				baseURL = "${baseURL}",
 				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 		}
 		else {

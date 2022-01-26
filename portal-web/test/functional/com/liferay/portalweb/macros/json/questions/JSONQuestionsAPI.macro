@@ -4,7 +4,7 @@ definition {
 	macro _addQuestion {
 		Variables.assertDefined(parameterList = "${categoryId},${titleField},${bodyField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -19,7 +19,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 			-H 'Content-Type: application/json' \
 			-u '${userEmailAddress}:${userPassword}' \
 			-d '{
@@ -45,7 +45,7 @@ definition {
 	macro _addQuestionWithTag {
 		Variables.assertDefined(parameterList = "${categoryId},${tagField},${titleField},${bodyField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -56,7 +56,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 			-H 'Content-Type: application/json' \
 			-u '${userEmailAddress}:${userPassword}' \
 			-d '{

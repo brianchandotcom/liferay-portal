@@ -1,17 +1,17 @@
 definition {
 
 	macro addAndEditExternalApplication {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		if (isSet(baseUrl)) {
-			var portalUrl = "${baseUrl}";
+		if (isSet(baseURL)) {
+			var portalURL = "${baseURL}";
 		}
 
-		OAuth2.openOAuth2Admin(baseUrl = "${baseUrl}");
+		OAuth2.openOAuth2Admin(baseURL = "${baseURL}");
 
 		OAuth2.addApplication(
 			applicationName = "${applicationName}",
-			callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=${clientId}''',
+			callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 			clientProfile = "Web Application");
 
 		if (isSet(checkboxCheckList)) {
@@ -20,10 +20,10 @@ definition {
 				locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
 		}
 
-		if (isSet(websiteUrl)) {
+		if (isSet(websiteURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Website URL",
-				text = "${websiteUrl}");
+				text = "${websiteURL}");
 		}
 
 		OAuth2.inputApplicationValues(
@@ -48,8 +48,8 @@ definition {
 			checkboxUncheckList = "${checkboxUncheckList}",
 			clientProfile = "${clientProfile}",
 			description = "${description}",
-			privacyPolicyUrl = "${privacyPolicyUrl}",
-			websiteUrl = "${websiteUrl}");
+			privacyPolicyURL = "${privacyPolicyURL}",
+			websiteURL = "${websiteURL}");
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -176,10 +176,10 @@ definition {
 			Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
 		}
 
-		if (isSet(portalUrl)) {
+		if (isSet(portalURL)) {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
-				value1 = "${portalUrl}");
+				value1 = "${portalURL}");
 		}
 
 		Type(
@@ -247,8 +247,8 @@ definition {
 			clientSecret = "${clientSecret}",
 			description = "${description}",
 			generateNewSecret = "${generateNewSecret}",
-			privacyPolicyUrl = "${privacyPolicyUrl}",
-			websiteUrl = "${websiteUrl}");
+			privacyPolicyURL = "${privacyPolicyURL}",
+			websiteURL = "${websiteURL}");
 
 		if (isSet(newApplicationName)) {
 			AssertTextEquals(
@@ -368,11 +368,11 @@ definition {
 	}
 
 	macro getAccessToken {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if ("${grantFlow}" == "clientCredentials") {
 			var tokenCurl = '''
-				${portalUrl}/o/oauth2/token \
+				${portalURL}/o/oauth2/token \
 					--data grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}
 			''';
 		}
@@ -388,21 +388,21 @@ definition {
 
 	macro getAuthorizationCode {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
 		Button.click(button = "Authorize");
 
 		WaitForElementPresent(locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL");
 
-		var currentUrl = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
-		echo("## * Current URL: ${currentUrl}");
+		echo("## * Current URL: ${currentURL}");
 
-		return "${currentUrl}";
+		return "${currentURL}";
 
-		var authorizationCode = StringUtil.extractLast("${currentUrl}", "code=");
+		var authorizationCode = StringUtil.extractLast("${currentURL}", "code=");
 
 		echo("## * Authorization Code: ${authorizationCode}");
 
@@ -449,10 +449,10 @@ definition {
 			PortletEntry.inputName(name = "${applicationName}");
 		}
 
-		if (isSet(websiteUrl)) {
+		if (isSet(websiteURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Website URL",
-				text = "${websiteUrl}");
+				text = "${websiteURL}");
 		}
 
 		if (isSet(description)) {
@@ -465,10 +465,10 @@ definition {
 				text = "${callbackUri}");
 		}
 
-		if (isSet(privacyPolicyUrl)) {
+		if (isSet(privacyPolicyURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Privacy Policy URL",
-				text = "${privacyPolicyUrl}");
+				text = "${privacyPolicyURL}");
 		}
 
 		if (isSet(clientProfile)) {
@@ -515,10 +515,10 @@ definition {
 	}
 
 	macro launchRequest {
-		if (isSet(requestUrl)) {
+		if (isSet(requestURL)) {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
-				value1 = "${requestUrl}");
+				value1 = "${requestURL}");
 		}
 
 		Button.click(button = "Launch Request");
@@ -542,7 +542,7 @@ definition {
 
 	macro openOAuth2Admin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
@@ -552,10 +552,10 @@ definition {
 	macro postClientCredentialTokenViaCurl {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
-				${portalUrl}/o/oauth2/token \
+				${portalURL}/o/oauth2/token \
 					-d client_id=${generatedClientId} \
 					-d client_secret=${generatedClientSecret} \
 					-d grant_type=client_credentials
@@ -653,11 +653,11 @@ definition {
 				value1 = "${applicationName}");
 		}
 
-		if (isSet(websiteUrl)) {
+		if (isSet(websiteURL)) {
 			AssertTextEquals(
 				key_fieldLabel = "Website URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${websiteUrl}");
+				value1 = "${websiteURL}");
 		}
 
 		if (isSet(description)) {
@@ -666,11 +666,11 @@ definition {
 				value1 = "${description}");
 		}
 
-		if (isSet(privacyPolicyUrl)) {
+		if (isSet(privacyPolicyURL)) {
 			AssertTextEquals(
 				key_fieldLabel = "Privacy Policy URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${privacyPolicyUrl}");
+				value1 = "${privacyPolicyURL}");
 		}
 
 		if (isSet(callbackUri)) {

@@ -49,13 +49,13 @@ definition {
 		}
 
 		task ("Change to instance language to es-ES") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			var currentUrl = Navigator.getCurrentURL();
+			var currentURL = Navigator.getCurrentURL();
 
-			var localizedUrl = StringUtil.replace("${currentUrl}", "${baseUrl}", "${baseUrl}/es");
+			var localizedURL = StringUtil.replace("${currentURL}", "${baseURL}", "${baseURL}/es");
 
-			Navigator.openSpecificURL(url = "${localizedUrl}");
+			Navigator.openSpecificURL(url = "${localizedURL}");
 		}
 
 		task ("Assert the fragment name is localized") {
@@ -128,7 +128,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {

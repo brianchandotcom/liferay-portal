@@ -27,10 +27,10 @@ definition {
 	@description = "This is a use case for LPS-107017. Creater user via JSONWSAPUI"
 	@priority = "4"
 	test CreateUserViaJSONWSAPIUI {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user via JSONWSUI") {
-			Navigator.openSpecificURL(url = "${portalUrl}/api/jsonws?contextName=&signature=/user/add-user-31-long-boolean-java.lang.String-java.lang.String-boolean-java.lang.String-java.lang.String-long-java.lang.String-java.util.Locale-java.lang.String-java.lang.String-java.lang.String-long-long-boolean-int-int-int-java.lang.String-%5BJ-%5BJ-%5BJ-%5BJ-java.util.List-java.util.List-java.util.List-java.util.List-java.util.List-boolean-com.liferay.portal.kernel.service.ServiceContext");
+			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextName=&signature=/user/add-user-31-long-boolean-java.lang.String-java.lang.String-boolean-java.lang.String-java.lang.String-long-java.lang.String-java.util.Locale-java.lang.String-java.lang.String-java.lang.String-long-long-boolean-int-int-int-java.lang.String-%5BJ-%5BJ-%5BJ-%5BJ-java.util.List-java.util.List-java.util.List-java.util.List-java.util.List-boolean-com.liferay.portal.kernel.service.ServiceContext");
 
 			JSONUser.addUserByJSONWSUI(
 				userFirstName = "testfUI",
@@ -127,9 +127,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			var plid = Page.getPlidFromHtmlSource();
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = '''${portalUrl}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
+			Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
@@ -142,7 +142,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Define user permissions view control panel menu") {
 			Role.openRolesAdmin();
@@ -199,7 +199,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.openSpecificURL(url = "${portalUrl}/web/test");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test");
 
 			PermissionsInline.gotoConfigurationPG(portletName = "Calendar");
 		}
@@ -210,8 +210,8 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
-		var url = "${portalUrl}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&serviceMethodName=getOSGiServiceIdentifier&p_auth=";
+		var portalURL = PropsUtil.get("portal.url");
+		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&serviceMethodName=getOSGiServiceIdentifier&p_auth=";
 
 		task ("Assert JSONWS empty page") {
 			Api.gotoPAuthURL(url = "${url}");
@@ -227,7 +227,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		var pAuth = Api.getPAuth();
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add new user") {
 			JSONUser.addUser(
@@ -249,7 +249,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.openSpecificURL(url = "${portalUrl}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}");
+			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}");
 
 			ServerAdministration.viewForbiddenErrorMessageAlert();
 		}
@@ -283,9 +283,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property portal.acceptance = "true";
 
 		task ("Go to home page") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalUrl}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com");
+			Navigator.openSpecificURL(url = "${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com");
 
 			Portlet.waitForHomePage(pageName = "Home");
 		}
@@ -301,7 +301,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assert test present in home page") {
-			Navigator.openSpecificURL(url = '''${portalUrl}/html/common/forward_jsp.jsp?FORWARD_URL=${portalUrl}/web/guest/test''');
+			Navigator.openSpecificURL(url = '''${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test''');
 
 			Portlet.waitForHomePage(pageName = "Test");
 		}
@@ -311,7 +311,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
-			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			LAR.importPortlet(
 				failureExpected = "true",
@@ -373,9 +373,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = "5"
 	test ViewJSLoaderModulesURLNoWiki {
 		task ("View JS loader modules") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${portalUrl}/o/js_loader_modules");
+			Open.openNoError(locator1 = "${portalURL}/o/js_loader_modules");
 
 			AssertConsoleTextPresent(value1 = "com.liferay.wiki.engine.html");
 
@@ -394,7 +394,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		task ("Add public layout") {
 			JSONLayout.addPublicLayout(
-				friendlyUrl = "/test-widget-page",
+				friendlyURL = "/test-widget-page",
 				groupName = "Guest",
 				layoutName = "Test Widget Page");
 		}
@@ -415,9 +415,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assert test widget page not present") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalUrl}/web/guest/test-widget-page/?p_p_id=asdf&p_p_lifecycle=0&p_p_state=maximized&_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/test-widget-page/?p_p_id=asdf&p_p_lifecycle=0&p_p_state=maximized&_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 
 			Portlet.viewPortletCouldNotBeFoundInfo();
 		}

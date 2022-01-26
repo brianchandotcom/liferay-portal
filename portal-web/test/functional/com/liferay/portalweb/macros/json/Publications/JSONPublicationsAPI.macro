@@ -3,14 +3,14 @@ definition {
 	macro _addPublication {
 		Variables.assertDefined(parameterList = "${publicationDescription},${publicationName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ct.ctcollection/add-ct-collection \
+			${portalURL}/api/jsonws/ct.ctcollection/add-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d userId=${userId} \
@@ -22,12 +22,12 @@ definition {
 	}
 
 	macro _enablePublications {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
+			${portalURL}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d ctCollectionId=0 \
@@ -40,12 +40,12 @@ definition {
 	macro _getCTCollectionId {
 		Variables.assertDefined(parameterList = "${publicationName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ct.ctcollection/get-ct-collections \
+			${portalURL}/api/jsonws/ct.ctcollection/get-ct-collections \
 			-u test@liferay.com:test \
 			-d companyId=${companyId} \
 			-d statuses=[2] \
@@ -65,14 +65,14 @@ definition {
 	macro _publishPublication {
 		Variables.assertDefined(parameterList = "${ctCollectionId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ct.ctcollection/publish-ct-collection \
+			${portalURL}/api/jsonws/ct.ctcollection/publish-ct-collection \
 				-u test@liferay.com:test \
 				-d ctCollectionId=${ctCollectionId} \
 				-d userId=${userId}
@@ -84,14 +84,14 @@ definition {
 	macro _selectPublication {
 		Variables.assertDefined(parameterList = "${ctCollectionId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
+			${portalURL}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d ctCollectionId=${ctCollectionId} \

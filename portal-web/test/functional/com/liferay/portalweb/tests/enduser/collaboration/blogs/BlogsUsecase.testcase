@@ -61,13 +61,13 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Source Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "source-site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
 
 		LAR.importPortlet(
 			larFileName = "Blogs.portlet.lar",
 			uploadFrom = "dependencies");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "source-site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -86,7 +86,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
 			larFileName = "BlogWithComment.lar",
@@ -97,7 +97,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blog Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content",

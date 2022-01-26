@@ -74,9 +74,9 @@ definition {
 			configuration = "disabled",
 			toggleSwitchLabel = "Enable Directory Indexing");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/test depot name");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/test depot name");
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",

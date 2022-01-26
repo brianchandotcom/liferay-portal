@@ -5,8 +5,8 @@ definition {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -28,7 +28,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
@@ -37,13 +37,13 @@ definition {
 	}
 
 	macro getDefaultPortalURL {
-		var portalUrl = PropsUtil.get("default.portal.url");
+		var portalURL = PropsUtil.get("default.portal.url");
 
-		if (!(contains("${portalUrl}", "http"))) {
-			var portalUrl = "http://${portalUrl}";
+		if (!(contains("${portalURL}", "http"))) {
+			var portalURL = "http://${portalURL}";
 		}
 
-		return "${portalUrl}";
+		return "${portalURL}";
 	}
 
 	macro getPortalInstanceName {
@@ -51,9 +51,9 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
-			var portalUrl = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 
-			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalUrl = "${portalUrl}");
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
 
 			return "${portalInstanceName}";
 		}
@@ -63,15 +63,15 @@ definition {
 	}
 
 	macro getPortalURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		return "${portalUrl}";
+		return "${portalURL}";
 	}
 
 	macro parsePortalInstanceURL {
-		Variables.assertDefined(parameterList = "${portalUrl}");
+		Variables.assertDefined(parameterList = "${portalURL}");
 
-		var portalInstanceName = StringUtil.replace("${portalUrl}", "http://", "");
+		var portalInstanceName = StringUtil.replace("${portalURL}", "http://", "");
 		var portalInstanceName = StringUtil.replace("${portalInstanceName}", ":8080", "");
 
 		return "${portalInstanceName}";

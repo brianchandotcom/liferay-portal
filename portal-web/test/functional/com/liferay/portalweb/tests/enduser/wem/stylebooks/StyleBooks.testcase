@@ -35,7 +35,7 @@ definition {
 		property testray.component.names = "Frontend Token";
 
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -133,7 +133,7 @@ definition {
 	@priority = "4"
 	test ChangeStyleBookOfContentPageViaLookAndFeel {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -358,7 +358,7 @@ definition {
 	@priority = "4"
 	test ChangeStyleBookOfWidgetPageViaLookAndFeel {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -501,7 +501,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Public Page");
 
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.changeSiteCurrentTheme(
 				privacy = "Public Pages",
@@ -513,7 +513,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Private Page");
 
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.changeSiteCurrentTheme(
 				privacy = "Private Pages",
@@ -521,7 +521,7 @@ definition {
 		}
 
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -533,7 +533,7 @@ definition {
 		}
 
 		task ("Change master page's theme to Minium") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 

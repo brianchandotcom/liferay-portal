@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllNoMasterPriceListsAndPromotions {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
@@ -12,7 +12,7 @@ definition {
 		if ("${priceListAndPromotionIds}" != "") {
 			for (var priceListAndPromotionId : list "${priceListAndPromotionIds}") {
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
+					${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -26,10 +26,10 @@ definition {
 	}
 
 	macro _getCommerceNoMasterPriceListsAndPromotions {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(priceListAndPromotionCount)) {
@@ -40,7 +40,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-pricing/v2.0/price-lists?pageSize=${priceListsAndPromotionsCount} \
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?pageSize=${priceListsAndPromotionsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

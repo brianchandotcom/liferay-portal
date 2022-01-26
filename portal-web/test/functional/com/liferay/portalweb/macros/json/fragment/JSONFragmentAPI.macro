@@ -4,7 +4,7 @@ definition {
 	macro _addFragmentCollection {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -14,7 +14,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
+			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d name=${name} \
@@ -28,10 +28,10 @@ definition {
 	macro _addSection {
 		Variables.assertDefined(parameterList = "${groupId},${collectionId},${name},${html},${configuration},${type},${status}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmententry/add-fragment-entry \
+			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d fragmentCollectionId=${collectionId} \
@@ -56,10 +56,10 @@ definition {
 	macro _deleteCollection {
 		Variables.assertDefined(parameterList = "${collectionId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
+			${portalURL}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
 			-u test@liferay.com:test \
 			-d fragmentCollectionId=${collectionId}
 		''';
@@ -71,10 +71,10 @@ definition {
 	macro _getCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${collectionName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
+			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d name=${collectionName} \
@@ -93,10 +93,10 @@ definition {
 
 	@summary = "Get the collectionName by using collectionName"
 	macro _getCollectionName {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
+			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d name=${collectionName} \
@@ -111,10 +111,10 @@ definition {
 
 	@summary = "Get the fragmentName from a fragmentCollection by using fragmentName "
 	macro _getFragmentName {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/fragment.fragmententry/get-fragment-entries \
+			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d fragmentCollectionId=${fragmentCollectionId} \

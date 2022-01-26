@@ -155,7 +155,7 @@ definition {
 
 		Staging.assignStagingAdminToSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
@@ -163,7 +163,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -175,7 +175,7 @@ definition {
 
 		Staging.undoStagingPageVersioningPG();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -187,7 +187,7 @@ definition {
 
 		Staging.redoStagingPageVersioningPG();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -201,7 +201,7 @@ definition {
 
 		Staging.publishToLive();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -259,7 +259,7 @@ definition {
 			pageName = "Wiki",
 			privacy = "Public Pages");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page Name");
 
@@ -292,7 +292,7 @@ definition {
 			pageName = "Test Page Name",
 			privacy = "Public Pages");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Staging Test Page");
 
@@ -336,7 +336,7 @@ definition {
 			copySitePagesVariationName = "None (Empty Site Pages Variation)",
 			sitePagesVariationName = "Empty Variation");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Empty Page Name");
 
@@ -418,7 +418,7 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "New Variation");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Wiki");
 
@@ -443,7 +443,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Home#PAGE_2");
 		}
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "New Page Name");
 
@@ -482,7 +482,7 @@ definition {
 	test StagingLocalLiveWebContent {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -581,13 +581,13 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -601,13 +601,13 @@ definition {
 			branchingPublic = "true",
 			groupName = "Site Name");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "site-name-staging");
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name-staging");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Page Revision");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
@@ -895,7 +895,7 @@ definition {
 
 		Staging.markAsReadyForPublication();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Wiki");
 
@@ -925,7 +925,7 @@ definition {
 	test UpdateAndDeleteWebContentCommentOnLiveSite {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 

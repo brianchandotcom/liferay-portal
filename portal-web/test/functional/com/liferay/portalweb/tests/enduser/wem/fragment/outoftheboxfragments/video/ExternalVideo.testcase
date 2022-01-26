@@ -42,11 +42,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add an external video shortcut") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			VideoShortcut.addCP(
 				videoShortcutTitle = "Liferay Digital Experience Platform",
-				videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 		}
 
 		task ("Add an External Video fragment to page") {
@@ -138,7 +138,7 @@ definition {
 
 			ItemSelector.addVideoFromURL(
 				navTab = "URL",
-				videoSourceUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+				videoSourceURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 		}
 
 		task ("View the video displayed in External Video") {

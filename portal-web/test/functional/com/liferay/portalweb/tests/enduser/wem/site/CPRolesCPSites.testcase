@@ -539,7 +539,7 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
 				value1 = "${siteName}");
 
-			PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Sites",

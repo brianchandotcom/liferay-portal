@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a DL Folder"
 	macro addFolder {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -36,7 +36,7 @@ definition {
 			addGuestPermissions = "${guestPermissions}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlapp/add-folder \
+			${portalURL}/api/jsonws/dlapp/add-folder \
 			-u test@liferay.com:test \
 			-d repositoryId=${repositoryId} \
 			-d parentFolderId=${parentFolderId} \
@@ -56,14 +56,14 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete a folder"
 	macro deleteFolder {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = "${groupName}",
 			name = "${folderName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlfolder/delete-folder \
+			${portalURL}/api/jsonws/dlfolder/delete-folder \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}
 		''';
@@ -71,14 +71,14 @@ definition {
 
 	@summary = "This calls the JSON WS API to move a folder to trash"
 	macro moveFolderToTrash {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = "${groupName}",
 			name = "${folderName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dltrash/move-folder-to-trash \
+			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}
 		''';

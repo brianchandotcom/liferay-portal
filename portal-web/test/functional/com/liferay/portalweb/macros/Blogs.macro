@@ -1,10 +1,10 @@
 definition {
 
 	macro addDraft {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToAddEntry(
 				layoutName = "${layoutName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			BlogsNavigator.gotoAddEntry();
@@ -45,7 +45,7 @@ definition {
 			videoShortcutDescription = "${videoShortcutDescription}",
 			videoShortcutPreview = "${videoShortcutPreview}",
 			videoShortcutTitle = "${videoShortcutTitle}",
-			videoUrl = "${videoUrl}",
+			videoURL = "${videoURL}",
 			viewInternalVideoPreview = "${viewInternalVideoPreview}");
 
 		if (isSet(readingTime)) {
@@ -91,7 +91,7 @@ definition {
 	}
 
 	macro addEntryWithCoverImageFromDepot {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "${siteUrlKey}");
+		BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");
 
 		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
@@ -134,8 +134,8 @@ definition {
 	}
 
 	macro addEntryWithCustomURL {
-		if (isSet(siteUrlKey)) {
-			BlogsNavigator.openToAddEntry(siteUrlKey = "${siteUrlKey}");
+		if (isSet(siteURLKey)) {
+			BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");
 		}
 		else {
 			BlogsNavigator.gotoAddEntry();
@@ -148,7 +148,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "${customUrl}");
+		BlogsEntry.addCustomURL(customURL = "${customURL}");
 
 		PortletEntry.publish();
 	}
@@ -260,7 +260,7 @@ definition {
 	}
 
 	macro addImageToBlogImages {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "${siteUrlKey}");
+		BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");
 
 		for (var uploadFileName : list "${uploadFileNames}") {
 			if (IsElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE")) {
@@ -512,11 +512,11 @@ definition {
 	}
 
 	macro editEntryPG {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToEditEntryInSite(
 				entryTitle = "${entryTitle}",
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			BlogsNavigator.gotoEditPG(entryTitle = "${entryTitle}");

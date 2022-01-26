@@ -75,13 +75,13 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormUrl = Form.getPublishedFormPublicURL();
+			var publishedFormURL = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -108,7 +108,7 @@ definition {
 		}
 
 		task ("Navigate to the published form") {
-			Navigator.openSpecificURL(url = "${publishedFormUrl}");
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
 
 			FormPortlet.waitFormRenderer(text = "Submit");
 		}
@@ -381,13 +381,13 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormUrl = Form.getPublishedFormPublicURL();
+			var publishedFormURL = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -414,7 +414,7 @@ definition {
 		}
 
 		task ("Navigate to the published form") {
-			Navigator.openSpecificURL(url = "${publishedFormUrl}");
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
 
 			FormPortlet.waitFormRenderer(text = "Submit");
 		}
@@ -546,13 +546,13 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormUrl = Form.getPublishedFormPublicURL();
+			var publishedFormURL = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -583,7 +583,7 @@ definition {
 		}
 
 		task ("Navigate to the published form") {
-			Navigator.openSpecificURL(url = "${publishedFormUrl}");
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
 		}
 
 		task ("Wait for sending requests") {
@@ -625,13 +625,13 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormUrl = Form.getPublishedFormPublicURL();
+			var publishedFormURL = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -672,7 +672,7 @@ definition {
 		}
 
 		task ("Navigate to the published form") {
-			Navigator.openSpecificURL(url = "${publishedFormUrl}");
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
 		}
 
 		task ("Wait for sending requests") {

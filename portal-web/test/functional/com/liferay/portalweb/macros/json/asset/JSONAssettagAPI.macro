@@ -4,10 +4,10 @@ definition {
 	macro _addTag {
 		Variables.assertDefined(parameterList = "${groupId},${tagName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assettag/add-tag \
+			${portalURL}/api/jsonws/assettag/add-tag \
 			-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d name=${tagName}

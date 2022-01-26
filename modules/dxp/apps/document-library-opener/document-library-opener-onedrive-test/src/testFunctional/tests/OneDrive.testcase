@@ -454,7 +454,7 @@ definition {
 			dmDocumentTitle = "Cancel Checkout Excel Sheet Title",
 			dmDocumentTypeName = "Excel");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.cancelCheckoutCP(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
 
@@ -716,7 +716,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは日本語のファイルです",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",

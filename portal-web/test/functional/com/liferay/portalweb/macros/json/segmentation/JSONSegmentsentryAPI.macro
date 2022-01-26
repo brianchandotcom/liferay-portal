@@ -4,10 +4,10 @@ definition {
 	macro _addSegment {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/segments.segmentsentry/add-segments-entry \
+			${portalURL}/api/jsonws/segments.segmentsentry/add-segments-entry \
 				-u test@liferay.com:test \
 				-d segmentsEntryKey= \
 				-d nameMap=${nameMap} \

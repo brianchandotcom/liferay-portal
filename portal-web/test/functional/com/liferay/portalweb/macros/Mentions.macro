@@ -4,10 +4,10 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
 
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToAddEntry(
 				layoutName = "${layoutName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
 			BlogsNavigator.gotoAddEntry();
@@ -120,11 +120,11 @@ definition {
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
 		var key_threadSubject = "${threadSubject}";
 
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToThread(
 				groupName = "${groupName}",
 				layoutName = "${layoutName}",
-				siteUrlKey = "${siteUrlKey}",
+				siteURLKey = "${siteURLKey}",
 				threadSubject = "${threadSubject}");
 		}
 		else {
@@ -153,8 +153,8 @@ definition {
 	}
 
 	macro addMentionViaMessageBoardThread {
-		if (isSet(siteUrlKey)) {
-			MessageboardsThread.openToAddThread(siteUrlKey = "${siteUrlKey}");
+		if (isSet(siteURLKey)) {
+			MessageboardsThread.openToAddThread(siteURLKey = "${siteURLKey}");
 		}
 		else {
 			LexiconEntry.gotoAdd();
@@ -199,10 +199,10 @@ definition {
 	}
 
 	macro addMentionViaMessageBoardThreadEdit {
-		if (isSet(siteUrlKey)) {
+		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToEditThread(
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}",
+				siteURLKey = "${siteURLKey}",
 				threadSubject = "${threadSubject}");
 		}
 		else {

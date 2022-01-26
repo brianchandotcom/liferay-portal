@@ -62,7 +62,7 @@ definition {
 
 		MessageboardsPortlet.configureMessageFormat(
 			messageFormat = "HTML",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -79,7 +79,7 @@ definition {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			source = "true",
 			threadBody = '''<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>''',
 			threadSubject = "MB Thread Message HTML Subject");
@@ -111,7 +111,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.flagThread(
@@ -135,7 +135,7 @@ definition {
 
 		MessageboardsPortlet.configureMessageAddedEmail(
 			bodyContent = "[$MESSAGE_BODY$] este es un campo de tablero de mensajes",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -152,7 +152,7 @@ definition {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBody = "MB Localized Template Body",
 			threadSubject = "MB Localized Template Subject");
 
@@ -172,7 +172,7 @@ definition {
 
 		MessageboardsPortlet.viewDefaultEmailFromCP(
 			emailFromAddress = "testadmin@liferay.com",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
@@ -187,7 +187,7 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		MessageboardsPortlet.subscribePG();
 
@@ -287,7 +287,7 @@ definition {
 		MessageboardsCategory.openToCategory(
 			categoryName = "MB Category Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -303,7 +303,7 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
@@ -360,7 +360,7 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -405,7 +405,7 @@ definition {
 		MessageboardsCategory.openToCategory(
 			categoryName = "MB Category Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -421,7 +421,7 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
@@ -442,7 +442,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
 		property test.name.skip.portal.instance = "MessageboardsUsecase#ViewMBThreadAndReplyThreadInGmail";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -555,7 +555,7 @@ definition {
 
 		Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject GMMB1 Reply");
 
-		Navigator.openSpecificURL(url = "${portalUrl}");
+		Navigator.openSpecificURL(url = "${portalURL}");
 
 		Pause(locator1 = "30000");
 

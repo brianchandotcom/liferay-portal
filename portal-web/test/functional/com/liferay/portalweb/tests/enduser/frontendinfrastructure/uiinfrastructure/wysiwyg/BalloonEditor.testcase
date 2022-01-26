@@ -96,7 +96,7 @@ definition {
 
 			ItemSelector.addVideoFromURL(
 				navTab = "URL",
-				videoSourceUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+				videoSourceURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 			Click(locator1 = "CKEditorBalloonEditorSample#VIDEO");
 		}

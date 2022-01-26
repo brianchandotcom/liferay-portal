@@ -81,13 +81,13 @@ definition {
 		task ("Assert Active pages shown for individuals and assert details") {
 			ACInterests.clickInterest(interestTopic = "ac page 1");
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACInterests.viewInterestPage(
 				pageName = "AC Page 1 - Site Name - ${siteName}",
-				pageUrl = "${portalUrl}/web/site-name/ac-page");
+				pageURL = "${portalURL}/web/site-name/ac-page");
 		}
 	}
 

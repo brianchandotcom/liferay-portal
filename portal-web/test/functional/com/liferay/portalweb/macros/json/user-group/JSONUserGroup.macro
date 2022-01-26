@@ -4,7 +4,7 @@ definition {
 	macro addLayout {
 		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
 
-		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
 
@@ -12,10 +12,10 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
@@ -29,7 +29,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "0",

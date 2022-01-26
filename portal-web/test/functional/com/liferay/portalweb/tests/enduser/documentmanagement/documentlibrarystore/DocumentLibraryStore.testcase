@@ -51,7 +51,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -94,11 +94,11 @@ definition {
 			locator1 = "build-test-aws-s3.xml",
 			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "test-site-name");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -127,7 +127,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -154,7 +154,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 

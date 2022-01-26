@@ -1,7 +1,7 @@
 definition {
 
 	macro addEntry {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
 			LexiconEntry.gotoAdd();
@@ -9,24 +9,24 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#REDIRECT_SOURCE_URL_PREFIX",
-			value1 = "${portalUrl}/web/${siteName}");
+			value1 = "${portalURL}/web/${siteName}");
 
 		AssertElementPresent(locator1 = "Button#TRY_REDIRECTION_DISABLED");
 
 		Type(
 			locator1 = "TextInput#REDIRECT_SOURCE_URL",
-			value1 = "${sourceUrl}");
+			value1 = "${sourceURL}");
 
 		Type(
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-			value1 = "${destinationUrl}");
+			value1 = "${destinationURL}");
 
-		if (isSet(checkDestinationUrl)) {
+		if (isSet(checkDestinationURL)) {
 			Click(locator1 = "Button#TRY_REDIRECTION");
 
 			SelectWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
 
-			AssertLocation(value1 = "${destinationUrl}");
+			AssertLocation(value1 = "${destinationURL}");
 
 			Close.closeWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
 		}
@@ -45,25 +45,25 @@ definition {
 
 		Button.click(button = "Create");
 
-		if ("${redirectUrlVariation}" == "Null") {
+		if ("${redirectURLVariation}" == "Null") {
 			Alert.viewRequiredField();
 		}
-		else if ("${sourceUrlVariation}" == "Duplicate") {
+		else if ("${sourceURLVariation}" == "Duplicate") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error:There is already a redirect set for the same source URL.");
 		}
-		else if ("${sourceUrlVariation}" == "Invalid") {
+		else if ("${sourceURLVariation}" == "Invalid") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Please enter a source URL with valid characters.");
 		}
-		else if ("${sourceUrlVariation}" == "LengthLimit") {
+		else if ("${sourceURLVariation}" == "LengthLimit") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error: The source URL is too long.");
 		}
-		else if (("${destinationUrlVariation}" == "Space") || ("${destinationUrlVariation}" == "RelativeURL")) {
+		else if (("${destinationURLVariation}" == "Space") || ("${destinationURLVariation}" == "RelativeURL")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#ALERT",
 				value1 = "This URL is not supported");
@@ -82,7 +82,7 @@ definition {
 	}
 
 	macro addEntryVia404URLs {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
@@ -93,32 +93,32 @@ definition {
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		if (isSet(ignoredUrl)) {
+		if (isSet(ignoredURL)) {
 			MenuItem.click(menuItem = "Ignored URLs");
 
 			Redirect.gotoEntryMenuItem(
 				item = "Create Redirect",
-				sourceUrl = "${ignoredUrl}");
+				sourceURL = "${ignoredURL}");
 		}
 		else {
 			MenuItem.click(menuItem = "Active URLs");
 
 			Redirect.gotoEntryMenuItem(
 				item = "Create Redirect",
-				sourceUrl = "${activeIgnoreUrl}");
+				sourceURL = "${activeIgnoreURL}");
 		}
 
 		AssertTextEquals(
 			locator1 = "TextInput#REDIRECT_SOURCE_URL_PREFIX",
-			value1 = "${portalUrl}/web/${siteName}");
+			value1 = "${portalURL}/web/${siteName}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#REDIRECT_SOURCE_URL",
-			value1 = "${sourceUrl}");
+			value1 = "${sourceURL}");
 
 		Type(
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-			value1 = "${destinationUrl}");
+			value1 = "${destinationURL}");
 
 		if (isSet(redirectType)) {
 			Select(
@@ -160,7 +160,7 @@ definition {
 			}
 		}
 
-		if (isSet(destinationUrlEdit)) {
+		if (isSet(destinationURLEdit)) {
 			AssertClick(
 				locator1 = "Button#MODAL_ITEM_SUBMIT",
 				value1 = "Save");
@@ -179,7 +179,7 @@ definition {
 		else {
 			Redirect.gotoEntryMenuItem(
 				item = "Delete",
-				sourceUrl = "${sourceUrl}");
+				sourceURL = "${sourceURL}");
 		}
 
 		Alert.viewSuccessMessage();
@@ -189,7 +189,7 @@ definition {
 		if (!(isSet(skipNavigation))) {
 			Redirect.gotoEntryMenuItem(
 				item = "Edit",
-				sourceUrl = "${sourceUrl}");
+				sourceURL = "${sourceURL}");
 		}
 
 		if (isSet(toolTip)) {
@@ -200,16 +200,16 @@ definition {
 				value1 = "The redirect type affects how long search engines and browsers cache the information.");
 		}
 
-		if (isSet(sourceUrlEdit)) {
+		if (isSet(sourceURLEdit)) {
 			Type(
 				locator1 = "TextInput#REDIRECT_SOURCE_URL",
-				value1 = "${sourceUrlEdit}");
+				value1 = "${sourceURLEdit}");
 		}
 
-		if (isSet(destinationUrlEdit)) {
+		if (isSet(destinationURLEdit)) {
 			Type(
 				locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-				value1 = "${destinationUrlEdit}");
+				value1 = "${destinationURLEdit}");
 		}
 
 		if (isSet(redirectTypeEdit)) {
@@ -234,7 +234,7 @@ definition {
 
 		if (isSet(redirectChain)) {
 			Redirect.configureRedirectChain(
-				destinationUrlEdit = "${destinationUrlEdit}",
+				destinationURLEdit = "${destinationURLEdit}",
 				noUpdateRedirect = "${noUpdateRedirect}",
 				noUpdateReferences = "${noUpdateReferences}",
 				updateRedirect = "${updateRedirect}");
@@ -246,7 +246,7 @@ definition {
 	macro gotoEntryMenuItem {
 		LexiconTable.clickEllipsisItem(
 			item = "${item}",
-			tableEntry = "${sourceUrl}");
+			tableEntry = "${sourceURL}");
 	}
 
 	macro ignoreEntry {
@@ -270,7 +270,7 @@ definition {
 			else {
 				Redirect.gotoEntryMenuItem(
 					item = "Unignore",
-					sourceUrl = "${ignoreUrl}");
+					sourceURL = "${ignoreURL}");
 			}
 
 			Alert.viewSuccessMessage();
@@ -286,7 +286,7 @@ definition {
 			else {
 				Redirect.gotoEntryMenuItem(
 					item = "Ignore",
-					sourceUrl = "${ignoreUrl}");
+					sourceURL = "${ignoreURL}");
 			}
 
 			Alert.viewSuccessMessage();
@@ -294,47 +294,47 @@ definition {
 	}
 
 	macro open404URLsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=404-urls");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=404-urls");
 	}
 
 	macro openRedirectAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddEntry {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseUrl}%3A8080%2Fgroup%2F${siteUrlKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet");
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
 	macro openToConfigInSystemSettings {
-		var baseUrl = PropsUtil.get("portal.url");
+		var baseURL = PropsUtil.get("portal.url");
 
-		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToEditEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			destinationUrl = "${destinationUrl}",
+			destinationURL = "${destinationURL}",
 			groupName = "${groupName}");
 
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseUrl}%3A8080%2Fgroup%2F${siteUrlKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
 	}
 
 	macro view404URLs {
-		if (isSet(activeIgnoreUrl)) {
+		if (isSet(activeIgnoreURL)) {
 			AssertClick(
 				key_navItem = "404 URLs",
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
@@ -343,15 +343,15 @@ definition {
 
 		if ("${multipleUrLs}" == "true") {
 			AssertTextEquals.assertPartialText(
-				key_rowEntry = "${ignoreUrl}",
+				key_rowEntry = "${ignoreURL}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				value1 = "${ignoreUrl}");
+				value1 = "${ignoreURL}");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
-				key_rowEntry = "${ignoreUrl}",
+				key_rowEntry = "${ignoreURL}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				value1 = "${ignoreUrl}");
+				value1 = "${ignoreURL}");
 
 			AssertTextEquals.assertPartialText(
 				key_rowEntry = "${requestNumber}",
@@ -378,14 +378,14 @@ definition {
 
 	macro viewEntry {
 		AssertTextEquals.assertPartialText(
-			key_rowEntry = "${sourceUrl}",
+			key_rowEntry = "${sourceURL}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			value1 = "${sourceUrl}");
+			value1 = "${sourceURL}");
 
 		AssertTextEquals.assertPartialText(
-			key_rowEntry = "${destinationUrl}",
+			key_rowEntry = "${destinationURL}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			value1 = "${destinationUrl}");
+			value1 = "${destinationURL}");
 
 		if (isSet(redirectType)) {
 			AssertTextEquals(
@@ -404,19 +404,19 @@ definition {
 
 	macro viewEntryFloatingURL {
 		MouseOver(
-			key_rowEntry = "${redirectUrl}",
+			key_rowEntry = "${redirectURL}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		AssertElementPresent(
-			key_redirectUrl = "${redirectUrl}",
+			key_redirectURL = "${redirectURL}",
 			locator1 = "Redirect#FLOATING_TOOLTIP_URL");
 	}
 
 	macro viewEntryInfo {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		Check(
-			key_tableEntry = "${portalUrl}/web/test-site-name/test-source-page",
+			key_tableEntry = "${portalURL}/web/test-site-name/test-source-page",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
 		Click.clickAt(locator1 = "Icon#INFO");

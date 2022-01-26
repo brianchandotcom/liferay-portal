@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Get all current companies in a JSON format"
 	macro _getPortalInstances {
-		var portalUrl = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -12,7 +12,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';
@@ -25,7 +25,7 @@ definition {
 	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
-		var portalUrl = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -50,7 +50,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-d ${parameters} \
 			-H Content-Type: application/json
@@ -63,7 +63,7 @@ definition {
 	macro addPortalInstanceWithVirtualInstanceInitializer {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -93,7 +93,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-d ${parameters} \
 			-H Content-Type: application/json
@@ -121,7 +121,7 @@ definition {
 	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = "${portalInstanceId}");
 
-		var portalUrl = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
 
@@ -133,7 +133,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
 			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';

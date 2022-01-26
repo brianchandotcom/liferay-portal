@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Add a Data Definition entry") {
-			DDLList.openDynamicDataListsAdmin(siteUrlKey = "test-site-name");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -126,7 +126,7 @@ definition {
 		}
 
 		task ("Add a Dynamic Data Lists entry") {
-			DDLList.openDynamicDataListsAdmin(siteUrlKey = "test-site-name");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
 
 			DDLList.addCP(ddlListName = "List Name");
 
@@ -214,7 +214,7 @@ definition {
 			Bookmark.addBookmarkViaAP(
 				bookmarkDescription = "Test Bookmark Description",
 				bookmarkName = "Test Bookmark Name",
-				bookmarkUrl = "https://www.liferay.com");
+				bookmarkURL = "https://www.liferay.com");
 		}
 
 		task ("View the bookmarks entry shown in Asset Publisher") {
@@ -229,7 +229,7 @@ definition {
 	@description = "LPS-96038 - Global Categories do not appear as filters in Asset Publisher Configuration."
 	@priority = "4"
 	test ConfigureAPPortletDisplaysGlobalCategoriesAsFilters {
-		Category.openCategoriesAdmin(siteUrlKey = "global");
+		Category.openCategoriesAdmin(siteURLKey = "global");
 
 		Category.addCP(
 			categoryName = "Category Name",
@@ -535,7 +535,7 @@ definition {
 	test OrderWebContentsByPriority {
 		task ("Add three web contents with different priority") {
 			for (var i : list "1,5,3") {
-				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 				WebContentNavigator.gotoAddCP();
 

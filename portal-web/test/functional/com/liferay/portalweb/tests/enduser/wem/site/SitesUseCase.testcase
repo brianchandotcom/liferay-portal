@@ -220,7 +220,7 @@ definition {
 		}
 
 		task ("Set Allow manual memebership management for the site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
 			Site.manageMembershipOptions(
 				allowManualMembershipManagement = "true",
@@ -249,7 +249,7 @@ definition {
 		}
 
 		task ("Set Allow manual memebership management for the site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "organization-name-2");
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
 			Site.manageMembershipOptions(
 				allowManualMembershipManagement = "true",
@@ -329,9 +329,9 @@ definition {
 		}
 
 		task ("View inactive request message in the second organization site") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/organization-name-2");
+			Navigator.openSpecificURL(url = "${baseURL}/web/organization-name-2");
 
 			Page.viewInactiveRequestMessage(resource = "site");
 		}
@@ -360,7 +360,7 @@ definition {
 		}
 
 		task ("Assign the user group to default site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 		}
@@ -424,7 +424,7 @@ definition {
 		}
 
 		task ("Assign site role to created user in default site's memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignSiteRoleCP(
 				resourceName = "userfn userln",
@@ -432,7 +432,7 @@ definition {
 		}
 
 		task ("View can not assign user group") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			NavItem.gotoUserGroups();
 
@@ -457,10 +457,10 @@ definition {
 		}
 
 		task ("Add virtual host to private page in default site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 			Site.addVirtualHostsURLCP(
-				privatePageVirtualHostUrl = "www.able.com",
+				privatePageVirtualHostURL = "www.able.com",
 				privateVirtualHosts = "true");
 		}
 
@@ -509,7 +509,7 @@ definition {
 
 		task ("Log in from private page virtual URL as the created user") {
 			User.firstLoginUI(
-				specificUrl = "http://www.able.com:8080/test-private-page",
+				specificURL = "http://www.able.com:8080/test-private-page",
 				userEmailAddress = "userea@liferay.com",
 				userPassword = "test");
 		}
@@ -560,15 +560,15 @@ definition {
 		}
 
 		task ("Add a virtual instance for public page") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.addVirtualHostsURLCP(
-				publicPageVirtualHostUrl = "www.baker.com",
+				publicPageVirtualHostURL = "www.baker.com",
 				publicVirtualHosts = "true");
 		}
 
 		task ("Log in public page in virtual host") {
-			User.firstLoginUI(specificUrl = "http://www.baker.com:8080");
+			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
 		}
 
 		task ("Add a user and set require password reset") {
@@ -591,7 +591,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "password",
-				specificUrl = "http://www.baker.com:8080",
+				specificURL = "http://www.baker.com:8080",
 				userEmailAddress = "user1@liferay.com");
 		}
 
@@ -638,7 +638,7 @@ definition {
 		}
 
 		task ("Log in instance in virtual host") {
-			User.firstLoginUI(specificUrl = "http://www.able.com:8080");
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
 		}
 
 		task ("Edit Email Verification Notification in instance settings") {
@@ -663,7 +663,7 @@ definition {
 			UserBar.signOut();
 
 			User.firstLoginUI(
-				specificUrl = "http://www.baker.com:8080",
+				specificURL = "http://www.baker.com:8080",
 				userEmailAddress = "user1@liferay.com");
 		}
 
@@ -674,7 +674,7 @@ definition {
 		}
 
 		task ("Get Email Address Verification URL from email") {
-			var emailAddressVerificationUrl = MockMock.getHTMLBodyFormattedText(
+			var emailAddressVerificationURL = MockMock.getHTMLBodyFormattedText(
 				newTab = "true",
 				recipient = "user2@",
 				sender = "Joe Bloggs",
@@ -684,7 +684,7 @@ definition {
 		}
 
 		task ("Open Email Address Verification URL and verify it") {
-			Navigator.openSpecificURL(url = "${emailAddressVerificationUrl}");
+			Navigator.openSpecificURL(url = "${emailAddressVerificationURL}");
 
 			Button.clickVerifyButton();
 		}
@@ -704,7 +704,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a user group") {
 			UserGroup.openUserGroupsAdmin();
@@ -754,7 +754,7 @@ definition {
 		task ("View my dashboard URL") {
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-			AssertLocation(value1 = "${portalUrl}/user/usersn");
+			AssertLocation(value1 = "${portalURL}/user/usersn");
 		}
 
 		task ("Log in as default user") {
@@ -770,21 +770,21 @@ definition {
 		}
 
 		task ("Edit default site friendly URL") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-			Site.editFriendlyURLCP(siteFriendlyUrlEdit = "/liferay");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
 		}
 
 		task ("Go to view the page via friendly URL") {
-			Navigator.openSpecificURL(url = "${portalUrl}/web/liferay/site-page-name");
+			Navigator.openSpecificURL(url = "${portalURL}/web/liferay/site-page-name");
 
-			AssertLocation(value1 = "${portalUrl}/web/liferay/site-page-name");
+			AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
 		}
 
 		task ("Edit default site friendly URL back to original one") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "liferay");
+			Site.openSiteSettingsAdmin(siteURLKey = "liferay");
 
-			Site.editFriendlyURLCP(siteFriendlyUrlEdit = "/guest");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 		}
 	}
 
@@ -813,7 +813,7 @@ definition {
 
 			JSONGroup.addGroup(groupName = "Site1 Name");
 
-			Site.openSiteSettingsAdmin(siteUrlKey = "site1-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
 			Site.selectPageType(
 				selectPublicPages = "true",
@@ -823,7 +823,7 @@ definition {
 		task ("Add another site and edit site name") {
 			JSONGroup.addGroup(groupName = "Site2 Name");
 
-			Site.openSiteSettingsAdmin(siteUrlKey = "site2-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
 
 			Site.editCP(
 				siteName = "Site2 Name",
@@ -873,7 +873,7 @@ definition {
 		}
 
 		task ("Inactive the first created site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "site1-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
 			Site.inactivateCP(siteName = "Site1 Name");
 		}
@@ -885,9 +885,9 @@ definition {
 		}
 
 		task ("View the inactive request message in the first created site") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/site1-name");
+			Navigator.openSpecificURL(url = "${baseURL}/web/site1-name");
 
 			Page.viewInactiveRequestMessage(resource = "site");
 		}
@@ -901,7 +901,7 @@ definition {
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a new site") {
 			JSONGroup.addGroup(
@@ -910,7 +910,7 @@ definition {
 		}
 
 		task ("Add tags to the new site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "world-cup-russia-2018");
+			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -923,16 +923,16 @@ definition {
 
 		task ("Add virtual host for public page and private page") {
 			Site.addVirtualHostsURLCP(
-				privatePageVirtualHostUrl = "www.baker.com",
+				privatePageVirtualHostURL = "www.baker.com",
 				privateVirtualHosts = "true",
-				publicPageVirtualHostUrl = "www.able.com",
+				publicPageVirtualHostURL = "www.able.com",
 				publicVirtualHosts = "true");
 		}
 
 		task ("Edit friendly URL") {
 			Navigator.gotoBack();
 
-			Site.editFriendlyURLCP(siteFriendlyUrlEdit = "/russia2018");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
 		}
 
 		task ("Add 2 public pages to the new site") {
@@ -961,7 +961,7 @@ definition {
 		}
 
 		task ("Change site logo for the new site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "russia2018");
+			PagesAdmin.openPagesAdmin(siteURLKey = "russia2018");
 
 			Site.changeSiteLogo(
 				logoFile = "Document_3.png",
@@ -969,7 +969,7 @@ definition {
 		}
 
 		task ("Add alert js to Arenas page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "russia2018");
+			PagesAdmin.openPagesAdmin(siteURLKey = "russia2018");
 
 			PagesAdmin.addJavaScript(
 				javaScript = "alert('Welcome to Russia.');",
@@ -977,7 +977,7 @@ definition {
 		}
 
 		task ("View alert in Arenas page") {
-			Open.openNoError(locator1 = "${portalUrl}/web/russia2018/Arenas");
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
 
 			AssertConfirm(value1 = "Welcome to Russia.");
 		}
@@ -987,7 +987,7 @@ definition {
 		}
 
 		task ("View alert in Arenas page") {
-			Open.openNoError(locator1 = "${portalUrl}/web/russia2018/Arenas");
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
 
 			AssertConfirm(value1 = "Welcome to Russia.");
 		}
@@ -999,7 +999,7 @@ definition {
 		}
 
 		task ("View logo is changed") {
-			Open.openNoError(locator1 = "${portalUrl}/web/russia2018");
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
 
 			Page.viewCustomLogoPG();
 		}
@@ -1015,7 +1015,7 @@ definition {
 		}
 
 		task ("Add blank js to Arenaspage") {
-			Open.openNoError(locator1 = "${portalUrl}/web/russia2018");
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
 
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -1064,7 +1064,7 @@ definition {
 		task ("Log in as created user via private page virtual host") {
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.baker.com:8080/group/russia2018",
+				specificURL = "http://www.baker.com:8080/group/russia2018",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1075,7 +1075,7 @@ definition {
 		task ("Log in as created user via site URL") {
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "${portalUrl}/web/russia2018",
+				specificURL = "${portalURL}/web/russia2018",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1135,7 +1135,7 @@ definition {
 		}
 
 		task ("Navigate to Site Settings admin in new site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "Test Site Name");
+			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
 		}
 
 		task ("Navigate to Message Boards configuration") {
@@ -1166,7 +1166,7 @@ definition {
 		}
 
 		task ("Navigate to Site Settings admin in new site") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "Test Site Name");
+			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
 		}
 
 		task ("Navigate to Message Boards configuration") {

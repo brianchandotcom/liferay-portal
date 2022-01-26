@@ -38,7 +38,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
@@ -59,7 +59,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.baker.com:8080",
+			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
@@ -104,7 +104,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
@@ -169,7 +169,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
@@ -195,7 +195,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:9080",
+			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
@@ -233,7 +233,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
@@ -274,7 +274,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
@@ -321,7 +321,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 
@@ -349,7 +349,7 @@ definition {
 			PagesAdmin.addPublicPage(pageName = "Web Content Display Page");
 
 			Navigator.gotoPage(
-				baseUrl = "www.able.com:8080",
+				baseURL = "www.able.com:8080",
 				pageName = "Web Content Display Page");
 
 			Portlet.addPG(portletName = "Web Content Display");
@@ -422,7 +422,7 @@ definition {
 			SignOut.signOut();
 
 			Navigator.gotoPage(
-				baseUrl = "www.able.com:8080",
+				baseURL = "www.able.com:8080",
 				pageName = "Web Content Display Page");
 
 			AssertTextEquals.assertPartialText(

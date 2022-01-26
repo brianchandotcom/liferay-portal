@@ -250,7 +250,7 @@ definition {
 	test DraftBlogIsNotDisplayed {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Asset Publisher Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -277,7 +277,7 @@ definition {
 	test EditedBlogReturnsToPendingAndIsNotDisplayed {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Asset Publisher Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

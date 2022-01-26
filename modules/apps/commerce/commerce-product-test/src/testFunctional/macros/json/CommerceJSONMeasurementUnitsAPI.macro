@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteCommerceMeasurementUnits {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var commerceMeasurementUnitsIds = CommerceJSONMeasurementUnitsAPI._getCommerceMeasurementUnits();
@@ -14,7 +14,7 @@ definition {
 				echo("Deleting Commerce Measurement Units with id: ${commerceMeasurementUnitsId}");
 
 				var curl = '''
-					${baseUrl}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
+					${baseURL}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
 						-u test@liferay.com:test \
 						-d cpMeasurementUnitId=${commerceMeasurementUnitsId}
 				''';
@@ -28,16 +28,16 @@ definition {
 	}
 
 	macro _getCommerceMeasurementUnits {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseUrl}/api/jsonws/commerce.cpmeasurementunit/get-cp-measurement-units \
+			  ${baseURL}/api/jsonws/commerce.cpmeasurementunit/get-cp-measurement-units \
 				  -u test@liferay.com:test \
 				  -d companyId=${companyId} \
 				  -d "start=-1" \

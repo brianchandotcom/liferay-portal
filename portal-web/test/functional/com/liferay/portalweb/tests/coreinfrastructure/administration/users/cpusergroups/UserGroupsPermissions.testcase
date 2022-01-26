@@ -302,7 +302,7 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userPassword = "test");
 
-		User.openUsersAdmin(siteUrlKey = "site-name-1");
+		User.openUsersAdmin(siteURLKey = "site-name-1");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -314,7 +314,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		User.openUsersAdmin(siteUrlKey = "site-name-1");
+		User.openUsersAdmin(siteURLKey = "site-name-1");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -322,7 +322,7 @@ definition {
 
 		LexiconEntry.viewNoEntryMenu(rowEntry = "Organization Name 1");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name-1");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-1");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -334,7 +334,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea3@liferay.com");
 
-		User.openUsersAdmin(siteUrlKey = "site-name-1");
+		User.openUsersAdmin(siteURLKey = "site-name-1");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -342,7 +342,7 @@ definition {
 
 		LexiconEntry.viewNoEntryMenu(rowEntry = "Organization Name 1");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name-1");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-1");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -367,7 +367,7 @@ definition {
 			roleKey = "UG Site Role",
 			roleTitle = "UG Site Role");
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoUserGroups();
 
@@ -375,7 +375,7 @@ definition {
 			roleName = "UG Site Role",
 			userGroupName = "UG User Group");
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoUserGroups();
 
@@ -456,7 +456,7 @@ definition {
 
 		ApplicationsMenuHelper.assertNoApplicationsMenu();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -474,7 +474,7 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userGroupName = "UG UserGroup Name");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",

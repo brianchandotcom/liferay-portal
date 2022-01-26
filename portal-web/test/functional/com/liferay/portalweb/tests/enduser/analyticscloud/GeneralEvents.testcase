@@ -113,13 +113,13 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormUrl = Form.getPublishedFormPublicURL();
+			var publishedFormURL = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Connect the DXP to AC") {
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("View the Form page as guest") {
-			Navigator.openSpecificURL(url = "${publishedFormUrl}");
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
 		}
 
 		task ("View the Form events triggered for guest") {
@@ -520,7 +520,7 @@ definition {
 		}
 
 		task ("View the SocialBookmarks events triggered for guest") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "SocialBookmarks",
@@ -544,7 +544,7 @@ definition {
 				applicationId = "SocialBookmarks",
 				eventId = "shared",
 				property = "url",
-				value = "${portalUrl}/web/site-name/blog/-/blogs/blogs-ac-title");
+				value = "${portalURL}/web/site-name/blog/-/blogs/blogs-ac-title");
 		}
 	}
 

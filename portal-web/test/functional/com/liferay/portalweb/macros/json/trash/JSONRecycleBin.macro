@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to empty recycle bin"
 	macro emptyRecycleBin {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(groupName))) {
 			var groupName = "Guest";
@@ -27,7 +27,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/trash.trashentry/delete-entries \
+			${portalURL}/api/jsonws/trash.trashentry/delete-entries \
 			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId}
 		''';

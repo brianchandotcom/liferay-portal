@@ -283,7 +283,7 @@ definition {
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
 
@@ -456,7 +456,7 @@ definition {
 
 		task ("Edit the web contents via Contents panel") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 				LexiconEntry.gotoAdd();
 
@@ -910,7 +910,7 @@ definition {
 	@priority = "4"
 	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
 		task ("Grant Update permission of specific content page to Site Member") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",
@@ -1129,7 +1129,7 @@ definition {
 		}
 
 		task ("Add a content page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}

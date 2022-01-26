@@ -56,7 +56,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteUrl = "http://${sharepointVmHostName}");
+			dmRepositorySiteURL = "http://${sharepointVmHostName}");
 
 		PortletEntry.save();
 	}
@@ -324,7 +324,7 @@ definition {
 			key_menuItem = "Edit",
 			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 

@@ -2,12 +2,12 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a layout"
 	macro _addLayout {
-		Variables.assertDefined(parameterList = "${friendlyUrl},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
+		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/add-layout \
+			${portalURL}/api/jsonws/layout/add-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
@@ -17,7 +17,7 @@ definition {
 				-d description= \
 				-d type=${type} \
 				-d hidden=false \
-				-d friendlyURL=${friendlyUrl} \
+				-d friendlyURL=${friendlyURL} \
 				-d serviceContext=${serviceContext}
 		''';
 		var plid = JSONCurlUtil.post("${curl}", "$['plid']");
@@ -29,10 +29,10 @@ definition {
 	macro _deleteLayout {
 		Variables.assertDefined(parameterList = "${groupId},${layoutId},${privateLayout},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/delete-layout \
+			${portalURL}/api/jsonws/layout/delete-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
@@ -47,10 +47,10 @@ definition {
 	macro _getDefaultPlidByGroupId {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/get-default-plid \
+			${portalURL}/api/jsonws/layout/get-default-plid \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -69,10 +69,10 @@ definition {
 	macro _getLayoutIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/get-layouts \
+			${portalURL}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -90,12 +90,12 @@ definition {
 	macro _getPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/get-layouts \
+			${portalURL}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -113,10 +113,10 @@ definition {
 	macro _getTypeSettingsByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/get-layouts \
+			${portalURL}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -134,10 +134,10 @@ definition {
 	macro _getUuidByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/get-layouts \
+			${portalURL}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -155,10 +155,10 @@ definition {
 	macro _publishLayoutByPlid {
 		Variables.assertDefined(parameterList = "${plid}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/publish-layout \
+			${portalURL}/api/jsonws/layout/publish-layout \
 				-u test@liferay.com:test \
 				-d plid=${plid}
 		''';
@@ -170,10 +170,10 @@ definition {
 	macro _updateTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/layout/update-layout \
+			${portalURL}/api/jsonws/layout/update-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \

@@ -356,15 +356,15 @@ definition {
 		}
 
 		task ("View only the last 5 activities shown in page 1") {
-			var portalUrl = PropsUtil.get("portal.url");
-			var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 			var n = "0";
 
 			while ("${n}" != "5") {
 				ACIndividualsDashboard.viewTimelineItem(
 					index = "${n}",
-					itemName = "Visited ${portalUrl}",
+					itemName = "Visited ${portalURL}",
 					visits = "1 Visit");
 			}
 		}
@@ -375,7 +375,7 @@ definition {
 
 		task ("View the activity shown in page 2") {
 			ACIndividualsDashboard.viewTimelineItem(
-				itemName = "Visited ${portalUrl}",
+				itemName = "Visited ${portalURL}",
 				visits = "1 Visit");
 		}
 	}

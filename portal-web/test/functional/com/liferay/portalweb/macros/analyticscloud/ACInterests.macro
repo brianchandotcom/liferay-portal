@@ -125,10 +125,10 @@ definition {
 			locator1 = "ACInterests#PAGE_NAME",
 			value1 = "${pageName}");
 
-		if (isSet(pageUrl)) {
+		if (isSet(pageURL)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#PAGE_URL",
-				value1 = "${pageUrl}");
+				value1 = "${pageURL}");
 		}
 
 		if (isSet(pageViews)) {

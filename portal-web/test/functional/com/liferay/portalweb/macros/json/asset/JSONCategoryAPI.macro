@@ -4,10 +4,10 @@ definition {
 	macro _addCategory {
 		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetcategory/add-category \
+			${portalURL}/api/jsonws/assetcategory/add-category \
 			-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentCategoryId=${parentCategoryId} \
@@ -26,10 +26,10 @@ definition {
 	macro _addVocabulary {
 		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext},${visibilityType}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetvocabulary/add-vocabulary \
+			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
 				-u test@liferay.com:test \
 				-d externalReferenceCode = \
 				-d groupId=${groupId} \
@@ -48,10 +48,10 @@ definition {
 	macro _deleteCategory {
 		Variables.assertDefined(parameterList = "${categoryId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetcategory/delete-category \
+			${portalURL}/api/jsonws/assetcategory/delete-category \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId}
 		''';
@@ -63,10 +63,10 @@ definition {
 	macro _deleteVocabulary {
 		Variables.assertDefined(parameterList = "${vocabularyId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetvocabulary/delete-vocabulary \
+			${portalURL}/api/jsonws/assetvocabulary/delete-vocabulary \
 				-u test@liferay.com:test \
 				-d vocabularyId=${vocabularyId}
 		''';
@@ -78,10 +78,10 @@ definition {
 	macro _getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
+			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d <CURL_DATA[name=${categoryName}]CURL_DATA> \
@@ -102,10 +102,10 @@ definition {
 	macro _getVocabularyCategoriesIds {
 		Variables.assertDefined(parameterList = "${vocabularyId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-            ${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
+            ${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
                 -u test@liferay.com:test \
                 -d vocabularyId=${vocabularyId} \
                 -d "start=-1" \
@@ -128,10 +128,10 @@ definition {
 	macro _getVocabularyIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetvocabulary/get-group-vocabularies \
+			${portalURL}/api/jsonws/assetvocabulary/get-group-vocabularies \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -148,10 +148,10 @@ definition {
 	macro _updateCategory {
 		Variables.assertDefined(parameterList = "${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/assetcategory/update-category \
+			${portalURL}/api/jsonws/assetcategory/update-category \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId} \
 				-d parentCategoryId=${parentCategoryId} \

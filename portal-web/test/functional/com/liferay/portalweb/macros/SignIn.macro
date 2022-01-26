@@ -5,13 +5,13 @@ definition {
 	var userPasswordReminderAnswer = "test";
 
 	macro _signIn {
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -45,22 +45,22 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		var portalUrl = PropsUtil.get("portal.url");
-		var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
-		var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
+		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			authenticationMethod = "${authenticationMethod}",
 			domain = "liferay.com",
-			portalInstanceId = "${portalUrl}",
-			virtualHost = "${portalUrl}");
+			portalInstanceId = "${portalURL}",
+			virtualHost = "${portalURL}");
 	}
 
 	macro signInSpecificURL {
 		SignIn._signIn(
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",
-			virtualHostsUrl = "${url}");
+			virtualHostsURL = "${url}");
 	}
 
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"

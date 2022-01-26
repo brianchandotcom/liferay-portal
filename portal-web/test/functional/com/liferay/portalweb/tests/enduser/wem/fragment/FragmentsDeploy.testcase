@@ -40,7 +40,7 @@ definition {
 		}
 
 		task ("Assert deployed fragment is read-only") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -79,7 +79,7 @@ definition {
 		}
 
 		task ("Assert deployed fragment is read-only") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -118,7 +118,7 @@ definition {
 		}
 
 		task ("Assert deployed fragment is read-only") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -159,7 +159,7 @@ definition {
 		}
 
 		task ("Assert can not delete virtual instance read-only scoped deployed fragment in normal site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -233,11 +233,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(
-				baseUrl = "http://www.able.com:8080",
-				siteUrlKey = "global");
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -277,7 +277,7 @@ definition {
 		}
 
 		task ("Assert new fragment exists in specific site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -289,7 +289,7 @@ definition {
 		}
 
 		task ("Assert new fragment not exists in other sites") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "guest");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			AssertElementNotPresent(
 				key_menuBar = "Imported",
@@ -332,11 +332,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(
-				baseUrl = "http://www.able.com:8080",
-				siteUrlKey = "guest");
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -363,7 +363,7 @@ definition {
 		}
 
 		task ("Assert new fragment exists in exist sites") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "guest");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -373,7 +373,7 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -387,7 +387,7 @@ definition {
 		task ("Assert new fragments exist in future site") {
 			JSONGroup.addGroup(groupName = "Test Future Site");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-future-site");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-future-site");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -414,7 +414,7 @@ definition {
 		}
 
 		task ("Assert new fragment exists in exist virtual instance") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "guest");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -441,11 +441,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(
-				baseUrl = "http://www.able.com:8080",
-				siteUrlKey = "guest");
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",

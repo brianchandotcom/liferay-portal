@@ -1,7 +1,7 @@
 definition {
 
 	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -41,7 +41,7 @@ definition {
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructure {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with nested fields");
 
@@ -115,7 +115,7 @@ definition {
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with Fieldsets level 2");
 
@@ -191,7 +191,7 @@ definition {
 	macro editAnUpgradedStructureWithFieldGroup {
 		var fieldList = "Text,Date,Number";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -265,7 +265,7 @@ definition {
 	}
 
 	macro editAnUpgradedStructureWithFieldset {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -443,7 +443,7 @@ definition {
 	}
 
 	macro editAnUpgradedWebContentWithTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
 
@@ -497,7 +497,7 @@ definition {
 	}
 
 	macro validateFieldLabelsTranslatedInStructure {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -535,7 +535,7 @@ definition {
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -574,7 +574,7 @@ definition {
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldSet {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -633,7 +633,7 @@ definition {
 	}
 
 	macro validateNStructure {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -646,7 +646,7 @@ definition {
 	}
 
 	macro validateNWebContent {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		var wcList = "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields";
 
@@ -659,7 +659,7 @@ definition {
 	}
 
 	macro validateWebContentWithAllFieldsTranslated {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with all fields");
 
@@ -687,7 +687,7 @@ definition {
 	}
 
 	macro validateWebContentWithFieldGroupLevel2AndTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "02/22/2021",
@@ -726,7 +726,7 @@ definition {
 	}
 
 	macro validateWebContentWithFieldsetLevel2AndTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "02/22/2021",
@@ -765,7 +765,7 @@ definition {
 	}
 
 	macro validateWebContentWithRepeatableFieldGroupAndTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
 

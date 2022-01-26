@@ -4,10 +4,10 @@ definition {
 	macro _addSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${auto},${groupId},${siteNavigationMenuName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${siteNavigationMenuName} \
@@ -22,10 +22,10 @@ definition {
 	macro _addSiteNavigationMenuItem {
 		Variables.assertDefined(parameterList = "${groupId},${parentSiteNavigationMenuItemId},${siteNavigationMenuId},${type},${typeSettings}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d siteNavigationMenuId=${siteNavigationMenuId} \
@@ -41,10 +41,10 @@ definition {
 	macro _deleteSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
 			  -u test@liferay.com:test \
 			  -d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
@@ -56,10 +56,10 @@ definition {
 	macro _getSiteNavigationMenuIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -72,10 +72,10 @@ definition {
 	macro _getSiteNavigationMenuItemIdByName {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId},${siteNavigationMenuItemName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
 				-u test@liferay.com:test \
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';

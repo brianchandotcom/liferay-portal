@@ -27,7 +27,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "high_resolution_photo.jpg");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry With Adaptive Media Image");
 
@@ -54,7 +54,7 @@ definition {
 
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		WebContent.addWithDocumentCP(
 			dmDocumentTitle = "high_resolution_photo.jpg",
@@ -81,7 +81,7 @@ definition {
 			mimeType = "image/svg+xml",
 			sourceFileName = "Document_1.svg");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry With Adaptive Media SVG Image");
 
@@ -463,7 +463,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsUrl = "http://www.able.com:8080");
+			virtualHostsURL = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 

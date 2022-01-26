@@ -91,11 +91,11 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		Ratings.rateThumb(ratingResult = "Rate this as good");
 
-		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
@@ -124,7 +124,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "second-site");
+			siteURLKey = "second-site");
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
@@ -171,8 +171,8 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -180,7 +180,7 @@ definition {
 
 		Comments.addPG(entryComment = "Wiki FrontPage Comment");
 
-		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
@@ -211,8 +211,8 @@ definition {
 			wikiPortlet = "true");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-page",
-			siteUrlKey = "second-site",
+			layoutURLKey = "wiki-page",
+			siteURLKey = "second-site",
 			wikiNodeName = "Main 2",
 			wikiPageTitle = "FrontPage");
 
@@ -248,8 +248,8 @@ definition {
 			wikiPageName = "Wiki Page 1");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page 1");
 
@@ -264,8 +264,8 @@ definition {
 			entryCommentEdit = "Wiki Page Comment Edited");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page 1");
 
@@ -318,7 +318,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -351,7 +351,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -426,7 +426,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		Ratings.rateThumb(ratingResult = "Rate this as good");
@@ -443,7 +443,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		Ratings.rateThumb(
@@ -476,16 +476,16 @@ definition {
 			wikiPageName = "Wiki Page 1");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page 1");
 
 		Ratings.rateStar(ratingStarCount = "4");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page 1");
 
@@ -516,7 +516,7 @@ definition {
 			applications = "Blogs",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -572,7 +572,7 @@ definition {
 			applications = "Blogs",
 			portlet = "Ratings",
 			ratingType = "Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -604,7 +604,7 @@ definition {
 			applications = "MBDiscussion",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -623,8 +623,8 @@ definition {
 			wikiPageName = "Wiki Page 1");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page 1");
 
@@ -650,7 +650,7 @@ definition {
 			applications = "JournalArticle",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -703,7 +703,7 @@ definition {
 			applications = "Wiki",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -722,8 +722,8 @@ definition {
 			wikiPageName = "Wiki Page");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "wiki-test-page",
-			siteUrlKey = "guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page");
 
@@ -747,7 +747,7 @@ definition {
 			applications = "document",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -759,7 +759,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.expandInfo();
 
@@ -783,7 +783,7 @@ definition {
 			applications = "knowledge",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -793,7 +793,7 @@ definition {
 		KBArticle.openToKBArticleInSite(
 			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Title",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Ratings.rateStackedStars(ratingStarCount = "3");
 
@@ -815,7 +815,7 @@ definition {
 			applications = "MBMessage",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -835,7 +835,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		Ratings.rateStackedStars(ratingStarCount = "3");
@@ -951,7 +951,7 @@ definition {
 			applications = "document",
 			portlet = "Ratings",
 			ratingType = "Like",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -973,7 +973,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.expandInfo();
 
@@ -1003,7 +1003,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.expandInfo();
 

@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>INVALID_URL</td>
-	<td>//ol[@id='invalidTestURLs']/li[${key_inValidUrl}]/a</td>
+	<td>//ol[@id='invalidTestURLs']/li[${key_inValidURL}]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -282,7 +282,7 @@
 </tr>
 <tr>
 	<td>VALID_URL</td>
-	<td>//ol[@id='validTestURLs']/li[${key_validUrl}]/a</td>
+	<td>//ol[@id='validTestURLs']/li[${key_validURL}]/a</td>
 	<td></td>
 </tr>
 <tr>

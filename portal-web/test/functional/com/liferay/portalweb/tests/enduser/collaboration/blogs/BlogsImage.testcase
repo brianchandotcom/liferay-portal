@@ -37,7 +37,7 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddInlineImage {
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -51,7 +51,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -64,17 +64,17 @@ definition {
 	@priority = "3"
 	test CanAutoSaveDuplicateCustomURL {
 		Blogs.addEntryWithCustomURL(
-			customUrl = "my-custom-url",
+			customURL = "my-custom-url",
 			entryContent = "Blog Entry Content",
 			entryTitle = "Blog Entry Title",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONBlog.moveEntryToTrash(
 			entryTitle = "Blog Entry Title",
-			friendlyUrl = "my-custom-url",
+			friendlyURL = "my-custom-url",
 			groupName = "Guest");
 
-		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blog Entry Content New",
@@ -82,11 +82,11 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomURL(customUrl = "my-custom-url");
+		BlogsEntry.addCustomURL(customURL = "my-custom-url");
 
 		BlogsEntry.autoSaveDraft();
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(
 			entryStatus = "Draft",
@@ -112,7 +112,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -156,7 +156,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.removeCoverImage(coverImageName = "Document_1.jpg");
 
@@ -165,7 +165,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_coverImageName = "Document_1.jpg",
@@ -197,7 +197,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -212,7 +212,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry with Small Image",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
 
@@ -221,7 +221,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry with Small Image",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_smallImage = "Document_1.jpg",
@@ -238,7 +238,7 @@ definition {
 	test CanReplaceSmallImage {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -253,7 +253,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.addSmallImage(
 			browseImage = "true",
@@ -274,7 +274,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSaveCoverImageAsDraft {
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -326,7 +326,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -349,7 +349,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -394,7 +394,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.removeSmallImage(
 			images = "true",
@@ -420,7 +420,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -473,7 +473,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry1 Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_1",
@@ -482,7 +482,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry2 Title",
 			layoutName = "Blogs Page",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_2",

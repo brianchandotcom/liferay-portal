@@ -136,11 +136,11 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "You need to be signed in to edit this field.");
 
@@ -516,7 +516,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		Navigator.openURL();
 
@@ -524,7 +524,7 @@ definition {
 			userLoginEmailAddress = "user1@liferay.com",
 			userLoginFullName = "user1 user1");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -579,11 +579,11 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -666,7 +666,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -699,7 +699,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -778,11 +778,11 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishFormUrl = Form.getPublishedFormPublicURL();
+		var publishFormURL = Form.getPublishedFormPublicURL();
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishFormUrl}");
+		Navigator.openSpecificURL(url = "${publishFormURL}");
 
 		FormFields.viewFieldValidationErrorMessage(
 			fieldName = "Upload",
@@ -929,7 +929,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		FormsAdminNavigator.gotoPublishedForm();
 
@@ -949,7 +949,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		ItemSelector.gotoItemSelectorViaSelectButtonByGuest(fieldName = "Upload");
 

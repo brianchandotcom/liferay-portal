@@ -56,7 +56,7 @@ definition {
 			layoutName = "Site Page 1",
 			widgetName = "Invite Members");
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		LexiconCard.viewCardNotPresent(card = "userfn userln");
 
@@ -86,7 +86,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.viewMemberCP(
 			userFirstName = "userfn",

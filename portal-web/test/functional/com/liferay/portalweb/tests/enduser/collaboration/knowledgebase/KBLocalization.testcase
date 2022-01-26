@@ -34,7 +34,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -63,7 +63,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -84,7 +84,7 @@ definition {
 		Page.viewTranslationsPG(
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageUrl = "${portalUrl}/es/web/guest/knowledge-base-display-page",
+			sitePageURL = "${portalURL}/es/web/guest/knowledge-base-display-page",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 
 		KBArticle.viewViaKBDisplayPG(

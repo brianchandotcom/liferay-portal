@@ -196,11 +196,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -322,7 +322,7 @@ definition {
 			itemType = "Web Content Article",
 			title = "Site Manual Asset List");
 
-		AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "site-name");
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Site Manual Asset List",

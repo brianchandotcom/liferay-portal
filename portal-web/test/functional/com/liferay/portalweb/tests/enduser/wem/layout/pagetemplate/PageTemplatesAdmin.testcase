@@ -30,7 +30,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to Test Site Name page admin") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert Masters, Page Templates, and Display Page Templates displayed") {

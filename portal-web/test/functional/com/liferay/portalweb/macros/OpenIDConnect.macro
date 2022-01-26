@@ -21,11 +21,11 @@ definition {
 	}
 
 	macro accountSignIn {
-		if (!(isSet(specificUrl))) {
+		if (!(isSet(specificURL))) {
 			Navigator.openURL();
 		}
 		else {
-			Navigator.openSpecificURL(url = "${specificUrl}");
+			Navigator.openSpecificURL(url = "${specificURL}");
 		}
 
 		AssertClick(

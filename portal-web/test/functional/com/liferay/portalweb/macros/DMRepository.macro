@@ -30,11 +30,11 @@ definition {
 				value1 = "${dmServerVersion}");
 		}
 
-		if (isSet(dmRepositorySiteAbsoluteUrl)) {
+		if (isSet(dmRepositorySiteAbsoluteURL)) {
 			Type(
 				key_fieldLabel = "Site Absolute URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmRepositorySiteAbsoluteUrl}");
+				value1 = "${dmRepositorySiteAbsoluteURL}");
 
 			Type(
 				key_fieldLabel = "Library Path",
@@ -44,7 +44,7 @@ definition {
 		else {
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#SITE_URL_FIELD",
-				value1 = "${dmRepositorySiteUrl}");
+				value1 = "${dmRepositorySiteURL}");
 
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD",

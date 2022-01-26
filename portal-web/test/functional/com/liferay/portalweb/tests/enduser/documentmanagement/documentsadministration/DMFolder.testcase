@@ -253,7 +253,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.editCP(
 			dmFolderDescription = "DM Folder Description",
@@ -312,7 +312,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "DM Document Title",
@@ -377,7 +377,7 @@ definition {
 			dmFolderName = "DM Folder2 Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.moveToFolderCP(
 			dmFolderName = "DM Folder2 Name",
@@ -400,7 +400,7 @@ definition {
 			groupName = "Guest",
 			parentFolderName = "DM Folder Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -421,7 +421,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",

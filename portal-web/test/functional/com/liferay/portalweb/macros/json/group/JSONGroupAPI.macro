@@ -4,12 +4,12 @@ definition {
 	macro _addGroup {
 		Variables.assertDefined(parameterList = "${groupDescriptionMap},${groupNameMap},${manualMembership},${parentGroupId},${type}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/add-group \
+			${portalURL}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
 				-d parentGroupId=${parentGroupId} \
 				-d liveGroupId=0 \
@@ -31,10 +31,10 @@ definition {
 	macro _assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
+			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
@@ -48,10 +48,10 @@ definition {
 	macro _assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
+			${portalURL}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
 				-u test@liferay.com:test
 		''';
 
@@ -62,10 +62,10 @@ definition {
 	macro _assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/user/add-group-users \
+			${portalURL}/api/jsonws/user/add-group-users \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
@@ -78,12 +78,12 @@ definition {
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/delete-group \
+			${portalURL}/api/jsonws/group/delete-group \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -97,14 +97,14 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
 			site = "${site}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/depot.depotentrygrouprel/get-depot-entry-group-rels \
+			${portalURL}/api/jsonws/depot.depotentrygrouprel/get-depot-entry-group-rels \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d "start=-1" \
@@ -125,7 +125,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(defaultLocale))) {
 			var defaultLocale = "en_US";
@@ -137,7 +137,7 @@ definition {
 		var locale = '''default-locale=\"${defaultLocale}\"''';
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
 				-u test@liferay.com:test
 		''';
 		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}' && @['name'] contains '${locale}')]['classPK']");
@@ -155,14 +155,14 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups \
+			${portalURL}/api/jsonws/group/get-groups \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d parentGroupId=0 \
@@ -187,10 +187,10 @@ definition {
 			grandParentGroupName = "${grandParentGroupName}",
 			parentGroupName = "${parentGroupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
@@ -206,18 +206,18 @@ definition {
 	macro _getGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");
+		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
 			parentGroupName = "${parentGroupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
@@ -237,10 +237,10 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-group/group-id/${groupId} \
+			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
 				-u test@liferay.com:test
 		''';
 		var groupName = JSONCurlUtil.get("${curl}", "$['nameCurrentValue']");
@@ -256,10 +256,10 @@ definition {
 
 		var grandParentGroupId = JSONGroupSetter.setGrandParentGroupId(grandParentGroupName = "${grandParentGroupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
@@ -275,14 +275,14 @@ definition {
 	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");
+		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/get-group \
+			${portalURL}/api/jsonws/group/get-group \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d groupKey=${groupName}

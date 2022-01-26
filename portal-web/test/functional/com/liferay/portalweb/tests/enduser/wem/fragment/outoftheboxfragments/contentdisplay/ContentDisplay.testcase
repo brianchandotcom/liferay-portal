@@ -104,7 +104,7 @@ definition {
 		}
 
 		task ("Remove View permission for Guest and Site Member in web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -248,7 +248,7 @@ definition {
 		}
 
 		task ("Add a fragment with item selector") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "display-collection-name.zip");
 		}
@@ -460,7 +460,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "display-collection-name.zip");
 		}
@@ -553,7 +553,7 @@ definition {
 		}
 
 		task ("Add a structure with Text field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -570,7 +570,7 @@ definition {
 		}
 
 		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -582,7 +582,7 @@ definition {
 		}
 
 		task ("Add a WC based on structure with Text field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -599,7 +599,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "display-collection-name.zip");
 		}
@@ -713,7 +713,7 @@ definition {
 		}
 
 		task ("Delete the web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
 		}
@@ -735,7 +735,7 @@ definition {
 		}
 
 		task ("Restore web content from Recycle Bin") {
-			RecycleBin.openRecycleBinAdmin(siteUrlKey = "test-site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.restoreCP(
 				assetName = "Web Content Title",
@@ -841,7 +841,7 @@ definition {
 		}
 
 		task ("Add a Content Display fragment to the display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -991,7 +991,7 @@ definition {
 		}
 
 		task ("Add a Content Display to page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1048,7 +1048,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 

@@ -17,13 +17,13 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 			Staging.activateStagingCP(siteName = "Test Site Name");
 		}
 
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name-staging");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name-staging");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -601,7 +601,7 @@ definition {
 		}
 
 		task ("Preview style book effect on page in page preview iframe") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name-staging");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name-staging");
 
 			StyleBooksAdmin.gotoStyleBook(styleBookName = "Test Style Book Name");
 
@@ -775,7 +775,7 @@ definition {
 		}
 
 		task ("Edit the style book in Staging site") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name-staging");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name-staging");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",

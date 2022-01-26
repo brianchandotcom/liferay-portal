@@ -44,7 +44,7 @@ definition {
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		WebProxy.addCP(initialUrl = "http://images.google.com/");
+		WebProxy.addCP(initialURL = "http://images.google.com/");
 
 		Navigator.gotoPage(pageName = "Web Proxy Page");
 

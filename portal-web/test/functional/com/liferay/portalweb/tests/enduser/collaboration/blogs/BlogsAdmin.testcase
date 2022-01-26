@@ -33,13 +33,13 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -52,7 +52,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchForContentInAdmin {
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -62,7 +62,7 @@ definition {
 			entryContent = "Blogs Entry Text",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -96,7 +96,7 @@ definition {
 			entryContent = "Blogs Entry Content Text",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

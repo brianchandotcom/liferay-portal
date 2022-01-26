@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteCommerceCurrencies {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var commerceCurrenciesIds = CommerceJSONCurrenciesAPI._getCommerceCurrencies();
@@ -14,7 +14,7 @@ definition {
 				echo("Deleting Commerce Currency with id: ${commerceCurrenciesId}");
 
 				var curl = '''
-					${baseUrl}/api/jsonws/commerce.commercecurrency/delete-commerce-currency \
+					${baseURL}/api/jsonws/commerce.commercecurrency/delete-commerce-currency \
 						-u test@liferay.com:test \
 						-d commerceCurrencyId=${commerceCurrenciesId}
 				''';
@@ -28,16 +28,16 @@ definition {
 	}
 
 	macro _getCommerceCurrencies {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseUrl}/api/jsonws/commerce.commercecurrency/get-commerce-currencies \
+			  ${baseURL}/api/jsonws/commerce.commercecurrency/get-commerce-currencies \
 				  -u test@liferay.com:test \
 				  -d companyId=${companyId} \
 				  -d "start=-1" \

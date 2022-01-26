@@ -25,7 +25,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Category.openCategoriesAdmin(siteUrlKey = "guest");
+			Category.openCategoriesAdmin(siteURLKey = "guest");
 
 			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 				Segmentation.tearDown();
@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 
@@ -428,7 +428,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 
@@ -497,7 +497,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 
@@ -726,7 +726,7 @@ definition {
 		}
 
 		task ("Delete one of the segments") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			Segmentation.deleteSegment(entry = "Segment With User1");
 		}
@@ -1746,7 +1746,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 
@@ -1835,7 +1835,7 @@ definition {
 		}
 
 		task ("Add team and assign to the user") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "test-site-name");
+			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -1847,7 +1847,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -1940,7 +1940,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 
@@ -2111,7 +2111,7 @@ definition {
 		}
 
 		task ("Assert if segment kept category") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			Segmentation.editSegment(entry = "KeepInfomationOfDeleteVocabularyInSegment Test");
 
@@ -2480,7 +2480,7 @@ definition {
 	@priority = "4"
 	test ValidateTeamFieldInputInViewMode {
 		task ("Add team") {
-			Site.openSiteTeamsAdmin(siteUrlKey = "guest");
+			Site.openSiteTeamsAdmin(siteURLKey = "guest");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -2488,7 +2488,7 @@ definition {
 		}
 
 		task ("Create segment using the property") {
-			Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
 

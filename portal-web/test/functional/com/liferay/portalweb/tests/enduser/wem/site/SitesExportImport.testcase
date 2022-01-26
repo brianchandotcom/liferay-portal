@@ -45,7 +45,7 @@ definition {
 		}
 
 		task ("Add a fragment with a Web Content Display in it") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -120,7 +120,7 @@ definition {
 		}
 
 		task (" Edit the Web Content on the Original Site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -455,7 +455,7 @@ definition {
 	@priority = "4"
 	test ExportImportSiteWithStyleBook {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -485,7 +485,7 @@ definition {
 		task ("Assert no error and the style book persists") {
 			AssertConsoleTextNotPresent(value1 = "com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException");
 
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "site-name");
 
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
 		}

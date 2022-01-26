@@ -3,10 +3,10 @@ definition {
 	macro _addCommerceProduct {
 		Variables.assertDefined(parameterList = "${catalogName},${productName},${productType}");
 
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (!(isSet(productDescription))) {
@@ -32,7 +32,7 @@ definition {
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/products \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
   			-H 'Content-Type: application/json' \
@@ -79,10 +79,10 @@ definition {
 	}
 
 	macro _deleteAllCommerceProducts {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
@@ -94,7 +94,7 @@ definition {
 				echo("Deleting Commerce product with productId: ${productId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -108,10 +108,10 @@ definition {
 	}
 
 	macro _getCommerceProductIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(prodCount)) {
@@ -122,7 +122,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -132,14 +132,14 @@ definition {
 	}
 
 	macro _getCommerceProductsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/products \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

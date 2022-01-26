@@ -27,7 +27,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
@@ -81,7 +81,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 
 		if (isSet(priority)) {
 			Select(
@@ -157,7 +157,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryUrlEdit}");
+			value1 = "${entryURLEdit}");
 
 		Button.clickSave();
 	}
@@ -167,7 +167,7 @@ definition {
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "${layoutName}",
-			siteUrlKey = "${siteUrlKey}",
+			siteURLKey = "${siteURLKey}",
 			tabName = "${tabName}");
 
 		AssertVisible(locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT");
@@ -180,7 +180,7 @@ definition {
 	macro tearDownCP {
 		AnnouncementsNavigator.opentoAdmin(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();

@@ -72,7 +72,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteUrl = "http://${sharepointVmHostName}",
+			dmRepositorySiteURL = "http://${sharepointVmHostName}",
 			permissionDefinitionKey = "ACCESS",
 			roleTitle = "Guest");
 

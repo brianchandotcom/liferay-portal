@@ -10,9 +10,9 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation(value1 = "${portalUrl}/web/guest?SM_USER=test@liferay.com");
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
 
 		SearchAdministration.executeReindex();
 	}
@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Select WC Template Name as template and save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("Assert Images added in one field is not available in the next image field before article is submitted") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -79,7 +79,7 @@ definition {
 		}
 
 		task ("Duplicate all fields that can be duplicated, 1-4 times") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("Disable 'Searchable'") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -135,7 +135,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Search.searchCP(searchTerm = "text1");
 
@@ -143,7 +143,7 @@ definition {
 		}
 
 		task ("Preview fields entered") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Copy successfully") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -220,7 +220,7 @@ definition {
 		}
 
 		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -246,7 +246,7 @@ definition {
 		}
 
 		task ("Move nested field to non-nested") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -264,7 +264,7 @@ definition {
 		}
 
 		task ("Translate labels") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -292,7 +292,7 @@ definition {
 		}
 
 		task ("Add new translation") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -304,7 +304,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -319,7 +319,7 @@ definition {
 		}
 
 		task ("Remove translation") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -331,7 +331,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -346,7 +346,7 @@ definition {
 		}
 
 		task ("View Translation while Editing article") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -370,7 +370,7 @@ definition {
 
 			Staging.activateStagingCP(siteName = "Test Site Name");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("Select WC Template Name as template, save as draft and publish") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -452,13 +452,13 @@ definition {
 		}
 
 		task ("Save as Draft, and then preview other versions") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
 			Button.clickSaveAsDraft();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Web Content Complex Title 1",
@@ -474,7 +474,7 @@ definition {
 		}
 
 		task ("Edit article and save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -482,7 +482,7 @@ definition {
 		}
 
 		task ("Duplicate all fields that can be duplicated, 1-4 times") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -502,7 +502,7 @@ definition {
 		}
 
 		task ("Remove duplicates") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -522,7 +522,7 @@ definition {
 		}
 
 		task ("Disable 'Searchable'") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -534,7 +534,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Search.searchCP(searchTerm = "text1");
 
@@ -542,7 +542,7 @@ definition {
 		}
 
 		task ("Preview fields entered") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -588,13 +588,13 @@ definition {
 		}
 
 		task ("Copy Article successfully") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.copyCP(webContentTitle = "Web Content Complex Title 1");
 		}
 
 		task ("Copy Structure successfully") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -604,7 +604,7 @@ definition {
 		}
 
 		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -628,7 +628,7 @@ definition {
 		}
 
 		task ("Move quad nested field to non-nested and save") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -685,7 +685,7 @@ definition {
 		}
 
 		task ("Add translation labels") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -703,7 +703,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -717,7 +717,7 @@ definition {
 		}
 
 		task ("Add new translation") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -729,7 +729,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -744,7 +744,7 @@ definition {
 		}
 
 		task ("Remove translation") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -756,7 +756,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -771,7 +771,7 @@ definition {
 		}
 
 		task ("View Translation while Editing article") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
@@ -789,7 +789,7 @@ definition {
 		}
 
 		task ("Add Default values to structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -809,7 +809,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -834,7 +834,7 @@ definition {
 				folderName = "WC Folder Name",
 				groupName = "Test Site Name");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Search.searchCP(searchTerm = "Web Content Complex Title 1");
 
@@ -844,7 +844,7 @@ definition {
 		}
 
 		task ("Set all fields to Required and check submission") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -856,7 +856,7 @@ definition {
 
 			WebContentStructures.saveCP();
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Copy Name");
 
@@ -881,7 +881,7 @@ definition {
 
 			Staging.activateStagingCP(siteName = "Test Site Name");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			Search.searchCP(searchTerm = "Web Content Complex Title 1");
 

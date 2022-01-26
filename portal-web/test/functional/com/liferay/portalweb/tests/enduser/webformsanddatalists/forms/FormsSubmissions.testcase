@@ -407,7 +407,7 @@ definition {
 			pageName = "Form Page 1",
 			sitePageType = "Widget Page");
 
-		var friendlyUrl = PagesAdmin.getFriendlyURL();
+		var friendlyURL = PagesAdmin.getFriendlyURL();
 
 		FormsAdmin.addForm();
 
@@ -419,7 +419,7 @@ definition {
 
 		FormsAdminNavigator.gotoSettings();
 
-		Form.configureRedirectURL(url = "${friendlyUrl}");
+		Form.configureRedirectURL(url = "${friendlyURL}");
 
 		Button.clickDone();
 
@@ -435,7 +435,7 @@ definition {
 
 		FormPortlet.submit();
 
-		Form.viewRedirectedURL(friendlyUrl = "${friendlyUrl}");
+		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
 
 		Navigator.gotoPage(pageName = "Form Page 1");
 
@@ -496,7 +496,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		Form.save();
 
@@ -523,7 +523,7 @@ definition {
 				Navigator.gotoPage(pageName = "Form Page");
 			}
 			else if ("${formAccessLevel}" == "public") {
-				Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+				Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 			}
 
 			FormPortlet.waitFormRenderer(text = "Submit");
@@ -569,15 +569,15 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		SignOut.signOut();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		User.viewLoginPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}?SM_USER=test@liferay.com");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}?SM_USER=test@liferay.com");
 
 		AssertElementPresent(
 			key_formName = "Form 1",

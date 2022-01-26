@@ -1,10 +1,10 @@
 definition {
 
 	macro assertPortalBuildNumber {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var buildNumberCurl = '''
-				${portalUrl}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
+				${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
 			''';
 		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
 
@@ -14,10 +14,10 @@ definition {
 	}
 
 	macro assertPortalVersion {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var portalVersionCurl = '''
-			${portalUrl}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
+			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
 		''';
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
@@ -241,17 +241,17 @@ definition {
 	}
 
 	macro openToConfigInSystemSettings {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if ("${portlet}" == "Applications Menu") {
 			var portletId = "com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration";
 		}
 
-		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro resetConfiguration {

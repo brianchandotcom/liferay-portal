@@ -33,7 +33,7 @@ definition {
 	@uitest
 	test AddAssetsViaCollaborationPanel {
 		task ("Add a panel page with collaboration component") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.addPublicPage(
 				componentName = "Collaboration",
@@ -96,7 +96,7 @@ definition {
 	@priority = "3"
 	test CannotDeleteLastPublicPageOnDefaultSite {
 		task ("Delete the Search page in Liferay instance") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			PagesAdmin.deletePage(pageName = "Search");
 		}
@@ -117,24 +117,24 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add an embedded page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name 1",
-				pageTypeUrl = "https://www.google.com",
+				pageTypeURL = "https://www.google.com",
 				sitePageType = "Embedded");
 		}
 
 		task ("Change embedded type URL") {
 			PagesAdmin.configurePage(
 				pageName = "Test Page Name 1",
-				pageTypeUrl = "http://iscaliforniaonfire.com/",
+				pageTypeURL = "http://iscaliforniaonfire.com/",
 				privacy = "Public Pages",
 				sitePageType = "Embedded");
 		}
 
 		task ("Add a panel page with community component") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				componentName = "Community",
@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("Add a localized friendly url") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -250,8 +250,8 @@ definition {
 
 			PagesAdmin.addLocalizedFriendlyURL(
 				configureWithoutSave = "true",
-				friendlyUrlLocalizedList = "de-DE",
-				localizedFriendlyUrlList = "/german",
+				friendlyURLLocalizedList = "de-DE",
+				localizedFriendlyURLList = "/german",
 				localizedNameList = "-");
 		}
 
@@ -268,7 +268,7 @@ definition {
 		}
 
 		task ("View default friendly url") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

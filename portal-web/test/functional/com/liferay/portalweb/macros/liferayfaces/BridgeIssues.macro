@@ -15,7 +15,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageUrl}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageURL}");
 
 		Portlet.addPG(portletName = "${portletName}");
 	}
@@ -132,9 +132,9 @@ definition {
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
-		if (isSet(validUrl)) {
+		if (isSet(validURL)) {
 			Click(
-				key_validUrl = "${validUrl}",
+				key_validURL = "${validURL}",
 				locator1 = "BridgeIssues#VALID_URL");
 
 			AssertElementPresent(
@@ -150,9 +150,9 @@ definition {
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
-		if (isSet(inValidUrl)) {
+		if (isSet(inValidURL)) {
 			Click(
-				key_inValidUrl = "${inValidUrl}",
+				key_inValidURL = "${inValidURL}",
 				locator1 = "BridgeIssues#INVALID_URL");
 
 			AssertElementPresent(locator1 = "BridgeIssues#ERROR_MESSAGE");

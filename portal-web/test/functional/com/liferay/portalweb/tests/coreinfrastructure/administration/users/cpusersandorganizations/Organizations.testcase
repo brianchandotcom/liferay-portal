@@ -283,7 +283,7 @@ definition {
 	test AddOrganizationSitePrivatePage {
 		property testray.component.names = "Training";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -313,7 +313,7 @@ definition {
 			siteName = "Organization Name",
 			siteType = "Private");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -323,7 +323,7 @@ definition {
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Private Page",
-			url = "${portalUrl}/group/organization-name/private-page");
+			url = "${portalURL}/group/organization-name/private-page");
 
 		PagesAdmin.viewPageItemPresent(
 			pageName = "Private Page",
@@ -332,7 +332,7 @@ definition {
 
 	@priority = "3"
 	test AddOrganizationSitePublicPage {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -352,7 +352,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -362,7 +362,7 @@ definition {
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Public Page",
-			url = "${portalUrl}/web/organization-name/public-page");
+			url = "${portalURL}/web/organization-name/public-page");
 
 		PagesAdmin.viewPageItemPresent(
 			pageName = "Public Page",
@@ -395,7 +395,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "organization-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
@@ -413,7 +413,7 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -421,7 +421,7 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Organization Public Page");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -550,7 +550,7 @@ definition {
 			var suborgName = StringUtil.replace("${suborgName}", " ", "-");
 			var suborgName = StringUtil.lowerCase("${suborgName}");
 
-			Site.openSiteSettingsAdmin(siteUrlKey = "${suborgName}");
+			Site.openSiteSettingsAdmin(siteURLKey = "${suborgName}");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
@@ -1122,7 +1122,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "organization-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
@@ -1140,7 +1140,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1148,7 +1148,7 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Public Page");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1174,7 +1174,7 @@ definition {
 	@description = "This is a use case for LPS-75084."
 	@priority = "5"
 	test NoPermissionUserCannotAddOrganizationViaURL {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1204,15 +1204,15 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcRenderCommandName=%2Fusers_admin%2Fedit_organization&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization");
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcRenderCommandName=%2Fusers_admin%2Fedit_organization&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization");
 
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fedit_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization");
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fedit_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization");
 
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fselect_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_p_u_i_d=0");
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fselect_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_p_u_i_d=0");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -1726,7 +1726,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#ViewContentInCustomOrganizationTypeSite";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1759,7 +1759,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(
-			defaultUrl = "false",
+			defaultURL = "false",
 			portletName = "Message Boards");
 
 		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
@@ -1843,7 +1843,7 @@ definition {
 			roleTitle = "United States Orgrole",
 			userScreenName = "usersn2");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/canada/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/canada/mb-page");
 
 		MessageboardsPortlet.gotoInlinePermissionsPG();
 
@@ -1851,7 +1851,7 @@ definition {
 			addOrRemoveViewPermission = "Remove",
 			roleList = "Guest,Site Member");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/canada/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/canada/mb-page");
 
 		MessageboardsPortlet.gotoInlinePermissionsPG();
 
@@ -1859,13 +1859,13 @@ definition {
 			addOrRemoveViewPermission = "Add",
 			roleList = "Canada Orgrole");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/canada/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/canada/mb-page");
 
 		MessageboardsThread.addPG(
 			threadBody = "Canada Message Body",
 			threadSubject = "Canada Message Subject");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/united-states/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/united-states/mb-page");
 
 		MessageboardsPortlet.gotoInlinePermissionsPG();
 
@@ -1873,7 +1873,7 @@ definition {
 			addOrRemoveViewPermission = "Remove",
 			roleList = "Guest,Site Member");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/united-states/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/united-states/mb-page");
 
 		MessageboardsPortlet.gotoInlinePermissionsPG();
 
@@ -1881,7 +1881,7 @@ definition {
 			addOrRemoveViewPermission = "Add",
 			roleList = "United States Orgrole");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/united-states/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/united-states/mb-page");
 
 		MessageboardsThread.addPG(
 			threadBody = "United States Message Body",
@@ -1893,7 +1893,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/united-states/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/united-states/mb-page");
 
 		MessageboardsThread.viewDoNotHaveRequiredPermissionsPG(threadSubject = "United States Message Subject");
 
@@ -1903,7 +1903,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/canada/mb-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/canada/mb-page");
 
 		MessageboardsThread.viewDoNotHaveRequiredPermissionsPG(threadSubject = "Canada Message Subject");
 	}
@@ -1938,7 +1938,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name 1");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name 1");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

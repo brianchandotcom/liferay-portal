@@ -49,7 +49,7 @@ definition {
 			key_settingFieldName = "Enable Dynamic Export",
 			locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -75,11 +75,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -115,11 +115,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 

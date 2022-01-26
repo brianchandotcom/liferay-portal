@@ -72,7 +72,7 @@ definition {
 				roleTitle = "Regrole Name");
 		}
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
@@ -82,7 +82,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationOptions(
 			noOptions = "true",
@@ -145,7 +145,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationOptions(
 			noOptions = "true",
@@ -205,7 +205,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -214,7 +214,7 @@ definition {
 			noTargetLocale = "ar-SA,ca-ES,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,sv-SE",
 			targetLocale = "es-ES,zh-CN");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -244,7 +244,7 @@ definition {
 			webContentDescription = "WC WebContent Descripción",
 			webContentTitle = "WC WebContent Título");
 
-		Translations.openTranslationAdmin(siteUrlKey = "guest");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",

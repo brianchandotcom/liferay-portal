@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 	}
@@ -63,7 +63,7 @@ definition {
 	@description = "This test ensures default title is carried to a new locale on the fieldsets modal."
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -746,7 +746,7 @@ definition {
 	test TranslateStructureWithFieldsetAndNested {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -1086,7 +1086,7 @@ definition {
 	@description = "This test ensures that the default language is the first show on the fieldset modal."
 	@priority = "5"
 	test VerifyDefaultLanguageIsFirstShown {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

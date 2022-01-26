@@ -1,9 +1,9 @@
 definition {
 
 	macro _addInformationTemplate {
-		Variables.assertDefined(parameterList = "${classNameId},${classPk},${groupId},${nameMap}");
+		Variables.assertDefined(parameterList = "${classNameId},${classPK},${groupId},${nameMap}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(script))) {
 			var script = "%3C%23--%0AAdd elements from the sidebar to define your template. Type %22%24%7B%22 to use the%0Aautocomplete feature.%0A--%3E";
@@ -12,11 +12,11 @@ definition {
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.info.item.provider.InfoItemFormProvider");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ddm.ddmtemplate/add-template \
+			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 				-d classNameId=${classNameId} \
-				-d classPK=${classPk} \
+				-d classPK=${classPK} \
 				-d resourceClassNameId=${resourceClassNameId} \
 				-d nameMap=${nameMap} \
 				-d descriptionMap=${descriptionMap} \

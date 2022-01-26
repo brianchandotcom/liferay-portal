@@ -46,7 +46,7 @@ definition {
 
 		Navigator.openURL();
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		FormsAdmin.addForm(groupName = "Global");
 
@@ -364,9 +364,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewTextFieldNotVisible(
 			fieldLabel = "Text",
@@ -374,7 +374,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text",
@@ -730,7 +730,7 @@ definition {
 
 		Navigator.openURL();
 
-		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			defaultSiteLanguage = "Spanish (Spain)",
@@ -830,7 +830,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 		Form.unpublishForm();
 
@@ -840,7 +840,7 @@ definition {
 			key_value = "Share",
 			locator1 = "Form#ANY_DISABLED_BUTTON");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		AssertElementNotPresent(
 			key_fieldLabe = "Text",
@@ -1001,7 +1001,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#DataProviderCanRetrieveDataForGuestUser";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
@@ -1022,7 +1022,7 @@ definition {
 			outputParameterPath = "nameCurrentValue",
 			outputParameterType = "List",
 			password = "test",
-			url = "${portalUrl}/api/jsonws/country/get-countries",
+			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 
 		FormsAdmin.saveDataProvider();
@@ -1059,9 +1059,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "${fieldNameCountries}",
@@ -1069,7 +1069,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "${fieldNameCountries}",
@@ -1478,13 +1478,13 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		Alert.viewWarningSpecific(warningMessage = "This form is not available or it was not published.");
 	}
@@ -1901,7 +1901,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		FormsAdmin.openFormsAdmin(siteUrlKey = "guest");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

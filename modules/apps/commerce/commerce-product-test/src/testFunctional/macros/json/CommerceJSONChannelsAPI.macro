@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllCommerceChannels {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var channelsCount = CommerceJSONChannelsAPI._getCommerceChannelsCount();
@@ -16,7 +16,7 @@ definition {
 				echo("Deleting Commerce channel with id: ${channelId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-channel/v1.0/channels/${channelId} \
+					${baseURL}/o/headless-commerce-admin-channel/v1.0/channels/${channelId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -30,10 +30,10 @@ definition {
 	}
 
 	macro _getCommerceChannelIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(channelCount)) {
@@ -44,7 +44,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -54,14 +54,14 @@ definition {
 	}
 
 	macro _getCommerceChannelsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-channel/v1.0/channels \
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

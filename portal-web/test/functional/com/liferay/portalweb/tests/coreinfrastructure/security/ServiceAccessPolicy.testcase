@@ -33,10 +33,10 @@ definition {
 		task ("Assert access denied for viewing liferay email") {
 			var companyId = JSONCompany.getCompanyId();
 
-			var portalUrl = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 
 			var curl = '''
-				${portalUrl}/api/jsonws/user/get-user-by-email-address \
+				${portalURL}/api/jsonws/user/get-user-by-email-address \
 					-d companyId=${companyId} \
 					-d emailAddress=test@liferay.com
 			''';
@@ -59,7 +59,7 @@ definition {
 			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com ");
 
 			var curl = '''
-				${portalUrl}/api/jsonws/user/get-user-by-email-address \
+				${portalURL}/api/jsonws/user/get-user-by-email-address \
 					-d companyId=${companyId} \
 					-d emailAddress=test@liferay.com
 			''';
@@ -69,7 +69,7 @@ definition {
 
 		task ("Assert permission available") {
 			var curl = '''
-				${portalUrl}/api/jsonws/user/get-current-user \
+				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
 					-u test@liferay.com:test
 			''';
@@ -90,7 +90,7 @@ definition {
 
 		task ("Assert permission denied") {
 			var curl = '''
-				${portalUrl}/api/jsonws/user/get-current-user \
+				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
 					-u test@liferay.com:test
 			''';

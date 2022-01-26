@@ -3,10 +3,10 @@ definition {
 	macro _addUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergroup/add-user-group \
+			${portalURL}/api/jsonws/usergroup/add-user-group \
 				-u test@liferay.com:test \
 				-d name=${userGroupName} \
 				-d description=${userGroupDescription}
@@ -19,10 +19,10 @@ definition {
 	macro _assignGroupRoleToUserGroup {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
+			${portalURL}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
@@ -36,10 +36,10 @@ definition {
 	macro _getUserGroupIdByName {
 		Variables.assertDefined(parameterList = "${userGroupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergroup/get-user-group \
+			${portalURL}/api/jsonws/usergroup/get-user-group \
 				-u test@liferay.com:test \
 				-d name=${userGroupName}
 		''';

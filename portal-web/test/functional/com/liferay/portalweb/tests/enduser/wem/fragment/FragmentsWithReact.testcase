@@ -35,7 +35,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Import the react fragment") {
@@ -75,7 +75,7 @@ definition {
 	@priority = "4"
 	test CannotExportReactFragmentWithCollection {
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Import the react fragment") {
@@ -99,7 +99,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin in the new site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 		}
 
 		task ("Import the fragment collection into the new site") {
@@ -121,7 +121,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Import the react fragment") {

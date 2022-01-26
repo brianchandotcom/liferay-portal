@@ -71,7 +71,7 @@ definition {
 		}
 
 		task ("Move the WC Folder to Recycle Bin in staging site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 			WebContentFolder.moveToRecycleBinCP(
 				assetType = "Web Content Folder",

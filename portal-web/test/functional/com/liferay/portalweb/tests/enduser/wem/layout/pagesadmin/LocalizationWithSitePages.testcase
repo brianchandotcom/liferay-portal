@@ -34,7 +34,7 @@ definition {
 		property testray.component.names = "Localization,Site Administration,Site Localization";
 
 		task ("Get portal URL") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 		}
 
 		task ("Add widget page") {
@@ -44,7 +44,7 @@ definition {
 		}
 
 		task ("Add a translation of page to es-ES") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -62,7 +62,7 @@ definition {
 				defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 				pageName = "Casa",
 				preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-				sitePageUrl = "${portalUrl}/es/web/test-site-name/home",
+				sitePageURL = "${portalURL}/es/web/test-site-name/home",
 				translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 		}
 
@@ -80,7 +80,7 @@ definition {
 		}
 
 		task ("Add a translation of child page to es-ES") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -99,7 +99,7 @@ definition {
 				childPageName = "Blog Página",
 				defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 				preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-				sitePageUrl = "${portalUrl}/es/web/test-site-name/blog-page",
+				sitePageURL = "${portalURL}/es/web/test-site-name/blog-page",
 				translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 		}
 	}

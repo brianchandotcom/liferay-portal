@@ -146,7 +146,7 @@ definition {
 
 		CalendarEvent.delete();
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "Publication Calendar Event Title",

@@ -44,7 +44,7 @@ definition {
 		Type(
 			key_text = "URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryExternalUrl}");
+			value1 = "${entryExternalURL}");
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
@@ -59,7 +59,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		CKEditor.addEntryExternalURL(
-			entryExternalUrl = "${entryExternalUrl}",
+			entryExternalURL = "${entryExternalURL}",
 			fieldLabel = "${fieldLabel}");
 
 		SelectFrame(value1 = "relative=top");
@@ -116,11 +116,11 @@ definition {
 				value1 = "${pageName}");
 		}
 
-		if (isSet(entryExternalUrl)) {
+		if (isSet(entryExternalURL)) {
 			AssertTextEquals(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",
-				value1 = "${entryExternalUrl}");
+				value1 = "${entryExternalURL}");
 		}
 
 		Click(locator1 = "CKEditor#OK_BUTTON");

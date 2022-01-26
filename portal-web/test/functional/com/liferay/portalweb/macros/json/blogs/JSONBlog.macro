@@ -4,10 +4,10 @@ definition {
 	macro addComment {
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentCommentId))) {
 			var parentCommentId = "0";
@@ -22,7 +22,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/blog-postings/${entryId}/comments \
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId}/comments \
 			-H 'Content-Type: application/json' \
 			-u '${userEmailAddress}:${userPassword}'
 			-d '{
@@ -45,7 +45,7 @@ definition {
 	macro addEntry {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
@@ -61,8 +61,8 @@ definition {
 			var guestPermissions = "true";
 		}
 
-		if (!(isSet(friendlyUrl))) {
-			var friendlyUrl = "";
+		if (!(isSet(friendlyURL))) {
+			var friendlyURL = "";
 		}
 
 		if (!(isSet(groupName))) {
@@ -107,12 +107,12 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/blogs.blogsentry/add-entry \
+			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d externalReferenceCode= \
 			-d title=${entryTitle} \
 			-d subtitle=${entrySubtitle} \
-			-d urlTitle=${friendlyUrl} \
+			-d urlTitle=${friendlyURL} \
 			-d description=${entryAbstractDescription} \
 			-d content=${contentXml} \
 			-d displayDateMonth=${displayDateMonth} \
@@ -141,7 +141,7 @@ definition {
 	macro addEntryWithImage {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle},${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -191,7 +191,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalUrl}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
+				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \
@@ -230,19 +230,19 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(friendlyUrl)) {
+		if (isSet(friendlyURL)) {
 			var curl = '''
-				${portalUrl}/api/jsonws/blogs.blogsentry/get-entry \
+				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
 			 	-u test@liferay.com:test \
 			 	-d groupId=${groupId} \
-			  	-d urlTitle=${friendlyUrl}
+			  	-d urlTitle=${friendlyURL}
 				''';
 		}
 		else {
 			var curl = '''
-				${portalUrl}/api/jsonws/blogs.blogsentry/get-entry \
+				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
 			  	-u test@liferay.com:test \
 			  	-d groupId=${groupId} \
 			  	-d urlTitle=${entryTitle}
@@ -263,14 +263,14 @@ definition {
 			var site = "true";
 		}
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
 			site = "${site}");
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -284,10 +284,10 @@ definition {
 
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -298,7 +298,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/blogs.blogsentry/move-entry-to-trash \
+			${portalURL}/api/jsonws/blogs.blogsentry/move-entry-to-trash \
 			-u ${userEmailAddress}:${userPassword} \
 			-d entryId=${entryId} \
 		''';
@@ -308,7 +308,7 @@ definition {
 	macro removeBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var imageId = JSONBlog.getBlogImageId(
 			groupName = "${groupName}",
@@ -316,7 +316,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
+			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -328,7 +328,7 @@ definition {
 	macro updateEntry {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -342,15 +342,15 @@ definition {
 			var entrySubtitle = "";
 		}
 
-		if (!(isSet(newFriendlyUrl))) {
-			var newFriendlyUrl = "";
+		if (!(isSet(newFriendlyURL))) {
+			var newFriendlyURL = "";
 		}
 
 		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}",
 			site = "${site}");
 
@@ -391,12 +391,12 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/blogs.blogsentry/update-entry \
+			${portalURL}/api/jsonws/blogs.blogsentry/update-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d entryId=${entryId} \
 			-d title=${entryTitle} \
 			-d subtitle=${entrySubtitle} \
-			-d urlTitle=${newFriendlyUrl} \
+			-d urlTitle=${newFriendlyURL} \
 			-d description= \
 			-d content=${contentXml} \
 			-d displayDateMonth=${displayDateMonth} \
@@ -421,7 +421,7 @@ definition {
 	macro updateEntryCoverImage {
 		Variables.assertDefined(parameterList = "${entryTitle},${entryContent},${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -429,7 +429,7 @@ definition {
 
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}",
 			site = "${site}");
 
@@ -448,7 +448,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalUrl}/o/headless-delivery/v1.0/blog-postings/${entryId} \
+				${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \
@@ -469,7 +469,7 @@ definition {
 	macro uploadBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -486,7 +486,7 @@ definition {
 		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 			-H accept: application/json \
 			-H Content-Type: multipart/form-data \
 			-u test@liferay.com:test \

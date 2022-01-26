@@ -80,12 +80,12 @@ definition {
 
 			// This data takes too long to appear
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
-				canonicalUrl = "${portalUrl}/web/site-name",
+				canonicalURL = "${portalURL}/web/site-name",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
 		}

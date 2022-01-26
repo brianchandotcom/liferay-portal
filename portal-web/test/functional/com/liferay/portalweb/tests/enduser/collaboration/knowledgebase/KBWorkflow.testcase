@@ -66,7 +66,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -126,7 +126,7 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "usersn");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -154,7 +154,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoSuggestionsNavigationCP();
 
@@ -184,7 +184,7 @@ definition {
 
 		KBArticleSuggestion.deleteCP(kbSuggestionBody = "Knowledge Base Article Suggestion");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoSuggestionsNavigationCP();
 

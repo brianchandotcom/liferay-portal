@@ -23,7 +23,7 @@ definition {
 
 		if (isSet(databaseName)) {
 			var originalDatabaseName = PropsUtil.get("database.mysql.schema");
-			var jdbcUrl = StringUtil.replace("${jdbcUrl}", "${originalDatabaseName}", "${databaseName}");
+			var jdbcURL = StringUtil.replace("${jdbcURL}", "${originalDatabaseName}", "${databaseName}");
 		}
 
 		Select(
@@ -32,7 +32,7 @@ definition {
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_URL_FIELD",
-			value1 = "${jdbcUrl}");
+			value1 = "${jdbcURL}");
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD",
@@ -74,8 +74,8 @@ definition {
 			base_branch = "${base_branch}",
 			deleteLiferayHome = "false");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -117,7 +117,7 @@ definition {
 			databaseType = "${databaseType}",
 			databaseUserName = "${databaseUserName}",
 			jdbcDriverClassName = "${jdbcDriverClassName}",
-			jdbcUrl = "${jdbcUrl}");
+			jdbcURL = "${jdbcURL}");
 
 		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
 
@@ -133,8 +133,8 @@ definition {
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
-		if (isSet(virtualHostsUrl)) {
-			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}");
 		}
 		else {
 			Navigator.openURL();

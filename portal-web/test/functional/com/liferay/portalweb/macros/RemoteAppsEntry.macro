@@ -20,7 +20,7 @@ definition {
 		Type(
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 	}
 
 	macro addCustomElementAllFields {
@@ -37,7 +37,7 @@ definition {
 		Type(
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 
 		Type(
 			key_text = "CSS URL",
@@ -98,7 +98,7 @@ definition {
 		Type(
 			key_id = "iFrameURL",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryUrl}");
+			value1 = "${entryURL}");
 	}
 
 	macro addPortletCategory {

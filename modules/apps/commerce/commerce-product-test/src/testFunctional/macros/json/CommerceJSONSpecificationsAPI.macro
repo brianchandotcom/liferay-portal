@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllCommerceSpecifications {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var specificationsCount = CommerceJSONSpecificationsAPI._getCommerceSpecificationsCount();
@@ -16,7 +16,7 @@ definition {
 				echo("Deleting Commerce specification with id: ${specificationId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-catalog/v1.0/specifications/${specificationId} \
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications/${specificationId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -30,10 +30,10 @@ definition {
 	}
 
 	macro _getCommerceSpecificationIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(specificationCount)) {
@@ -44,7 +44,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/specifications?pageSize=${specificationsCount} \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications?pageSize=${specificationsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -54,14 +54,14 @@ definition {
 	}
 
 	macro _getCommerceSpecificationsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-catalog/v1.0/specifications \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

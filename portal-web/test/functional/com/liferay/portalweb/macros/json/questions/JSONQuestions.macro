@@ -9,7 +9,7 @@ definition {
 			groupName = "${groupName}",
 			titleField = "${titleField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -20,7 +20,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/mb.mbmessage/add-message \
+			${portalURL}/api/jsonws/mb.mbmessage/add-message \
 				-u ${userEmailAddress}:${userPassword} \
 				-d parentMessageId=${messageId} \
 				-d subject=RE: ${threadSubject} \
@@ -87,12 +87,12 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${titleField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/mb.mbmessage/get-thread-messages \
+			${portalURL}/api/jsonws/mb.mbmessage/get-thread-messages \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -121,10 +121,10 @@ definition {
 			groupName = "${groupName}",
 			titleField = "${titleField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -148,10 +148,10 @@ definition {
 			pending = "1",
 			titleField = "${titleField}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -175,12 +175,12 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
+			${portalURL}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -206,7 +206,7 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -218,7 +218,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
+			${portalURL}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \

@@ -23,7 +23,7 @@ definition {
 			operator = "equals",
 			segmentName = "Third Segment");
 
-		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		Segmentation.editSegment(entry = "First Segment");
 
@@ -31,7 +31,7 @@ definition {
 
 		Segmentation.viewSegment(propertyField = "liferay.com");
 
-		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		Segmentation.editSegment(entry = "Second Segment");
 
@@ -39,7 +39,7 @@ definition {
 
 		Segmentation.viewSegment(propertyField = "QA");
 
-		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		Segmentation.editSegment(entry = "Third Segment");
 

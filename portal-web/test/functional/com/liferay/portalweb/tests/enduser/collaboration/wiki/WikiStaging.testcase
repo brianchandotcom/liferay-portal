@@ -58,9 +58,9 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name-staging",
-			tabUrlKey = "all_pages",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name-staging",
+			tabURLKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
@@ -74,9 +74,9 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name",
-			tabUrlKey = "all_pages",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
@@ -179,8 +179,8 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -191,8 +191,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name-staging",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name-staging",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -229,9 +229,9 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name",
-			tabUrlKey = "all_pages",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
@@ -261,7 +261,7 @@ definition {
 			wikiParentPageName = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			siteUrlKey = "site-name-staging",
+			siteURLKey = "site-name-staging",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Child Page Title");
 
@@ -280,7 +280,7 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.openToWikiPage(
-			siteUrlKey = "site-name-staging",
+			siteURLKey = "site-name-staging",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Child Page Title");
 
@@ -300,7 +300,7 @@ definition {
 
 		WikiNavigator.openToWikiNode(
 			groupName = "Site Name",
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			wikiNodeName = "Main");
 
 		for (var wikiPageTitle : list "Child Page Title,Rename Page Title,Rename Page Title 1") {
@@ -338,9 +338,9 @@ definition {
 		Staging.publishToLive();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutUrlKey = "staging-test-page",
-			siteUrlKey = "site-name",
-			tabUrlKey = "all_pages",
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiTable.viewEntry(

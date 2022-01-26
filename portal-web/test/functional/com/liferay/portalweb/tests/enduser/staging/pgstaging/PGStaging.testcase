@@ -158,7 +158,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -614,7 +614,7 @@ definition {
 
 		DMNavigator.gotoURLDetail();
 
-		var dmDocumentUrl = selenium.getElementValue("//input[contains(@id,'url')]");
+		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -632,7 +632,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceUrl = "${dmDocumentUrl}",
+			imageSourceURL = "${dmDocumentURL}",
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -686,8 +686,8 @@ definition {
 	@description = "This is a use case for LPS-80295."
 	@priority = "4"
 	test PublishWCWithFriendlyURL {
-		var baseUrl = PropsUtil.get("portal.url");
-		var friendlyUrl = "link";
+		var baseURL = PropsUtil.get("portal.url");
+		var friendlyURL = "link";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -708,7 +708,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithFriendlyURL(
-			friendlyUrl = "${friendlyUrl}",
+			friendlyURL = "${friendlyURL}",
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
@@ -726,7 +726,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSpecificURL(url = "${baseUrl}/web/site-name-staging/-/${friendlyUrl}");
+		Navigator.openSpecificURL(url = "${baseURL}/web/site-name-staging/-/${friendlyURL}");
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Web Content Title",
@@ -738,7 +738,7 @@ definition {
 			locator1 = "APAsset#ASSET_VIEW_CONTENT",
 			value1 = "Web Content Content");
 
-		Navigator.openSpecificURL(url = "${baseUrl}/web/site-name/-/${friendlyUrl}");
+		Navigator.openSpecificURL(url = "${baseURL}/web/site-name/-/${friendlyURL}");
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Web Content Title",
@@ -859,11 +859,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -872,7 +872,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Test Variation Page",
 			siteName = "Remote Site");
 

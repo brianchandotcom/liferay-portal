@@ -621,7 +621,7 @@ definition {
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
-			portalUrl = "http://localhost:${remotePort}",
+			portalURL = "http://localhost:${remotePort}",
 			site = "true");
 
 		Type(
@@ -796,7 +796,7 @@ definition {
 	}
 
 	macro openStagingAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
 	}
 
 	macro publishCustomPublication {
@@ -1025,15 +1025,15 @@ definition {
 
 		JSONGroup.addGroup(
 			groupName = "Remote Site",
-			portalUrl = "http://localhost:${remotePort}");
+			portalURL = "http://localhost:${remotePort}");
 
 		var siteId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
-			portalUrl = "http://localhost:${remotePort}");
+			portalURL = "http://localhost:${remotePort}");
 
-		var siteUrlKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 
-		Staging.openStagingAdmin(siteUrlKey = "${siteUrlKey}");
+		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
 
 		Staging.activateStagingCP(
 			contentName = "${contentName}",
@@ -1052,11 +1052,11 @@ definition {
 
 		JSONGroup.addGroup(
 			groupName = "Remote Site",
-			portalUrl = "http://localhost:${remotePort}");
+			portalURL = "http://localhost:${remotePort}");
 
 		var remoteGroupId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
-			portalUrl = "http://localhost:${remotePort}");
+			portalURL = "http://localhost:${remotePort}");
 
 		JSONStaging.enableRemoteStaging(
 			branchingPrivate = "${branchingPrivate}",
@@ -1515,7 +1515,7 @@ definition {
 	}
 
 	macro viewRepeatingEventDetails {
-		Staging.openStagingAdmin(siteUrlKey = "${siteName}");
+		Staging.openStagingAdmin(siteURLKey = "${siteName}");
 
 		Navigator.gotoNavItem(navItem = "Scheduled");
 

@@ -44,7 +44,7 @@ definition {
 		}
 
 		task ("Assign user to the site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -66,7 +66,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -75,7 +75,7 @@ definition {
 		}
 
 		task ("Assign Site Content Reviewer to the user") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignSiteRoleCP(
 				resourceName = "userfn userln",
@@ -83,7 +83,7 @@ definition {
 		}
 
 		task ("View the user has Site Content Reviewer role in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.viewSiteRoleViaSiteMembershipsCP(
 				resourceName = "userfn userln",
@@ -101,13 +101,13 @@ definition {
 		}
 
 		task ("Assign organization to site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
 		}
 
 		task ("View the user has Organization Name in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.viewMemberOrganizationCP(orgName = "Organization Name");
 		}
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Assign users to site in memberships admin") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			for (var userNum : list "1,2,3") {
 				Site.assignUserAsMemberCP(
@@ -143,7 +143,7 @@ definition {
 		}
 
 		task ("View the users in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			for (var userNum : list "1,2,3") {
 				Site.viewMemberCP(
@@ -169,13 +169,13 @@ definition {
 		}
 
 		task ("Assign user group to default site in memberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 		}
 
 		task ("View the user group in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
 		}
@@ -194,13 +194,13 @@ definition {
 		}
 
 		task ("Assign user group to default site in memberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 		}
 
 		task ("Assign Site Content Reviewer role to user group in default site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			NavItem.gotoUserGroups();
 
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("View the user group and its role in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			NavItem.gotoUserGroups();
 
@@ -234,7 +234,7 @@ definition {
 		}
 
 		task ("Limit memebershio in memeberships") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "child-sitename");
+			Site.openSiteSettingsAdmin(siteURLKey = "child-sitename");
 
 			Site.limitMembership(siteLimitMembership = "Yes");
 		}
@@ -246,7 +246,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -255,7 +255,7 @@ definition {
 		}
 
 		task ("View the user in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.viewMemberCP(
 				siteName = "Site Name",
@@ -266,7 +266,7 @@ definition {
 		}
 
 		task ("Assign the user to child site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "child-sitename");
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -275,7 +275,7 @@ definition {
 		}
 
 		task ("View the user in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "child-sitename");
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
 
 			Site.viewMemberCP(
 				childSiteName = "Site Name",
@@ -286,7 +286,7 @@ definition {
 		}
 
 		task ("Remove the user from child site and parent site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "child-sitename");
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
 
 			Site.removeMemberCP(
 				siteName = "Child SiteName",
@@ -294,7 +294,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.removeMemberCP(
 				siteName = "Site Name",
@@ -303,7 +303,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		Site.openSiteMembershipsAdmin(siteUrlKey = "child-sitename");
+		Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
 
 		task ("View no user in memeberships") {
 			Site.viewLimitMembershipParentSiteCP(
@@ -371,13 +371,13 @@ definition {
 		}
 
 		task ("Allow manual memebership management for Organization Name 1") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
 
 		task ("View Organization Name 1 in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.viewMemberOrganizationCP(orgName = "Organization Name 1");
 		}
@@ -389,9 +389,9 @@ definition {
 		}
 
 		task ("Assign the user to organization site in memeberships") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "Organization Name 1");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name 1");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -400,21 +400,21 @@ definition {
 		}
 
 		task ("Assign the second organization to organization site and view it in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.viewMemberOrganizationCP(orgName = "Organization Name 2");
 		}
 
 		task ("Assign the third organization to organization site and view it in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 3");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "organization-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
 			Site.viewMemberOrganizationCP(orgName = "Organization Name 3");
 		}
@@ -443,7 +443,7 @@ definition {
 		}
 
 		task ("Remove user from site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.removeMemberCP(
 				siteName = "Site Name",
@@ -465,13 +465,13 @@ definition {
 		}
 
 		task ("Assign the first organization to site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 1");
 		}
 
 		task ("Assert could not find the second orgnization in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			NavItem.gotoOrganizations();
 
@@ -499,13 +499,13 @@ definition {
 		}
 
 		task ("Assign the first user group to site in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name 1");
 		}
 
 		task ("Assert could not find the second orgnization in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			NavItem.gotoUserGroups();
 
@@ -537,13 +537,13 @@ definition {
 		task ("Add a site and assign 10 users to the site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.addAllMembersCP();
 		}
 
 		task ("View 10 users in memeberships") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.viewMemberListCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
 
@@ -655,7 +655,7 @@ definition {
 		}
 
 		task ("Assign 3 users to the default site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.addAllMembersCP();
 		}
@@ -877,7 +877,7 @@ definition {
 		task ("Log out and log in as the default user and view request from first created site") {
 			User.logoutAndLoginPG(userLoginFullName = "Test Test");
 
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name-1");
 
 			Site.viewSiteMembershipsRequest(
 				userFirstName = "userfn",
@@ -885,7 +885,7 @@ definition {
 		}
 
 		task ("View no request from the second created site") {
-			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name-2");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name-2");
 
 			Site.viewNoSiteMembershipsRequest();
 		}
@@ -898,7 +898,7 @@ definition {
 		property testray.component.names = "Site Administration";
 
 		task ("Allow manual memebership management from site settings") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
@@ -916,7 +916,7 @@ definition {
 		}
 
 		task ("Disable manual memebership management from site settings") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "guest");
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
 		}

@@ -49,7 +49,7 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "site-name");
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -112,7 +112,7 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "site-name");
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

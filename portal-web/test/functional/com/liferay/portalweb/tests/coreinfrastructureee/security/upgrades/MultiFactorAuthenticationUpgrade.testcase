@@ -24,7 +24,7 @@ definition {
 		task ("Login at able.com and send otp email") {
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			MultiFactorAuthentication.sendOTPEmailPG();
@@ -32,15 +32,15 @@ definition {
 
 		task ("Check OTP information for test test") {
 			MultiFactorAuthentication.verifyOTP(
-				portalUrl = "http://www.able.com:8080",
+				portalURL = "http://www.able.com:8080",
 				recipient = "test test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
 				userPassword = "test");
 		}
 
 		task ("View OTP email sender") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(baseUrl = "http://www.able.com:8080");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.viewOTPEmailSenderCP(
 				emailAddress = "test@www.able.com",
@@ -54,7 +54,7 @@ definition {
 		property data.archive.type = "data-archive-mfa-system-level";
 		property portal.version = "7.3.10";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Login and send OTP email") {
 			User.firstLoginUI(
@@ -66,7 +66,7 @@ definition {
 
 		task ("Check OTP information for test test") {
 			MultiFactorAuthentication.verifyOTP(
-				portalUrl = "${portalUrl}",
+				portalURL = "${portalURL}",
 				recipient = "test test",
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");

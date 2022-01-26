@@ -5,7 +5,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		if ("${siteUrlTemp}" == "true") {
+		if ("${siteURLTemp}" == "true") {
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
 				siteName = "${siteName}");
@@ -219,7 +219,7 @@ definition {
 			pageName = "${pageName}",
 			portletName = "${portletName}",
 			siteName = "Organization Name",
-			siteUrl = "true");
+			siteURL = "true");
 
 		JSONRole.addOrganizationRole(roleTitle = "${roleTitle}");
 
@@ -495,7 +495,7 @@ definition {
 			userMiddleName = "${userMiddleName}",
 			userScreenName = "${userScreenName}");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "${siteName}");
+		PagesAdmin.openPagesAdmin(siteURLKey = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -528,7 +528,7 @@ definition {
 			pageName = "${pageName}",
 			portletName = "${portletName}",
 			siteName = "${siteName}",
-			siteUrl = "true");
+			siteURL = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

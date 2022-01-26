@@ -5,11 +5,11 @@ definition {
 
 		if ("${locale}" == "zh") {
 			var zhAlternate = '''" hreflang="zh-CN" rel="alternate">''';
-			var pageSource = StringUtil.add("${html}", "${portalUrl}/zh/web/guest${zhAlternate}", "");
+			var pageSource = StringUtil.add("${html}", "${portalURL}/zh/web/guest${zhAlternate}", "");
 		}
 		else if ("${locale}" == "es") {
 			var esAlternate = '''" hreflang="es-ES" rel="alternate">''';
-			var pageSource = StringUtil.add("${html}", "${portalUrl}/es/web/guest${esAlternate}", "");
+			var pageSource = StringUtil.add("${html}", "${portalURL}/es/web/guest${esAlternate}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -20,23 +20,23 @@ definition {
 
 		var html2 = '''" rel="canonical">''';
 
-		if (isSet(customCanonicalUrl)) {
-			var portalUrl = "${customCanonicalUrl}";
+		if (isSet(customCanonicalURL)) {
+			var portalURL = "${customCanonicalURL}";
 		}
 		else if (isSet(locale)) {
-			var portalUrl = "${portalUrl}/${locale}/web/guest";
+			var portalURL = "${portalURL}/${locale}/web/guest";
 		}
 		else {
-			var portalUrl = "${portalUrl}/web/guest";
+			var portalURL = "${portalURL}/web/guest";
 		}
 
 		if (isSet(pageName)) {
 			var pageName = StringUtil.lowerCase("${pageName}");
-			var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
-			var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}${html2}", "");
+			var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+			var pageSource = StringUtil.add("${html}", "${portalURL}/${pageNameURL}${html2}", "");
 		}
 		else {
-			var pageSource = StringUtil.add("${html}", "${portalUrl}${html2}", "");
+			var pageSource = StringUtil.add("${html}", "${portalURL}${html2}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -46,7 +46,7 @@ definition {
 		var html = '''<link data-senna-track="temporary" href="''';
 
 		var html2 = '''" hreflang="x-default" rel="alternate">''';
-		var pageSource = StringUtil.add("${html}", "${portalUrl}${html2}", "");
+		var pageSource = StringUtil.add("${html}", "${portalURL}${html2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
@@ -170,9 +170,9 @@ definition {
 	}
 
 	macro openURLLocale {
-		Navigator.openSpecificURL(url = "${localizationPageUrl}");
+		Navigator.openSpecificURL(url = "${localizationPageURL}");
 
-		AssertLocation(value1 = "${localizationPageUrl}");
+		AssertLocation(value1 = "${localizationPageURL}");
 	}
 
 	macro searchInCollectionFilter {
@@ -378,16 +378,16 @@ definition {
 			locator1 = "PagesAdmin#PREVIEW_TITLE",
 			value1 = "${htmlTitle}");
 
-		var pageNameUrl = StringUtil.lowerCase("${pageName}");
-		var pageNameUrl = StringUtil.replace("${pageNameUrl}", " ", "-");
-		var url = "${portalUrl}/web/guest/${pageNameUrl}";
+		var pageNameURL = StringUtil.lowerCase("${pageName}");
+		var pageNameURL = StringUtil.replace("${pageNameURL}", " ", "-");
+		var url = "${portalURL}/web/guest/${pageNameURL}";
 
-		if (isSet(siteNameUrl)) {
+		if (isSet(siteNameURL)) {
 			if (isSet(pageName)) {
-				var url = "${portalUrl}/web/${siteNameUrl}/${pageNameUrl}";
+				var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
 			}
 			else {
-				var url = "${portalUrl}/web/${siteNameUrl}";
+				var url = "${portalURL}/web/${siteNameURL}";
 			}
 		}
 
@@ -400,10 +400,10 @@ definition {
 
 			if (isSet(openGraph)) {
 				var languageName = StringUtil.upperCase("${languageName}");
-				var portalUrl = StringUtil.upperCase("${portalUrl}");
+				var portalURL = StringUtil.upperCase("${portalURL}");
 			}
 
-			var url = StringUtil.replace("${url}", "${portalUrl}", "${portalUrl}/${languageName}");
+			var url = StringUtil.replace("${url}", "${portalURL}", "${portalURL}/${languageName}");
 		}
 
 		AssertTextEquals(
@@ -433,7 +433,7 @@ definition {
 			}
 		}
 
-		if (isSet(truncatedUrl)) {
+		if (isSet(truncatedURL)) {
 			if (isSet(openGraph)) {
 				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES_OG");
 			}
@@ -509,9 +509,9 @@ definition {
 	}
 
 	macro viewTranslationsPG {
-		Navigator.openSpecificURL(url = "${sitePageUrl}");
+		Navigator.openSpecificURL(url = "${sitePageURL}");
 
-		AssertLocation(value1 = "${sitePageUrl}");
+		AssertLocation(value1 = "${sitePageURL}");
 
 		Alert.viewLocalizationMessage(
 			defaultLanguageLocalizationMessage = "${defaultLanguageLocalizationMessage}",
@@ -528,7 +528,7 @@ definition {
 				value1 = "${localizationOption}");
 		}
 
-		AssertLocation(value1 = "${localizationPageUrl}");
+		AssertLocation(value1 = "${localizationPageURL}");
 	}
 
 	macro viewWithWorkflowPG {

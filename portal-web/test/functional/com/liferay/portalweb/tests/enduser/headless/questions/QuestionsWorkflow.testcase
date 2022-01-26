@@ -108,7 +108,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewStatus(status = "pending");

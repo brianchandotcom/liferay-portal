@@ -56,7 +56,7 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementUrl = "http://www.liferay.com");
+			announcementURL = "http://www.liferay.com");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -71,18 +71,18 @@ definition {
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "site-page-name",
-			siteUrlKey = "test-site-name",
+			siteURLKey = "test-site-name",
 			tabName = "unread");
 
 		AnnouncementsEntry.addPG(
 			distributionScope = "Test Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title",
-			entryUrl = "http://www.yahoo.com");
+			entryURL = "http://www.yahoo.com");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
@@ -104,7 +104,7 @@ definition {
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewPG(
@@ -116,7 +116,7 @@ definition {
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "site-page-name",
-			siteUrlKey = "test-site-name",
+			siteURLKey = "test-site-name",
 			tabName = "unread");
 
 		AnnouncementsEntry.viewPG(
@@ -137,21 +137,21 @@ definition {
 			JSONAnnouncement.addAnnouncement(
 				announcementContent = "Announcements Entry Content ${entryCount}",
 				announcementTitle = "Announcements Entry Title ${entryCount}",
-				announcementUrl = "http://www.liferay.com",
+				announcementURL = "http://www.liferay.com",
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");
 		}
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "4");
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			tabName = "unread");
 
 		for (var viewEntryCount : list "4,5,6,7") {
@@ -203,7 +203,7 @@ definition {
 
 		AnnouncementsNavigator.opentoAdmin(
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Pagination.changePagination(itemsPerPage = "4");
 

@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_URL</td>
-	<td>//table[contains(@class,'table-autofit')]//td[3][contains(.,'${key_bookmarkUrl}')]</td>
+	<td>//table[contains(@class,'table-autofit')]//td[3][contains(.,'${key_bookmarkURL}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -92,7 +92,7 @@ definition {
 				title = "Similar Results WC Title ${count}");
 		}
 
-		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -690,7 +690,7 @@ definition {
 			groupName = "Guest",
 			title = "Similar Results WC Title 2");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPage(pageName = "Similar Results Page");
 

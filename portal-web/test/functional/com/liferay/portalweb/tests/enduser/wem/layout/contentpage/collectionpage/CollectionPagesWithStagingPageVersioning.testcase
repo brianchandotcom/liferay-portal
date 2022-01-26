@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Add the first collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -91,7 +91,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",
@@ -136,7 +136,7 @@ definition {
 		}
 
 		task ("Assert View action of the third collection page is disabled in live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Third Collection Page Name");
 

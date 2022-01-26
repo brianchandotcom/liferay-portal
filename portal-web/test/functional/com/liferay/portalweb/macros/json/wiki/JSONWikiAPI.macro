@@ -4,14 +4,14 @@ definition {
 	macro _addAttachmentToWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${title},${mimeType},${fileName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 		var filePath = "${baseDir}${dependenciesDir}/${fileName}";
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikipage/add-page-attachment \
+			${portalURL}/api/jsonws/wiki.wikipage/add-page-attachment \
 			-u test@liferay.com:test \
 			-F nodeId=${nodeId} \
 			-F fileName=${fileName} \
@@ -33,7 +33,7 @@ definition {
 	macro _addWikiChildPage {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";
@@ -64,7 +64,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{
@@ -85,7 +85,7 @@ definition {
 	macro _addWikiNode {
 		Variables.assertDefined(parameterList = "${name}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -95,7 +95,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikinode/add-node \
+			${portalURL}/api/jsonws/wiki.wikinode/add-node \
 				-u test@liferay.com:test \
 				-d name=${name} \
 				-d description=${description} \
@@ -109,7 +109,7 @@ definition {
 	macro _addWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";
@@ -140,7 +140,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
+			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{
@@ -160,12 +160,12 @@ definition {
 	macro _getNodeIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
+			${portalURL}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
 				-u test@liferay.com:test
 		''';
 		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
@@ -183,12 +183,12 @@ definition {
 	macro _getPageIdByName {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikipage/get-page \
+			${portalURL}/api/jsonws/wiki.wikipage/get-page \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -208,12 +208,12 @@ definition {
 	macro _getPageResourcePrimKey {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
-		if (!(isSet(portalUrl))) {
-			var portalUrl = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikipage/get-page \
+			${portalURL}/api/jsonws/wiki.wikipage/get-page \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -233,10 +233,10 @@ definition {
 	macro _movePageToTrash {
 		Variables.assertDefined(parameterList = "${title},${nodeId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/wiki.wikipage/move-page-to-trash \
+			${portalURL}/api/jsonws/wiki.wikipage/move-page-to-trash \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -248,7 +248,7 @@ definition {
 	macro _updateWikiPage {
 		Variables.assertDefined(parameterList = "${resourcePrimKey}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";
@@ -279,7 +279,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{

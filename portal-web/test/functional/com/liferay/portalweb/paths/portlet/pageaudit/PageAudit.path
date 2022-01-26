@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>PANEL_PAGE_URL</td>
-	<td>//div[contains(@class, 'sidebar-body')] //*[contains(@class, 'text-secondary') and contains(.,'${partialUrl}')]</td>
+	<td>//div[contains(@class, 'sidebar-body')] //*[contains(@class, 'text-secondary') and contains(.,'${partialURL}')]</td>
 	<td></td>
 </tr>
 <tr>

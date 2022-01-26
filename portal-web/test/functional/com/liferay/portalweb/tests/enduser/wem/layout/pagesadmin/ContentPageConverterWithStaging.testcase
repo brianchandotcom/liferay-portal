@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -85,7 +85,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("View the page type is Content Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -176,7 +176,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page without publish") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -192,7 +192,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -226,7 +226,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",

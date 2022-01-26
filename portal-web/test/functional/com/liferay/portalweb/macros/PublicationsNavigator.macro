@@ -76,19 +76,19 @@ definition {
 
 	macro openPublicationsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet");
 	}
 
 	macro openPublicationsHistory {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_history");
 	}
 
 	macro openPublicationsScheduled {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_scheduled");
 	}
 

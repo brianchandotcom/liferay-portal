@@ -524,7 +524,7 @@ definition {
 		}
 
 		task ("Get property URL") {
-			var propertyUrl = Navigator.getCurrentURL();
+			var propertyURL = Navigator.getCurrentURL();
 		}
 
 		task ("Exit Settings") {
@@ -532,7 +532,7 @@ definition {
 		}
 
 		task ("Go to property via URL") {
-			Open(locator1 = "${propertyUrl}");
+			Open(locator1 = "${propertyURL}");
 
 			ACProperties.assertNewCreatedProperty(propertyName = "${myProperty}");
 		}

@@ -31,12 +31,12 @@ definition {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
 					clientSecret = "defaultsecret${count}",
-					websiteUrl = "http://www.liferay.com");
+					websiteURL = "http://www.liferay.com");
 			}
 		}
 
@@ -88,7 +88,7 @@ definition {
 		task ("Add and edit an external application with remember device enabled") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=abc123''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -125,7 +125,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#AuthCodeShouldWorkWithClusteredPortals";
 
 		task ("Add an OAuth 2 application") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -148,7 +148,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			OAuth2.openOAuth2Admin(baseUrl = "http://localhost:9080");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:9080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -192,11 +192,11 @@ definition {
 		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=default''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteUrl = "http://localhost:8080");
+				websiteURL = "http://localhost:8080");
 		}
 
 		task ("Verify that the created application is in the first row and the Revoke button is not present") {
@@ -242,12 +242,12 @@ definition {
 		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=default''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteUrl = "http://localhost:8080");
+				websiteURL = "http://localhost:8080");
 		}
 
 		task ("Verify that the application has 0 authorizations at OAuth 2 admin and the Revoke button is not present") {
@@ -306,7 +306,7 @@ definition {
 			WaitForSPARefresh();
 
 			var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 		}
 
 		task ("Go to scopes and add com.liferay.oauth2.provider.sample.jar file") {
@@ -334,7 +334,7 @@ definition {
 		}
 
 		task ("Verify request is authorized") {
-			Navigator.openSpecificURL(url = "${portalUrl}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+			Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
 			OAuth2.viewAuthorizationRequestAppName(appName = "Analytics Cloud");
 
@@ -356,7 +356,7 @@ definition {
 		}
 
 		task ("Verify authorization request name is sample-app") {
-			Navigator.openSpecificURL(url = "${portalUrl}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+			Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
 			OAuth2.viewAuthorizationRequestResourceName(resourceName = "Portal Services");
 
@@ -378,7 +378,7 @@ definition {
 		}
 
 		task ("Add SAP") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -423,12 +423,12 @@ definition {
 		}
 
 		task ("Set article Id") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			var tokenCurl = '''
-				${portalUrl}/o/oauth2/token \
+				${portalURL}/o/oauth2/token \
 					--data grant_type=client_credentials&client_id=abc123&client_secret=abc123
 			''';
 
@@ -445,7 +445,7 @@ definition {
 				site = "true");
 
 			var deleteCurl = '''
-				${portalUrl}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
+				${portalURL}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
 					-d groupId=${liferaySiteId} \
 					-d articleId=${articleId} \
 					-d articleURL='wc-title'
@@ -473,7 +473,7 @@ definition {
 		}
 
 		task ("Verify WC deleted") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			AssertTextNotPresent(value1 = "WC Title");
 		}
@@ -498,7 +498,7 @@ definition {
 		}
 
 		task ("Verify resource and global scopes are present in OAuth 2 administration entry scopes") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -522,9 +522,9 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
-			User.openUsersAdmin(baseUrl = "http://www.able.com:8080");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			User.unassignRegularRoleCP(
 				regularRoleName = "Power User",
@@ -532,7 +532,7 @@ definition {
 		}
 
 		task ("Verify resource scopes are not present in OAuth 2 administration entry scope") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -558,9 +558,9 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
 			SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
 
@@ -655,17 +655,17 @@ definition {
 		property osgi.module.configurations = "access.token.expires.in=&quot;30&quot;${line.separator}refresh.token.expires.in=&quot;60&quot;:oauth2.expired.authorizations.afterlife.duration=&quot;30&quot;${line.separator}oauth2.expired.authorizations.check.interval=&quot;30&quot;";
 
 		task ("Add a new OAuth 2 application") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
 			var clientId = "abc123";
 			var clientSecret = "abc123";
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.addApplication(
 				applicationName = "Test Expired Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=${clientId}''');
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''');
 		}
 
 		task ("Edit scopes") {
@@ -736,7 +736,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAddedAndEdited";
 
 		task ("Add a new OAuth 2 application") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -744,7 +744,7 @@ definition {
 				applicationName = "OAuth Application",
 				callbackUri = "http://www.liferay.com",
 				clientProfile = "Web Application",
-				websiteUrl = "http://www.liferay.com");
+				websiteURL = "http://www.liferay.com");
 		}
 
 		task ("Get clientId and client secret then add description with privacy policy URL to the Application") {
@@ -753,7 +753,7 @@ definition {
 
 			OAuth2.inputApplicationValues(
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com");
 
 			Navigator.gotoBack();
 		}
@@ -774,8 +774,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 
 		task ("Edit all application values") {
@@ -789,8 +789,8 @@ definition {
 				clientSecret = "abcd1234",
 				description = "Editing a new application",
 				newApplicationName = "OAuth Application Edited",
-				privacyPolicyUrl = "http://www.google.com",
-				websiteUrl = "http://www.google.com");
+				privacyPolicyURL = "http://www.google.com",
+				websiteURL = "http://www.google.com");
 		}
 
 		task ("View recent changes applied") {
@@ -809,8 +809,8 @@ definition {
 				clientProfile = "Native Application",
 				clientSecret = "abcd1234",
 				description = "Editing a new application",
-				privacyPolicyUrl = "http://www.google.com",
-				websiteUrl = "http://www.google.com");
+				privacyPolicyURL = "http://www.google.com",
+				websiteURL = "http://www.google.com");
 		}
 
 		task ("Edit application new secret") {
@@ -840,7 +840,7 @@ definition {
 		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=abc123''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123");
@@ -866,7 +866,7 @@ definition {
 		task ("Add and edit an external trusted application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=abc123''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -895,7 +895,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#GrantedAuthorizationsCanBeRevoked";
 
 		task ("Add a new external application") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -985,7 +985,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#OAuth2SAPEntriesCanBeAddedAndEdited";
 
 		task ("Add SAP") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -1108,9 +1108,9 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#PanelsShouldBeExpandableOnGlobalScopes";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
 			SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
 
@@ -1147,7 +1147,7 @@ definition {
 		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=abc123''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123");
@@ -1178,14 +1178,14 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 
 		task ("Add a new external application with remember device checked") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 			var clientId = "abc123";
 
 			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=${clientId}''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 				checkboxCheckList = "Remember Device",
 				clientProfile = "Web Application");
 		}
@@ -1208,12 +1208,12 @@ definition {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
 					clientSecret = "defaultsecret${count}",
-					websiteUrl = "http://www.liferay.com");
+					websiteURL = "http://www.liferay.com");
 			}
 		}
 
@@ -1263,12 +1263,12 @@ definition {
 		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=default''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
 				checkboxCheckList = "Remember Device",
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteUrl = "http://localhost:8080");
+				websiteURL = "http://localhost:8080");
 		}
 
 		task ("Verify My Application has 0 authorizations at OAuth 2 admin") {
@@ -1316,7 +1316,7 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Add OAuth 2 Application") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -1383,9 +1383,9 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
 			SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
 
@@ -1422,9 +1422,9 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
-			User.openUsersAdmin(baseUrl = "http://www.able.com:8080");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			User.unassignRegularRoleCP(
 				regularRoleName = "Power User",
@@ -1432,7 +1432,7 @@ definition {
 		}
 
 		task ("Verify user is not able to view Analytics in OAuth 2 administration scopes") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -1450,7 +1450,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
 
 		task ("Add a trusted OAuth 2 application") {
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -1458,7 +1458,7 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Trusted Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=${clientId}''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 				checkboxCheckList = "Trusted Application",
 				clientProfile = "Web Application");
 		}

@@ -1033,7 +1033,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteUrlKey = "guest");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1097,7 +1097,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteUrlKey = "guest");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1211,9 +1211,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
 
@@ -1223,7 +1223,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormPortlet.changeLocale(locale = "português-Brasil");
 

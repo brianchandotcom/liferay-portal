@@ -69,11 +69,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToConfigInSystemSettings(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
@@ -85,7 +85,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -117,11 +117,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 

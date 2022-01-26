@@ -22,7 +22,7 @@ definition {
 			databaseType = "DB2",
 			databaseUserName = PropsUtil.get("database.db2.username"),
 			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
-			jdbcUrl = PropsUtil.get("database.db2.url"));
+			jdbcURL = PropsUtil.get("database.db2.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -45,7 +45,7 @@ definition {
 			databaseType = "DB2",
 			databaseUserName = PropsUtil.get("database.db2.username"),
 			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
-			jdbcUrl = PropsUtil.get("database.db2.url"));
+			jdbcURL = PropsUtil.get("database.db2.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -70,7 +70,7 @@ definition {
 			databaseType = "Oracle",
 			databaseUserName = PropsUtil.get("database.oracle.username"),
 			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
-			jdbcUrl = PropsUtil.get("database.oracle.url"));
+			jdbcURL = PropsUtil.get("database.oracle.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -93,7 +93,7 @@ definition {
 			databaseType = "Oracle",
 			databaseUserName = "lportal1",
 			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
-			jdbcUrl = PropsUtil.get("database.oracle.url"));
+			jdbcURL = PropsUtil.get("database.oracle.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -118,7 +118,7 @@ definition {
 			databaseType = "SQLServer",
 			databaseUserName = PropsUtil.get("database.sqlserver.username"),
 			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
-			jdbcUrl = PropsUtil.get("database.sqlserver.url"));
+			jdbcURL = PropsUtil.get("database.sqlserver.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -141,7 +141,7 @@ definition {
 			databaseType = "SQLServer",
 			databaseUserName = PropsUtil.get("database.sqlserver.username"),
 			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
-			jdbcUrl = PropsUtil.get("database.sqlserver.url"));
+			jdbcURL = PropsUtil.get("database.sqlserver.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -165,7 +165,7 @@ definition {
 			databaseType = "Sybase",
 			databaseUserName = PropsUtil.get("database.sybase.username"),
 			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
-			jdbcUrl = PropsUtil.get("database.sybase.url"));
+			jdbcURL = PropsUtil.get("database.sybase.url"));
 
 		Smoke.viewWelcomeContentPage();
 
@@ -188,7 +188,7 @@ definition {
 			databaseType = "Sybase",
 			databaseUserName = PropsUtil.get("database.sybase.username"),
 			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
-			jdbcUrl = PropsUtil.get("database.sybase.url"));
+			jdbcURL = PropsUtil.get("database.sybase.url"));
 
 		Smoke.viewWelcomeContentPage();
 

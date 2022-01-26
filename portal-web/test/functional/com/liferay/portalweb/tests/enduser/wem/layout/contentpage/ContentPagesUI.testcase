@@ -168,7 +168,7 @@ definition {
 		}
 
 		task ("Assert the actions order for content pages") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 

@@ -5,7 +5,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -15,7 +15,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/user/get-user-by-id/user-id/${userId} \
+			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u ${userName}:test \
 		''';
 

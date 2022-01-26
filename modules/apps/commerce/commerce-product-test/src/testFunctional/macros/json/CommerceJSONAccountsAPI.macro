@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllCommerceAccounts {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var accountsCount = CommerceJSONAccountsAPI._getCommerceAccountsCount();
@@ -16,7 +16,7 @@ definition {
 				echo("Deleting Commerce account with id: ${accountId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-account/v1.0/accounts/${accountId} \
+					${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -30,10 +30,10 @@ definition {
 	}
 
 	macro _getCommerceAccountEmail {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(accountName)) {
@@ -51,7 +51,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-account/v1.0/accounts \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -61,10 +61,10 @@ definition {
 	}
 
 	macro _getCommerceAccountIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(accountCount)) {
@@ -75,7 +75,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-account/v1.0/accounts?pageSize=${accountsCount} \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts?pageSize=${accountsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -85,14 +85,14 @@ definition {
 	}
 
 	macro _getCommerceAccountsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-account/v1.0/accounts \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

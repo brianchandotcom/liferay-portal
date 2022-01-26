@@ -1,7 +1,7 @@
 definition {
 
 	macro addAndEditTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
 
@@ -69,7 +69,7 @@ definition {
 	}
 
 	macro addAutoTaggedBlogsEntry {
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
 			entryContent = "${entryContent}",
@@ -94,7 +94,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		DMDocument.addCP(
@@ -108,7 +108,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -123,7 +123,7 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
 		WebContentNavigator.gotoAddCP();
@@ -138,7 +138,7 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
@@ -167,7 +167,7 @@ definition {
 		GogoShell.viewOutput(outputContent = "Added ${wcTagNum} tags to asset entry ${webContentTitleXml}");
 
 		if (isSet(blogEntryTitle)) {
-			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			BlogsNavigator.gotoEntryCP(entryTitle = "${blogEntryTitle}");
 
@@ -182,7 +182,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -197,7 +197,7 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
@@ -211,7 +211,7 @@ definition {
 
 	macro addContentPage {
 		task ("Add a content page in Test Site Name site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
@@ -341,7 +341,7 @@ definition {
 	}
 
 	macro addDataDefinitionWithDB2 {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -391,7 +391,7 @@ definition {
 	}
 
 	macro addDMWithDocumentTypesAndMetadataSets {
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Type Description",
@@ -403,7 +403,7 @@ definition {
 			navTab = "Documents and Media",
 			numberField = "1234");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -521,7 +521,7 @@ definition {
 
 	macro addStyleBook {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name 2");
 		}
@@ -961,7 +961,7 @@ definition {
 
 	macro configurePageEditor {
 		task ("View fragment persists and could add another fragment in page editor") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 
@@ -976,7 +976,7 @@ definition {
 		}
 
 		task ("Assert could edit fragment upgrading from 7.2") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
@@ -1091,7 +1091,7 @@ definition {
 		}
 
 		task ("Assert could add fragment added to display page after upgrading") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -1107,7 +1107,7 @@ definition {
 	macro deleteDocumentTypesAndMetadataSets {
 		JSONRecycleBin.emptyRecycleBin();
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name Edit");
 
@@ -1305,17 +1305,17 @@ definition {
 	}
 
 	macro editAndDeleteRedirects {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteUrlKey = "test-site-name");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.editEntry(
-			destinationUrlEdit = "${portalUrl}/web/test-site-name/test-destination-temporary-page-edit",
-			sourceUrl = "test-source-temporary-page");
+			destinationURLEdit = "${portalURL}/web/test-site-name/test-destination-temporary-page-edit",
+			sourceURL = "test-source-temporary-page");
 
-		Redirect.openRedirectAdmin(siteUrlKey = "test-site-name");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.deleteEntry(sourceUrl = "test-source-permanent-page");
+		Redirect.deleteEntry(sourceURL = "test-source-permanent-page");
 	}
 
 	macro editAndDeleteWiki {
@@ -1351,7 +1351,7 @@ definition {
 	}
 
 	macro editDocumentTypesAndMetadataSets {
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoMetadataSets();
 
@@ -1370,7 +1370,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Address");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -1403,13 +1403,13 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "${entryTitleKey}",
 			layoutName = "test-page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "${entryTitle}",
 			tagName = "${tagName}");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
 
@@ -1424,7 +1424,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "${entryTitleKey}",
 			layoutName = "test-page",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewNoTag(
 			entryTitle = "${entryTitle}",
@@ -1451,7 +1451,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -1464,7 +1464,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -1479,7 +1479,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -1492,7 +1492,7 @@ definition {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
 		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -1503,7 +1503,7 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
@@ -1516,7 +1516,7 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
@@ -1541,14 +1541,14 @@ definition {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
 		else {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "${webContentTitle}");
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
@@ -1571,7 +1571,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field Edit",
@@ -1592,7 +1592,7 @@ definition {
 	}
 
 	macro EditWebContentAndViewInWCDandAssetPublisher {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1628,7 +1628,7 @@ definition {
 	}
 
 	macro exportAndImportTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -1648,7 +1648,7 @@ definition {
 			webContentDescription = "",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP.xlf",
@@ -1663,7 +1663,7 @@ definition {
 			webContentContent = "Webコンテンツ",
 			webContentTitle = "Webコンテンツのタイトル");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			dependencyfile = "true",
@@ -1691,7 +1691,7 @@ definition {
 		}
 
 		task ("View the two versions of the web content on default site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View History",
@@ -1729,7 +1729,7 @@ definition {
 		}
 
 		task ("View the two versions of the web content on the new site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View History",
@@ -1744,39 +1744,39 @@ definition {
 	}
 
 	macro ignore404URLs {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.open404URLsAdmin(siteUrlKey = "test-site-name");
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
 		Redirect.view404URLs(
-			ignoreUrl = "${portalUrl}/web/test-site-name/test-destination-page1",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
 
 		Redirect.view404URLs(
-			ignoreUrl = "${portalUrl}/web/test-site-name/test-destination-page2",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
 			requestNumber = "1");
 
 		Redirect.ignoreEntry(
-			ignoreUrl = "${portalUrl}/web/test-site-name/test-destination-page1",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			skipNavigation = "true");
 
-		Redirect.open404URLsAdmin(siteUrlKey = "test-site-name");
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
 		Redirect.addEntryVia404URLs(
-			destinationUrl = "${portalUrl}/web/test-site-name/test-destination-temporary-page",
-			ignoredUrl = "${portalUrl}/web/test-site-name/test-destination-page1",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-temporary-page",
+			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			siteName = "test-site-name",
 			skipNavigation = "true",
-			sourceUrl = "test-destination-page1");
+			sourceURL = "test-destination-page1");
 
-		Redirect.open404URLsAdmin(siteUrlKey = "test-site-name");
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
 		Redirect.addEntryVia404URLs(
-			activeIgnoreUrl = "${portalUrl}/web/test-site-name/test-destination-page2",
-			destinationUrl = "${portalUrl}/web/test-site-name/test-destination-temporary-page",
+			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-temporary-page",
 			siteName = "test-site-name",
 			skipNavigation = "true",
-			sourceUrl = "test-destination-page2");
+			sourceURL = "test-destination-page2");
 
 		Redirect.view404URLsDefault();
 	}
@@ -2433,7 +2433,7 @@ definition {
 	macro revokeAndUpdateSharedEntry {
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${dmDocumentTitleView}");
 
@@ -2443,7 +2443,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		if (isSet(blogsEntryTitleView)) {
 			Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${blogsEntryTitleView}");
@@ -2646,7 +2646,7 @@ definition {
 			key_assetTitle = "DM Document Title In Depot Edit",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document with DM Document Type Description",
@@ -2671,7 +2671,7 @@ definition {
 			fieldFieldLabel = "Number",
 			fieldFieldLabelEdit = "Amount");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title With DM Type");
 
@@ -2679,11 +2679,11 @@ definition {
 			numericFieldLabel = "Amount",
 			numericValue = "1234");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title With DM Type");
 
-		RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "DM Document Title With DM Type",
@@ -2810,7 +2810,7 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC WebContent Title Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -2821,7 +2821,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
@@ -2839,17 +2839,17 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text Edit",
 			webContentTitle = "Web Content Title With Structure");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.deleteCP(
-			siteUrlKey = "site-name",
+			siteURLKey = "site-name",
 			webContentTitle = "Web Content Title With Structure");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -2858,42 +2858,42 @@ definition {
 	}
 
 	macro viewAndAccessRedirects {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteUrlKey = "test-site-name");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewEntry(
-			destinationUrl = "${portalUrl}/web/test-site-name/test-destination-permanent-page",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-permanent-page",
 			redirectType = "Temporary",
-			sourceUrl = "${portalUrl}/web/test-site-name/test-source-permanent-page");
+			sourceURL = "${portalURL}/web/test-site-name/test-source-permanent-page");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-source-permanent-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
 
 		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
 
-		AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-destination-permanent-page");
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
 
-		Redirect.openRedirectAdmin(siteUrlKey = "test-site-name");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewEntry(
-			destinationUrl = "${portalUrl}/web/test-site-name/test-source-temporary-page",
+			destinationURL = "${portalURL}/web/test-site-name/test-source-temporary-page",
 			redirectType = "Temporary",
-			sourceUrl = "${portalUrl}/web/test-site-name/test-destination-temporary-page");
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-temporary-page");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-source-temporary-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-temporary-page");
 
-		AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-destination-temporary-page");
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-temporary-page");
 
 		for (var i : list "1,2") {
-			Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-without-references-page${i}");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-without-references-page${i}");
 
-			AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-without-references-page3");
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-without-references-page3");
 		}
 
 		for (var i : list "1,2") {
-			Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-with-references-page${i}");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-with-references-page${i}");
 
-			AssertLocation(value1 = "${portalUrl}/web/test-site-name/test-with-references-page3");
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
 		}
 	}
 
@@ -2901,7 +2901,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -2912,7 +2912,7 @@ definition {
 			BlogsNavigator.openToBlogEntry(
 				entryTitle = "Blogs Entry Title With Video",
 				layoutName = "Blogs",
-				siteUrlKey = "guest");
+				siteURLKey = "guest");
 
 			BlogsEntry.viewEntryPG(
 				embedVideo = "true",
@@ -2975,7 +2975,7 @@ definition {
 			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
-		KBAdmin.openKBAdmin(siteUrlKey = "guest");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content After Upgrade",
@@ -3198,11 +3198,11 @@ definition {
 	}
 
 	macro viewAndEditCustomMetaTag {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property" content="custom Tag 1 content",property="custom Tag 2 property" content="custom Tag 2 content"''');
 
@@ -3210,7 +3210,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -3230,13 +3230,13 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property edit" content="custom Tag 1 content edit",property="custom Tag 3 property" content="custom Tag 3 content"''');
 	}
 
 	macro viewAndEditGoogleDriveDocuments {
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		var key_dmDocumentTitle = "Untitled (1)";
 
@@ -3260,7 +3260,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Sheet");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled (2)",
@@ -3277,7 +3277,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Slide");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
@@ -3296,7 +3296,7 @@ definition {
 	}
 
 	macro viewAndEditOpenGraph {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -3304,21 +3304,21 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		Page.viewPreview(
 			description = "This is a custom description",
 			htmlTitle = "This is a custom title",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title","og:description" content="This is a custom description","og:image" content="${portalUrl}/documents/${siteId}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title","og:description" content="This is a custom description","og:image" content="${portalURL}/documents/${siteId}/0/Document_1.jpg''');
 
 		User.loginUserPG(
 			password = "test",
@@ -3328,7 +3328,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description edit",
@@ -3342,14 +3342,14 @@ definition {
 			htmlTitle = "This is a custom title edit",
 			key_imageName = "Document_2.jpg",
 			openGraph = "true",
-			portalUrl = "${portalUrl}",
-			siteNameUrl = "test-site-name");
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalUrl}/documents/${siteId}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalURL}/documents/${siteId}/0/Document_2.jpg''');
 
 		User.loginUserPG(
 			password = "test",
@@ -3359,7 +3359,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.clearImage();
 
@@ -3367,7 +3367,7 @@ definition {
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -3375,19 +3375,19 @@ definition {
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_3.jpg");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalUrl}/documents/${siteId}/0/Document_3.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteId}/0/Document_3.jpg''');
 	}
 
 	macro viewAndEditSERPPreview {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -3399,7 +3399,7 @@ definition {
 			description = "Description",
 			htmlTitle = "Page HTML Title - Liferay DXP",
 			pageName = "Test Page",
-			portalUrl = "${portalUrl}");
+			portalURL = "${portalURL}");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
@@ -3408,7 +3408,7 @@ definition {
 			htmlTitle = "Page HTML Title - Liferay DXP",
 			openGraph = "true",
 			pageName = "Test Page",
-			portalUrl = "${portalUrl}");
+			portalURL = "${portalURL}");
 
 		Navigator.gotoNavTab(navTab = "SEO");
 
@@ -3426,7 +3426,7 @@ definition {
 			description = "Page Description Edit",
 			htmlTitle = "Page HTML Title Edit - Liferay DXP",
 			pageName = "Test Page",
-			portalUrl = "${portalUrl}");
+			portalURL = "${portalURL}");
 	}
 
 	macro viewAndEditUser {
@@ -4180,7 +4180,7 @@ definition {
 		}
 
 		task ("View the site default language") {
-			Site.openSiteSettingsAdmin(siteUrlKey = "beijing2008");
+			Site.openSiteSettingsAdmin(siteURLKey = "beijing2008");
 
 			Click(
 				key_itemName = "Localization",
@@ -4227,7 +4227,7 @@ definition {
 	}
 
 	macro viewDocuments {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -4244,7 +4244,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document Type Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "DM Document Type Title.doc",
@@ -4270,13 +4270,13 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document Video",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "DM Document Video.mp4",
 			dmDocumentTitle = "DM Document Video");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/DM Document Video.mp4");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/DM Document Video.mp4");
 
 		DownloadTempFile();
 
@@ -4294,13 +4294,13 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "DM Document JPG.jpg",
 			dmDocumentTitle = "DM Document JPG");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/documents/${siteId}/0/DM Document JPG");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/DM Document JPG");
 
 		DownloadTempFile();
 
@@ -4318,7 +4318,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title.doc",
@@ -4326,7 +4326,7 @@ definition {
 	}
 
 	macro viewDocumentTypesAndMetadataSets {
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -4349,7 +4349,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocumentTypes#METADATA_SETS_NAME",
 			value1 = "Document Metadata Set Name");
 
-		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "guest");
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "Document Metadata Set Name");
 
@@ -4622,7 +4622,7 @@ definition {
 
 	macro viewMSBUpgrade {
 		task ("Assert the fragments survived") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Content");
 
@@ -4656,7 +4656,7 @@ definition {
 		}
 
 		task ("Assert the content page template survived") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
@@ -4709,7 +4709,7 @@ definition {
 		}
 
 		task ("Assert the navigation menu survived") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_rowEntry = "Test Navigation Menu Name",
@@ -4717,7 +4717,7 @@ definition {
 		}
 
 		task ("Assert the display page survived") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
 
@@ -4778,19 +4778,19 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsUrl = "http://www.able.com:8080");
+			virtualHostsURL = "http://www.able.com:8080");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseUrl = "http://www.able.com:8080",
-			siteUrlKey = "guest");
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Share",
 			rowEntry = "Document with sharing disabled");
 
 		BlogsNavigator.openBlogsAdmin(
-			baseUrl = "http://www.able.com:8080",
-			siteUrlKey = "guest");
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Share",
@@ -5479,7 +5479,7 @@ definition {
 	}
 
 	macro viewTranslations {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
 
@@ -5490,7 +5490,7 @@ definition {
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Side By Side");
 
@@ -5501,7 +5501,7 @@ definition {
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトルを並べて");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
 
@@ -5514,7 +5514,7 @@ definition {
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトルを並べて");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
 
@@ -5706,7 +5706,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.able.com:8080",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -5762,7 +5762,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://www.baker.com:8080",
+			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -5818,7 +5818,7 @@ definition {
 	}
 
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		if ("${webContentColor}" == "false") {
 			WebContent.viewWithStructureCP(
@@ -6026,7 +6026,7 @@ definition {
 	macro viewWebContentWithNoDisplayPageTemplate {
 		task ("View the View Content action not shown in dropdown list and the None is selected in Display Page Template field") {
 			for (var n : list "1,2") {
-				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 				Click(
 					key_webContentTitle = "Web Content Title ${n} Edit",

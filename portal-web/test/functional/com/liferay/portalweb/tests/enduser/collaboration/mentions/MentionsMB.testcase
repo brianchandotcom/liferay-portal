@@ -50,7 +50,7 @@ definition {
 		Mentions.addMentionViaMessageBoardThread(
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(
@@ -70,7 +70,7 @@ definition {
 			groupName = "Guest",
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBody = "Thread Reply Body",
 			threadSubject = "Thread Subject");
 
@@ -91,11 +91,11 @@ definition {
 			groupName = "Guest",
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadBody = "Thread Body Edit",
 			threadSubject = "Thread Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -133,7 +133,7 @@ definition {
 		Mentions.addMentionViaMessageBoardThread(
 			mentionsUserScreenNameList = "usersn,usersn2",
 			multipleMentions = "true",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(
@@ -142,7 +142,7 @@ definition {
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
-			siteUrlKey = "guest",
+			siteURLKey = "guest",
 			threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(

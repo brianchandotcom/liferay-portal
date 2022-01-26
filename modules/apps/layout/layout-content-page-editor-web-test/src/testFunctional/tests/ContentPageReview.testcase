@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
@@ -289,7 +289,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Test Site Name");
 
@@ -342,7 +342,7 @@ definition {
 			fragmentName = "Title",
 			targetFragmentName = "Rich Text");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PageEditor.clickDiscardDraft(pageName = "Content Page Name");
 
@@ -403,9 +403,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		User.loginUserPG(
 			password = "test",
@@ -536,7 +536,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewCommentOnDifferentExperience {
-		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 

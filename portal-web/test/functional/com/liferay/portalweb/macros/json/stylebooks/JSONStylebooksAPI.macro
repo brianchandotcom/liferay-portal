@@ -4,10 +4,10 @@ definition {
 	macro _addStylebookEntry {
 		Variables.assertDefined(parameterList = "${groupId},${styleBookEntryName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
+			${portalURL}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${styleBookEntryName} \

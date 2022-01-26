@@ -1,7 +1,7 @@
 definition {
 
 	macro addFragment {
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "${siteUrlKey}");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${siteURLKey}");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
 
@@ -27,18 +27,18 @@ definition {
 			BlogsNavigator.openToEditEntryInSite(
 				entryTitle = "${entryTitle}",
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else if ("${assetType}" == "Document") {
 			DMNavigator.openToEditEntryInSite(
 				dmDocumentTitle = "${entryTitle}",
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}");
+				siteURLKey = "${siteURLKey}");
 		}
 		else if ("${assetType}" == "Web Content") {
 			WebContentNavigator.openToEditWCInSite(
 				groupName = "${groupName}",
-				siteUrlKey = "${siteUrlKey}",
+				siteURLKey = "${siteURLKey}",
 				webContentTitle = "${entryTitle}");
 		}
 

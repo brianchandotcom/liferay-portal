@@ -91,13 +91,13 @@ definition {
 				dmDocumentTitle = "DM AC Title",
 				groupName = "Site Name");
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
-				canonicalUrl = "${portalUrl}/web/site-name/ac-page/-/document_library",
-				canonicalUrlSuffix = "/view_file/${fileEntryId}",
+				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
+				canonicalURLSuffix = "/view_file/${fileEntryId}",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
 

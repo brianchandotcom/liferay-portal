@@ -60,13 +60,13 @@ definition {
 		}
 
 		task ("Publish to Live site") {
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("View pages order in Staging site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.viewPagesOrder(
 				depth = "2",
@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("View pages order in Live site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
 				depth = "2",
@@ -153,7 +153,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -198,7 +198,7 @@ definition {
 		}
 
 		task ("View header table are shown in collection items via Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 

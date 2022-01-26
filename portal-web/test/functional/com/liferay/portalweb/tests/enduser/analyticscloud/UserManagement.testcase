@@ -337,14 +337,14 @@ definition {
 	@priority = "3"
 	test LoggedUserAcessesDirectlyInexistentWorkspace {
 		task ("Change URL to a workspace that doesn't exist") {
-			var workspaceUrl = Navigator.getCurrentURL();
+			var workspaceURL = Navigator.getCurrentURL();
 
-			var workspaceUrl = StringUtil.extractFirst("${workspaceUrl}", "workspace");
-			var workspaceUrl = StringUtil.add("${workspaceUrl}", "workspace/0000", "");
+			var workspaceURL = StringUtil.extractFirst("${workspaceURL}", "workspace");
+			var workspaceURL = StringUtil.add("${workspaceURL}", "workspace/0000", "");
 		}
 
 		task ("Open an inexistent workspace in a new tab") {
-			Open.openNoError(locator1 = "${workspaceUrl}");
+			Open.openNoError(locator1 = "${workspaceURL}");
 		}
 
 		task ("Assert the error message") {
@@ -821,13 +821,13 @@ definition {
 	@priority = "3"
 	test UserNotLoggedAccessACURLPassingWorkspaceParameter {
 		task ("Copy current URL and SignOut") {
-			var workspaceUrl = Navigator.getCurrentURL();
+			var workspaceURL = Navigator.getCurrentURL();
 
 			ACWorkspace.signOut();
 		}
 
 		task ("Open URL and LogIn") {
-			Open.openNoError(locator1 = "${workspaceUrl}");
+			Open.openNoError(locator1 = "${workspaceURL}");
 
 			ACLogin.loginAs(
 				emailAddress = "test@liferay.com",

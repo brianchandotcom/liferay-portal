@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -495,7 +495,7 @@ definition {
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test CheckLocalizationOfWebContentUponLanguageChange {
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -744,7 +744,7 @@ definition {
 		NavItem.click(navItem = "Web Content");
 
 		WebContent.deleteCP(
-			siteUrlKey = "test-site-name",
+			siteURLKey = "test-site-name",
 			webContentTitle = "Web Content Title - en-US");
 
 		NavItem.gotoStructures();
@@ -1129,7 +1129,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1268,7 +1268,7 @@ definition {
 		NavItem.click(navItem = "Web Content");
 
 		WebContent.deleteCP(
-			siteUrlKey = "test-site-name",
+			siteURLKey = "test-site-name",
 			webContentTitle = "Web Content Title - pt-BR");
 
 		NavItem.gotoStructures();

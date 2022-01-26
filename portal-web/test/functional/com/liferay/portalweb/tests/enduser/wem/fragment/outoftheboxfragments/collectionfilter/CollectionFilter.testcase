@@ -362,7 +362,7 @@ definition {
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -632,7 +632,7 @@ definition {
 		}
 
 		task ("Select the second and third web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Hot Sale");
 
@@ -652,7 +652,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Select the display page template as Specific in the first web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
@@ -1177,7 +1177,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1489,7 +1489,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1815,7 +1815,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -2044,7 +2044,7 @@ definition {
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2068,7 +2068,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2370,7 +2370,7 @@ definition {
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2394,7 +2394,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2698,7 +2698,7 @@ definition {
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2722,7 +2722,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2944,7 +2944,7 @@ definition {
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2968,7 +2968,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -3461,7 +3461,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",

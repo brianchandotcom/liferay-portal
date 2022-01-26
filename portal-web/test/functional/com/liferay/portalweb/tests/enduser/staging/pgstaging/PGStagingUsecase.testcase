@@ -52,7 +52,7 @@ definition {
 			organizationName = "Staging Organization Name",
 			organizationSite = "true");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		PagesAdmin.addPublicPage(pageName = "Staging Test Page");
 
@@ -120,7 +120,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Staging Organization Name");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "staging-organization-name-staging");
+		Workflow.openWorkflowAdmin(siteURLKey = "staging-organization-name-staging");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -138,7 +138,7 @@ definition {
 
 		User.logoutPG();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_portletName = "Blogs",
@@ -174,7 +174,7 @@ definition {
 
 		User.logoutPG();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",
@@ -198,7 +198,7 @@ definition {
 
 		User.logoutPG();
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "Staging Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",

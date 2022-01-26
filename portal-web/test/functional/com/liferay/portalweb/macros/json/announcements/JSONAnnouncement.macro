@@ -4,7 +4,7 @@ definition {
 	macro addAnnouncement {
 		Variables.assertDefined(parameterList = "${announcementTitle},${announcementContent}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -14,8 +14,8 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(announcementUrl))) {
-			var announcementUrl = "";
+		if (!(isSet(announcementURL))) {
+			var announcementURL = "";
 		}
 
 		if (!(isSet(announcementType))) {
@@ -53,7 +53,7 @@ definition {
 			announcementContent = "${announcementContent}",
 			announcementTitle = "${announcementTitle}",
 			announcementType = "${announcementType}",
-			announcementUrl = "${announcementUrl}",
+			announcementURL = "${announcementURL}",
 			displayDate = "${displayDate}",
 			expirationDate = "${expirationDate}",
 			priority = "${priority}",
@@ -65,12 +65,12 @@ definition {
 	macro deleteAnnouncement {
 		var entryId = JSONAnnouncementAPI._getEntryId(
 			groupName = "${groupName}",
-			siteUrlKey = "${siteUrlKey}");
+			siteURLKey = "${siteURLKey}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/announcementsentry/delete-entry \
+			${portalURL}/api/jsonws/announcementsentry/delete-entry \
 				-u test@liferay.com:test \
 				-d entryId=${entryId} \
 		''';

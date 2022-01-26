@@ -92,14 +92,14 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentOrganizationId))) {
 			var parentOrganizationId = "0";
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
+			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
 				-u test@liferay.com:test
 		''';
 		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
@@ -110,10 +110,10 @@ definition {
 	macro getOrganizationName {
 		Variables.assertDefined(parameterList = "${organizationId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
+			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
 				-u test@liferay.com:test
 		''';
 		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");

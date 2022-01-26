@@ -49,7 +49,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -87,7 +87,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title");
 
@@ -125,13 +125,13 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 
@@ -155,7 +155,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -180,7 +180,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Auto Tagged Image",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -191,7 +191,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Auto Tagged Image",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "Auto Tagged Image");
 
@@ -213,12 +213,12 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -231,7 +231,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 

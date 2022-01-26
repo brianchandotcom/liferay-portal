@@ -58,7 +58,7 @@ definition {
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page");
 

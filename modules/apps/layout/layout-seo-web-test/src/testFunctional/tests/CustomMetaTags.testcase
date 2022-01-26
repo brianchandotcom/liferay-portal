@@ -27,20 +27,20 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanAddTagWithEscapeCharacters {
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "& content",
 			customProperty = "& property");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="&amp; property" content="&amp; content"''');
 	}
@@ -51,12 +51,12 @@ definition {
 	test CanClearCustomTag {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -68,9 +68,9 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content=""''');
 	}
@@ -81,12 +81,12 @@ definition {
 	test CanEditTag {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -100,9 +100,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property edit" content="custom meta content edit"''');
 	}
@@ -113,12 +113,12 @@ definition {
 	test CanViewMultipleTranslatedTags {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom Tag 1 content",
@@ -134,9 +134,9 @@ definition {
 
 		CustomMetaTags.removeTag(tagNum = "2");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/ca/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado",property="custom Tag 3 property" content="contenido de metaetiqueta personalizado"''');
 
@@ -149,20 +149,20 @@ definition {
 	test CanViewTagAfterEditingPage {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
 			customProperty = "custom meta property");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
 
@@ -170,15 +170,15 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
 		PortletEntry.save();
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
 	}
@@ -189,12 +189,12 @@ definition {
 	test CanViewTagWithoutPropertyOrContent {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -206,9 +206,9 @@ definition {
 			newCustomContent = "custom meta content edit",
 			newCustomProperty = "");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content="custom meta content edit"''');
 
@@ -219,7 +219,7 @@ definition {
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.editTag(
 			customContent = "custom meta content edit",
@@ -227,9 +227,9 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "custom meta property edit");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property edit" content=""''');
 	}
@@ -240,12 +240,12 @@ definition {
 	test CanViewTranslatedTagWithDefaultValue {
 		property portal.acceptance = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -255,9 +255,9 @@ definition {
 
 		CustomMetaTags.viewDisabledProperty(customContent = "custom meta content");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/ca/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
 	}

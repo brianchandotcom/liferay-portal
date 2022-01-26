@@ -32,7 +32,7 @@ definition {
 	test AddDuplicateFields {
 		property portal.acceptance = "true";
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -44,7 +44,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -73,7 +73,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -86,7 +86,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "guest");
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -96,7 +96,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -108,13 +108,13 @@ definition {
 			dmDocumentTypeFieldRequiredEdit = "Date",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Date");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dateValue = "01/01/2022",
@@ -124,7 +124,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			numericField = "123");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -139,7 +139,7 @@ definition {
 	test AddEntryWithNoTitle {
 		property portal.acceptance = "true";
 
-		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "guest");
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -149,7 +149,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -157,7 +157,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "Document Metadata Set Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -187,7 +187,7 @@ definition {
 	test AddMultipleEntries {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 1 Description",
@@ -200,7 +200,7 @@ definition {
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 1 Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 2 Description",
@@ -213,7 +213,7 @@ definition {
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 2 Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 3 Description",
@@ -240,7 +240,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -259,7 +259,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -272,7 +272,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -290,7 +290,7 @@ definition {
 	test AddPredefinedImageViaRichText {
 		property portal.acceptance = "true";
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -315,7 +315,7 @@ definition {
 
 		PortletEntry.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -331,7 +331,7 @@ definition {
 	test CannotDeleteWhenBeingUsed {
 		property portal.acceptance = "true";
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -342,7 +342,7 @@ definition {
 		DMNavigator.openToAddEntry(
 			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -351,7 +351,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.delete(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -368,7 +368,7 @@ definition {
 			localization = "true",
 			modelResource = "com.liferay.document.library.kernel.model.DLFileEntry");
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -379,7 +379,7 @@ definition {
 		DMNavigator.openToAddEntry(
 			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewTypeFieldLocalizableLanguages(localizableLanguages = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE");
 
@@ -392,14 +392,14 @@ definition {
 	test CheckOutDocumentWithCustomField {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Numeric",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -408,13 +408,13 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			numericField = "123");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "DM Document Title",
 			editStatus = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Draft",
@@ -426,7 +426,7 @@ definition {
 	test DeleteEntry {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.viewDefaultCP();
 
@@ -441,7 +441,7 @@ definition {
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
 
@@ -452,14 +452,14 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test DeleteFields {
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text,Date,Image,Upload",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -469,13 +469,13 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.deleteFields(
 			dmDocumentTypeName = "DM Document Type Name",
 			fieldFieldLabel = "Text,Date,Image");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -495,7 +495,7 @@ definition {
 	test EditEntry {
 		property testray.component.names = "Training";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -508,7 +508,7 @@ definition {
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeDescriptionEdit = "DM Document Type Description Edit",
@@ -528,14 +528,14 @@ definition {
 	test ViewDocumentwithEditedImageField {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -544,7 +544,7 @@ definition {
 			imageField = "Document_1.jpg",
 			navTab = "Documents and Media");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Photo",
@@ -554,7 +554,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldFieldLabelEdit = "Photo");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -566,7 +566,7 @@ definition {
 
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Photo");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -590,14 +590,14 @@ definition {
 	test ViewDocumentwithEditedTextField {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -612,7 +612,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",
@@ -622,7 +622,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Company");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -634,7 +634,7 @@ definition {
 
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Company");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -663,14 +663,14 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Upload",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -680,7 +680,7 @@ definition {
 			fieldFieldLabel = "Upload",
 			navTab = "Documents and Media");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Resume",
@@ -690,7 +690,7 @@ definition {
 			fieldFieldLabel = "Upload",
 			fieldFieldLabelEdit = "Resume");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -702,7 +702,7 @@ definition {
 
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Resume");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -725,7 +725,7 @@ definition {
 	test ViewDocumentwithRepeatableImageField {
 		property portal.acceptance = "true";
 
-		DMNavigator.openToAddDocumentType(siteUrlKey = "guest");
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -737,7 +737,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -761,7 +761,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -796,14 +796,14 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -812,7 +812,7 @@ definition {
 			navTab = "Documents and Media",
 			textField = "Test Text");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -843,14 +843,14 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewLocalizedDocumentType {
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -859,7 +859,7 @@ definition {
 			fieldFieldLabelEdit = "Imagen",
 			locale = "es-ES");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Navigator.ensureLocaleURL(locale = "es");
 

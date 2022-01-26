@@ -24,11 +24,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -41,8 +41,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -57,11 +57,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -74,8 +74,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -89,11 +89,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -106,8 +106,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -121,11 +121,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -138,8 +138,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -164,8 +164,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -190,8 +190,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -215,8 +215,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 
@@ -240,8 +240,8 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyUrl = "http://www.liferay.com",
-				websiteUrl = "http://www.liferay.com");
+				privacyPolicyURL = "http://www.liferay.com",
+				websiteURL = "http://www.liferay.com");
 		}
 	}
 

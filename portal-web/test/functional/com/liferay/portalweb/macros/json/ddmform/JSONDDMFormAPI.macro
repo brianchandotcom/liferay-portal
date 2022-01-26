@@ -3,14 +3,14 @@ definition {
 	macro _getFormInstanceId {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var groupId = JSONDDMFormSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ddm.ddmforminstance/get-form-instances \
+			${portalURL}/api/jsonws/ddm.ddmforminstance/get-form-instances \
 			  -u test@liferay.com:test \
 			  -d companyId=${companyId} \
 			  -d groupId=${groupId} \
@@ -27,10 +27,10 @@ definition {
 	}
 
 	macro _getFormInstanceRecordId {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
+			${portalURL}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
 			  -u test@liferay.com:test \
 			  -d ddmFormInstanceId=${formInstanceId}
 		''';

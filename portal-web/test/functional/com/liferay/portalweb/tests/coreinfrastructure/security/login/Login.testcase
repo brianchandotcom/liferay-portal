@@ -58,9 +58,9 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
-			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -91,7 +91,7 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.baker.com",
-				virtualHostsUrl = "http://www.baker.com:8080");
+				virtualHostsURL = "http://www.baker.com:8080");
 
 			UserBar.signOut();
 
@@ -209,7 +209,7 @@ definition {
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "Facebook Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -243,7 +243,7 @@ definition {
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",
@@ -267,7 +267,7 @@ definition {
 			User.firstLoginUI(
 				localization = "ES",
 				password = "test",
-				specificUrl = "${portalUrl}/es",
+				specificURL = "${portalURL}/es",
 				userEmailAddress = "test@liferay.com");
 		}
 	}
@@ -314,11 +314,11 @@ definition {
 		task ("Login at able.com and enable OpenId connect CP") {
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://www.able.com:8080",
+				baseURL = "http://www.able.com:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -327,7 +327,7 @@ definition {
 		}
 
 		task ("Add SSO openID connect provider") {
-			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -344,7 +344,7 @@ definition {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "${userEmailAddress}",
 				userPassword = "${userPassword}");
 		}
@@ -354,7 +354,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 	}
@@ -374,7 +374,7 @@ definition {
 			User.firstLoginPG();
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -447,20 +447,20 @@ definition {
 			Pause(locator1 = "30000");
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenSSO",
 				configurationScope = "Virtual Instance Scope");
 
 			PortalSettings.configureOpenSSO(
-				openSsoLoginUrl = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
-				openSsoLogoutUrl = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
-				openSsoServiceUrl = "http://test.able.com:8080/openam");
+				openSsoLoginURL = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
+				openSsoLogoutURL = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
+				openSsoServiceURL = "http://test.able.com:8080/openam");
 		}
 
 		task ("Test SSO connection") {
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenSSO",
 				configurationScope = "Virtual Instance Scope");
@@ -472,7 +472,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenSSOEnabledPG(
-				hostsUrl = "http://www.able.com:8080",
+				hostsURL = "http://www.able.com:8080",
 				password = "password",
 				userScreenName = "test");
 		}
@@ -487,7 +487,7 @@ definition {
 			User.firstLoginPG();
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "Instance Configuration",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
@@ -560,10 +560,10 @@ definition {
 		task ("Login at able.com and enable token based SSO") {
 			User.firstLoginUI(
 				password = "test",
-				specificUrl = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",

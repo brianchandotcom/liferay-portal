@@ -134,7 +134,7 @@ definition {
 		}
 
 		task ("The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin") {
-			PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			WaitForPageLoad();
 
@@ -173,7 +173,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name");
 
-			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 			Staging.activateStagingCP(siteName = "Test Site Name");
 
@@ -267,7 +267,7 @@ definition {
 				password = "test",
 				portalInstanceName = "www.able.com",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsUrl = "http://www.able.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("Assert Applications Menu icon is shown in Control Menu by default") {

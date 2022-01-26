@@ -51,7 +51,7 @@ definition {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
 			parentGroupName = "${parentGroupName}",
-			portalUrl = "${portalUrl}",
+			portalURL = "${portalURL}",
 			site = "${site}");
 
 		return "${groupId}";

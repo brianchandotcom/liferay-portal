@@ -159,10 +159,10 @@ definition {
 	macro restoreWebContentFromTrashViaResourcePrimKey {
 		var resourcePrimKey = "${resourcePrimKey}";
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/restore-article-from-trash \
+			${portalURL}/api/jsonws/journal.journalarticle/restore-article-from-trash \
 				-u test@liferay.com:test \
 				-d resourcePrimKey=${resourcePrimKey}
 		''';

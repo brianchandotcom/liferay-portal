@@ -4,7 +4,7 @@ definition {
 	macro _addFolder {
 		Variables.assertDefined(parameterList = "${groupId},${parentFolderId},${folderName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderDescription)) {
 			var description = "${folderDescription}";
@@ -22,7 +22,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalfolder/add-folder \
+			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
 				-u ${userEmailAddress}:${userPassword} \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
@@ -37,7 +37,7 @@ definition {
 	macro _addWebContent {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXml},${serviceContext}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -48,7 +48,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/add-article \
+			${portalURL}/api/jsonws/journal.journalarticle/add-article \
 				-u ${userEmailAddress}:${userPassword} \
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
@@ -68,10 +68,10 @@ definition {
 	macro _deleteWebContent {
 		Variables.assertDefined(parameterList = "${articleId},${groupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/delete-article \
+			${portalURL}/api/jsonws/journal.journalarticle/delete-article \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId} \
@@ -88,10 +88,10 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/get-article-by-url-title \
+			${portalURL}/api/jsonws/journal.journalarticle/get-article-by-url-title \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d "urlTitle=${urlTitle}"
@@ -105,10 +105,10 @@ definition {
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalfolder/get-folders \
+			${portalURL}/api/jsonws/journal.journalfolder/get-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -127,10 +127,10 @@ definition {
 
 		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
+			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d urlTitle=${urlTitle}
@@ -144,10 +144,10 @@ definition {
 	macro _moveWebContentToTrash {
 		Variables.assertDefined(parameterList = "${articleId},${groupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/move-article-to-trash \
+			${portalURL}/api/jsonws/journal.journalarticle/move-article-to-trash \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId}
@@ -160,10 +160,10 @@ definition {
 	macro _updateStatus {
 		Variables.assertDefined(parameterList = "${articleId},${groupId},${status},${version}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/journal.journalarticle/update-status \
+			${portalURL}/api/jsonws/journal.journalarticle/update-status \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId} \

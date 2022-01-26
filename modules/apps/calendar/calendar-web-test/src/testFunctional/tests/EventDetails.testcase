@@ -1013,7 +1013,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

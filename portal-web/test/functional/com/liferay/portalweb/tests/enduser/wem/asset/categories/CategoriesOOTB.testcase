@@ -71,7 +71,7 @@ definition {
 		task ("Go to add Basic Document page in Global") {
 			DMNavigator.openToAddEntry(
 				groupName = "Global",
-				siteUrlKey = "global");
+				siteURLKey = "global");
 		}
 
 		task ("Assert if not possible to ADD cateory") {
@@ -87,7 +87,7 @@ definition {
 		task ("Go to add Basic Document page in Global") {
 			DMNavigator.openToAddEntry(
 				groupName = "Global",
-				siteUrlKey = "global");
+				siteURLKey = "global");
 		}
 
 		task ("Add category via DM page") {
@@ -104,7 +104,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a global category via Save And Add button") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			Category.addCategoryWithSaveAndAddButton(
 				categoryName = "Category Name",
@@ -139,7 +139,7 @@ definition {
 		}
 
 		task ("Cannot edit the global category in normal site") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.viewCP(
 				categoryName = "Category Name",
@@ -164,7 +164,7 @@ definition {
 	@priority = "5"
 	test CheckAudienceStageDefaultSettings {
 		task ("Go to Global Vocabularies") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 		}
 
 		task ("Assert if Vocabulary is for internal use only") {
@@ -206,7 +206,7 @@ definition {
 		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Create a vocabulary with Associated Asset Type of Document > Basic Document") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetSubtype = "Basic Document",
@@ -217,7 +217,7 @@ definition {
 		task ("Check avaliable vocabularies to Basic Document") {
 			DMNavigator.openToAddEntry(
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -232,7 +232,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "External Video Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -251,7 +251,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "Google Drive Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -275,7 +275,7 @@ definition {
 		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Create a vocabulary with Associated Asset Type of Document > External Video Shortcut") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetSubtype = "External Video Shortcut",
@@ -287,7 +287,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "External Video Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -301,7 +301,7 @@ definition {
 		task ("Check avaliable vocabularies to Basic Documents") {
 			DMNavigator.openToAddEntry(
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -320,7 +320,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "Google Drive Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -344,7 +344,7 @@ definition {
 		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Create a vocabulary with Associated Asset Type of Document > Google Drive Shortcut") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetSubtype = "Google Drive Shortcut",
@@ -356,7 +356,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "Google Drive Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -370,7 +370,7 @@ definition {
 		task ("Check avaliable vocabularies to Basic Documents") {
 			DMNavigator.openToAddEntry(
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -389,7 +389,7 @@ definition {
 			DMNavigator.openToAddEntry(
 				documentTypeName = "External Video Shortcut",
 				groupName = "Test Site Name",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
 			Panel.expandPanel(panel = "Categorization");
 
@@ -499,7 +499,7 @@ definition {
 		}
 
 		task ("Assert if Learn How is not displayed") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
 		}
@@ -513,7 +513,7 @@ definition {
 		}
 
 		task ("Assert if Learn How is not displayed") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -556,7 +556,7 @@ definition {
 	@priority = "4"
 	test CheckVocabularyVisibilityNotEditable {
 		task ("Add a vocabulary disallow multiple categories") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 		}
@@ -584,7 +584,7 @@ definition {
 		}
 
 		task ("Try to move category between vocabularies with differente visibility") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			Category.assertMoveDifferentVisibilityVocabulary(
 				categoryName = "Public Category",
@@ -602,7 +602,7 @@ definition {
 	@priority = "3"
 	test OpenLiferayLearnCategoriesVocabulariesPage {
 		task ("Click on the Documentation link") {
-			Category.openCategoriesAdmin(siteUrlKey = "global");
+			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			Click(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
 		}
@@ -633,7 +633,7 @@ definition {
 	@priority = "3"
 	test OpenLiferayLearnCategoriesVocabulariesPageFromWCEditor {
 		task ("Go to web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -658,7 +658,7 @@ definition {
 		}
 
 		task ("View the global category in normal site") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.viewCP(
 				categoryName = "Category Name",
@@ -674,7 +674,7 @@ definition {
 		}
 
 		task ("View the edited global category in normal site") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.viewCP(
 				categoryName = "Category Name Edit",
@@ -718,7 +718,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content based on Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 		}
@@ -744,7 +744,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content based on Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 		}

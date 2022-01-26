@@ -172,9 +172,9 @@ definition {
 	macro gotoPublishedForm {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 	}
 
 	macro gotoRules {
@@ -212,9 +212,9 @@ definition {
 	macro openPublishURL {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishFormUrl = Form.getPublishedFormPublicURL();
+		var publishFormURL = Form.getPublishedFormPublicURL();
 
-		Navigator.openSpecificURL(url = "${publishFormUrl}");
+		Navigator.openSpecificURL(url = "${publishFormURL}");
 	}
 
 }

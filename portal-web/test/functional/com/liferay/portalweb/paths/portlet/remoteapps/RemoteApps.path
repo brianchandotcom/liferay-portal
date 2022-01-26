@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_URL</td>
-	<td>//table//tbody//td[contains(text(),'${key_tableEntryUrl}')]</td>
+	<td>//table//tbody//td[contains(text(),'${key_tableEntryURL}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_URL_REMOTE_TABLE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_tableEntryUrl}')]</td>
+	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_tableEntryURL}')]</td>
 	<td></td>
 </tr>
 <tr>

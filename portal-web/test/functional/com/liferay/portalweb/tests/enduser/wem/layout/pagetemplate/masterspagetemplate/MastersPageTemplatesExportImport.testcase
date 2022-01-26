@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Assert custom master has a Draft label") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			LexiconCard.viewCardLabel(
 				card = "Custom Masters Page Template",
@@ -72,7 +72,7 @@ definition {
 		}
 
 		task ("Add composition of fragments to custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -120,7 +120,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -132,7 +132,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("Add a Container and a Heading to custom master and set up configuration settings of them") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -220,7 +220,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -232,7 +232,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -264,7 +264,7 @@ definition {
 		}
 
 		task ("Configure the Look and Feel of custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -296,7 +296,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -308,7 +308,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -358,7 +358,7 @@ definition {
 		}
 
 		task ("Add fragments to custom master and edit inline content") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -419,7 +419,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -431,7 +431,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -487,7 +487,7 @@ definition {
 		}
 
 		task ("Add a Categories Navigation portlet to master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "organization-name-1");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -530,7 +530,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "organization-name-1");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -544,7 +544,7 @@ definition {
 				organizationName = "Organization Name 2",
 				organizationSite = "true");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "organization-name-2");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-2");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -584,7 +584,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -594,7 +594,7 @@ definition {
 		}
 
 		task ("Change thumbnail of custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Change Thumbnail",
@@ -608,7 +608,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -620,7 +620,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 		}
@@ -640,7 +640,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -650,7 +650,7 @@ definition {
 		}
 
 		task ("Change thumbnail of custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Change Thumbnail",
@@ -664,7 +664,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -674,7 +674,7 @@ definition {
 		}
 
 		task ("Import masters page template in the current site") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
@@ -710,7 +710,7 @@ definition {
 	@priority = "4"
 	test ShowSpecificErrorMessageWhenImportMastersPageTemplateWithInvalidValue {
 		task ("Import masters page template with invalid value") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

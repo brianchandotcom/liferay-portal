@@ -6,7 +6,7 @@ definition {
 
 	macro addLDAPServer {
 		PortalSettings.gotoConfiguration(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			configurationCategory = "LDAP",
 			configurationName = "Servers",
 			configurationScope = "Virtual Instance Scope");
@@ -211,15 +211,15 @@ definition {
 
 		FormFields.editText(
 			fieldName = "loginURL",
-			fieldValue = "${openSsoLoginUrl}");
+			fieldValue = "${openSsoLoginURL}");
 
 		FormFields.editText(
 			fieldName = "logoutURL",
-			fieldValue = "${openSsoLogoutUrl}");
+			fieldValue = "${openSsoLogoutURL}");
 
 		FormFields.editText(
 			fieldName = "serviceURL",
-			fieldValue = "${openSsoServiceUrl}");
+			fieldValue = "${openSsoServiceURL}");
 
 		PortletEntry.save();
 	}
@@ -461,7 +461,7 @@ definition {
 
 	macro editLDAPServer {
 		PortalSettings.gotoConfiguration(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			configurationCategory = "LDAP",
 			configurationName = "Servers",
 			configurationScope = "Virtual Instance Scope");
@@ -602,7 +602,7 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		PortalSettings.openInstanceSettingsAdmin(baseUrl = "${baseUrl}");
+		PortalSettings.openInstanceSettingsAdmin(baseURL = "${baseURL}");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "${configurationCategory}",
@@ -624,7 +624,7 @@ definition {
 
 	macro openInstanceSettingsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseUrl = "${baseUrl}",
+			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 	}
 

@@ -266,7 +266,7 @@ definition {
 	@priority = "4"
 	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
 		task ("Add a custom Web Content structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -294,7 +294,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -307,7 +307,7 @@ definition {
 		}
 
 		task ("Add a custom Document type") {
-			DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeDescription = "DM Document Type Description",
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("Add a document based on new document type") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -340,7 +340,7 @@ definition {
 				itemType = "Document",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -433,7 +433,7 @@ definition {
 	@priority = "3"
 	test MapImageToBackgroundImageOfContainer {
 		task ("Add a custom structure with image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -447,7 +447,7 @@ definition {
 		}
 
 		task ("Add a web content article based on new structure and select an image") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -466,7 +466,7 @@ definition {
 				itemType = "Web Content Article",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -537,7 +537,7 @@ definition {
 	@priority = "4"
 	test MapImageToImageFragment {
 		task ("Add a custom structure with image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -553,7 +553,7 @@ definition {
 		}
 
 		task ("Add a web content article based on new structure and select an image") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -567,7 +567,7 @@ definition {
 		}
 
 		task ("Add a dynamic collection with Web Content Article and new structure") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
@@ -1716,7 +1716,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Dynamic Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -1875,22 +1875,22 @@ definition {
 		}
 
 		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Document Title",
 				assetType = "Basic Document");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Blogs Entry Title",
 				assetType = "Blogs Entry",
-				siteUrlKey = "test-site-name");
+				siteURLKey = "test-site-name");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -2011,7 +2011,7 @@ definition {
 		}
 
 		task ("Select the document in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -2132,7 +2132,7 @@ definition {
 		}
 
 		task ("Select the document in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -2252,21 +2252,21 @@ definition {
 				itemType = "All Types",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
 				assetType = "Basic Web Content");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Blogs Entry Title",
 				assetType = "Blogs Entry");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -2319,7 +2319,7 @@ definition {
 		}
 
 		task ("Add a custom Document type") {
-			DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeDescription = "DM Document Type Description",
@@ -2328,7 +2328,7 @@ definition {
 		}
 
 		task ("Add a document based on new document type") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -2359,7 +2359,7 @@ definition {
 				itemType = "Document",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -2954,7 +2954,7 @@ definition {
 				itemType = "Blogs Entry",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -3098,7 +3098,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -3114,7 +3114,7 @@ definition {
 		}
 
 		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -3128,7 +3128,7 @@ definition {
 		}
 
 		task ("Add three web contents based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			for (var i : list "1,2,3") {
 				WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");

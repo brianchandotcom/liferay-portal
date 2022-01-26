@@ -49,7 +49,7 @@ definition {
 			locale = "${locale}",
 			portalInstanceName = "${portalInstanceName}",
 			serviceContext = "${serviceContext}",
-			specificUrl = "${specificUrl}",
+			specificURL = "${specificURL}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
@@ -171,7 +171,7 @@ definition {
 	macro agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalUrl = "${portalUrl}");
+		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = "${portalURL}");
 
 		var userId = JSONUserSetter.setUserId(
 			portalInstanceName = "${portalInstanceName}",
@@ -183,7 +183,7 @@ definition {
 	macro agreeToTermsAndAnswerReminderQueryByScreenName {
 		Variables.assertDefined(parameterList = "${userScreenName}");
 
-		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalUrl = "${portalUrl}");
+		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = "${portalURL}");
 
 		var userId = JSONUserSetter.setUserIdByScreenName(
 			creatorPassword = "${creatorPassword}",

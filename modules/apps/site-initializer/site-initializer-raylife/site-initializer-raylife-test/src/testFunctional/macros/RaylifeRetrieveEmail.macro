@@ -9,9 +9,9 @@ definition {
 
 		WaitForElementPresent(locator1 = "RaylifeRetrieveEmail#QUOTE_RETRIEVE_LINK");
 
-		var openUrl = selenium.getAttribute("RaylifeRetrieveEmail#SITE_LINK");
+		var openURL = selenium.getAttribute("RaylifeRetrieveEmail#SITE_LINK");
 
-		Navigator.openSpecificURL(url = "${openUrl}");
+		Navigator.openSpecificURL(url = "${openURL}");
 	}
 
 }

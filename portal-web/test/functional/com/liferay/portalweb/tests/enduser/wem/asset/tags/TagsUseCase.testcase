@@ -498,7 +498,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Blogs");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.addPublicPage(
 			pageName = "search",

@@ -1,10 +1,10 @@
 definition {
 
 	macro _getRecordId {
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ddl.ddlrecord/get-records \
+			${portalURL}/api/jsonws/ddl.ddlrecord/get-records \
 			-u test@liferay.com:test \
 			-d recordSetId=${recordSetId}
 		''';
@@ -20,12 +20,12 @@ definition {
 	macro _getRecordSetId {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONDDLSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalUrl}/api/jsonws/ddl.ddlrecordset/get-record-sets \
+			${portalURL}/api/jsonws/ddl.ddlrecordset/get-record-sets \
 			-u test@liferay.com:test \
 			-d groupIds=${groupId}
 		''';

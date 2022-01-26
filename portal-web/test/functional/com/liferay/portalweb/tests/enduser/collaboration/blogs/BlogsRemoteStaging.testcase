@@ -103,7 +103,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "remote-site");
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -143,11 +143,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificUrl = "http://localhost:9080",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseUrl = "http://localhost:9080",
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Blogs Page",
 			siteName = "Remote Site");
 
@@ -194,7 +194,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -231,7 +231,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Staging Blogs Page",
-			siteUrlKey = "remote-site");
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

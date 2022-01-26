@@ -40,9 +40,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -64,7 +64,7 @@ definition {
 			mappedFieldValue = "Description is Description: ${description:Description}",
 			textType = "TextArea");
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addWithCustomAbstract(
 			entryAbstractDescription = "Custom Abstract",
@@ -77,11 +77,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 
@@ -104,9 +104,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -139,7 +139,7 @@ definition {
 			mappedFieldValue = "Description is MIME Type: ${mimeType:MIME Type}Version: ${version:Version}",
 			textType = "TextArea");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -151,19 +151,19 @@ definition {
 			entryTitle = "Document_1.jpg",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
 		var dmFileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Test Site Name");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name",
 			site = "true");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryId}");
 
@@ -188,9 +188,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -233,11 +233,11 @@ definition {
 			entryTitle = "Web Content Title",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteUrlKey = "test-site-name");
+			siteURLKey = "test-site-name");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 

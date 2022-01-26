@@ -70,7 +70,7 @@ definition {
 
 		task ("Add a '${fragmentName}' fragment to the content page named '${contentPageName}'") {
 			task ("Create a Content Page") {
-				PagesAdmin.openPagesAdmin(siteUrlKey = "${siteName}");
+				PagesAdmin.openPagesAdmin(siteURLKey = "${siteName}");
 
 				ContentPages.addPage(pageName = "${contentPageName}");
 			}

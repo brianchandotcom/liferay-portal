@@ -4,10 +4,10 @@ definition {
 	macro _getFileEntryTypeId {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
 			  -u test@liferay.com:test \
 			  -d groupIds=[${groupId}]
 		''';
@@ -24,10 +24,10 @@ definition {
 	macro _getFileEntryTypeIds {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
 			  -u test@liferay.com:test \
 			  -d groupIds=[${groupId}]
 		''';

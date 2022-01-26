@@ -39,7 +39,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeAutocompletedUsingADataProvider";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
@@ -64,7 +64,7 @@ definition {
 			outputParameterType = "List",
 			outputParameterType2 = "List",
 			password = "test",
-			url = "${portalUrl}/api/jsonws/country/get-countries",
+			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 
 		FormsAdmin.saveDataProvider();
@@ -1320,7 +1320,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteUrlKey = "guest");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1376,7 +1376,7 @@ definition {
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
 
-		FormsAdmin.openFormsAdmin(siteUrlKey = "guest");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 

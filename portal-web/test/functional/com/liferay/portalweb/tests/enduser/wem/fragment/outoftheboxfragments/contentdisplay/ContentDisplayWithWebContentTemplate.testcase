@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Add a web content template for Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -81,7 +81,7 @@ definition {
 		}
 
 		task ("View delete the web content template") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -103,7 +103,7 @@ definition {
 		}
 
 		task ("Add a template for Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -165,7 +165,7 @@ definition {
 		}
 
 		task ("Add a new template for Basic Web Content in Global site") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "global");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 			NavItem.gotoTemplates();
 
@@ -216,7 +216,7 @@ definition {
 	@priority = "2"
 	test SelectWebContentTemplateFromScriptFile {
 		task ("Add a web content structure with Text and Numeric fields") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -294,7 +294,7 @@ definition {
 		}
 
 		task ("Add a new web content structrue") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("Add three templates for Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
@@ -395,7 +395,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithColorField {
 		task ("Add a web content structure with a Color field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -458,7 +458,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithDateField {
 		task ("Add a web content structure with a Date field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -521,7 +521,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithGeolocationField {
 		task ("Add a web content structure with a Geolocation field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -581,7 +581,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithGridField {
 		task ("Add a web content structure with a Grid field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -644,7 +644,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithImageField {
 		task ("Add a web content structure with a Image field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -714,7 +714,7 @@ definition {
 		}
 
 		task ("Add a web content structure with a Link to Page field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -776,7 +776,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithMultipleSelectionField {
 		task ("Add a web content structure with a Multiple Selection field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -837,7 +837,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithNumericField {
 		task ("Add a web content structure with a Numeric field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -900,7 +900,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithRichTextField {
 		task ("Add a web content structure with a Rich Text field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -963,7 +963,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithSelectFromListField {
 		task ("Add a web content structure with a Select from List field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1024,7 +1024,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithSingleSelectionField {
 		task ("Add a web content structure with a Single Selection field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1085,7 +1085,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithTextField {
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1148,7 +1148,7 @@ definition {
 	@priority = "3"
 	test ViewSelectedWebContentWithUploadField {
 		task ("Add a web content structure with a Upload field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1218,7 +1218,7 @@ definition {
 		}
 
 		task ("Add a web content structure with a Web Content field") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 

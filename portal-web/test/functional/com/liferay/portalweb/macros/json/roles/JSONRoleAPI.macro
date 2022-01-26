@@ -3,10 +3,10 @@ definition {
 	macro _addRole {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/role/add-role \
+			${portalURL}/api/jsonws/role/add-role \
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
@@ -23,10 +23,10 @@ definition {
 	macro _assignRoleToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${roleId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/group/add-role-groups \
+			${portalURL}/api/jsonws/group/add-role-groups \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupIds=${groupId}
@@ -38,10 +38,10 @@ definition {
 	macro _assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleId},${userId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/user/add-role-users \
+			${portalURL}/api/jsonws/user/add-role-users \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
@@ -53,10 +53,10 @@ definition {
 	macro _assignSiteRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
+			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d userId=${userId} \
 				-d groupId=${groupId} \
@@ -69,10 +69,10 @@ definition {
 	macro _deleteRoleById {
 		Variables.assertDefined(parameterList = "${roleId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/role/delete-role \
+			${portalURL}/api/jsonws/role/delete-role \
 				-u test@liferay.com:test \
 				-d roleId=${roleId}
 		''';
@@ -85,10 +85,10 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/role/get-role \
+			${portalURL}/api/jsonws/role/get-role \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d name=${name}

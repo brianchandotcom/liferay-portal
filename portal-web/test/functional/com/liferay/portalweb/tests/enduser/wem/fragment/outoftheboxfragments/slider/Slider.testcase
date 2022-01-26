@@ -45,7 +45,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -100,7 +100,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -118,7 +118,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			var baseUrl = PropsUtil.get("portal.url");
+			var baseURL = PropsUtil.get("portal.url");
 
 			ContentPages.focusSlide(slideNumber = "1");
 
@@ -142,7 +142,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
 				id = "02-03-subtitle",
-				text = "${baseUrl}/web/test-site-name/w/web-content-title");
+				text = "${baseURL}/web/test-site-name/w/web-content-title");
 		}
 
 		task ("View the third slide is not shown in Slide") {

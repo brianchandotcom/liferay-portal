@@ -50,9 +50,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Asset Publisher Page");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/asset-publisher-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
@@ -86,7 +86,7 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/asset-publisher-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 
 		// Workaround for LPS-113094
 
@@ -323,7 +323,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SearchAdministration.openSearchAdmin(baseUrl = "http://localhost:9080");
+		SearchAdministration.openSearchAdmin(baseURL = "http://localhost:9080");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
@@ -448,7 +448,7 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlSecondConnection}");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -483,7 +483,7 @@ definition {
 			layoutName = "Multiple Connections Page",
 			widgetName = "Low Level Search Options");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/multiple-connections-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page");
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
@@ -547,9 +547,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/search-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 

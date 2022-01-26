@@ -47,7 +47,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
@@ -57,7 +57,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentFile = "Document_1.png",
@@ -87,7 +87,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
@@ -97,7 +97,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentFile = "Document_1.jpg",
@@ -107,7 +107,7 @@ definition {
 			dmDocumentStatus = "Pending",
 			dmDocumentTitle = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
@@ -125,7 +125,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name",
-			siteUrlKey = "site-name");
+			siteURLKey = "site-name");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
@@ -142,7 +142,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
@@ -152,7 +152,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentFile = "Document_1.doc",
@@ -204,7 +204,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest",
-			siteUrlKey = "guest");
+			siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",

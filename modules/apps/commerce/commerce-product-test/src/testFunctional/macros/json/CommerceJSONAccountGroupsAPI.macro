@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteAllCommerceAccountGroups {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var accountGroupsCount = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupsCount();
@@ -16,7 +16,7 @@ definition {
 				echo("Deleting Commerce account group with id: ${accountGroupId}");
 
 				var curl = '''
-					${baseUrl}/o/headless-commerce-admin-account/v1.0/accountGroups/${accountGroupId} \
+					${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups/${accountGroupId} \
 					-u test@liferay.com:test \
 					-H 'accept: application/json' \
 				''';
@@ -30,10 +30,10 @@ definition {
 	}
 
 	macro _getCommerceAccountGroupIds {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(accountGroupCount)) {
@@ -44,7 +44,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupsCount} \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupsCount} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
@@ -54,14 +54,14 @@ definition {
 	}
 
 	macro _getCommerceAccountGroupsCount {
-		var baseUrl = "${baseUrl}";
+		var baseURL = "${baseURL}";
 
-		if (!(isSet(baseUrl))) {
-			var baseUrl = PropsUtil.get("portal.url");
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var curl = '''
-			${baseUrl}/o/headless-commerce-admin-account/v1.0/accountGroups \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

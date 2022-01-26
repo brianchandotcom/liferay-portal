@@ -62,25 +62,25 @@ definition {
 
 		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
 		PagesAdmin.addLocalizedFriendlyURL(
-			friendlyUrlLocalizedList = "de-DE",
-			localizedFriendlyUrlList = "/german",
+			friendlyURLLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
 			localizedNameList = "German Staging Test Page");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
 		PagesAdmin.viewFriendlyURL(
-			localizedFriendlyUrl = "de-DE",
+			localizedFriendlyURL = "de-DE",
 			pageName = "german");
 	}
 
@@ -88,7 +88,7 @@ definition {
 	test AddPageWithPageVersioningEnabled {
 		property portal.acceptance = "true";
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Staging Page Versioning");
 
@@ -141,7 +141,7 @@ definition {
 			copySitePagesVariationName = "All Site Pages Variations",
 			sitePagesVariationName = "Site Pages Variation Name");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicChildPage(
 			childPageName = "Child Page",

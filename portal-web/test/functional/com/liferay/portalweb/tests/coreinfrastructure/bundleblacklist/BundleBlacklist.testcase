@@ -128,7 +128,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -259,7 +259,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -333,7 +333,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -372,7 +372,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Reinstalling bundle minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -562,7 +562,7 @@ definition {
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

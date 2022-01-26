@@ -3,12 +3,12 @@ definition {
 	macro _addResourcePermission {
 		Variables.assertDefined(parameterList = "${groupId},${name},${scope},${primKey},${roleId},${actionId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/resourcepermission/add-resource-permission \
+			${portalURL}/api/jsonws/resourcepermission/add-resource-permission \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d companyId=${companyId} \
@@ -25,12 +25,12 @@ definition {
 	macro _removeResourcePermission {
 		Variables.assertDefined(parameterList = "${groupId},${name},${scope},${primKey},${roleId},${actionId}");
 
-		var portalUrl = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalUrl}/api/jsonws/resourcepermission/remove-resource-permission \
+			${portalURL}/api/jsonws/resourcepermission/remove-resource-permission \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d companyId=${companyId} \

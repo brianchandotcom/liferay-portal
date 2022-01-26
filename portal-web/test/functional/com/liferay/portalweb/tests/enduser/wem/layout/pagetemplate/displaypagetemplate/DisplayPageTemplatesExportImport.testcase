@@ -36,7 +36,7 @@ definition {
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -65,7 +65,7 @@ definition {
 				masterLayoutEntryName = "Custom Masters Page Template",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -81,7 +81,7 @@ definition {
 		}
 
 		task ("Export display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -91,7 +91,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -103,7 +103,7 @@ definition {
 		task ("Import masters page template in new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("Import display page template in a new site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
 			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
 
@@ -169,7 +169,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("Export display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -214,7 +214,7 @@ definition {
 		task ("Import display page template in a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
 			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
 

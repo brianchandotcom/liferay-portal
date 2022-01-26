@@ -269,9 +269,9 @@ definition {
 	@priority = "3"
 	test AssertSitesAcquisitionCardReferrersHighestSession {
 		task ("Get the portal URL") {
-			var portalUrl = PropsUtil.get("portal.url");
-			var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 		}
 
 		task ("Sign out then sign in as Test Test") {
@@ -322,20 +322,20 @@ definition {
 			ACCards.viewMetricBarStyle(
 				backgroundColor = "rgba(80, 210, 160, 1)",
 				cardTitle = "Acquisitions",
-				entryName = "${portalUrl}",
+				entryName = "${portalURL}",
 				style = "width: 100%;");
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
 				entryInfo = "1",
-				entryName = "${portalUrl}");
+				entryName = "${portalURL}");
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "column-text-end",
 				entryInfo = "100.00%",
-				entryName = "${portalUrl}");
+				entryName = "${portalURL}");
 		}
 	}
 
@@ -345,9 +345,9 @@ definition {
 		property portal.upstream = "quarantine";
 
 		task ("Get the portal URL") {
-			var portalUrl = PropsUtil.get("portal.url");
-			var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 		}
 
 		task ("Sign out then sign in as Test Test") {
@@ -398,20 +398,20 @@ definition {
 			ACCards.viewMetricBarStyle(
 				backgroundColor = "rgba(80, 210, 160, 1)",
 				cardTitle = "Acquisitions",
-				entryName = "${portalUrl} / referral",
+				entryName = "${portalURL} / referral",
 				style = "width: 100%;");
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
 				entryInfo = "1",
-				entryName = "${portalUrl} / referral");
+				entryName = "${portalURL} / referral");
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "column-text-end",
 				entryInfo = "100.00%",
-				entryName = "${portalUrl} / referral");
+				entryName = "${portalURL} / referral");
 		}
 	}
 

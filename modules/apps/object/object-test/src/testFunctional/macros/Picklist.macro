@@ -42,9 +42,11 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Picklist#ADD_ITEM_BUTTON");
 
-		Type(
-			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
-			value1 = "${picklistItemName}");
+		if (isSet(picklistItemName)) {
+			Type(
+				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+				value1 = "${picklistItemName}");
+		}
 
 		if (isSet(picklistItemKey)) {
 			Type(

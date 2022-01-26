@@ -186,12 +186,21 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for a Picklist item"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeavePicklistItemNameFieldEmpty {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145706 CannotLeavePicklistItemNameFieldEmpty pending implementation
+		Picklist.gotoPicklists();
 
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.addPicklistItemViaUI(picklistItemKey = "PicklistItemKeyTest");
+
+		Picklist.clickSaveButton();
+
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for Picklist"

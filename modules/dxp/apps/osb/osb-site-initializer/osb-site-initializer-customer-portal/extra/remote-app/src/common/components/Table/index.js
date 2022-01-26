@@ -72,7 +72,7 @@ const Table = ({
 				)}
 			</ClayTable>
 
-			{hasPagination && (
+			{!!hasPagination && !!totalCount && (
 				<TablePagination
 					activePage={activePage}
 					itemsPerPage={itemsPerPage}

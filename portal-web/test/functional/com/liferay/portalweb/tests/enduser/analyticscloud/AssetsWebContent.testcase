@@ -725,8 +725,6 @@ definition {
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
-		property portal.upstream = "quarantine";
-
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -916,8 +914,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"
 	@priority = "5"
 	test WebContentTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(

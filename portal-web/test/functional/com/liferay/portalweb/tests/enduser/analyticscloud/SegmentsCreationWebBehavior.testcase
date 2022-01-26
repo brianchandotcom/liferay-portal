@@ -276,7 +276,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentSinceXdays {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
 
 		ACUtils.createWCAndAddToPage();
@@ -502,7 +501,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9217 | Test Summary: Add segment using a web behavior 'before' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBefore {
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -656,7 +654,6 @@ definition {
 	@description = "Add segment using a web behavior 'ever' done"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingEver {
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -802,7 +799,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9219 | Test Summary: Add segment using a web behavior 'on' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingOn {
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -1254,7 +1250,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingWC {
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

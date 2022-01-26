@@ -58,6 +58,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,
 	ffOneToOneRelationshipConfigurationEnabled,
+	objectDefinitionId,
 	observer,
 	onClose,
 }) => {
@@ -142,29 +143,38 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		validate,
 	});
 
+	const makeRequest = async () => {
+		const result = await Liferay.Util.fetch(
+			'/o/object-admin/v1.0/object-definitions?page=-1',
+			{
+				headers,
+				method: 'GET',
+			}
+		);
+
+		const {items = []} = await result.json();
+
+		const objectDefinitions = items
+			.map(({id, name, system}: TObjectDefinition) => ({
+				id,
+				name,
+				system,
+			}))
+			.filter(({system}: TObjectDefinition) => !system);
+
+		setObjectDefinitions(objectDefinitions);
+	};
+
+	const handleChangeManyToMany = () => {
+		const newObjectDefinitions = objectDefinitions.filter(
+			(objectDefinition) =>
+				objectDefinition.id !== Number(objectDefinitionId)
+		);
+
+		setObjectDefinitions(newObjectDefinitions);
+	};
+
 	useEffect(() => {
-		const makeRequest = async () => {
-			const result = await Liferay.Util.fetch(
-				'/o/object-admin/v1.0/object-definitions?page=-1',
-				{
-					headers,
-					method: 'GET',
-				}
-			);
-
-			const {items = []} = await result.json();
-
-			const objectDefinitions = items
-				.map(({id, name, system}: TObjectDefinition) => ({
-					id,
-					name,
-					system,
-				}))
-				.filter(({system}: TObjectDefinition) => !system);
-
-			setObjectDefinitions(objectDefinitions);
-		};
-
 		makeRequest();
 	}, []);
 
@@ -210,6 +220,10 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 									value: type,
 								},
 							} as any);
+
+							type.value === 'manyToMany'
+								? handleChangeManyToMany()
+								: makeRequest();
 						}}
 						options={objectRelationshipTypes}
 						required
@@ -268,12 +282,13 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
+	objectDefinitionId: number;
 	observer: any;
 	onClose: () => void;
 }
 
 type TObjectDefinition = {
-	id: string;
+	id: number;
 	name: string;
 	system: boolean;
 };
@@ -291,6 +306,7 @@ type TInitialValues = {
 const ModalWithProvider: React.FC<IProps> = ({
 	apiURL,
 	ffOneToOneRelationshipConfigurationEnabled,
+	objectDefinitionId,
 }) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
@@ -313,6 +329,7 @@ const ModalWithProvider: React.FC<IProps> = ({
 					ffOneToOneRelationshipConfigurationEnabled={
 						ffOneToOneRelationshipConfigurationEnabled
 					}
+					objectDefinitionId={objectDefinitionId}
 					observer={observer}
 					onClose={onClose}
 				/>

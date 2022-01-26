@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import React from 'react';
 
 import '../css/main.scss';
@@ -29,11 +28,11 @@ export default function App() {
 			<hr />
 
 			<div>
-				<body class="test">
+				<body className="test">
 					<p> This is a body without cadmin.</p>
 				</body>
-				
-				<body class="cadmin">
+
+				<body className="cadmin">
 					<p> This is a body with cadmin.</p>
 				</body>
 			</div>

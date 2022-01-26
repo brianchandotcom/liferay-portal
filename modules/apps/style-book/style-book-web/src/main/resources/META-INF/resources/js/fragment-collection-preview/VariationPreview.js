@@ -50,10 +50,13 @@ export function VariationPreview({
 	}, [fragmentEntryKey, namespace, previewURL, variation]);
 
 	return (
-		<article>
-			<h5>{label}</h5>
+		<article className="d-flex flex-column-reverse">
+			<h4 className="mb-0 mt-2 text-secondary">{label}</h4>
 
-			<div dangerouslySetInnerHTML={{__html: html}} />
+			<div
+				className="align-items-center d-flex flex-grow-1 justify-content-center overflow-hidden p-4 variation-preview__content"
+				dangerouslySetInnerHTML={{__html: html}}
+			/>
 		</article>
 	);
 }

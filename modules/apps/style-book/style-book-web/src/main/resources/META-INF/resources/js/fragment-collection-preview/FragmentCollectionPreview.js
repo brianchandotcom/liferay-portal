@@ -16,6 +16,8 @@ import React from 'react';
 
 import {FragmentPreview} from './FragmentPreview';
 
+import '../../css/FragmentCollectionPreview.scss';
+
 export default function FragmentCollectionPreview({fragments, namespace}) {
 	return (
 		<>

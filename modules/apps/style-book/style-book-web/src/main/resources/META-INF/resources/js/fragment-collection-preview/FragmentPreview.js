@@ -23,32 +23,34 @@ export function FragmentPreview({fragment, namespace}) {
 	]);
 
 	return (
-		<section>
-			<h4>{fragment.name}</h4>
+		<section className="fragment-preview p-5">
+			<h3>{fragment.name}</h3>
 
-			{variations.map((variation) => {
-				const label = `${fragment.name} ${variation
-					.map((part) => part.label)
-					.join(' ')}`;
+			<div className="fragment-preview__list">
+				{variations.map((variation) => {
+					const label = `${fragment.name} ${variation
+						.map((part) => part.label)
+						.join(' ')}`;
 
-				return (
-					<VariationPreview
-						fragmentEntryKey={fragment.fragmentEntryKey}
-						key={label}
-						label={label}
-						namespace={namespace}
-						previewURL={fragment.previewURL}
-						variation={variation}
-					/>
-				);
-			})}
+					return (
+						<VariationPreview
+							fragmentEntryKey={fragment.fragmentEntryKey}
+							key={label}
+							label={label}
+							namespace={namespace}
+							previewURL={fragment.previewURL}
+							variation={variation}
+						/>
+					);
+				})}
+			</div>
 		</section>
 	);
 }
 
 function getFragmentVariations(fragment) {
-	const configurationValues = fragment.configuration.fieldSets.flatMap(
-		(fieldSet) =>
+	const configurationValues =
+		fragment.configuration.fieldSets?.flatMap((fieldSet) =>
 			fieldSet.fields
 				.filter(
 					(field) =>
@@ -62,7 +64,7 @@ function getFragmentVariations(fragment) {
 						value: validValue.value,
 					}))
 				)
-	);
+		) || [];
 
 	return combine(...configurationValues);
 }

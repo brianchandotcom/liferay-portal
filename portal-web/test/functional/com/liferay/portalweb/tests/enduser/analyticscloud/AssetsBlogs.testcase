@@ -285,8 +285,8 @@ definition {
 	test BlogsLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Location data issues happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9345
+		// AC Refactor: The location data should show the name of the country but it's actually showing "Local network"
+		// AC Refactor: Personas
 		// AC Refactor ticket: LRAC-9395
 
 		task ("Connect the DXP to AC") {

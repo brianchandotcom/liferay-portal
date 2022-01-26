@@ -447,8 +447,8 @@ definition {
 	test DocumentsLocationCardShowsDownloadsByExpectedLocation {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Location data issues happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9345
+		// AC Refactor: The location data should show the name of the country but it's actually showing "Local network"
+		// AC Refactor: Personas
 		// AC Refactor ticket: LRAC-9398
 
 		task ("Connect the DXP to AC") {
@@ -490,7 +490,7 @@ definition {
 		}
 
 		task ("Navigate to the Overview tab in document report entry") {
-			ACNavigation.openItem(itemName = "Document_1.jpg");
+			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
 		task ("View the time filter of Downloads by Location map is Last 24 Hours") {

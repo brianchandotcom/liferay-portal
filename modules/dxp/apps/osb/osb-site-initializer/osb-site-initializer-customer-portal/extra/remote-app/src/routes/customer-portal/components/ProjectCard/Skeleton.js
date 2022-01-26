@@ -10,11 +10,11 @@
  */
 
 import ClayCard from '@clayui/card';
-import Skeleton from '../../../../common/components/Skeleton';
+import {Skeleton} from '../../../../common/components';
 
 const ProjectCardSkeleton = () => {
 	return (
-		<ClayCard className="m-0 project-card">
+		<ClayCard className="cp-project-card m-0">
 			<ClayCard.Body className="d-flex flex-column h-100 justify-content-between">
 				<ClayCard.Description displayType="title" tag="div">
 					<Skeleton height={32} width={136} />

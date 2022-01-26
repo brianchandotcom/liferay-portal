@@ -11,18 +11,18 @@
 
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
-import {status as statusProject} from '../../utils/constants';
-import getDateCustomFormat from '../../utils/dateCustomFormat';
+import {STATUS_TAG_TYPES} from '../../utils/constants';
+import getDateCustomFormat from '../../utils/getDateCustomFormat';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 
 const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 	const getStatusMessage = (currentStatus) => {
-		if (currentStatus === statusProject.active) {
+		if (currentStatus === STATUS_TAG_TYPES.active) {
 			return 'Ends on ';
 		}
 
-		if (currentStatus === statusProject.expired) {
+		if (currentStatus === STATUS_TAG_TYPES.expired) {
 			return 'Ended on ';
 		}
 
@@ -32,8 +32,8 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 	return (
 		<ClayCard
 			className={classNames('m-0', {
-				'project-card': !isSmall,
-				'project-card-sm': isSmall,
+				'cp-project-card': !isSmall,
+				'cp-project-card-sm': isSmall,
 			})}
 			onClick={() => onClick()}
 		>

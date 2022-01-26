@@ -56,7 +56,7 @@ definition {
 				pageName = "Child Page Name",
 				siteName = "Test Site Name");
 
-			SiteMapPortlet.viewPagePG(pageNameList = "Test Page Name,Child Page Name");
+			SiteMapPortlet.viewPageItem(pageNameList = "Test Page Name,Child Page Name");
 		}
 	}
 

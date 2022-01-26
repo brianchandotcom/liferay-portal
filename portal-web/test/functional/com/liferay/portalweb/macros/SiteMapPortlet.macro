@@ -1,42 +1,11 @@
 definition {
 
-	macro viewCustomADTMultiColumnPG {
-		for (var pageName : list "${listPageName}") {
-			var key_pageName = "${pageName}";
-
+	macro viewPageItem {
+		for (var pageName : list "${pageNameList}") {
 			AssertTextEquals(
-				locator1 = "SiteMap#ADT_MULTI_COLUMN_PAGE_DISPLAY",
-				value1 = "${pageName}");
-		}
-
-		if (isSet(listChildPageName)) {
-			for (var childPageName : list "${listChildPageName}") {
-				var key_childPageName = "${childPageName}";
-
-				AssertTextEquals(
-					locator1 = "SiteMap#ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY",
-					value1 = "${childPageName}");
-			}
-		}
-	}
-
-	macro viewDefaultPG {
-		for (var pageName : list "${listPageName}") {
-			var key_pageName = "${pageName}";
-
-			AssertTextEquals.assertPartialText(
+				key_pageName = "${pageName}",
 				locator1 = "SiteMap#SITE_MAP_PAGE_DISPLAY",
 				value1 = "${pageName}");
-		}
-
-		if (isSet(listChildPageName)) {
-			for (var childPageName : list "${listChildPageName}") {
-				var key_childPageName = "${childPageName}";
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "SiteMap#SITE_MAP_CHILD_PAGE_DISPLAY",
-					value1 = "${childPageName}");
-			}
 		}
 	}
 

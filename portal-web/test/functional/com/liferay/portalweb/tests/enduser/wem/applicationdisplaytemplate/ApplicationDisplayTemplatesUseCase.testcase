@@ -288,9 +288,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			SiteMapPortlet.viewDefaultPG(
-				listChildPageName = "ADT Child Page Name",
-				listPageName = "ADT Test Page,ADT Test Page 2,ADT Test Page 3");
+			SiteMapPortlet.viewPageItem(pageNameList = "ADT Test Page,ADT Test Page 2,ADT Test Page 3,ADT Child Page Name");
 		}
 
 		task ("Add a widget template for Site Map") {
@@ -314,9 +312,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			SiteMapPortlet.viewCustomADTMultiColumnPG(
-				listChildPageName = "ADT Child Page Name",
-				listPageName = "ADT Test Page,ADT Test Page 2,ADT Test Page 3");
+			SiteMapPortlet.viewPageItem(pageNameList = "ADT Test Page,ADT Test Page 2,ADT Test Page 3,ADT Child Page Name");
 		}
 	}
 

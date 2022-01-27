@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal CCPP API
 Bundle-SymbolicName: com.liferay.portal.ccpp.api
 Bundle-Version: 1.0.2
-Export-Package:\
+-exportcontents:\
 	javax.ccpp,\
 	javax.ccpp.uaprof

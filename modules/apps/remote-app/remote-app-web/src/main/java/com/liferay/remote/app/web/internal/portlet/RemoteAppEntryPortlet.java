@@ -64,7 +64,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		String type = _remoteAppEntry.getType();
+		String type = _getType();
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			_renderCustomElement(renderRequest, renderResponse);
@@ -104,6 +104,16 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			portletPreferences.getValue("properties", StringPool.BLANK));
 
 		return properties;
+	}
+
+	private String _getType() {
+		String type = _remoteAppEntry.getType();
+
+		if (type.equals(RemoteAppConstants.TYPE_BUNDLED_APP)) {
+			type = _remoteAppEntry.getBundledAppType();
+		}
+
+		return type;
 	}
 
 	private void _loadProperties(Properties properties, String string)

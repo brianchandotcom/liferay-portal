@@ -15,6 +15,7 @@
 package com.liferay.remote.app.service.impl;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -118,18 +119,17 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry;
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			JSONArray cssURLsJSONArray = manifestJSONObject.getJSONArray(
-				"cssURLs");
+			String cssURLs = _joinJSONArray(
+				manifestJSONObject.getJSONArray("cssURLs"));
 			String htmlElementName = manifestJSONObject.getString(
 				"htmlElementName");
-			JSONArray urlsJSONArray = manifestJSONObject.getJSONArray("urls");
+			String urls = _joinJSONArray(
+				manifestJSONObject.getJSONArray("urls"));
 
 			remoteAppEntry = _createCustomElementRemoteAppEntry(
-				externalReferenceCode, userId,
-				cssURLsJSONArray.join(StringPool.COMMA), htmlElementName,
-				urlsJSONArray.join(StringPool.COMMA), description,
-				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-				properties, sourceCodeURL);
+				externalReferenceCode, userId, cssURLs, htmlElementName, urls,
+				description, friendlyURLMapping, instanceable, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			String url = manifestJSONObject.getString("url");
@@ -142,13 +142,29 @@ public class RemoteAppEntryLocalServiceImpl
 			throw new PortalException("Invalid Bundled App type " + type);
 		}
 
+		remoteAppEntry.setBundledAppType(type);
 		remoteAppEntry.setBundledAppURL(bundledAppURL);
+		remoteAppEntry.setType(RemoteAppConstants.TYPE_BUNDLED_APP);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
 		_addResources(remoteAppEntry);
 
 		return _startWorkflowInstance(userId, remoteAppEntry);
+	}
+
+	private String _joinJSONArray(JSONArray jsonArray) {
+		StringBundler sb = new StringBundler(2 * jsonArray.length() - 1);
+
+		for (int i=0; i< jsonArray.length(); i++) {
+			if (i>0) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(jsonArray.getString(i));
+		}
+
+		return sb.toString();
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

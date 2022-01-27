@@ -129,10 +129,16 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 				"javax.portlet.security-role-ref", "power-user,user"
 			).build();
 
+		String type = remoteAppEntry.getType();
+
 		if (Objects.equals(
 				remoteAppEntry.getType(),
-				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+				RemoteAppConstants.TYPE_BUNDLED_APP)) {
 
+			type = remoteAppEntry.getBundledAppType();
+		}
+
+		if (Objects.equals(type, RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			String customElementURLs = remoteAppEntry.getCustomElementURLs();
 
 			dictionary.put(
@@ -148,16 +154,14 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 					customElementCSSURLs.split(StringPool.NEW_LINE));
 			}
 		}
-		else if (Objects.equals(
-					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
-
+		else if (Objects.equals(type, RemoteAppConstants.TYPE_IFRAME)) {
 			dictionary.put(
 				"com.liferay.portlet.footer-portlet-css",
 				"/display/css/main.css");
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid remote app entry type: " + remoteAppEntry.getType());
+				"Invalid remote app entry type: " + type);
 		}
 
 		return _bundleContext.registerService(

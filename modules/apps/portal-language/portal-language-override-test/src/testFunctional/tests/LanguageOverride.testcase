@@ -166,6 +166,30 @@ definition {
 		}
 	}
 
+	@description = "This test can search existing keys and view it in the main view page."
+	@priority = "5"
+	test CanSearchForExistingKeys {
+		task ("When the language key is existed and search it in search bar") {
+			Search.searchCP(searchTerm = "2-synced-contact-data");
+		}
+
+		task ("Then the language key can be viewed in the View page and there is results message") {
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Results for 2-synced-contact-data");
+
+			AssertTextEquals(
+				key_languageKey = "2-synced-contact-data",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "2-synced-contact-data");
+
+			AssertTextEquals(
+				key_translation = "Synced Contact Data",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY_TRANSLATION",
+				value1 = "Synced Contact Data");
+		}
+	}
+
 	@description = "This test asserts that searching for existing translations will yield accurate results."
 	@priority = "5"
 	test CanSearchForTranslations {

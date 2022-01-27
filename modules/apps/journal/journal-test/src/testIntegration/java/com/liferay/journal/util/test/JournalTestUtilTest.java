@@ -93,7 +93,7 @@ public class JournalTestUtilTest {
 			ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_FTL,
-			JournalTestUtil.getSampleTemplateXSL());
+			JournalTestUtil.getSampleTemplateFTL());
 
 		Assert.assertNotNull(
 			JournalTestUtil.addArticleWithXMLContent(
@@ -189,7 +189,7 @@ public class JournalTestUtilTest {
 				ddmStructure.getStructureId(),
 				PortalUtil.getClassNameId(JournalArticle.class),
 				TemplateConstants.LANG_TYPE_FTL,
-				JournalTestUtil.getSampleTemplateXSL()));
+				JournalTestUtil.getSampleTemplateFTL()));
 	}
 
 	@Test

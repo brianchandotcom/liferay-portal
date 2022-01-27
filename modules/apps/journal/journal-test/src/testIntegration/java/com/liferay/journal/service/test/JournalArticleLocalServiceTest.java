@@ -618,7 +618,7 @@ public class JournalArticleLocalServiceTest {
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_FTL,
-			JournalTestUtil.getSampleTemplateXSL(), LocaleUtil.US);
+			JournalTestUtil.getSampleTemplateFTL(), LocaleUtil.US);
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			HashMapBuilder.put(

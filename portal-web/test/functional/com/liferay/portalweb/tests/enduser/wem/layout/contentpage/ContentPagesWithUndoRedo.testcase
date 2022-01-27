@@ -660,6 +660,7 @@ definition {
 	@priority = "5"
 	@uitest
 	test UndoInteractionStatesHundredTimes {
+		property custom.properties = "session.timeout=30";
 		property web.xml.timeout = "30";
 
 		task ("Add a Tabs fragment to page") {

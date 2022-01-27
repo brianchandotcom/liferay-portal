@@ -540,6 +540,11 @@
 		<td>//div[contains(text(),'${key_labelName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CHOOSE_ANY_LANGUAGE</td>
+		<td>//*[contains(@class, 'autofit-section') and contains(., '${key_newLanguage}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

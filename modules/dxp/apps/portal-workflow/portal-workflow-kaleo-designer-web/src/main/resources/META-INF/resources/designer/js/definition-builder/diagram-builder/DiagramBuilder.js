@@ -178,6 +178,45 @@ export default function DiagramBuilder({version}) {
 		setReactFlowInstance(reactFlowInstance);
 	};
 
+	const onNodeDragStart = (event) => {
+		const elementRectangle = event.currentTarget.getBoundingClientRect();
+
+		setElementRectangle({
+			mouseXInRectangle: event.clientX - elementRectangle.left,
+			mouseYInRectangle: event.clientY - elementRectangle.top,
+			rectangleHeight: elementRectangle.height,
+			rectangleWidth: elementRectangle.width,
+		});
+	};
+
+	const onNodeDragStop = (event, node) => {
+		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
+
+		const position = reactFlowInstance.project({
+			x:
+				event.clientX -
+				reactFlowBounds.left -
+				elementRectangle.mouseXInRectangle,
+			y:
+				event.clientY -
+				reactFlowBounds.top -
+				elementRectangle.mouseYInRectangle,
+		});
+
+		setElements((elements) =>
+			elements.map((element) => {
+				if (element.id === node.id) {
+					element = {
+						...element,
+						position,
+					};
+				}
+
+				return element;
+			})
+		);
+	};
+
 	useEffect(() => {
 		if (
 			selectedItem &&
@@ -318,6 +357,8 @@ export default function DiagramBuilder({version}) {
 						onDragOver={onDragOver}
 						onDrop={onDrop}
 						onLoad={onLoad}
+						onNodeDragStart={onNodeDragStart}
+						onNodeDragStop={onNodeDragStop}
 					/>
 
 					<Controls showInteractive={false} />

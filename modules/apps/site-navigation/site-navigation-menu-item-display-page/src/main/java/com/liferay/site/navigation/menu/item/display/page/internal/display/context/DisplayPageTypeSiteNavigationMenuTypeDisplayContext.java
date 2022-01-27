@@ -37,15 +37,15 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
-import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -55,6 +55,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,30 +66,32 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		DisplayPageTypeContext displayPageTypeContext,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		_displayPageTypeContext =
-			(DisplayPageTypeContext)httpServletRequest.getAttribute(
-				SiteNavigationMenuItemTypeDisplayPageWebKeys.
-					DISPLAY_PAGE_TYPE_CONTEXT);
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			SiteNavigationMenuItemTypeDisplayPageWebKeys.ITEM_SELECTOR);
-		_siteNavigationMenuItem =
-			(SiteNavigationMenuItem)httpServletRequest.getAttribute(
-				SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
+		_displayPageTypeContext = displayPageTypeContext;
+		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
+		_siteNavigationMenuItem = siteNavigationMenuItem;
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			portletResponse);
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getChooseInfoItemButtonContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
+	public Map<String, Object> getChooseInfoItemButtonContext() {
 		return HashMapBuilder.<String, Object>put(
 			"eventName",
-			liferayPortletResponse.getNamespace() + "selectInfoItem"
+			_liferayPortletResponse.getNamespace() + "selectInfoItem"
 		).put(
-			"getItemDetailsURL", getItemDetailsURL(liferayPortletResponse)
+			"getItemDetailsURL", getItemDetailsURL()
 		).put(
 			"itemSelectorURL",
 			() -> {
@@ -102,12 +105,12 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 					RequestBackedPortletURLFactoryUtil.create(
-						httpServletRequest);
+						_httpServletRequest);
 
 				PortletURL infoItemSelectorURL =
 					_itemSelector.getItemSelectorURL(
 						requestBackedPortletURLFactory,
-						liferayPortletResponse.getNamespace() +
+						_liferayPortletResponse.getNamespace() +
 							"selectInfoItem",
 						itemSelectorCriterion);
 
@@ -181,15 +184,11 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _classTypeId;
 	}
 
-	public Map<String, Object> getDisplayPageItemContextualSidebarContext(
-			HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+	public Map<String, Object> getDisplayPageItemContextualSidebarContext()
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
-			"chooseItemProps",
-			getChooseInfoItemButtonContext(
-				httpServletRequest, liferayPortletResponse)
+			"chooseItemProps", getChooseInfoItemButtonContext()
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
@@ -246,7 +245,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 						"localizedNames", "{}"));
 			}
 		).put(
-			"namespace", liferayPortletResponse.getNamespace()
+			"namespace", _liferayPortletResponse.getNamespace()
 		).put(
 			"useCustomName",
 			() -> {
@@ -261,11 +260,9 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).build();
 	}
 
-	public String getItemDetailsURL(
-		LiferayPortletResponse liferayPortletResponse) {
-
+	public String getItemDetailsURL() {
 		LiferayPortletURL itemDetailsURL =
-			(LiferayPortletURL)liferayPortletResponse.createResourceURL();
+			(LiferayPortletURL)_liferayPortletResponse.createResourceURL();
 
 		itemDetailsURL.setCopyCurrentRenderParameters(false);
 		itemDetailsURL.setResourceID("/navigation_menu/get_item_details");
@@ -419,8 +416,10 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	private Long _classPK;
 	private Long _classTypeId;
 	private final DisplayPageTypeContext _displayPageTypeContext;
+	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _originalTitle;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;

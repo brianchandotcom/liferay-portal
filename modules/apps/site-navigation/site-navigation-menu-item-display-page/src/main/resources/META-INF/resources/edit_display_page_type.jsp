@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigationMenuTypeDisplayContext = new DisplayPageTypeSiteNavigationMenuTypeDisplayContext(request);
+DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigationMenuTypeDisplayContext = (DisplayPageTypeSiteNavigationMenuTypeDisplayContext)request.getAttribute(DisplayPageTypeSiteNavigationMenuTypeDisplayContext.class.getName());
 %>
 
 <c:choose>
@@ -25,7 +25,7 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 		<div>
 			<react:component
 				module="js/DisplayPageItemContextualSidebar"
-				props="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getDisplayPageItemContextualSidebarContext(request, liferayPortletResponse) %>"
+				props="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getDisplayPageItemContextualSidebarContext() %>"
 			/>
 		</div>
 	</c:when>
@@ -73,7 +73,7 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 		</div>
 
 		<clay:button
-			additionalProps="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getChooseInfoItemButtonContext(request, liferayPortletResponse) %>"
+			additionalProps="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getChooseInfoItemButtonContext() %>"
 			cssClass="mb-4"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "chooseInfoItem" %>'

@@ -46,9 +46,8 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
-import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
+import com.liferay.site.navigation.menu.item.display.page.internal.display.context.DisplayPageTypeSiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -456,15 +455,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		throws IOException {
 
 		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeDisplayPageWebKeys.
-				DISPLAY_PAGE_TYPE_CONTEXT,
-			_displayPageTypeContext);
-		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeDisplayPageWebKeys.ITEM_SELECTOR,
-			_itemSelector);
-		httpServletRequest.setAttribute(
-			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
-			siteNavigationMenuItem);
+			DisplayPageTypeSiteNavigationMenuTypeDisplayContext.class.getName(),
+			new DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
+				_displayPageTypeContext, httpServletRequest, _itemSelector,
+				siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

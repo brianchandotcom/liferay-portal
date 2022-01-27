@@ -118,6 +118,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_bundle = FrameworkUtil.getBundle(getClass());
 
 		_group = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
@@ -270,6 +271,29 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			stringValuesMap);
 
 		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithFriendlyURLSiteKeyDifferentGroup()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"FRIENDLY_URL", layout.getFriendlyURL()
+		).put(
+			"SITE_KEY", String.valueOf(_group.getGroupKey())
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"container/link_mapped_layout/friendly_url_site_key/expected", null,
+			stringValuesMap);
+		File inputFile = _generateZipFile(
+			"container/link_mapped_layout/friendly_url_site_key/input", null,
+			stringValuesMap);
+
+		_validateImportExport(
+			expectedFile, inputFile, _group.getGroupId(), _group2.getGroupId());
 	}
 
 	@Test
@@ -929,6 +953,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

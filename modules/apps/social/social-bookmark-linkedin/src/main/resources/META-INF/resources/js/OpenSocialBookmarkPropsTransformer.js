@@ -12,19 +12,4 @@
  * details.
  */
 
-import {openSocialBookmark} from 'social-bookmarks-taglib';
-
-export default function propsTransformer({
-	additionalProps: {className, classPK, postURL, type, url},
-	...otherProps
-}) {
-	return {
-		...otherProps,
-		onClick(event) {
-			event.preventDefault();
-			event.stopPropagation();
-
-			return openSocialBookmark({className, classPK, postURL, type, url});
-		},
-	};
-}
+export {OpenSocialBookmarkPropsTransformer as default} from 'social-bookmarks-taglib';

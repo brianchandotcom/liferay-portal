@@ -12,4 +12,4 @@
  * details.
  */
 
-export {default as openSocialBookmark} from './js/openSocialBookmark';
+export {default as OpenSocialBookmarkPropsTransformer} from './js/OpenSocialBookmarkPropsTransformer';

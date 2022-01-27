@@ -10,6 +10,8 @@
  *
  */
 
+import {isEdge} from 'react-flow-renderer';
+
 import {defaultLanguageId} from '../constants';
 import {removeNewLine, replaceTabSpaces} from '../util/utils';
 import {DEFAULT_LANGUAGE} from './constants';
@@ -121,10 +123,21 @@ DeserializeUtil.prototype = {
 							return;
 						}
 
+						const hasDefaultEdge = elements.find(
+							(element) =>
+								isEdge(element) &&
+								element.source === nodeId &&
+								element.data.defaultEdge
+						);
+
 						elements.push({
 							arrowHeadType: 'arrowclosed',
 							data: {
-								defaultEdge: JSON.parse(transition.default),
+								defaultEdge:
+									transition?.default === 'true' ||
+									!hasDefaultEdge
+										? true
+										: false,
 								label,
 							},
 							id: transitionId,

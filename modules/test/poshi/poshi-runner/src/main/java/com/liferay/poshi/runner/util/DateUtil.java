@@ -16,6 +16,8 @@ package com.liferay.poshi.runner.util;
 
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +44,12 @@ public class DateUtil {
 
 	public static String getCurrentMonthName() {
 		return getFormattedCurrentDate("MMMM");
+	}
+
+	public static String getCurrentUTCTime() {
+		Instant instant = Instant.now();
+
+		return instant.toString();
 	}
 
 	public static String getCurrentYear() {

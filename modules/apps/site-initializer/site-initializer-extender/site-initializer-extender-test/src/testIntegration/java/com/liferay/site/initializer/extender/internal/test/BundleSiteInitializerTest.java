@@ -840,20 +840,35 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertSapEntries(Group group) {
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+		SAPEntry sapEntry1 = _sapEntryLocalService.fetchSAPEntry(
 			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
-		Assert.assertNotNull(sapEntry);
+		Assert.assertNotNull(sapEntry1);
 
-		List<String> allowedServiceSignatures =
-			sapEntry.getAllowedServiceSignaturesList();
+		List<String> allowedServiceSignatures1 =
+			sapEntry1.getAllowedServiceSignaturesList();
 
 		Assert.assertEquals(
-			allowedServiceSignatures.toString(), 3,
-			allowedServiceSignatures.size());
+			allowedServiceSignatures1.toString(), 3,
+			allowedServiceSignatures1.size());
 
-		Assert.assertTrue(sapEntry.isDefaultSAPEntry());
-		Assert.assertTrue(sapEntry.isEnabled());
+		Assert.assertTrue(sapEntry1.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntry1.isEnabled());
+
+		SAPEntry sapEntry2 = _sapEntryLocalService.fetchSAPEntry(
+			group.getCompanyId(), "TEST_SAP_ENTRY_2");
+
+		Assert.assertNotNull(sapEntry2);
+
+		List<String> allowedServiceSignatures2 =
+			sapEntry2.getAllowedServiceSignaturesList();
+
+		Assert.assertEquals(
+			allowedServiceSignatures2.toString(), 5,
+			allowedServiceSignatures2.size());
+
+		Assert.assertFalse(sapEntry2.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntry2.isEnabled());
 	}
 
 	private void _assertSiteNavigationMenu(Group group) {

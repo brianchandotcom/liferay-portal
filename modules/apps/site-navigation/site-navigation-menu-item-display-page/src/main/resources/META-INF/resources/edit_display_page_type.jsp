@@ -25,42 +25,7 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 		<div>
 			<react:component
 				module="js/DisplayPageItemContextualSidebar"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"chooseItemProps", displayPageTypeSiteNavigationMenuTypeDisplayContext.getChooseInfoItemButtonContext(request, liferayPortletResponse)
-					).put(
-						"defaultLanguageId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getDefaultLanguageId()
-					).put(
-						"hasDisplayPage", displayPageTypeSiteNavigationMenuTypeDisplayContext.hasDisplayPage()
-					).put(
-						"item",
-						HashMapBuilder.<String, Object>put(
-							"classNameId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassNameId()
-						).put(
-							"classPK", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassPK()
-						).put(
-							"classTypeId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassTypeId()
-						).put(
-							"data", displayPageTypeSiteNavigationMenuTypeDisplayContext.getDataJSONArray()
-						).put(
-							"title", displayPageTypeSiteNavigationMenuTypeDisplayContext.getTitle()
-						).put(
-							"type", displayPageTypeSiteNavigationMenuTypeDisplayContext.getType()
-						).build()
-					).put(
-						"itemSubtype", displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemSubtype()
-					).put(
-						"itemType", displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemType()
-					).put(
-						"locales", displayPageTypeSiteNavigationMenuTypeDisplayContext.getAvailableLocalesJSONArray()
-					).put(
-						"localizedNames", displayPageTypeSiteNavigationMenuTypeDisplayContext.getLocalizedNamesJSONObject()
-					).put(
-						"namespace", liferayPortletResponse.getNamespace()
-					).put(
-						"useCustomName", displayPageTypeSiteNavigationMenuTypeDisplayContext.isUseCustomName()
-					).build()
-				%>'
+				props="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getDisplayPageItemContextualSidebarContext(request, liferayPortletResponse) %>"
 			/>
 		</div>
 	</c:when>

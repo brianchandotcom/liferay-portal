@@ -242,6 +242,49 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale());
 	}
 
+	public Map<String, Object> getDisplayPageItemContextualSidebarContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		return HashMapBuilder.<String, Object>put(
+			"chooseItemProps",
+			getChooseInfoItemButtonContext(
+				httpServletRequest, liferayPortletResponse)
+		).put(
+			"defaultLanguageId", getDefaultLanguageId()
+		).put(
+			"hasDisplayPage", hasDisplayPage()
+		).put(
+			"item",
+			HashMapBuilder.<String, Object>put(
+				"classNameId", getClassNameId()
+			).put(
+				"classPK", getClassPK()
+			).put(
+				"classTypeId", getClassTypeId()
+			).put(
+				"data", getDataJSONArray()
+			).put(
+				"title", getTitle()
+			).put(
+				"type", getType()
+			).build()
+		).put(
+			"itemSubtype", getItemSubtype()
+		).put(
+			"itemType", getItemType()
+		).put(
+			"locales", getAvailableLocalesJSONArray()
+		).put(
+			"localizedNames", getLocalizedNamesJSONObject()
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"useCustomName", isUseCustomName()
+		).build();
+	}
+
 	public String getItemDetailsURL(
 		LiferayPortletResponse liferayPortletResponse) {
 

@@ -18,7 +18,7 @@ import {ClayInput} from '@clayui/form';
 import ClayList from '@clayui/list';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useModal} from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -34,9 +34,24 @@ const ViewBuilderScreen = () => {
 
 	const [visibleModal, setVisibleModal] = useState(false);
 
+	const [query, setQuery] = useState('');
+	const [filteredItems, setFilteredItems] = useState(
+		objectView.objectViewColumns
+	);
+
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
+
+	useEffect(() => {
+		setFilteredItems(objectView.objectViewColumns);
+	}, [objectView]);
+
+	const newFiltredItems = filteredItems.filter((objectViewColumn) =>
+		objectViewColumn.objectFieldName
+			.toLowerCase()
+			.includes(query.toLowerCase())
+	);
 
 	return (
 		<>
@@ -52,8 +67,12 @@ const ViewBuilderScreen = () => {
 										<ClayInput
 											aria-label="Search"
 											className="form-control input-group-inset input-group-inset-after"
-											defaultValue="Search"
+											onChange={({target}) =>
+												setQuery(target.value)
+											}
+											placeholder="Search"
 											type="text"
+											value={query}
 										/>
 
 										<ClayInput.GroupInsetItem
@@ -89,9 +108,9 @@ const ViewBuilderScreen = () => {
 
 					{objectView?.objectViewColumns?.length > 0 ? (
 						<ClayList>
-							{objectView?.objectViewColumns.map(
-								(viewColumn, index) => {
-									return (
+							{query ? (
+								newFiltredItems.length > 0 ? (
+									newFiltredItems.map((viewColumn, index) => (
 										<>
 											{index === 0 && (
 												<ClayList.Item flex>
@@ -105,17 +124,69 @@ const ViewBuilderScreen = () => {
 												</ClayList.Item>
 											)}
 
-											<DndProvider backend={HTML5Backend}>
-												<ViewBuilderListItem
-													index={index}
-													objectViewColumn={
-														viewColumn
-													}
-												/>
-											</DndProvider>
+											<ClayList.Item flex>
+												<ClayList.ItemField>
+													<ClayButtonWithIcon
+														displayType={null}
+														symbol="drag"
+													/>
+												</ClayList.ItemField>
+
+												<ClayList.ItemField expand>
+													<ClayList.ItemTitle>
+														{
+															viewColumn.objectFieldName
+														}
+													</ClayList.ItemTitle>
+												</ClayList.ItemField>
+											</ClayList.Item>
 										</>
-									);
-								}
+									))
+								) : (
+									<div className="object-web__custom-view-view-builder--empty-space">
+										<ClayEmptyState
+											description={Liferay.Language.get(
+												'sorry-there-are-no-results-for-delivery'
+											)}
+											title={Liferay.Language.get(
+												'no-results-found'
+											)}
+										></ClayEmptyState>
+									</div>
+								)
+							) : (
+								objectView?.objectViewColumns.map(
+									(viewColumn, index) => {
+										return (
+											<>
+												{index === 0 && (
+													<ClayList.Item flex>
+														<ClayList.ItemField
+															expand
+														>
+															<ClayList.ItemField>
+																{Liferay.Language.get(
+																	'name'
+																)}
+															</ClayList.ItemField>
+														</ClayList.ItemField>
+													</ClayList.Item>
+												)}
+
+												<DndProvider
+													backend={HTML5Backend}
+												>
+													<ViewBuilderListItem
+														index={index}
+														objectViewColumn={
+															viewColumn
+														}
+													/>
+												</DndProvider>
+											</>
+										);
+									}
+								)
 							)}
 						</ClayList>
 					) : (

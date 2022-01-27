@@ -239,7 +239,7 @@ const InvitesPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 		}
-		else if (touched['invites']?.some((field) => field.email)) {
+		else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -336,8 +336,8 @@ const InvitesPage = ({
 						{`Only ${maxRequestors} member${
 							maxRequestors > 1 ? 's' : ''
 						} per project (including yourself) have
-						role permissions (Admins & Requestors) to open Support
-						tickets. `}
+						 role permissions (Admins & Requestors) to open Support
+						 tickets. `}
 
 						<a
 							className="font-weight-bold text-neutral-9"

@@ -38,7 +38,7 @@ definition {
 				title = "Web Content Title${i}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkExportTranslation(
 			exportTranslationEntry = "Web Content Title1,Web Content Title3",
@@ -156,7 +156,7 @@ definition {
 				title = "WebContentTitle${i}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkExportTranslation(exportTranslationEntry = "WebContentTitle1,WebContentTitle3");
 
@@ -188,7 +188,7 @@ definition {
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkImportTranslation();
 
@@ -206,7 +206,7 @@ definition {
 				webContentDescription = "Descripcion${i}",
 				webContentTitle = "Titulodelcontenidoweb${i}");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle2");
@@ -534,7 +534,7 @@ definition {
 				title = "WebContentTitle${i}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkExportTranslation(exportTranslationEntry = "WebContentTitle1,WebContentTitle3");
 
@@ -583,7 +583,7 @@ definition {
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkImportTranslation();
 
@@ -608,14 +608,14 @@ definition {
 				webContentDescription = "Descripcion${i}",
 				webContentTitle = "Titulodelcontenidoweb${i}");
 
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle1");
 
 		Translations.viewUntranslatedStatus(locale = "ja-JP");
 
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle3");
 

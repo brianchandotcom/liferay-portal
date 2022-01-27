@@ -1,8 +1,7 @@
 {
 	"articleId": "BLOG-01",
 	"assetCategoryERCs": [
-		"MASCAT0002",
-		"MASCAT0003"
+		"MASCAT0002"
 	],
 	"ddmStructureKey": "BLOG",
 	"ddmTemplateKey": "BLOG",

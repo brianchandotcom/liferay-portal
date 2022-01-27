@@ -199,5 +199,6 @@
 		<exception>BatchPlannerPlanName</exception>
 		<exception>BatchPlannerPolicyName</exception>
 		<exception>DuplicateBatchPlannerPlan</exception>
+		<exception>RequiredBatchPlannerPlan</exception>
 	</exceptions>
 </service-builder>

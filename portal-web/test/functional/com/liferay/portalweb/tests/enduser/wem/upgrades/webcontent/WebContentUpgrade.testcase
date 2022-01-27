@@ -191,9 +191,9 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			for (var contentText : list "Link Pagina Origem,Link Pagina Atual") {
+			for (var displayText : list "Link Pagina Origem,Link Pagina Atual") {
 				AssertElementPresent(
-					key_displayText = "${key_displayText}",
+					key_displayText = "${displayText}",
 					key_webContentTitle = "Web Content Complex Title 1",
 					locator1 = "WCD#WEB_CONTENT_LINK");
 			}

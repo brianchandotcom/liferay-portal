@@ -43,7 +43,7 @@ export default function ({
 	}
 
 	itemFinder('itemFinder', 'item-finder-root-payment-terms', {
-		apiUrl: '/o/headless-commerce-admin-order/v1.0/terms',
+		apiUrl,
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-payment-term'),
 		itemCreation: false,

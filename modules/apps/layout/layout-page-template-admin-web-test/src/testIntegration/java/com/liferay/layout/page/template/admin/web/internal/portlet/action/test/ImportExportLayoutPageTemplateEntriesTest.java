@@ -884,14 +884,22 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	private void _validateImportExport(File expectedFile, File inputFile)
 		throws Exception {
 
+		_validateImportExport(
+			expectedFile, inputFile, _group.getGroupId(), _group.getGroupId());
+	}
+
+	private void _validateImportExport(
+			File expectedFile, File inputFile, long groupId1, long groupId2)
+		throws Exception {
+
 		File outputFile1 = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
+			inputFile, groupId1, false,
 			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
 
 		_validateFile(expectedFile, outputFile1);
 
 		File outputFile2 = _importExportLayoutPageTemplateEntry(
-			outputFile1, _group.getGroupId(), true,
+			outputFile1, groupId2, true,
 			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
 
 		_validateFile(expectedFile, outputFile2);

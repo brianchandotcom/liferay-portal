@@ -21,7 +21,8 @@ public class CommerceTermEntryClayDataSetDisplayNames {
 
 	public static final String COMMERCE_TERM_ENTRIES = "commerceTermEntries";
 
-	public static final String COMMERCE_TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
-		"commerceTermEntryQualifierCommerceOrderTypes";
+	public static final String
+		COMMERCE_TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
+			"commerceTermEntryQualifierCommerceOrderTypes";
 
 }

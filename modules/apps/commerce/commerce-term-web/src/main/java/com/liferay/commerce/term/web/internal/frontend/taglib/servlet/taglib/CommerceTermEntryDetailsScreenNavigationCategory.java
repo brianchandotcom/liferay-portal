@@ -126,7 +126,8 @@ public class CommerceTermEntryDetailsScreenNavigationCategory
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceTermEntryDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/commerce_term_entry/details.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_term_entry/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

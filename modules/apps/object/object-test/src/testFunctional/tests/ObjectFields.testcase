@@ -23,11 +23,31 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify it is possible to create a Clob field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateClobField {
 
-		// TODO LPS-145670 CanCreateClobField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Clob");
+
+		Refresh();	
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Custom Field",
+			fieldType = "Clob");
 
 	}
 

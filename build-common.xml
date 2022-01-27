@@ -1627,7 +1627,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 
 							<echo>Updating ${build.binaries.cache.dir.absolute.path}.</echo>
 
-							<retry retrydelay="30000" retrycount="3">
+							<retry retrycount="3" retrydelay="30000">
 								<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
 									<arg value="pull" />
 									<arg value="--rebase" />

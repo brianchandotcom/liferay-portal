@@ -370,7 +370,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 				_displayPageTypeContext.
 					getLayoutDisplayPageInfoItemFieldValuesProviderOptional();
 
-		LayoutDisplayPageInfoItemFieldValuesProvider
+		LayoutDisplayPageInfoItemFieldValuesProvider<?>
 			layoutDisplayPageInfoItemFieldValuesProvider =
 				layoutDisplayPageInfoItemFieldValuesProviderOptional.orElse(
 					null);
@@ -393,7 +393,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			infoFieldValue -> JSONUtil.put(
 				"title",
 				() -> {
-					InfoField infoField = infoFieldValue.getInfoField();
+					InfoField<?> infoField = infoFieldValue.getInfoField();
 
 					return infoField.getLabel(_themeDisplay.getLocale());
 				}

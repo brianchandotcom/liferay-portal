@@ -42,6 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -108,8 +109,9 @@ public class InfoFieldUtil {
 		}
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		HttpServletResponse httpServletResponse = serviceContext.getResponse();
 
-		if (httpServletRequest == null) {
+		if ((httpServletRequest == null) || (httpServletResponse == null)) {
 			return _renderHtml(fragmentEntryLink, defaultElementName);
 		}
 
@@ -129,7 +131,7 @@ public class InfoFieldUtil {
 
 		return fragmentRendererController.render(
 			defaultFragmentRendererContext, httpServletRequest,
-			serviceContext.getResponse());
+			httpServletResponse);
 	}
 
 	private static InfoField<TextInfoFieldType> _getInfoField(

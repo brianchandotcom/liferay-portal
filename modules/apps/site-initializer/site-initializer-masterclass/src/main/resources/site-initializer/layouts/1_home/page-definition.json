@@ -246,8 +246,11 @@
 																			}
 																		},
 																		"text": {
-																			"value_i18n": {
-																				"en_US": "Category"
+																			"mapping": {
+																				"fieldKey": "masterclass",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
 																			}
 																		}
 																	}
@@ -2485,8 +2488,11 @@
 																	}
 																},
 																"text": {
-																	"value_i18n": {
-																		"en_US": "Category"
+																	"mapping": {
+																		"fieldKey": "masterclass",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
 																	}
 																}
 															}

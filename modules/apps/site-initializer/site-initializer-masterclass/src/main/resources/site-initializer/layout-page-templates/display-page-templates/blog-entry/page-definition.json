@@ -111,8 +111,11 @@
 											}
 										},
 										"text": {
-											"value_i18n": {
-												"en_US": "Category"
+											"mapping": {
+												"fieldKey": "masterclass",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
 											}
 										}
 									}
@@ -729,8 +732,11 @@
 															}
 														},
 														"text": {
-															"value_i18n": {
-																"en_US": "Category"
+															"mapping": {
+																"fieldKey": "masterclass",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
 															}
 														}
 													}

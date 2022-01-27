@@ -95,7 +95,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			externalReferenceCode, permissionChecker.getUserId(),
 			permissionChecker.getCompanyId(), name, description,
 			serviceContext);
-
 	}
 
 	/**

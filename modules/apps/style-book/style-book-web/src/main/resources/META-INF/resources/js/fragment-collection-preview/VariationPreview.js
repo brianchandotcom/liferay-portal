@@ -12,8 +12,8 @@
  * details.
  */
 
-import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
+import React, {useEffect, useRef} from 'react';
 
 export function VariationPreview({
 	fragmentEntryKey,
@@ -22,7 +22,7 @@ export function VariationPreview({
 	previewURL,
 	variation,
 }) {
-	const [html, setHTML] = useState('');
+	const ref = useRef();
 
 	useEffect(() => {
 		fetch(previewURL, {
@@ -41,11 +41,13 @@ export function VariationPreview({
 		})
 			.then((response) => response.text())
 			.then((data) => {
-				setHTML(data);
+				ref.current.innerHTML = data;
+
+				runScriptsInElement(ref.current);
 			})
 			.catch((error) => {
 				console.error(error);
-				setHTML('');
+				ref.current.innerHTML = '';
 			});
 	}, [fragmentEntryKey, namespace, previewURL, variation]);
 
@@ -57,7 +59,7 @@ export function VariationPreview({
 
 			<div
 				className="align-items-center d-flex flex-grow-1 justify-content-center overflow-hidden p-4 variation-preview__content"
-				dangerouslySetInnerHTML={{__html: html}}
+				ref={ref}
 			/>
 		</article>
 	);

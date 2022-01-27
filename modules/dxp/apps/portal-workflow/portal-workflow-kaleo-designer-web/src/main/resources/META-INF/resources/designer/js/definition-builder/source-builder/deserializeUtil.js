@@ -13,6 +13,7 @@
 import {defaultLanguageId} from '../constants';
 import {removeNewLine, replaceTabSpaces} from '../util/utils';
 import {DEFAULT_LANGUAGE} from './constants';
+import parseAssignments from './utils';
 import XMLDefinition from './xmlDefinition';
 
 export default function DeserializeUtil(content) {
@@ -67,6 +68,10 @@ DeserializeUtil.prototype = {
 				};
 
 				if (type === 'task') {
+					if (node.assignments) {
+						data.assignments = parseAssignments(node);
+					}
+
 					data.scriptLanguage =
 						node.scriptLanguage || DEFAULT_LANGUAGE;
 				}

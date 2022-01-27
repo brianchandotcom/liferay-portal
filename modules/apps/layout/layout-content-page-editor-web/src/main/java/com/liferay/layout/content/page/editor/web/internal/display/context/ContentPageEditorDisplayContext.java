@@ -355,7 +355,7 @@ public class ContentPageEditorDisplayContext {
 							getFrontendTokenDefinition(layoutSet.getThemeId());
 
 					if (frontendTokenDefinition == null) {
-						return JSONFactoryUtil.getJSONFactory();
+						return JSONFactoryUtil.createJSONObject();
 					}
 
 					return StyleBookEntryUtil.getFrontendTokensValues(

@@ -181,44 +181,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _classTypeId;
 	}
 
-	public JSONArray getDataJSONArray() throws Exception {
-		Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
-			layoutDisplayPageInfoItemFieldValuesProviderOptional =
-				_displayPageTypeContext.
-					getLayoutDisplayPageInfoItemFieldValuesProviderOptional();
-
-		LayoutDisplayPageInfoItemFieldValuesProvider
-			layoutDisplayPageInfoItemFieldValuesProvider =
-				layoutDisplayPageInfoItemFieldValuesProviderOptional.orElse(
-					null);
-
-		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
-			return JSONFactoryUtil.createJSONArray();
-		}
-
-		InfoItemFieldValues infoItemFieldValues =
-			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
-				getClassPK());
-
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoItemFieldValues.getInfoFieldValues();
-
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
-
-		return JSONUtil.toJSONArray(
-			stream.collect(Collectors.toList()),
-			infoFieldValue -> JSONUtil.put(
-				"title",
-				() -> {
-					InfoField infoField = infoFieldValue.getInfoField();
-
-					return infoField.getLabel(_themeDisplay.getLocale());
-				}
-			).put(
-				"value", infoFieldValue.getValue(_themeDisplay.getLocale())
-			));
-	}
-
 	public Map<String, Object> getDisplayPageItemContextualSidebarContext(
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
@@ -245,7 +207,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			).put(
 				"classTypeId", getClassTypeId()
 			).put(
-				"data", getDataJSONArray()
+				"data", _getDataJSONArray()
 			).put(
 				"title", getTitle()
 			).put(
@@ -399,6 +361,44 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	public boolean isFFMultipleSelectionEnabled() {
 		return FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
 			multipleSelectionEnabled();
+	}
+
+	private JSONArray _getDataJSONArray() throws Exception {
+		Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
+			layoutDisplayPageInfoItemFieldValuesProviderOptional =
+				_displayPageTypeContext.
+					getLayoutDisplayPageInfoItemFieldValuesProviderOptional();
+
+		LayoutDisplayPageInfoItemFieldValuesProvider
+			layoutDisplayPageInfoItemFieldValuesProvider =
+				layoutDisplayPageInfoItemFieldValuesProviderOptional.orElse(
+					null);
+
+		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
+			return JSONFactoryUtil.createJSONArray();
+		}
+
+		InfoItemFieldValues infoItemFieldValues =
+			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
+				getClassPK());
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+
+		return JSONUtil.toJSONArray(
+			stream.collect(Collectors.toList()),
+			infoFieldValue -> JSONUtil.put(
+				"title",
+				() -> {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					return infoField.getLabel(_themeDisplay.getLocale());
+				}
+			).put(
+				"value", infoFieldValue.getValue(_themeDisplay.getLocale())
+			));
 	}
 
 	private LayoutDisplayPageObjectProvider<?>

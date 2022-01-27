@@ -9,7 +9,7 @@ need, but it'd be nice if you could apply particular display options to specific
 portlet instances without having to redeploy any plugins. Ideally, you should be
 able to provide authorized portal users the ability to apply custom display
 settings to portlets. This saves you from having to change portlet configuration
-code every time you need new settings. 
+code every time you need new settings.
 
 Be of good cheer! That's precisely what
 [Application Display Templates](/discover/portal/-/knowledge_base/6-2/using-application-display-templates)
@@ -17,5 +17,4 @@ Be of good cheer! That's precisely what
 the portal. This isn't actually a new concept in Liferay. In some portlets
 (e.g., *Web Content*, *Documents and Media*, and *Dynamic Data Lists*), you can
 already add as many display options (or templates) as you want. Now you can add
-them to your custom portlets, too. 
-
+them to your custom portlets, too.

@@ -6,7 +6,7 @@ definition {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
 
 		ArchiveUtil.archive("${dependencyFilePath}", "${tempDir}/${fileName}");
-		
+
 		var dependencyFilePath = "${tempDir}/${fileName}";
 
 		UploadFile(

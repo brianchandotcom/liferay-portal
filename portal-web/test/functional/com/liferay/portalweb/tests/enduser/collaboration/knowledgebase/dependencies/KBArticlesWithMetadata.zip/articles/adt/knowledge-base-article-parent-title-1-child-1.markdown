@@ -1,6 +1,6 @@
 # Knowledge Base Article Parent Title 1 Child 1 [](id=knowledge-base-article-parent-title-1-child-1)
 
-<!-- You can test this tutorial using the following portlet project 
+<!-- You can test this tutorial using the following portlet project
 https://github.com/liferay/liferay-docs/tree/master/develop/tutorials/code/wc/impl-adts/begin/event-listing-portlet)
 -->
 
@@ -51,24 +51,24 @@ exposing the ADT functionality to users. Let's walk through these steps:
 
         <?xml version="1.0"?>
         <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
-        
+
         <liferay-portlet-app>
-        
+
             ...
-            
+
             <portlet>
                 <portlet-name>yourportlet</portlet-name>
                 <icon>/icon.png</icon>
                 <configuration-action-class>com.samples.portlet.eventlisting.action.ConfigurationActionImpl</configuration-action-class>
                 <template-handler>com.samples.portlet.yourportlet.template.YourEntityPortletDisplayTemplateHandler</template-handler>
                 <instanceable>false</instanceable>
-                
+
                 ...
-                
+
             </portlet>
-            
+
             ...
-            
+
         </liferay-portlet-app>
 
 3. Since the ability to add ADTs is new to your portlet, you must configure
@@ -80,9 +80,9 @@ exposing the ADT functionality to users. Let's walk through these steps:
         <?xml version="1.0"?>
         <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
         <resource-action-mapping>
-        
+
             ...
-            
+
             <portlet-resource>
                 <portlet-name>yourportlet</portlet-name>
                 <permissions>
@@ -92,31 +92,31 @@ exposing the ADT functionality to users. Let's walk through these steps:
                         <action-key>CONFIGURATION</action-key>
                         <action-key>VIEW</action-key>
                     </supports>
-                    
+
                     ...
-                
+
                 </permissions>
             </portlet-resource>
-            
+
             ...
-        
+
         </resource-action-mapping>
-	 
+
 4.  Now that your portlet officially supports ADTs, you'll want to expose the
     ADT option to your users. Just include the
     `<liferay-ui:ddm-template-selector>` tag in the JSP file you're using to
     control your portlet's configuration.
-   
+
     For example, it may be helpful for you to insert an `<aui:fieldset>` like
     the following one in your configuration JSP file:
- 
+
         <aui:fieldset>
             <div class="display-template">
 
                 <%
                 TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(YourEntity.class.getName());
                 %>
-        
+
                 <liferay-ui:ddm-template-selector
                     classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
                     displayStyle="<%= displayStyle %>"
@@ -131,16 +131,16 @@ exposing the ADT functionality to users. Let's walk through these steps:
     `YourEntity` class. Then, the `<liferay-ui:ddm-template-selector>` tag
     specifies the Display Template drop-down menu to be used in the portlet's
     Configuration menu.
-    
+
     As an example JSP, see
-    [`configuration.jsp`](https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/code/wc/impl-adts/end/event-listing-portlet/docroot/html/locationlisting/configuration.jsp). 
+    [`configuration.jsp`](https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/code/wc/impl-adts/end/event-listing-portlet/docroot/html/locationlisting/configuration.jsp).
 
 5.  You're almost finished, but you still have to extend your view code to
     render your portlet with the selected ADT. Here is where you decide exactly
     which part of your view will be rendered by the ADT and what will be
     available in the template context.
 
-    First, initialize the Java variables needed for the ADT: 
+    First, initialize the Java variables needed for the ADT:
 
         <%
         String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", StringPool.BLANK));
@@ -150,14 +150,14 @@ exposing the ADT functionality to users. Let's walk through these steps:
         %>
 
     Next, you can test if the ADT is configured, grab the entities to be
-    rendered, and render them using the ADT. 
+    rendered, and render them using the ADT.
 
     Here's some example code that demonstrates implementing this:
-		
+
 		<c:choose>
 			<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
 				<% List<YourEntity> entities = YourEntity.LocalServiceUtil.getLocationsByGroupId(scopeGroupId); %>
-		
+
 				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, entities) %>
 			</c:when>
 			<c:otherwise>
@@ -167,8 +167,8 @@ exposing the ADT functionality to users. Let's walk through these steps:
             </c:otherwise>
         </c:choose>
 
-    In this step, we initialized variables dealing with the display settings 
-    (`displayStyle`, `displayStyleGroupId`, and `portletDisplayDDMTemplateId`), 
+    In this step, we initialized variables dealing with the display settings
+    (`displayStyle`, `displayStyleGroupId`, and `portletDisplayDDMTemplateId`),
     and then used conditional tags to choose between rendering the ADT, or
     displaying the entities some other way. If the
     `portletDisplayDDMTemplateId` exists, the entity list is initialized and
@@ -185,7 +185,7 @@ the display of your portlet. You can experiment by adding your own custom ADT.
    Templates*. Then select *Add* &rarr; *Your Template*. Give your ADT a name
    and insert FreeMarker (like the following code) or Velocity code into the
    template editor, and click *Save*:
-   
+
         <#if entries?has_content>
             Quick List:
             <ul>
@@ -200,7 +200,7 @@ the display of your portlet. You can experiment by adding your own custom ADT.
    *Save*.
 
 ![Figure 2: The example Quick List template displays entities in a bullet list format.](../../images/quick-list-template.png)
-    
+
 Once your script is uploaded into the portal and saved, users with the specified
 roles can select the template when they're configuring the display settings of
 your portlet on a page. You can visit the
@@ -218,18 +218,18 @@ Next, we'll provide some recommendations for using ADTs in Liferay Portal.
 You've harnessed a lot of power by learning to leverage the ADT API. Be
 careful, for with great power, comes great responsibility! To that end, let's
 talk about some practices you can use to to optimize your portlet's performance
-and security. 
- 
+and security.
+
 First let's talk about security. You may want to hide some classes or packages
 from the template context, to limit the operations that ADTs can perform on
 your portal. Liferay provides some portal properties to define the restricted
 classes, packages, and variables. You can override the following portal
 properties via the `portal-ext.properties` file.
 
-    freemarker.engine.restricted.classes 
+    freemarker.engine.restricted.classes
     freemarker.engine.restricted.packages
     freemarker.engine.restricted.variables
-    velocity.engine.restricted.classes 
+    velocity.engine.restricted.classes
     velocity.engine.restricted.packages
     velocity.engine.restricted.variables
 
@@ -239,7 +239,7 @@ values assigned to the `freemarker.engine.restricted.variables` and
 to the classes, packages, and variables restricted by default by
 `portal.properties`. Descriptions of Liferay Portal's FreeMarker engine and
 Velocity engine properties are available on
-[docs.liferay.com](http://docs.liferay.com/portal/6.2/propertiesdoc/portal.properties.html). 
+[docs.liferay.com](http://docs.liferay.com/portal/6.2/propertiesdoc/portal.properties.html).
 
 Application Display Templates introduce additional processing tasks when your
 portlet is rendered. To minimize negative effects on performance, make your
@@ -267,9 +267,9 @@ of "Using Liferay Portal", once we have a section on ADTs that we can point to.
 
 Finally, don't forget to run performance tests and tune the template cache
 options by overriding the following portal properties in your
-`portal-ext.properties` file: 
+`portal-ext.properties` file:
 
-    freemarker.engine.resource.modification.check.interval 
+    freemarker.engine.resource.modification.check.interval
     velocity.engine.resource.modification.check.interval
 
 The cool thing about ADTs is the power they provide to your Liferay portlets,
@@ -288,4 +288,3 @@ performance.
 [Localization](/develop/tutorials/-/knowledge_base/6-2/localization)
 
 [OpenSocial Gadgets](/develop/tutorials/-/knowledge_base/6-2/opensocial-gadgets)
-

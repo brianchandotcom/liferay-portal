@@ -100,8 +100,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 						"backUrl", backURL
 					).put(
 						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
-					).put(	
-						"mappedFields", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
 					).put(
 						"formImportURL",
 						ResourceURLBuilder.createResourceURL(
@@ -122,6 +120,8 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 						).setParameter(
 							"template", true
 						).buildString()
+					).put(
+						"mappedFields", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
 					).build()
 				%>'
 			/>

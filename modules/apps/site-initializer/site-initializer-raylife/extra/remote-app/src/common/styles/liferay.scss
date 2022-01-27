@@ -1,6 +1,6 @@
-@media screen and (max-width: 768px) {
-	@import 'variables';
+@import 'variables';
 
+@media screen and (max-width: $breakpoint-phone) {
 	section#content.raylife-mobile {
 		background-color: $color-brand-primary-darken-5;
 	}

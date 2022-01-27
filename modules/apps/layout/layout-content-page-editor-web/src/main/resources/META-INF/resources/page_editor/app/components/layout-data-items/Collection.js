@@ -123,7 +123,9 @@ const Grid = ({
 								<ColumnContext
 									collectionConfig={collectionConfig}
 									collectionId={collectionId}
-									collectionItem={collection.items[index]}
+									collectionItem={
+										collection.items[index] ?? {}
+									}
 									customCollectionSelectorURL={
 										customCollectionSelectorURL
 									}
@@ -184,10 +186,7 @@ const Collection = React.memo(
 		const emptyCollection = useMemo(
 			() => ({
 				fakeCollection: true,
-				items: Array.from(
-					Array(collectionConfig.numberOfItems || 1),
-					() => ({})
-				),
+				items: {length: collectionConfig.numberOfItems || 1},
 				length: collectionConfig.numberOfItems || 1,
 				totalNumberOfItems: collectionConfig.numberOfItems || 1,
 			}),

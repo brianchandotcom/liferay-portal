@@ -91,6 +91,7 @@ const Roles = () => {
 					</label>
 
 					<ClayAutocomplete.Input
+						autoComplete="off"
 						id="role-name"
 						onChange={(event) => handleInputChange(event)}
 						onFocus={() => handleInputFocus()}

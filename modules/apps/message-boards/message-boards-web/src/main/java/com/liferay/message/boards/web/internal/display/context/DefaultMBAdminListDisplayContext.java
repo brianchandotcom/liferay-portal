@@ -167,11 +167,15 @@ public class DefaultMBAdminListDisplayContext
 
 			Hits hits = indexer.search(searchContext);
 
-			searchContainer.setResults(
-				SearchResultUtil.getSearchResults(
-					hits, _httpServletRequest.getLocale()));
-
-			searchContainer.setTotal(hits.getLength());
+			try {
+				searchContainer.setResultsAndTotal(
+					() -> SearchResultUtil.getSearchResults(
+						hits, _httpServletRequest.getLocale()),
+					hits.getLength());
+			}
+			catch (Throwable throwable) {
+				throw new PortalException(throwable);
+			}
 		}
 		else {
 			String entriesNavigation = ParamUtil.getString(
@@ -195,14 +199,18 @@ public class DefaultMBAdminListDisplayContext
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBCategoryServiceUtil.getCategoriesAndThreadsCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
-				searchContainer.setResults(
-					MBCategoryServiceUtil.getCategoriesAndThreads(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
+				try {
+					searchContainer.setResultsAndTotal(
+						() -> MBCategoryServiceUtil.getCategoriesAndThreads(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition),
+						MBCategoryServiceUtil.getCategoriesAndThreadsCount(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition));
+				}
+				catch (Throwable throwable) {
+					throw new PortalException(throwable);
+				}
 			}
 			else if (Objects.equals(entriesNavigation, "threads")) {
 				int status = WorkflowConstants.STATUS_APPROVED;
@@ -223,14 +231,18 @@ public class DefaultMBAdminListDisplayContext
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBThreadServiceUtil.getThreadsCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
-				searchContainer.setResults(
-					MBThreadServiceUtil.getThreads(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
+				try {
+					searchContainer.setResultsAndTotal(
+						() -> MBThreadServiceUtil.getThreads(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition),
+						MBThreadServiceUtil.getThreadsCount(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition));
+				}
+				catch (Throwable throwable) {
+					throw new PortalException(throwable);
+				}
 			}
 			else if (Objects.equals(entriesNavigation, "categories")) {
 				int status = WorkflowConstants.STATUS_APPROVED;
@@ -251,14 +263,18 @@ public class DefaultMBAdminListDisplayContext
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBCategoryServiceUtil.getCategoriesCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
-				searchContainer.setResults(
-					MBCategoryServiceUtil.getCategories(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
+				try {
+					searchContainer.setResultsAndTotal(
+						() -> MBCategoryServiceUtil.getCategories(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition),
+						MBCategoryServiceUtil.getCategoriesCount(
+							themeDisplay.getScopeGroupId(), _categoryId,
+							queryDefinition));
+				}
+				catch (Throwable throwable) {
+					throw new PortalException(throwable);
+				}
 			}
 		}
 	}

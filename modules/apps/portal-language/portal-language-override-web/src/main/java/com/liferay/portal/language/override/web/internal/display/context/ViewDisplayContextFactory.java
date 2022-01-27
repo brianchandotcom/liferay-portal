@@ -290,8 +290,6 @@ public class ViewDisplayContextFactory {
 			}
 		}
 
-		searchContainer.setTotal(languageItemDisplays.size());
-
 		// Sorting
 
 		Comparator<LanguageItemDisplay> comparator = Comparator.comparing(
@@ -309,8 +307,9 @@ public class ViewDisplayContextFactory {
 			searchContainer.getStart(), searchContainer.getEnd(),
 			searchContainer.getTotal());
 
-		searchContainer.setResults(
-			languageItemDisplays.subList(startAndEnd[0], startAndEnd[1]));
+		searchContainer.setResultsAndTotal(
+			() -> languageItemDisplays.subList(startAndEnd[0], startAndEnd[1]),
+			languageItemDisplays.size());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

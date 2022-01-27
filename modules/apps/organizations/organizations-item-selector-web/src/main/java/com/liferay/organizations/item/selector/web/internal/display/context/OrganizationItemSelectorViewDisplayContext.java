@@ -153,11 +153,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 				SortFactoryUtil.getSort(
 					Organization.class, getOrderByCol(), getOrderByType()));
 
-		_searchContainer.setTotal(
-			organizationBaseModelSearchResult.getLength());
-
-		_searchContainer.setResults(
-			organizationBaseModelSearchResult.getBaseModels());
+		_searchContainer.setResultsAndTotal(organizationBaseModelSearchResult);
 
 		return _searchContainer;
 	}

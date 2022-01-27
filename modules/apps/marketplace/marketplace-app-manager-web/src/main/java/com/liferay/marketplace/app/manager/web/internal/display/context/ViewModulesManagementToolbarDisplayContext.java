@@ -146,18 +146,12 @@ public class ViewModulesManagementToolbarDisplayContext
 		bundles = ListUtil.sort(
 			bundles, new BundleComparator(getOrderByType()));
 
-		int end = searchContainer.getEnd();
-
-		if (end > bundles.size()) {
-			end = bundles.size();
-		}
-
 		List<Object> results = new ArrayList<>(bundles);
 
-		searchContainer.setResults(
-			results.subList(searchContainer.getStart(), end));
-
-		searchContainer.setTotal(bundles.size());
+		searchContainer.setResultsAndTotal(
+			() -> results.subList(
+				searchContainer.getStart(), searchContainer.getResultEnd()),
+			bundles.size());
 
 		_searchContainer = searchContainer;
 

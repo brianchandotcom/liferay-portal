@@ -252,8 +252,8 @@ public class SelectUsersDisplayContext {
 				}
 			});
 
-		userSearch.setResults(users);
-		userSearch.setTotal(
+		userSearch.setResultsAndTotal(
+			() -> users,
 			UserLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams));

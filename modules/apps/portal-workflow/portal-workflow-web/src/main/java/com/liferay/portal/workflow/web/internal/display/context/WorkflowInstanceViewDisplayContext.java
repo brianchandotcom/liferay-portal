@@ -274,9 +274,9 @@ public class WorkflowInstanceViewDisplayContext
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator());
 
-		_searchContainer.setResults(
-			workflowModelSearchResult.getWorkflowModels());
-		_searchContainer.setTotal(workflowModelSearchResult.getLength());
+		_searchContainer.setResultsAndTotal(
+			workflowModelSearchResult::getWorkflowModels,
+			workflowModelSearchResult.getLength());
 
 		setSearchContainerEmptyResultsMessage(_searchContainer);
 

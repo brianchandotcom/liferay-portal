@@ -153,19 +153,16 @@ public class RoleItemSelectorView
 
 		searchTerms.setType(type);
 
-		List<Role> results = _roleService.search(
-			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
-			searchContainer.getStart(), searchContainer.getEnd(),
-			searchContainer.getOrderByComparator());
-
-		int total = _roleService.searchCount(
-			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
-
-		searchContainer.setTotal(total);
-
-		searchContainer.setResults(results);
+		searchContainer.setResultsAndTotal(
+			() -> _roleService.search(
+				CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()),
+			_roleService.searchCount(
+				CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getTypesObj(),
+				new LinkedHashMap<String, Object>()));
 
 		return searchContainer;
 	}

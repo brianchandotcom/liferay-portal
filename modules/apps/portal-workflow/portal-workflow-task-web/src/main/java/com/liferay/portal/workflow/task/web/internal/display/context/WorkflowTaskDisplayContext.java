@@ -632,9 +632,9 @@ public class WorkflowTaskDisplayContext {
 			_getWorkflowModelSearchResult(
 				_workflowTaskSearch.getDisplayTerms(), searchByUserRoles);
 
-		_workflowTaskSearch.setResults(
-			workflowModelSearchResult.getWorkflowModels());
-		_workflowTaskSearch.setTotal(workflowModelSearchResult.getLength());
+		_workflowTaskSearch.setResultsAndTotal(
+			workflowModelSearchResult::getWorkflowModels,
+			workflowModelSearchResult.getLength());
 
 		_setWorkflowTaskSearchEmptyResultsMessage(
 			_workflowTaskSearch, searchByUserRoles, _getCompleted());

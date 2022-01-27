@@ -335,13 +335,17 @@ public class WorkflowDefinitionLinkDisplayContext {
 				searchTerms.getKeywords(), false);
 		}
 
-		searchContainer.setResults(
-			ListUtil.subList(
+		List<WorkflowDefinitionLinkSearchEntry>
+			filteredworkflowDefinitionLinkSearchEntries =
+				workflowDefinitionLinkSearchEntries;
+
+		searchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
 				ListUtil.sort(
-					workflowDefinitionLinkSearchEntries,
+					filteredworkflowDefinitionLinkSearchEntries,
 					searchContainer.getOrderByComparator()),
-				searchContainer.getStart(), searchContainer.getEnd()));
-		searchContainer.setTotal(workflowDefinitionLinkSearchEntries.size());
+				searchContainer.getStart(), searchContainer.getEnd()),
+			filteredworkflowDefinitionLinkSearchEntries.size());
 
 		return searchContainer;
 	}

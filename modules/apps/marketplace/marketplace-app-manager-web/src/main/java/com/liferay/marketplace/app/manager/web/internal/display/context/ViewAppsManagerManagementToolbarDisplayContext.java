@@ -184,26 +184,19 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 			category = StringPool.BLANK;
 		}
 
-		List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(
-			BundleManagerUtil.getBundles(), category,
-			BundleStateConstants.getState(getState()),
-			liferayPortletRequest.getLocale());
+		List<AppDisplay> appDisplays = ListUtil.sort(
+			AppDisplayFactoryUtil.getAppDisplays(
+				BundleManagerUtil.getBundles(), category,
+				BundleStateConstants.getState(getState()),
+				liferayPortletRequest.getLocale()),
+			new AppDisplayComparator(getOrderByType()));
 
-		appDisplays = ListUtil.sort(
-			appDisplays, new AppDisplayComparator(getOrderByType()));
-
-		int end = searchContainer.getEnd();
-
-		if (end > appDisplays.size()) {
-			end = appDisplays.size();
-		}
-
-		List<Object> results = new ArrayList<>(appDisplays);
-
-		searchContainer.setResults(
-			results.subList(searchContainer.getStart(), end));
-
-		searchContainer.setTotal(appDisplays.size());
+		searchContainer.setResultsAndTotal(
+			() -> new ArrayList<>(
+				appDisplays.subList(
+					searchContainer.getStart(),
+					searchContainer.getResultEnd())),
+			appDisplays.size());
 
 		return searchContainer;
 	}

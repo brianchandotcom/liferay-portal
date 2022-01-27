@@ -336,8 +336,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 			portletURL, headerNames, emptyResultsMessage, cssClass);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
-		searchContainer.setResults(documents);
-		searchContainer.setTotal(totalHits);
+		searchContainer.setResultsAndTotal(() -> documents, totalHits);
 
 		return searchContainer;
 	}

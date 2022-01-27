@@ -186,17 +186,16 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 		PasswordPolicyDisplayTerms searchTerms =
 			(PasswordPolicyDisplayTerms)passwordPolicySearch.getSearchTerms();
 
-		passwordPolicySearch.setResults(
-			PasswordPolicyServiceUtil.search(
+		passwordPolicySearch.setResultsAndTotal(
+			() -> PasswordPolicyServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				passwordPolicySearch.getStart(), passwordPolicySearch.getEnd(),
-				passwordPolicySearch.getOrderByComparator()));
+				passwordPolicySearch.getOrderByComparator()),
+			PasswordPolicyServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords()));
 
 		passwordPolicySearch.setRowChecker(
 			new PasswordPolicyChecker(_renderResponse));
-		passwordPolicySearch.setTotal(
-			PasswordPolicyServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords()));
 
 		_passwordPolicySearch = passwordPolicySearch;
 

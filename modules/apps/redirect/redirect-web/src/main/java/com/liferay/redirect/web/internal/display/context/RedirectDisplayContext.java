@@ -272,11 +272,10 @@ public class RedirectDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		redirectEntrySearch.setResults(
-			_redirectEntryService.getRedirectEntries(
+		redirectEntrySearch.setResultsAndTotal(
+			() -> _redirectEntryService.getRedirectEntries(
 				themeDisplay.getScopeGroupId(), _redirectEntrySearch.getStart(),
-				_redirectEntrySearch.getEnd(), _getOrderByComparator()));
-		redirectEntrySearch.setTotal(
+				_redirectEntrySearch.getEnd(), _getOrderByComparator()),
 			_redirectEntryService.getRedirectEntriesCount(
 				themeDisplay.getScopeGroupId()));
 	}
@@ -305,16 +304,15 @@ public class RedirectDisplayContext {
 
 		Stream<SearchResult> stream = searchResults.stream();
 
-		redirectEntrySearch.setResults(
-			stream.map(
+		redirectEntrySearch.setResultsAndTotal(
+			() -> stream.map(
 				SearchResult::getClassPK
 			).map(
 				_redirectEntryLocalService::fetchRedirectEntry
 			).collect(
 				Collectors.toList()
-			));
-
-		redirectEntrySearch.setTotal(hits.getLength());
+			),
+			hits.getLength());
 	}
 
 	private final DateFormat _expirationDateFormat;

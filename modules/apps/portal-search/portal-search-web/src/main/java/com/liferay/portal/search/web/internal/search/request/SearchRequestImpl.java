@@ -131,10 +131,8 @@ public class SearchRequestImpl {
 		searchContainer.setSearch(true);
 
 		searchResponse.withHits(
-			hits -> {
-				searchContainer.setResults(hits.toList());
-				searchContainer.setTotal(hits.getLength());
-			});
+			hits -> searchContainer.setResultsAndTotal(
+				hits::toList, hits.getLength()));
 	}
 
 	private final SearchContainerBuilder _searchContainerBuilder;

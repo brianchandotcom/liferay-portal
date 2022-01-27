@@ -262,29 +262,29 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			List<ObjectEntry> objectEntries = null;
+			searchContainer.setResultsAndTotal(
+				() -> {
+					List<ItemSelectorReturnType>
+						desiredItemSelectorReturnTypes =
+							_infoItemItemSelectorCriterion.
+								getDesiredItemSelectorReturnTypes();
 
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-				_infoItemItemSelectorCriterion.
-					getDesiredItemSelectorReturnTypes();
+					if (desiredItemSelectorReturnTypes.get(0) instanceof
+							InfoItemItemSelectorReturnType) {
 
-			if (desiredItemSelectorReturnTypes.get(0) instanceof
-					InfoItemItemSelectorReturnType) {
+						return _objectEntryLocalService.getObjectEntries(
+							_getGroupId(),
+							_objectDefinition.getObjectDefinitionId(),
+							WorkflowConstants.STATUS_APPROVED,
+							searchContainer.getStart(),
+							searchContainer.getEnd());
+					}
 
-				objectEntries = _objectEntryLocalService.getObjectEntries(
-					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
-					WorkflowConstants.STATUS_APPROVED,
-					searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				objectEntries = _objectEntryLocalService.getObjectEntries(
-					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
-					searchContainer.getStart(), searchContainer.getEnd());
-			}
-
-			searchContainer.setResults(objectEntries);
-
-			searchContainer.setTotal(
+					return _objectEntryLocalService.getObjectEntries(
+						_getGroupId(),
+						_objectDefinition.getObjectDefinitionId(),
+						searchContainer.getStart(), searchContainer.getEnd());
+				},
 				_objectEntryLocalService.getObjectEntriesCount());
 
 			return searchContainer;

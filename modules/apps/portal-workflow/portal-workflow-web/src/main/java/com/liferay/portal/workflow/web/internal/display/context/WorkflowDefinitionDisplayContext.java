@@ -386,18 +386,24 @@ public class WorkflowDefinitionDisplayContext {
 				searchTerms.getKeywords(), status, false);
 		}
 
-		_workflowDefinitionSearch.setTotal(workflowDefinitions.size());
+		List<WorkflowDefinition> filteredWorkflowDefinitions =
+			workflowDefinitions;
 
-		if (workflowDefinitions.size() >
-				(_workflowDefinitionSearch.getEnd() -
-					_workflowDefinitionSearch.getStart())) {
+		_workflowDefinitionSearch.setResultsAndTotal(
+			() -> {
+				if (filteredWorkflowDefinitions.size() >
+						(_workflowDefinitionSearch.getEnd() -
+							_workflowDefinitionSearch.getStart())) {
 
-			workflowDefinitions = ListUtil.subList(
-				workflowDefinitions, _workflowDefinitionSearch.getStart(),
-				_workflowDefinitionSearch.getEnd());
-		}
+					return ListUtil.subList(
+						filteredWorkflowDefinitions,
+						_workflowDefinitionSearch.getStart(),
+						_workflowDefinitionSearch.getEnd());
+				}
 
-		_workflowDefinitionSearch.setResults(workflowDefinitions);
+				return filteredWorkflowDefinitions;
+			},
+			filteredWorkflowDefinitions.size());
 
 		return _workflowDefinitionSearch;
 	}

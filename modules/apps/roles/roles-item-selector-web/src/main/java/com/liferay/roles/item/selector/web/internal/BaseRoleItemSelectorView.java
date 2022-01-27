@@ -158,19 +158,16 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 
 		searchTerms.setType(type);
 
-		List<Role> results = roleService.search(
-			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
-			searchContainer.getStart(), searchContainer.getEnd(),
-			searchContainer.getOrderByComparator());
-
-		int total = roleService.searchCount(
-			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
-
-		searchContainer.setTotal(total);
-
-		searchContainer.setResults(results);
+		searchContainer.setResultsAndTotal(
+			() -> roleService.search(
+				CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()),
+			roleService.searchCount(
+				CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getTypesObj(),
+				new LinkedHashMap<String, Object>()));
 
 		return searchContainer;
 	}

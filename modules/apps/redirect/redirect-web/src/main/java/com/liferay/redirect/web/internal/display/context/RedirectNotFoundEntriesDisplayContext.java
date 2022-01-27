@@ -235,16 +235,15 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		Stream<SearchResult> stream = searchResults.stream();
 
-		redirectNotFoundEntrySearch.setResults(
-			stream.map(
+		redirectNotFoundEntrySearch.setResultsAndTotal(
+			() -> stream.map(
 				SearchResult::getClassPK
 			).map(
 				_redirectNotFoundEntryLocalService::fetchRedirectNotFoundEntry
 			).collect(
 				Collectors.toList()
-			));
-
-		redirectNotFoundEntrySearch.setTotal(hits.getLength());
+			),
+			hits.getLength());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

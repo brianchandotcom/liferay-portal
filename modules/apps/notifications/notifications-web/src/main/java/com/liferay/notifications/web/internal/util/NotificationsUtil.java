@@ -53,37 +53,37 @@ public class NotificationsUtil {
 				orderByType.equals("asc"));
 
 		if (navigation.equals("all")) {
-			searchContainer.setTotal(
+			searchContainer.setResultsAndTotal(
+				() ->
+					UserNotificationEventLocalServiceUtil.
+						getDeliveredUserNotificationEvents(
+							userId, _DELIVERY_TYPE, true, actionRequired,
+							searchContainer.getStart(),
+							searchContainer.getEnd(), orderByComparator),
 				UserNotificationEventLocalServiceUtil.
 					getDeliveredUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired));
-
-			searchContainer.setResults(
-				UserNotificationEventLocalServiceUtil.
-					getDeliveredUserNotificationEvents(
-						userId, _DELIVERY_TYPE, true, actionRequired,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator));
 		}
 		else {
-			boolean archived = false;
+			boolean readNavigation = false;
 
 			if (navigation.equals("read")) {
-				archived = true;
+				readNavigation = true;
 			}
 
-			searchContainer.setTotal(
+			boolean archived = readNavigation;
+
+			searchContainer.setResultsAndTotal(
+				() ->
+					UserNotificationEventLocalServiceUtil.
+						getArchivedUserNotificationEvents(
+							userId, _DELIVERY_TYPE, true, actionRequired,
+							archived, searchContainer.getStart(),
+							searchContainer.getEnd(), orderByComparator),
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired,
 						archived));
-
-			searchContainer.setResults(
-				UserNotificationEventLocalServiceUtil.
-					getArchivedUserNotificationEvents(
-						userId, _DELIVERY_TYPE, true, actionRequired, archived,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator));
 		}
 	}
 

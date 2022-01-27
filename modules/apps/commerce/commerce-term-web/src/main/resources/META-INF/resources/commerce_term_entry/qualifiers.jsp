@@ -17,17 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceTermEntryQualifiersDisplayContext
-	commerceTermEntryQualifiersDisplayContext = (CommerceTermEntryQualifiersDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceTermEntryQualifiersDisplayContext commerceTermEntryQualifiersDisplayContext = (CommerceTermEntryQualifiersDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTermEntry commerceTermEntry = commerceTermEntryQualifiersDisplayContext.getCommerceTermEntry();
 long commerceTermEntryId = commerceTermEntryQualifiersDisplayContext.getCommerceTermEntryId();
 
-
 String orderTypeQualifiers = ParamUtil.getString(request, "orderTypeQualifiers", commerceTermEntryQualifiersDisplayContext.getActiveOrderTypeEligibility());
 
-boolean hasPermission = commerceTermEntryQualifiersDisplayContext.hasPermission(
-	ActionKeys.UPDATE);
+boolean hasPermission = commerceTermEntryQualifiersDisplayContext.hasPermission(ActionKeys.UPDATE);
 %>
 
 <portlet:actionURL name="/commerce_term_entry/edit_commerce_term_entry_qualifiers" var="editCommerceTermEntryQualifiersActionURL" />

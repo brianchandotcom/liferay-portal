@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Crescenzo Rega
+ * @author Alessio Antonio Rendina
  */
 public class CommerceTermEntryQualifiersDisplayContext
 	extends CommerceTermEntryDisplayContext {
@@ -57,8 +58,9 @@ public class CommerceTermEntryQualifiersDisplayContext
 
 	public String getActiveOrderTypeEligibility() throws PortalException {
 		long commerceOrderTypeCommerceTermEntryRelsCount =
-			_commerceTermEntryRelService.getCommerceOrderTypeCommerceTermEntryRelsCount(
-				 getCommerceTermEntryId(),null);
+			_commerceTermEntryRelService.
+				getCommerceOrderTypeCommerceTermEntryRelsCount(
+					getCommerceTermEntryId(), null);
 
 		if (commerceOrderTypeCommerceTermEntryRelsCount > 0) {
 			return "orderTypes";
@@ -96,34 +98,6 @@ public class CommerceTermEntryQualifiersDisplayContext
 
 	private List<ClayDataSetActionDropdownItem> _getClayDataSetActionTemplates(
 		String portletURL, boolean sidePanel) {
-
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
-
-		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
-			new ClayDataSetActionDropdownItem(
-				portletURL, "pencil", "edit",
-				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
-				null);
-
-		if (sidePanel) {
-			clayDataSetActionDropdownItem.setTarget("sidePanel");
-		}
-
-		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
-
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
-				null, "trash", "remove",
-				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete", "headless"));
-
-		return clayDataSetActionDropdownItems;
-	}
-
-	private List<ClayDataSetActionDropdownItem>
-		_getClayHeadlessDataSetActionTemplates(
-			String portletURL, boolean sidePanel) {
 
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();

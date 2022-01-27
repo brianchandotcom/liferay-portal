@@ -22,11 +22,11 @@
 			HashMapBuilder.<String, Object>put(
 				"datasetId", CommerceTermEntryClayDataSetDisplayNames.COMMERCE_TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
 			).put(
+				"rootPortletId", portletDisplay.getRootPortletId()
+			).put(
 				"termExternalReferenceCode", HtmlUtil.escapeJS(commerceTermEntry.getExternalReferenceCode())
 			).put(
 				"termId", commerceTermEntryId
-			).put(
-				"rootPortletId", portletDisplay.getRootPortletId()
 			).build()
 		%>'
 		module="js/commerce_order_types"

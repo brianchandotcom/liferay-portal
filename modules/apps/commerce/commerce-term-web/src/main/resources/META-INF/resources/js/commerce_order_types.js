@@ -18,18 +18,18 @@ import {UPDATE_DATASET_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefin
 
 export default function ({
 	datasetId,
+	rootPortletId,
 	termExternalReferenceCode,
 	termId,
-	rootPortletId,
 }) {
 	const termOrderTypesResource = ServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(orderType) {
 		const orderTypeData = {
-			termExternalReferenceCode,
-			termId,
 			orderTypeExternalReferenceCode: orderType.externalReferenceCode,
 			orderTypeId: orderType.id,
+			termExternalReferenceCode,
+			termId,
 		};
 
 		return termOrderTypesResource

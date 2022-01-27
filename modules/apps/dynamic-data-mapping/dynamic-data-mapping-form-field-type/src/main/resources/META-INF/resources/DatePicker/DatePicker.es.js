@@ -21,7 +21,7 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {createAutoCorrectedDatePipe} from './createAutoCorrectedDatePipe';
 
 const DIGIT_REGEX = /\d/;
-const PIPE_FORBIDDEN_ENDING_CHAR_REGEX = /[^\w]|[a]$/i;
+const PIPE_FORBIDDEN_ENDING_CHAR_REGEX = /[^\w]/i;
 const LETTER_REGEX = /[a-z]/i;
 const SERVER_DATE_FORMAT = 'YYYY-MM-DD';
 const SERVER_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
@@ -183,8 +183,11 @@ export default function DatePicker({
 						return `${format} dd`;
 					case 'mm':
 						return `${format} MM`;
-					case '':
+					case 'A':
+					case 'a':
 						return format;
+					case '':
+						return `${format} `;
 					default:
 						return `${format} ${item}`;
 				}

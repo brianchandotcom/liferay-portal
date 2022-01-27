@@ -162,6 +162,11 @@
 	text-transform: uppercase;
 }
 
+.public-site-navbar .navbar-logo {
+	height: 36px;
+	width: 120px;
+}
+
 @media only screen and (max-width: 991px) {
 	.public-site-navbar .public-site-navbar-divider,
 	.public-site-navbar .public-site-navbar-link,

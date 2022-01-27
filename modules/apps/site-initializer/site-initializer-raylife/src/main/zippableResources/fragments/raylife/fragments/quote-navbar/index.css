@@ -83,7 +83,7 @@
 	transition: var(--transition-value);
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767.98px) {
 	.quote-site-navbar #navbar-contact-phone,
 	.quote-site-navbar .public-site-navbar-divider,
 	.quote-site-navbar .public-site-navbar-link,
@@ -91,7 +91,7 @@
 	.quote-site-navbar .voice-chat-icon {
 		display: none;
 	}
-		
+
 	.quote-site-navbar .background-icon-close {
 		background: url('[resources:close_menu_white.svg]');
 		background-repeat: no-repeat;
@@ -100,7 +100,7 @@
 		transition: var(--transition-value);
 		width: 16px;
 	}
-	
+
 	.quote-site-navbar .background-icon-grid {
 		background: url('[resources:grid_icon_white.svg]');
 		background-repeat: no-repeat;
@@ -109,7 +109,7 @@
 		transition: var(--transition-value);
 		width: 16px;
 	}
-	
+
 	.quote-site-navbar .drop-content {
 		background-color: var(--color-brand-primary-darken-5);
 		border: 1px solid var(--color-neutral-0);
@@ -124,7 +124,7 @@
 		height: 36px;
 		width: 120px;
 	}
-	
+
 	.quote-site-navbar .navbar-brand {
 		max-width: auto !important;
 		padding-left: 0;

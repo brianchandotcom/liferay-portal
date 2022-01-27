@@ -16,7 +16,6 @@ import React, {useContext, useEffect} from 'react';
 import {useWatch} from 'react-hook-form';
 
 import {createExitAlert} from '../../../common/utils/exitAlert';
-import {getWebDavUrl} from '../../../common/utils/webdav';
 import Providers from '../Providers';
 import {FormLayout} from '../components/containers/Forms';
 import {Steps} from '../components/containers/Steps';
@@ -38,15 +37,6 @@ const adaptRaylifeLayout = (isMobile) => {
 			.querySelector('section#content')
 			?.setAttribute('class', 'raylife-mobile');
 	}
-
-	document
-		.querySelector('.quote-site-navbar .container img.navbar-logo')
-		?.setAttribute(
-			'src',
-			`${getWebDavUrl()}${
-				isMobile ? 'raylife_logo_mobile.svg' : 'raylife_logo.svg'
-			}`
-		);
 
 	document
 		.querySelector('.get-a-quote-structure .step-list')

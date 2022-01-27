@@ -20,6 +20,7 @@ import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException
 import com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.petra.string.StringBundler;
@@ -173,8 +174,12 @@ public class BatchPlannerPlanServiceTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertNotNull(unsupportedOperationException);
+		catch (RequiredBatchPlannerPlanException
+					requiredBatchPlannerPlanException) {
+
+			Assert.assertEquals(
+				"Batch planner plan is not a template",
+				requiredBatchPlannerPlanException.getMessage());
 		}
 	}
 

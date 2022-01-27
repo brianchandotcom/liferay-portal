@@ -19,6 +19,7 @@ import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException
 import com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanLocalServiceBaseImpl;
@@ -139,10 +140,8 @@ public class BatchPlannerPlanLocalServiceImpl
 			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 
 		if (!batchPlannerPlan.isTemplate()) {
-
-			// TODO Change this to RequiredBatchPlannerPlanException
-
-			throw new UnsupportedOperationException();
+			throw new RequiredBatchPlannerPlanException(
+				"Batch planner plan is not a template");
 		}
 
 		User user = userLocalService.getUser(userId);

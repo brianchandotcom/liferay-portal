@@ -5,9 +5,9 @@
 		],
 		"defaultSAPEntry": "true",
 		"enabled": "true",
-		"name": "TEST_API_GUEST_ACCESS",
+		"name": "TEST_SAP_ENTRY_1",
 		"title_i18n": {
-			"en-US": "Grant Guest access to Test site API"
+			"en-US": "Test SAP Entry 1"
 		}
 	}
 ]

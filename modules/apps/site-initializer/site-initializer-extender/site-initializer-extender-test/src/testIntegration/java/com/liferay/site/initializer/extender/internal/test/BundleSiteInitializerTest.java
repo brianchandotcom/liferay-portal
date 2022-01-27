@@ -841,7 +841,7 @@ public class BundleSiteInitializerTest {
 
 	private void _assertSapEntries(Group group) {
 		SAPEntry sapEntryLocalService = _sapEntryLocalService.fetchSAPEntry(
-			group.getCompanyId(), "TEST_API_GUEST_ACCESS");
+			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
 		Assert.assertNotNull(sapEntryLocalService);
 		Assert.assertEquals(

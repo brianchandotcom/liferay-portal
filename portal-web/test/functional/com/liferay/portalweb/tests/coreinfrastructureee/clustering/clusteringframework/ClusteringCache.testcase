@@ -43,15 +43,15 @@ definition {
 
 		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
 
-		Clustering.viewSessionData(sessionContent = "No session data exists, generating a new one with random string:");
+		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
 
 		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
-		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TEXT");
+		AssertElementPresent(locator1 = "ClusterSamplePortlet#STORED_DATA");
 
-		var sessionData = selenium.getText("Portlet#SPECIFIC_TEXT");
+		var sessionData = selenium.getText("ClusterSamplePortlet#STORED_DATA");
 
 		echo("${sessionData}");
 
@@ -75,7 +75,7 @@ definition {
 			url = "http://localhost:9080");
 
 		AssertTextEquals(
-			locator1 = "Portlet#SPECIFIC_TEXT",
+			locator1 = "ClusterSamplePortlet#STORED_DATA",
 			value1 = "${sessionData}");
 
 		for (var serverPort : list "8080,9080") {
@@ -113,7 +113,7 @@ definition {
 
 		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
 
-		Clustering.viewSessionData(sessionContent = "No session data exists, generating a new one with random string:");
+		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
 
 		Clustering.deployClusteringModule(nodePort = "9080");
 
@@ -121,9 +121,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
-		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TEXT");
+		AssertElementPresent(locator1 = "ClusterSamplePortlet#STORED_DATA");
 
-		var sessionData = selenium.getText("Portlet#SPECIFIC_TEXT");
+		var sessionData = selenium.getText("ClusterSamplePortlet#STORED_DATA");
 
 		echo("${sessionData}");
 
@@ -132,7 +132,7 @@ definition {
 			url = "http://localhost:9080");
 
 		AssertTextEquals(
-			locator1 = "Portlet#SPECIFIC_TEXT",
+			locator1 = "ClusterSamplePortlet#STORED_DATA",
 			value1 = "${sessionData}");
 
 		for (var serverPort : list "8080,9080") {

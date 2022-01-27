@@ -247,14 +247,6 @@ definition {
 		}
 	}
 
-	macro viewSessionData {
-		var key_sessionContent = "${sessionContent}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#LOADED_1",
-			value1 = "${sessionContent}");
-	}
-
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	macro viewTextNotPresentOnSpecificNode {
 		if ("${nodePort}" == "8080") {

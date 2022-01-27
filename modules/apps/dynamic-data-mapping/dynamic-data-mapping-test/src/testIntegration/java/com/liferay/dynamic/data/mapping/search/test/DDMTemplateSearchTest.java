@@ -173,8 +173,8 @@ public class DDMTemplateSearchTest {
 			PortalUtil.getClassNameId(JournalArticle.class), null, nameMap,
 			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			TemplateConstants.LANG_TYPE_VM,
-			DDMTemplateTestUtil.getSampleTemplateXSL(), false, false, null,
-			null, serviceContext);
+			DDMTemplateTestUtil.getSampleTemplateVM(), false, false, null, null,
+			serviceContext);
 	}
 
 	protected void assertSearch() throws Exception {

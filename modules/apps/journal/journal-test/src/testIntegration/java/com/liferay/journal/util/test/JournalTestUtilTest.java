@@ -178,7 +178,7 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testAddDDMTemplateToDDMStructureWithXSLAndLanguage()
+	public void testAddDDMTemplateToDDMStructureWithLanguage()
 		throws Exception {
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
@@ -274,9 +274,9 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testGetSampleTemplateXSL() {
+	public void testGetSampleTemplateVM() {
 		Assert.assertEquals(
-			"$name.getData()", JournalTestUtil.getSampleTemplateXSL());
+			"$name.getData()", JournalTestUtil.getSampleTemplateVM());
 	}
 
 	@Test

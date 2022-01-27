@@ -452,8 +452,7 @@ public class ContentDashboardAdminPortletTest {
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
-			JournalTestUtil.getSampleTemplateXSL(),
-			LocaleUtil.getSiteDefault());
+			JournalTestUtil.getSampleTemplateVM(), LocaleUtil.getSiteDefault());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -900,8 +899,7 @@ public class ContentDashboardAdminPortletTest {
 			_group.getGroupId(), ddmStructure1.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
-			JournalTestUtil.getSampleTemplateXSL(),
-			LocaleUtil.getSiteDefault());
+			JournalTestUtil.getSampleTemplateVM(), LocaleUtil.getSiteDefault());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

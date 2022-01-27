@@ -831,7 +831,7 @@ public class JournalTestUtil {
 		return "${name.getData()}";
 	}
 
-	public static String getSampleTemplateXSL() {
+	public static String getSampleTemplateVM() {
 		return "$name.getData()";
 	}
 

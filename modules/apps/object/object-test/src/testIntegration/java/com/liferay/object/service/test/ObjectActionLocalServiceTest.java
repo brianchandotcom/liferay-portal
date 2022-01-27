@@ -185,12 +185,13 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status",
+				"Object/code"));
 		Assert.assertEquals(
 			"John",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertNull(
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry"));
@@ -218,17 +219,18 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status",
+				"Object/code"));
 		Assert.assertEquals(
 			"John",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));
+				"Object/status", "Object/code"));
 
 		Assert.assertEquals("onafterupdate", options.getHeader("x-api-key"));
 		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
@@ -266,22 +268,23 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status",
+				"Object/code"));
 		Assert.assertEquals(
 			"João",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));
+				"Object/status", "Object/code"));
 		Assert.assertEquals(
 			"John",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"JSONObject/values", "Object/firstName"));
+				"JSONObject/properties", "Object/firstName"));
 
 		Assert.assertEquals("onafterupdate", options.getHeader("x-api-key"));
 		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
@@ -314,12 +317,13 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status",
+				"Object/code"));
 		Assert.assertEquals(
 			"João",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertNull(
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry"));

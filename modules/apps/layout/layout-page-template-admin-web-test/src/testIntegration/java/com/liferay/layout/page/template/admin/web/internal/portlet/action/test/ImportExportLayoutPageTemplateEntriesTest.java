@@ -258,6 +258,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
+		).put(
+			"SITE_KEY", String.valueOf(_group.getGroupKey())
 		).build();
 
 		File expectedFile = _generateZipFile(
@@ -280,6 +282,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"FRIENDLY_URL", layout.getFriendlyURL()
 		).put(
 			"PLID", String.valueOf(layout.getPlid())
+		).put(
+			"SITE_KEY", String.valueOf(_group.getGroupKey())
 		).build();
 
 		File expectedFile = _generateZipFile(

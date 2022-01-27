@@ -163,7 +163,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 					Policy.class);
 				taskItemDelegateName =
 					batchPlannerPlan.getTaskItemDelegateName();
-				template = batchPlannerPlan.getTemplate();
+				template = batchPlannerPlan.isTemplate();
 			}
 		};
 	}

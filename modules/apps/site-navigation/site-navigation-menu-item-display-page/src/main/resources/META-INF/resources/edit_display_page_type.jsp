@@ -31,6 +31,8 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 					).put(
 						"defaultLanguageId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getDefaultLanguageId()
 					).put(
+						"hasDisplayPage", displayPageTypeSiteNavigationMenuTypeDisplayContext.hasDisplayPage()
+					).put(
 						"item",
 						HashMapBuilder.<String, Object>put(
 							"classNameId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassNameId()

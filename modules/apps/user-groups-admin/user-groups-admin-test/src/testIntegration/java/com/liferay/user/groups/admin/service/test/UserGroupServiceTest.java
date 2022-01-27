@@ -16,10 +16,13 @@ package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -28,13 +31,16 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -63,6 +69,73 @@ public class UserGroupServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testAddOrUpdateUserGroupAddUserGroup() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		UserTestUtil.setUser(user);
+
+		_addResourcePermission(
+			PortletKeys.PORTAL, String.valueOf(TestPropsValues.getCompanyId()),
+			ActionKeys.ADD_USER_GROUP, user);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupService.addOrUpdateUserGroup(
+			externalReferenceCode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testAddOrUpdateUserGroupAddWithoutPermission()
+		throws Exception {
+
+		UserTestUtil.setUser(UserTestUtil.addUser());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupService.addOrUpdateUserGroup(
+			externalReferenceCode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+	}
+
+	@Test
+	public void testAddOrUpdateUserGroupUpdateUserGroup() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupLocalService.updateExternalReferenceCode(
+			_addUserGroupAdminUser(), externalReferenceCode);
+
+		User user = UserTestUtil.addUser();
+
+		UserTestUtil.setUser(user);
+
+		_addResourcePermission(
+			UserGroup.class.getName(),
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE,
+			user);
+
+		_userGroupService.addOrUpdateUserGroup(
+			externalReferenceCode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testAddOrUpdateUserGroupUpdateWithoutPermission()
+		throws Exception {
+
+		UserTestUtil.setUser(UserTestUtil.addUser());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupService.updateExternalReferenceCode(
+			_addUserGroupAdminUser(), externalReferenceCode);
+
+		_userGroupService.addOrUpdateUserGroup(
+			externalReferenceCode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+	}
 
 	@Test
 	public void testDatabaseSearchPermissionCheck() throws Exception {
@@ -161,12 +234,31 @@ public class UserGroupServiceTest {
 		_assertExpectedUserGroups(allUserGroups, "");
 	}
 
+	private void _addResourcePermission(
+			String resourceName, String primKey, String actionKey, User user)
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, resourceName, ResourceConstants.SCOPE_COMPANY, primKey,
+			actionKey);
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+	}
+
 	private UserGroup _addUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroups.add(userGroup);
 
 		return userGroup;
+	}
+
+	private UserGroup _addUserGroupAdminUser() throws Exception {
+		return _userGroupLocalService.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
 	private void _assertExpectedUserGroups(

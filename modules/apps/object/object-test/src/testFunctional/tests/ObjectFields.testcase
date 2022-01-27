@@ -25,7 +25,6 @@ definition {
 	@description = "LPS-142659 - Verify it is possible to create a Clob field"
 	@priority = "4"
 	test CanCreateClobField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -43,12 +42,11 @@ definition {
 			fieldLabel = "Custom Field",
 			fieldType = "Clob");
 
-		Refresh();	
+		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
 			fieldType = "Clob");
-
 	}
 
 }

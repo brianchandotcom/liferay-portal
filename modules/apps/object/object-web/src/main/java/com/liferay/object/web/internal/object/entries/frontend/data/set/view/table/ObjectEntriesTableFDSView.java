@@ -15,12 +15,12 @@
 package com.liferay.object.web.internal.object.entries.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
-import com.liferay.frontend.data.set.view.table.ClobFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.DateFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
+import com.liferay.frontend.data.set.view.table.StringFDSTableSchemaField;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -73,15 +73,17 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 			FDSTableSchemaField fdsTableSchemaField = null;
 
-			if (Objects.equals(objectField.getDBType(), "Clob")) {
-				ClobFDSTableSchemaField clobFDSTableSchemaField =
+			if (Objects.equals(objectField.getDBType(), "Clob") ||
+				Objects.equals(objectField.getDBType(), "String")) {
+
+				StringFDSTableSchemaField stringFDSTableSchemaField =
 					fdsTableSchemaBuilder.addFDSTableSchemaField(
-						ClobFDSTableSchemaField.class, fieldName,
+						StringFDSTableSchemaField.class, fieldName,
 						objectField.getLabel(locale, true));
 
-				clobFDSTableSchemaField.setTruncate(true);
+				stringFDSTableSchemaField.setTruncate(true);
 
-				fdsTableSchemaField = clobFDSTableSchemaField;
+				fdsTableSchemaField = stringFDSTableSchemaField;
 			}
 			else if (Objects.equals(objectField.getDBType(), "Date")) {
 				DateFDSTableSchemaField dateFDSTableSchemaField =

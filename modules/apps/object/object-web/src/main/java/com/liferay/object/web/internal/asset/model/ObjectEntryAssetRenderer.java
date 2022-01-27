@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
 
 /**
  * @author Feliphe Marinho
@@ -147,10 +149,10 @@ public class ObjectEntryAssetRenderer
 		httpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
 		httpServletRequest.setAttribute(
-			"objectEntryId", _objectEntry.getObjectEntryId());
-		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_objectEntryDisplayContextFactory.create(httpServletRequest, true));
+		httpServletRequest.setAttribute(
+			"objectEntryId", _objectEntry.getObjectEntryId());
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}

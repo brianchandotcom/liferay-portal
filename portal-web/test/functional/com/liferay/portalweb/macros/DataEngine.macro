@@ -1686,7 +1686,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		Pause(locator1 = "1000");
+		Pause(locator1 = "3000");
 
 		Button.clickSave();
 	}

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
@@ -46,6 +48,7 @@ import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Inácio Nery
@@ -167,15 +170,27 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 		Long newDDMStructureId = _getNewDDMStructureId(
 			oldDDMTemplate.getClassPK());
 
-		DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
-			oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
-			oldDDMTemplate.getClassNameId(), newDDMStructureId,
-			_KALEO_PROCESS_CLASS_NAME_ID, oldDDMTemplate.getNameMap(),
-			oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
-			oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
-			oldDDMTemplate.getScript(), serviceContext);
+		Locale oldLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		newDDMTemplateId = newDDMTemplate.getTemplateId();
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			oldDDMTemplate.getDefaultLanguageId());
+
+		LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+
+		try {
+			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
+				oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
+				oldDDMTemplate.getClassNameId(), newDDMStructureId,
+				_KALEO_PROCESS_CLASS_NAME_ID, oldDDMTemplate.getNameMap(),
+				oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
+				oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
+				oldDDMTemplate.getScript(), serviceContext);
+
+			newDDMTemplateId = newDDMTemplate.getTemplateId();
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(oldLocale);
+		}
 
 		_ddmTemplateMap.put(oldDDMTemplateId, newDDMTemplateId);
 

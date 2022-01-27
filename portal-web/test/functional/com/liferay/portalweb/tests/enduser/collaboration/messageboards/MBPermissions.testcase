@@ -640,7 +640,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		LexiconEntry.viewNoEntryMenuItem(
+		DMDocument.viewNoPermission(
 			menuItem = "Move to Recycle Bin",
 			rowEntry = "MB Category Name");
 	}
@@ -686,7 +686,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		LexiconEntry.viewNoEntryMenuItem(
+		DMDocument.viewNoPermission(
 			menuItem = "Move to Recycle Bin",
 			rowEntry = "Message Boards Thread");
 	}
@@ -788,7 +788,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		LexiconEntry.viewNoEntryMenuItem(
+		DMDocument.viewNoPermission(
 			menuItem = "Subscribe",
 			rowEntry = "Message Boards Thread");
 	}
@@ -834,7 +834,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		LexiconEntry.viewNoEntryMenuItem(
+		DMDocument.viewNoPermission(
 			menuItem = "Edit",
 			rowEntry = "Message Boards Thread");
 	}

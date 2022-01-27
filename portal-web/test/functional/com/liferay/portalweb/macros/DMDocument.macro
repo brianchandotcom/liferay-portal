@@ -1710,7 +1710,9 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCardTitle(card = "${dmDocumentTitle}");
+		Click(
+			key_card = "${dmDocumentTitle}",
+			locator1 = "Card#CARD_TITLE");
 	}
 
 	macro gotoMenuItemViaInfoPanel {
@@ -3058,6 +3060,14 @@ definition {
 				key_mgDocumentTitle = "${mgDocumentTitle}",
 				locator1 = "MediaGallery#IMAGE_TITLE");
 		}
+	}
+
+	macro viewNoPermission {
+		Click(
+			key_rowEntry = "${rowEntry}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "${menuItem}");
 	}
 
 	macro viewNoTagInfo {

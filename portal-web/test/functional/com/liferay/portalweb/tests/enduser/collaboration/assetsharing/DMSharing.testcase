@@ -248,7 +248,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		LexiconEntry.viewNoEntryMenuItem(
+		DMDocument.viewNoPermission(
 			menuItem = "Share",
 			rowEntry = "DM Document Title");
 	}

@@ -20,6 +20,8 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
+				"apiUrl", "/o/headless-commerce-admin-order/v1.0/terms?filter=type eq '" + CommerceTermEntryConstants.TYPE_PAYMENT_TERMS + "'"
+			).put(
 				"datasetId", CommercePaymentMethodGroupRelClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_COMMERCE_TERM_ENTRIES
 			).put(
 				"paymentMethodGroupRelId", commercePaymentMethodGroupRelId

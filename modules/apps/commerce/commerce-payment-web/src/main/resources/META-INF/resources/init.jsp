@@ -32,6 +32,7 @@ page import="com.liferay.commerce.payment.web.internal.constants.CommercePayment
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.frontend.CommercePaymentRestrictionsPageClayTable" %><%@
+page import="com.liferay.commerce.term.constants.CommerceTermEntryConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

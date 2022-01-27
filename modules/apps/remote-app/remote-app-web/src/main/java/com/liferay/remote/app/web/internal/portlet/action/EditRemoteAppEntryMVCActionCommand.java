@@ -103,7 +103,14 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "sourceCodeURL");
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (type.equals(RemoteAppConstants.TYPE_BUNDLED_APP)) {
+			_remoteAppEntryService.addBundledAppRemoteAppEntry(
+				StringPool.BLANK,
+				ParamUtil.getString(actionRequest, "bundledAppURL"),
+				description, friendlyURLMapping, instanceable, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			_remoteAppEntryService.addCustomElementRemoteAppEntry(
 				StringPool.BLANK,
 				StringUtil.merge(

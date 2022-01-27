@@ -49,7 +49,10 @@ public class RemoteAppFDSEntry {
 	public String getType() {
 		String type = _remoteAppEntry.getType();
 
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (type.equals(RemoteAppConstants.TYPE_BUNDLED_APP)) {
+			return LanguageUtil.get(_locale, "bundled-app");
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			return LanguageUtil.get(_locale, "custom-element");
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {

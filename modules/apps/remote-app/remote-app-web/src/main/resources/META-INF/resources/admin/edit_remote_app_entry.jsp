@@ -67,10 +67,20 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				label="type"
 				name="type"
 				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "bundled-app"), RemoteAppConstants.TYPE_BUNDLED_APP, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_BUNDLED_APP)), new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
 				%>'
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
+
+			<liferay-frontend:fieldset
+				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_BUNDLED_APP) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_BUNDLED_APP) %>"
+				id='<%= liferayPortletResponse.getNamespace() + "_type_bundledApp" %>'
+			>
+				<aui:input label="url" name="bundledAppURL">
+					<aui:validator name="urlAllowRelative" />
+				</aui:input>
+			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
 				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
-import com.liferay.portal.kernel.servlet.MultiSessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,10 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.remote.app.constants.RemoteAppConstants;
-import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
-import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
-import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
-import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.ArrayList;
@@ -40,6 +35,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionParameters;
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -224,44 +221,28 @@ public class EditRemoteAppEntryDisplayContext {
 		return false;
 	}
 
-	private String _getErrorSection() {
-		if (MultiSessionErrors.contains(
-				_portletRequest,
-				RemoteAppEntryIFrameURLException.class.getName())) {
-
-			return RemoteAppConstants.TYPE_IFRAME;
-		}
-
-		if (MultiSessionErrors.contains(
-				_portletRequest,
-				RemoteAppEntryCustomElementCSSURLsException.class.getName()) ||
-			MultiSessionErrors.contains(
-				_portletRequest,
-				RemoteAppEntryCustomElementHTMLElementNameException.class.
-					getName()) ||
-			MultiSessionErrors.contains(
-				_portletRequest,
-				RemoteAppEntryCustomElementURLsException.class.getName())) {
-
-			return RemoteAppConstants.TYPE_CUSTOM_ELEMENT;
-		}
-
-		return null;
-	}
-
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_portletRequest);
 	}
 
 	private String _getRemoteAppEntryType() {
-		String errorSection = _getErrorSection();
-
-		if (errorSection != null) {
-			return errorSection;
-		}
-
 		if (_remoteAppEntry == null) {
-			return RemoteAppConstants.TYPE_IFRAME;
+			String type = null;
+
+			if (_portletRequest instanceof ActionRequest) {
+				ActionRequest actionRequest = (ActionRequest)_portletRequest;
+
+				ActionParameters actionParameters =
+					actionRequest.getActionParameters();
+
+				type = actionParameters.getValue("type");
+			}
+
+			if (type == null) {
+				type = RemoteAppConstants.TYPE_IFRAME;
+			}
+
+			return type;
 		}
 
 		return _remoteAppEntry.getType();

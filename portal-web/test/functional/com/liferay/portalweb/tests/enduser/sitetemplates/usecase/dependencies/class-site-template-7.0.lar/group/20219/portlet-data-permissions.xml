@@ -2,6 +2,6 @@
 
 <portlet-data-permissions>
 	<portlet-data resource-name="com.liferay.portal.kernel.model.LayoutSetPrototype" resource-pk="33131">
-		<permissions role-name="Owner" actions="DELETE,PERMISSIONS,UPDATE,VIEW"/>
+		<permissions actions="DELETE,PERMISSIONS,UPDATE,VIEW" role-name="Owner" />
 	</portlet-data>
 </portlet-data-permissions>

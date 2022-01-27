@@ -247,8 +247,16 @@ definition {
 				title = "Blogs Entry Title");
 		}
 
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
 		task ("Add a fragment with item selector") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 

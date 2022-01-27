@@ -31,7 +31,7 @@ definition {
 
 	@description = "The assets should be ordered by view counts in Most Viewed Assets widget."
 	@priority = "4"
-	test ViewOrderOfAssets {
+	test ViewMostViewedAsset {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(

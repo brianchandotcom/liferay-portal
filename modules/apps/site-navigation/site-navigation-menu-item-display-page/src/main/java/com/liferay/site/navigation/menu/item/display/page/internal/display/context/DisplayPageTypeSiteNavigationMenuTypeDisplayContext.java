@@ -26,11 +26,8 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -81,22 +78,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 				SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public JSONArray getAvailableLocalesJSONArray() throws Exception {
-		return JSONUtil.toJSONArray(
-			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()),
-			locale -> {
-				String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
-
-				return JSONUtil.put(
-					"id", LocaleUtil.toLanguageId(locale)
-				).put(
-					"label", w3cLanguageId
-				).put(
-					"symbol", StringUtil.toLowerCase(w3cLanguageId)
-				);
-			});
 	}
 
 	public Map<String, Object> getChooseInfoItemButtonContext(
@@ -238,10 +219,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			));
 	}
 
-	public String getDefaultLanguageId() {
-		return LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale());
-	}
-
 	public Map<String, Object> getDisplayPageItemContextualSidebarContext(
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
@@ -252,9 +229,13 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			getChooseInfoItemButtonContext(
 				httpServletRequest, liferayPortletResponse)
 		).put(
-			"defaultLanguageId", getDefaultLanguageId()
+			"defaultLanguageId",
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
 		).put(
-			"hasDisplayPage", hasDisplayPage()
+			"hasDisplayPage",
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_themeDisplay.getScopeGroupId(), getClassNameId(), getClassPK(),
+				getClassTypeId())
 		).put(
 			"item",
 			HashMapBuilder.<String, Object>put(
@@ -275,13 +256,46 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).put(
 			"itemType", getItemType()
 		).put(
-			"locales", getAvailableLocalesJSONArray()
+			"locales",
+			JSONUtil.toJSONArray(
+				LanguageUtil.getAvailableLocales(
+					_themeDisplay.getSiteGroupId()),
+				locale -> {
+					String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
+
+					return JSONUtil.put(
+						"id", LocaleUtil.toLanguageId(locale)
+					).put(
+						"label", w3cLanguageId
+					).put(
+						"symbol", StringUtil.toLowerCase(w3cLanguageId)
+					);
+				})
 		).put(
-			"localizedNames", getLocalizedNamesJSONObject()
+			"localizedNames",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return JSONFactoryUtil.createJSONObject(
+					typeSettingsUnicodeProperties.getProperty(
+						"localizedNames", "{}"));
+			}
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
-			"useCustomName", isUseCustomName()
+			"useCustomName",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return GetterUtil.getBoolean(
+					typeSettingsUnicodeProperties.get("useCustomName"));
+			}
 		).build();
 	}
 
@@ -326,22 +340,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public String getItemType() {
 		return _displayPageTypeContext.getLabel(_themeDisplay.getLocale());
-	}
-
-	public JSONObject getLocalizedNamesJSONObject() throws JSONException {
-		if (_localizedNamesJSONObject != null) {
-			return _localizedNamesJSONObject;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings()
-			).build();
-
-		_localizedNamesJSONObject = JSONFactoryUtil.createJSONObject(
-			typeSettingsUnicodeProperties.getProperty("localizedNames", "{}"));
-
-		return _localizedNamesJSONObject;
 	}
 
 	public String getOriginalTitle() {
@@ -398,37 +396,9 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _type;
 	}
 
-	public boolean hasDisplayPage() throws PortalException {
-		if (_hasDisplayPage != null) {
-			return _hasDisplayPage;
-		}
-
-		_hasDisplayPage = AssetDisplayPageUtil.hasAssetDisplayPage(
-			_themeDisplay.getScopeGroupId(), getClassNameId(), getClassPK(),
-			getClassTypeId());
-
-		return _hasDisplayPage;
-	}
-
 	public boolean isFFMultipleSelectionEnabled() {
 		return FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
 			multipleSelectionEnabled();
-	}
-
-	public boolean isUseCustomName() {
-		if (_useCustomName != null) {
-			return _useCustomName;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings()
-			).build();
-
-		_useCustomName = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("useCustomName"));
-
-		return _useCustomName;
 	}
 
 	private LayoutDisplayPageObjectProvider<?>
@@ -449,15 +419,12 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	private Long _classPK;
 	private Long _classTypeId;
 	private final DisplayPageTypeContext _displayPageTypeContext;
-	private Boolean _hasDisplayPage;
 	private final ItemSelector _itemSelector;
 	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
-	private JSONObject _localizedNamesJSONObject;
 	private String _originalTitle;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;
 	private String _title;
 	private String _type;
-	private Boolean _useCustomName;
 
 }

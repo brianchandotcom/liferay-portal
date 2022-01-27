@@ -482,6 +482,18 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipTypeException("Invalid type " + type);
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
+
+		if (objectDefinition.isSystem() &&
+			!Objects.equals(
+				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			throw new ObjectRelationshipTypeException(
+				"Invalid type for system object definition " +
+					objectDefinitionId1);
+		}
+
 		if (Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
 			Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {

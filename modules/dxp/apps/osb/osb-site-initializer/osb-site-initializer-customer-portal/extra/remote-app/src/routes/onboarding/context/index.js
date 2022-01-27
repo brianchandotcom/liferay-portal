@@ -57,7 +57,9 @@ const AppContextProvider = ({assetsPath, children}) => {
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(({name}) => name === ROLE_TYPES.admin);
+					?.roleBriefs?.find(
+						({name}) => name === ROLE_TYPES.admin.key
+					);
 
 				const userAccount = {
 					...data.userAccount,

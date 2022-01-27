@@ -55,6 +55,7 @@ export default function UpperToolbar({
 	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
 	const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+	const [showDangerAlert, setShowDangerAlert] = useState(false);
 	const [alertMessage, setAlertMessage] = useState('');
 
 	const availableLocales = getAvailableLocalesObject(
@@ -100,34 +101,41 @@ export default function UpperToolbar({
 	const definitionNotPublished = version === '0' || !active;
 
 	const publishDefinition = () => {
-		let successMessage;
+		let alertMessage;
 
-		if (definitionNotPublished) {
-			successMessage = Liferay.Language.get(
-				'workflow-published-successfully'
-			);
+		if (!definitionTitle) {
+			alertMessage = Liferay.Language.get('name-workflow-before-publish');
+			setAlertMessage(alertMessage);
+			setShowDangerAlert(true);
 		}
 		else {
-			successMessage = Liferay.Language.get(
-				'workflow-updated-successfully'
-			);
-		}
-
-		setAlertMessage(successMessage);
-
-		publishDefinitionRequest({
-			active,
-			content: getXMLContent(true),
-			name: definitionId,
-			title: definitionTitle,
-			version,
-		}).then((response) => {
-			if (response.ok) {
-				setShowSuccessAlert(true);
-
-				window.history.back();
+			if (definitionNotPublished) {
+				alertMessage = Liferay.Language.get(
+					'workflow-published-successfully'
+				);
 			}
-		});
+			else {
+				alertMessage = Liferay.Language.get(
+					'workflow-updated-successfully'
+				);
+			}
+
+			setAlertMessage(alertMessage);
+
+			publishDefinitionRequest({
+				active,
+				content: getXMLContent(true),
+				name: definitionId,
+				title: definitionTitle,
+				version,
+			}).then((response) => {
+				if (response.ok) {
+					setShowSuccessAlert(true);
+
+					window.history.back();
+				}
+			});
+		}
 	};
 
 	const saveDefinition = () => {
@@ -279,6 +287,19 @@ export default function UpperToolbar({
 						displayType="success"
 						onClose={() => setShowSuccessAlert(false)}
 						title={`${Liferay.Language.get('success')}:`}
+					>
+						{alertMessage}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
+
+			{showDangerAlert && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={5000}
+						displayType="danger"
+						onClose={() => setShowDangerAlert(false)}
+						title={`${Liferay.Language.get('error')}:`}
 					>
 						{alertMessage}
 					</ClayAlert>

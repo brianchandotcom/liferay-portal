@@ -24,7 +24,7 @@ import CustomSelect from './form/CustomSelect/CustomSelect';
 import Input from './form/Input';
 import Select from './form/Select';
 
-let objectRelationshipTypes = [
+const objectRelationshipTypes = [
 	{
 		description: Liferay.Language.get(
 			"one-object's-entry-interacts-only-with-one-other-object's-entry"
@@ -61,6 +61,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	objectDefinitionId,
 	observer,
 	onClose,
+	system,
 }) => {
 	const [error, setError] = useState<string>('');
 	const [objectDefinitions, setObjectDefinitions] = useState<
@@ -73,11 +74,18 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		type: {label: '', value: ''},
 	};
 
-	if (!ffOneToOneRelationshipConfigurationEnabled) {
-		objectRelationshipTypes = objectRelationshipTypes.filter(
-			(relationshipType) => relationshipType.value !== 'oneToOne'
-		);
-	}
+	const filteredObjectRelationshipTypes = objectRelationshipTypes.filter(
+		({value}) => {
+			if (system) {
+				return value === 'oneToMany';
+			}
+			else if (!ffOneToOneRelationshipConfigurationEnabled) {
+				return value !== 'oneToOne';
+			}
+
+			return true;
+		}
+	);
 
 	const onSubmit = async ({
 		label,
@@ -225,7 +233,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 								? handleChangeManyToMany()
 								: makeRequest();
 						}}
-						options={objectRelationshipTypes}
+						options={filteredObjectRelationshipTypes}
 						required
 						value={values.type.label}
 					>
@@ -285,6 +293,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	objectDefinitionId: number;
 	observer: any;
 	onClose: () => void;
+	system: boolean;
 }
 
 type TObjectDefinition = {
@@ -307,6 +316,7 @@ const ModalWithProvider: React.FC<IProps> = ({
 	apiURL,
 	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionId,
+	system,
 }) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
@@ -332,6 +342,7 @@ const ModalWithProvider: React.FC<IProps> = ({
 					objectDefinitionId={objectDefinitionId}
 					observer={observer}
 					onClose={onClose}
+					system={system}
 				/>
 			)}
 		</ClayModalProvider>

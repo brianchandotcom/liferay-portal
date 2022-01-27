@@ -1,7 +1,9 @@
 [
 	{
 		"allowedServiceSignatures": [
-			"com.liferay.object.rest*"
+			"com.liferay.url1",
+			"com.liferay.url2",
+			"com.liferay.url3"
 		],
 		"defaultSAPEntry": "true",
 		"enabled": "true",

@@ -844,8 +844,14 @@ public class BundleSiteInitializerTest {
 			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
 		Assert.assertNotNull(sapEntry);
+
+		List<String> allowedServiceSignatures =
+			sapEntry.getAllowedServiceSignaturesList();
+
 		Assert.assertEquals(
-			"com.liferay.object.rest*", sapEntry.getAllowedServiceSignatures());
+			allowedServiceSignatures.toString(), 3,
+			allowedServiceSignatures.size());
+
 		Assert.assertTrue(sapEntry.isDefaultSAPEntry());
 		Assert.assertTrue(sapEntry.isEnabled());
 	}

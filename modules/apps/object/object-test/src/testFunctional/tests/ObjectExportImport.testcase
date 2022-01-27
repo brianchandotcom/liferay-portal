@@ -1,0 +1,153 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-142175 - Verify it is possible to cancel importing an object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelImport {
+
+		// TODO LPS-146369 CanCancelImport pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to clear the JSON file on the import dialog"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanClearJsonFile {
+
+		// TODO LPS-146368 CanClearJsonFile pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify if it is possible to export the data structure from a custom objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanExportDataStructure {
+		property portal.acceptance = "true";
+
+		// TODO LPS-146357 CanExportDataStructure pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to export and import an already published Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanExportImportPublishedObject {
+
+		// TODO LPS-146362 CanExportImportPublishedObject pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanImportDataStructure {
+		property portal.acceptance = "true";
+
+		// TODO LPS-146358 CanImportDataStructure pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to maintain Fields after importing an Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportFields {
+
+		// TODO LPS-146361 CanImportFields pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to maintain Layouts after importing an Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportLayouts {
+
+		// TODO LPS-146360 CanImportLayouts pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to import the same object more then one time"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportSameObjectMoreThanOnce {
+
+		// TODO LPS-146367 CanImportSameObjectMoreThanOnce pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it's possible to maintain Scope after importing an Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportScope {
+
+		// TODO LPS-146370 CanImportScope pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is not possible to maintain Relationships after importing an Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotImportRelationships {
+
+		// TODO LPS-146359 CannotImportRelationships pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishImportedObject {
+
+		// TODO LPS-146365 CanPublishImportedObject pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify if the Import dialog is automatically closed when the object is successfully imported"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ImportDialogIsClosed {
+
+		// TODO LPS-146366 ImportDialogIsClosed pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify that an imported custom object has the same Label of the source Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImportedObjectHasSameLabel {
+
+		// TODO LPS-146364 ImportedObjectHasSameLabel pending implementation
+
+	}
+
+	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImportedObjectIsDraft {
+
+		// TODO LPS-146363 ImportedObjectIsDraft pending implementation
+
+	}
+
+}

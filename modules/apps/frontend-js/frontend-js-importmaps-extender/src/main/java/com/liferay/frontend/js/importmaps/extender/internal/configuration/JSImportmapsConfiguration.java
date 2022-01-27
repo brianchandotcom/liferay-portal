@@ -31,8 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface JSImportmapsConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "enable-importmaps-help",
-		name = "enable-importmaps", required = false
+		deflt = "false",name = "enable-importmaps", required = false
 	)
 	public boolean enableImportmaps();
 

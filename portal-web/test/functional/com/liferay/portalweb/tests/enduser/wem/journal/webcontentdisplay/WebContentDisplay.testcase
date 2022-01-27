@@ -1470,7 +1470,7 @@ ${runtimeInstance}
 
 			WebContent.deleteCP(
 				siteURLKey = "test-site-name",
-				webContentTitle = "WC WebContent Title");
+				webContentTitle = "Web Content Title");
 		}
 
 		task ("View the no longer exists message in Web Content Display") {

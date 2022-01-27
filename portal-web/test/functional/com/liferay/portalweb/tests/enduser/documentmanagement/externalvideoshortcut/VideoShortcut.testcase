@@ -784,7 +784,7 @@ definition {
 	test ViewSearchResult {
 		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
-		PagesAdmin.deletePage(pageName = "Documents and Media");
+		PagesAdmin.deletePage(pageName = "Documents and Media Page");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 

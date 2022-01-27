@@ -1097,10 +1097,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.journal.service"
 		},
 		{
-			"journal.error.template[xsl]", "error.template[xsl]",
-			"com.liferay.journal.service"
-		},
-		{
 			"journal.feed.force.autogenerate.id",
 			"journal.feed.force.autogenerate.id", "com.liferay.journal.web"
 		},
@@ -1137,11 +1133,6 @@ public class VerifyProperties extends VerifyProcess {
 		{
 			"journal.template.language.content[vm]",
 			"journal.article.template.language.content[vm]",
-			"com.liferay.journal.web"
-		},
-		{
-			"journal.template.language.content[xsl]",
-			"journal.article.template.language.content[xsl]",
 			"com.liferay.journal.web"
 		},
 		{
@@ -1536,13 +1527,6 @@ public class VerifyProperties extends VerifyProcess {
 			"xsl.content.xsl.secure.processing.enabled",
 			"xsl.secure.processing.enabled", "com.liferay.xsl.content.web"
 		},
-
-		// XSL Engine
-
-		{
-			"xsl.template.secure.processing.enabled",
-			"secure.processing.enabled", "com.liferay.portal.template.xsl"
-		}
 	};
 
 	private static final String[][] _MODULARIZED_SYSTEM_KEYS = {
@@ -1727,7 +1711,9 @@ public class VerifyProperties extends VerifyProcess {
 		"journal.article.form.translate", "journal.article.types",
 		"journal.articles.page.delta.values",
 		"journal.browse.by.structures.sorted.by.name",
-		"journal.image.extensions", "journal.image.small.max.size",
+		"journal.error.template[xsl]", "journal.image.extensions",
+		"journal.image.small.max.size",
+		"journal.template.language.content[xsl]",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",
@@ -1886,7 +1872,8 @@ public class VerifyProperties extends VerifyProcess {
 		"webdav.storage.class", "webdav.storage.show.edit.url",
 		"webdav.storage.show.view.url", "webdav.storage.tokens",
 		"wiki.email.page.added.signature", "wiki.email.page.updated.signature",
-		"xss.allow", "xuggler.enabled", "xuggler.jar.file", "xuggler.jar.url",
+		"xsl.template.secure.processing.enabled", "xss.allow",
+		"xuggler.enabled", "xuggler.jar.file", "xuggler.jar.url",
 		"xuggler.jar.options", "xuggler.ffpreset.8x8dct", "xuggler.ffpreset.bf",
 		"xuggler.f.ffpreset.cmp", "xuggler.f.ffpreset.coder",
 		"xuggler.f.ffpreset.flags", "xuggler.f.ffpreset.flags2",

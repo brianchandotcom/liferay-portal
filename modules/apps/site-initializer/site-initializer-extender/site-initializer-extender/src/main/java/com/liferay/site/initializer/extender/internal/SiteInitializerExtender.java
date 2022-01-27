@@ -69,6 +69,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
@@ -97,7 +98,7 @@ public class SiteInitializerExtender
 			new SiteInitializerExtension(
 				_accountResourceFactory, _assetCategoryLocalService,
 				_assetListEntryLocalService, bundle, _bundleContext,
-				_commerceReferencesHolder, _ddmStructureLocalService,
+				() -> _commerceReferencesHolder, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
 				_dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
@@ -170,9 +171,10 @@ public class SiteInitializerExtender
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private CommerceReferencesHolder _commerceReferencesHolder;
+	private volatile CommerceReferencesHolder _commerceReferencesHolder;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

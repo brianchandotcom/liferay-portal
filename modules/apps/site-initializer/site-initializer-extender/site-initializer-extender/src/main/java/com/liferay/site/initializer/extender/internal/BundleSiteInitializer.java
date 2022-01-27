@@ -178,6 +178,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 
 import javax.servlet.ServletContext;
 
@@ -193,7 +194,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountResource.Factory accountResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		CommerceReferencesHolder commerceReferencesHolder,
+		Supplier<CommerceReferencesHolder> commerceReferencesHolderSupplier,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -235,16 +236,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Commerce references holder " + commerceReferencesHolder);
-		}
-
 		_accountResourceFactory = accountResourceFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
-		_commerceReferencesHolder = commerceReferencesHolder;
+		_commerceReferencesHolderSupplier = commerceReferencesHolderSupplier;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -582,6 +578,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCommerceCatalogs(
 			Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			CommerceReferencesHolder commerceReferencesHolder,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -593,7 +590,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		CatalogResource.Builder catalogResourceBuilder =
-			_commerceReferencesHolder.catalogResourceFactory.create();
+			commerceReferencesHolder.catalogResourceFactory.create();
 
 		CatalogResource catalogResource = catalogResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -630,18 +627,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			catalog = catalogResource.postCatalog(catalog);
 
 			_addCPOptions(
-				catalog,
+				catalog, commerceReferencesHolder,
 				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
 				serviceContext);
 			_addCPDefinitions(
 				assetVocabularyName, catalog, channel,
-				commerceInventoryWarehouses,
+				commerceInventoryWarehouses, commerceReferencesHolder,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					_addCPInstanceSubscriptions(
+						commerceReferencesHolder,
 						StringUtil.replaceLast(
 							resourcePath, ".json",
 							".products.subscriptions.properties.json"),
@@ -652,7 +650,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Channel _addCommerceChannel(ServiceContext serviceContext)
+	private Channel _addCommerceChannel(
+			CommerceReferencesHolder commerceReferencesHolder,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String resourcePath = "/site-initializer/commerce-channel.json";
@@ -664,7 +664,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		ChannelResource.Builder channelResourceBuilder =
-			_commerceReferencesHolder.channelResourceFactory.create();
+			commerceReferencesHolder.channelResourceFactory.create();
 
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -715,23 +715,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		modifiableSettings.store();
 
-		_commerceReferencesHolder.commerceAccountRoleHelper.
+		commerceReferencesHolder.commerceAccountRoleHelper.
 			checkCommerceAccountRoles(serviceContext);
 
-		_commerceReferencesHolder.commerceCurrencyLocalService.
+		commerceReferencesHolder.commerceCurrencyLocalService.
 			importDefaultValues(serviceContext);
 
-		_commerceReferencesHolder.cpMeasurementUnitLocalService.
+		commerceReferencesHolder.cpMeasurementUnitLocalService.
 			importDefaultValues(serviceContext);
 
 		return channel;
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
+			CommerceReferencesHolder commerceReferencesHolder,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return _commerceReferencesHolder.commerceInventoryWarehousesImporter.
+		return commerceReferencesHolder.commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
 					_read(
@@ -742,6 +743,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addCommerceNotificationTemplate(
 			long commerceChannelId,
+			CommerceReferencesHolder commerceReferencesHolder,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
@@ -758,7 +760,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONFactoryUtil.createJSONObject(json);
 
 		CommerceChannel commerceChannel =
-			_commerceReferencesHolder.commerceChannelLocalService.
+			commerceReferencesHolder.commerceChannelLocalService.
 				getCommerceChannel(commerceChannelId);
 
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
@@ -779,7 +781,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		_commerceReferencesHolder.commerceNotificationTemplateLocalService.
+		commerceReferencesHolder.commerceNotificationTemplateLocalService.
 			addCommerceNotificationTemplate(
 				serviceContext.getUserId(), commerceChannel.getGroupId(),
 				commerceNotificationTemplateJSONObject.getString("name"),
@@ -803,6 +805,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addCommerceNotificationTemplates(
 			long commerceChannelId,
+			CommerceReferencesHolder commerceReferencesHolder,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -817,7 +820,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
-				commerceChannelId, documentsStringUtilReplaceValues,
+				commerceChannelId, commerceReferencesHolder,
+				documentsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
 				serviceContext);
 		}
@@ -829,30 +833,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if ((_commerceReferencesHolder == null) ||
+		CommerceReferencesHolder commerceReferencesHolder =
+			_commerceReferencesHolderSupplier.get();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Commerce references holder " + commerceReferencesHolder);
+		}
+
+		if ((commerceReferencesHolder == null) ||
 			!GetterUtil.getBoolean(
 				PropsUtil.get("enterprise.product.commerce.enabled"))) {
 
 			return;
 		}
 
-		Channel channel = _addCommerceChannel(serviceContext);
+		Channel channel = _addCommerceChannel(
+			commerceReferencesHolder, serviceContext);
 
 		if (channel == null) {
 			return;
 		}
 
 		_addCommerceCatalogs(
-			channel, _addCommerceInventoryWarehouses(serviceContext),
-			serviceContext);
+			channel,
+			_addCommerceInventoryWarehouses(
+				commerceReferencesHolder, serviceContext),
+			commerceReferencesHolder, serviceContext);
 		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues,
+			channel.getId(), commerceReferencesHolder,
+			documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
 	}
 
 	private void _addCPDefinitions(
 			String assetVocabularyName, Catalog catalog, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			CommerceReferencesHolder commerceReferencesHolder,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -866,7 +883,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 				catalog.getId());
 
-		_commerceReferencesHolder.cpDefinitionsImporter.importCPDefinitions(
+		commerceReferencesHolder.cpDefinitionsImporter.importCPDefinitions(
 			JSONFactoryUtil.createJSONArray(json), assetVocabularyName,
 			commerceCatalogGroup.getGroupId(), channel.getId(),
 			ListUtil.toLongArray(
@@ -878,6 +895,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addCPInstanceSubscriptions(
+			CommerceReferencesHolder commerceReferencesHolder,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -888,7 +906,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		ProductOptionResource.Builder productOptionResourceBuilder =
-			_commerceReferencesHolder.productOptionResourceFactory.create();
+			commerceReferencesHolder.productOptionResourceFactory.create();
 
 		ProductOptionResource productOptionResource =
 			productOptionResourceBuilder.user(
@@ -896,7 +914,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		OptionResource.Builder optionResourceBuilder =
-			_commerceReferencesHolder.optionResourceFactory.create();
+			commerceReferencesHolder.optionResourceFactory.create();
 
 		OptionResource optionResource = optionResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -941,7 +959,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			};
 
 			CPDefinition cpDefinition =
-				_commerceReferencesHolder.cpDefinitionLocalService.
+				commerceReferencesHolder.cpDefinitionLocalService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						subscriptionPropertiesJSONObject.getString(
 							"cpDefinitionExternalReferenceCode"),
@@ -950,7 +968,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			productOptionResource.postProductIdProductOptionsPage(
 				cpDefinition.getCProductId(), productOptions);
 
-			_commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
+			commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
 				cpDefinition.getCPDefinitionId(), serviceContext);
 
 			JSONArray cpInstancePropertiesJSONArray =
@@ -966,13 +984,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 					cpInstancePropertiesJSONArray.getJSONObject(j);
 
 				_updateCPInstanceProperties(
-					cpDefinition, cpInstancePropertiesJSONObject);
+					commerceReferencesHolder, cpDefinition,
+					cpInstancePropertiesJSONObject);
 			}
 		}
 	}
 
 	private void _addCPOptions(
-			Catalog catalog, String resourcePath, ServiceContext serviceContext)
+			Catalog catalog, CommerceReferencesHolder commerceReferencesHolder,
+			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		String json = _read(resourcePath);
@@ -985,7 +1005,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 				catalog.getId());
 
-		_commerceReferencesHolder.cpOptionsImporter.importCPOptions(
+		commerceReferencesHolder.cpOptionsImporter.importCPOptions(
 			JSONFactoryUtil.createJSONArray(json),
 			commerceCatalogGroup.getGroupId(), serviceContext.getUserId());
 	}
@@ -2963,12 +2983,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _updateCPInstanceProperties(
+			CommerceReferencesHolder commerceReferencesHolder,
 			CPDefinition cpDefinition,
 			JSONObject cpInstancePropertiesJSONObject)
 		throws Exception {
 
 		CPInstance cpInstance =
-			_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
+			commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
 				cpDefinition.getCPDefinitionId(),
 				cpInstancePropertiesJSONObject.getString("cpInstanceSKu"));
 
@@ -2987,7 +3008,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			UnicodeProperties unicodeProperties = new UnicodeProperties(
 				JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject), true);
 
-			_commerceReferencesHolder.cpInstanceLocalService.
+			commerceReferencesHolder.cpInstanceLocalService.
 				updateSubscriptionInfo(
 					cpInstance.getCPInstanceId(),
 					cpInstancePropertiesJSONObject.getBoolean(
@@ -3018,7 +3039,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				BigDecimal.valueOf(
 					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
 
-			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
+			commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
 				cpInstance);
 		}
 	}
@@ -3161,7 +3182,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private CommerceReferencesHolder _commerceReferencesHolder;
+	private final Supplier<CommerceReferencesHolder>
+		_commerceReferencesHolderSupplier;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

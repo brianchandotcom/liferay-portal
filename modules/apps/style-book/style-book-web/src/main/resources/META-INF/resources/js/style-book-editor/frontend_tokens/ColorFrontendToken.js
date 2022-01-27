@@ -14,7 +14,10 @@
 
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {ColorPicker} from '@liferay/layout-content-page-editor-web';
+import {
+	ColorPicker,
+	convertRGBtoHex,
+} from '@liferay/layout-content-page-editor-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
@@ -47,6 +50,32 @@ export default function ColorFrontendToken({
 				'--style-book-color-picker-color',
 				color
 			);
+		}
+
+		if (!config.tokenReuseEnabled) {
+			if (color.startsWith('#')) {
+				setCustomColors([color]);
+			}
+			else {
+				const element = document.createElement('div');
+
+				element.style.background = color;
+				element.style.display = 'none';
+
+				document.body.appendChild(element);
+
+				const backgroundColor = element.style.background;
+
+				setCustomColors([
+					backgroundColor
+						? convertRGBtoHex(
+								window.getComputedStyle(element).backgroundColor
+						  )
+						: 'FFFFFF',
+				]);
+
+				element.parentElement.removeChild(element);
+			}
 		}
 	}, [color]);
 

@@ -24,6 +24,8 @@ import './OrganizationInputItem.es';
 
 import './OrganizationListItem.es';
 
+import '../css/main.scss';
+
 class AddOrganizationModal extends Component {
 	created() {
 		this._debouncedFetchOrganizations = debounce(

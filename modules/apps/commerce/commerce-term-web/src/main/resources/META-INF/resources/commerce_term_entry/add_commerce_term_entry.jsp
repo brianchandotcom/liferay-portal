@@ -26,10 +26,6 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 	title='<%= LanguageUtil.get(request, "add-term") %>'
 >
 	<aui:form method="post" name="fm">
-		<liferay-ui:error exception="<%= CommerceTermEntryNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= CommerceTermEntryPriorityException.class %>" message="please-enter-a-valid-priority" />
-		<liferay-ui:error exception="<%= CommerceTermEntryTypeException.class %>" message="please-select-a-valid-type" />
-
 		<aui:model-context bean="<%= commerceTermEntryDisplayContext.getCommerceTermEntry() %>" model="<%= CommerceTermEntry.class %>" />
 
 		<aui:input name="name" required="<%= true %>" />

@@ -15,6 +15,9 @@
 package com.liferay.commerce.term.web.internal.portlet.action;
 
 import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
+import com.liferay.commerce.term.exception.CommerceTermEntryNameException;
+import com.liferay.commerce.term.exception.CommerceTermEntryPriorityException;
+import com.liferay.commerce.term.exception.CommerceTermEntryTypeException;
 import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
@@ -68,7 +71,7 @@ public class EditCommerceTermEntryMVCActionCommand
 				boolean active = ParamUtil.getBoolean(actionRequest, "active");
 				Map<Locale, String> descriptionMap =
 					LocalizationUtil.getLocalizationMap(
-						actionRequest, "description");
+						actionRequest, "descriptionMapAsXML");
 				int displayDateMonth = ParamUtil.getInteger(
 					actionRequest, "displayDateMonth");
 				int displayDateDay = ParamUtil.getInteger(
@@ -108,7 +111,8 @@ public class EditCommerceTermEntryMVCActionCommand
 				boolean neverExpire = ParamUtil.getBoolean(
 					actionRequest, "neverExpire");
 				Map<Locale, String> labelMap =
-					LocalizationUtil.getLocalizationMap(actionRequest, "label");
+					LocalizationUtil.getLocalizationMap(
+						actionRequest, "labelMapAsXML");
 				String name = ParamUtil.getString(actionRequest, "name");
 				double priority = ParamUtil.getDouble(
 					actionRequest, "priority");
@@ -143,7 +147,11 @@ public class EditCommerceTermEntryMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof NoSuchTermEntryException) {
+			if (throwable instanceof CommerceTermEntryNameException ||
+				throwable instanceof CommerceTermEntryPriorityException ||
+				throwable instanceof CommerceTermEntryTypeException ||
+				throwable instanceof NoSuchTermEntryException) {
+
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 

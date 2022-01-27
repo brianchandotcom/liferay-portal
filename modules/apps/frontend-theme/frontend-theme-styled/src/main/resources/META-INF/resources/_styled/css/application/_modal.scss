@@ -1,17 +1,6 @@
-.modal {
-	display: block;
-	margin: 0;
+.modal-body.dialog-iframe-bd {
 	overflow: hidden;
-	position: fixed;
-}
-
-.modal-body {
-	overflow: auto;
-
-	&.dialog-iframe-bd {
-		overflow: hidden;
-		padding: 0;
-	}
+	padding: 0;
 }
 
 .modal-dialog {
@@ -35,4 +24,8 @@
 			right: 0;
 		}
 	}
+}
+
+.modal-open .modal {
+	display: block;
 }

@@ -605,6 +605,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-141462. The user could change same type asset with selected one in an existing item."
+	@priority = "4"
+	test ChangeSameAssetTypeItem {
+		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
+		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
+
+		task ("Add two Categories with different asset types") {
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Document",
+				vocabularyName = "Vocabulary Name 1");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Document Category Name",
+				vocabularyName = "Vocabulary Name 1");
+
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Web Content Article",
+				vocabularyName = "Vocabulary Name 2");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Web Content Article Category Name",
+				vocabularyName = "Vocabulary Name 2");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Navigate to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Adding a category item type and view the iframe is Select Categories") {
+			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Document Category Name");
+		}
+
+		task ("Assert the first category is shown after selecting in Navigation Menu") {
+			NavigationMenusAdmin.viewItem(itemName = "Document Category Name");
+		}
+
+		task ("View second category is shown after changing item") {
+			NavigationMenusAdmin.editItem(
+				assetTitle = "Web Content Article Category Name",
+				item = "Category",
+				itemName = "Document Category Name");
+
+			NavigationMenusAdmin.viewItem(itemName = "Web Content Article Category Name");
+		}
+	}
+
 	@description = "LPS-78049 - Multiple Navigation Menus can be deleted Filter by All."
 	@priority = "3"
 	test DeleteMultipleNavigationMenus {

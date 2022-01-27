@@ -21,7 +21,9 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
-renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "import") : LanguageUtil.get(request, "edit"));
+boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
+
+renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : LanguageUtil.get(request, "import"));
 
 EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

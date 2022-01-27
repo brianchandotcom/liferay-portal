@@ -22,6 +22,10 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuJSPDynamicInclude.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/customization_settings.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2 py-2">
 		<clay:container-fluid>

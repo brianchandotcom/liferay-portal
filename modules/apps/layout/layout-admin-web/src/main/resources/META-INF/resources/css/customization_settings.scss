@@ -4,24 +4,14 @@
 }
 
 .customizable-layout-column-content {
+	background-color: #c92c3c;
+
 	&.yui3-widget-content-expanded {
 		margin: 0 15px;
 	}
 
-	background-color: #c92c3c;
-}
-
-.layout-customizable-controls {
-	background-color: rgba(201, 44, 60, 0.8);
-}
-
-.customizable {
-	.customizable-layout-column-content {
+	.customizable & {
 		background-color: #5eaf3d;
-	}
-
-	.layout-customizable-controls {
-		background-color: rgba(94, 175, 61, 0.8);
 	}
 }
 
@@ -31,13 +21,18 @@
 }
 
 .layout-customizable-controls {
-	label {
-		color: #fff;
-	}
-
+	background-color: rgba(201, 44, 60, 0.8);
 	font-size: 1.5em;
 	padding: 4px 16px;
 	position: absolute;
 	width: 100%;
 	z-index: 15;
+
+	label {
+		color: #fff;
+	}
+
+	.customizable & {
+		background-color: rgba(94, 175, 61, 0.8);
+	}
 }

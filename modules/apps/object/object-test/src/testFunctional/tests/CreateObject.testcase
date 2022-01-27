@@ -4354,6 +4354,8 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141614",
 			objectName = "CustomObject141614",
@@ -6452,6 +6454,8 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140887",
 			objectName = "CustomObject140887",

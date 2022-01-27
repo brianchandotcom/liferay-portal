@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -27,6 +28,7 @@ definition {
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
 		property test.name.skip.portal.instance = "BlogsEntry#AbstractDescriptionPersistsWhenTypingInContentField";
+		property portal.acceptance = "false";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -192,6 +194,8 @@ definition {
 	@description = "This is a test for LPS-136763. It checks that 400 characters can be added to the description."
 	@priority = "3"
 	test CanAddDescriptionWith400Characters {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -247,6 +251,8 @@ definition {
 	@description = "This is a test for LPS-136761. It checks that special characters can be added to a custom abstract"
 	@priority = "3"
 	test CanAddSpecialCharactersToCustomAbstract {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -351,7 +357,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddWithEmbeddedVideo {
-		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		JSONLayout.addPublicLayout(
@@ -647,8 +652,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteMultipleEntriesSequentially {
-		property portal.acceptance = "true";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
@@ -675,6 +678,8 @@ definition {
 	@description = "This is a test for LPS-136771. It checks that the cover image caption can be edited with special characters."
 	@priority = "3"
 	test CanEditCoverImageCaptionWithSpecialCharacters {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -814,7 +819,7 @@ definition {
 	test CanManuallySaveAsDraft {
 		property portal.acceptance = "true";
 
-		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
@@ -920,6 +925,8 @@ definition {
 	@description = "This is a test for LPS-136764. It checks that Javascript cannot be executed in the content field."
 	@priority = "3"
 	test CannotExecuteXSSInContent {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -955,6 +962,8 @@ definition {
 	@description = "This is a test for LPS-136773. It checks that XSS cannot be executed in the cover image caption."
 	@priority = "3"
 	test CannotExecuteXSSInCoverImageCaption {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -988,6 +997,8 @@ definition {
 	@description = "This is a test for LPS-136765. It checks that Javascript cannot be executed in the custom abstract."
 	@priority = "3"
 	test CannotExecuteXSSInCustomAbstract {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -1307,7 +1318,9 @@ definition {
 	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
 	@priority = "3"
 	test URLWithEscapeCharactersWillBeNormalized {
-		var portalUrl = PropsUtil.get("portal.url");
+		property portal.acceptance = "false";
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1325,7 +1338,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			siteUrlKey = "guest");
 
-		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/blogs-page/-/blogs/blog-entry");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blog-entry");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

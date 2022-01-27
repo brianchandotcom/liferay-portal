@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -83,7 +84,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanImportEntryWithComment {
-		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");

@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Roles";
@@ -39,6 +40,7 @@ definition {
 	@refactordone
 	test CanAccessAdminWithRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -287,6 +289,7 @@ definition {
 	@refactorneeded
 	test CannotAddEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -813,6 +816,7 @@ definition {
 	@refactorneeded
 	test CannotDeleteEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -1119,6 +1123,7 @@ definition {
 	@priority = "3"
 	test CannotEditEntryWhenUserHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1161,6 +1166,7 @@ definition {
 	test CannotEditOwnComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Comment";
+		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

@@ -197,6 +197,7 @@ definition {
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateBlogs {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateBlogs";
 		property testray.main.component.name = "Blogs";
 

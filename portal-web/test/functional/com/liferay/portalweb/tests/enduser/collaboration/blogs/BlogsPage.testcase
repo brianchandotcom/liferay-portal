@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -85,7 +86,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteComment {
-		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
@@ -138,7 +138,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanEditComment {
-		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
@@ -172,8 +171,6 @@ definition {
 	@refactordone
 	@uitest
 	test CanEditEntry {
-		property portal.acceptance = "true";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -201,7 +198,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanEditMultipleComments {
-		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
@@ -642,7 +638,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewReadingTime {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsPage#CanViewReadingTime";
 
 		BlogsConfiguration.enableReadingTime();

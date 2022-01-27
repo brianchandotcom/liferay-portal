@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -63,6 +64,7 @@ definition {
 	@refactordone
 	test CannotShareUnpublishedEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

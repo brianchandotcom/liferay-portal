@@ -200,6 +200,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				portletURL.setParameter(
 					"commerceOrderUuid",
 					String.valueOf(commerceOrder.getUuid()));
+				portletURL.setParameter(
+					"commerceOrderId",
+					String.valueOf(commerceOrder.getCommerceOrderId()));
 			}
 
 			return portletURL;

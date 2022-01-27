@@ -50,6 +50,395 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Landscape Phone Size"
+	@priority = "4"
+	test BlogEntryDPTOnLandscapePhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Blog Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Portrait Phone Size"
+	@priority = "4"
+	test BlogEntryDPTOnPortraitPhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Blog Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
+		}
+
+		task ("Go to Preview Mode in Portrait Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Tablet Size"
+	@priority = "4"
+	test BlogEntryDPTOnTabletSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Blog Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
+		}
+
+		task ("Go to Preview Mode in Tablet") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Home page on Desktop Size"
+	@priority = "4"
+	test HomePageOnDesktopSize {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Test Site Team Extranet");
+		}
+
+		task ("Go to Preview Mode in Desktop") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,video,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Home page on Landscape Phone Size"
+	@priority = "4"
+	test HomePageOnLandscapePhoneSize {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Test Site Team Extranet");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,video,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Home page on Portrait Phone Size"
+	@priority = "4"
+	test HomePageOnPortraitPhoneSize {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Test Site Team Extranet");
+		}
+
+		task ("Go to Preview Mode in Desktop") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,video,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Home page on Tablet Size"
+	@priority = "4"
+	test HomePageOnTabletSize {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Test Site Team Extranet");
+		}
+
+		task ("Go to Preview Mode in Tablet") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,video,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Desktop Size"
+	@priority = "4"
+	test JobPositionDPTOnDesktopSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Job Position") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Job Position");
+		}
+
+		task ("Go to Preview Mode in Desktop") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Landscape Phone Size"
+	@priority = "4"
+	test JobPositionDPTOnLandscapePhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Job Position") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Job Position");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Portrait Phone Size"
+	@priority = "4"
+	test JobPositionDPTOnPortraitPhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Job Position") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Job Position");
+		}
+
+		task ("Go to Preview Mode in Portrait Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Tablet Size"
+	@priority = "4"
+	test JobPositionDPTOnTabletSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Job Position") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Job Position");
+		}
+
+		task ("Go to Preview Mode in Tablet") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
 	@priority = "4"
 	test StylebookOneIsDefaultAndIncludesAThumbnail {
@@ -67,6 +456,162 @@ definition {
 			LexiconCard.viewCardSticker(
 				card = "Stylebook One",
 				icon = "check-circle");
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Desktop Size"
+	@priority = "4"
+	test TeamMemberDPTOnDesktopSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Team Member") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Team Member");
+		}
+
+		task ("Go to Preview Mode in Desktop") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Landscape Phone Size"
+	@priority = "4"
+	test TeamMemberDPTOnLandscapePhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Team Member") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Team Member");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Portrait Phone Size"
+	@priority = "4"
+	test TeamMemberDPTOnPortraitPhoneSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Team Member") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Team Member");
+		}
+
+		task ("Go to Preview Mode in Portrait Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Tablet Size"
+	@priority = "4"
+	test TeamMemberDPTOnTabletSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Display Page Templates and Team Member") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Team Member");
+		}
+
+		task ("Go to Preview Mode in Tablet") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 

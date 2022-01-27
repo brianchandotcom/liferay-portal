@@ -188,4 +188,32 @@
 	.portlet-configuration-edit-templates .portlet-configuration-body-content {
 		bottom: 0;
 	}
+
+	&:not(.article-preview) {
+		#main-content,
+		#wrapper {
+			bottom: 0;
+			left: 0;
+			overflow: auto;
+			padding: $dialog-iframe-padding;
+			position: absolute;
+			right: 0;
+			top: 0;
+			-webkit-overflow-scrolling: touch;
+
+			@media print {
+				position: initial;
+			}
+		}
+	}
+
+	.columns-max > .portlet-layout.row {
+		margin-left: 0;
+		margin-right: 0;
+
+		> .portlet-column {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
 }

@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -134,8 +136,16 @@ public class FragmentMappedValueUtil {
 							privatePageField.setFieldValue(
 								String.valueOf(layout.isPrivateLayout()));
 
+							Field siteKeyField = new Field();
+
+							Group group = GroupLocalServiceUtil.getGroup(
+								layout.getGroupId());
+
+							siteKeyField.setFieldName("siteKey");
+							siteKeyField.setFieldValue(group.getGroupKey());
+
 							return new Field[] {
-								friendlyURLField, privatePageField
+								friendlyURLField, privatePageField, siteKeyField
 							};
 						});
 				}

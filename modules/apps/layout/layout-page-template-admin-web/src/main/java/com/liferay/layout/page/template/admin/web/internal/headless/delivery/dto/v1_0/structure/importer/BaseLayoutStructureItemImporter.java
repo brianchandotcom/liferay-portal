@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -142,6 +144,7 @@ public abstract class BaseLayoutStructureItemImporter {
 
 			String friendlyURL = null;
 			Boolean privatePage = null;
+			String siteKey = null;
 
 			List<Map<String, String>> fields =
 				(List<Map<String, String>>)itemReferenceMap.get("fields");
@@ -155,6 +158,9 @@ public abstract class BaseLayoutStructureItemImporter {
 				else if (Objects.equals(key, "privatePage")) {
 					privatePage = Boolean.valueOf(field.get("fieldValue"));
 				}
+				else if (Objects.equals(key, "siteKey")) {
+					siteKey = field.get("fieldValue");
+				}
 			}
 
 			if ((friendlyURL == null) || (privatePage == null)) {
@@ -164,8 +170,28 @@ public abstract class BaseLayoutStructureItemImporter {
 			Layout currentLayout =
 				layoutStructureItemImporterContext.getLayout();
 
+			long groupId = currentLayout.getGroupId();
+
+			if (Validator.isNotNull(siteKey)) {
+				Group group = groupLocalService.fetchGroup(
+					currentLayout.getCompanyId(), siteKey);
+
+				if (group == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to process mapping because group ",
+								siteKey, " could not be obtained"));
+					}
+
+					return;
+				}
+
+				groupId = group.getGroupId();
+			}
+
 			Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
-				currentLayout.getGroupId(), privatePage, friendlyURL);
+				groupId, privatePage, friendlyURL);
 
 			_processLayout("friendlyURL", friendlyURL, jsonObject, layout);
 		}
@@ -390,6 +416,9 @@ public abstract class BaseLayoutStructureItemImporter {
 			"width", styles.get("width")
 		);
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;

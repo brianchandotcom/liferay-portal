@@ -38,7 +38,7 @@ public class DDMTemplateTestUtil {
 
 		return addTemplate(
 			groupId, classNameId, classPK, resourceClassNameId,
-			TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
+			TemplateConstants.LANG_TYPE_VM, "$name.getData()",
 			LocaleUtil.getSiteDefault());
 	}
 
@@ -61,10 +61,6 @@ public class DDMTemplateTestUtil {
 			).build(),
 			null, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null, language,
 			script, false, false, null, null, serviceContext);
-	}
-
-	public static String getSampleTemplateXSL() {
-		return "$name.getData()";
 	}
 
 }

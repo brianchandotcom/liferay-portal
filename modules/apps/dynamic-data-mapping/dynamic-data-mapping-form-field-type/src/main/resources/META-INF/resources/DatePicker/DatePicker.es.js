@@ -50,8 +50,6 @@ export default function DatePicker({
 }) {
 	const inputRef = useRef(null);
 	const maskRef = useRef();
-	const [expanded, setExpand] = useState(false);
-
 	const {
 		clayFormat,
 		isDateTime,
@@ -203,11 +201,7 @@ export default function DatePicker({
 		});
 	}, [momentFormat]);
 
-	const handleValueChange = (value, eventType) => {
-		if (eventType === 'click') {
-			setExpand(false);
-			inputRef.current.focus();
-		}
+	const handleValueChange = (value) => {
 
 		/**
 		 * TODO When Clay change their implementation of the default time
@@ -254,10 +248,8 @@ export default function DatePicker({
 				dateFormat={clayFormat}
 				dir={dir}
 				disabled={readOnly}
-				expanded={expanded}
 				months={months}
 				onBlur={onBlur}
-				onExpandedChange={setExpand}
 				onFocus={onFocus}
 				onInput={({target: {value}}) => maskRef.current.update(value)}
 				onValueChange={handleValueChange}

@@ -16,6 +16,10 @@
 										{
 											"fieldName": "privatePage",
 											"fieldValue": "false"
+										},
+										{
+											"fieldName": "siteKey",
+											"fieldValue": "£{SITE_KEY}"
 										}
 									]
 								}

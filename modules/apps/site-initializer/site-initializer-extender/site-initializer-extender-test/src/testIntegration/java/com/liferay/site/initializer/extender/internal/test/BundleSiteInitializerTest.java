@@ -840,15 +840,14 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertSapEntries(Group group) {
-		SAPEntry sapEntryLocalService = _sapEntryLocalService.fetchSAPEntry(
+		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
-		Assert.assertNotNull(sapEntryLocalService);
+		Assert.assertNotNull(sapEntry);
 		Assert.assertEquals(
-			"com.liferay.object.rest*",
-			sapEntryLocalService.getAllowedServiceSignatures());
-		Assert.assertTrue(sapEntryLocalService.isDefaultSAPEntry());
-		Assert.assertTrue(sapEntryLocalService.isEnabled());
+			"com.liferay.object.rest*", sapEntry.getAllowedServiceSignatures());
+		Assert.assertTrue(sapEntry.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntry.isEnabled());
 	}
 
 	private void _assertSiteNavigationMenu(Group group) {

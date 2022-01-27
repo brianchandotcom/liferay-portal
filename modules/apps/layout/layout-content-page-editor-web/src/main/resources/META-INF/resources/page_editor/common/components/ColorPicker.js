@@ -23,6 +23,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {convertRGBtoHex} from '../../app/utils/convertRGBtoHex';
 import {getValidHexColor} from '../../app/utils/getValidHexColor';
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
@@ -130,9 +131,16 @@ export function ColorPicker({
 	};
 
 	const onBlurAutocompleteInput = ({target}) => {
-		const colorButton = colorButtonRef.current.querySelector(
-			'.clay-color-btn'
-		);
+		const element = document.createElement('div');
+
+		Object.assign(element.style, {
+			background: target.value,
+			display: 'none',
+		});
+		document.body.appendChild(element);
+
+		const backgroundColor = element.style.background;
+
 		const isHexColor = target.value.startsWith('#');
 		let nextValue = isHexColor
 			? getValidHexColor(target.value)
@@ -169,7 +177,17 @@ export function ColorPicker({
 					setCustomColors([nextValue.replace('#', '')]);
 				}
 			}
-			else if (colorButton.style.background !== nextValue) {
+			else if (backgroundColor) {
+				setCustomColors([
+					convertRGBtoHex(
+						window.getComputedStyle(element).backgroundColor
+					),
+				]);
+
+				element.parentElement.removeChild(element);
+			}
+			else if (!backgroundColor) {
+				setCustomColors(['FFFFFF']);
 				setError(ERROR_MESSAGES.valueNotExist);
 
 				return;

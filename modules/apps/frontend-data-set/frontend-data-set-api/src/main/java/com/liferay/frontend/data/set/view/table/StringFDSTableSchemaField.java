@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 /**
  * @author Marcela Cunha
  */
-public class ClobFDSTableSchemaField extends FDSTableSchemaField {
+public class StringFDSTableSchemaField extends FDSTableSchemaField {
 
 	public boolean isTruncate() {
 		return _truncate;

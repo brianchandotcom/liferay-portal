@@ -20,6 +20,7 @@ import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -38,7 +39,8 @@ public class TermEntityModel implements EntityModel {
 			new DoubleEntityField(
 				"priority",
 				locale -> Field.getSortableFieldName(
-					Field.PRIORITY + "_Number"))
+					Field.PRIORITY + "_Number")),
+			new StringEntityField("type", locale -> "type")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

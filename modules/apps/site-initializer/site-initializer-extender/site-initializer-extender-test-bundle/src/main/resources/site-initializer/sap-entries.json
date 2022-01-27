@@ -11,5 +11,20 @@
 		"title_i18n": {
 			"en-US": "Test SAP Entry 1"
 		}
+	},
+	{
+		"allowedServiceSignatures": [
+			"com.liferay.url1",
+			"com.liferay.url2",
+			"com.liferay.url3",
+			"com.liferay.url4",
+			"com.liferay.url5"
+		],
+		"defaultSAPEntry": "false",
+		"enabled": "true",
+		"name": "TEST_SAP_ENTRY_2",
+		"title_i18n": {
+			"en-US": "Test SAP Entry 2"
+		}
 	}
 ]

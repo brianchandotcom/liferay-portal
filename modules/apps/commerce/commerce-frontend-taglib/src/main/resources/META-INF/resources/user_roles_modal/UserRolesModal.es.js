@@ -23,6 +23,8 @@ import './RoleInputItem.es';
 
 import './RoleListItem.es';
 
+import '../css/main.scss';
+
 class UserRolesModal extends Component {
 	syncSelectedRoles() {
 		const contentWrapper = this.element.querySelector(

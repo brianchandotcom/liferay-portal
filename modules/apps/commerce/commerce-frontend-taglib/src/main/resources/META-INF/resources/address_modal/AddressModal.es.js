@@ -22,6 +22,8 @@ import 'clay-modal';
 
 import '../input_utils/CommerceInputText';
 
+import '../css/main.scss';
+
 class AddressModal extends Component {
 	attached() {
 		return this._fetchCountries();

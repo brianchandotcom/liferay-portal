@@ -46,12 +46,42 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is possible to cancel the update of an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelActionUpdate {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145719 CanCancelActionUpdate pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.goToActionDetails(viewEntry = "Action Name");
+
+		ObjectAdmin.viewFieldDetails();
+
+		Type(
+			locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
+			value1 = "Update Action Name");
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Action Name");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to create an Action"

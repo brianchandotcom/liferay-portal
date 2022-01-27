@@ -718,6 +718,14 @@ definition {
 		Button.clickSave();
 	}
 
+	macro goToActionDetails {
+		Click(
+			key_objectLabel = "${viewEntry}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "View");
+	}
+
 	macro goToActionsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_ACTIONS_TAB");
 	}

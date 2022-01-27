@@ -540,6 +540,11 @@
 		<td>//div[contains(text(),'${key_labelName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_ACTION_NAME_ON_SIDE_PANEL</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
+		<td></td>
+</tr>
 </tbody>
 </table>
 </body>

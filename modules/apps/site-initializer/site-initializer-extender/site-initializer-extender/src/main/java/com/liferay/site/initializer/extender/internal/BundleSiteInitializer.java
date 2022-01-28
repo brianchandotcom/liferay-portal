@@ -355,15 +355,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addAccounts(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
-			_invoke(() -> _addFragmentEntries(serviceContext));
-			_invoke(() -> _addSAPEntries(serviceContext));
-			_invoke(() -> _addSiteConfiguration(serviceContext));
-			_invoke(() -> _addStyleBookEntries(serviceContext));
-			_invoke(
-				() -> _addTaxonomyVocabularies(
-					serviceContext, siteNavigationMenuItemSettingsBuilder));
-			_invoke(() -> _addUserAccounts(serviceContext));
-			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -373,6 +364,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
 				() -> _addDocuments(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
+
+			_invoke(
+				() -> _addFragmentEntries(
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues, serviceContext));
+
+			_invoke(() -> _addSAPEntries(serviceContext));
+			_invoke(() -> _addSiteConfiguration(serviceContext));
+			_invoke(() -> _addStyleBookEntries(serviceContext));
+			_invoke(
+				() -> _addTaxonomyVocabularies(
+					serviceContext, siteNavigationMenuItemSettingsBuilder));
+			_invoke(() -> _addUserAccounts(serviceContext));
+			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -1330,18 +1335,79 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
-	private void _addFragmentEntries(ServiceContext serviceContext)
+	private void _addFragmentEntries(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		URL url = _bundle.getEntry("/fragments.zip");
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/fragments", StringPool.STAR, true);
 
-		if (url == null) {
+		if (enumeration == null) {
 			return;
+		}
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String fileName = url.getFile();
+
+			int index = fileName.lastIndexOf(CharPool.FORWARD_SLASH);
+
+			if ((index == -1) || (index >= (fileName.length() - 1))) {
+				continue;
+			}
+
+			fileName = fileName.substring(index + 1);
+
+			if (Validator.isNull(fileName)) {
+				continue;
+			}
+
+			String urlPath = url.getPath();
+
+			if (StringUtil.endsWith(
+					urlPath, "fragment-composition-definition.json")) {
+
+				String json = StringUtil.read(url.openStream());
+
+				json = StringUtil.replace(
+					json, "\"[$", "$]\"",
+					HashMapBuilder.putAll(
+						assetListEntryIdsStringUtilReplaceValues
+					).putAll(
+						documentsStringUtilReplaceValues
+					).build());
+
+				Group scopeGroup = serviceContext.getScopeGroup();
+
+				json = StringUtil.replace(
+					json,
+					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
+					new String[] {
+						scopeGroup.getFriendlyURL(),
+						String.valueOf(serviceContext.getScopeGroupId())
+					});
+
+				zipWriter.addEntry(
+					StringUtil.removeFirst(
+						urlPath, "/site-initializer/fragments/"),
+					json);
+			}
+			else {
+				zipWriter.addEntry(
+					StringUtil.removeFirst(
+						urlPath, "/site-initializer/fragments/"),
+					url.openStream());
+			}
 		}
 
 		_fragmentsImporter.importFragmentEntries(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-			FileUtil.createTempFile(url.openStream()), false);
+			zipWriter.getFile(), false);
 	}
 
 	private void _addJournalArticles(

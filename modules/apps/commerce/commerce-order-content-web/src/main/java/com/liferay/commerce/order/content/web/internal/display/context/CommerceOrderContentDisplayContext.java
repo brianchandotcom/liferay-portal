@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
@@ -178,7 +179,7 @@ public class CommerceOrderContentDisplayContext {
 		throws PortalException {
 
 		return _commerceAddressService.getBillingCommerceAddresses(
-			companyId, CommerceAccount.class.getName(), commerceAccountId);
+			companyId, AccountEntry.class.getName(), commerceAccountId);
 	}
 
 	public CommerceAccount getCommerceAccount() {
@@ -641,7 +642,7 @@ public class CommerceOrderContentDisplayContext {
 		throws PortalException {
 
 		return _commerceAddressService.getShippingCommerceAddresses(
-			companyId, CommerceAccount.class.getName(), commerceAccountId);
+			companyId, AccountEntry.class.getName(), commerceAccountId);
 	}
 
 	public boolean hasModelPermission(

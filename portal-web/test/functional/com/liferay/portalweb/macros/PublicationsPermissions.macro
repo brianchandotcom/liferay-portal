@@ -110,18 +110,6 @@ definition {
 
 	macro assertPublisherPermissions {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
-			menuItem = "Invite Users",
-			publicationName = "${publicationName}");
-
-		AssertVisible(
-			key_text = "Send",
-			locator1 = "Button#ANY_DISABLED");
-
-		ClickNoError(
-			key_menuItem = "Cancel",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Edit",
 			publicationName = "${publicationName}");
 

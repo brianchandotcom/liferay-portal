@@ -142,6 +142,7 @@
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that method parameter names conform to a specified pattern." />
 			<property name="documentationLocation" value="config_naming.html#ParameterName" />
+			<property name="format" value="^[a-z][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="RequireThisCheck">

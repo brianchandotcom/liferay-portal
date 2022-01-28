@@ -373,7 +373,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			content, "add", "ConcurrentSkipListSet", "HashSet", "TreeSet");
 		content = _sortMethodCallsByParameter(
 			content, "put", "ConcurrentHashMap", "HashMap", "JSONObject",
-			"SortedMap", "TreeMap");
+			"Properties", "SortedMap", "TreeMap");
 		content = _sortMethodCallsByParameter(content, "setAttribute");
 
 		return content;

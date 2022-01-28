@@ -259,6 +259,11 @@ public class DLAdminDisplayContext {
 			_repositoryId = folder.getRepositoryId();
 		}
 		else {
+			_repositoryId =
+				_dlPortletInstanceSettings.getSelectedRepositoryId();
+		}
+
+		if (_repositoryId == 0) {
 			_repositoryId = ParamUtil.getLong(
 				_httpServletRequest, "repositoryId",
 				_themeDisplay.getScopeGroupId());

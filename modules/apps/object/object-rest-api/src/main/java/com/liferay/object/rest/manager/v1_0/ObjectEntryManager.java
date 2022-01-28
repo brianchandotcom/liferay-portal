@@ -40,7 +40,9 @@ public interface ObjectEntryManager {
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception;
 
-	public void deleteObjectEntry(long objectEntryId) throws Exception;
+	public void deleteObjectEntry(
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception;
 
 	public void deleteObjectEntry(
 			String externalReferenceCode, long companyId,

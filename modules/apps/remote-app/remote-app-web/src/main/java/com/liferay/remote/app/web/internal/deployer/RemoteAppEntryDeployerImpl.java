@@ -27,6 +27,7 @@ import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
+import com.liferay.remote.app.web.internal.servlet.taglib.RemoteAppTopHeadDynamicInclude;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -109,6 +110,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	private ServiceRegistration<Portlet> _registerPortlet(
 		RemoteAppEntry remoteAppEntry) {
 
+		String portletName = _getPortletId(remoteAppEntry);
+
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
@@ -124,7 +127,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 				"javax.portlet.display-name",
 				remoteAppEntry.getName(LocaleUtil.US)
 			).put(
-				"javax.portlet.name", _getPortletId(remoteAppEntry)
+				"javax.portlet.name", portletName
 			).put(
 				"javax.portlet.security-role-ref", "power-user,user"
 			).build();
@@ -135,9 +138,15 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 			String customElementURLs = remoteAppEntry.getCustomElementURLs();
 
-			dictionary.put(
-				"com.liferay.portlet.footer-portal-javascript",
-				customElementURLs.split(StringPool.NEW_LINE));
+			if (remoteAppEntry.isCustomElementUseESM()) {
+				_remoteAppTopHeadDynamicInclude.registerURLs(
+					portletName, customElementURLs.split(StringPool.NEW_LINE));
+			}
+			else {
+				dictionary.put(
+					"com.liferay.portlet.footer-portal-javascript",
+					customElementURLs.split(StringPool.NEW_LINE));
+			}
 
 			String customElementCSSURLs =
 				remoteAppEntry.getCustomElementCSSURLs();
@@ -170,5 +179,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference
+	private RemoteAppTopHeadDynamicInclude _remoteAppTopHeadDynamicInclude;
 
 }

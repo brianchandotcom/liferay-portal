@@ -811,7 +811,6 @@ definition {
 
 	macro assertNoFileNameFromTempFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
-
 		var exportedFile = FileUtil.exists("${tempDir}/${fileName}");
 
 		if ("${exportedFile}" == "true") {

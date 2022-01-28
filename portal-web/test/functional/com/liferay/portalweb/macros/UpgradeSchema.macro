@@ -7,7 +7,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "validate-db-upgrade-schemas");
 
-		var result = FileUtil.read("${projectDir}/db-changes.txt");
+		var result = FileUtil.read("${projectDir}/validate-db-upgrade-schemas.txt");
 
 		if (!(contains("${result}", "Database schemas match"))) {
 			echo("${result}");

@@ -152,6 +152,18 @@ public class ObjectDefinitionResourceImpl
 			Long objectDefinitionId, ObjectDefinition objectDefinition)
 		throws Exception {
 
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.getObjectDefinition(
+					objectDefinitionId);
+
+		if (serviceBuilderObjectDefinition.isSystem()) {
+			return _toObjectDefinition(
+				_objectDefinitionService.updateTitleObjectFieldId(
+					objectDefinitionId,
+					objectDefinition.getTitleObjectFieldId()));
+		}
+
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId, 0,

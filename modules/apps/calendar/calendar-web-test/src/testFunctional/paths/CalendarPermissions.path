@@ -15,6 +15,46 @@
 	<td>//h3[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PERMISSIONS_ROLE_NAME</td>
+	<td>//tr//*[normalize-space(text())='${key_roleName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_RESULTS_BAR</td>
+	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_FIELD_SEARCH</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SEARCH_CLEAR</td>
+	<td>//a[contains(text(),'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SEARCH_ICON</td>
+	<td>//span[contains(@class,'input-group-inset-item input-group-inset-item-after')]//button[2][contains(@class,'btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_ROLES_WERE_FOUND</td>
+	<td>//div[contains(text(),'No roles were found.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ITEMS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_ENTRIES</td>
+	<td>//p[@class='pagination-results']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

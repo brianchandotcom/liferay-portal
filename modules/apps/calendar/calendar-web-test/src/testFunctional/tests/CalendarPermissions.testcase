@@ -57,39 +57,66 @@ definition {
 	}
 
 	@description = "LRQA-71890 - Verify that the user can change the number of entries on the permission page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanChangeTheNumberOfEntriesDIsplayed {
+		CalendarPermissions.gotoPermissions();
 
-		// TODO LRQA-71961 CanChangeTheNumberOfEntriesDIsplayed pending implementation
+		CalendarPermissions.changePaginationPermissions(itemsPerPage = "4");
 
+		CalendarPermissions.viewResultsEntries(results = "Showing 1 to 4 of 9 entries.");
+
+		CalendarPermissions.changePaginationPermissions(itemsPerPage = "8");
+
+		CalendarPermissions.viewResultsEntries(results = "Showing 1 to 8 of 9 entries.");
 	}
 
 	@description = "LRQA-71890 - Verify that the user can clear the result bar after a search"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanClearTheResultsOfASearch {
+		CalendarPermissions.gotoPermissions();
 
-		// TODO LRQA-71960 CanClearTheResultsOfASearch pending implementation
+		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
+		CalendarPermissions.viewSearchResult(searchResults = "1 Results for Guest");
+
+		CalendarPermissions.cleanSearchResult();
+
+		CalendarPermissions.resultBarIsnotDisplayed();
 	}
 
 	@description = "LRQA-71890 - Verify that the user can search for a existent permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchOnPermissionsPage {
+		CalendarPermissions.gotoPermissions();
 
-		// TODO LRQA-71959 CanSearchOnPermissionsPage pending implementation
+		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
+		CalendarPermissions.viewSearchResult(searchResults = "1 Results for Guest");
+
+		CalendarPermissions.viewPermissionsRoleName(roleName = "Guest");
+
+		CalendarPermissions.cleanSearchResult();
+
+		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
+
+		CalendarPermissions.viewSearchResult(searchResults = "0 Results for DXP Client");
+
+		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
 	}
 
 	@description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SystemDisplaysMessageWhenNoRoleIsFound {
+		CalendarPermissions.gotoPermissions();
 
-		// TODO LRQA-71962 SystemDisplaysMessageWhenNoRoleIsFound pending implementation
+		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
 
+		CalendarPermissions.viewSearchResult(searchResults = "0 Results for DXP Client");
+
+		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
+
+
+		
 	}
 
 }

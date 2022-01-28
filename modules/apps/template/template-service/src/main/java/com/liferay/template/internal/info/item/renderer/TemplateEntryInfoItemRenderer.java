@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
+import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.model.TemplateEntry;
 
 import java.io.Writer;
@@ -41,10 +42,11 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 
 	public TemplateEntryInfoItemRenderer(
 		InfoItemServiceTracker infoItemServiceTracker,
-		TemplateEntry templateEntry) {
+		TemplateEntry templateEntry, TemplateNodeFactory templateNodeFactory) {
 
 		_infoItemServiceTracker = infoItemServiceTracker;
 		_templateEntry = templateEntry;
+		_templateNodeFactory = templateNodeFactory;
 	}
 
 	@Override
@@ -100,7 +102,8 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 			TemplateDisplayTemplateTransformer
 				templateDisplayTemplateTransformer =
 					new TemplateDisplayTemplateTransformer(
-						_templateEntry, infoItemFieldValues);
+						_templateEntry, infoItemFieldValues,
+						_templateNodeFactory);
 
 			String content = templateDisplayTemplateTransformer.transform(
 				LocaleThreadLocal.getThemeDisplayLocale());
@@ -114,5 +117,6 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final TemplateEntry _templateEntry;
+	private final TemplateNodeFactory _templateNodeFactory;
 
 }

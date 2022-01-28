@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.template.internal.info.item.renderer.TemplateEntryInfoItemRenderer;
+import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
@@ -67,7 +68,8 @@ public class TemplateEntryModelListener
 			_bundleContext.registerService(
 				InfoItemRenderer.class,
 				new TemplateEntryInfoItemRenderer<>(
-					_infoItemServiceTracker, templateEntry),
+					_infoItemServiceTracker, templateEntry,
+					_templateNodeFactory),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", templateEntry.getInfoItemClassName()
 				).build()));
@@ -107,7 +109,8 @@ public class TemplateEntryModelListener
 				_bundleContext.registerService(
 					InfoItemRenderer.class,
 					new TemplateEntryInfoItemRenderer<>(
-						_infoItemServiceTracker, templateEntry),
+						_infoItemServiceTracker, templateEntry,
+						_templateNodeFactory),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"item.class.name", templateEntry.getInfoItemClassName()
 					).build())));
@@ -172,5 +175,8 @@ public class TemplateEntryModelListener
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;
+
+	@Reference
+	private TemplateNodeFactory _templateNodeFactory;
 
 }

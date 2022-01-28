@@ -19,10 +19,9 @@ package com.liferay.remote.app.web.internal.frontend.data.set.model;
  */
 public class StatusInfo {
 
-	public StatusInfo(String label, String labelI18n) {
+	public StatusInfo(String label, String label_i18n) {
 		_label = label;
-
-		_label_i18n = labelI18n;
+		_label_i18n = label_i18n;
 	}
 
 	public String getLabel() {

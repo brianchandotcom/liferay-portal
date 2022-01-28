@@ -178,8 +178,6 @@ public class LiferayJWTBearerGrantHandler
 		if (defaultsMap != null) {
 			defaultsMap.forEach(map::putIfAbsent);
 		}
-
-		_rebuild(CompanyConstants.SYSTEM);
 	}
 
 	private void _rebuild() {

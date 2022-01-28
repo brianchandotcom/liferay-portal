@@ -150,6 +150,11 @@
 		<td>//input[@id=('listTypeEntryKey') and @value=('${key_itemKey}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DISABLED_PICKLIST_NAME</td>
+		<td>//input[(@id='_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_name') and (@disabled)]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -72,6 +72,22 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertDisabledPicklistItem {
+		Picklist.assertDisableKey();
+
+		AssertElementPresent(locator1 = "Picklist#DISABLED_PICKLIST_NAME");
+	}
+
+	macro assertDisabledPicklistName {
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
+		AssertElementPresent(locator1 = "Picklist#DISABLED_PICKLIST_NAME");
+	}
+
+	macro assertDisabledSaveButton {
+		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
+	}
+
 	macro assertDisableKey {
 		IFrame.selectTopFrame();
 

@@ -171,12 +171,63 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to update a Picklist without the Update permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotUpdatePicklistWithoutUpdatePermission {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145758 CannotUpdatePicklistWithoutUpdatePermission pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "ItemTest",
+			itemName = "Picklist Item",
+			picklistName = "Picklist Test");
 
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.list.type.model.ListTypeDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		CreateObject.viewObject(labelName = "Picklist Test");
+
+		Picklist.assertDisabledPicklistName();
+
+		Picklist.assertDisabledSaveButton();
+
+		CreateObject.viewObject(labelName = "Picklist Item");
+
+		Picklist.assertDisabledPicklistItem();
+
+		Picklist.assertDisabledSaveButton();
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view a Picklist without the View permission"

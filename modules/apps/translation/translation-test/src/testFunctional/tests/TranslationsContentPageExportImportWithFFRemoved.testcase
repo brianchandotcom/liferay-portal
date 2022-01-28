@@ -29,6 +29,9 @@ definition {
 	@description = "This ensures that the user can export an available language for multiple experiences."
 	@priority = "5"
 	test CanExportAnAvailableLanguageForMultipleExperiences {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "TranslationContentPage",
@@ -61,8 +64,8 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
-		for (var translationFileName : list "TranslationContentPage (NewAnyoneExperience1)-en_US-es_ES,TranslationContentPage (NewAnyoneExperience2)-en_US-es_ES") {
-			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
+		for (var fileName : list "TranslationContentPage (NewAnyoneExperience1)-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience2)-en_US-es_ES.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
 		}
 	}
 
@@ -103,8 +106,8 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
-		for (var translationFileName : list "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES") {
-			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
+		for (var fileName : list "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
 		}
 	}
 
@@ -144,8 +147,8 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
-		for (var translationFileName : list "TranslationContentPage-en_US-ja_JP,TranslationContentPage-en_US-es_ES,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES") {
-			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
+		for (var fileName : list "TranslationContentPage-en_US-ja_JP.xlf,TranslationContentPage-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
 		}
 	}
 

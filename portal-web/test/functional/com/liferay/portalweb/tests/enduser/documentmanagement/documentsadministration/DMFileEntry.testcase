@@ -730,7 +730,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Site_1.zip");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Site_1.zip");
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document file name."
@@ -758,7 +758,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.mp4");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.mp4");
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document title."
@@ -786,7 +786,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.mp4");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.mp4");
 	}
 
 	@description = "This ensures that the document file can be downloaded using the updated document file name."
@@ -820,7 +820,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3Edit.doc");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3Edit.doc");
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document title."
@@ -853,7 +853,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3.doc");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3.doc");
 	}
 
 	@description = "This ensures that the document file name will be applied to the downloaded file name."
@@ -876,7 +876,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "document_1_Edit.jpg");
+		DMDocument.assertFileNameFromTempFolder(fileName = "document_1_Edit.jpg");
 	}
 
 	@priority = "5"
@@ -898,7 +898,7 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/@!# Title");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.doc");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.doc");
 	}
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
@@ -997,7 +997,7 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3.doc");
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3.doc");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

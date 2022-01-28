@@ -4282,7 +4282,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "DM Document Video.mp4");
+		DMDocument.assertFileNameFromTempFolder(fileName = "DM Document Video.mp4");
 
 		Navigator.gotoPage(pageName = "Documents");
 
@@ -4306,7 +4306,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "DM Document JPG");
+		DMDocument.assertFileNameFromTempFolder(fileName = "DM Document JPG");
 
 		Navigator.gotoPage(pageName = "Documents");
 

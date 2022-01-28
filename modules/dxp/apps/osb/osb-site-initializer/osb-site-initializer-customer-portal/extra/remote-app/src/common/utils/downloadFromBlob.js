@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default function getDownloadFromBlob(blob, filename) {
+export default function downloadFromBlob(blob, filename) {
 	const a = document.createElement('a');
 	a.href = window.URL.createObjectURL(blob);
 	a.download = filename;

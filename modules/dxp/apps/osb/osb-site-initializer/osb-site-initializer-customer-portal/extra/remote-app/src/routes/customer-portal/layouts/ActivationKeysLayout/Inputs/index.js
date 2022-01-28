@@ -20,8 +20,8 @@ import {
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
 import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
-import getDownloadFromBlob from '../../../../../common/utils/getDownloadFromBlob';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
 import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 
@@ -124,7 +124,9 @@ const ActivationKeysInputs = ({
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			return getDownloadFromBlob(licenseBlob, `license${extensionFile}`);
+			downloadFromBlob(licenseBlob, `license${extensionFile}`);
+
+			return;
 		}
 
 		setLicenseDownloadError(true);

@@ -837,7 +837,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Desktop size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassHomeinDesktopSize {
 		task ("Go to Home Page") {
@@ -1416,7 +1415,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137508. View the Masterclass Stylebook Classic Theme"
-	@ignore = "true"
 	test ViewMasterclassClassicStylebook {
 		task ("Go to Masterclass Stylebook") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");

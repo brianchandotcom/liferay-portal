@@ -411,12 +411,12 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public long getUserId() {
-		return _article.getUserId();
+		return _article.getStatusByUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _article.getUserName();
+		return _article.getStatusByUserName();
 	}
 
 	@Override

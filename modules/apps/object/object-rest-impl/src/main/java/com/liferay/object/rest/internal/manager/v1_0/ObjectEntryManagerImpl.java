@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -117,7 +118,14 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Override
-	public void deleteObjectEntry(long objectEntryId) throws Exception {
+	public void deleteObjectEntry(
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(
+			_objectEntryService.getObjectEntry(objectEntryId),
+			objectDefinition);
+
 		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}
 
@@ -127,9 +135,14 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		_objectEntryService.deleteObjectEntry(
-			externalReferenceCode, companyId,
-			_getGroupId(objectDefinition, scopeKey));
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, companyId,
+				_getGroupId(objectDefinition, scopeKey));
+
+		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+
+		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -223,9 +236,13 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {
 
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+
 		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_objectEntryService.getObjectEntry(objectEntryId));
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -235,11 +252,15 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
+		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, companyId,
-				_getGroupId(objectDefinition, scopeKey)));
+				_getGroupId(objectDefinition, scopeKey));
+
+		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -252,6 +273,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
+		_checkObjectEntryObjectDefinitionId(
+			serviceBuilderObjectEntry, objectDefinition);
+
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.updateObjectEntry(
@@ -261,6 +285,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				new ServiceContext()));
+	}
+
+	private void _checkObjectEntryObjectDefinitionId(
+			com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		if (objectEntry.getObjectDefinitionId() !=
+				objectDefinition.getObjectDefinitionId()) {
+
+			throw new NoSuchObjectEntryException();
+		}
 	}
 
 	private long _getGroupId(

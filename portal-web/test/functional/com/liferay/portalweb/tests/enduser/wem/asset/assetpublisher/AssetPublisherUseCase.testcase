@@ -1271,7 +1271,7 @@ definition {
 		}
 
 		task ("Select a display page in web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

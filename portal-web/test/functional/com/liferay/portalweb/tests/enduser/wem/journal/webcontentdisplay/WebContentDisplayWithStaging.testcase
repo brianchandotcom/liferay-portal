@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("Expire the web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContent.expireSpecificVersionCP(webContentTitle = "Web Content Title");
 		}
@@ -108,7 +108,7 @@ definition {
 		}
 
 		task ("View web content status in web content admin") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -195,13 +195,13 @@ definition {
 		}
 
 		task ("Move the web content to recycle bin in live") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.moveToRecycleBinViaDeleteIconCP();
 		}
 
 		task ("Edit the web content in staging") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -243,7 +243,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add an image field to web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			NavItem.gotoStructures();
 
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("Add an image description to web content") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

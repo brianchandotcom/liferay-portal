@@ -3730,7 +3730,7 @@ definition {
 		}
 
 		task ("Edit Web Content created by Test user") {
-			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 1");
 

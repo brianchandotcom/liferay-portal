@@ -1066,6 +1066,99 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
 	}
 
+	@description = "This is a use case for LPS-143567."
+	test SaveAndEditCustomJSONElement {
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "apple apple apple");
+
+		var webContentserviceContext = '''{"assetTagNames": ["apple"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			serviceContext = "${webContentserviceContext}",
+			title = "gala");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Custom JSON Element");
+
+		var customJson = '''
+{
+	"elementDefinition": {
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetTagNames.raw": {
+											"value": "${keywords}",
+											"boost": "2000"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Tags Match Custom JSON"
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${customJson}");
+
+		PortletEntry.save();
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(
+			element = "Boost Tags Match Custom JSON",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "1",
+			value1 = "gala");
+
+		var customJsonEdited = '''
+{
+	"title_i18n": {
+		"en_US": "Custom JSON Element Edited"
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${customJsonEdited}");
+
+		PortletEntry.save();
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(
+			element = "Custom JSON Element Edited",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+	}
+
 	test SearchBlueprintsAdminTable {
 		Blueprints.openBlueprintsAdmin();
 

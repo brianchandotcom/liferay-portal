@@ -98,6 +98,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			}
 
 			_httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+			_httpServletRequest.setAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
 				infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class, className));

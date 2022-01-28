@@ -18,7 +18,7 @@
 		/>
 		<fileset
 			dir="${project.dir}/lib/portal"
-			includes="commons-logging.jar,liferay-rhino.jar"
+			includes="commons-logging.jar"
 		/>
 	</path>
 

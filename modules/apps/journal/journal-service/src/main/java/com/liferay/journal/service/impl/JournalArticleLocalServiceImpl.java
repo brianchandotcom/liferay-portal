@@ -6474,6 +6474,17 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
 			article.setStatusDate(new Date());
 
+			User statusUser = _userLocalService.fetchUser(
+				serviceContext.getUserId());
+
+			if (statusUser == null) {
+				statusUser = _userLocalService.getDefaultUser(
+					oldArticle.getCompanyId());
+			}
+
+			article.setStatusByUserId(statusUser.getUserId());
+			article.setStatusByUserName(statusUser.getFullName());
+
 			ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 				oldArticle.getExpandoBridge(), article.getExpandoBridge());
 

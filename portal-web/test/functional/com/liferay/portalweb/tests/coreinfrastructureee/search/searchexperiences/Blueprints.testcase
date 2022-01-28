@@ -680,6 +680,30 @@ definition {
 			text = "clauses");
 	}
 
+	test DownloadElementJSONViaElementsEditPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.editElement(
+			element = "Text Match Over Multiple Fields",
+			searchForElement = "true");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		Click(
+			key_text = "Dropdown",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "View Element JSON");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Link#DOWNLOAD");
+
+		Blueprints.viewDownloadedContent(
+			fileName = "sxpElement.json",
+			text = "queryConfiguration");
+	}
+
 	test DownloadScoreExplanationViaBlueprintsQueryBuilder {
 		Blueprints.openBlueprintsAdmin();
 

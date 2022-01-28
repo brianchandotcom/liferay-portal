@@ -68,15 +68,10 @@ definition {
 
 		Blueprints.addElement(element = "Paste Any Elasticsearch Query");
 
-		var elasticsearchQueryJson = '''
-{
-	"match_none":
-	{}
-}
-		''';
+		var elasticsearchQueryJson = '''{"match_none":{}}''';
 
 		Type.typeCodeMirrorEditorNoError(
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ELASTICSEARCH_QUERY_EDITOR",
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "${elasticsearchQueryJson}");
 
 		PortletEntry.save();
@@ -162,18 +157,6 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "liferay");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
-	}
-
-	test AssertBlueprintsPreviewFormValidation {
-		Blueprints.openBlueprintsAdmin();
-
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		Blueprints.addElement(element = "Boost Asset Type");
-
-		Blueprints.searchBlueprintsPreview(searchTerm = "test");
-
-		Alert.viewErrorMessage(errorMessage = "The configuration has missing or invalid values.");
 	}
 
 	test AssertLocalizedFieldsAddLocaleDropdown {
@@ -319,7 +302,7 @@ definition {
 		''';
 
 		Type.typeCodeMirrorEditorNoError(
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ELASTICSEARCH_QUERY_EDITOR",
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "${elasticsearchQueryJson}");
 
 		Blueprints.configureElementDropdown(
@@ -1330,6 +1313,18 @@ definition {
 		AssertTextEquals(
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE",
 			value1 = "Test Blueprint");
+	}
+
+	test ViewBlueprintsPreviewFormValidation {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Alert.viewErrorMessage(errorMessage = "The configuration has missing or invalid values.");
 	}
 
 	test ViewClauseContributorsUI {

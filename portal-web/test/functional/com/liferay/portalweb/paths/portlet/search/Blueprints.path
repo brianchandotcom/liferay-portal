@@ -41,11 +41,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BLUEPRINTS_ADDED_ELEMENT_ELASTICSEARCH_QUERY_EDITOR</td>
-	<td>//div[contains(@class,'custom-json')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL</td>
 	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//label[contains(.,'${fieldName}')]</td>
 	<td></td>
@@ -83,11 +78,6 @@
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION</td>
 	<td>//select[@aria-label="${dropdownName}"]/option[contains(.,"${option}")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLUEPRINTS_ADDED_ELEMENT_GENERIC_FIELD</td>
-	<td>//input[contains(@aria-label, "${key_fieldLabel}") and contains(@name, "selectedQueryElements")]</td>
 	<td></td>
 </tr>
 <tr>

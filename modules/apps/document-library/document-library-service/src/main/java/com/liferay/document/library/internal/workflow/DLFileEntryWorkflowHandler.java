@@ -87,6 +87,23 @@ public class DLFileEntryWorkflowHandler
 	}
 
 	@Override
+	public long getDiscussionClassPk(
+		Map<String, Serializable> workflowContext) {
+
+		try {
+			AssetRenderer<DLFileEntry> dlFileEntryAssetRenderer =
+				getAssetRenderer(super.getDiscussionClassPk(workflowContext));
+
+			return dlFileEntryAssetRenderer.getClassPK();
+		}
+		catch (PortalException portalException) {
+			portalException.printStackTrace();
+		}
+
+		return super.getDiscussionClassPk(workflowContext);
+	}
+
+	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
@@ -50,6 +51,13 @@ public interface WorkflowHandler<T> {
 	public AssetRendererFactory<T> getAssetRendererFactory();
 
 	public String getClassName();
+
+	public default long getDiscussionClassPk(
+		Map<String, Serializable> workflowContext) {
+
+		return GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+	}
 
 	public String getIconCssClass();
 

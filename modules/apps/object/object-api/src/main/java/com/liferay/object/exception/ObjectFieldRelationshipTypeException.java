@@ -21,21 +21,30 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectFieldRelationshipTypeException extends PortalException {
 
-	public ObjectFieldRelationshipTypeException() {
+	public static class
+		MustNotEditDescriptionAndTitleUsingObjectFieldRelationshipType
+			extends ObjectFieldRelationshipTypeException {
+
+		public MustNotEditDescriptionAndTitleUsingObjectFieldRelationshipType() {
+			super(
+				"Description and title object fields cannot have a " +
+					"relationship type");
+		}
+
 	}
 
-	public ObjectFieldRelationshipTypeException(String msg) {
+	public static class MustNotEditNameOrDBTypeOfObjectFieldRelationshipType
+		extends ObjectFieldRelationshipTypeException {
+
+		public MustNotEditNameOrDBTypeOfObjectFieldRelationshipType() {
+			super(
+				"Object field relationship name and DB type cannot be changed");
+		}
+
+	}
+
+	private ObjectFieldRelationshipTypeException(String msg) {
 		super(msg);
-	}
-
-	public ObjectFieldRelationshipTypeException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public ObjectFieldRelationshipTypeException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

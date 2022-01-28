@@ -1091,9 +1091,8 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			throw new ObjectFieldRelationshipTypeException(
-				"Description and title object fields cannot have a " +
-					"relationship type");
+			throw new ObjectFieldRelationshipTypeException.
+				MustNotEditDescriptionAndTitleUsingObjectFieldRelationshipType();
 		}
 	}
 

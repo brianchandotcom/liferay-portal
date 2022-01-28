@@ -14,12 +14,11 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -98,30 +96,16 @@ public class ProcessSummaryDisplayContext {
 			return layoutIds;
 		}
 
-		Map<String, Serializable> parameterMap =
-			(Map<String, Serializable>)exportImportConfigurationSettingsMap.get(
-				"parameterMap");
+		Map<Long, Boolean> layoutIdMap =
+			(Map<Long, Boolean>)exportImportConfigurationSettingsMap.get(
+				"layoutIdMap");
 
 		try {
-			JSONArray layoutIdsJSONArray = JSONFactoryUtil.createJSONArray(
-				MapUtil.getString(parameterMap, "layoutIds"));
-
-			layoutIds = new long[layoutIdsJSONArray.length()];
-
-			for (int i = 0; i < layoutIdsJSONArray.length(); ++i) {
-				JSONObject layoutJSONObject = layoutIdsJSONArray.getJSONObject(
-					i);
-
-				long plid = layoutJSONObject.getLong("plid");
-
-				Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-				layoutIds[i] = layout.getLayoutId();
-			}
+			layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 		}
-		catch (JSONException jsonException) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsonException);
+				_log.warn(portalException);
 			}
 		}
 

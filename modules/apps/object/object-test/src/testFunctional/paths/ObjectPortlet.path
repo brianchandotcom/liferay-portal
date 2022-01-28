@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>DUPLICATED_ENTRY_VALUE</td>
-		<td>(//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')])[2]</td>
+		<td>(//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')])[2]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -52,22 +52,22 @@
 	</tr>
 	<tr>
 		<td>ENTRY_STATUS</td>
-		<td>//div[contains(text(),'${key_entry}')]/following-sibling::div//span[contains(@class,'workflow-status')]//strong[contains(text(),'${key_status}')]</td>
+		<td>//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//span[contains(@class,'workflow-status')]//strong[contains(text(),'${key_status}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]</td>
+		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE_SPECIFIC_ORDER</td>
-		<td>//div[${resultOrder}]//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]</td>
+		<td>//div[${resultOrder}]//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_KEBAB_MENU</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
+		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
 		<td></td>
 	</tr>
 	<tr>

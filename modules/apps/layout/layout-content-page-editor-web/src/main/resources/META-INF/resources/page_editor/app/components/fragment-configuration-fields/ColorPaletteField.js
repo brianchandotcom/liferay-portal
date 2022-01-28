@@ -20,7 +20,7 @@ import ColorPalette from '../../../common/components/ColorPalette';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export function ColorPaletteField({field, onValueSelect, value}) {
-	const [nextValue, setNextValue] = useState(value && value.cssClass);
+	const [nextValue, setNextValue] = useState(value?.cssClass ?? value);
 
 	return (
 		<ClayForm.Group>
@@ -32,33 +32,14 @@ export function ColorPaletteField({field, onValueSelect, value}) {
 					onValueSelect(field.name, '');
 				}}
 				onColorSelect={(color) => {
-					setNextValue(color);
+					setNextValue(color.cssClass);
 
-					onValueSelect(field.name, {
-						color,
-						cssClass: color,
-						rgbValue: getRgbValue(color),
-					});
+					onValueSelect(field.name, color);
 				}}
 				selectedColor={nextValue}
 			/>
 		</ClayForm.Group>
 	);
-}
-
-function getRgbValue(className) {
-	const node = document.createElement('div');
-
-	node.classList.add(`bg-${className}`);
-	node.style.display = 'none';
-
-	document.body.append(node);
-
-	const rgbValue = getComputedStyle(node).backgroundColor;
-
-	document.body.removeChild(node);
-
-	return rgbValue;
 }
 
 ColorPaletteField.propTypes = {

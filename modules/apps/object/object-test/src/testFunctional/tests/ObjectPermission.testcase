@@ -23,12 +23,41 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view and access the Picklist portlet with the Access in Control Panel permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAccessPicklistWithAccessPermission {
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		// TODO LPS-145753 CanAccessPicklistWithAccessPermission pending implementation
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		ObjectPortlet.assertHeader(objectLabel = "Picklists");
+
+		ObjectAdmin.assertNoItemsWereFound();
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add a Picklist with the Add permission"

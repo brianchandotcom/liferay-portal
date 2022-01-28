@@ -28,10 +28,6 @@ else {
 	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 
-WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
-
-long classPK = workflowInstanceViewDisplayContext.getWorkflowContextEntryClassPK(workflowInstance.getWorkflowContext());
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -142,19 +138,32 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 						</c:if>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel
-						markupView="lexicon"
-						title="comments"
-					>
-						<liferay-comment:discussion
-							className="<%= assetRenderer.getClassName() %>"
-							classPK="<%= classPK %>"
-							formName='<%= "fm" + classPK %>'
-							ratingsEnabled="<%= false %>"
-							redirect="<%= currentURL %>"
-							userId="<%= user.getUserId() %>"
-						/>
-					</liferay-ui:panel>
+					<%
+					WorkflowHandler<?> workflowHandler = workflowInstanceEditDisplayContext.getWorkflowHandler();
+					%>
+
+					<c:if test="<%= workflowHandler.isCommentable() %>">
+
+						<%
+						WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+
+						long discussionClassPK = workflowHandler.getDiscussionClassPk(workflowInstance.getWorkflowContext());
+						%>
+
+						<liferay-ui:panel
+							markupView="lexicon"
+							title="comments"
+						>
+							<liferay-comment:discussion
+								className="<%= assetRenderer.getClassName() %>"
+								classPK="<%= discussionClassPK %>"
+								formName='<%= "fm" + discussionClassPK %>'
+								ratingsEnabled="<%= false %>"
+								redirect="<%= currentURL %>"
+								userId="<%= user.getUserId() %>"
+							/>
+						</liferay-ui:panel>
+					</c:if>
 				</c:if>
 
 				<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">

@@ -187,6 +187,22 @@ public class AssetVocabularySettingsHelperTest {
 			vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(2, 2));
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(
+			true, new long[] {AssetCategoryConstants.ALL_CLASS_NAME_ID, 1},
+			new long[] {
+				AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				AssetCategoryConstants.ALL_CLASS_TYPE_PK
+			},
+			new boolean[] {false, true});
+
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(
+				AssetCategoryConstants.ALL_CLASS_NAME_ID,
+				AssetCategoryConstants.ALL_CLASS_TYPE_PK));
+		Assert.assertTrue(
+			vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(
 			true, new long[] {1, 1},
 			new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK, 2},
 			new boolean[] {false, true});

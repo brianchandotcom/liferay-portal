@@ -22,12 +22,12 @@ BatchPlannerLogDisplayContext batchPlannerLogDisplayContext = (BatchPlannerLogDi
 SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = batchPlannerLogDisplayContext.getSearchContainer();
 %>
 
-<clay:management-toolbar
-	managementToolbarDisplayContext="<%= new BatchPlannerLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerLogDisplaySearchContainer) %>"
-/>
-
 <clay:navigation-bar
 	navigationItems="<%= batchPlannerLogDisplayContext.getNavigationItems() %>"
+/>
+
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new BatchPlannerLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerLogDisplaySearchContainer) %>"
 />
 
 <clay:container-fluid>

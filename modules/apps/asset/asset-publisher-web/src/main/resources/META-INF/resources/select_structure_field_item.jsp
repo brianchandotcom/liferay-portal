@@ -17,15 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String className = ParamUtil.getString(request, "className");
 long classTypeId = ParamUtil.getLong(request, "classTypeId");
 String ddmStructureFieldName = ParamUtil.getString(request, "ddmStructureFieldName");
 Serializable ddmStructureFieldValue = ParamUtil.getString(request, "ddmStructureFieldValue");
 String name = ParamUtil.getString(request, "name");
 
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+ClassTypeField classTypeField = classType.getClassTypeField(name);
+
 com.liferay.dynamic.data.mapping.storage.Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
 
 ddmField.setDefaultLocale(themeDisplay.getLocale());
-ddmField.setDDMStructureId(classTypeId);
+ddmField.setDDMStructureId(classTypeField.getClassTypeId());
 ddmField.setName(name);
 
 if (name.equals(ddmStructureFieldName)) {
@@ -35,7 +44,7 @@ if (name.equals(ddmStructureFieldName)) {
 
 <liferay-ddm:html-field
 	classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-	classPK="<%= classTypeId %>"
+	classPK="<%= classTypeField.getClassTypeId() %>"
 	field="<%= ddmField %>"
 />
 

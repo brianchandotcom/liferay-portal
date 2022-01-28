@@ -15,6 +15,11 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeField;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
@@ -133,21 +138,36 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				resourceRequest);
 
-			long structureId = ParamUtil.getLong(
-				resourceRequest, "structureId");
+			String className = ParamUtil.getString(
+				resourceRequest, "className");
+			long classTypeId = ParamUtil.getLong(
+				resourceRequest, "classTypeId");
+			String fieldName = ParamUtil.getString(resourceRequest, "name");
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			ClassType classType = classTypeReader.getClassType(
+				classTypeId, themeDisplay.getLocale());
+
+			ClassTypeField classTypeField = classType.getClassTypeField(
+				fieldName);
 
 			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + structureId);
+				Fields.class.getName() + classTypeField.getClassTypeId());
 
 			if (fields == null) {
 				String fieldsNamespace = ParamUtil.getString(
 					resourceRequest, "fieldsNamespace");
 
 				fields = DDMUtil.getFields(
-					structureId, fieldsNamespace, serviceContext);
+					classTypeField.getClassTypeId(), fieldsNamespace,
+					serviceContext);
 			}
-
-			String fieldName = ParamUtil.getString(resourceRequest, "name");
 
 			Field field = fields.get(fieldName);
 

@@ -98,8 +98,9 @@ public class SelectStructureFieldDisplayContext {
 		ResourceURL getFieldValueURL = _renderResponse.createResourceURL();
 
 		getFieldValueURL.setParameter("portletResource", _getPortletResource());
+		getFieldValueURL.setParameter("className", _getClassName());
 		getFieldValueURL.setParameter(
-			"structureId", String.valueOf(_getClassTypeId()));
+			"classTypeId", String.valueOf(_getClassTypeId()));
 		getFieldValueURL.setResourceID("getFieldValue");
 
 		return getFieldValueURL.toString();

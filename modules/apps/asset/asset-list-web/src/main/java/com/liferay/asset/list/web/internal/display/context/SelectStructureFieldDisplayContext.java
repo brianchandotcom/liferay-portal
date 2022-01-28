@@ -107,8 +107,9 @@ public class SelectStructureFieldDisplayContext {
 			(LiferayPortletURL)_renderResponse.createResourceURL();
 
 		getFieldValueURL.setCopyCurrentRenderParameters(false);
+		getFieldValueURL.setParameter("className", _getClassName());
 		getFieldValueURL.setParameter(
-			"structureId", String.valueOf(_getClassTypeId()));
+			"classTypeId", String.valueOf(_getClassTypeId()));
 		getFieldValueURL.setResourceID("/asset_list/get_field_value");
 
 		return getFieldValueURL.toString();

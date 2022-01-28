@@ -254,15 +254,6 @@ public class AssetVocabularySettingsHelper {
 			return true;
 		}
 
-		if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
-			String prefix = classNameId + StringPool.COLON;
-
-			return ArrayUtil.exists(
-				classNameIdsAndClassTypePKs,
-				classNameIdsAndClassTypePK ->
-					classNameIdsAndClassTypePK.startsWith(prefix));
-		}
-
 		String classNameIdAndClassTypePK = getClassNameIdAndClassTypePK(
 			classNameId, classTypePK);
 

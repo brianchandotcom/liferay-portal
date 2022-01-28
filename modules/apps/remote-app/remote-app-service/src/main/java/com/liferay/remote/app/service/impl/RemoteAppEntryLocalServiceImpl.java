@@ -125,11 +125,12 @@ public class RemoteAppEntryLocalServiceImpl
 				"htmlElementName");
 			String urls = _joinJSONArray(
 				manifestJSONObject.getJSONArray("urls"));
+			boolean useESM = manifestJSONObject.getBoolean("useESM", false);
 
 			remoteAppEntry = _createCustomElementRemoteAppEntry(
 				externalReferenceCode, userId, cssURLs, htmlElementName, urls,
 				description, friendlyURLMapping, instanceable, nameMap,
-				portletCategoryName, properties, sourceCodeURL);
+				portletCategoryName, properties, sourceCodeURL, useESM);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			String url = manifestJSONObject.getString("url");
@@ -153,20 +154,6 @@ public class RemoteAppEntryLocalServiceImpl
 		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
-	private String _joinJSONArray(JSONArray jsonArray) {
-		StringBundler sb = new StringBundler(2 * jsonArray.length() - 1);
-
-		for (int i=0; i< jsonArray.length(); i++) {
-			if (i>0) {
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.append(jsonArray.getString(i));
-		}
-
-		return sb.toString();
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
@@ -182,7 +169,7 @@ public class RemoteAppEntryLocalServiceImpl
 			externalReferenceCode, userId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			properties, sourceCodeURL, false);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -509,7 +496,7 @@ public class RemoteAppEntryLocalServiceImpl
 			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			String properties, String sourceCodeURL, boolean useESM)
 		throws PortalException {
 
 		long remoteAppEntryId = counterLocalService.increment();
@@ -549,6 +536,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setCustomElementUseESM(useESM);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
 		remoteAppEntry.setSourceCodeURL(sourceCodeURL);

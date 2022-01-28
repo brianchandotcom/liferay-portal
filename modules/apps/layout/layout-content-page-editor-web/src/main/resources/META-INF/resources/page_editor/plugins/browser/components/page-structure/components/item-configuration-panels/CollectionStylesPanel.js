@@ -12,23 +12,18 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../../../../../../app/config/index';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {CommonStyles} from './CommonStyles';
 
 export function CollectionStylesPanel({item}) {
-	const {availableViewportSizes} = config;
-
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const viewportSize = availableViewportSizes[selectedViewportSize];
 
 	const collectionConfig = getResponsiveConfig(
 		item.config,
@@ -36,18 +31,10 @@ export function CollectionStylesPanel({item}) {
 	);
 
 	return (
-		<>
-			<p className="page-editor__row-styles-panel__viewport-label">
-				<ClayIcon className="mr-2" symbol={viewportSize.icon} />
-
-				{viewportSize.label}
-			</p>
-
-			<CommonStyles
-				commonStylesValues={collectionConfig.styles}
-				item={item}
-			/>
-		</>
+		<CommonStyles
+			commonStylesValues={collectionConfig.styles}
+			item={item}
+		/>
 	);
 }
 

@@ -12,11 +12,9 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../../../../../../app/config/index';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
@@ -27,28 +25,13 @@ export function ContainerStylesPanel({item}) {
 		(state) => state.selectedViewportSize
 	);
 
-	const {availableViewportSizes} = config;
-
 	const containerConfig = getResponsiveConfig(
 		item.config,
 		selectedViewportSize
 	);
 
-	const viewportSize = availableViewportSizes[selectedViewportSize];
-
 	return (
-		<>
-			<p className="page-editor__row-styles-panel__viewport-label">
-				<ClayIcon className="mr-2" symbol={viewportSize.icon} />
-
-				{viewportSize.label}
-			</p>
-
-			<CommonStyles
-				commonStylesValues={containerConfig.styles}
-				item={item}
-			/>
-		</>
+		<CommonStyles commonStylesValues={containerConfig.styles} item={item} />
 	);
 }
 

@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
@@ -35,8 +34,6 @@ import {FieldSet} from './FieldSet';
 export function FragmentStylesPanel({item}) {
 	const dispatch = useDispatch();
 
-	const {availableViewportSizes} = config;
-
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
@@ -46,8 +43,6 @@ export function FragmentStylesPanel({item}) {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-
-	const viewportSize = availableViewportSizes[selectedViewportSize];
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
@@ -67,12 +62,6 @@ export function FragmentStylesPanel({item}) {
 
 	return (
 		<>
-			<p className="page-editor__row-styles-panel__viewport-label">
-				<ClayIcon className="mr-2" symbol={viewportSize.icon} />
-
-				{viewportSize.label}
-			</p>
-
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 				<CustomStyles
 					fragmentEntryLink={fragmentEntryLink}

@@ -144,6 +144,22 @@ public class ObjectFieldLocalServiceImpl
 		return _deleteObjectField(objectField);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public ObjectField deleteObjectFieldRelationshipType(long objectFieldId)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		if (Validator.isNull(objectField.getRelationshipType())) {
+			throw new ObjectFieldRelationshipTypeException.
+				IsNotObjectFieldRelationshipType();
+		}
+
+		return _deleteObjectField(objectField);
+	}
+
 	@Override
 	public ObjectField fetchObjectField(long objectDefinitionId, String name) {
 		return objectFieldPersistence.fetchByODI_N(objectDefinitionId, name);

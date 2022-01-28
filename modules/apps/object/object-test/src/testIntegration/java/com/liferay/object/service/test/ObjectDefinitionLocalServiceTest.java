@@ -1040,6 +1040,47 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
+	@Test
+	public void testUpdateTitleObjectFieldId() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.emptyList());
+
+		try {
+			objectDefinition =
+				_objectDefinitionLocalService.updateTitleObjectFieldId(
+					objectDefinition.getObjectDefinitionId(),
+					RandomTestUtil.randomLong());
+
+			Assert.fail();
+		}
+		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+			Assert.assertNotNull(noSuchObjectFieldException);
+		}
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
+			false, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), true);
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				objectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId());
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName,
 			String dbType, String name, boolean required)

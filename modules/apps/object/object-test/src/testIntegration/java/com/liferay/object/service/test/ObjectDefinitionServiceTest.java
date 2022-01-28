@@ -17,8 +17,10 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.model.User;
@@ -171,6 +173,26 @@ public class ObjectDefinitionServiceTest {
 
 		_testUpdateCustomObjectDefinition(_defaultUser, _defaultUser);
 		_testUpdateCustomObjectDefinition(_user, _user);
+	}
+
+	@Test
+	public void testUpdateTitleObjectFieldId() throws Exception {
+		try {
+			_testUpdateTitleObjectFieldId(_user, _defaultUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have UPDATE permission for"));
+		}
+
+		_testUpdateTitleObjectFieldId(_defaultUser, _defaultUser);
+		_testUpdateTitleObjectFieldId(_user, _user);
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(User user)
@@ -352,6 +374,50 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
+	private void _testUpdateTitleObjectFieldId(User ownerUser, User user)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			_setUser(user);
+
+			objectDefinition =
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					ownerUser.getUserId(),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"A" + RandomTestUtil.randomString(), null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					Arrays.asList(
+						ObjectFieldUtil.createObjectField(
+							"Text", "String", RandomTestUtil.randomString(),
+							StringUtil.randomId())));
+
+			ObjectField objectField =
+				_objectFieldLocalService.addCustomObjectField(
+					ownerUser.getUserId(), 0,
+					objectDefinition.getObjectDefinitionId(), "Text", "String",
+					false, false, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(), false);
+
+			objectDefinition =
+				_objectDefinitionService.updateTitleObjectFieldId(
+					objectDefinition.getObjectDefinitionId(),
+					objectField.getObjectFieldId());
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
 	private User _defaultUser;
 
 	@Inject
@@ -359,6 +425,9 @@ public class ObjectDefinitionServiceTest {
 
 	@Inject
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;

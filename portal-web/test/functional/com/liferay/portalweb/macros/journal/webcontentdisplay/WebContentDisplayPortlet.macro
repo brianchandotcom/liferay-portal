@@ -340,21 +340,12 @@ definition {
 	}
 
 	macro viewConfigureScopePG {
-		var key_portletName = "Web Content Display";
-
-		if ("${scopeSelectionDefault}" == "true") {
-			AssertTextEquals(
-				locator1 = "Portlet#TITLE",
-				value1 = "Web Content Display");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Portlet#TITLE",
-				value1 = "Web Content Display (${scopeSelection})");
-		}
+		AssertElementPresent(
+			key_portletName = "Web Content Display (${scopeSelection})",
+			locator1 = "Portlet#TITLE");
 
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = "Web Content Display (${scopeSelection})",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

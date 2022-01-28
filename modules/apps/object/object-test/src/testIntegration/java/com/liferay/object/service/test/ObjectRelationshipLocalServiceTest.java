@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -92,6 +93,19 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
+
+		_systemObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", RandomTestUtil.randomString(),
+						StringUtil.randomId())));
 	}
 
 	@Test
@@ -131,6 +145,48 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship);
 
 		Assert.assertFalse(_hasTable(objectRelationship.getDBTableName()));
+	}
+
+	@Test
+	public void testAddSystemObjectRelationship() throws Exception {
+		try {
+			_testAddSystemObjectRelationship(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			Assert.fail();
+		}
+		catch (ObjectRelationshipTypeException
+					objectRelationshipTypeException) {
+
+			String message = objectRelationshipTypeException.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Invalid type for system object definition"));
+		}
+
+		ObjectRelationship objectRelationship =
+			_testAddSystemObjectRelationship(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Assert.assertNotNull(objectRelationship);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		try {
+			_testAddSystemObjectRelationship(
+				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+
+			Assert.fail();
+		}
+		catch (ObjectRelationshipTypeException
+					objectRelationshipTypeException) {
+
+			String message = objectRelationshipTypeException.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Invalid type for system object definition"));
+		}
 	}
 
 	@Test
@@ -217,6 +273,18 @@ public class ObjectRelationshipLocalServiceTest {
 					_objectDefinition1.getPKObjectFieldName()));
 	}
 
+	private ObjectRelationship _testAddSystemObjectRelationship(String type)
+		throws Exception {
+
+		return _objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_systemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), type);
+	}
+
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
 
@@ -231,5 +299,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _systemObjectDefinition;
 
 }

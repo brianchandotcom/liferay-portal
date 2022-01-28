@@ -557,9 +557,17 @@ public class UserAccountResourceImpl
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
+		boolean autoPassword = false;
+		String password = userAccount.getPassword();
+
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+		}
+
 		User user = _userService.addUser(
-			contextCompany.getCompanyId(), true, null, null, false,
-			userAccount.getAlternateName(), userAccount.getEmailAddress(),
+			contextCompany.getCompanyId(), autoPassword, password, password,
+			false, userAccount.getAlternateName(),
+			userAccount.getEmailAddress(),
 			contextAcceptLanguage.getPreferredLocale(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(userAccount),
@@ -681,10 +689,18 @@ public class UserAccountResourceImpl
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
+		boolean autoPassword = false;
+		String password = userAccount.getPassword();
+
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+		}
+
 		User user = _userService.addOrUpdateUser(
 			externalReferenceCode, contextUser.getUserId(),
-			contextCompany.getCompanyId(), true, null, null, false,
-			userAccount.getAlternateName(), userAccount.getEmailAddress(),
+			contextCompany.getCompanyId(), autoPassword, password, password,
+			false, userAccount.getAlternateName(),
+			userAccount.getEmailAddress(),
 			contextAcceptLanguage.getPreferredLocale(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(userAccount),

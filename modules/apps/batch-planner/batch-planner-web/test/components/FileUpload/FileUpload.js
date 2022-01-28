@@ -17,7 +17,7 @@ import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import parseFile from '../../../src/main/resources/META-INF/resources/js/FileParsers';
-import FileUpload from '../../../src/main/resources/META-INF/resources/js/FileUpload';
+import FileUpload from '../../../src/main/resources/META-INF/resources/js/components/FileUpload';
 import {FILE_SCHEMA_EVENT} from '../../../src/main/resources/META-INF/resources/js/constants';
 
 jest.mock('../../../src/main/resources/META-INF/resources/js/FileParsers');

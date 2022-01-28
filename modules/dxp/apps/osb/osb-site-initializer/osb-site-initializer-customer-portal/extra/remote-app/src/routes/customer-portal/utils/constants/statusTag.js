@@ -16,3 +16,11 @@ export const STATUS_TAG_TYPES = {
 	inProgress: 4,
 	notActivated: 5,
 };
+
+export const STATUS_TAG_TYPE_NAMES = {
+	active: 'Active',
+	expired: 'Expired',
+	future: 'Future',
+	inProgress: 'In Progress',
+	notActivated: 'Not Activated',
+};

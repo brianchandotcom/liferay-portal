@@ -24,7 +24,7 @@ import {
 import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
-import {STATUS_TAG_TYPES} from '../../utils/constants';
+import {STATUS_TAG_TYPES, STATUS_TAG_TYPE_NAMES} from '../../utils/constants';
 import StatusTag from '../StatusTag';
 
 const SetupDXPCloudModal = ({
@@ -89,7 +89,7 @@ const ActivationStatus = ({
 	};
 
 	const currentActivationStatus = {
-		[STATUS_TAG_TYPES.active]: {
+		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
 				<a
 					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
@@ -105,12 +105,12 @@ const ActivationStatus = ({
 			subtitle:
 				'Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.',
 		},
-		[STATUS_TAG_TYPES.inProgress]: {
+		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle:
 				'Your DXP Cloud environments are being set up and will be available soon.',
 		},
-		[STATUS_TAG_TYPES.notActivated]: {
+		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: userAccount.isAdmin && (
 				<Button
 					appendIcon="order-arrow-right"
@@ -129,7 +129,8 @@ const ActivationStatus = ({
 
 	const activationStatus =
 		currentActivationStatus[
-			subscriptionGroupActivationStatus || STATUS_TAG_TYPES.notActivated
+			subscriptionGroupActivationStatus ||
+				STATUS_TAG_TYPE_NAMES.notActivated
 		];
 
 	useEffect(() => {
@@ -193,10 +194,10 @@ const ActivationStatus = ({
 										{
 											'in-progress':
 												subscriptionGroupActivationStatus ===
-												STATUS_TAG_TYPES.inProgress,
+												STATUS_TAG_TYPE_NAMES.inProgress,
 											'not-active':
 												subscriptionGroupActivationStatus ===
-													STATUS_TAG_TYPES.notActivated ||
+													STATUS_TAG_TYPE_NAMES.notActivated ||
 												!subscriptionGroupActivationStatus,
 										}
 									)}

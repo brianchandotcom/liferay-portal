@@ -17,6 +17,6 @@ export * from './pageTypes';
 export * from './productTypes';
 export * from './slaNames';
 export * from './statusCode';
-export * from './statusTagTypes';
+export * from './statusTag';
 export * from './subscriptionsStatus';
 export * from './webContentDXPVersionTypes';

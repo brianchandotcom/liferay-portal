@@ -21,7 +21,7 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
-import {STATUS_TAG_TYPES} from '../../../../routes/customer-portal/utils/constants/statusTagTypes';
+import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import Layout from '../Layout';
@@ -122,7 +122,7 @@ const SetupDXPCloudPage = ({
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
-							activationStatus: STATUS_TAG_TYPES.inProgress,
+							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 						},
 						id: subscriptionGroupId,
 					},

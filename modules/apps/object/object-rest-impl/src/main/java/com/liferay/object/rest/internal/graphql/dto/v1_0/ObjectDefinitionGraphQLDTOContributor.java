@@ -122,7 +122,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public boolean deleteDTO(long id) throws Exception {
-		_objectEntryManager.deleteObjectEntry(id);
+		_objectEntryManager.deleteObjectEntry(_objectDefinition, id);
 
 		return true;
 	}

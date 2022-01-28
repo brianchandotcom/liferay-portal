@@ -103,7 +103,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				objectDefinition, objectEntryId);
 
 			if (objectEntry != null) {
-				_objectEntryManager.deleteObjectEntry(objectEntry.getId());
+				_objectEntryManager.deleteObjectEntry(
+					objectDefinition, objectEntry.getId());
 			}
 
 			return DDMStorageAdapterDeleteResponse.Builder.newBuilder(

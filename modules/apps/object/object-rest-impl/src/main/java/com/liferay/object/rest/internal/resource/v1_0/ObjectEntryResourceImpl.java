@@ -103,7 +103,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
-		_objectEntryManager.deleteObjectEntry(objectEntryId);
+		_objectEntryManager.deleteObjectEntry(_objectDefinition, objectEntryId);
 	}
 
 	@Override

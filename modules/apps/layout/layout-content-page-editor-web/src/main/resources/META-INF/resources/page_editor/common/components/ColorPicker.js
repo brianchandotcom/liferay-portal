@@ -75,6 +75,10 @@ export function ColorPicker({
 		value ? tokenValues[value]?.label : Liferay.Language.get('default')
 	);
 
+	const showButtons = config.tokenReuseEnabled
+		? (tokenLabel && color) || !tokenLabel
+		: color;
+
 	const tokenColorValues = Object.values(tokenValues)
 		.filter((token) => token.editorType === 'ColorPicker')
 		.map((token) => ({
@@ -402,7 +406,7 @@ export function ColorPicker({
 					</>
 				)}
 
-				{color && (
+				{showButtons && (
 					<>
 						{config.tokenReuseEnabled && (
 							<ClayInput.GroupItem

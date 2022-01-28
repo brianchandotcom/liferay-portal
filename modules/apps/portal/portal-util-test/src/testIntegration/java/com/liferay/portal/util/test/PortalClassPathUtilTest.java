@@ -89,7 +89,7 @@ public class PortalClassPathUtilTest {
 
 		Assert.assertTrue(
 			"Bootstrap class path should not contain jars with " +
-				"'Liferay-Releng-App' headers in Manifest.MF" +
+				"'Liferay-Releng-App' headers in Manifest.MF: " +
 					liferayReleaseApps,
 			liferayReleaseApps.isEmpty());
 	}

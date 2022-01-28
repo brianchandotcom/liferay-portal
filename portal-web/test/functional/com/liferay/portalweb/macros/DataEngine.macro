@@ -1688,7 +1688,12 @@ definition {
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 
-		Button.clickSave();
+		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
+			Button.clickPublish();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Button.clickSave();
+		}
 	}
 
 }

@@ -187,7 +187,7 @@ definition {
 			fieldLabel = "Numeric",
 			value = "1.23");
 
-		Button.clickPublish();
+		DataEngine.waitForAutoSave();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -303,7 +303,7 @@ definition {
 			fieldLabel = "Numeric",
 			value = "1.00");
 
-		Button.clickPublish();
+		DataEngine.waitForAutoSave();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

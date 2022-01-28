@@ -543,7 +543,7 @@ definition {
 
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
-		PortletEntry.inputTitle(name = "Edited Blueprint");
+		PortletEntry.inputTitle(title = "Edited Blueprint");
 
 		Button.clickDone();
 
@@ -730,7 +730,7 @@ definition {
 
 		Click(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
 
-		PortletEntry.inputTitle(name = "Edited Blueprint");
+		PortletEntry.inputTitle(title = "Edited Blueprint");
 
 		Button.clickDone();
 

@@ -142,6 +142,10 @@ public interface ObjectFieldLocalService
 	public ObjectField deleteObjectField(ObjectField objectField)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
+	public ObjectField deleteObjectFieldRelationshipType(long objectFieldId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

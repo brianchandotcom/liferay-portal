@@ -21,6 +21,17 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectFieldRelationshipTypeException extends PortalException {
 
+	public static class MustNotDeleteObjectFieldRelationshipType
+		extends ObjectFieldRelationshipTypeException {
+
+		public MustNotDeleteObjectFieldRelationshipType() {
+			super(
+				"Object field cannot be deleted because it is of " +
+					"relationship type.");
+		}
+
+	}
+
 	public static class
 		MustNotEditDescriptionAndTitleUsingObjectFieldRelationshipType
 			extends ObjectFieldRelationshipTypeException {

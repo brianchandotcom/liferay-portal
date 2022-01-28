@@ -24,9 +24,9 @@ definition {
 		}
 
 		AssertTextEquals(
-			ABtestTitle = "${ABtestTitle}",
+			abTestTitle = "${abTestTitle}",
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
-			value1 = "${ABtestTitle}");
+			value1 = "${abTestTitle}");
 
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}

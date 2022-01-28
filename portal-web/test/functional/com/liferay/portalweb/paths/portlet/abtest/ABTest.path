@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_TITLE_AC_SIDE</td>
-	<td>//*[@class= 'text-truncate' and contains(text(),'${ABtestTitle}')]</td>
+	<td>//*[@class= 'text-truncate' and contains(text(),'${abTestTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

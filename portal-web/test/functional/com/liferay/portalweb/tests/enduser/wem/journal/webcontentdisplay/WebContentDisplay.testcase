@@ -231,7 +231,7 @@ definition {
 		task ("View test portlet is shown after click in the link") {
 			WebContentDisplayPortlet.viewContent(
 				displayText = "text",
-				URL = "/web/test-site-name/test-page-name/-/testportlet",
+				url = "/web/test-site-name/test-page-name/-/testportlet",
 				webContentTitle = "Web Content Title");
 
 			Portlet.viewTitle(portletName = "testportlet");

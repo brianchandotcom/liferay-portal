@@ -473,14 +473,15 @@ public class BundleSiteInitializerTest {
 		CPInstance cpInstance1 = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), "Test Value 1");
 
+		Assert.assertNotNull(cpInstance1);
+
 		BigDecimal actualPrice = cpInstance1.getPrice();
+
+		Assert.assertEquals(60.0, actualPrice.doubleValue(), 0.0001);
+
 		BigDecimal actualPromoPrice = cpInstance1.getPromoPrice();
 
-		Assert.assertEquals(
-			Double.valueOf(60), actualPrice.doubleValue(), 0.0001);
-		Assert.assertEquals(
-			Double.valueOf(25), actualPromoPrice.doubleValue(), 0.0001);
-		Assert.assertNotNull(cpInstance1);
+		Assert.assertEquals(25.0, actualPromoPrice.doubleValue(), 0.0001);
 
 		CPInstance cpInstance2 = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), "Test Value 2");
@@ -506,6 +507,8 @@ public class BundleSiteInitializerTest {
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					"TEST001", group.getCompanyId());
+
+		Assert.assertNotNull(cpDefinition);
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			cpDefinition.getCPDefinitionOptionRels();

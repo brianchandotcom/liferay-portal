@@ -7339,18 +7339,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/rhino.jar</file-name>
-				<version>1.7R4</version>
-				<project-name>Mozilla Rhino</project-name>
-				<project-url>https://developer.mozilla.org/en/Rhino</project-url>
-				<licenses>
-					<license>
-						<license-name>MPL 2.0</license-name>
-						<license-url>https://www.mozilla.org/en-US/MPL/2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/rmi-api.jar</file-name>
 				<version>1.0.5.Final</version>
 				<project-name>The javax.rmi and javax.rmi.CORBA classes</project-name>

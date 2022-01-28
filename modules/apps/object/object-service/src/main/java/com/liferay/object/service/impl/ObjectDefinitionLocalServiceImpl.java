@@ -581,6 +581,8 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
+		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
+
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 
 		return objectDefinitionPersistence.update(objectDefinition);

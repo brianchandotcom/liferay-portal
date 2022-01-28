@@ -56,6 +56,10 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 			liferayPortletResponse
 		).setMVCPath(
 			"/view_search_results.jsp"
+		).setRedirect(
+			ParamUtil.getString(
+				httpServletRequest, "redirect",
+				String.valueOf(liferayPortletResponse.createRenderURL()))
 		).setKeywords(
 			() -> {
 				if (Validator.isNotNull(getKeywords())) {
@@ -71,12 +75,6 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 		).setParameter(
 			"state", getState()
 		).buildPortletURL();
-
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "redirect",
-			String.valueOf(liferayPortletResponse.createRenderURL()));
-
-		portletURL.setParameter("redirect", redirect);
 
 		if (_searchContainer != null) {
 			portletURL.setParameter(

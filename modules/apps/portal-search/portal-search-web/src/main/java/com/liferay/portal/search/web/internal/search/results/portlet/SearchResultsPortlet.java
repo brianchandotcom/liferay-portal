@@ -42,7 +42,6 @@ import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryImpl;
 import com.liferay.portal.search.web.internal.display.context.SearchResultPreferences;
-import com.liferay.portal.search.web.internal.document.DocumentFormPermissionChecker;
 import com.liferay.portal.search.web.internal.document.DocumentFormPermissionCheckerImpl;
 import com.liferay.portal.search.web.internal.portlet.shared.search.NullPortletURL;
 import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
@@ -448,9 +447,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
 
-		DocumentFormPermissionChecker documentFormPermissionChecker =
-			new DocumentFormPermissionCheckerImpl(themeDisplay);
-
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchResultsPortletPreferences);
 
@@ -464,7 +460,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		SearchResultPreferences searchResultPreferences =
 			new SearchResultPreferencesImpl(
-				searchResultsPortletPreferences, documentFormPermissionChecker);
+				searchResultsPortletPreferences,
+				new DocumentFormPermissionCheckerImpl(themeDisplay));
 
 		for (Document document : documents) {
 			SearchResultSummaryDisplayContext
@@ -493,10 +490,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 	private String _getURLString(
 		RenderRequest renderRequest, String paginationStartParameterName) {
 
-		String urlString = portletSharedRequestHelper.getCompleteURL(
-			renderRequest);
-
-		return http.removeParameter(urlString, paginationStartParameterName);
+		return http.removeParameter(
+			portletSharedRequestHelper.getCompleteURL(renderRequest),
+			paginationStartParameterName);
 	}
 
 	@Reference

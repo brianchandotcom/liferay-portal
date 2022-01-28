@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -125,19 +124,17 @@ public class ViewDisplayContextFactory {
 
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(renderRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(renderResponse);
 
 		SearchContainer<LanguageItemDisplay> searchContainer =
 			new SearchContainer<>(
 				liferayPortletRequest,
 				PortletURLUtil.getCurrent(
-					liferayPortletRequest, liferayPortletResponse),
+					liferayPortletRequest,
+					_portal.getLiferayPortletResponse(renderResponse)),
 				Arrays.asList("key", "value"),
 				"no-language-entries-were-found");
 
 		searchContainer.setId("portalLanguageOverrideEntries");
-
 		searchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
 				liferayPortletRequest, PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE,

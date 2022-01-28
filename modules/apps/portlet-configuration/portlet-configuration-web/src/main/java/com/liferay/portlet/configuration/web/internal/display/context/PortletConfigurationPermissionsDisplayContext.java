@@ -123,11 +123,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			_getPortletResource(), getModelResource());
 
 		if (Objects.equals(getModelResource(), Group.class.getName())) {
-			long modelResourceGroupId = GetterUtil.getLong(
-				getResourcePrimKey());
-
 			Group modelResourceGroup = GroupLocalServiceUtil.getGroup(
-				modelResourceGroupId);
+				GetterUtil.getLong(getResourcePrimKey()));
 
 			if (modelResourceGroup.isLayoutPrototype() ||
 				modelResourceGroup.isLayoutSetPrototype() ||
@@ -148,10 +145,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			}
 		}
 		else if (Objects.equals(getModelResource(), Role.class.getName())) {
-			long modelResourceRoleId = GetterUtil.getLong(getResourcePrimKey());
-
 			Role modelResourceRole = RoleLocalServiceUtil.getRole(
-				modelResourceRoleId);
+				GetterUtil.getLong(getResourcePrimKey()));
 
 			String name = modelResourceRole.getName();
 
@@ -349,10 +344,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			getModelResource());
 
 		if (Objects.equals(getModelResource(), Role.class.getName())) {
-			long modelResourceRoleId = GetterUtil.getLong(getResourcePrimKey());
-
 			Role modelResourceRole = RoleLocalServiceUtil.getRole(
-				modelResourceRoleId);
+				GetterUtil.getLong(getResourcePrimKey()));
 
 			RoleTypeContributor roleTypeContributor =
 				_roleTypeContributorProvider.getRoleTypeContributor(
@@ -372,8 +365,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		}
 
 		boolean filterGuestRole = false;
-		boolean permissionCheckGuestEnabled =
-			PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
 
 		if (Objects.equals(getModelResource(), Layout.class.getName())) {
 			Layout resourceLayout = LayoutLocalServiceUtil.getLayout(
@@ -383,7 +374,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 				Group resourceLayoutGroup = resourceLayout.getGroup();
 
 				if (!resourceLayoutGroup.isLayoutSetPrototype() &&
-					!permissionCheckGuestEnabled) {
+					!PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {
 
 					filterGuestRole = true;
 				}
@@ -396,18 +387,15 @@ public class PortletConfigurationPermissionsDisplayContext {
 				PortletConstants.LAYOUT_SEPARATOR);
 
 			if (pos > 0) {
-				long resourcePlid = GetterUtil.getLong(
-					getResourcePrimKey().substring(0, pos));
-
 				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(
-					resourcePlid);
+					GetterUtil.getLong(resourcePrimKey.substring(0, pos)));
 
 				if (resourceLayout.isPrivateLayout()) {
 					Group resourceLayoutGroup = resourceLayout.getGroup();
 
 					if (!resourceLayoutGroup.isLayoutPrototype() &&
 						!resourceLayoutGroup.isLayoutSetPrototype() &&
-						!permissionCheckGuestEnabled) {
+						!PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {
 
 						filterGuestRole = true;
 					}
@@ -415,9 +403,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 			}
 		}
 
-		Set<String> excludedRoleNamesSet = new HashSet<>();
-
-		excludedRoleNamesSet.add(RoleConstants.ADMINISTRATOR);
+		Set<String> excludedRoleNamesSet = new HashSet<String>() {
+			{
+				add(RoleConstants.ADMINISTRATOR);
+			}
+		};
 
 		if (filterGroupRoles) {
 			for (RoleTypeContributor roleTypeContributor :
@@ -616,13 +606,12 @@ public class PortletConfigurationPermissionsDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _getPortletResource());
-
 		HttpSession httpSession = _httpServletRequest.getSession();
 
 		_selResourceDescription = PortalUtil.getPortletTitle(
-			portlet, httpSession.getServletContext(), themeDisplay.getLocale());
+			PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), _getPortletResource()),
+			httpSession.getServletContext(), themeDisplay.getLocale());
 
 		return _selResourceDescription;
 	}

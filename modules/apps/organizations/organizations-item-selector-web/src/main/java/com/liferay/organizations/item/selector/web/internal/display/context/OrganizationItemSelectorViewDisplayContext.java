@@ -17,17 +17,14 @@ package com.liferay.organizations.item.selector.web.internal.display.context;
 import com.liferay.organizations.item.selector.web.internal.search.OrganizationItemSelectorChecker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
@@ -128,32 +125,28 @@ public class OrganizationItemSelectorViewDisplayContext {
 			_renderRequest, getPortletURL());
 
 		_searchContainer.setEmptyResultsMessage("no-organizations-were-found");
-
-		OrderByComparator<Organization> orderByComparator =
-			_usersAdmin.getOrganizationOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		RowChecker rowChecker = new OrganizationItemSelectorChecker(
-			_renderResponse, _getCheckedOrganizationIds());
-
 		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByComparator(
+			_usersAdmin.getOrganizationOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(rowChecker);
 
 		OrganizationSearchTerms organizationSearchTerms =
 			(OrganizationSearchTerms)_searchContainer.getSearchTerms();
 
-		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
+		_searchContainer.setResultsAndTotal(
 			_organizationLocalService.searchOrganizations(
 				CompanyThreadLocal.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				organizationSearchTerms.getKeywords(), null,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				SortFactoryUtil.getSort(
-					Organization.class, getOrderByCol(), getOrderByType()));
+					Organization.class, _searchContainer.getOrderByCol(),
+					_searchContainer.getOrderByType())));
 
-		_searchContainer.setResultsAndTotal(organizationBaseModelSearchResult);
+		_searchContainer.setRowChecker(
+			new OrganizationItemSelectorChecker(
+				_renderResponse, _getCheckedOrganizationIds()));
 
 		return _searchContainer;
 	}

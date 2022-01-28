@@ -428,14 +428,11 @@ public class WorkflowTaskDisplayContext {
 		sb.append("dialog: {destroyOnHide: true, modal: true}, id: '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append("viewDiffs', title: '");
-
-		String title = LanguageUtil.get(
-			_workflowTaskRequestHelper.getRequest(), "diffs");
-
-		sb.append(HtmlUtil.escapeJS(title));
-
+		sb.append(
+			HtmlUtil.escapeJS(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(), "diffs")));
 		sb.append("', uri:'");
-
 		sb.append(
 			HtmlUtil.escapeJS(
 				PortletURLBuilder.create(
@@ -449,7 +446,6 @@ public class WorkflowTaskDisplayContext {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString()));
-
 		sb.append("'});");
 
 		return sb.toString();
@@ -568,12 +564,14 @@ public class WorkflowTaskDisplayContext {
 	public List<WorkflowLog> getWorkflowLogs(WorkflowTask workflowTask)
 		throws PortalException {
 
-		List<Integer> logTypes = new ArrayList<>();
-
-		logTypes.add(WorkflowLog.TASK_ASSIGN);
-		logTypes.add(WorkflowLog.TASK_COMPLETION);
-		logTypes.add(WorkflowLog.TASK_UPDATE);
-		logTypes.add(WorkflowLog.TRANSITION);
+		List<Integer> logTypes = new ArrayList<Integer>() {
+			{
+				add(WorkflowLog.TASK_ASSIGN);
+				add(WorkflowLog.TASK_COMPLETION);
+				add(WorkflowLog.TASK_UPDATE);
+				add(WorkflowLog.TRANSITION);
+			}
+		};
 
 		return WorkflowLogManagerUtil.getWorkflowLogsByWorkflowTask(
 			_workflowTaskRequestHelper.getCompanyId(),

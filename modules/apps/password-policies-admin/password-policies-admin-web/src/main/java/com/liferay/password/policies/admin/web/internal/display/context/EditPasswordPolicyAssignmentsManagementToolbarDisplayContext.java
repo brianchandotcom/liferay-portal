@@ -185,22 +185,20 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long parentOrganizationId =
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
 		OrganizationSearchTerms searchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
 		organizationSearch.setResultsAndTotal(
 			() -> OrganizationLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), parentOrganizationId,
-				getKeywords(), searchTerms.getType(),
-				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-				organizationParams, organizationSearch.getStart(),
-				organizationSearch.getEnd(),
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, getKeywords(),
+				searchTerms.getType(), searchTerms.getRegionIdObj(),
+				searchTerms.getCountryIdObj(), organizationParams,
+				organizationSearch.getStart(), organizationSearch.getEnd(),
 				organizationSearch.getOrderByComparator()),
 			OrganizationLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), parentOrganizationId,
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				searchTerms.getKeywords(), searchTerms.getType(),
 				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
 				organizationParams));

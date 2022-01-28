@@ -106,12 +106,11 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "category"),
-					LanguageUtil.get(httpServletRequest, category));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(httpServletRequest, "category"),
+						LanguageUtil.get(httpServletRequest, category)));
 			}
 		).add(
 			() -> !state.equals("all-statuses"),
@@ -125,12 +124,10 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "state"),
-					LanguageUtil.get(httpServletRequest, state));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "state"),
+						LanguageUtil.get(httpServletRequest, state)));
 			}
 		).build();
 	}

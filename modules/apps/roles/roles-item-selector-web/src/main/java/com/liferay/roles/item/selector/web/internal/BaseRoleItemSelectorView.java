@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
@@ -141,17 +140,10 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 			renderRequest, currentURL);
 
 		searchContainer.setEmptyResultsMessage("no-roles-were-found");
-
-		OrderByComparator<Role> orderByComparator =
+		searchContainer.setOrderByComparator(
 			usersAdmin.getRoleOrderByComparator(
 				searchContainer.getOrderByCol(),
-				searchContainer.getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
-		searchContainer.setRowChecker(
-			new RoleItemSelectorChecker(
-				renderResponse, checkedRoleIds, excludedRoleNames));
+				searchContainer.getOrderByType()));
 
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)searchContainer.getSearchTerms();
@@ -168,6 +160,10 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 				CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getTypesObj(),
 				new LinkedHashMap<String, Object>()));
+
+		searchContainer.setRowChecker(
+			new RoleItemSelectorChecker(
+				renderResponse, checkedRoleIds, excludedRoleNames));
 
 		return searchContainer;
 	}

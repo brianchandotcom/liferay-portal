@@ -65,16 +65,15 @@ public class ViewModulesManagementToolbarDisplayContext
 
 		AppDisplay appDisplay = null;
 
-		List<Bundle> allBundles = BundleManagerUtil.getBundles();
-
 		if (Validator.isNumber(app)) {
 			appDisplay = AppDisplayFactoryUtil.getAppDisplay(
-				allBundles, GetterUtil.getLong(app));
+				BundleManagerUtil.getBundles(), GetterUtil.getLong(app));
 		}
 
 		if (appDisplay == null) {
 			appDisplay = AppDisplayFactoryUtil.getAppDisplay(
-				allBundles, app, httpServletRequest.getLocale());
+				BundleManagerUtil.getBundles(), app,
+				httpServletRequest.getLocale());
 		}
 
 		return appDisplay;
@@ -143,10 +142,8 @@ public class ViewModulesManagementToolbarDisplayContext
 		BundleUtil.filterBundles(
 			bundles, BundleStateConstants.getState(getState()));
 
-		bundles = ListUtil.sort(
-			bundles, new BundleComparator(getOrderByType()));
-
-		List<Object> results = new ArrayList<>(bundles);
+		List<Object> results = new ArrayList<>(
+			ListUtil.sort(bundles, new BundleComparator(getOrderByType())));
 
 		searchContainer.setResultsAndTotal(
 			() -> results.subList(

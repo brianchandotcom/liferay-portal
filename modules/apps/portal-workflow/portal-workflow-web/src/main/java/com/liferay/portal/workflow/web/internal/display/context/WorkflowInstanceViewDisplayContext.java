@@ -274,11 +274,11 @@ public class WorkflowInstanceViewDisplayContext
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator());
 
+		setSearchContainerEmptyResultsMessage(_searchContainer);
+
 		_searchContainer.setResultsAndTotal(
 			workflowModelSearchResult::getWorkflowModels,
 			workflowModelSearchResult.getLength());
-
-		setSearchContainerEmptyResultsMessage(_searchContainer);
 
 		return _searchContainer;
 	}
@@ -357,7 +357,6 @@ public class WorkflowInstanceViewDisplayContext
 		return new ViewTypeItemList(getViewPortletURL(), getDisplayStyle()) {
 			{
 				addListViewTypeItem();
-
 				addTableViewTypeItem();
 			}
 		};
@@ -414,10 +413,11 @@ public class WorkflowInstanceViewDisplayContext
 		for (WorkflowHandler<?> workflowHandler :
 				getSearchableAssetsWorkflowHandlers()) {
 
-			String assetType = workflowHandler.getType(
-				workflowInstanceRequestHelper.getLocale());
+			if (StringUtil.equalsIgnoreCase(
+					keywords,
+					workflowHandler.getType(
+						workflowInstanceRequestHelper.getLocale()))) {
 
-			if (StringUtil.equalsIgnoreCase(keywords, assetType)) {
 				return workflowHandler.getClassName();
 			}
 		}

@@ -181,15 +181,14 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			long searchCategoryId = ParamUtil.getLong(
 				_httpServletRequest, "searchCategoryId");
 
-			List<Long> categoryIds = new ArrayList<>();
-
-			categoryIds.add(Long.valueOf(searchCategoryId));
+			List<Long> categoryIds = new ArrayList<Long>() {
+				{
+					add(Long.valueOf(searchCategoryId));
+				}
+			};
 
 			MBCategoryServiceUtil.getSubcategoryIds(
 				categoryIds, themeDisplay.getScopeGroupId(), searchCategoryId);
-
-			long[] categoryIdsArray = StringUtil.split(
-				StringUtil.merge(categoryIds), 0L);
 
 			Indexer<MBMessage> indexer = IndexerRegistryUtil.getIndexer(
 				MBMessage.class);
@@ -198,15 +197,12 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				_httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "more");
-			searchContext.setCategoryIds(categoryIdsArray);
+			searchContext.setCategoryIds(
+				StringUtil.split(StringUtil.merge(categoryIds), 0L));
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
-
-			String keywords = ParamUtil.getString(
-				_httpServletRequest, "keywords");
-
-			searchContext.setKeywords(keywords);
-
+			searchContext.setKeywords(
+				ParamUtil.getString(_httpServletRequest, "keywords"));
 			searchContext.setStart(searchContainer.getStart());
 
 			Hits hits = indexer.search(searchContext);

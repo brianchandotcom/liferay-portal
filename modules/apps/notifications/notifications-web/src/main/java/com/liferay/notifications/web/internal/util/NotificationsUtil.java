@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alejandro Tardín
@@ -48,10 +47,6 @@ public class NotificationsUtil {
 			SearchContainer<UserNotificationEvent> searchContainer)
 		throws PortalException {
 
-		OrderByComparator<UserNotificationEvent> orderByComparator =
-			new UserNotificationEventTimestampComparator(
-				orderByType.equals("asc"));
-
 		if (navigation.equals("all")) {
 			searchContainer.setResultsAndTotal(
 				() ->
@@ -59,7 +54,9 @@ public class NotificationsUtil {
 						getDeliveredUserNotificationEvents(
 							userId, _DELIVERY_TYPE, true, actionRequired,
 							searchContainer.getStart(),
-							searchContainer.getEnd(), orderByComparator),
+							searchContainer.getEnd(),
+							new UserNotificationEventTimestampComparator(
+								orderByType.equals("asc"))),
 				UserNotificationEventLocalServiceUtil.
 					getDeliveredUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired));
@@ -79,7 +76,9 @@ public class NotificationsUtil {
 						getArchivedUserNotificationEvents(
 							userId, _DELIVERY_TYPE, true, actionRequired,
 							archived, searchContainer.getStart(),
-							searchContainer.getEnd(), orderByComparator),
+							searchContainer.getEnd(),
+							new UserNotificationEventTimestampComparator(
+								orderByType.equals("asc"))),
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired,

@@ -192,21 +192,20 @@ public class RedirectNotFoundEntriesDisplayContext {
 	}
 
 	private Sort _getSorts() {
-		boolean orderByAsc = StringUtil.equals(
-			_redirectNotFoundEntrySearch.getOrderByType(), "asc");
-
 		if (Objects.equals(
 				_redirectNotFoundEntrySearch.getOrderByCol(),
 				"modified-date")) {
 
 			return new Sort(
 				Field.getSortableFieldName(Field.MODIFIED_DATE), Sort.LONG_TYPE,
-				orderByAsc);
+				StringUtil.equals(
+					_redirectNotFoundEntrySearch.getOrderByType(), "asc"));
 		}
 
 		return new Sort(
 			Field.getSortableFieldName("requestCount"), Sort.LONG_TYPE,
-			orderByAsc);
+			StringUtil.equals(
+				_redirectNotFoundEntrySearch.getOrderByType(), "asc"));
 	}
 
 	private void _populateWithSearchIndex(

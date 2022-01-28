@@ -112,15 +112,14 @@ public class DefaultMBAdminListDisplayContext
 			long searchCategoryId = ParamUtil.getLong(
 				_httpServletRequest, "searchCategoryId");
 
-			List<Long> categoryIds = new ArrayList<>();
-
-			categoryIds.add(Long.valueOf(searchCategoryId));
+			List<Long> categoryIds = new ArrayList<Long>() {
+				{
+					add(Long.valueOf(searchCategoryId));
+				}
+			};
 
 			MBCategoryServiceUtil.getSubcategoryIds(
 				categoryIds, themeDisplay.getScopeGroupId(), searchCategoryId);
-
-			long[] categoryIdsArray = StringUtil.split(
-				StringUtil.merge(categoryIds), 0L);
 
 			Indexer<MBMessage> indexer = IndexerRegistryUtil.getIndexer(
 				MBMessage.class);
@@ -129,20 +128,16 @@ public class DefaultMBAdminListDisplayContext
 				_httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "more");
-			searchContext.setCategoryIds(categoryIdsArray);
+			searchContext.setCategoryIds(
+				StringUtil.split(StringUtil.merge(categoryIds), 0L));
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
 			searchContext.setIncludeInternalAssetCategories(true);
-
-			String keywords = ParamUtil.getString(
-				_httpServletRequest, "keywords");
-
-			searchContext.setKeywords(keywords);
+			searchContext.setKeywords(
+				ParamUtil.getString(_httpServletRequest, "keywords"));
 
 			String orderByCol = searchContainer.getOrderByCol();
 			String orderByType = searchContainer.getOrderByType();
-
-			Sort sort = null;
 
 			boolean orderByAsc = false;
 
@@ -150,15 +145,18 @@ public class DefaultMBAdminListDisplayContext
 				orderByAsc = true;
 			}
 
+			Sort sort = null;
+
 			if (Objects.equals(orderByCol, "modified-date")) {
 				sort = new Sort(
 					Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
 			else if (Objects.equals(orderByCol, "title")) {
-				String sortFieldName = Field.getSortableFieldName(
-					"localized_title_".concat(themeDisplay.getLanguageId()));
-
-				sort = new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
+				sort = new Sort(
+					Field.getSortableFieldName(
+						"localized_title_".concat(
+							themeDisplay.getLanguageId())),
+					Sort.STRING_TYPE, !orderByAsc);
 			}
 
 			searchContext.setSorts(sort);

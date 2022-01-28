@@ -17,7 +17,7 @@ import {Button} from '../../../../../common/components';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
 import {getDevelopmentLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import getDownloadFromBlob from '../../../../../common/utils/getDownloadFromBlob';
+import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import {
 	EXTENSION_FILE_TYPES,
 	LIST_TYPES,
@@ -70,12 +70,14 @@ const DevelopersKeysInputs = ({
 			selectedVersion
 		);
 
-		if (license.status === STATUS_CODE.SUCCESS) {
+		if (license.status === STATUS_CODE.sucess) {
 			const contentType = license.headers.get('content-type');
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			return getDownloadFromBlob(licenseBlob, `license${extensionFile}`);
+			downloadFromBlob(licenseBlob, `license${extensionFile}`);
+
+			return;
 		}
 	};
 

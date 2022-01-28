@@ -115,6 +115,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 import java.io.InputStream;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -463,9 +464,7 @@ public class BundleSiteInitializerTest {
 			"test_commerce_product.png", fileEntry.getFileName());
 	}
 
-	private void _assertCPInstanceProperties(Group group)
-		throws Exception {
-
+	private void _assertCPInstanceProperties(Group group) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
@@ -477,8 +476,10 @@ public class BundleSiteInitializerTest {
 		BigDecimal actualPrice = cpInstance1.getPrice();
 		BigDecimal actualPromoPrice = cpInstance1.getPromoPrice();
 
-		Assert.assertEquals(Double.valueOf(60), actualPrice.doubleValue(), 0.0001);
-		Assert.assertEquals(Double.valueOf(25), actualPromoPrice.doubleValue(), 0.0001);
+		Assert.assertEquals(
+			Double.valueOf(60), actualPrice.doubleValue(), 0.0001);
+		Assert.assertEquals(
+			Double.valueOf(25), actualPromoPrice.doubleValue(), 0.0001);
 		Assert.assertNotNull(cpInstance1);
 
 		CPInstance cpInstance2 = _cpInstanceLocalService.getCPInstance(

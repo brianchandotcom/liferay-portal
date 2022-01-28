@@ -3,13 +3,13 @@
 		"cpDefinitionExternalReferenceCode": "RAY004",
 		"cpInstanceProperties": [
 			{
-				"cpInstanceSKu": "PAY IN FULL",
+				"cpInstanceSku": "PAY IN FULL",
 				"propertyType": "UPDATE_PRICE",
 				"skuPrice": 60,
 				"skuPromoPrice": 25
 			},
 			{
-				"cpInstanceSKu": "INSTALLMENT",
+				"cpInstanceSku": "INSTALLMENT",
 				"deliveryMaxSubscriptionCycles": 0,
 				"deliverySubscriptionEnabled": false,
 				"deliverySubscriptionLength": 1,

@@ -64,7 +64,9 @@ definition {
 					-d emailAddress=test@liferay.com
 			''';
 
-			SystemSettings.getViewUserEmailPermissionDenied(curl = "${curl}");
+			SystemSettings.getViewUserEmailPermissionDenied(
+				curl = "${curl}",
+				userId = "${userId}");
 		}
 
 		task ("Assert permission available") {
@@ -74,7 +76,9 @@ definition {
 					-u test@liferay.com:test
 			''';
 
-			SystemSettings.getUserEmailSuccessfully(curl = "${curl}");
+			SystemSettings.getUserEmailSuccessfully(
+				companyId = "${companyId}",
+				curl = "${curl}");
 		}
 
 		task ("Edit service access policy") {

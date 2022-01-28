@@ -188,24 +188,25 @@ definition {
 	}
 
 	macro getUserEmailSuccessfully {
+		Variables.assertDefined(parameterList = "${curl},${companyId}");
+
 		var output = JSONCurlUtil.post("${curl}");
 
 		if (contains("${output}", ""agreedToTermsOfUse":true") && contains("${output}", ""companyId":"${companyId}"")) {
 			echo("Get current user successful.");
 		}
 		else {
-			fail("FAIL! Cannot find the currrent user.");
+			fail("FAIL! Cannot find the current user.");
 		}
 	}
 
 	macro getViewUserEmailPermissionDenied {
+		Variables.assertDefined(parameterList = "${curl},${userId}");
+
 		var output = JSONCurlUtil.post("${curl}");
 
-		if (contains("${output}", "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}")) {
-			echo("Default user must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}");
-		}
-		else {
-			fail("FAIL! Cannot find the user info message.");
+		if (!(contains("${output}", "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}"))) {
+			fail("FAIL! Cannot find the current user.");
 		}
 	}
 

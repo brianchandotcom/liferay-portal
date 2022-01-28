@@ -126,13 +126,12 @@ public class AssetVocabularySettingsHelper {
 
 			if (classNameIdAndClassTypePK.equals(
 					AssetCategoryConstants.
-						ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS)) {
+						ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS) &&
+				required) {
 
-				if (required) {
-					requiredClassNameIds.clear();
+				requiredClassNameIds.clear();
 
-					requiredClassNameIds.add(classNameIdAndClassTypePK);
-				}
+				requiredClassNameIds.add(classNameIdAndClassTypePK);
 
 				selectedClassNameIds.clear();
 
@@ -146,6 +145,17 @@ public class AssetVocabularySettingsHelper {
 			}
 
 			selectedClassNameIds.add(classNameIdAndClassTypePK);
+		}
+
+		if (selectedClassNameIds.contains(
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS)) {
+
+			selectedClassNameIds.clear();
+
+			selectedClassNameIds.add(
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
+
+			selectedClassNameIds.addAll(requiredClassNameIds);
 		}
 
 		_unicodeProperties.setProperty(

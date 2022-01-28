@@ -6,12 +6,7 @@
 					"label": "Video",
 					"name": "video",
 					"type": "videoSelector"
-				}
-			]
-		},
-		{
-			"configurationRole": "style",
-			"fields": [
+				},
 				{
 					"defaultValue": "",
 					"label": "Width",

@@ -31,12 +31,7 @@
 					"label": "Hide controls",
 					"name": "hideControls",
 					"type": "checkbox"
-				}
-			]
-		},
-		{
-			"configurationRole": "style",
-			"fields": [
+				},
 				{
 					"defaultValue": "",
 					"label": "Width",

@@ -193,9 +193,16 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						cssClass="lfr-small-column table-cell-expand-smaller"
 						name="subtype"
 					>
-						<span class="lfr-portal-tooltip text-truncate" title="<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>">
-							<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>
-						</span>
+						<c:choose>
+							<c:when test="<%= contentDashboardItemSubtype != null %>">
+								<span class="lfr-portal-tooltip text-truncate" title="<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>">
+									<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>
+								</span>
+							</c:when>
+							<c:otherwise>
+								<span class="lfr-portal-tooltip text-truncate" />
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

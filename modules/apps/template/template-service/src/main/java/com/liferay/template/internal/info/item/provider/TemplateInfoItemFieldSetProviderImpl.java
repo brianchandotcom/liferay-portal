@@ -37,6 +37,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
+import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
@@ -142,7 +143,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 				TemplateDisplayTemplateTransformer
 					templateDisplayTemplateTransformer =
 						new TemplateDisplayTemplateTransformer(
-							templateEntry, infoItemFieldValues);
+							templateEntry, infoItemFieldValues,
+							_templateNodeFactory);
 
 				try {
 					return templateDisplayTemplateTransformer.transform(
@@ -207,5 +209,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;
+
+	@Reference
+	private TemplateNodeFactory _templateNodeFactory;
 
 }

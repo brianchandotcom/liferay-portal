@@ -146,6 +146,18 @@ public class LiferayJWTBearerGrantHandler
 		return _jwtBearerGrantHandler;
 	}
 
+	protected Map<String, Map<String, JwsSignatureVerifier>>
+		getJwsSignatureVerifiers(long companyId) {
+
+		return _jwsSignatureVerifiers.getOrDefault(
+			companyId, _jwsSignatureVerifiers.get(CompanyConstants.SYSTEM));
+	}
+
+	protected Map<String, String> getUserAuthTypes(long companyId) {
+		return _userAuthTypes.getOrDefault(
+			companyId, _userAuthTypes.get(CompanyConstants.SYSTEM));
+	}
+
 	@Override
 	protected boolean hasPermission(
 		Client client, MultivaluedMap<String, String> params) {
@@ -162,8 +174,16 @@ public class LiferayJWTBearerGrantHandler
 		return _oAuth2ProviderConfiguration.allowJWTBearerGrant();
 	}
 
+	private <U, V> void _addDefaults(Map<U, V> map, Map<U, V> defaultsMap) {
+		if (defaultsMap != null) {
+			defaultsMap.forEach(map::putIfAbsent);
+		}
+
+		_rebuild(CompanyConstants.SYSTEM);
+	}
+
 	private void _rebuild() {
-		_rebuildHelper(CompanyConstants.SYSTEM);
+		_rebuild(CompanyConstants.SYSTEM);
 
 		for (Long key : _jwsSignatureVerifiers.keySet()) {
 			if (key == CompanyConstants.SYSTEM) {
@@ -175,45 +195,6 @@ public class LiferayJWTBearerGrantHandler
 	}
 
 	private void _rebuild(long companyId) {
-		_rebuildHelper(companyId);
-
-		// Merge signature verifiers from system settings
-
-		Map<String, Map<String, JwsSignatureVerifier>> jwsSignatureVerifiers =
-			_jwsSignatureVerifiers.get(companyId);
-
-		Map<String, Map<String, JwsSignatureVerifier>>
-			systemJWSSignatureVerifiers = _jwsSignatureVerifiers.get(
-				CompanyConstants.SYSTEM);
-
-		for (Map.Entry<String, Map<String, JwsSignatureVerifier>> entry :
-				systemJWSSignatureVerifiers.entrySet()) {
-
-			if (jwsSignatureVerifiers.containsKey(entry.getKey())) {
-				continue;
-			}
-
-			jwsSignatureVerifiers.put(entry.getKey(), entry.getValue());
-		}
-
-		// Merge user auth types from system settings
-
-		Map<String, String> userAuthTypes = _userAuthTypes.get(companyId);
-
-		Map<String, String> systemUserAuthTypes = _userAuthTypes.get(
-			CompanyConstants.SYSTEM);
-
-		for (Map.Entry<String, String> entry : systemUserAuthTypes.entrySet()) {
-			if (userAuthTypes.containsKey(entry.getKey())) {
-				continue;
-			}
-
-			userAuthTypes.put(entry.getKey(), entry.getValue());
-		}
-	}
-
-	private void _rebuildHelper(long companyId) {
-
 		Map<String, Map<String, JwsSignatureVerifier>> jwsSignatureVerifiers =
 			new HashMap<>();
 		Map<String, String> userAuthTypes = new HashMap<>();
@@ -292,6 +273,14 @@ public class LiferayJWTBearerGrantHandler
 			}
 		}
 
+		if (companyId != CompanyConstants.SYSTEM) {
+			_addDefaults(
+				jwsSignatureVerifiers,
+				_jwsSignatureVerifiers.get(CompanyConstants.SYSTEM));
+			_addDefaults(
+				userAuthTypes, _userAuthTypes.get(CompanyConstants.SYSTEM));
+		}
+
 		_jwsSignatureVerifiers.put(companyId, jwsSignatureVerifiers);
 		_userAuthTypes.put(companyId, userAuthTypes);
 	}
@@ -366,8 +355,7 @@ public class LiferayJWTBearerGrantHandler
 		public UserSubject createUserSubject(
 			long companyId, String issuer, String subject) {
 
-			Map<String, String> userAuthTypes = _userAuthTypes.getOrDefault(
-				companyId, _userAuthTypes.get(CompanyConstants.SYSTEM));
+			Map<String, String> userAuthTypes = getUserAuthTypes(companyId);
 
 			String userAuthType = userAuthTypes.get(issuer);
 
@@ -397,9 +385,7 @@ public class LiferayJWTBearerGrantHandler
 			long companyId, JwsHeaders jwsHeaders, JwtClaims jwtClaims) {
 
 			Map<String, Map<String, JwsSignatureVerifier>>
-				jwsSignatureVerifiers = _jwsSignatureVerifiers.getOrDefault(
-					companyId,
-					_jwsSignatureVerifiers.get(CompanyConstants.SYSTEM));
+				jwsSignatureVerifiers = getJwsSignatureVerifiers(companyId);
 
 			Map<String, JwsSignatureVerifier> kidsJWSSignatureVerifiers =
 				jwsSignatureVerifiers.get(jwtClaims.getIssuer());

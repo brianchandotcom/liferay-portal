@@ -220,9 +220,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.row) {
 		panelsIds = {
 			[PANEL_IDS.rowStyles]: canUpdateItemConfiguration,
-			[PANEL_IDS.rowGeneral]:
-				canUpdateItemConfiguration &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+			[PANEL_IDS.rowGeneral]: canUpdateItemConfiguration,
 		};
 	}
 

@@ -417,10 +417,6 @@ definition {
 	}
 
 	test CopyElementJSONViaBlueprintsQueryBuilder {
-		property test.name.skip.portal.instance = "Blueprints#CopyElementJSONViaBlueprintsQueryBuilder";
-
-		// Not running the test on a virtual instance is a workaround for LPS-140041
-
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -439,10 +435,6 @@ definition {
 	}
 
 	test CopyScoreExplanationViaBlueprintsQueryBuilder {
-		property test.name.skip.portal.instance = "Blueprints#CopyScoreExplanationViaBlueprintsQueryBuilder";
-
-		// Not running the test on a virtual instance is a workaround for LPS-140041
-
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

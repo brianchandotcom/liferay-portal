@@ -117,7 +117,8 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		User user = UserLocalServiceUtil.fetchUser(_article.getUserId());
+		User user = UserLocalServiceUtil.fetchUser(
+			_article.getStatusByUserId());
 
 		if (user == null) {
 			return StringPool.BLANK;
@@ -128,7 +129,8 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getStickerIcon() {
-		User user = UserLocalServiceUtil.fetchUser(_article.getUserId());
+		User user = UserLocalServiceUtil.fetchUser(
+			_article.getStatusByUserId());
 
 		if (user == null) {
 			return StringPool.BLANK;
@@ -144,7 +146,8 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getStickerImageSrc() {
 		try {
-			User user = UserLocalServiceUtil.fetchUser(_article.getUserId());
+			User user = UserLocalServiceUtil.fetchUser(
+				_article.getStatusByUserId());
 
 			if (user == null) {
 				return StringPool.BLANK;

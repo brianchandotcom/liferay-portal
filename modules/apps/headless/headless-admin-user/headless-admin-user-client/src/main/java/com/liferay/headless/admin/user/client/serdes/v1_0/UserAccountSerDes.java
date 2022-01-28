@@ -402,6 +402,20 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
+		if (userAccount.getPassword() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getPassword()));
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getProfileURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -668,6 +682,13 @@ public class UserAccountSerDes {
 				String.valueOf(userAccount.getOrganizationBriefs()));
 		}
 
+		if (userAccount.getPassword() == null) {
+			map.put("password", null);
+		}
+		else {
+			map.put("password", String.valueOf(userAccount.getPassword()));
+		}
+
 		if (userAccount.getProfileURL() == null) {
 			map.put("profileURL", null);
 		}
@@ -864,6 +885,11 @@ public class UserAccountSerDes {
 						).toArray(
 							size -> new OrganizationBrief[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "password")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setPassword((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {

@@ -1839,6 +1839,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("password", additionalAssertFieldName)) {
+				if (userAccount.getPassword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (userAccount.getProfileURL() == null) {
 					valid = false;
@@ -2457,6 +2465,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("password", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getPassword(),
+						userAccount2.getPassword())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getProfileURL(),
@@ -2825,6 +2844,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				jobTitle = RandomTestUtil.randomString();
 				lastLoginDate = RandomTestUtil.nextDate();
 				name = RandomTestUtil.randomString();
+				password = RandomTestUtil.randomString();
 				profileURL = RandomTestUtil.randomString();
 			}
 		};

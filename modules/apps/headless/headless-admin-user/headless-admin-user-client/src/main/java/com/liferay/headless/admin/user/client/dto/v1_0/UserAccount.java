@@ -496,6 +496,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected OrganizationBrief[] organizationBriefs;
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setPassword(
+		UnsafeSupplier<String, Exception> passwordUnsafeSupplier) {
+
+		try {
+			password = passwordUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String password;
+
 	public String getProfileURL() {
 		return profileURL;
 	}

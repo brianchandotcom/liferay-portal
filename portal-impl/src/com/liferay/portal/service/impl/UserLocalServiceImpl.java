@@ -318,7 +318,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), false);
+		boolean passwordReset = false;
+
+		try {
+			PasswordPolicy passwordPolicy =
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
+
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable()) {
+				passwordReset = true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
+
+		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
 
 		return defaultAdminUser;
 	}

@@ -34,8 +34,8 @@ public class PropertiesSettingsTest {
 			new LocationVariableResolver(null, (SettingsLocatorHelper)null),
 			new Properties() {
 				{
-					put(_SINGLE_KEY, _SINGLE_VALUE);
 					put(_MULTIPLE_KEY, _MULTIPLE_VALUES);
+					put(_SINGLE_KEY, _SINGLE_VALUE);
 				}
 			});
 

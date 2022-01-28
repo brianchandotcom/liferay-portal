@@ -45,7 +45,8 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping, boolean instanceable,
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
@@ -55,9 +56,9 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 		return remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			externalReferenceCode, getUserId(), customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -101,9 +102,9 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_remoteAppEntryModelResourcePermission.check(
@@ -111,9 +112,9 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 			getUserId(), remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, nameMap, portletCategoryName, properties,
-			sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override

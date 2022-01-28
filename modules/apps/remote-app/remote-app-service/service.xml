@@ -22,6 +22,7 @@
 		<column name="customElementCSSURLs" type="String" />
 		<column name="customElementHTMLElementName" type="String" />
 		<column name="customElementURLs" type="String" />
+		<column name="customElementUseESM" type="boolean" />
 		<column name="description" type="String" />
 		<column name="friendlyURLMapping" type="String" />
 		<column method-name="IFrameURL" name="iFrameURL" type="String" />

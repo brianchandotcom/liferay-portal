@@ -1228,55 +1228,71 @@ definition {
 	}
 
 	test SearchViaBlueprintsPreviewWithAttributes {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Test Vocabulary");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Test Category",
+			vocabularyName = "Test Vocabulary");
+
+		var webContentserviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			serviceContext = "${webContentserviceContext}",
+			title = "gala");
+
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
 			title = "apple apple apple");
 
-		var webContentserviceContext = '''{"assetTagNames": ["apple"]}''';
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		JSONWebcontent.addWebContent(
-			content = "",
+		JSONSegmentsentry.addSegment(
+			fieldName = "First Name",
 			groupName = "Guest",
-			serviceContext = "${webContentserviceContext}",
-			title = "gala");
+			operator = "equals",
+			segmentName = "Test Segment",
+			text = "test");
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(title = "Boost Tags Match Blueprint");
+		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Blueprints.addElement(element = "Boost Tags Match");
+		Blueprints.addElement(element = "Boost Contents in a Category for a User Segment");
 
 		Type(
-			elementName = "Boost Tags Match",
+			elementName = "Boost Contents in a Category for a User Segment",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "${categoryId}");
+
+		var segmentId = JSONSegmentsentry.getSegmentId(segmentName = "Test Segment");
+
+		Type(
+			elementName = "Boost Contents in a Category for a User Segment",
+			fieldLabel = "User Segment IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "${segmentId}");
+
+		Type(
+			elementName = "Boost Contents in a Category for a User Segment",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "2000");
 
-		PortletEntry.save();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		Click(locator1 = "Button#PREVIEW");
-
-		Click.javaScriptClick(
-			key_title = "Attributes",
-			locator1 = "Button#ANY_TITLE");
-
-		var blueprintId = Blueprints.getBlueprintID(title = "Boost Tags Match Blueprint");
-
-		Type(
-			locator1 = "TextInput#KEY",
-			value1 = "search.experiences.blueprint.id");
-
-		Type(
-			key_fieldLabel = "Value",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${blueprintId}");
-
-		Button.clickDone();
-
-		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
+		Blueprints.searchBlueprintsPreview(
+			attributesKey = "search.experiences.scope.group.id",
+			attributesValue = "${groupId}",
+			searchTerm = "apple");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",

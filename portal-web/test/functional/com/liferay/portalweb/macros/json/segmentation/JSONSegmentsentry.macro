@@ -30,4 +30,30 @@ definition {
 			serviceContext = "${serviceContext}");
 	}
 
+	macro getSegmentId {
+		Variables.assertDefined(parameterList = "${segmentName}");
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "true");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/segments.segmentsentry/get-segments-entries \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d includeAncestorSegmentsEntries=true
+		''';
+		var segmentId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${segmentName}')]['segmentsEntryId']");
+
+		echo("## ID for Segment ${segmentName}: ${segmentId}");
+
+		return "${segmentId}";
+	}
+
 }

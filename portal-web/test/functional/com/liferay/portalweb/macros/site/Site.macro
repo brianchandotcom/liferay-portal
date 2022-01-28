@@ -65,6 +65,8 @@ definition {
 			SelectFrameTop();
 
 			Alert.viewSuccessMessage();
+
+			WaitForPageLoad();
 		}
 
 		if ("${siteType}" == "Site Template") {

@@ -12,15 +12,16 @@
  * details.
  */
 
-interface ThemeDisplay {
+interface IThemeDisplay {
 	getCompanyGroupId: () => number;
+	getPathThemeImages: () => string;
 	getScopeGroupId: () => number;
 	getSiteGroupId: () => number;
 }
 
 interface ILiferay {
+	ThemeDisplay: IThemeDisplay;
 	authToken: string;
-	themeDisplay: ThemeDisplay;
 }
 
 declare global {
@@ -32,6 +33,7 @@ declare global {
 export const Liferay = window.Liferay || {
 	ThemeDisplay: {
 		getCompanyGroupId: () => 0,
+		getPathThemeImages: () => '',
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
 	},

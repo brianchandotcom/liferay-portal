@@ -12,10 +12,14 @@
  * details.
  */
 
-const HelloFoo = () => (
-	<div className="hello-foo">
-		<h1>Hello Foo</h1>
+const Header = () => (
+	<div className="header-container">
+		<span className="d-flex flex-column">
+			<small className="font-weight-bold text-secondary">PROJECT</small>
+
+			<h1 className="font-weight-500">Project Directory</h1>
+		</span>
 	</div>
 );
 
-export default HelloFoo;
+export default Header;

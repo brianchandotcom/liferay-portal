@@ -12,10 +12,23 @@
  * details.
  */
 
-const HelloWorld = () => (
-	<div className="hello-world">
-		<h1>Hello World</h1>
-	</div>
-);
+import Header from './Header';
+import Sidebar from './Sidebar';
 
-export default HelloWorld;
+const Layout: React.FC = ({children}) => {
+	return (
+		<main className="testray-main">
+			<div className="testray-body">
+				<Sidebar />
+
+				<div className="testray-page">
+					<Header />
+
+					<div className="testray-content">{children}</div>
+				</div>
+			</div>
+		</main>
+	);
+};
+
+export default Layout;

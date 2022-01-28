@@ -1,0 +1,76 @@
+.testray-sidebar {
+	display: flex;
+	flex-direction: column;
+	background-color: #18215c;
+	height: 100vh;
+	padding: 20px 0 0 0;
+	width: 250px;
+
+	.divider {
+		background-color: $sidebar-divider-color;
+		height: 1px;
+		margin: 20px 25px;
+		min-height: 1px;
+		opacity: 0.25;
+
+		&.divider-full {
+			margin: 0;
+		}
+	}
+
+	.testray-sidebar-content {
+		display: flex;
+		flex: 1;
+		box-sizing: border-box;
+		flex-direction: column;
+
+		overflow-x: hidden;
+		overflow-y: auto;
+
+		.testray-logo {
+			margin: 5px 25px 30px 25px;
+
+			svg {
+				height: 35px;
+
+				circle,
+				path,
+				polygon {
+					fill: #8b8db2;
+				}
+			}
+		}
+	}
+
+	.testray-sidebar-footer {
+		width: 100%;
+	}
+
+	.testray-sidebar-item {
+		color: #8b8db2;
+		display: block;
+		padding: 10px 25px;
+		position: relative;
+		white-space: nowrap;
+
+		&:active,
+		&:focus,
+		&:hover {
+			background-color: #303376;
+			text-decoration: none;
+		}
+
+		&.active {
+			background-color: #303376;
+			color: #8b8db2;
+		}
+
+		.testray-sidebar-text {
+			font-size: 1.2em;
+			font-weight: 500;
+			padding-left: 10px;
+			vertical-align: middle;
+			transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+		}
+	}
+}

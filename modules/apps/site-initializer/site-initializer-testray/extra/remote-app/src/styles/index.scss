@@ -1,0 +1,23 @@
+// stylelint-disable selector-type-no-unknown
+
+*,
+*:after,
+*:before {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+	font-size: 100%;
+	list-style-type: none;
+}
+
+liferay-remote-app-testray {
+	@import 'variables';
+	@import 'components/layout/header';
+	@import 'components/layout/layout';
+	@import 'components/layout/sidebar';
+	@import 'hello-world';
+}

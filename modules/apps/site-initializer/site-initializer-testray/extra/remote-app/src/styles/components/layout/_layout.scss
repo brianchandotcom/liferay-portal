@@ -1,0 +1,23 @@
+.testray-main {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+
+	.testray-body {
+		display: flex;
+		flex: 1;
+		background-color: #f5f6f7;
+
+		.testray-page {
+			width: 100%;
+			overflow: auto;
+			padding: 0;
+			position: relative;
+
+			.testray-content {
+				padding: 25px 30px 30px;
+				position: relative;
+			}
+		}
+	}
+}

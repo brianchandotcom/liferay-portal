@@ -1,0 +1,13 @@
+.header-container {
+	background-color: #fff;
+	border-bottom: 1px solid #e3e9ee;
+	box-shadow: 0 2px 4px 0 rgb(38 47 87 / 5%);
+	-webkit-transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+	-o-transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+	transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+	z-index: 1;
+	height: 92px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+}

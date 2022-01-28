@@ -15,22 +15,24 @@
 import ReactDOM from 'react-dom';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import HelloBar from './routes/hello-bar/pages/HelloBar';
-import HelloFoo from './routes/hello-foo/pages/HelloFoo';
-import HelloWorld from './routes/hello-world/pages/HelloWorld';
+import Layout from './components/Layout/Layout';
+import ClayIconProvider from './context/ClayIconProvider';
+import Home from './pages/Home';
 
-import './common/styles/index.scss';
+import './styles/index.scss';
 
 const App = () => (
-	<HashRouter>
-		<Routes>
-			<Route element={<HelloWorld />} index />
+	<ClayIconProvider>
+		<Layout>
+			<HashRouter>
+				<Routes>
+					<Route element={<Home />} index />
 
-			<Route element={<HelloFoo />} path="/hello-foo" />
-
-			<Route element={<HelloBar />} path="/hello-bar" />
-		</Routes>
-	</HashRouter>
+					{/* <Route element={<HelloBar />} path="/hello-bar" /> */}
+				</Routes>
+			</HashRouter>
+		</Layout>
+	</ClayIconProvider>
 );
 
 class WebComponent extends HTMLElement {

@@ -329,7 +329,7 @@ public class LiferayJWTBearerGrantHandler
 
 				JwtClaims jwtClaims = jwtToken.getClaims();
 
-				setJwsSignatureVerifier(companyId, jwsHeaders, jwtClaims);
+				_initGrantHandler(companyId, jwsHeaders, jwtClaims);
 
 				validateSignature(
 					new JwsHeaders(jwsHeaders),
@@ -340,7 +340,7 @@ public class LiferayJWTBearerGrantHandler
 
 				return doCreateAccessToken(
 					client,
-					createUserSubject(
+					_createUserSubject(
 						companyId, jwtClaims.getIssuer(),
 						jwtClaims.getSubject()),
 					Constants.JWT_BEARER_GRANT,
@@ -352,7 +352,7 @@ public class LiferayJWTBearerGrantHandler
 			}
 		}
 
-		public UserSubject createUserSubject(
+		private UserSubject _createUserSubject(
 			long companyId, String issuer, String subject) {
 
 			Map<String, String> userAuthTypes = getUserAuthTypes(companyId);
@@ -381,7 +381,7 @@ public class LiferayJWTBearerGrantHandler
 			return userSubject;
 		}
 
-		public void setJwsSignatureVerifier(
+		private void _initGrantHandler(
 			long companyId, JwsHeaders jwsHeaders, JwtClaims jwtClaims) {
 
 			Map<String, Map<String, JwsSignatureVerifier>>

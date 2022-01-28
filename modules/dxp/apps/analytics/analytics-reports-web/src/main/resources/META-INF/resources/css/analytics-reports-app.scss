@@ -25,11 +25,7 @@ html#{$cadmin-selector} {
 			}
 
 			.custom-tooltip {
-				background-color: #fff;
-				border: 1px solid #ccc;
-				margin: 0;
-				opacity: 0.9;
-				padding: 4px;
+				position: static;
 				white-space: nowrap;
 			}
 
@@ -85,6 +81,7 @@ html#{$cadmin-selector} {
 			.pie-chart-wrapper {
 				display: flex;
 				justify-content: space-between;
+				overflow-x: hidden;
 				position: relative;
 
 				&.pie-chart-wrapper--loading {

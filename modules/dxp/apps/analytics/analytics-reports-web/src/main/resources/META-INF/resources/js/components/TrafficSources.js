@@ -323,8 +323,8 @@ function TrafficSourcesCustomTooltip(props) {
 	const {formatter, payload, separator = ''} = props;
 
 	return (
-		<div className="custom-tooltip">
-			<p className="mb-1 mt-0">
+		<div className="custom-tooltip popover">
+			<p className="mx-2 popover-header py-1">
 				<b>
 					{
 						// eslint-disable-next-line @liferay/no-length-jsx-expression
@@ -333,7 +333,7 @@ function TrafficSourcesCustomTooltip(props) {
 				</b>
 			</p>
 
-			<ul className="list-unstyled mb-0">
+			<ul className="list-unstyled mb-0 p-2 popover-body">
 				<>
 					{payload.map((item) => {
 						// eslint-disable-next-line no-unused-vars

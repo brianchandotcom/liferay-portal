@@ -240,9 +240,8 @@ public class ObjectFieldLocalServiceImpl
 			if (!Objects.equals(objectField.getDBType(), dbType) ||
 				!Objects.equals(objectField.getName(), name)) {
 
-				throw new ObjectFieldRelationshipTypeException(
-					"Object field relationship name and DB type cannot be " +
-						"changed");
+				throw new ObjectFieldRelationshipTypeException.
+					MustNotEditNameOrDBTypeOfObjectFieldRelationshipType();
 			}
 		}
 		else {

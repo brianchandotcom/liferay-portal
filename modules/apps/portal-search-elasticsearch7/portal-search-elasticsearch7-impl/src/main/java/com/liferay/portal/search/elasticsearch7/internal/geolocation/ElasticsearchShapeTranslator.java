@@ -33,16 +33,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.elasticsearch.common.geo.builders.CircleBuilder;
-import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
-import org.elasticsearch.common.geo.builders.GeometryCollectionBuilder;
-import org.elasticsearch.common.geo.builders.LineStringBuilder;
-import org.elasticsearch.common.geo.builders.MultiLineStringBuilder;
-import org.elasticsearch.common.geo.builders.MultiPointBuilder;
-import org.elasticsearch.common.geo.builders.MultiPolygonBuilder;
-import org.elasticsearch.common.geo.builders.PointBuilder;
-import org.elasticsearch.common.geo.builders.PolygonBuilder;
-import org.elasticsearch.common.geo.builders.ShapeBuilder;
+import org.elasticsearch.legacygeo.builders.CircleBuilder;
+import org.elasticsearch.legacygeo.builders.EnvelopeBuilder;
+import org.elasticsearch.legacygeo.builders.GeometryCollectionBuilder;
+import org.elasticsearch.legacygeo.builders.LineStringBuilder;
+import org.elasticsearch.legacygeo.builders.MultiLineStringBuilder;
+import org.elasticsearch.legacygeo.builders.MultiPointBuilder;
+import org.elasticsearch.legacygeo.builders.MultiPolygonBuilder;
+import org.elasticsearch.legacygeo.builders.PointBuilder;
+import org.elasticsearch.legacygeo.builders.PolygonBuilder;
+import org.elasticsearch.legacygeo.builders.ShapeBuilder;
 
 /**
  * @author Michael C. Han

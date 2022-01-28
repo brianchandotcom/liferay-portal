@@ -887,6 +887,11 @@ components:
                         $ref: "#/components/schemas/OrganizationBrief"
                     readOnly: true
                     type: array
+                password:
+                    description:
+                        The user's password.
+                    type: string
+                    writeOnly: true
                 profileURL:
                     description:
                         A relative URL to the user's profile.

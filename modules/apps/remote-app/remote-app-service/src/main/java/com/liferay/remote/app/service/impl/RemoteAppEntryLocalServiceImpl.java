@@ -122,7 +122,7 @@ public class RemoteAppEntryLocalServiceImpl
 			String cssURLs = _joinJSONArray(
 				manifestJSONObject.getJSONArray("cssURLs"));
 			String htmlElementName = manifestJSONObject.getString(
-				"htmlElementName");
+				"htmlElementName", StringPool.BLANK);
 			String urls = _joinJSONArray(
 				manifestJSONObject.getJSONArray("urls"));
 			boolean useESM = manifestJSONObject.getBoolean("useESM", false);
@@ -133,7 +133,7 @@ public class RemoteAppEntryLocalServiceImpl
 				portletCategoryName, properties, sourceCodeURL, useESM);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			String url = manifestJSONObject.getString("url");
+			String url = manifestJSONObject.getString("url", StringPool.BLANK);
 
 			remoteAppEntry = _createIFrameRemoteAppEntry(
 				userId, description, friendlyURLMapping, url, instanceable,
@@ -641,6 +641,10 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	private String _joinJSONArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler((2 * jsonArray.length()) - 1);
 
 		for (int i = 0; i < jsonArray.length(); i++) {

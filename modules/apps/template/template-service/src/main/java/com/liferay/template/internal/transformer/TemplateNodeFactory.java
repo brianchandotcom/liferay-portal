@@ -16,95 +16,38 @@ package com.liferay.template.internal.transformer;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.type.categorization.Category;
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
+import com.liferay.template.info.field.transformer.TemplateNodeTransformerTracker;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
  */
+@Component(immediate = true, service = TemplateNodeFactory.class)
 public class TemplateNodeFactory {
 
-	public static TemplateNode createTemplateNode(
-			InfoFieldValue<Object> infoFieldValue, ThemeDisplay themeDisplay)
-		throws Exception {
+	public TemplateNode createTemplateNode(
+		InfoFieldValue<Object> infoFieldValue, ThemeDisplay themeDisplay) {
 
 		InfoField<?> infoField = infoFieldValue.getInfoField();
 
-		Object data = infoFieldValue.getValue(themeDisplay.getLocale());
-
-		if (Validator.isNull(data)) {
-			return new TemplateNode(
-				themeDisplay, infoField.getName(), StringPool.BLANK,
-				StringPool.BLANK, Collections.emptyMap());
-		}
-
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-		if (Objects.equals(CategoriesInfoFieldType.INSTANCE, infoFieldType)) {
-			List<Category> categories = (List<Category>)data;
+		Class<?> infoFieldTypeClass = infoFieldType.getClass();
 
-			return _createTemplateNode(
-				infoField.getName(), themeDisplay, categories,
-				category -> new TemplateNode(
-					themeDisplay, infoField.getName(),
-					category.getLabel(themeDisplay.getLocale()),
-					infoFieldType.getName(),
-					HashMapBuilder.put(
-						"key", category.getKey()
-					).put(
-						"label", category.getLabel(themeDisplay.getLocale())
-					).build()));
-		}
-		else if (data instanceof List) {
-			List<Object> list = (List<Object>)data;
+		TemplateNodeTransformer templateNodeTransformer =
+			_templateNodeTransformerTracker.geTemplateNodeTransformer(
+				infoFieldTypeClass.getName());
 
-			return _createTemplateNode(
-				infoField.getName(), themeDisplay, list,
-				object -> new TemplateNode(
-					themeDisplay, infoField.getName(), String.valueOf(object),
-					infoFieldType.getName(), Collections.emptyMap()));
-		}
-
-		return new TemplateNode(
-			themeDisplay, infoField.getName(), String.valueOf(data),
-			StringPool.BLANK, Collections.emptyMap());
+		return templateNodeTransformer.transform(infoFieldValue, themeDisplay);
 	}
 
-	private static <T> TemplateNode _createTemplateNode(
-			String fieldName, ThemeDisplay themeDisplay, List<T> list,
-			UnsafeFunction<T, TemplateNode, Exception> unsafeFunction)
-		throws Exception {
-
-		if (list.isEmpty()) {
-			return new TemplateNode(
-				themeDisplay, fieldName, StringPool.BLANK, StringPool.BLANK,
-				Collections.emptyMap());
-		}
-
-		T firstItem = list.get(0);
-
-		TemplateNode templateNode = unsafeFunction.apply(firstItem);
-
-		templateNode.appendSibling(templateNode);
-
-		for (int i = 1; i < list.size(); i++) {
-			T item = list.get(i);
-
-			templateNode.appendSibling(unsafeFunction.apply(item));
-		}
-
-		return templateNode;
-	}
+	@Reference
+	private TemplateNodeTransformerTracker _templateNodeTransformerTracker;
 
 }

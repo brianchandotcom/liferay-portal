@@ -4,6 +4,7 @@ Bundle-Version: 2.1.1
 Export-Package:\
 	com.liferay.template.constants,\
 	com.liferay.template.exception,\
+	com.liferay.template.info.field.transformer,\
 	com.liferay.template.info.item.capability,\
 	com.liferay.template.info.item.provider,\
 	com.liferay.template.model,\

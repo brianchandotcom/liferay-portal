@@ -192,7 +192,9 @@ public class PortalClassPathUtil {
 
 				Attributes attributes = manifest.getMainAttributes();
 
-				if (attributes.containsKey("Liferay-Releng-App-Title")) {
+				if (attributes.containsKey(
+						new Attributes.Name("Liferay-Releng-App-Title"))) {
+
 					return false;
 				}
 

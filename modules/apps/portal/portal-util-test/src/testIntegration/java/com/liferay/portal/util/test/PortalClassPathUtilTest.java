@@ -73,7 +73,9 @@ public class PortalClassPathUtilTest {
 
 				Attributes attributes = manifest.getMainAttributes();
 
-				if (attributes.containsKey("Liferay-Releng-App-Title")) {
+				if (attributes.containsKey(
+						new Attributes.Name("Liferay-Releng-App-Title"))) {
+
 					liferayReleaseApps.add(bootstrapClassPathEntry);
 				}
 			}

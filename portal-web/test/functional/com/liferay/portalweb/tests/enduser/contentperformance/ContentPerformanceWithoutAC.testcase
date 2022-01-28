@@ -108,21 +108,83 @@ definition {
 	}
 
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the blog display page in the view mode"
-	@ignore = "true"
 	@priority = "3"
 	test MetricsIconNotVisibleInBlogDisplayPageWithoutAC {
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
 
-		// TODO LPS-144030 MetricsIconNotVisibleInBlogDisplayPageWithoutAC pending implementation
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Open Content Performance panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if infomation is not present at painel") {
+			AssertElementNotPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "DM Document Title");
+
+			AssertTextNotPresent(
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the document display page in the view mode"
-	@ignore = "true"
 	@priority = "3"
 	test MetricsIconNotVisibleInDocumentDisplayPageWithoutAC {
+		task ("Create a Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
 
-		// TODO LPS-144030 MetricsIconNotVisibleInDocumentDisplayPageWithoutAC pending implementation
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Open Content Performance panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if infomation is not present at painel") {
+			AssertElementNotPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "DM Document Title");
+
+			AssertTextNotPresent(
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is shown in the bar above the widget page in the view mode"

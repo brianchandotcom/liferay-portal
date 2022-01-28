@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRAPH_ENGAGEMENT</td>
+	<td>//div[contains(@class,'recharts-wrapper')]//*[name()='svg'][contains(@class,'recharts-surface')]//*[name()='g'][contains(@class,'recharts-cartesian-grid')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_TRAFFIC_SOURCES_NUMBER</td>
 	<td>//div[@class='pie-chart-wrapper'] //td[contains(text(),'0')]</td>
 	<td></td>

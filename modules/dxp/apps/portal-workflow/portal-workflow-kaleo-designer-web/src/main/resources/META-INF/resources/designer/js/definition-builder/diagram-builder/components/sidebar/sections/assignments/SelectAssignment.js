@@ -22,35 +22,39 @@ import User from './select-assignment/User';
 
 const options = [
 	{
+		label: '',
+		value: '',
+	},
+	{
+		assignmentType: 'assetCreator',
 		label: Liferay.Language.get('asset-creator'),
-		value: 'assetCreator',
 	},
 	{
+		assignmentType: 'resourceActions',
 		label: Liferay.Language.get('resource-actions'),
-		value: 'resourceActions',
 	},
 	{
+		assignmentType: 'roleId',
 		label: Liferay.Language.get('role'),
-		value: 'role',
 	},
 	{
+		assignmentType: 'user',
 		label: Liferay.Language.get('user'),
-		value: 'user',
 	},
 	{
+		assignmentType: 'roleType',
 		label: Liferay.Language.get('role-type'),
-		value: 'roleType',
 	},
 	{
+		assignmentType: 'scriptedAssignment',
 		label: Liferay.Language.get('scripted-assignment'),
-		value: 'scriptedAssignment',
 	},
 ];
 
 const AssignmentSectionComponents = {
 	assetCreator: AssetCreator,
 	resourceActions: ResourceActions,
-	role: Role,
+	roleId: Role,
 	roleType: RoleType,
 	scriptedAssignment: ScriptedAssignment,
 	user: User,
@@ -85,9 +89,9 @@ const SelectAssignment = (props) => {
 						{options.map((item) => (
 							<ClaySelect.Option
 								disabled={item?.disabled}
-								key={item.value}
+								key={item.assignmentType}
 								label={item.label}
-								value={item.value}
+								value={item.assignmentType}
 							/>
 						))}
 					</ClaySelect>
@@ -112,4 +116,4 @@ const SelectAssignment = (props) => {
 	);
 };
 
-export default SelectAssignment;
+export {SelectAssignment, options};

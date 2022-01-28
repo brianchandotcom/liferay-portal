@@ -114,9 +114,6 @@ definition {
 		CalendarPermissions.viewSearchResult(searchResults = "0 Results for DXP Client");
 
 		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
-
-
-		
 	}
 
 }

@@ -61,9 +61,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#NO_ROLES_WERE_FOUND",
 			value1 = "${message}");
-
-
-			
 	}
 
 }

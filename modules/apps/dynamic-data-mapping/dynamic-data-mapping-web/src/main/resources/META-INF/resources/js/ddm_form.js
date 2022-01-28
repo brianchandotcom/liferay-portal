@@ -2437,9 +2437,9 @@ AUI.add(
 
 					breadcrumbContainer.empty();
 
-					var layoutsPathLenght = layoutsPath.length;
+					var layoutsPathLength = layoutsPath.length;
 
-					for (var index = 0; index < layoutsPathLenght; index++) {
+					for (var index = 0; index < layoutsPathLength; index++) {
 						var layoutPath = layoutsPath[index];
 
 						instance._addBreadcrumbElement(
@@ -2448,6 +2448,18 @@ AUI.add(
 							layoutPath.groupId,
 							layoutPath.privateLayout
 						);
+
+						if (index < layoutsPathLength - 1) {
+							if (instance._modal && instance._modal.bodyNode) {
+								var breadcrumbNode = instance._modal.bodyNode.one(
+									'.lfr-ddm-breadcrumb'
+								);
+
+								if (breadcrumbNode) {
+									breadcrumbNode.append('&nbsp;&gt;&nbsp;');
+								}
+							}
+						}
 					}
 				},
 

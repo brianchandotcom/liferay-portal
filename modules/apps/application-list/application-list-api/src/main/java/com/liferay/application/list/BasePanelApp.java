@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -38,6 +39,7 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -71,8 +73,11 @@ public abstract class BasePanelApp implements PanelApp {
 	@Override
 	public String getLabel(Locale locale) {
 		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
+
 			return LanguageUtil.get(
-				locale,
+				resourceBundle,
 				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
 					getPortletId());
 		}

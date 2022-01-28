@@ -40,7 +40,6 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -226,7 +225,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 				}
 			}
 
-			User user = _getLastVersionUser(journalArticle);
+			User user = _userLocalService.fetchUser(journalArticle.getUserId());
 
 			if (user != null) {
 				journalArticleFieldValues.add(
@@ -378,16 +377,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 						exception);
 				}
 			});
-	}
-
-	private User _getLastVersionUser(JournalArticle journalArticle) {
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			journalArticle.getGroupId(), journalArticle.getArticleId(), 0, 1,
-			new ArticleVersionComparator(true));
-
-		journalArticle = articles.get(0);
-
-		return _userLocalService.fetchUser(journalArticle.getUserId());
 	}
 
 	private String _getTemplateKey(DDMTemplate ddmTemplate) {

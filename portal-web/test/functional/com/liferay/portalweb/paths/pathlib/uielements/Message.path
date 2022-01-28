@@ -222,7 +222,7 @@
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_N</td>
-	<td>xpath=(//div[contains(@class,'text-danger')]/preceding-sibling::div)[${key_indexNumber}]</td>
+	<td>xpath=(//div[contains(@class,'text-danger')]/preceding-sibling::div[contains(@class,'title')])[${key_indexNumber}]</td>
 	<td></td>
 </tr>
 <tr>

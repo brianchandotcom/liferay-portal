@@ -56,7 +56,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value='<%= batchPlannerPlan.isExport() ?"/batch_planner/edit_export_batch_planner_plan" : "/batch_planner/edit_import_batch_planner_plan" %>' />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="batchPlannerPlanId" value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>" />
 					<portlet:param name="editable" value="true" />
 				</portlet:renderURL>

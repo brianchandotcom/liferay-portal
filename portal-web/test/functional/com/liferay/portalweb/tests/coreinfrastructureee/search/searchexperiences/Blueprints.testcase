@@ -1327,6 +1327,46 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "The configuration has missing or invalid values.");
 	}
 
+	test ViewBlueprintsPreviewLocalizedResults {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "pt_BR:contente",
+			groupName = "Guest",
+			titleMap = "en_US:Title,pt_BR:Título");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Language Selector");
+
+		Search.openSearchPage();
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "pt_BR",
+			textIcon = "português-Brasil");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_BUTTON_PORTUGUESE");
+
+		Type(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_BAR_PORTUGUESE",
+			value1 = "content");
+
+		KeyPress(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_BAR_PORTUGUESE",
+			value1 = "\RETURN");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Título");
+	}
+
 	test ViewClauseContributorsUI {
 		Blueprints.openBlueprintsAdmin();
 

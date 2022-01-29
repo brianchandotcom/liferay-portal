@@ -191,8 +191,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_PREVIEW_BUTTON_PORTUGUESE</td>
+	<td>//button[contains(.,'Pré-visualizar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR</td>
 	<td>//div[contains(@class,'preview-sidebar')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR_PORTUGUESE</td>
+	<td>//div[contains(@class,'preview-sidebar')]//input[contains(@placeholder,'Buscar')]</td>
 	<td></td>
 </tr>
 <tr>

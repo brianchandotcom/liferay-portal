@@ -12,4 +12,4 @@ or
 
 * a Liferay specific definition key defined in `_APP_BND_DEFINITION_KEYS`,
  `_APP_BND_DEFINITION_KEYS` or `_APP_BND_DEFINITION_KEYS` in
-[BNDSourceUtil](https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/util/BNDSourceUtil.java)
+[BNDSourceUtil](https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/src/main/java/com/liferay/source/formatter/check/util/BNDSourceUtil.java)

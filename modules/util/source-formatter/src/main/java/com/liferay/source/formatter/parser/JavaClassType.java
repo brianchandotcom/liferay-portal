@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

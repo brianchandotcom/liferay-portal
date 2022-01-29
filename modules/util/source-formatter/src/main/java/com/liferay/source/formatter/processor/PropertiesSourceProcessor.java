@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;

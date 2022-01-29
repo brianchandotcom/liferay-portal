@@ -12,18 +12,29 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Alan Huang
  */
-public interface FileCheck extends SourceCheck {
+public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testIncorrectWhitespaceCheck() throws Exception {
+		test("IncorrectWhitespaceCheck.testproperties");
+	}
+
+	@Test
+	public void testSortDefinitionKeys() throws Exception {
+		test("FormatProperties/liferay-plugin-package.testproperties");
+		test("FormatProperties/TLiferayBatchFileProperties.testproperties");
+	}
+
+	@Test
+	public void testStylingCheck() throws Exception {
+		test("StylingCheck.testproperties");
+	}
 
 }

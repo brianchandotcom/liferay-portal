@@ -574,7 +574,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		try {
 			Class<?> clazz = Class.forName(
-				"com.liferay.source.formatter." + sourceProcessorName);
+				"com.liferay.source.formatter.processor." +
+					sourceProcessorName);
 
 			Field field = clazz.getDeclaredField("_INCLUDES");
 

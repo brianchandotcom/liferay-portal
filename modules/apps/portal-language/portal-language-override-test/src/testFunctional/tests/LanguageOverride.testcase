@@ -53,6 +53,53 @@ definition {
 		}
 	}
 
+	@description = "This test filters to only see Overrides."
+	@priority = "5"
+	test CanFilterOverrides {
+		task ("Given that assert no existing keys filter by override") {
+			ManagementBar.setFilterAndOrder(filterBy = "Override");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "0 Results for");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found.");
+
+			Click(locator1 = "LanguageOverride#VIEW_PAGE_OVERRIDDED_CLOSE");
+
+			AssertTextEquals(
+				key_languageKey = "0-analytics-cloud-connection",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "0-analytics-cloud-connection");
+		}
+
+		task ("When add a language key and filters by Overrides") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "Text contains error");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		}
+
+		task ("Then only see overrides and click overridded buttton to edit the key") {
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Results for");
+
+			AssertTextEquals(
+				key_languageKey = "text-contains-error",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "text-contains-error");
+
+			AssertTextEquals(
+				locator1 = "LanguageOverride#VIEW_PAGE_OVERRIDDEN",
+				value1 = "OVERRIDDEN");
+		}
+	}
+
 	@description = "This test asserts that a user can remove all translation overrides on the main view page for language keys that are overridden and doing so will delete the language key"
 	@priority = "5"
 	test CanRemoveAllTranslationOverridesViaMenuItem {

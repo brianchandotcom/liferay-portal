@@ -12,18 +12,31 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Karen Dang
  */
-public interface FileCheck extends SourceCheck {
+public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines1.testxml");
+		test("IncorrectEmptyLines2.testxml");
+	}
+
+	@Test
+	public void testIncorrectTabs() throws Exception {
+		test("IncorrectTabs1.testaction");
+		test("IncorrectTabs2.testaction");
+		test("IncorrectTabs3.testaction");
+	}
+
+	@Test
+	public void testIncorrectXMLStyling() throws Exception {
+		test("IncorrectXMLStyling.testxml");
+	}
 
 }

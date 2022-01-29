@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public class JavaParserTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testJavaAnnotation() throws Exception {
+		test("JavaAnnotation.testjava");
+	}
+
+	@Test
+	public void testJavaArray() throws Exception {
+		test("JavaArray.testjava");
+	}
 
 }

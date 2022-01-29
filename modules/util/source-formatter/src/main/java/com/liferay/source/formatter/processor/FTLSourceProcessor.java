@@ -12,18 +12,37 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import java.io.IOException;
+
+import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public class FTLSourceProcessor extends BaseSourceProcessor {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Override
+	protected List<String> doGetFileNames() throws IOException {
+		return getFileNames(
+			new String[] {
+				"**/journal/dependencies/template.ftl",
+				"**/service/builder/dependencies/props.ftl"
+			},
+			getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
+	}
+
+	@Override
+	protected boolean hasGeneratedTag(String content) {
+		return false;
+	}
+
+	private static final String[] _INCLUDES = {"**/*.ftl"};
 
 }

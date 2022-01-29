@@ -17,7 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
-import com.liferay.source.formatter.SourceProcessor;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.util.List;
 import java.util.Set;

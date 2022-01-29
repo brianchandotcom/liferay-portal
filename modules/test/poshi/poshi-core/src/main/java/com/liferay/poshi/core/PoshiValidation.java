@@ -1454,9 +1454,9 @@ public class PoshiValidation {
 					"\" but found ", seleniumParameterCount, "\n", filePath));
 		}
 
-		for (String methodParameter : methodParameterValues) {
+		for (String methodParameterValue : methodParameterValues) {
 			Matcher invalidMethodParameterMatcher =
-				_invalidMethodParameterPattern.matcher(methodParameter);
+				_invalidMethodParameterPattern.matcher(methodParameterValue);
 
 			if (invalidMethodParameterMatcher.find()) {
 				String invalidSyntax = invalidMethodParameterMatcher.group(

@@ -725,7 +725,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 	private static final String _CHECKSTYLE_SOURCE_LOCATION =
 		"src/main/java/com/liferay/source/formatter/checkstyle/check/";
 
-	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
+	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "check/";
 
 	private static final String _DOCUMENTATION_DIR_LOCATION =
 		"src/main/resources/documentation/";

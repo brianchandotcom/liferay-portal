@@ -102,7 +102,6 @@ public class JavaSourceFormatterDocumentationCheck extends BaseJavaTermCheck {
 	}
 
 	private static final String _DOCUMENTATION_DIR_LOCATION =
-		"modules/util/source-formatter/src/main/resources/documentation" +
-			"/checks/";
+		"modules/util/source-formatter/src/main/resources/documentation/check/";
 
 }

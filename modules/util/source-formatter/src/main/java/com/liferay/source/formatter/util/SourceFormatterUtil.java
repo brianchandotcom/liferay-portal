@@ -520,7 +520,7 @@ public class SourceFormatterUtil {
 		ClassLoader classLoader = SourceFormatterUtil.class.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"documentation/checks/" + markdownFileName);
+			"documentation/check/" + markdownFileName);
 
 		if (inputStream != null) {
 			return _DOCUMENTATION_URL + markdownFileName;
@@ -699,7 +699,7 @@ public class SourceFormatterUtil {
 
 	private static final String _DOCUMENTATION_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
-			"/source-formatter/src/main/resources/documentation/checks/";
+			"/source-formatter/src/main/resources/documentation/check/";
 
 	private static final String _SUPPRESSIONS_FILE_NAME =
 		"source-formatter-suppressions.xml";

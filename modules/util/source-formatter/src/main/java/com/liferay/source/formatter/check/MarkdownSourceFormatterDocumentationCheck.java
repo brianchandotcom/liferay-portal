@@ -28,7 +28,7 @@ public class MarkdownSourceFormatterDocumentationCheck extends BaseFileCheck {
 
 		if (!absolutePath.contains(
 				"/modules/util/source-formatter/src/main/resources" +
-					"/documentation/checks/")) {
+					"/documentation/check/")) {
 
 			return content;
 		}

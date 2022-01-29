@@ -4,8 +4,8 @@ Check | Category | Description
 ----- | -------- | -----------
 GradleBlockOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts logic in gradle build files. |
 GradleBodyCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in the body of gradle build files. |
-[GradleDependenciesCheck](checks/gradle_dependencies_check.markdown#gradledependenciescheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that modules are not depending on other modules. |
-[GradleDependencyArtifactsCheck](checks/gradle_dependency_artifacts_check.markdown#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that value `default` is not used for attribute `version`. |
+[GradleDependenciesCheck](check/gradle_dependencies_check.markdown#gradledependenciescheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that modules are not depending on other modules. |
+[GradleDependencyArtifactsCheck](check/gradle_dependency_artifacts_check.markdown#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that value `default` is not used for attribute `version`. |
 GradleDependencyConfigurationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
 GradleDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |
 GradleExportedPackageDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates dependencies in gradle build files. |
@@ -14,8 +14,8 @@ GradleIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Fin
 GradleJavaVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files. |
 GradlePropertiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
-[GradleRequiredDependenciesCheck](checks/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
+[GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
 GradleStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style. |
-[GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown#gradletaskcreationcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that a task is declared on a separate line before the closure. |
+[GradleTaskCreationCheck](check/gradle_task_creation_check.markdown#gradletaskcreationcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that a task is declared on a separate line before the closure. |
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |
 WhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace. |

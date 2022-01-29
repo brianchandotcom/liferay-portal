@@ -51,8 +51,18 @@ function ImportForm({
 	useEffect(() => {
 		if (dbFields && fileFields && !useTemplateMappingRef.current) {
 			const newFieldsSelection = {};
-			fileFields.forEach((field) => {
-				newFieldsSelection[field] = null;
+
+			const sameFieldFound = fileFields?.filter((f) =>
+				dbFields.some((item) => item.value === f)
+			);
+
+			fileFields?.forEach((field) => {
+				if (sameFieldFound.includes(field)) {
+					newFieldsSelection[field] = field;
+				}
+				else {
+					newFieldsSelection[field] = null;
+				}
 			});
 			setFieldsSelections(newFieldsSelection);
 		}

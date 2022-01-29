@@ -10,8 +10,9 @@
  */
 
 import ClayForm, {ClaySelect} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
 import AssetCreator from './select-assignment/AssetCreator';
 import ResourceActions from './select-assignment/ResourceActions';
@@ -61,7 +62,16 @@ const AssignmentSectionComponents = {
 };
 
 const SelectAssignment = (props) => {
-	const [section, setSection] = useState('');
+	const {selectedItem} = useContext(DiagramBuilderContext);
+	const assignments = selectedItem?.data?.assignments;
+
+	const assignmentType =
+		assignments?.assignmentType[0] === 'user' &&
+		!Object.keys(assignments).includes('emailAddress')
+			? 'assetCreator'
+			: assignments?.assignmentType[0];
+
+	const [section, setSection] = useState(assignmentType || '');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
 	const AssignmentSectionComponent = AssignmentSectionComponents[section];

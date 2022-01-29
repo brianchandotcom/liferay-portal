@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Alan Huang
  */
-public interface FileCheck extends SourceCheck {
+public class GradleSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testSortMapKeys() throws Exception {
+		test("SortMapKeys1.testgradle");
+		test("SortMapKeys2.testgradle");
+		test("SortMapKeys3.testgradle");
+		test("SortMapKeys4.testgradle");
+		test("SortMapKeys5.testgradle");
+	}
+
+	@Test
+	public void testStylingCheck() throws Exception {
+		test("StylingCheck.testgradle");
+	}
 
 }

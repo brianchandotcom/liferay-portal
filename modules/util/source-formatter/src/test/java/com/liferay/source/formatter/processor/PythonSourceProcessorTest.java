@@ -12,18 +12,28 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Alan Huang
  */
-public interface FileCheck extends SourceCheck {
+public class PythonSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testIncorrectClassesAndMethodsOrder() throws Exception {
+		test("IncorrectClassesAndMethodsOrder.testpy");
+	}
+
+	@Test
+	public void testIncorrectImportsOrder() throws Exception {
+		test("IncorrectImportsOrder.testpy");
+	}
+
+	@Test
+	public void testIncorrectWhitespace() throws Exception {
+		test("IncorrectWhitespace.testpy");
+	}
 
 }

@@ -12,18 +12,32 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import java.io.IOException;
+
+import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public class HTMLSourceProcessor extends BaseSourceProcessor {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Override
+	protected List<String> doGetFileNames() throws IOException {
+		return getFileNames(
+			new String[] {
+				"**/jenkins-results-parser/src/test/resources/dependencies/**",
+				"**/lib/versions.html"
+			},
+			getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
+	}
+
+	private static final String[] _INCLUDES = {"**/*.html", "**/*.path"};
 
 }

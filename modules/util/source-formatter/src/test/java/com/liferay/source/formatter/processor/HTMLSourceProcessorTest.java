@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.processor.SourceProcessor;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Alan Huang
  */
-public interface FileCheck extends SourceCheck {
+public class HTMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	public String process(
-			SourceProcessor sourceProcessor, String fileName,
-			String absolutePath, String content)
-		throws Exception;
+	@Test
+	public void testFormatSelfClosingTags() throws Exception {
+		test("FormatSelfClosingTags.testhtml");
+	}
+
+	@Test
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines.testhtml");
+	}
 
 }

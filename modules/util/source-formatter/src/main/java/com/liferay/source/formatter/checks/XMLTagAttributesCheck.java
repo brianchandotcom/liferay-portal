@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.HTMLSourceProcessor;
+import com.liferay.source.formatter.processor.HTMLSourceProcessor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

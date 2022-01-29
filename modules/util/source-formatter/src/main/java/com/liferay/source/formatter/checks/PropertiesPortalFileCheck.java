@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.PropertiesSourceProcessor;
+import com.liferay.source.formatter.processor.PropertiesSourceProcessor;
 
 import java.io.IOException;
 

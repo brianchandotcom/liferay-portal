@@ -421,9 +421,6 @@ public class PoshiValidation {
 
 			validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
-
-			validateRequiredAttributeNames(
-				element, possibleAttributeNames, filePath);
 		}
 	}
 

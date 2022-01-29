@@ -1772,6 +1772,65 @@ definition {
 		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 	}
 
+	@description = "This is a use case for LPS-145025. No redirect and language is changed when change the language in password reset page."
+	@priority = "3"
+	test LanguageChangedAndNoRedirectWhenChangeLanguageInPasswordResetPage {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		var portalUrl = PropsUtil.get("portal.url");
+
+		task ("Given that a user forgot password and send emial to set new password") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Sender",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			User.logoutPG();
+
+			User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("And open link to reset password in email") {
+			MockMock.openBodyLink(
+				asset = "${portalUrl}: Reset Your Password",
+				content = "You can reset your password for ${portalUrl}",
+				subject = "${portalUrl}: Reset Your Password");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#CHANGE_PASSWORD_TITLE",
+				value1 = "Change Password");
+		}
+
+		task ("When the user clicks on flags button and select Arabic in password reset page") {
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "中文-中国",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then the page does not redirect and language is changed") {
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#CHANGE_PASSWORD_TITLE",
+				value1 = "更改密码");
+		}
+	}
+
 	@priority = "4"
 	test LoginUser {
 		ApplicationsMenu.gotoPortlet(

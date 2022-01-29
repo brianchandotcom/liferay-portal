@@ -58,7 +58,7 @@
 </tr>
 <tr>
 <td>DROPDOWN_MENU_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*[contains(@class,'dropdown-item') and contains(.,'${key_locale}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*[contains(@class,'dropdown-item') and contains(.,'${key_locale}')] | //div[contains(@class,'lfr-icon-menu-open') and contains(@class,'open')]//*[contains(@class,'dropdown-item') and contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
 <tr>

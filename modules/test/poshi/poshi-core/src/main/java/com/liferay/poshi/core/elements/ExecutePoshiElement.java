@@ -77,16 +77,16 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			addAttribute("selenium", getCommandName(poshiScript));
 
-			List<String> methodParameters =
+			List<String> methodParameterValues =
 				PoshiScriptParserUtil.getMethodParameterValues(
 					poshiScriptParentheticalContent);
 
-			for (int i = 0; i < methodParameters.size(); i++) {
-				String methodParameter = methodParameters.get(i);
+			for (int i = 0; i < methodParameterValues.size(); i++) {
+				String methodParameterValue = methodParameterValues.get(i);
 
-				String value = getDoubleQuotedContent(methodParameter);
-
-				addAttribute("argument" + (i + 1), value);
+				addAttribute(
+					"argument" + (i + 1),
+					getDoubleQuotedContent(methodParameterValue));
 			}
 
 			return;
@@ -142,30 +142,30 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("class", getClassName(poshiScript));
 			addAttribute("method", getCommandName(poshiScript));
 
-			for (String methodParameter :
+			for (String methodParameterValue :
 					PoshiScriptParserUtil.getMethodParameterValues(
 						poshiScriptParentheticalContent)) {
 
-				add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
+				add(PoshiNodeFactory.newPoshiNode(this, methodParameterValue));
 			}
 
 			return;
 		}
 
-		for (String methodParameter :
+		for (String methodParameterValue :
 				PoshiScriptParserUtil.getMethodParameterValues(
 					poshiScriptParentheticalContent,
 					_executeParameterPattern)) {
 
-			methodParameter = methodParameter.trim();
+			methodParameterValue = methodParameterValue.trim();
 
 			boolean functionAttributeAdded = false;
 
 			for (String functionAttributeName : _functionAttributeNames) {
-				String name = getNameFromAssignment(methodParameter);
+				String name = getNameFromAssignment(methodParameterValue);
 
 				if (name.equals(functionAttributeName)) {
-					String value = getValueFromAssignment(methodParameter);
+					String value = getValueFromAssignment(methodParameterValue);
 
 					Matcher matcher = quotedPattern.matcher(value);
 
@@ -176,7 +176,7 @@ public class ExecutePoshiElement extends PoshiElement {
 						sb.append("match: (locator|value)(1|2) = \".*\"");
 
 						throw new PoshiScriptParserException(
-							sb.toString(), methodParameter,
+							sb.toString(), methodParameterValue,
 							(PoshiElement)getParent());
 					}
 
@@ -186,7 +186,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 					add(
 						new PoshiElementAttribute(
-							name, value, methodParameter));
+							name, value, methodParameterValue));
 
 					functionAttributeAdded = true;
 
@@ -198,7 +198,7 @@ public class ExecutePoshiElement extends PoshiElement {
 				continue;
 			}
 
-			add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
+			add(PoshiNodeFactory.newPoshiNode(this, methodParameterValue));
 		}
 	}
 

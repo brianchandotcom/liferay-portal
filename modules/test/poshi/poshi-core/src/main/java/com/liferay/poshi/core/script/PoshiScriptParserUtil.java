@@ -42,20 +42,21 @@ public class PoshiScriptParserUtil {
 			String content, Pattern parameterPattern)
 		throws PoshiScriptParserException {
 
-		List<String> methodParameters = new ArrayList<>();
+		List<String> methodParameterValues = new ArrayList<>();
 
 		if (content.length() == 0) {
-			return methodParameters;
+			return methodParameterValues;
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		String methodParameter = sb.toString();
+		String methodParameterValue = sb.toString();
 
 		for (char c : content.toCharArray()) {
-			if ((c == ',') && isBalancedPoshiScript(methodParameter)) {
+			if ((c == ',') && isBalancedPoshiScript(methodParameterValue)) {
 				if (parameterPattern != null) {
-					Matcher matcher = parameterPattern.matcher(methodParameter);
+					Matcher matcher = parameterPattern.matcher(
+						methodParameterValue);
 
 					if (!matcher.matches()) {
 						sb.append(c);
@@ -64,7 +65,7 @@ public class PoshiScriptParserUtil {
 					}
 				}
 
-				methodParameters.add(methodParameter);
+				methodParameterValues.add(methodParameterValue);
 
 				sb.setLength(0);
 
@@ -73,11 +74,11 @@ public class PoshiScriptParserUtil {
 
 			sb.append(c);
 
-			methodParameter = sb.toString();
+			methodParameterValue = sb.toString();
 		}
 
 		if (parameterPattern != null) {
-			Matcher matcher = parameterPattern.matcher(methodParameter);
+			Matcher matcher = parameterPattern.matcher(methodParameterValue);
 
 			if (!matcher.matches()) {
 				throw new PoshiScriptParserException(
@@ -85,9 +86,9 @@ public class PoshiScriptParserUtil {
 			}
 		}
 
-		methodParameters.add(methodParameter);
+		methodParameterValues.add(methodParameterValue);
 
-		return methodParameters;
+		return methodParameterValues;
 	}
 
 	public static boolean isBalancedPoshiScript(String poshiScript) {

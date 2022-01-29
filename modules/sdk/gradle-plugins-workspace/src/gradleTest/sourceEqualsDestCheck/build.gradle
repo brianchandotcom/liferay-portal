@@ -5,6 +5,7 @@ String errorMessage = ""
 gradle.liferayWorkspace {
 	bundleCacheDir = "bundlesDir"
 	bundleUrl = uri("bundlesDir/bundle.zip")
+	product = "portal-7.4-ga8"
 }
 
 gradle.taskGraph.afterTask {

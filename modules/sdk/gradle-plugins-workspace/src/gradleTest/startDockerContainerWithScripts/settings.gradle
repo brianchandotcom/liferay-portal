@@ -15,6 +15,7 @@ gradle.liferayWorkspace {
 
 	dockerContainerId = hostName + "startdockercontainerwithscripts"
 	dockerImageId = hostName + "startdockercontainerwithscripts"
+	product = "portal-7.4-ga8"
 }
 
 gradle.projectsEvaluated {

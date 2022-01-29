@@ -127,11 +127,13 @@ downloadBundle {
 
 downloadHotFixZip {
 	dest new File(buildDir, "liferay-hotfix-1072-7210.zip")
+	onlyIfModified true
 	src hotFixZipUrl
 }
 
 downloadPluginsSdk {
 	dest new File(buildDir, "plugins-sdk.zip")
+	onlyIfModified true
 	src pluginsSdkUrl
 }
 

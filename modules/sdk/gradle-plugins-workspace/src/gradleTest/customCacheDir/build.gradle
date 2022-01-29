@@ -2,6 +2,7 @@ task runGradleTest
 
 gradle.liferayWorkspace {
 	bundleUrl = uri("bundle.zip")
+	product = "portal-7.4-ga8"
 }
 
 runGradleTest {

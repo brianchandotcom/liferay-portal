@@ -24,6 +24,7 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -122,7 +123,7 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 		String bundleUrl = workspaceExtension.getBundleUrl();
 
-		if (bundleUrl.contains("7.0.")) {
+		if (Objects.nonNull(bundleUrl) && bundleUrl.contains("7.0.")) {
 			GradleUtil.setProperty(project, "portal.version", "7.0.x");
 		}
 	}

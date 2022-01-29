@@ -7,6 +7,7 @@ gradle.liferayWorkspace {
 	bundleDistRootDirName = "foo/bar"
 	environment = "production"
 	modules.jspPrecompileEnabled = true
+	product = "portal-7.4-ga8"
 }
 
 runGradleTest {

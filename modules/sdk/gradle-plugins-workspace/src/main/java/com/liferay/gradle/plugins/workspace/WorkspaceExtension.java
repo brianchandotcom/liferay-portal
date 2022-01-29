@@ -116,8 +116,6 @@ public class WorkspaceExtension {
 			settings, "target.platform.version",
 			_getDefaultTargetplatformVersion());
 
-		_rootProjectConfigurator = new RootProjectConfigurator(settings);
-
 		_gradle.afterProject(
 			new Closure<Void>(_gradle) {
 
@@ -197,6 +195,8 @@ public class WorkspaceExtension {
 				}
 
 			});
+
+		_rootProjectConfigurator = new RootProjectConfigurator(settings);
 	}
 
 	public String getAppServerTomcatVersion() {
@@ -252,7 +252,7 @@ public class WorkspaceExtension {
 		).map(
 			this::_decodeBundleUrl
 		).orElse(
-			BundleSupportConstants.DEFAULT_BUNDLE_URL
+			null
 		);
 	}
 
@@ -286,6 +286,10 @@ public class WorkspaceExtension {
 
 	public String getProduct() {
 		return GradleUtil.toString(_product);
+	}
+
+	public ProductInfo getProductInfo() {
+		return _getProductInfo(getProduct());
 	}
 
 	public Iterable<ProjectConfigurator> getProjectConfigurators() {
@@ -394,6 +398,59 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
+	public class ProductInfo {
+
+		public String getAppServerTomcatVersion() {
+			return _appServerTomcatVersion;
+		}
+
+		public String getBundleChecksumMD5() {
+			return _bundleChecksumMD5;
+		}
+
+		public String getBundleUrl() {
+			return _bundleUrl;
+		}
+
+		public String getLiferayDockerImage() {
+			return _liferayDockerImage;
+		}
+
+		public String getLiferayProductVersion() {
+			return _liferayProductVersion;
+		}
+
+		public String getReleaseDate() {
+			return _releaseDate;
+		}
+
+		public String getTargetPlatformVersion() {
+			return _targetPlatformVersion;
+		}
+
+		@SerializedName("appServerTomcatVersion")
+		private String _appServerTomcatVersion;
+
+		@SerializedName("bundleChecksumMD5")
+		private String _bundleChecksumMD5;
+
+		@SerializedName("bundleUrl")
+		private String _bundleUrl;
+
+		@SerializedName("liferayDockerImage")
+		private String _liferayDockerImage;
+
+		@SerializedName("liferayProductVersion")
+		private String _liferayProductVersion;
+
+		@SerializedName("releaseDate")
+		private String _releaseDate;
+
+		@SerializedName("targetPlatformVersion")
+		private String _targetPlatformVersion;
+
+	}
+
 	private String _decodeBundleUrl(ProductInfo productInfo) {
 		try {
 			return BundleURLCodec.decode(
@@ -421,7 +478,7 @@ public class WorkspaceExtension {
 		).map(
 			ProductInfo::getLiferayDockerImage
 		).orElse(
-			_DOCKER_IMAGE_LIFERAY
+			null
 		);
 	}
 
@@ -533,9 +590,6 @@ public class WorkspaceExtension {
 	private static final File _DOCKER_DIR = new File(
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
-	private static final String _DOCKER_IMAGE_LIFERAY =
-		"liferay/portal:7.3.3-ga4";
-
 	private static final String _NODE_PACKAGE_MANAGER = "yarn";
 
 	private static final String _PRODUCT_INFO_URL =
@@ -568,59 +622,5 @@ public class WorkspaceExtension {
 	private Object _targetPlatformVersion;
 	private final File _workspaceCacheDir = new File(
 		System.getProperty("user.home"), _DEFAULT_WORKSPACE_CACHE_DIR_NAME);
-
-	@SuppressWarnings("unused")
-	private class ProductInfo {
-
-		public String getAppServerTomcatVersion() {
-			return _appServerTomcatVersion;
-		}
-
-		public String getBundleChecksumMD5() {
-			return _bundleChecksumMD5;
-		}
-
-		public String getBundleUrl() {
-			return _bundleUrl;
-		}
-
-		public String getLiferayDockerImage() {
-			return _liferayDockerImage;
-		}
-
-		public String getLiferayProductVersion() {
-			return _liferayProductVersion;
-		}
-
-		public String getReleaseDate() {
-			return _releaseDate;
-		}
-
-		public String getTargetPlatformVersion() {
-			return _targetPlatformVersion;
-		}
-
-		@SerializedName("appServerTomcatVersion")
-		private String _appServerTomcatVersion;
-
-		@SerializedName("bundleChecksumMD5")
-		private String _bundleChecksumMD5;
-
-		@SerializedName("bundleUrl")
-		private String _bundleUrl;
-
-		@SerializedName("liferayDockerImage")
-		private String _liferayDockerImage;
-
-		@SerializedName("liferayProductVersion")
-		private String _liferayProductVersion;
-
-		@SerializedName("releaseDate")
-		private String _releaseDate;
-
-		@SerializedName("targetPlatformVersion")
-		private String _targetPlatformVersion;
-
-	}
 
 }

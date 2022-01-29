@@ -12,6 +12,7 @@ apply plugin: "com.liferay.workspace"
 gradle.liferayWorkspace {
 	dockerContainerId = "create_docker_container_container"
 	dockerImageId = "create_docker_container_image"
+	product = "portal-7.4-ga8"
 }
 
 gradle.projectsEvaluated {

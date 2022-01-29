@@ -8,6 +8,8 @@ gradle.liferayWorkspace {
 	bundleUrl = bundleURL.toExternalForm()
 
 	bundleChecksumMD5 = "6a92a5fce4177bb8f35329a5f1b5c7e7"
+
+	product = "portal-7.4-ga8"
 }
 
 runGradleTest {

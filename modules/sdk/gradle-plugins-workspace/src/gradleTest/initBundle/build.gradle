@@ -3,6 +3,7 @@ task runGradleTest
 gradle.liferayWorkspace {
 	environment = "production"
 	homeDir = new File(buildDir, "bundles")
+	product = "portal-7.4-ga8"
 }
 
 runGradleTest {

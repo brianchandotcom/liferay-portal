@@ -20,26 +20,12 @@
 ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBlueprintsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT);
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= viewSXPBlueprintsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= viewSXPBlueprintsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= viewSXPBlueprintsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= SXPBlueprintAdminFDSNames.SXP_BLUEPRINTS %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	propsTransformer="sxp_blueprint_admin/js/view_sxp_blueprints/ViewSXPBlueprintsPropsTransformer"
-	style="fluid"
-/>
-
-<div id="<portlet:namespace />addSXPBlueprint">
+<div id="<portlet:namespace />viewSXPBlueprints">
 	<react:component
-		module="sxp_blueprint_admin/js/view_sxp_blueprints/AddSXPBlueprintModal"
+		module="sxp_blueprint_admin/js/view_sxp_blueprints/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"contextPath", application.getContextPath()
+				"apiURL", viewSXPBlueprintsDisplayContext.getAPIURL()
 			).put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 			).put(
@@ -50,7 +36,9 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 					"/sxp_blueprint_admin/edit_sxp_blueprint"
 				).buildString()
 			).put(
-				"portletNamespace", liferayPortletResponse.getNamespace()
+				"hasAddSXPBlueprintPermission", viewSXPBlueprintsDisplayContext.hasAddSXPBlueprintPermission()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
 	/>

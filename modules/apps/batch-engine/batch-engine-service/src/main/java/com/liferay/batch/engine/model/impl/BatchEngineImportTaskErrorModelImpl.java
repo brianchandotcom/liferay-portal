@@ -75,8 +75,8 @@ public class BatchEngineImportTaskErrorModelImpl
 		{"batchEngineImportTaskErrorId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"batchEngineImportTaskId", Types.BIGINT}, {"item", Types.VARCHAR},
-		{"itemIndex", Types.INTEGER}, {"message", Types.VARCHAR}
+		{"batchEngineImportTaskId", Types.BIGINT}, {"item", Types.CLOB},
+		{"itemIndex", Types.INTEGER}, {"message", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,13 +90,13 @@ public class BatchEngineImportTaskErrorModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("batchEngineImportTaskId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("item", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("item", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("itemIndex", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("message", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("message", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineImportTaskError (mvccVersion LONG default 0 not null,batchEngineImportTaskErrorId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchEngineImportTaskId LONG,item VARCHAR(75) null,itemIndex INTEGER,message VARCHAR(75) null)";
+		"create table BatchEngineImportTaskError (mvccVersion LONG default 0 not null,batchEngineImportTaskErrorId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchEngineImportTaskId LONG,item TEXT null,itemIndex INTEGER,message TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineImportTaskError";

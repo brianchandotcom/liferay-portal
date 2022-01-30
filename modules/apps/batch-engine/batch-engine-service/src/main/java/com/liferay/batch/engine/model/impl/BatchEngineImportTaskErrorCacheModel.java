@@ -159,7 +159,9 @@ public class BatchEngineImportTaskErrorCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		batchEngineImportTaskErrorId = objectInput.readLong();
@@ -171,10 +173,10 @@ public class BatchEngineImportTaskErrorCacheModel
 		modifiedDate = objectInput.readLong();
 
 		batchEngineImportTaskId = objectInput.readLong();
-		item = objectInput.readUTF();
+		item = (String)objectInput.readObject();
 
 		itemIndex = objectInput.readInt();
-		message = objectInput.readUTF();
+		message = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -192,19 +194,19 @@ public class BatchEngineImportTaskErrorCacheModel
 		objectOutput.writeLong(batchEngineImportTaskId);
 
 		if (item == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(item);
+			objectOutput.writeObject(item);
 		}
 
 		objectOutput.writeInt(itemIndex);
 
 		if (message == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(message);
+			objectOutput.writeObject(message);
 		}
 	}
 

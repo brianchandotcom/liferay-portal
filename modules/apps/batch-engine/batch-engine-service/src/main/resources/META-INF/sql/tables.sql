@@ -55,7 +55,7 @@ create table BatchEngineImportTaskError (
 	createDate DATE null,
 	modifiedDate DATE null,
 	batchEngineImportTaskId LONG,
-	item VARCHAR(75) null,
+	item TEXT null,
 	itemIndex INTEGER,
-	message VARCHAR(75) null
+	message TEXT null
 );

@@ -66,6 +66,7 @@
 		<column name="errorMessage" type="String" />
 		<column name="executeStatus" type="String" />
 		<column name="fieldNameMapping" type="Map" />
+		<column name="importStrategy" type="int" />
 		<column name="operation" type="String" />
 		<column name="parameters" type="Map" />
 		<column name="processedItemsCount" type="int" />
@@ -80,6 +81,32 @@
 		</finder>
 		<finder name="ExecuteStatus" return-type="Collection">
 			<finder-column name="executeStatus" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="BatchEngineImportTaskError" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="batchEngineImportTaskErrorId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="batchEngineImportTaskId" type="long" />
+		<column name="item" type="String" />
+		<column name="itemIndex" type="int" />
+		<column name="message" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="BatchEngineImportTaskId" return-type="Collection">
+			<finder-column name="batchEngineImportTaskId" />
 		</finder>
 	</entity>
 	<exceptions>

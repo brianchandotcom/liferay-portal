@@ -66,8 +66,12 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="batchEngineImportTaskId" type="long" />
-		<field name="item" type="String" />
+		<field name="item" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="itemIndex" type="int" />
-		<field name="message" type="String" />
+		<field name="message" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

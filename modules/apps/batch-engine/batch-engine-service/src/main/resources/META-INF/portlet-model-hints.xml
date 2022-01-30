@@ -50,11 +50,24 @@
 		</field>
 		<field name="executeStatus" type="String" />
 		<field name="fieldNameMapping" type="Map" />
+		<field name="importStrategy" type="int" />
 		<field name="operation" type="String" />
 		<field name="parameters" type="Map" />
 		<field name="processedItemsCount" type="int" />
 		<field name="startTime" type="Date" />
 		<field name="taskItemDelegateName" type="String" />
 		<field name="totalItemsCount" type="int" />
+	</model>
+	<model name="com.liferay.batch.engine.model.BatchEngineImportTaskError">
+		<field name="mvccVersion" type="long" />
+		<field name="batchEngineImportTaskErrorId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="batchEngineImportTaskId" type="long" />
+		<field name="item" type="String" />
+		<field name="itemIndex" type="int" />
+		<field name="message" type="String" />
 	</model>
 </model-hints>

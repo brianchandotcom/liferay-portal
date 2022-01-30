@@ -38,10 +38,24 @@ create table BatchEngineImportTask (
 	errorMessage TEXT null,
 	executeStatus VARCHAR(75) null,
 	fieldNameMapping TEXT null,
+	importStrategy INTEGER,
 	operation VARCHAR(75) null,
 	parameters TEXT null,
 	processedItemsCount INTEGER,
 	startTime DATE null,
 	taskItemDelegateName VARCHAR(75) null,
 	totalItemsCount INTEGER
+);
+
+create table BatchEngineImportTaskError (
+	mvccVersion LONG default 0 not null,
+	batchEngineImportTaskErrorId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	batchEngineImportTaskId LONG,
+	item VARCHAR(75) null,
+	itemIndex INTEGER,
+	message VARCHAR(75) null
 );

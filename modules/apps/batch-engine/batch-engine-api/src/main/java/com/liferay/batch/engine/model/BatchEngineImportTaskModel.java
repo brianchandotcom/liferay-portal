@@ -320,6 +320,20 @@ public interface BatchEngineImportTaskModel
 	public void setFieldNameMapping(Map<String, Serializable> fieldNameMapping);
 
 	/**
+	 * Returns the import strategy of this batch engine import task.
+	 *
+	 * @return the import strategy of this batch engine import task
+	 */
+	public int getImportStrategy();
+
+	/**
+	 * Sets the import strategy of this batch engine import task.
+	 *
+	 * @param importStrategy the import strategy of this batch engine import task
+	 */
+	public void setImportStrategy(int importStrategy);
+
+	/**
 	 * Returns the operation of this batch engine import task.
 	 *
 	 * @return the operation of this batch engine import task

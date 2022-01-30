@@ -82,6 +82,10 @@ public class BatchEngineImportTaskTable
 	public final Column<BatchEngineImportTaskTable, Clob> fieldNameMapping =
 		createColumn(
 			"fieldNameMapping", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<BatchEngineImportTaskTable, Integer> importStrategy =
+		createColumn(
+			"importStrategy", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportTaskTable, String> operation =
 		createColumn(
 			"operation", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

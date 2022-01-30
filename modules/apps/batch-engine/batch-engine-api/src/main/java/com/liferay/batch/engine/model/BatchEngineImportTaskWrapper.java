@@ -65,6 +65,7 @@ public class BatchEngineImportTaskWrapper
 		attributes.put("errorMessage", getErrorMessage());
 		attributes.put("executeStatus", getExecuteStatus());
 		attributes.put("fieldNameMapping", getFieldNameMapping());
+		attributes.put("importStrategy", getImportStrategy());
 		attributes.put("operation", getOperation());
 		attributes.put("parameters", getParameters());
 		attributes.put("processedItemsCount", getProcessedItemsCount());
@@ -173,6 +174,12 @@ public class BatchEngineImportTaskWrapper
 
 		if (fieldNameMapping != null) {
 			setFieldNameMapping(fieldNameMapping);
+		}
+
+		Integer importStrategy = (Integer)attributes.get("importStrategy");
+
+		if (importStrategy != null) {
+			setImportStrategy(importStrategy);
 		}
 
 		String operation = (String)attributes.get("operation");
@@ -338,6 +345,16 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public Map<String, Serializable> getFieldNameMapping() {
 		return model.getFieldNameMapping();
+	}
+
+	/**
+	 * Returns the import strategy of this batch engine import task.
+	 *
+	 * @return the import strategy of this batch engine import task
+	 */
+	@Override
+	public int getImportStrategy() {
+		return model.getImportStrategy();
 	}
 
 	/**
@@ -585,6 +602,16 @@ public class BatchEngineImportTaskWrapper
 		Map<String, Serializable> fieldNameMapping) {
 
 		model.setFieldNameMapping(fieldNameMapping);
+	}
+
+	/**
+	 * Sets the import strategy of this batch engine import task.
+	 *
+	 * @param importStrategy the import strategy of this batch engine import task
+	 */
+	@Override
+	public void setImportStrategy(int importStrategy) {
+		model.setImportStrategy(importStrategy);
 	}
 
 	/**

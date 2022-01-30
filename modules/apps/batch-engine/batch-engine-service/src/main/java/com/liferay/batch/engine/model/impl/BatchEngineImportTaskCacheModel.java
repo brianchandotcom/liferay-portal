@@ -80,7 +80,7 @@ public class BatchEngineImportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,6 +112,8 @@ public class BatchEngineImportTaskCacheModel
 		sb.append(executeStatus);
 		sb.append(", fieldNameMapping=");
 		sb.append(fieldNameMapping);
+		sb.append(", importStrategy=");
+		sb.append(importStrategy);
 		sb.append(", operation=");
 		sb.append(operation);
 		sb.append(", parameters=");
@@ -207,6 +209,7 @@ public class BatchEngineImportTaskCacheModel
 		}
 
 		batchEngineImportTaskImpl.setFieldNameMapping(fieldNameMapping);
+		batchEngineImportTaskImpl.setImportStrategy(importStrategy);
 
 		if (operation == null) {
 			batchEngineImportTaskImpl.setOperation("");
@@ -263,6 +266,8 @@ public class BatchEngineImportTaskCacheModel
 		errorMessage = (String)objectInput.readObject();
 		executeStatus = objectInput.readUTF();
 		fieldNameMapping = (Map<String, Serializable>)objectInput.readObject();
+
+		importStrategy = objectInput.readInt();
 		operation = objectInput.readUTF();
 		parameters = (Map<String, Serializable>)objectInput.readObject();
 
@@ -333,6 +338,8 @@ public class BatchEngineImportTaskCacheModel
 
 		objectOutput.writeObject(fieldNameMapping);
 
+		objectOutput.writeInt(importStrategy);
+
 		if (operation == null) {
 			objectOutput.writeUTF("");
 		}
@@ -370,6 +377,7 @@ public class BatchEngineImportTaskCacheModel
 	public String errorMessage;
 	public String executeStatus;
 	public Map<String, Serializable> fieldNameMapping;
+	public int importStrategy;
 	public String operation;
 	public Map<String, Serializable> parameters;
 	public int processedItemsCount;

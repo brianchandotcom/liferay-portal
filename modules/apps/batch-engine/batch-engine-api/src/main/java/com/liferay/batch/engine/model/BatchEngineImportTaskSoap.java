@@ -55,6 +55,7 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		soapModel.setErrorMessage(model.getErrorMessage());
 		soapModel.setExecuteStatus(model.getExecuteStatus());
 		soapModel.setFieldNameMapping(model.getFieldNameMapping());
+		soapModel.setImportStrategy(model.getImportStrategy());
 		soapModel.setOperation(model.getOperation());
 		soapModel.setParameters(model.getParameters());
 		soapModel.setProcessedItemsCount(model.getProcessedItemsCount());
@@ -253,6 +254,14 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		_fieldNameMapping = fieldNameMapping;
 	}
 
+	public int getImportStrategy() {
+		return _importStrategy;
+	}
+
+	public void setImportStrategy(int importStrategy) {
+		_importStrategy = importStrategy;
+	}
+
 	public String getOperation() {
 		return _operation;
 	}
@@ -317,6 +326,7 @@ public class BatchEngineImportTaskSoap implements Serializable {
 	private String _errorMessage;
 	private String _executeStatus;
 	private Map<String, Serializable> _fieldNameMapping;
+	private int _importStrategy;
 	private String _operation;
 	private Map<String, Serializable> _parameters;
 	private int _processedItemsCount;

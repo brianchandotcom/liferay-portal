@@ -33,7 +33,7 @@ definition {
 
 		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME", key_cartItemName = "${productName}")) {
+		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
 			var newItemCount = "${currentItemCount}";
 		}
 		else {
@@ -186,8 +186,8 @@ definition {
 				echo("Checking ${fsOptionValue} ${fsProductName} SKU is correct...");
 
 				AssertElementPresent(
-					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
-					key_productSku = "${fsOptionValueUppercase}SKU");
+					key_productSku = "${fsOptionValueUppercase}SKU",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 
 				echo("Checking ${fsOptionValue} ${fsProductName} price is correct...");
 

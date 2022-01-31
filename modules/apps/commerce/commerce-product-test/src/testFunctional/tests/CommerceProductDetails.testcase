@@ -484,9 +484,9 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
 		FrontStore.addToCartFromProductDetails(
-			productSku = "MIN93016B",
 			optionNamesAndValues = "Package Quantity:48",
-			productName = "Brake Fluid");
+			productName = "Brake Fluid",
+			productSku = "MIN93016B");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -719,8 +719,8 @@ definition {
 			value1 = "Black");
 
 		AssertElementPresent(
-			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
-			key_productSku = "BLACKSKU");
+			key_productSku = "BLACKSKU",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
@@ -743,8 +743,8 @@ definition {
 			value1 = "Blue");
 
 		AssertElementPresent(
-			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
-			key_productSku = "BLUESKU");
+			key_productSku = "BLUESKU",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",

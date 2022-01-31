@@ -228,6 +228,24 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				infoItemClassDetails.getClassName());
 
 		if (infoItemFormVariationsProvider == null) {
+			contentDashboardItemTypesJSONArray.put(
+				JSONUtil.put(
+					"icon", _getIcon(className)
+				).put(
+					"itemSubtypes", JSONFactoryUtil.createJSONArray()
+				).put(
+					"label",
+					() -> {
+						InfoLocalizedValue<String>
+							infoItemClassDetailsLabelInfoLocalizedValue =
+								infoItemClassDetails.
+									getLabelInfoLocalizedValue();
+
+						return infoItemClassDetailsLabelInfoLocalizedValue.
+							getValue(themeDisplay.getLocale());
+					}
+				));
+
 			return;
 		}
 

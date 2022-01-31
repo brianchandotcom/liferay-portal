@@ -11,9 +11,8 @@
 
 import {Button as ClayButton, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
-import {Button} from '../../../../common/components';
+import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import {useCustomerPortal} from '../../context';
 
 const SubscriptionDropDownMenu = ({
@@ -72,9 +71,6 @@ const SubscriptionsNavbar = ({
 	setSelectedSubscriptionGroup,
 	subscriptionGroups,
 }) => {
-	const [selectedButton, setSelectedButton] = useState(
-		subscriptionGroups[0]?.name
-	);
 	const [showDropDown, setShowDropDown] = useState(false);
 	const [{isQuickLinksExpanded}] = useCustomerPortal();
 
@@ -82,7 +78,6 @@ const SubscriptionsNavbar = ({
 
 	useEffect(() => {
 		setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
-		setSelectedButton(subscriptionGroups[0]?.name);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [subscriptionGroups]);
@@ -98,6 +93,8 @@ const SubscriptionsNavbar = ({
 
 		updateShowDropDown();
 		window.addEventListener('resize', updateShowDropDown);
+
+		return () => window.removeEventListener('resize', updateShowDropDown);
 	}, [isQuickLinksExpanded]);
 
 	return (
@@ -129,40 +126,18 @@ const SubscriptionsNavbar = ({
 							)}
 
 							{!showDropDown && (
-								<div
-									className="bg-neutral-1 border border-light btn-group rounded-pill"
-									role="group"
-								>
-									{subscriptionGroups.map(
-										(subscriptionGroup) => (
-											<Button
-												className={classNames(
-													'btn px-4 py-1 rounded-pill',
-													{
-														'bg-transparent text-neutral-4':
-															selectedButton !==
-															subscriptionGroup.name,
-														'bg-white border border-primary label-primary text-brand-primary':
-															selectedButton ===
-															subscriptionGroup.name,
-													}
-												)}
-												key={subscriptionGroup.name}
-												onClick={(event) => {
-													setSelectedSubscriptionGroup(
-														event.target.value
-													);
-													setSelectedButton(
-														event.target.value
-													);
-												}}
-												value={subscriptionGroup.name}
-											>
-												{subscriptionGroup.name}
-											</Button>
-										)
+								<RoundedGroupButtons
+									groupButtons={subscriptionGroups.map(
+										(subscriptionGroup) => ({
+											label: subscriptionGroup.name,
+											value: subscriptionGroup.name,
+										})
 									)}
-								</div>
+									id="subscription-navbar"
+									onChange={(value) => {
+										setSelectedSubscriptionGroup(value);
+									}}
+								/>
 							)}
 						</>
 					)}

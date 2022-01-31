@@ -59,9 +59,9 @@ const DXPActivationKeysTable = () => {
 	const [{assetsPath, project, sessionId}] = useCustomerPortal();
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 
-	const [activationKeys, setActivationKeys] = useState([]);
+	const [activationKeys, setActivationKeys] = useState({data: []});
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
-	const [totalCount, setTotalCount] = useState(0);
+	const [totalCount, setTotalCount] = useState(5);
 
 	const [filterStatusBar, setFilterStatusBar] = useState('all');
 
@@ -70,6 +70,12 @@ const DXPActivationKeysTable = () => {
 	const [isLoadingActivationKeys, setIsLoadingActivationKeys] = useState(
 		false
 	);
+
+	useEffect(() => {
+		if (filterStatusBar) {
+			setActivePage(1);
+		}
+	}, [filterStatusBar]);
 
 	useEffect(() => {
 		setIsLoadingActivationKeys(true);
@@ -83,7 +89,27 @@ const DXPActivationKeysTable = () => {
 				sessionId
 			);
 			if (items) {
-				setActivationKeys(items);
+				setActivationKeys({
+					data: items,
+					statusBar: {
+						activeTotalCount: items.filter((activationKey) =>
+							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.active(
+								activationKey
+							)
+						).length,
+						allTotalCount: items.length,
+						expiredTotalCount: items.filter((activationKey) =>
+							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(
+								activationKey
+							)
+						).length,
+						notActiveTotalCount: items.filter((activationKey) =>
+							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
+								activationKey
+							)
+						).length,
+					},
+				});
 			}
 
 			setIsLoadingActivationKeys(false);
@@ -92,8 +118,8 @@ const DXPActivationKeysTable = () => {
 	}, [licenseKeyDownloadURL, project.accountKey, sessionId]);
 
 	useEffect(() => {
-		if (activationKeys.length) {
-			const activationKeysFilterData = activationKeys.filter(
+		if (activationKeys.data.length) {
+			const activationKeysFilterData = activationKeys.data.filter(
 				(activationKey) =>
 					ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
 						? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar](
@@ -101,12 +127,15 @@ const DXPActivationKeysTable = () => {
 						  )
 						: Boolean
 			);
-			setTotalCount(activationKeysFilterData.length);
+			setTotalCount(activationKeysFilterData.length || 5);
+			const activationKeysFilterByPage = activationKeysFilterData.slice(
+				itemsPerPage * activePage - itemsPerPage,
+				itemsPerPage * activePage
+			);
 			setActivationKeysFiltered(
-				activationKeysFilterData.slice(
-					itemsPerPage * activePage - itemsPerPage,
-					itemsPerPage * activePage
-				)
+				activationKeysFilterByPage.length
+					? activationKeysFilterByPage
+					: activationKeysFilterData
 			);
 		}
 	}, [activationKeys, activePage, filterStatusBar, itemsPerPage]);
@@ -208,7 +237,6 @@ const DXPActivationKeysTable = () => {
 					]}
 					onChange={(value) => {
 						setFilterStatusBar(value);
-						setItemsPerPage(5);
 					}}
 				/>
 			</div>

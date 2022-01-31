@@ -23,7 +23,7 @@ const TablePagination = ({
 	listItemsPerPage = [],
 	totalItems,
 }) => {
-	if (totalItems > itemsPerPage) {
+	if (showDeltasDropDown || totalItems > itemsPerPage) {
 		const defaultLabels = {
 			paginationResults: 'Showing {0} to {1} of {2}',
 			perPageItems: '{0} items',

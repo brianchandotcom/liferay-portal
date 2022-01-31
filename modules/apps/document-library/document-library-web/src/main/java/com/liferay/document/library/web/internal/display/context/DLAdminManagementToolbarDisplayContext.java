@@ -308,12 +308,6 @@ public class DLAdminManagementToolbarDisplayContext
 					LanguageUtil.get(
 						_httpServletRequest, "filter-by-navigation"));
 			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
-			}
 		).build();
 	}
 
@@ -385,6 +379,15 @@ public class DLAdminManagementToolbarDisplayContext
 	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
+	}
+
+	@Override
+	public List<DropdownItem> getOrderDropdownItems() {
+		if (_isSearch()) {
+			return null;
+		}
+
+		return _getOrderByDropdownItems();
 	}
 
 	@Override

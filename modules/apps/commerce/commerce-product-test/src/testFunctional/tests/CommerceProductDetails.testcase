@@ -467,8 +467,6 @@ definition {
 	test SelectOptionValueAndAddProductToCart {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -482,22 +480,19 @@ definition {
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
 		Click(
-			key_productName = "brake-fluid",
+			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
-		Click(locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PACKAGE_QUANTITY");
-
-		Click(
-			key_selectValue = "48",
-			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
-
-		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		FrontStore.addToCartFromProductDetails(
+			productSku = "MIN93016B",
+			optionNamesAndValues = "Package Quantity:48",
+			productName = "Brake Fluid");
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertElementPresent(
 			key_cartItemSku = "MIN93016B",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU");
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
 	}
 
 	@description = "COMMERCE-6658. As a buyer, I want to be able to select an option value(Bundled Product) and I want to see product details updating(Price, SKU and Availability)"

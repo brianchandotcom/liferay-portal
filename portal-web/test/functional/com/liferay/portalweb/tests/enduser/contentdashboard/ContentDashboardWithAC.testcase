@@ -1,0 +1,203 @@
+@component-name = "portal-content-dashboard"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Content Dashboard";
+
+	setUp {
+		task ("Open Analytics Cloud") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		}
+
+		task ("Take token from Analytics Cloud") {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Connect and synchronyze with Analytics Cloud") {
+			AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
+		}
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		AnalyticsCloud.teardownAnalyticsCloud();
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-136512 Given The Content Performance panel of a document is opened
+	When the user clicks on the times icon ( X )
+	Then the Content Performance panel is closed"
+	@priority = "3"
+	test CloseMetricsPanel {
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("Go to Content Dashboard and click on View Metrics") {
+			ContentDashboard.goToContentDashboard();
+
+			MouseOver(
+				key_individualAttribute = "DM Document Title",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+
+			Click(
+				keyButtonAction = "View Metrics",
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+		task ("Exit the Content Performance panel and assert is not visible anymore") {
+			Click(locator1 = "ContentDashboard#CLOSE_CONTENT_PERFORMANCE_PANEL");
+
+			AssertNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+	}
+
+	@description = "LPS-136512 Given A document associated with a Display Page
+	When the user clicks on the option "View metrics" in the kebab menu
+	Then the Content Performance panel is displayed"
+	@priority = "4"
+	test ViewMetricsButtonKebabWhenDocumentHasDPT {
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("Go to Content Dashboard and click on View Mtrics in the kebab menu") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_dropdownItem = "View Metrics",
+				locator1 = "ACUtils#DROPDOWN_ITEM");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+	}
+
+	@description = "LPS-136512 Given A document associated with a Display Page
+	When the user clicks on the "Metrics" button in the hover action
+	Then the Content Performance panel is displayed"
+	@priority = "4"
+	test ViewMetricsButtonWhenDocumentHasDPT {
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("Go to Content Dashboard and click on View Mtrics") {
+			ContentDashboard.goToContentDashboard();
+
+			MouseOver(
+				key_individualAttribute = "DM Document Title",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+
+			Click(
+				keyButtonAction = "View Metrics",
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+	}
+
+}

@@ -979,12 +979,12 @@ definition {
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
 		Click(
-			key_productName = "brake-fluid",
+			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
-		AssertTextEquals(
-			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
-			value1 = "MIN93016A");
+		AssertElementPresent(
+			key_productSku = "MIN93016A",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 	}
 
 	@description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"

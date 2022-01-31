@@ -526,7 +526,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		Click(
-			key_productName = "bundled-product",
+			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
 		Click(
@@ -1017,7 +1017,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		Click(
-			key_productName = "bundled-product",
+			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
 		Click(

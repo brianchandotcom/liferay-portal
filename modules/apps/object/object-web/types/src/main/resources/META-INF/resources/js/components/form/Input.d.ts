@@ -17,7 +17,7 @@ interface IInputProps extends React.HTMLAttributes<HTMLElement> {
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
-	id: string;
+	id?: string;
 	label: string;
 	name: string;
 	required?: boolean;

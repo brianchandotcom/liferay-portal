@@ -41,71 +41,47 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 	const [query, setQuery] = useState('');
 
 	useEffect(() => {
-		if (
-			fieldsChecked &&
-			filteredItems.every((item) => item.checked === true)
-		) {
-			setAllFieldsChecked(true);
-		}
-		else if (filteredItems.find((item) => item.checked === true)) {
-			setFieldsChecked(true);
-			setAllFieldsChecked(false);
-		}
-		else {
-			setFieldsChecked(false);
-			setAllFieldsChecked(false);
-		}
+		const checkedItems = filteredItems.filter(
+			({checked}) => checked === true
+		);
+
+		setAllFieldsChecked(checkedItems.length === filteredItems.length);
+
+		setFieldsChecked(checkedItems.length > 0);
 	}, [fieldsChecked, filteredItems]);
 
 	useEffect(() => {
-		if (query) {
-			setFilteredItems((filteredItems) =>
-				filteredItems.map((field) => {
-					if (
-						!field.label[defaultLanguageId]
-							.toLowerCase()
-							.includes(query.toLowerCase())
-					) {
-						return {
-							...field,
-							filtered: false,
-						};
-					}
+		setFilteredItems((filteredItems) =>
+			filteredItems.map((field) => {
+				const filtered =
+					!query ||
+					field.label[defaultLanguageId]
+						.toLowerCase()
+						.includes(query.toLowerCase());
 
-					return {...field, filtered: true};
-				})
-			);
-		}
-		else {
-			setFilteredItems((filteredItems) =>
-				filteredItems.map((field) => {
-					return {
-						...field,
-						filtered: true,
-					};
-				})
-			);
-		}
+				return {...field, filtered};
+			})
+		);
 	}, [query]);
 
-	const setSelection = (checked: boolean) => {
-		if (allFieldsChecked) {
-			return false;
-		}
-		else if (fieldsChecked) {
-			return true;
-		}
-		else if (!checked) {
-			return false;
-		}
-		else {
-			setFieldsChecked(true);
-
-			return true;
-		}
-	};
-
 	const handleAllFieldsChecked = (checked: boolean) => {
+		const setSelection = (checked: boolean) => {
+			if (allFieldsChecked) {
+				return false;
+			}
+			else if (fieldsChecked) {
+				return true;
+			}
+			else if (!checked) {
+				return false;
+			}
+			else {
+				setFieldsChecked(true);
+
+				return true;
+			}
+		};
+
 		setFilteredItems(
 			filteredItems.map((field) => {
 				return {
@@ -116,16 +92,14 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 		);
 	};
 
-	const handleFieldChecked = (name: String) => {
+	const toggleFieldCheckbox = (name: String) => {
 		const newfiltredItems = filteredItems.map((field) => {
-			if (field.name === name) {
-				return {
-					...field,
-					checked: !field.checked,
-				};
-			}
-
-			return field;
+			return field.name === name
+				? {
+						...field,
+						checked: !field.checked,
+				  }
+				: field;
 		});
 
 		setFilteredItems(newfiltredItems);
@@ -145,117 +119,107 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 	};
 
 	return (
-		<>
-			<ClayModal
-				className="object-web__modal-add-columns"
-				observer={observer}
-			>
-				<ClayForm onSubmit={(event) => onSubmit(event)}>
-					<ClayModal.Header>
-						{Liferay.Language.get('add-columns')}
-					</ClayModal.Header>
+		<ClayModal
+			className="lfr-object__object-view-modal-add-columns"
+			observer={observer}
+		>
+			<ClayForm onSubmit={(event) => onSubmit(event)}>
+				<ClayModal.Header>
+					{Liferay.Language.get('add-columns')}
+				</ClayModal.Header>
 
-					<ClayModal.Body>
-						<div className="object-web__modal-add-columns--selection-title">
-							{Liferay.Language.get('select-the-columns')}
-						</div>
+				<ClayModal.Body>
+					<div className="lfr-object__object-view-modal-add-columns-selection-title">
+						{Liferay.Language.get('select-the-columns')}
+					</div>
 
-						<ClayManagementToolbar>
-							<ClayManagementToolbar.ItemList>
-								<ClayManagementToolbar.Item>
-									<ClayCheckbox
-										checked={fieldsChecked}
-										indeterminate={
-											!allFieldsChecked && fieldsChecked
-										}
+					<ClayManagementToolbar>
+						<ClayManagementToolbar.ItemList>
+							<ClayManagementToolbar.Item>
+								<ClayCheckbox
+									checked={fieldsChecked}
+									indeterminate={
+										!allFieldsChecked && fieldsChecked
+									}
+									onChange={({target}) =>
+										handleAllFieldsChecked(target.checked)
+									}
+								/>
+							</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.ItemList>
+
+						<ClayManagementToolbar.Search>
+							<ClayInput.Group>
+								<ClayInput.GroupItem>
+									<ClayInput
+										aria-label="Search"
+										className="form-control input-group-inset input-group-inset-after"
+										defaultValue=""
 										onChange={({target}) =>
-											handleAllFieldsChecked(
-												target.checked
-											)
+											setQuery(target.value)
 										}
+										placeholder={Liferay.Language.get(
+											'search'
+										)}
+										type="text"
 									/>
-								</ClayManagementToolbar.Item>
-							</ClayManagementToolbar.ItemList>
 
-							<ClayManagementToolbar.Search>
-								<ClayInput.Group>
-									<ClayInput.GroupItem>
-										<ClayInput
-											aria-label="Search"
-											className="form-control input-group-inset input-group-inset-after"
-											defaultValue=""
-											onChange={({target}) =>
-												setQuery(target.value)
-											}
-											placeholder={Liferay.Language.get(
-												'search'
-											)}
-											type="text"
+									<ClayInput.GroupInsetItem after tag="span">
+										<ClayButtonWithIcon
+											className="navbar-breakpoint-d-none"
+											displayType="unstyled"
+											onClick={() => {}}
+											symbol="times"
 										/>
 
-										<ClayInput.GroupInsetItem
-											after
-											tag="span"
-										>
-											<ClayButtonWithIcon
-												className="navbar-breakpoint-d-none"
-												displayType="unstyled"
-												onClick={() => {}}
-												symbol="times"
-											/>
+										<ClayButtonWithIcon
+											displayType="unstyled"
+											symbol="search"
+											type="submit"
+										/>
+									</ClayInput.GroupInsetItem>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayManagementToolbar.Search>
+					</ClayManagementToolbar>
 
-											<ClayButtonWithIcon
-												displayType="unstyled"
-												symbol="search"
-												type="submit"
-											/>
-										</ClayInput.GroupInsetItem>
-									</ClayInput.GroupItem>
-								</ClayInput.Group>
-							</ClayManagementToolbar.Search>
-						</ClayManagementToolbar>
+					<ClayList className="lfr-object__object-view-modal-add-columns-list">
+						{filteredItems?.map((field, index) => (
+							<ClayList.Item
+								className={field?.filtered ? '' : 'hide'}
+								flex
+								key={`list-item-${index}`}
+							>
+								<ClayCheckbox
+									checked={field.checked}
+									label={field.label[defaultLanguageId]}
+									onChange={() => {
+										toggleFieldCheckbox(field.name);
+									}}
+								/>
+							</ClayList.Item>
+						))}
+					</ClayList>
+				</ClayModal.Body>
 
-						<ClayList className="object-web__modal-add-columns--list">
-							{filteredItems?.map((field, index) => (
-								<ClayList.Item
-									className={field?.filtered ? '' : 'hide'}
-									flex
-									key={`list-item-${index}`}
-								>
-									<ClayCheckbox
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
 
-										// @ts-ignore
-
-										checked={field.checked}
-										label={field.label[defaultLanguageId]}
-										onChange={() => {
-											handleFieldChecked(field.name);
-										}}
-									/>
-								</ClayList.Item>
-							))}
-						</ClayList>
-					</ClayModal.Body>
-
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group key={1} spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={onClose}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-
-								<ClayButton displayType="primary" type="submit">
-									{Liferay.Language.get('save')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
-				</ClayForm>
-			</ClayModal>
-		</>
+							<ClayButton displayType="primary" type="submit">
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</ClayForm>
+		</ClayModal>
 	);
 };
 

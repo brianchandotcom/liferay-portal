@@ -17,13 +17,12 @@ export declare type TName = {
 	[key: string]: string;
 };
 export declare type TObjectField = {
-	checked?: boolean;
+	checked: boolean;
 	filtered?: boolean | undefined;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: string;
-	inLayout?: boolean;
 	label: TName;
 	listTypeDefinitionId: boolean;
 	name: string;

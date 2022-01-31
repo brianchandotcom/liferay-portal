@@ -14,14 +14,14 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {headers} from '../../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const User = ({displayDelete, identifier, index, setSections}) => {
-	const {setSelectedItem} = useContext(DiagramBuilderContext);
+const User = ({identifier, index, sectionsLength, setSections}) => {
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
 	const [search, setSearch] = useState('');
 	const [networkStatus, setNetworkStatus] = useState(4);
@@ -44,6 +44,30 @@ const User = ({displayDelete, identifier, index, setSections}) => {
 		variables: {search},
 	});
 
+	useEffect(() => {
+		setUser((prev) => {
+			if (selectedItem.data.assignments?.usersData) {
+				return {
+					emailAddress:
+						selectedItem.data.assignments?.usersData[index]
+							?.emailAddress,
+					screenName:
+						selectedItem.data.assignments?.usersData[index]
+							?.screenName,
+					userId:
+						selectedItem.data.assignments?.usersData[index]?.userId,
+				};
+			} else {
+				return {
+					emailAddress: prev.emailAddress,
+					screenName: prev.screenName,
+					userId: prev.userId,
+				};
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const serializer = (values) => {
 		setSelectedItem((previousItem) => ({
 			...previousItem,
@@ -52,6 +76,7 @@ const User = ({displayDelete, identifier, index, setSections}) => {
 				assignments: {
 					assignmentType: ['user'],
 					emailAddress: values.map(({emailAddress}) => emailAddress),
+					usersData: values.map((values) => values),
 				},
 			},
 		}));
@@ -97,6 +122,7 @@ const User = ({displayDelete, identifier, index, setSections}) => {
 
 				<ClayAutocomplete>
 					<ClayAutocomplete.Input
+						autoComplete="off"
 						id="search"
 						onChange={(event) => setSearch(event.target.value)}
 						value={search}
@@ -200,7 +226,7 @@ const User = ({displayDelete, identifier, index, setSections}) => {
 					{Liferay.Language.get('new-section')}
 				</ClayButton>
 
-				{displayDelete && (
+				{sectionsLength > 1 && (
 					<ClayButtonWithIcon
 						className="delete-button"
 						displayType="unstyled"

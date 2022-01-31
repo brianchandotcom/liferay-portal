@@ -143,13 +143,15 @@ definition {
 				var fsPrice = StringUtil.extractLast("${fsOptionValues}", ":");
 				var fsOptionValueUppercase = StringUtil.upperCase("${fsOptionValue}");
 
-				FrontStore.selectAssociatedFSOptionsValue(fsOptionValue = "${fsOptionValue}");
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "${fsOptionName}",
+					fsOptionValue = "${fsOptionValue}");
 
 				echo("Checking ${fsOptionValue} ${fsProductName} SKU is correct...");
 
-				AssertTextEquals(
+				AssertElementPresent(
 					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
-					value1 = "${fsOptionValueUppercase}SKU");
+					key_productSku = "${fsOptionValueUppercase}SKU");
 
 				echo("Checking ${fsOptionValue} ${fsProductName} price is correct...");
 

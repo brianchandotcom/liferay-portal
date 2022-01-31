@@ -103,11 +103,6 @@
 </tr>
 <!--PASSWORD-->
 <tr>
-	<td>CHANGE_PASSWORD_TITLE</td>
-	<td>//div[contains(@class,'autofit-col')]/h2[contains(@class,'sheet-title')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PASSWORD_CONFIRM_PASSWORD_FIELD</td>
 	<td>//input[contains(@id,'password')]</td>
 	<td></td>

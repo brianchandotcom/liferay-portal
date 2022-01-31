@@ -53,7 +53,8 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 				}
 			}
 
-			searchContainer.setResults(_results);
+			searchContainer.setResultsAndTotal(
+				() -> _results, searchContainer.getTotal());
 
 			pageContext.setAttribute(_resultsVar, _results);
 

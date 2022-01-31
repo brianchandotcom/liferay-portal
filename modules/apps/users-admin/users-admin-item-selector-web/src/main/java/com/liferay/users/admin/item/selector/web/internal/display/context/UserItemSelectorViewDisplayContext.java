@@ -29,8 +29,6 @@ import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.item.selector.web.internal.search.UserItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
-import java.util.List;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -124,16 +122,11 @@ public class UserItemSelectorViewDisplayContext {
 		String keywords = userSearchTerms.getKeywords();
 		int status = userSearchTerms.getStatus();
 
-		int total = _userLocalService.searchCount(
-			companyId, keywords, status, null);
-
-		_searchContainer.setTotal(total);
-
-		List<User> results = _userLocalService.search(
-			companyId, keywords, status, null, _searchContainer.getStart(),
-			_searchContainer.getEnd(), orderByComparator);
-
-		_searchContainer.setResults(results);
+		_searchContainer.setResultsAndTotal(
+			() -> _userLocalService.search(
+				companyId, keywords, status, null, _searchContainer.getStart(),
+				_searchContainer.getEnd(), orderByComparator),
+			_userLocalService.searchCount(companyId, keywords, status, null));
 
 		return _searchContainer;
 	}

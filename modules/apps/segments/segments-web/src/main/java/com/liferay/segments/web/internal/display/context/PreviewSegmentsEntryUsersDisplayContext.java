@@ -33,7 +33,6 @@ import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -84,9 +83,6 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			return userSearchContainer;
 		}
 
-		int total = 0;
-		List<User> users = null;
-
 		try {
 			Criteria criteria = _getCriteriaFromSession();
 
@@ -96,38 +92,41 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 				Validator.isNotNull(
 					criteria.getFilterString(Criteria.Type.MODEL))) {
 
-				total = _userODataRetriever.getResultsCount(
-					_themeDisplay.getCompanyId(),
-					criteria.getFilterString(Criteria.Type.MODEL),
-					_themeDisplay.getLocale());
-
-				users = _userODataRetriever.getResults(
-					_themeDisplay.getCompanyId(),
-					criteria.getFilterString(Criteria.Type.MODEL),
-					_themeDisplay.getLocale(), userSearchContainer.getStart(),
-					userSearchContainer.getEnd());
+				userSearchContainer.setResultsAndTotal(
+					() -> _userODataRetriever.getResults(
+						_themeDisplay.getCompanyId(),
+						criteria.getFilterString(Criteria.Type.MODEL),
+						_themeDisplay.getLocale(),
+						userSearchContainer.getStart(),
+						userSearchContainer.getEnd()),
+					_userODataRetriever.getResultsCount(
+						_themeDisplay.getCompanyId(),
+						criteria.getFilterString(Criteria.Type.MODEL),
+						_themeDisplay.getLocale()));
 			}
 			else if ((criteria == null) && (segmentsEntry != null)) {
-				total =
+				userSearchContainer.setResultsAndTotal(
+					() -> {
+						long[] segmentsEntryClassPKs =
+							_segmentsEntryProviderRegistry.
+								getSegmentsEntryClassPKs(
+									segmentsEntry.getSegmentsEntryId(),
+									userSearchContainer.getStart(),
+									userSearchContainer.getEnd());
+
+						LongStream segmentsEntryClassPKsLongStream =
+							Arrays.stream(segmentsEntryClassPKs);
+
+						return segmentsEntryClassPKsLongStream.boxed(
+						).map(
+							userId -> _userLocalService.fetchUser(userId)
+						).collect(
+							Collectors.toList()
+						);
+					},
 					_segmentsEntryProviderRegistry.
 						getSegmentsEntryClassPKsCount(
-							segmentsEntry.getSegmentsEntryId());
-
-				long[] segmentsEntryClassPKs =
-					_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
-						segmentsEntry.getSegmentsEntryId(),
-						userSearchContainer.getStart(),
-						userSearchContainer.getEnd());
-
-				LongStream segmentsEntryClassPKsLongStream = Arrays.stream(
-					segmentsEntryClassPKs);
-
-				users = segmentsEntryClassPKsLongStream.boxed(
-				).map(
-					userId -> _userLocalService.fetchUser(userId)
-				).collect(
-					Collectors.toList()
-				);
+							segmentsEntry.getSegmentsEntryId()));
 			}
 		}
 		catch (PortalException portalException) {
@@ -137,9 +136,6 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 					portalException);
 			}
 		}
-
-		userSearchContainer.setResults(users);
-		userSearchContainer.setTotal(total);
 
 		_userSearchContainer = userSearchContainer;
 

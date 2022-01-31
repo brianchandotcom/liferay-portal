@@ -795,17 +795,23 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinitionVersionActiveComparator.thenComparing(
 				searchContainer.getOrderByComparator()));
 
-		searchContainer.setTotal(kaleoDefinitionVersions.size());
+		List<KaleoDefinitionVersion> filteredKaleoDefinitionVersions =
+			kaleoDefinitionVersions;
 
-		if (kaleoDefinitionVersions.size() >
-				(searchContainer.getEnd() - searchContainer.getStart())) {
+		searchContainer.setResultsAndTotal(
+			() -> {
+				if (filteredKaleoDefinitionVersions.size() >
+						(searchContainer.getEnd() -
+							searchContainer.getStart())) {
 
-			kaleoDefinitionVersions = ListUtil.subList(
-				kaleoDefinitionVersions, searchContainer.getStart(),
-				searchContainer.getEnd());
-		}
+					return ListUtil.subList(
+						filteredKaleoDefinitionVersions,
+						searchContainer.getStart(), searchContainer.getEnd());
+				}
 
-		searchContainer.setResults(kaleoDefinitionVersions);
+				return filteredKaleoDefinitionVersions;
+			},
+			filteredKaleoDefinitionVersions.size());
 	}
 
 	private static final String _HTML =

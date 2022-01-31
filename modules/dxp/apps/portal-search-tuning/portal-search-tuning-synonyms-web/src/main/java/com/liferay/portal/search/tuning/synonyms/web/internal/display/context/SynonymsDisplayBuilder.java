@@ -161,12 +161,12 @@ public class SynonymsDisplayBuilder {
 		SearchSynonymSetResponse searchSynonymSetResponse =
 			searchSynonymSetRequest.search();
 
-		searchContainer.setResults(
-			_buildSynonymSetDisplayContexts(
-				searchSynonymSetResponse.getSearchHits()));
+		searchContainer.setResultsAndTotal(
+			() -> _buildSynonymSetDisplayContexts(
+				searchSynonymSetResponse.getSearchHits()),
+			searchSynonymSetResponse.getTotalHits());
 
 		searchContainer.setSearch(true);
-		searchContainer.setTotal(searchSynonymSetResponse.getTotalHits());
 
 		return searchContainer;
 	}

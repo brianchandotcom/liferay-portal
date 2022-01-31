@@ -193,8 +193,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 		List<SiteNavigationMenuEntry> siteNavigationMenuItems =
 			_getSiteNavigationMenuItems();
 
-		searchContainer.setResults(siteNavigationMenuItems);
-		searchContainer.setTotal(siteNavigationMenuItems.size());
+		searchContainer.setResultsAndTotal(
+			() -> siteNavigationMenuItems, siteNavigationMenuItems.size());
 
 		return searchContainer;
 	}
@@ -218,28 +218,33 @@ public class SelectSiteNavigationMenuDisplayContext {
 		List<SiteNavigationMenu> staticSiteNavigationMenus =
 			_getStaticSiteNavigationMenus();
 
-		int start = searchContainer.getStart();
-
 		int staticSiteNavigationMenusCount = staticSiteNavigationMenus.size();
-
-		if (start != 0) {
-			start -= staticSiteNavigationMenusCount;
-		}
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				groupIds, start, searchContainer.getEnd(), null);
 
 		int siteNavigationMenusCount =
 			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(groupIds);
 
-		if (start == 0) {
-			siteNavigationMenus = ListUtil.concat(
-				staticSiteNavigationMenus, siteNavigationMenus);
-		}
+		long[] siteNavigationMenusGroupIds = groupIds;
 
-		searchContainer.setResults(siteNavigationMenus);
-		searchContainer.setTotal(
+		searchContainer.setResultsAndTotal(
+			() -> {
+				int start = searchContainer.getStart();
+
+				if (start != 0) {
+					start -= staticSiteNavigationMenusCount;
+				}
+
+				List<SiteNavigationMenu> siteNavigationMenus =
+					SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+						siteNavigationMenusGroupIds, start,
+						searchContainer.getEnd(), null);
+
+				if (start == 0) {
+					siteNavigationMenus = ListUtil.concat(
+						staticSiteNavigationMenus, siteNavigationMenus);
+				}
+
+				return siteNavigationMenus;
+			},
 			siteNavigationMenusCount + staticSiteNavigationMenusCount);
 
 		return searchContainer;

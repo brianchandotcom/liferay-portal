@@ -147,10 +147,10 @@ public class MySitesItemSelectorViewDisplayContext
 	}
 
 	private void _prependGroup(GroupSearch groupSearch, Group group) {
-		groupSearch.setResults(
-			ListUtil.concat(Arrays.asList(group), groupSearch.getResults()));
-
-		groupSearch.setTotal(groupSearch.getTotal() + 1);
+		groupSearch.setResultsAndTotal(
+			() -> ListUtil.concat(
+				Arrays.asList(group), groupSearch.getResults()),
+			groupSearch.getTotal() + 1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

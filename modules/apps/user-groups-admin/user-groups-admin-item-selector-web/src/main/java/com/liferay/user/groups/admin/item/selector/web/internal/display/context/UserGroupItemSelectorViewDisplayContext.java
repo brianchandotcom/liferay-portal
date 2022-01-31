@@ -28,8 +28,6 @@ import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -104,16 +102,11 @@ public class UserGroupItemSelectorViewDisplayContext {
 
 		String keywords = searchTerms.getKeywords();
 
-		int total = _userGroupLocalService.searchCount(
-			companyId, keywords, null);
-
-		_searchContainer.setTotal(total);
-
-		List<UserGroup> results = _userGroupLocalService.search(
-			companyId, keywords, null, _searchContainer.getStart(),
-			_searchContainer.getEnd(), orderByComparator);
-
-		_searchContainer.setResults(results);
+		_searchContainer.setResultsAndTotal(
+			() -> _userGroupLocalService.search(
+				companyId, keywords, null, _searchContainer.getStart(),
+				_searchContainer.getEnd(), orderByComparator),
+			_userGroupLocalService.searchCount(companyId, keywords, null));
 
 		return _searchContainer;
 	}

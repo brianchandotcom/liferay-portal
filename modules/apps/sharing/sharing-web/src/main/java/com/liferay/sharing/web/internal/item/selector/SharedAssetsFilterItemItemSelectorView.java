@@ -136,9 +136,13 @@ public class SharedAssetsFilterItemItemSelectorView
 								JavaConstants.JAVAX_PORTLET_REQUEST),
 							portletURL, null, null);
 
-					entriesSearchContainer.setResults(
+					List<SharedAssetsFilterItem> sharedAssetsFilterItems =
 						_sharedAssetsFilterItemTracker.
-							getSharedAssetsFilterItems());
+							getSharedAssetsFilterItems();
+
+					entriesSearchContainer.setResultsAndTotal(
+						() -> sharedAssetsFilterItems,
+						sharedAssetsFilterItems.size());
 
 					return entriesSearchContainer;
 				}

@@ -76,12 +76,10 @@ public class RecentSitesItemSelectorViewDisplayContext
 		List<Group> results = _recentGroupManager.getRecentGroups(
 			httpServletRequest);
 
-		groupSearch.setTotal(results.size());
-
-		results = ListUtil.subList(
-			results, groupSearch.getStart(), groupSearch.getEnd());
-
-		groupSearch.setResults(results);
+		groupSearch.setResultsAndTotal(
+			() -> ListUtil.subList(
+				results, groupSearch.getStart(), groupSearch.getEnd()),
+			results.size());
 
 		return groupSearch;
 	}

@@ -110,13 +110,12 @@ public class InformationTemplatesTemplateDisplayContext
 		templateEntrySearchContainer.setOrderByType(getOrderByType());
 		templateEntrySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
-		templateEntrySearchContainer.setResults(
-			TemplateEntryLocalServiceUtil.getTemplateEntries(
+		templateEntrySearchContainer.setResultsAndTotal(
+			() -> TemplateEntryLocalServiceUtil.getTemplateEntries(
 				themeDisplay.getScopeGroupId(),
 				templateEntrySearchContainer.getStart(),
 				templateEntrySearchContainer.getEnd(),
-				templateEntrySearchContainer.getOrderByComparator()));
-		templateEntrySearchContainer.setTotal(
+				templateEntrySearchContainer.getOrderByComparator()),
 			TemplateEntryLocalServiceUtil.getTemplateEntriesCount(
 				themeDisplay.getScopeGroupId()));
 

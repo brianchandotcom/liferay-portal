@@ -180,11 +180,11 @@ public class SitesDirectoryDisplayContext {
 			}
 		}
 
-		_searchContainer.setResults(
-			ListUtil.subList(
+		_searchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
 				new ArrayList<>(visibleGroups), _searchContainer.getStart(),
-				_searchContainer.getEnd()));
-		_searchContainer.setTotal(visibleGroups.size());
+				_searchContainer.getEnd()),
+			visibleGroups.size());
 
 		return _searchContainer;
 	}

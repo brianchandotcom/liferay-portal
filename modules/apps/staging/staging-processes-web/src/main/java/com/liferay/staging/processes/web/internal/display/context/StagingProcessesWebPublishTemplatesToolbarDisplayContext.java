@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms;
 import com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -143,24 +142,23 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
 		}
 
+		int exportImportConfigurationTypeFilter = exportImportConfigurationType;
+
 		PublishConfigurationSearchTerms searchTerms =
 			(PublishConfigurationSearchTerms)searchContainer.getSearchTerms();
 
-		List<ExportImportConfiguration> results =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfigurations(
-					companyId, groupId, searchTerms.getKeywords(),
-					exportImportConfigurationType, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-		int total =
+		searchContainer.setResultsAndTotal(
+			() ->
+				ExportImportConfigurationLocalServiceUtil.
+					getExportImportConfigurations(
+						companyId, groupId, searchTerms.getKeywords(),
+						exportImportConfigurationTypeFilter,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfigurationsCount(
 					companyId, groupId, searchTerms.getKeywords(),
-					exportImportConfigurationType);
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
+					exportImportConfigurationTypeFilter));
 
 		return searchContainer;
 	}

@@ -91,14 +91,12 @@ public class SelectSiteInitializerDisplayContext {
 		List<SiteInitializerItem> siteInitializerItems =
 			_getSiteInitializerItems();
 
-		siteInitializerItemSearchContainer.setTotal(
+		siteInitializerItemSearchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
+				siteInitializerItems,
+				siteInitializerItemSearchContainer.getStart(),
+				siteInitializerItemSearchContainer.getEnd()),
 			siteInitializerItems.size());
-
-		siteInitializerItems = ListUtil.subList(
-			siteInitializerItems, siteInitializerItemSearchContainer.getStart(),
-			siteInitializerItemSearchContainer.getEnd());
-
-		siteInitializerItemSearchContainer.setResults(siteInitializerItems);
 
 		return siteInitializerItemSearchContainer;
 	}

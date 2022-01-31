@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -89,24 +87,20 @@ public class CommerceMLForecastAlertEntryListDisplayContext {
 		_searchContainer.setEmptyResultsMessage(
 			"there-are-no-forecast-alert-entries-to-display");
 
-		List<CommerceMLForecastAlertEntry> results =
-			_commerceMLForecastAlertEntryService.
-				getBelowThresholdCommerceMLForecastAlertEntries(
-					_commerceMLForecastAlertEntryRequestHelper.getCompanyId(),
-					_commerceMLForecastAlertEntryRequestHelper.getUserId(),
-					CommerceMLForecastAlertConstants.STATUS_NEW, 0.0,
-					_searchContainer.getStart(), _searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
-
-		int total =
+		_searchContainer.setResultsAndTotal(
+			() ->
+				_commerceMLForecastAlertEntryService.
+					getBelowThresholdCommerceMLForecastAlertEntries(
+						_commerceMLForecastAlertEntryRequestHelper.
+							getCompanyId(),
+						_commerceMLForecastAlertEntryRequestHelper.getUserId(),
+						CommerceMLForecastAlertConstants.STATUS_NEW, 0.0,
+						_searchContainer.getStart(), _searchContainer.getEnd()),
 			_commerceMLForecastAlertEntryService.
 				getBelowThresholdCommerceMLForecastAlertEntriesCount(
 					_commerceMLForecastAlertEntryRequestHelper.getCompanyId(),
 					_commerceMLForecastAlertEntryRequestHelper.getUserId(),
-					CommerceMLForecastAlertConstants.STATUS_NEW, 0.0);
-
-		_searchContainer.setTotal(total);
+					CommerceMLForecastAlertConstants.STATUS_NEW, 0.0));
 
 		return _searchContainer;
 	}

@@ -169,7 +169,8 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			if (_total != 0) {
-				_searchContainer.setTotal(_total);
+				_searchContainer.setResultsAndTotal(
+					_searchContainer::getResults, _total);
 			}
 
 			if (Validator.isNotNull(_totalVar)) {

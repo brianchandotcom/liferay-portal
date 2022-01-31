@@ -68,8 +68,6 @@ public class GroupSearchProvider {
 
 		Company company = themeDisplay.getCompany();
 
-		List<Group> results = null;
-
 		if (!searchTerms.hasSearchTerms() &&
 			isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
 
@@ -77,47 +75,43 @@ public class GroupSearchProvider {
 				getAllGroups(portletRequest),
 				groupSearch.getOrderByComparator());
 
-			groupSearch.setTotal(groups.size());
-
-			results = ListUtil.subList(
-				groups, groupSearch.getStart(), groupSearch.getEnd());
+			groupSearch.setResultsAndTotal(
+				() -> ListUtil.subList(
+					groups, groupSearch.getStart(), groupSearch.getEnd()),
+				groups.size());
 		}
 		else if (searchTerms.hasSearchTerms()) {
-			int total = _groupLocalService.searchCount(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(portletRequest, searchTerms, parentGroupId));
-
-			groupSearch.setTotal(total);
-
-			results = _groupLocalService.search(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(portletRequest, searchTerms, parentGroupId),
-				groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator());
+			groupSearch.setResultsAndTotal(
+				() -> _groupLocalService.search(
+					company.getCompanyId(), _classNameIds,
+					searchTerms.getKeywords(),
+					getGroupParams(portletRequest, searchTerms, parentGroupId),
+					groupSearch.getStart(), groupSearch.getEnd(),
+					groupSearch.getOrderByComparator()),
+				_groupLocalService.searchCount(
+					company.getCompanyId(), _classNameIds,
+					searchTerms.getKeywords(),
+					getGroupParams(
+						portletRequest, searchTerms, parentGroupId)));
 		}
 		else {
 			long groupId = ParamUtil.getLong(
 				portletRequest, "groupId",
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			int total = _groupLocalService.searchCount(
-				company.getCompanyId(), _classNameIds, groupId,
-				searchTerms.getKeywords(),
-				getGroupParams(portletRequest, searchTerms, parentGroupId));
-
-			groupSearch.setTotal(total);
-
-			results = _groupLocalService.search(
-				company.getCompanyId(), _classNameIds, groupId,
-				searchTerms.getKeywords(),
-				getGroupParams(portletRequest, searchTerms, parentGroupId),
-				groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator());
+			groupSearch.setResultsAndTotal(
+				() -> _groupLocalService.search(
+					company.getCompanyId(), _classNameIds, groupId,
+					searchTerms.getKeywords(),
+					getGroupParams(portletRequest, searchTerms, parentGroupId),
+					groupSearch.getStart(), groupSearch.getEnd(),
+					groupSearch.getOrderByComparator()),
+				_groupLocalService.searchCount(
+					company.getCompanyId(), _classNameIds, groupId,
+					searchTerms.getKeywords(),
+					getGroupParams(
+						portletRequest, searchTerms, parentGroupId)));
 		}
-
-		groupSearch.setResults(results);
 
 		return groupSearch;
 	}

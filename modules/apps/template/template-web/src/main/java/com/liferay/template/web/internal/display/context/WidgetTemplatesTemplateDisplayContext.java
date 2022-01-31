@@ -150,23 +150,22 @@ public class WidgetTemplatesTemplateDisplayContext
 		ddmTemplateSearchContainer.setOrderByComparator(
 			_getTemplateOrderByComparator());
 		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
-		ddmTemplateSearchContainer.setResults(
-			DDMTemplateServiceUtil.search(
+		ddmTemplateSearchContainer.setResultsAndTotal(
+			() -> DDMTemplateServiceUtil.search(
 				themeDisplay.getCompanyId(),
 				new long[] {themeDisplay.getScopeGroupId()}, getClassNameIds(),
 				null, getResourceClassNameId(), getKeywords(), StringPool.BLANK,
 				StringPool.BLANK, WorkflowConstants.STATUS_ANY,
 				ddmTemplateSearchContainer.getStart(),
 				ddmTemplateSearchContainer.getEnd(),
-				ddmTemplateSearchContainer.getOrderByComparator()));
-		ddmTemplateSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
-		ddmTemplateSearchContainer.setTotal(
+				ddmTemplateSearchContainer.getOrderByComparator()),
 			DDMTemplateServiceUtil.searchCount(
 				themeDisplay.getCompanyId(),
 				new long[] {themeDisplay.getScopeGroupId()}, getClassNameIds(),
 				null, getResourceClassNameId(), getKeywords(), StringPool.BLANK,
 				StringPool.BLANK, WorkflowConstants.STATUS_ANY));
+		ddmTemplateSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
 

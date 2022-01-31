@@ -100,23 +100,22 @@ public class UADSearchContainerBuilder {
 
 		Stream<UADEntity<?>> uadEntitiesStream = uadEntities.stream();
 
-		List<UADEntity<?>> results = uadEntitiesStream.sorted(
-			_getComparator(
-				searchContainer.getOrderByCol(),
-				searchContainer.getOrderByType())
-		).skip(
-			searchContainer.getStart()
-		).limit(
-			searchContainer.getDelta()
-		).collect(
-			Collectors.toList()
-		);
-
-		searchContainer.setResults(results);
+		searchContainer.setResultsAndTotal(
+			() -> uadEntitiesStream.sorted(
+				_getComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType())
+			).skip(
+				searchContainer.getStart()
+			).limit(
+				searchContainer.getDelta()
+			).collect(
+				Collectors.toList()
+			),
+			uadEntities.size());
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
-		searchContainer.setTotal(uadEntities.size());
 
 		return searchContainer;
 	}
@@ -170,29 +169,26 @@ public class UADSearchContainerBuilder {
 
 			Stream<UADEntity<?>> uadEntitiesStream = uadEntities.stream();
 
-			List<UADEntity<?>> results = uadEntitiesStream.sorted(
-				_getComparator(
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType())
-			).skip(
-				searchContainer.getStart()
-			).limit(
-				searchContainer.getDelta()
-			).collect(
-				Collectors.toList()
-			);
-
-			searchContainer.setResults(results);
-
-			searchContainer.setTotal(entities.size());
+			searchContainer.setResultsAndTotal(
+				() -> uadEntitiesStream.sorted(
+					_getComparator(
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType())
+				).skip(
+					searchContainer.getStart()
+				).limit(
+					searchContainer.getDelta()
+				).collect(
+					Collectors.toList()
+				),
+				entities.size());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
 
-			searchContainer.setResults(Collections.emptyList());
-			searchContainer.setTotal(0);
+			searchContainer.setResultsAndTotal(Collections::emptyList, 0);
 		}
 
 		RowChecker rowChecker = new UADHierarchyChecker(
@@ -234,9 +230,8 @@ public class UADSearchContainerBuilder {
 						uadDisplay));
 			}
 
-			searchContainer.setResults(uadEntities);
-
-			searchContainer.setTotal(
+			searchContainer.setResultsAndTotal(
+				() -> uadEntities,
 				(int)uadDisplay.searchCount(
 					selectedUser.getUserId(), groupIds,
 					displayTerms.getKeywords()));
@@ -246,8 +241,7 @@ public class UADSearchContainerBuilder {
 				_log.warn(exception, exception);
 			}
 
-			searchContainer.setResults(Collections.emptyList());
-			searchContainer.setTotal(0);
+			searchContainer.setResultsAndTotal(Collections::emptyList, 0);
 		}
 
 		RowChecker rowChecker = new UADHierarchyChecker(

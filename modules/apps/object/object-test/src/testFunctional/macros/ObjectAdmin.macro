@@ -718,6 +718,22 @@ definition {
 		Button.clickSave();
 	}
 
+	macro editObjectAction {
+		ObjectAdmin.goToActionDetails(viewEntry = "${viewEntry}");
+
+		ObjectAdmin.viewFieldDetails();
+
+		if (isSet(newActionName)) {
+			Type(
+				locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
+				value1 = "${newActionName}");
+		}
+
+		Button.clickSave();
+
+		Refresh();
+	}
+
 	macro goToActionDetails {
 		Click(
 			key_objectLabel = "${viewEntry}",

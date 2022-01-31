@@ -232,12 +232,36 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is possible to update an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145717 CanUpdateAction pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Action Name");
+
+		ObjectAdmin.editObjectAction(
+			newActionName = "Update Action Name",
+			viewEntry = "Action Name");
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Update Action Name");
 	}
 
 	@description = "LPS-139008 - Verify that Webhook action works with On After Add"

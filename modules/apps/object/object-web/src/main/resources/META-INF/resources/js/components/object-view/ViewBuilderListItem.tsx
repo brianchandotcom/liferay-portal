@@ -33,7 +33,7 @@ const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 
 	const {objectFieldName} = objectViewColumn;
 
-	const ref = useRef<any>();
+	const ref = useRef() as React.MutableRefObject<HTMLLIElement>;
 
 	const [{isDragging}, dragRef] = useDrag({
 		collect: (monitor) => ({
@@ -45,10 +45,10 @@ const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 		},
 	});
 
-	const [{isActive}, dropRef] = useDrop({
+	const [{canDrop}, dropRef] = useDrop({
 		accept: 'FIELD',
 		collect: (monitor) => ({
-			isActive: monitor.canDrop() && monitor.isOver(),
+			canDrop: monitor.canDrop() && monitor.isOver(),
 		}),
 		hover(item: any, monitor) {
 			const draggedIndex = item.index;
@@ -93,10 +93,12 @@ const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 	return (
 		<>
 			<ClayList.Item
-				className={`object-custom-view-builder-item ${classNames({
-					dragging: isDragging,
-					isActive,
-				})}`}
+				className={`lfr-object__object-custom-view-builder-item${classNames(
+					{
+						'-object-custom-view-builder-item--canDrop': canDrop,
+						'-object-custom-view-builder-item--dragging': isDragging,
+					}
+				)}`}
 				flex
 				ref={ref}
 			>

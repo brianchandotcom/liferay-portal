@@ -1,5 +1,5 @@
-.object-custom-view-builder-item {
-	&.dragging {
+.lfr-object__object-custom-view-builder-item {
+	&-object-custom-view-builder-item--dragging {
 		background: transparent;
 		background-color: #f7f8f9;
 		border-radius: 0;
@@ -9,7 +9,7 @@
 		padding-top: 20px;
 	}
 
-	&.isActive {
+	&-object-custom-view-builder-item--canDrop {
 		border: 2px solid #80acff;
 		padding-top: 20px;
 	}

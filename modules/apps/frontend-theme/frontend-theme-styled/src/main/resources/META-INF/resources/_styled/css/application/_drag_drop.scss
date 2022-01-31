@@ -148,3 +148,7 @@ html#{$cadmin-selector} {
 .yui3-dd-proxy {
 	z-index: 1110 !important;
 }
+
+.portlet-column-content.empty {
+	padding: $portlet-column-content-empty-padding;
+}

@@ -1,3 +1,6 @@
+/* eslint-disable @liferay/no-abbreviations */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *

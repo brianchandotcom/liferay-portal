@@ -1984,6 +1984,43 @@ definition {
 		}
 	}
 
+	@description = "LPS-146003 Bug: Can't edit variant using top toolbar edit button"
+	@priority = "4"
+	test EditVariantWithToolbarButton {
+		task ("Add a Heading fragment to content page") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a new A/B test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+		}
+
+		task ("Create a Variant for AB Test") {
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Open editor with upper pencil icon") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New text");
+
+			Button.clickPublish();
+		}
+	}
+
 	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
 	@priority = "3"
 	test EyeButton {

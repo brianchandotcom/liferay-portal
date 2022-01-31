@@ -1049,6 +1049,10 @@ public class StructuredContentResourceImpl
 			structuredContent.getFriendlyUrlPath_i18n(),
 			journalArticle.getFriendlyURLMap());
 
+		friendlyUrlMap =
+			friendlyUrlMap.isEmpty() ? journalArticle.getFriendlyURLMap() :
+				friendlyUrlMap;
+
 		notFoundLocales.addAll(friendlyUrlMap.keySet());
 
 		LocalizedMapUtil.validateI18n(

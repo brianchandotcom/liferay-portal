@@ -1,0 +1,24 @@
+.testray-progress-bar {
+	display: flex;
+	height: 15px;
+	margin: 10px 0;
+	white-space: nowrap;
+
+	.progress-bar-item {
+		&.failed {
+			background-color: $color-red;
+		}
+
+		&.passed {
+			background-color: $color-green;
+		}
+
+		&.test-fix {
+			background-color: $color-blue;
+		}
+
+		&.test-incomplete {
+			background-color: $color-gray-light;
+		}
+	}
+}

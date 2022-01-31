@@ -1,8 +1,7 @@
 .testray-sidebar {
+	background-color: #18215c;
 	display: flex;
 	flex-direction: column;
-	background-color: #18215c;
-	height: 100vh;
 	padding: 20px 0 0 0;
 	width: 250px;
 
@@ -19,16 +18,15 @@
 	}
 
 	.testray-sidebar-content {
-		display: flex;
-		flex: 1;
 		box-sizing: border-box;
+		display: flex;
 		flex-direction: column;
-
+		flex: 1;
 		overflow-x: hidden;
 		overflow-y: auto;
 
 		.testray-logo {
-			margin: 5px 25px 30px 25px;
+			margin: 5px 25px 30px -14px;
 
 			svg {
 				height: 35px;
@@ -56,6 +54,7 @@
 		&:active,
 		&:focus,
 		&:hover {
+			color: white;
 			background-color: #303376;
 			text-decoration: none;
 		}
@@ -63,14 +62,18 @@
 		&.active {
 			background-color: #303376;
 			color: #8b8db2;
+
+			.testray-sidebar-text {
+				color: white;
+			}
 		}
 
 		.testray-sidebar-text {
 			font-size: 1.2em;
-			font-weight: 500;
+			font-weight: 450;
 			padding-left: 10px;
-			vertical-align: middle;
 			transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+			vertical-align: middle;
 		}
 	}
 }

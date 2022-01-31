@@ -18,7 +18,7 @@ const navbarButton = fragmentElement.querySelector('.navbar-toggler');
 const navbarCollapse = fragmentElement.querySelector('.navbar-collapse');
 const siteNavbar = fragmentElement.querySelector('.main-navbar');
 
-navbarButton.addEventListener('click', function () {
+navbarButton.addEventListener('click', () => {
 	body.classList.toggle('overflow-hidden');
 	navbarCollapse.classList.toggle('show');
 	siteNavbar.classList.toggle('open');

@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.webserver.DynamicResourceServlet;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -305,7 +304,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 			displayName = displayName.substring(1);
 		}
 
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("<display-name>");
 		sb.append(displayName);
@@ -325,8 +324,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 			sb.append("</listener-class>");
 			sb.append("</listener>");
 		}
-
-		sb.append(_getDynamicResourceServletContent());
 
 		boolean hasTaglib = false;
 
@@ -872,48 +869,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		}
 
 		return displayName;
-	}
-
-	private String _getDynamicResourceServletContent() {
-		StringBundler sb = new StringBundler();
-
-		sb.append("<servlet>");
-		sb.append("<servlet-name>");
-		sb.append("Dynamic Resource Servlet");
-		sb.append("</servlet-name>");
-		sb.append("<servlet-class>");
-		sb.append(PortalClassLoaderServlet.class.getName());
-		sb.append("</servlet-class>");
-		sb.append("<init-param>");
-		sb.append("<param-name>");
-		sb.append("servlet-class");
-		sb.append("</param-name>");
-		sb.append("<param-value>");
-		sb.append(DynamicResourceServlet.class.getName());
-		sb.append("</param-value>");
-		sb.append("</init-param>");
-		sb.append("<load-on-startup>1</load-on-startup>");
-		sb.append("</servlet>");
-
-		for (String allowedPath :
-				PropsValues.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS) {
-
-			sb.append("<servlet-mapping>");
-			sb.append("<servlet-name>");
-			sb.append("Dynamic Resource Servlet");
-			sb.append("</servlet-name>");
-			sb.append("<url-pattern>");
-			sb.append(allowedPath);
-
-			if (!allowedPath.endsWith(StringPool.SLASH)) {
-				sb.append(StringPool.SLASH);
-			}
-
-			sb.append("*</url-pattern>");
-			sb.append("</servlet-mapping>");
-		}
-
-		return sb.toString();
 	}
 
 	private String _getInvokerFilterContent() {

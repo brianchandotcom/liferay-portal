@@ -420,6 +420,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 			<liferay-ui:icon
 				icon="print"
 				message="print"
+				target="_blank"
 				url="<%= commerceOrderContentDisplayContext.getExportCommerceOrderReportURL() %>"
 			/>
 		</c:if>

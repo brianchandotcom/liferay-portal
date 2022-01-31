@@ -265,6 +265,7 @@ if (commerceOrder != null) {
 		<liferay-ui:icon
 			icon="print"
 			message="print"
+			target="_blank"
 			url="<%= commerceOrderContentDisplayContext.getExportCommerceOrderReportURL() %>"
 		/>
 	</liferay-ui:icon-menu>

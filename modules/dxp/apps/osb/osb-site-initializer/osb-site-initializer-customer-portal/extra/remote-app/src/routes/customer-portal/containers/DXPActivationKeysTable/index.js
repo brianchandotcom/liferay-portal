@@ -17,7 +17,7 @@ import {IconButton} from '../../../../common/components';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/ApplicationPropertiesProvider';
-import {fetchActivationKeysLicense} from '../../../../common/services/liferay/raysource-api';
+import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {getCurrentEndDate} from '../../../../common/utils';
 import {useCustomerPortal} from '../../context';
 import {getPascalCase} from '../../utils/getPascalCase';
@@ -74,7 +74,7 @@ const DXPActivationKeysTable = () => {
 	useEffect(() => {
 		setIsLoadingActivationKeys(true);
 		const fetchActivationKeysData = async () => {
-			const {items} = await fetchActivationKeysLicense(
+			const {items} = await getActivationLicenseKey(
 				project.accountKey,
 				licenseKeyDownloadURL,
 				encodeURI('active eq true'),

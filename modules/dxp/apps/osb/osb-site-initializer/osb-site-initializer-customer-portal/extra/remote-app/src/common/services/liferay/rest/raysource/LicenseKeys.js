@@ -50,3 +50,24 @@ export async function getDevelopmentLicenseKey(
 
 	return response;
 }
+
+export async function getActivationLicenseKey(
+	accountKey,
+	licenseKeyDownloadURL,
+	licenseStatus,
+	page,
+	pageSize,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys?filter=${licenseStatus}&page=${page}&pageSize=${pageSize}`,
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+		}
+	);
+
+	return response.json();
+}

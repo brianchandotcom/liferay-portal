@@ -553,13 +553,6 @@ function serializeDefinition(
 		if (item.data.assignments) {
 			appendXMLAssignments(buffer, item.data.assignments);
 		}
-		else {
-			if (item.type === 'task') {
-				buffer.push(
-					XMLUtil.create('assignments', XMLUtil.create('user', null))
-				);
-			}
-		}
 
 		const xmlLabels = XMLUtil.createObj('labels');
 

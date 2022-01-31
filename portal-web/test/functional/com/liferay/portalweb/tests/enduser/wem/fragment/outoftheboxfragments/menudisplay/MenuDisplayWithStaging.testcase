@@ -51,7 +51,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
 				dropTarget = "Header",
-				fragmentName = "Menu Display Fragment",
+				fragmentName = "Menu Display",
 				scope = "Master");
 		}
 

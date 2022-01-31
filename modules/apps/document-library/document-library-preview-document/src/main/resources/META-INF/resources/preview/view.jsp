@@ -23,7 +23,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 int previewFileCount = PDFProcessorUtil.getPreviewFileCount(fileVersion);
 
-String previewQueryString = "&previewFileIndex=";
+String previewQueryString = "&previewFileIndex=1";
 
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
 

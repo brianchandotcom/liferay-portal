@@ -12,13 +12,18 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import lang from '../../../../../util/lang';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import {options} from './SelectAssignment';
+import {getAssignmentType} from './utils';
 
 const CurrentAssignments = ({assignments, setContentName}) => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);
+	const assignmentType = getAssignmentType(assignments);
+
+	const [assignmentsDetails, setAssignmentsDetails] = useState(null);
 
 	const deleteCurrentAssignments = () => {
 		setSelectedItem((previousValue) => ({
@@ -30,15 +35,61 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 		}));
 	};
 
-	const optionFilter = (option) => {
-		if (
-			assignments.assignmentType[0] === 'user' &&
-			!Object.keys(assignments).includes('emailAddress')
-		) {
-			return option.assignmentType === 'assetCreator';
-		}
+	const optionFilter = (option) => option.assignmentType === assignmentType;
 
-		return option.assignmentType === assignments.assignmentType[0];
+	useEffect(() => {
+		if (assignmentType === 'resourceActions') {
+			const resourceActionsArray = assignments.resourceAction.split(' ');
+
+			setAssignmentsDetails({
+				assignmentsCount: resourceActionsArray.length,
+				firstName: resourceActionsArray[0],
+			});
+		}
+		if (assignmentType === 'roleId') {
+			setAssignmentsDetails({
+				assignmentsCount: 1,
+				firstName: assignments.rolesData.name,
+			});
+		}
+		if (assignmentType === 'user') {
+			setAssignmentsDetails({
+				assignmentsCount: assignments.sectionsData.length,
+				firstName: assignments.sectionsData
+					.sort((firstElement, secondElement) => {
+						if (firstElement.name < secondElement.name) {
+							return -1;
+						}
+						if (firstElement.name > secondElement.name) {
+							return 1;
+						}
+
+						return 0;
+					})[0]
+					.name.split(' ')[0],
+			});
+		}
+	}, [assignmentType, assignments]);
+
+	const getAssignmentsDetails = () => {
+		if (assignmentType === 'assetCreator') {
+			return [''];
+		} else if (assignmentsDetails) {
+			const result = [': ' + assignmentsDetails.firstName || ''];
+
+			if (assignmentsDetails.assignmentsCount !== 1) {
+				result.push(
+					' ' +
+						lang.sub(Liferay.Language.get('and-x-more'), [
+							assignmentsDetails.assignmentsCount - 1,
+						])
+				);
+			}
+
+			return result;
+		} else {
+			return [`: ${assignments[Object.keys(assignments)[1]]}`];
+		}
 	};
 
 	return (
@@ -49,11 +100,16 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 			>
 				<ClayLink
 					button={false}
+					className="truncate-container"
 					displayType="secondary"
 					href="#"
 					onClick={() => setContentName('assignments')}
 				>
 					{options.find(optionFilter)?.label}
+
+					{getAssignmentsDetails().map((content, index) => (
+						<span key={index}>{content}</span>
+					))}
 				</ClayLink>
 
 				<ClayButtonWithIcon

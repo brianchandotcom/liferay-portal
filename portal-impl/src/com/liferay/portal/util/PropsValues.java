@@ -1013,9 +1013,6 @@ public class PropsValues {
 	public static final int DNS_SECURITY_THREAD_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DNS_SECURITY_THREAD_LIMIT));
 
-	public static final String[] DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS =
-		PropsUtil.getArray(PropsKeys.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS);
-
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 

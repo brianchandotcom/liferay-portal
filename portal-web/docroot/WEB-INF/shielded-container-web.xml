@@ -101,11 +101,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Dynamic Resource Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.webserver.DynamicResourceServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
@@ -248,10 +243,6 @@
 	<servlet-mapping>
 		<servlet-name>Combo Servlet</servlet-name>
 		<url-pattern>/combo/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Dynamic Resource Servlet</servlet-name>
-		<url-pattern>/sprite/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>

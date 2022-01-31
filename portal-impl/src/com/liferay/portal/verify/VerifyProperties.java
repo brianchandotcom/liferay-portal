@@ -1655,7 +1655,8 @@ public class VerifyProperties extends VerifyProcess {
 		"dynamic.data.mapping.structure.private.field.repeatable[" +
 			"_fieldsDisplay]",
 		"dynamic.data.mapping.template.language.types",
-		"editor.ckeditor.version", "editor.inline.editing.enabled",
+		"dynamic.resource.servlet.allowed.paths", "editor.ckeditor.version",
+		"editor.inline.editing.enabled",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.asset_publisher." +
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.blogs.configuration." +

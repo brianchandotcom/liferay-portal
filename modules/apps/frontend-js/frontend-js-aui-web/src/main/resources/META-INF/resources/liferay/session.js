@@ -335,6 +335,10 @@ AUI.add(
 					instance._initEvents();
 
 					instance._startTimer();
+
+					Liferay.fire('sessionInitialized', {
+						session: instance,
+					});
 				},
 
 				registerInterval(fn) {

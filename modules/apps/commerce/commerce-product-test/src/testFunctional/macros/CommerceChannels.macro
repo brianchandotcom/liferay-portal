@@ -64,30 +64,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addProductDisplayPage {
-		Button.click(button = "Choose");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		if ("${pageType}" == "Private") {
-			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
-		}
-
-		CommerceNavigator.searchEntry(entryName = "${pageName}");
-
-		LexiconCard.clickCard(card = "${pageName}");
-
-		SelectFrame.selectFrameTop();
-
-		Button.clickDone();
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		CommerceEntry.assertDefaultProductDisplayPage(pageName = "${pageName}");
-	}
-
 	macro assertMercanetConfigurationEnvironment {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "${paymentMethod}",

@@ -39,7 +39,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceEntry.assertDefaultProductDisplayPage(pageName = "None");
+			CommerceEntry.assertDefaultDisplayPage(pageName = "None");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
@@ -57,7 +57,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-7950. Verify user selects, changes and removes a Default Product Display page by navigating to channels page"
+	@description = "This is a test for COMMERCE-7950. Verify user can select, change, and remove a Default Product Display page"
 	@priority = "5"
 	test CanSelectChangeAndRemoveDefaultProductDisplayPage {
 		task ("Given a Minium site") {
@@ -86,13 +86,21 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page 1",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Public Widget Page 1",
 				pageType = "Public");
 		}
 
 		task ("And given the user changes the Default Product Display Page") {
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page 2",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Public Widget Page 2",
 				pageType = "Public");
 		}
@@ -104,7 +112,7 @@ definition {
 		task ("Then it should show Product Display Page as 'None'") {
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceEntry.assertDefaultProductDisplayPage(pageName = "None");
+			CommerceEntry.assertDefaultDisplayPage(pageName = "None");
 		}
 	}
 
@@ -140,7 +148,11 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Private Content Page",
+				pageType = "Private");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Private Content Page",
 				pageType = "Private");
 		}
@@ -177,7 +189,11 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Private Widget Page",
+				pageType = "Private");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Private Widget Page",
 				pageType = "Private");
 		}
@@ -228,7 +244,11 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Content Page",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Public Content Page",
 				pageType = "Public");
 		}
@@ -265,7 +285,11 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
 
-			CommerceChannels.addProductDisplayPage(
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
 				pageName = "Test Public Widget Page",
 				pageType = "Public");
 		}

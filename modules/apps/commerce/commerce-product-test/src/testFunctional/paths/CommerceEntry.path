@@ -76,11 +76,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_PRODUCT_DISPLAY_PAGE</td>
-	<td>//span[contains (@id,'displayPageNameInput') and contains(.,'${key_displayPage}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[contains (@id,'description')]</td>
 	<td></td>

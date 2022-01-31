@@ -824,11 +824,11 @@ definition {
 
 			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
 
-			NavigationMenusWidget.selectDisplayTemplate(templateName = "Menu Display Widget Test ADT");
+			NavigationMenusWidget.selectDisplayTemplate(templateName = "Menu Display Test ADT");
 
 			AssertSelectedLabel(
 				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "Menu Display Widget Test ADT");
+				value1 = "Menu Display Test ADT");
 
 			Portlet.saveAndCloseConfig();
 		}

@@ -46,6 +46,38 @@ function retrieveDefinitionRequest(definitionId) {
 	);
 }
 
+function retrieveRolesBy(filterType, keywords) {
+	if (filterType === 'roleId') {
+		return fetch(
+			`${window.location.origin}${userBaseURL}/roles/` + keywords,
+			{
+				headers,
+				method: 'GET',
+			}
+		);
+	}
+}
+
+function retrieveUsersBy(filterType, keywords) {
+	let filterParameter = String();
+	for (const keyword of keywords) {
+		filterParameter =
+			filterParameter + filterType + " eq '" + keyword + "' or ";
+	}
+	filterParameter = encodeURIComponent(filterParameter)
+		.replace(/'/g, '%27')
+		.slice(0, -8);
+
+	const url = new URL(
+		`${window.location.origin}${userBaseURL}/user-accounts?filter=${filterParameter}`
+	);
+
+	return fetch(url, {
+		headers,
+		method: 'GET',
+	});
+}
+
 function saveDefinitionRequest(requestBody) {
 	return fetch(`${workflowBaseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
@@ -64,5 +96,7 @@ export {
 	publishDefinitionRequest,
 	retrieveAccountRoles,
 	retrieveDefinitionRequest,
+	retrieveRolesBy,
+	retrieveUsersBy,
 	saveDefinitionRequest,
 };

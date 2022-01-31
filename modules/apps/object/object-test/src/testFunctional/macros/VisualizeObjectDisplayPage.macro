@@ -75,4 +75,10 @@ definition {
 			value1 = "${contentType}");
 	}
 
+	macro assertDisplayEntryNotPresent {
+		AssertElementNotPresent(
+			key_entry = "${entry}",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
+	}
+
 }

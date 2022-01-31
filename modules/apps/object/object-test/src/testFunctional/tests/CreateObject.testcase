@@ -6182,11 +6182,70 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries are not displayed on Page fragments from an Object that was inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectEntriesDisappearsPageFragmentsWhenInactivated {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140867 ObjectEntriesDisappearsPageFragmentsWhenInactivated pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			listStyle = "Table",
+			selectedName = "Custom Objects");
+
+		PageEditor.clickPublish();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.inactiveCustomObject(objectName = "Custom Object");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Display Page");
+
+		ObjectAdmin.assertEntryOnPageNotPresent(entryName = "Entry Test");
+
 
 	}
 

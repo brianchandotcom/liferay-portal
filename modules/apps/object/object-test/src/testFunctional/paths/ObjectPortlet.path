@@ -164,7 +164,12 @@
 		<td>OBJECT_FIELD_SELECTED</td>
 		<td>//div[@class='form-control results-chosen select-field-trigger']//div[contains(text(),'${key_entrySelected}')]</td>
 		<td></td>
-</tr>
+	</tr>
+	<tr>
+		<td>ENTRY_CLOB_KEBAB_MENU</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[contains(.,'${key_entry}')]/following-sibling::div//button</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

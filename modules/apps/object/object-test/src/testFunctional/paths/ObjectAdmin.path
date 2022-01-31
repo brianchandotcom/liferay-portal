@@ -550,6 +550,11 @@
 		<td>//*[contains(@class, 'autofit-section') and contains(., '${key_newLanguage}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_CLOB_TYPE_TEXT_ENTRY</td>
+		<td>//textarea[contains(@type,'text') and contains(text(),'${key_clobType}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

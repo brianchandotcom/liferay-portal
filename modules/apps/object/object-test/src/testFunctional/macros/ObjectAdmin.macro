@@ -898,4 +898,10 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
+	macro assertClobTypeText {
+		AssertElementPresent(
+			key_clobType = "${clobType}",
+			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
+	}
+
 }

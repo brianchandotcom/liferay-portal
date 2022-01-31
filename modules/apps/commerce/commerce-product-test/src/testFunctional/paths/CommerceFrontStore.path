@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
-	<td>//p/span[(normalize-space(text())='SKU')]/following::span</td>
+	<td>//p/span[(normalize-space(text())='SKU')]/following::span[text()='${key_productSku}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,12 +47,12 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTIONS_SELECT</td>
-	<td>//div[contains (@class,'select-field-trigger')]//a</td>
+	<td>//div/label[text()='${key_optionName}']/..//div[contains (@class,'select-field-trigger')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTION</td>
-	<td>//div[contains(@class,'dropdown-menu')]/ul//li/button[contains(.,'${key_optionValue}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]/ul//li/button[(normalize-space(text())='${key_optionValue}')]</td>
 	<td></td>
 </tr>
 <tr>

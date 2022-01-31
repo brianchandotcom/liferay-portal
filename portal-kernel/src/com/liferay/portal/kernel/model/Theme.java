@@ -79,8 +79,6 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
 	public Properties getSettingsProperties();
 
-	public SpriteImage getSpriteImage(String fileName);
-
 	public String getStaticResourcePath();
 
 	public String getTemplateExtension();
@@ -138,9 +136,6 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 	public void setServletContextName(String servletContextName);
 
 	public void setSetting(String key, String value);
-
-	public void setSpriteImages(
-		String spriteFileName, Properties spriteProperties);
 
 	public void setTemplateExtension(String templateExtension);
 

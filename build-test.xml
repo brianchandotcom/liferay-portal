@@ -4157,9 +4157,7 @@ module.framework.base.dir=${liferay.home}/osgi
 
 memory.scheduler.org.quartz.threadPool.threadCount=1
 
-persisted.scheduler.org.quartz.threadPool.threadCount=1
-
-sprite.root.dir=/tmp/sprite]]></echo>
+persisted.scheduler.org.quartz.threadPool.threadCount=1]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
 		</sequential>
@@ -7026,8 +7024,6 @@ go</echo>
 				</if>
 			</then>
 		</if>
-
-		<delete dir="/tmp/sprite" />
 	</target>
 
 	<target name="delete-portal-theme">
@@ -8669,8 +8665,6 @@ mail.session.jndi.name=
 
 module.framework.properties.dependency.manager.sync.timeout=1800
 module.framework.properties.initial.system.check.enabled=true
-
-sprite.root.dir=/tmp/sprite
 
 memory.scheduler.org.quartz.threadPool.threadCount=1
 

@@ -17,8 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.image.SpriteProcessor;
-import com.liferay.portal.kernel.image.SpriteProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
@@ -52,10 +50,7 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.plugin.PluginUtil;
 import com.liferay.portal.service.base.ThemeLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContextReplace;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,7 +58,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -849,10 +843,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				}
 			}
 
-			if (PropsValues.SPRITE_ENABLED) {
-				_setSpriteImages(servletContext, theme, imagesPath);
-			}
-
 			if (!_themes.containsKey(themeId)) {
 				_themes.put(themeId, theme);
 			}
@@ -868,62 +858,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		}
 
 		return themes;
-	}
-
-	private void _setSpriteImages(
-			ServletContext servletContext, Theme theme, String resourcePath)
-		throws Exception {
-
-		if (!resourcePath.startsWith(StringPool.SLASH)) {
-			resourcePath = StringPool.SLASH.concat(resourcePath);
-		}
-
-		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcePath);
-
-		if ((resourcePaths == null) || resourcePaths.isEmpty()) {
-			return;
-		}
-
-		List<URL> imageURLs = new ArrayList<>(resourcePaths.size());
-
-		for (String curResourcePath : resourcePaths) {
-			if (curResourcePath.endsWith(StringPool.SLASH)) {
-				_setSpriteImages(servletContext, theme, curResourcePath);
-			}
-			else if (curResourcePath.endsWith(".png")) {
-				URL imageURL = servletContext.getResource(curResourcePath);
-
-				if (imageURL != null) {
-					imageURLs.add(imageURL);
-				}
-				else {
-					_log.error(
-						"Resource URL for " + curResourcePath + " is null");
-				}
-			}
-		}
-
-		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
-		String spriteFileName = resourcePath.concat(
-			PropsValues.SPRITE_FILE_NAME);
-		String spritePropertiesFileName = resourcePath.concat(
-			PropsValues.SPRITE_PROPERTIES_FILE_NAME);
-		String rootPath = ServletContextUtil.getRootPath(servletContext);
-
-		Properties spriteProperties = SpriteProcessorUtil.generate(
-			servletContext, imageURLs, spriteRootDirName, spriteFileName,
-			spritePropertiesFileName, rootPath, 16, 16, 10240);
-
-		if (spriteProperties == null) {
-			return;
-		}
-
-		spriteFileName = StringBundler.concat(
-			servletContext.getContextPath(), SpriteProcessor.PATH,
-			spriteFileName);
-
-		theme.setSpriteImages(spriteFileName, spriteProperties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

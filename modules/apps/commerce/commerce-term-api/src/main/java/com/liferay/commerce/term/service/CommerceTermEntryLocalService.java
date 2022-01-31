@@ -321,6 +321,11 @@ public interface CommerceTermEntryLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId);
+
 	/**
 	 * @throws PortalException
 	 */

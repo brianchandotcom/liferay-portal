@@ -17,6 +17,7 @@ import AssetCreator from './select-assignment/AssetCreator';
 import ResourceActions from './select-assignment/ResourceActions';
 import Role from './select-assignment/Role';
 import RoleType from './select-assignment/RoleType';
+import ScriptedAssignment from './select-assignment/ScriptedAssignment';
 import User from './select-assignment/User';
 
 const options = [
@@ -41,7 +42,6 @@ const options = [
 		value: 'roleType',
 	},
 	{
-		disabled: true,
 		label: Liferay.Language.get('scripted-assignment'),
 		value: 'scriptedAssignment',
 	},
@@ -52,10 +52,11 @@ const AssignmentSectionComponents = {
 	resourceActions: ResourceActions,
 	role: Role,
 	roleType: RoleType,
+	scriptedAssignment: ScriptedAssignment,
 	user: User,
 };
 
-const Assignments = (props) => {
+const SelectAssignment = (props) => {
 	const [section, setSection] = useState('');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
@@ -111,4 +112,4 @@ const Assignments = (props) => {
 	);
 };
 
-export default Assignments;
+export default SelectAssignment;

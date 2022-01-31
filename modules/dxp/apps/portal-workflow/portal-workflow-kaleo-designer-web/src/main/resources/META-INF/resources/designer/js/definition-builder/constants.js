@@ -11,4 +11,9 @@
 
 const defaultLanguageId = themeDisplay.getLanguageId();
 
-export {defaultLanguageId};
+const editorConfig = {
+	tabSpaces: 4,
+	toolbar: [['Source']],
+};
+
+export {defaultLanguageId, editorConfig};

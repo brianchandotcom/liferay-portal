@@ -20,13 +20,9 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
+import {editorConfig} from '../constants';
 import {xmlNamespace} from './constants';
 import {serializeDefinition} from './serializeUtil';
-
-const config = {
-	tabSpaces: 4,
-	toolbar: [['Source']],
-};
 
 export default function SourceBuilder({version}) {
 	const {
@@ -153,7 +149,7 @@ export default function SourceBuilder({version}) {
 			</ClayToolbar>
 
 			<Editor
-				config={config}
+				config={editorConfig}
 				onInstanceReady={({editor}) => {
 					setCurrentEditor(editor);
 

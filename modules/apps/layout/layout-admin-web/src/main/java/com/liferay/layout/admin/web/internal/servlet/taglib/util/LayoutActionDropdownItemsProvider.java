@@ -38,7 +38,6 @@ import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -280,7 +279,9 @@ public class LayoutActionDropdownItemsProvider {
 									_httpServletRequest, "copy-page"));
 						}
 					).add(
-						() -> _isShowExportTranslationAction(layout),
+						() ->
+							_layoutsAdminDisplayContext.
+								isShowExportTranslationAction(layout),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								PortletURLBuilder.create(
@@ -462,17 +463,10 @@ public class LayoutActionDropdownItemsProvider {
 		return false;
 	}
 
-	private boolean _isShowExportTranslationAction(Layout layout) {
-		if (layout.isTypeContent() && !_isSingleLanguageSite()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isShowImportTranslationAction(Layout layout) {
 		try {
-			if (layout.isTypeContent() && !_isSingleLanguageSite() &&
+			if (layout.isTypeContent() &&
+				!_layoutsAdminDisplayContext.isSingleLanguageSite() &&
 				LayoutPermissionUtil.contains(
 					_themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)) {
@@ -489,19 +483,8 @@ public class LayoutActionDropdownItemsProvider {
 
 	private boolean _isShowTranslateAction(Layout layout) {
 		if (layout.isTypeContent() && _hasTranslatePermission() &&
-			!_isSingleLanguageSite()) {
+			!_layoutsAdminDisplayContext.isSingleLanguageSite()) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isSingleLanguageSite() {
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			_themeDisplay.getSiteGroupId());
-
-		if (availableLocales.size() == 1) {
 			return true;
 		}
 

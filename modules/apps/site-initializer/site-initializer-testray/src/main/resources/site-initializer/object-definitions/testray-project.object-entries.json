@@ -92,8 +92,8 @@
 		"name": "LRDCOM "
 	},
 	{
-		"name": "Marketplace",
-		"description": "Test results for liferay.com/marketplace tests"
+		"description": "Test results for liferay.com/marketplace tests",
+		"name": "Marketplace"
 	},
 	{
 		"description": "",
@@ -116,8 +116,8 @@
 		"name": "Search Infrastructure"
 	},
 	{
-		"name": "Segmentation & Personalization ",
-		"description": "All functional features related to the Segmentation & Personalization team"
+		"description": "All functional features related to the Segmentation & Personalization team",
+		"name": "Segmentation & Personalization "
 	},
 	{
 		"description": "",

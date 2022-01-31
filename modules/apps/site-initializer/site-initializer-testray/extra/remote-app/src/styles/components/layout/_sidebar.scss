@@ -20,8 +20,8 @@
 	.testray-sidebar-content {
 		box-sizing: border-box;
 		display: flex;
-		flex-direction: column;
 		flex: 1;
+		flex-direction: column;
 		overflow-x: hidden;
 		overflow-y: auto;
 
@@ -54,8 +54,8 @@
 		&:active,
 		&:focus,
 		&:hover {
-			color: white;
 			background-color: #303376;
+			color: white;
 			text-decoration: none;
 		}
 

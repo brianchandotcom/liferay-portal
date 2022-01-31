@@ -25,7 +25,6 @@ definition {
 			kfStatus = "${workflowStatus}",
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
 			value1 = "${workflowStatus}");
-
 	}
 
 }

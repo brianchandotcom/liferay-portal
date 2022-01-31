@@ -163,7 +163,8 @@ public class IndexerScoreDistortionTest {
 			searchResponse2);
 		assertValues(
 			Field.TITLE + "_en_US",
-			"[collision, , collision, collision, collision]", searchResponse2);
+			"[collision, collision, collision, collision, collision]",
+			searchResponse2);
 		assertValues(
 			Field.TITLE + "_hu_HU", "[collision, , , collision, collision]",
 			searchResponse2);

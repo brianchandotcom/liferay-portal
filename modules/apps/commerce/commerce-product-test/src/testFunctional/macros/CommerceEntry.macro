@@ -541,7 +541,7 @@ definition {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
-				value1 = "${$pageName}");
+				value1 = "${pageName}");
 		}
 
 		if ("${pageType}" == "Public") {

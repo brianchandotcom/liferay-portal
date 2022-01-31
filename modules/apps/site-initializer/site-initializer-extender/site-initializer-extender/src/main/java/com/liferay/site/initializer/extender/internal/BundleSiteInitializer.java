@@ -83,6 +83,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -1642,6 +1643,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
+			String file = url.getFile();
+
+			int pos = file.lastIndexOf(CharPool.FORWARD_SLASH);
+
+			String fileName = file.substring(pos + 1);
+
+			if (Validator.isNull(fileName)) {
+				continue;
+			}
+
 			String urlPath = url.getPath();
 
 			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
@@ -1682,13 +1693,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						urlPath, "/site-initializer/layout-page-templates/"),
+						urlPath, "/site-initializer/layout-page-templates"),
 					json);
 			}
 			else {
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						urlPath, "/site-initializer/layout-page-templates/"),
+						urlPath, "/site-initializer/layout-page-templates"),
 					url.openStream());
 			}
 		}

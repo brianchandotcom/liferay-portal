@@ -1253,6 +1253,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-145992 Bug: Run A/B Test with Click Goal of a deleted button"
+	@priority = "4"
+	test DeleteButtonWarning {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Button.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the button as clickable element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Go to edit page and remove the fragment created") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.removeFragment(fragmentName = "Button");
+
+			Button.clickPublish();
+		}
+
+		task ("Assert the warning alert") {
+			ABTest.openABTestPanel();
+
+			AssertTextEquals(
+				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
+				value1 = "An element needs to be selected.");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
+	}
+
 	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
 	@priority = "3"
 	test DeleteHistoryTab {

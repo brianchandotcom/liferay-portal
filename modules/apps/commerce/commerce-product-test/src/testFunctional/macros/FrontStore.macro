@@ -28,6 +28,42 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro addToCartFromProductDetails {
+		CommerceNavigator.gotoMiniCart();
+
+		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME", key_cartItemName = "${productName}")) {
+			var newItemCount = "${currentItemCount}";
+		}
+		else {
+			var newItemCount = ${currentItemCount} + 1;
+		}
+
+		Refresh();
+
+		if (isSet(optionNamesAndValues)) {
+			for (var optionNameAndValue : list "${optionNamesAndValues}") {
+				var optionName = StringUtil.extractFirst("${optionNameAndValue}", ":");
+				var optionValue = StringUtil.extractLast("${optionNameAndValue}", ":");
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "${optionName}",
+					fsOptionValue = "${optionValue}");
+			}
+		}
+
+		WaitForElementPresent(
+			key_productSku = "${productSku}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+		WaitForElementPresent(
+			key_itemCount = "${newItemCount}",
+			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+	}
+
 	macro selectAssociatedFSOptionsValue {
 		Click(
 			key_optionName = "${fsOptionName}",

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,7 @@ public class SearchOrderByUtil {
 		String defaultValue) {
 
 		String orderByCol = ParamUtil.getString(
-			httpServletRequest, "orderByCol");
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -88,7 +89,7 @@ public class SearchOrderByUtil {
 		String defaultValue) {
 
 		String orderByType = ParamUtil.getString(
-			httpServletRequest, "orderByType");
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(

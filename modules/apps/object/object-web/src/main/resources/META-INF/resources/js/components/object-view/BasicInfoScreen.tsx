@@ -21,7 +21,7 @@ import ViewContext, {TYPES} from './context';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const BasicInfoScreen = () => {
+export default function BasicInfoScreen() {
 	const [{objectView}, dispatch] = useContext(ViewContext);
 
 	const handleChangeName = (newName: string) => {
@@ -46,7 +46,6 @@ const BasicInfoScreen = () => {
 				<ClayForm.Group>
 					<Input
 						disabled={false}
-						id="objectLayoutName"
 						label={Liferay.Language.get('name')}
 						name="name"
 						onChange={({target: {value}}: any) => {
@@ -70,6 +69,4 @@ const BasicInfoScreen = () => {
 			</Card.Body>
 		</Card>
 	);
-};
-
-export default BasicInfoScreen;
+}

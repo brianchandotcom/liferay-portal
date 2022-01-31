@@ -19,13 +19,12 @@ export type TName = {
 };
 
 export type TObjectField = {
-	checked?: boolean;
+	checked: boolean;
 	filtered?: boolean | undefined;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: string;
-	inLayout?: boolean; // eslint-disable-line @typescript-eslint/member-ordering
 	label: TName;
 	listTypeDefinitionId: boolean;
 	name: string;

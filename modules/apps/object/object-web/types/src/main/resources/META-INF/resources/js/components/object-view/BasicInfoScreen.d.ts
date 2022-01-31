@@ -14,5 +14,4 @@
 
 /// <reference types="react" />
 
-declare const BasicInfoScreen: () => JSX.Element;
-export default BasicInfoScreen;
+export default function BasicInfoScreen(): JSX.Element;

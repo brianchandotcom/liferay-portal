@@ -3701,8 +3701,12 @@ tell application "Safari" to quit
 
 			<beanshell>
 				<![CDATA[
+					import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+					import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 					import com.liferay.jenkins.results.parser.Job;
 					import com.liferay.jenkins.results.parser.JobFactory;
+					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.NPMTestBatchTestClassGroup;
@@ -3718,8 +3722,34 @@ tell application "Safari" to quit
 						return Job.BuildProfile.PORTAL;
 					}
 
+					public String getRepositoryName() {
+						String upstreamBranchName = getUpstreamBranchName();
+
+						if (upstreamBranchName.equals("master")) {
+							return "liferay-portal";
+						}
+
+						return "liferay-portal-ee";
+					}
+
+					public GitWorkingDirectory getPortalGitWorkingDirectory() {
+						File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
+
+						GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
+
+						if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+							return (PortalGitWorkingDirectory)gitWorkingDirectory;
+						}
+
+						return null;
+					}
+
+					public String getUpstreamBranchName() {
+						return project.getProperty("git.working.branch.name");
+					}
+
 					try {
-						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"), null, null, null, getBuildProfile());
+						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"), null, getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
 
 						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
@@ -12485,9 +12515,12 @@ if (ppstate.equals("normal")) {
 		<beanshell>
 			<![CDATA[
 				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
+				import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+				import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 				import com.liferay.jenkins.results.parser.Job;
 				import com.liferay.jenkins.results.parser.JobFactory;
+				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 				public Job.BuildProfile getBuildProfile() {
 					String testPortalBuildProfile = project.getProperty("build.profile");
@@ -12513,6 +12546,18 @@ if (ppstate.equals("normal")) {
 					return "liferay-portal-ee";
 				}
 
+				public GitWorkingDirectory getPortalGitWorkingDirectory() {
+					File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
+
+					GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
+
+					if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+						return (PortalGitWorkingDirectory)gitWorkingDirectory;
+					}
+
+					return null;
+				}
+
 				public File getSummaryDir() {
 					File summaryDir = new File("job/summary");
 
@@ -12529,7 +12574,7 @@ if (ppstate.equals("normal")) {
 					return project.getProperty("git.working.branch.name");
 				}
 
-				Job job = JobFactory.newJob(getJobName(), getTestSuiteName(), getUpstreamBranchName(), getRepositoryName(), getBuildProfile());
+				Job job = JobFactory.newJob(getJobName(), getTestSuiteName(), getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
 
 				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
 

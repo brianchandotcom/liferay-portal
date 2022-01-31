@@ -13,14 +13,14 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {headers} from '../../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
 const Roles = () => {
-	const {setSelectedItem} = useContext(DiagramBuilderContext);
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
 	const [active, setActive] = useState(false);
 	const [filter, setFilter] = useState(true);
@@ -42,6 +42,16 @@ const Roles = () => {
 	const initialLoading = networkStatus === 1;
 	const loading = networkStatus < 4;
 	const error = networkStatus === 5;
+
+	useEffect(()=>{
+		setFieldValues(
+			{
+				id: selectedItem.data.assignments?.rolesData?.id || '',
+				name: selectedItem.data.assignments?.rolesData?.name || '',
+			}
+		)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[])
 
 	const handleInputFocus = () => {
 		setFilter(fieldValues.name === '');
@@ -68,7 +78,15 @@ const Roles = () => {
 			...previousValue,
 			data: {
 				...previousValue.data,
-				assignments: {assignmentType: ['roleId'], roleId: role.id},
+				assignments: {
+					assignmentType: ['roleId'],
+					roleId: role.id,
+					rolesData: {
+						id: role.id,
+						name: role.name,
+						roleType: role.roleType,
+					},
+				},
 			},
 		}));
 	};

@@ -155,6 +155,16 @@
 		<td>//input[(@id='_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_name') and (@disabled)]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_EDIT_ITEM_NAME</td>
+		<td>//input[@id=('_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_name') and @value=('${key_itemName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_EDIT_ITEM_KEY</td>
+		<td>//input[@id=('_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_key') and @value=('${key_itemKey}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

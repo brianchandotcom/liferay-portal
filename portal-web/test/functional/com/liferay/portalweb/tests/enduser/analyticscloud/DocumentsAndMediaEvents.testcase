@@ -8,6 +8,10 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "record-test-generated-properties");
+
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
 

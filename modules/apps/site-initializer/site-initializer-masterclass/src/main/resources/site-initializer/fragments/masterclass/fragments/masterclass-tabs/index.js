@@ -27,7 +27,7 @@ const tabPanelItems = [].slice.call(
 );
 
 function activeTab(item) {
-	tabItems.forEach(function (tabItem) {
+	tabItems.forEach((tabItem) => {
 		tabItem.setAttribute('aria-selected', false);
 		tabItem.classList.remove('active');
 	});
@@ -36,7 +36,7 @@ function activeTab(item) {
 }
 
 function activeTabPanel(item) {
-	tabPanelItems.forEach(function (tabPanelItem) {
+	tabPanelItems.forEach((tabPanelItem) => {
 		if (!tabPanelItem.classList.contains('d-none')) {
 			tabPanelItem.classList.add('d-none');
 		}
@@ -99,15 +99,15 @@ function main() {
 	let tabItemSelected = tabItems[0];
 
 	if (initialState) {
-		tabItems.forEach(function (item, i) {
+		tabItems.forEach((item, i) => {
 			if (!i) {
 				activeTab(item);
 			}
-			item.addEventListener('click', function (event) {
+			item.addEventListener('click', (event) => {
 				openTabPanel(event, i);
 			});
 		});
-		tabPanelItems.forEach(function (item, i) {
+		tabPanelItems.forEach((item, i) => {
 			if (!i) {
 				activeTabPanel(item);
 			}
@@ -117,7 +117,7 @@ function main() {
 		tabItemSelected = tabItems[this.tabIndex];
 		tabItems.forEach(function (item, i) {
 			activeTab(tabItems[this.tabIndex]);
-			item.addEventListener('click', function (event) {
+			item.addEventListener('click', (event) => {
 				openTabPanel(event, i);
 			});
 		});
@@ -126,7 +126,7 @@ function main() {
 		});
 	}
 
-	dropdownButton.addEventListener('click', function (event) {
+	dropdownButton.addEventListener('click', (event) => {
 		handleDropdown(event);
 	});
 	handleDropdownButtonName(tabItemSelected);

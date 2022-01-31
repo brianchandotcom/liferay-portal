@@ -23,7 +23,7 @@ btnPlayFirst.classList.add('active');
 courses.setAttribute('src', btnPlayFirst.getAttribute('href'));
 
 for (const btn of btnPlay) {
-	btn.addEventListener('click', function (e) {
+	btn.addEventListener('click', (e) => {
 		e.preventDefault();
 		for (const rem of btnPlay) {
 			rem.classList.remove('active');
@@ -34,13 +34,13 @@ for (const btn of btnPlay) {
 	});
 }
 
-play.addEventListener('click', function () {
+play.addEventListener('click', () => {
 	if (courses.paused) {
 		courses.play();
 	}
 });
 
-fullscreen.addEventListener('click', function () {
+fullscreen.addEventListener('click', () => {
 	colToHide.classList.toggle('hide');
 	fullscreen.classList.toggle('active');
 });

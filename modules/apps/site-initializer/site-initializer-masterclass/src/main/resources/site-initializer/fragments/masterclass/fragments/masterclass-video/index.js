@@ -29,7 +29,7 @@ function resize() {
 	content.style.height = '';
 	content.style.width = '';
 
-	requestAnimationFrame(function () {
+	requestAnimationFrame(() => {
 		try {
 			const boundingClientRect = content.getBoundingClientRect();
 
@@ -72,11 +72,11 @@ function showError() {
 }
 
 const rawProvider = {
-	getParameters: function (url) {
-		return {url: url};
+	getParameters(url) {
+		return {url};
 	},
 
-	showVideo: function (parameters) {
+	showVideo(parameters) {
 		const video = document.createElement('video');
 		const source = document.createElement('source');
 
@@ -97,7 +97,7 @@ const rawProvider = {
 };
 
 const youtubeProvider = {
-	getParameters: function (url) {
+	getParameters(url) {
 		const start = url.searchParams.get('start');
 
 		if (['www.youtube.com', 'youtube.com'].includes(url.hostname)) {
@@ -105,8 +105,8 @@ const youtubeProvider = {
 
 			if (videoId) {
 				return {
-					start: start,
-					videoId: videoId,
+					start,
+					videoId,
 				};
 			}
 		}
@@ -115,18 +115,18 @@ const youtubeProvider = {
 
 			if (videoId) {
 				return {
-					start: start,
-					videoId: videoId,
+					start,
+					videoId,
 				};
 			}
 		}
 	},
 
-	showVideo: function (parameters) {
+	showVideo(parameters) {
 		const handleAPIReady = function () {
 			const player = new YT.Player(videoContainer, {
 				events: {
-					onReady: function () {
+					onReady() {
 						if (configuration.mute) {
 							player.mute();
 						}
@@ -134,7 +134,7 @@ const youtubeProvider = {
 						showVideo();
 					},
 				},
-				height: height,
+				height,
 				playerVars: {
 					autoplay: configuration.autoPlay,
 					controls: configuration.hideControls ? 0 : 1,
@@ -145,7 +145,7 @@ const youtubeProvider = {
 					start: !parameters.start ? 0 : parameters.start,
 				},
 				videoId: parameters.videoId,
-				width: width,
+				width,
 			});
 		};
 
@@ -164,7 +164,7 @@ const youtubeProvider = {
 			const apiSrc = '//www.youtube.com/iframe_api';
 
 			let script = Array.from(document.querySelectorAll('script')).find(
-				function (script) {
+				(script) => {
 					return script.src === apiSrc;
 				}
 			);

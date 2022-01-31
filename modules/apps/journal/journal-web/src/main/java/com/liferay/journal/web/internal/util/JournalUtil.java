@@ -32,12 +32,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -237,6 +239,40 @@ public class JournalUtil {
 		}
 
 		return themeDisplay.getPlid();
+	}
+
+	public static boolean hasWorkflowDefinitionsLinks(
+		ThemeDisplay themeDisplay) {
+
+		int folderWorkflowDefinitionLinksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					JournalFolder.class.getName());
+
+		if (folderWorkflowDefinitionLinksCount == 0) {
+			int siteWorkflowDefinitionLinksCount =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					getWorkflowDefinitionLinksCount(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),
+						JournalArticle.class.getName());
+
+			if (siteWorkflowDefinitionLinksCount == 0) {
+				int companyWorkflowDefinitionLinksCount =
+					WorkflowDefinitionLinkLocalServiceUtil.
+						getWorkflowDefinitionLinksCount(
+							themeDisplay.getCompanyId(),
+							GroupConstants.DEFAULT_PARENT_GROUP_ID,
+							JournalArticle.class.getName());
+
+				if (companyWorkflowDefinitionLinksCount == 0) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public static boolean isIncludeVersionHistory() {

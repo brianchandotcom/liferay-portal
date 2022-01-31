@@ -21,42 +21,58 @@ const contents = {
 	'assignments': {
 		backButton: (setContentName) => () => setContentName('task'),
 		sections: ['selectAssignment'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('assignments'),
 	},
 	'condition': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('condition-node'),
 	},
 	'end': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('end'),
 	},
 	'fork': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('fork-node'),
 	},
 	'join': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('join-node'),
 	},
 	'join-xor': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('join-xor-node'),
+	},
+	'scripted-assignment': {
+		backButton: (setContentName) => () => setContentName('assignments'),
+		sections: ['sourceCode'],
+		showDeleteButton: false,
+		title: Liferay.Language.get('scripted-assignment'),
 	},
 	'start': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('start'),
 	},
 	'state': {
 		sections: ['nodeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('state'),
 	},
 	'task': {
 		sections: ['nodeInformation', 'assignments'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('task'),
 	},
 	'transition': {
 		sections: ['edgeInformation'],
+		showDeleteButton: true,
 		title: Liferay.Language.get('transition'),
 	},
 };
@@ -109,7 +125,8 @@ export default function Sidebar() {
 				backButtonFunction={
 					content?.backButton?.(setContentName) || defaultBackButton
 				}
-				showHeaderButtons={!!content}
+				showBackButton={!!content}
+				showDeleteButton={content?.showDeleteButton}
 				title={title}
 			/>
 

@@ -380,6 +380,14 @@ public class CommerceTermEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<CommerceTermEntry> getPaymentCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		return getService().getPaymentCommerceTermEntries(
+			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

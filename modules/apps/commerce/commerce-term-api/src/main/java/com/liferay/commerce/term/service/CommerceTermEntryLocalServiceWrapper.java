@@ -435,6 +435,16 @@ public class CommerceTermEntryLocalServiceWrapper
 		return _commerceTermEntryLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntry>
+		getPaymentCommerceTermEntries(
+			long companyId, long commerceOrderTypeId,
+			long commercePaymentMethodGroupRelId) {
+
+		return _commerceTermEntryLocalService.getPaymentCommerceTermEntries(
+			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

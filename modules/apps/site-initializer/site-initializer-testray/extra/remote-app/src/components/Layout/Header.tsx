@@ -12,6 +12,31 @@
  * details.
  */
 
+import ClayTabs from '@clayui/tabs';
+
+const tabs = [
+	{
+		active: true,
+		title: 'Overview',
+	},
+	{
+		active: true,
+		title: 'Routines',
+	},
+	{
+		active: true,
+		title: 'Suites',
+	},
+	{
+		active: true,
+		title: 'Cases',
+	},
+	{
+		active: true,
+		title: 'Requirements',
+	},
+];
+
 const Header = () => (
 	<div className="header-container">
 		<span className="d-flex flex-column">
@@ -19,6 +44,23 @@ const Header = () => (
 
 			<h1 className="font-weight-500">Project Directory</h1>
 		</span>
+
+		<div>
+			<ClayTabs className="header-container-tabs" modern>
+				{tabs.map((tab, index) => (
+					<ClayTabs.Item
+						active={false}
+						innerProps={{
+							'aria-controls': 'tabpanel-1',
+						}}
+						key={index}
+						onClick={() => index}
+					>
+						{tab.title}
+					</ClayTabs.Item>
+				))}
+			</ClayTabs>
+		</div>
 	</div>
 );
 

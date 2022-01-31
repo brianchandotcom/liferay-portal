@@ -12,27 +12,16 @@
  * details.
  */
 
-import {Outlet} from 'react-router-dom';
-
-import Header from './Header';
-import Sidebar from './Sidebar';
-
-const Layout: React.FC = () => {
-	return (
-		<main className="testray-main">
-			<div className="testray-body">
-				<Sidebar />
-
-				<div className="testray-page">
-					<Header />
-
-					<div className="testray-content">
-						<Outlet />
-					</div>
-				</div>
-			</div>
-		</main>
-	);
+type ContainerProps = {
+	title?: string;
 };
 
-export default Layout;
+const Container: React.FC<ContainerProps> = ({children, title}) => (
+	<div className="bg-white border-1 p-4">
+		{title && <h3>{title}</h3>}
+
+		{children}
+	</div>
+);
+
+export default Container;

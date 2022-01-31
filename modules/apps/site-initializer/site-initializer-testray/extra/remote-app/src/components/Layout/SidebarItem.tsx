@@ -12,27 +12,28 @@
  * details.
  */
 
-import {Outlet} from 'react-router-dom';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import {Link} from 'react-router-dom';
 
-import Header from './Header';
-import Sidebar from './Sidebar';
-
-const Layout: React.FC = () => {
-	return (
-		<main className="testray-main">
-			<div className="testray-body">
-				<Sidebar />
-
-				<div className="testray-page">
-					<Header />
-
-					<div className="testray-content">
-						<Outlet />
-					</div>
-				</div>
-			</div>
-		</main>
-	);
+type SidebarItemProps = {
+	className?: string;
+	icon: string;
+	label: string;
+	path: string;
 };
 
-export default Layout;
+const SidebarItem: React.FC<SidebarItemProps> = ({
+	className,
+	icon,
+	label,
+	path,
+}) => (
+	<Link className={classNames('testray-sidebar-item', className)} to={path}>
+		<ClayIcon fontSize={20} symbol={icon} />
+
+		<span className="ml-1 testray-sidebar-text">{label}</span>
+	</Link>
+);
+
+export default SidebarItem;

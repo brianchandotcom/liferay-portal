@@ -12,28 +12,28 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import classNames from 'classnames';
 
 import TestrayLogo from '../../images/testray-logo';
+import {Liferay} from '../../services/liferay/liferay';
+import SidebarItem from './SidebarItem';
 
-const items = [
+const sidebarItems = [
 	{
 		icon: 'polls',
 		label: 'Results',
-		path: '',
+		path: '/',
 	},
 	{
 		icon: 'merge',
 		label: 'TestFlow',
-		path: '',
+		path: '/testflow',
 	},
 	{
 		className: 'mt-3',
 		icon: 'drop',
 		label: 'Compare Runs',
-		path: '',
+		path: '/compare-runs',
 	},
 ];
 
@@ -42,50 +42,39 @@ const Sidebar = () => {
 		<div className="testray-sidebar">
 			<div className="testray-sidebar-content">
 				<a
-					className="d-flex mb-5 testray-logo"
+					className="d-flex flex-center mb-5 testray-logo"
 					href="https://testray.liferay.com/web/guest"
 				>
 					<TestrayLogo />
 				</a>
 
-				{items.map((item, index) => (
-					<a
-						className={classNames(
-							'testray-sidebar-item',
-							item.className || ''
-						)}
-						href="#"
+				{sidebarItems.map((item, index) => (
+					<SidebarItem
+						className={item.className}
+						icon={item.icon}
 						key={index}
-					>
-						<ClayIcon fontSize={22} symbol={item.icon} />
-
-						<span className="ml-1 testray-sidebar-text">
-							{item.label}
-						</span>
-					</a>
+						label={item.label}
+						path={item.path}
+					/>
 				))}
 			</div>
 
 			<div className="testray-sidebar-footer">
-				<a className={classNames('testray-sidebar-item')} href="#">
-					<ClayIcon fontSize={22} symbol="cog" />
+				<SidebarItem icon="cog" label="Manage" path="/manage" />
 
-					<span className="ml-1 testray-sidebar-text">Manage</span>
-				</a>
+				<div className="divider divider-full" />
 
-				<div className="divider divider-full"></div>
+				<div className="testray-sidebar-item">
+					<ClaySticker size="lg">
+						<ClaySticker.Image
+							alt="placeholder"
+							src="https://clayui.com/images/long_user_image.png"
+						/>
+					</ClaySticker>
 
-				<div className={classNames('testray-sidebar-item')}>
-					<>
-						<ClaySticker size="lg">
-							<ClaySticker.Image
-								alt="placeholder"
-								src="https://clayui.com/images/long_user_image.png"
-							/>
-						</ClaySticker>
-
-						<span className="ml-2">Keven Leone</span>
-					</>
+					<span className="ml-2">
+						{Liferay.ThemeDisplay.getUserName()}
+					</span>
 				</div>
 			</div>
 		</div>

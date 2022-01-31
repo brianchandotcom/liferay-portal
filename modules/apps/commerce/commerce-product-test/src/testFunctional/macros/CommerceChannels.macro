@@ -221,7 +221,7 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet");
 	}
 
-	macro removeProductDisplayPage {
+	macro removeDefaultDisplayPage {
 		Click(locator1 = "CommerceEntry#DISPLAY_PAGE_ITEM_REMOVE");
 
 		Button.clickSave();

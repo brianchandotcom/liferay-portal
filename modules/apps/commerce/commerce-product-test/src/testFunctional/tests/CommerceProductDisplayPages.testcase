@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("When the user removes the Product Display Page") {
-			CommerceChannels.removeProductDisplayPage();
+			CommerceChannels.removeDefaultDisplayPage();
 		}
 
 		task ("Then it should show Product Display Page as 'None'") {

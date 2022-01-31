@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -639,14 +640,38 @@ public class JournalManagementToolbarDisplayContext
 		statuses.add(WorkflowConstants.STATUS_ANY);
 		statuses.add(WorkflowConstants.STATUS_DRAFT);
 
-		int workflowDefinitionLinksCount =
+		boolean addWorkflowStatuses = true;
+
+		int folderWorkflowDefinitionLinksCount =
 			WorkflowDefinitionLinkLocalServiceUtil.
 				getWorkflowDefinitionLinksCount(
 					_themeDisplay.getCompanyId(),
 					_themeDisplay.getScopeGroupId(),
 					JournalFolder.class.getName());
 
-		if (workflowDefinitionLinksCount > 0) {
+		if (folderWorkflowDefinitionLinksCount == 0) {
+			int siteWorkflowDefinitionLinksCount =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					getWorkflowDefinitionLinksCount(
+						_themeDisplay.getCompanyId(),
+						_themeDisplay.getScopeGroupId(),
+						JournalArticle.class.getName());
+
+			if (siteWorkflowDefinitionLinksCount == 0) {
+				int companyWorkflowDefinitionLinksCount =
+					WorkflowDefinitionLinkLocalServiceUtil.
+						getWorkflowDefinitionLinksCount(
+							_themeDisplay.getCompanyId(),
+							GroupConstants.DEFAULT_PARENT_GROUP_ID,
+							JournalArticle.class.getName());
+
+				if (companyWorkflowDefinitionLinksCount == 0) {
+					addWorkflowStatuses = false;
+				}
+			}
+		}
+
+		if (addWorkflowStatuses) {
 			statuses.add(WorkflowConstants.STATUS_PENDING);
 			statuses.add(WorkflowConstants.STATUS_DENIED);
 		}

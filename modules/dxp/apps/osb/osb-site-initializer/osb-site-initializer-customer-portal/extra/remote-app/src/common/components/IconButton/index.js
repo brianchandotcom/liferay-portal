@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-export {default as Badge} from './Badge';
-export {default as Button} from './Button';
-export {default as IconButton} from './IconButton';
-export {default as Input} from './formik-fields/Input';
-export {default as Select} from './formik-fields/Select';
-export {default as Skeleton} from './Skeleton';
-export {default as Table} from './Table';
+import {ButtonWithIcon} from '@clayui/core';
+
+const IconButton = ({symbol, ...props}) => (
+	<ButtonWithIcon symbol={symbol} {...props} />
+);
+
+export default IconButton;

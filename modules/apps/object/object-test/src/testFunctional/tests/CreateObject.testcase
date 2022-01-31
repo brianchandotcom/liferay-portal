@@ -6245,8 +6245,6 @@ definition {
 			pageName = "Blank Display Page");
 
 		ObjectAdmin.assertEntryOnPageNotPresent(entryName = "Entry Test");
-
-
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow Metrics page when they are deleted"
@@ -6567,8 +6565,7 @@ definition {
 			key_completed = "1",
 			key_ontime = "0",
 			key_overdue = "0",
-			key_untracked = "1");	
-
+			key_untracked = "1");
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"

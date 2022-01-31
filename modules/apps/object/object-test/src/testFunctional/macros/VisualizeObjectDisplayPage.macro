@@ -22,6 +22,12 @@ definition {
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
+	macro assertDisplayEntryNotPresent {
+		AssertElementNotPresent(
+			key_entry = "${entry}",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
+	}
+
 	macro createObjectPageTemplate {
 		VisualizeObjectDisplayPage.openPageTemplate();
 
@@ -73,12 +79,6 @@ definition {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
 			value1 = "${contentType}");
-	}
-
-	macro assertDisplayEntryNotPresent {
-		AssertElementNotPresent(
-			key_entry = "${entry}",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 }

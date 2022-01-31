@@ -40,9 +40,9 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject",
-				value = "Entry Test");
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -60,7 +60,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
-
 	}
 
 }

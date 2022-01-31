@@ -388,6 +388,12 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_BLOCK_ADD_FIELD_BUTTON");
 	}
 
+	macro assertClobTypeText {
+		AssertElementPresent(
+			key_clobType = "${clobType}",
+			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
+	}
+
 	macro assertEntryOnPageNotPresent {
 		AssertElementNotPresent(
 			key_entryName = "${entryName}",
@@ -896,12 +902,6 @@ definition {
 			key_name = "${name}",
 			key_system = "Yes",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
-	macro assertClobTypeText {
-		AssertElementPresent(
-			key_clobType = "${clobType}",
-			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
 	}
 
 }

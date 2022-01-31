@@ -20,7 +20,7 @@
 
 <@liferay.control_menu />
 
-<div class="container-fluid" id="wrapper">
+<div class="container-fluid position-relative" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
 			<div aria-level="1" class="site-title" role="heading">

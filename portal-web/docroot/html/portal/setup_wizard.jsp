@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<div class="pt-0" id="wrapper">
+<div class="position-relative pt-0" id="wrapper">
 	<header class="mb-4" id="banner">
 		<div class="mb-4 navbar navbar-classic navbar-top py-3">
 			<div class="container">

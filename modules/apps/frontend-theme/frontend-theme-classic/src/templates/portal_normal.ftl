@@ -21,7 +21,7 @@
 <div class="d-flex flex-column min-vh-100">
 	<@liferay.control_menu />
 
-	<div class="d-flex flex-column flex-fill" id="wrapper">
+	<div class="d-flex flex-column flex-fill position-relative" id="wrapper">
 		<#if show_header>
 			<header id="banner">
 				<div class="navbar navbar-classic navbar-top py-3">

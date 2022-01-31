@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {ResizeContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ResizeContext';
@@ -38,6 +38,20 @@ const RESIZE_CONTEXT_STATE = {
 };
 
 const STATE = {
+	layoutData: {
+		items: {
+			'item-1': {
+				config: {
+					size: 6,
+				},
+			},
+			'item-2': {
+				config: {
+					size: 6,
+				},
+			},
+		},
+	},
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',
 };
@@ -47,7 +61,7 @@ const renderComponent = ({
 	state = STATE,
 	contextState = RESIZE_CONTEXT_STATE,
 	dispatch = () => {},
-}) =>
+} = {}) =>
 	render(
 		<StoreAPIContextProvider
 			dispatch={dispatch}
@@ -58,7 +72,7 @@ const renderComponent = ({
 			>
 				<RowGeneralPanel
 					item={{
-						children: [],
+						children: ['item-1', 'item-2'],
 						config: {...ITEM_CONFIG, ...config},
 						itemId: '0',
 						parentId: '',
@@ -99,8 +113,9 @@ describe('RowGeneralPanel', () => {
 	});
 
 	it('allows changing the number of modules of a grid', async () => {
-		const {getByLabelText} = renderComponent({});
-		const input = getByLabelText('number-of-modules');
+		renderComponent();
+
+		const input = screen.getByLabelText('number-of-modules');
 
 		await fireEvent.change(input, {
 			target: {value: '6'},
@@ -115,13 +130,140 @@ describe('RowGeneralPanel', () => {
 	});
 
 	it('allows changing the gutter', async () => {
-		const {getByLabelText} = renderComponent({});
-		const input = getByLabelText('show-gutter');
+		renderComponent();
+
+		const input = screen.getByLabelText('show-gutter');
 
 		await fireEvent.click(input);
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: false},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing the modules per row', async () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('layout');
+
+		await fireEvent.change(input, {
+			target: {value: '2'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				modulesPerRow: 2,
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows custom value in modules per row when row is customized', async () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('layout');
+
+		expect(input).toHaveValue('2');
+	});
+
+	it('change label to custom when the column configuration is customized', async () => {
+		renderComponent({
+			state: {
+				layoutData: {
+					items: {
+						'item-1': {
+							config: {
+								size: 5,
+							},
+						},
+						'item-2': {
+							config: {
+								size: 7,
+							},
+						},
+					},
+				},
+			},
+		});
+
+		const input = screen.getByLabelText('layout');
+
+		expect(input).toHaveValue('custom');
+	});
+
+	it('allows changing the vertical alignment', async () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('vertical-alignment');
+
+		await fireEvent.change(input, {
+			target: {value: 'middle'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				verticalAlignment: 'middle',
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows inverse order when number of modules is 2 and modules per row is 1', async () => {
+		renderComponent({
+			config: {
+				modulesPerRow: 1,
+			},
+			state: {
+				layoutData: {
+					items: {
+						'item-1': {
+							config: {
+								size: 12,
+							},
+						},
+						'item-2': {
+							config: {
+								size: 12,
+							},
+						},
+					},
+				},
+			},
+		});
+
+		const input = screen.getByLabelText('inverse-order');
+
+		await fireEvent.click(input);
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				reverseOrder: true,
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing layout for a given viewport', async () => {
+		renderComponent({
+			state: {
+				selectedViewportSize: 'tablet',
+			},
+		});
+		const input = screen.getByLabelText('layout');
+
+		await fireEvent.change(input, {
+			target: {value: '1'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				tablet: {modulesPerRow: 1},
+			},
 			itemId: '0',
 			segmentsExperienceId: '0',
 		});

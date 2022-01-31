@@ -13,10 +13,11 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -44,18 +45,23 @@ jest.mock(
 	() => jest.fn()
 );
 
-function renderLinkPanel(itemConfiguration = {}) {
-	const state = {
-		languageId: 'en_US',
-		segmentsExperienceId: '0',
-	};
-
+function renderComponent(
+	itemConfig = {
+		tablet: {styles: {}},
+	}
+) {
 	return render(
-		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
+		<StoreAPIContextProvider
+			dispatch={() => {}}
+			getState={() => ({
+				languageId: 'en_US',
+				segmentsExperienceId: '0',
+			})}
+		>
 			<ContainerGeneralPanel
 				item={{
 					children: [],
-					config: itemConfiguration,
+					config: itemConfig,
 					itemId: 'some-container-id',
 					type: LAYOUT_DATA_ITEM_TYPES.container,
 				}}
@@ -73,28 +79,29 @@ describe('ContainerGeneralPanel', () => {
 	});
 
 	it('opens link in same tab by default', () => {
-		const {getByLabelText} = renderLinkPanel();
+		renderComponent();
 
-		expect(getByLabelText('open-in-a-new-tab')).not.toBeChecked();
+		expect(screen.getByLabelText('open-in-a-new-tab')).not.toBeChecked();
 	});
 
 	it('renders existing target', () => {
-		const {getByLabelText} = renderLinkPanel({link: {target: '_blank'}});
+		renderComponent({link: {target: '_blank'}});
 
-		expect(getByLabelText('open-in-a-new-tab')).toBeChecked();
+		expect(screen.getByLabelText('open-in-a-new-tab')).toBeChecked();
 	});
 
 	it('renders exiting href', () => {
-		const {getByLabelText} = renderLinkPanel({
+		renderComponent({
 			link: {href: {en_US: 'https://liferay.us'}},
 		});
 
-		expect(getByLabelText('url')).toHaveValue('https://liferay.us');
+		expect(screen.getByLabelText('url')).toHaveValue('https://liferay.us');
 	});
 
 	it('stores link target', () => {
-		const {getByLabelText} = renderLinkPanel();
-		const targetInput = getByLabelText('open-in-a-new-tab');
+		renderComponent();
+
+		const targetInput = screen.getByLabelText('open-in-a-new-tab');
 
 		userEvent.click(targetInput);
 
@@ -111,8 +118,9 @@ describe('ContainerGeneralPanel', () => {
 	});
 
 	it('stores link href as localizable', () => {
-		const {getByLabelText} = renderLinkPanel();
-		const urlInput = getByLabelText('url');
+		renderComponent();
+
+		const urlInput = screen.getByLabelText('url');
 
 		userEvent.type(urlInput, 'https://liferay.us');
 		fireEvent.blur(urlInput);
@@ -127,5 +135,62 @@ describe('ContainerGeneralPanel', () => {
 			itemId: 'some-container-id',
 			segmentsExperienceId: '0',
 		});
+	});
+
+	it('calls dispatch method when changing the container width', async () => {
+		renderComponent();
+
+		const containerWidthSelect = screen.getByLabelText('container-width');
+
+		await fireEvent.change(containerWidthSelect, {
+			target: {value: 'fixed'},
+		});
+
+		expect(updateItemConfig).toBeCalledWith(
+			expect.objectContaining({
+				itemConfig: {
+					widthType: 'fixed',
+				},
+			})
+		);
+	});
+
+	it('calls dispatch method when changing the content display', async () => {
+		renderComponent();
+
+		const contentDisplaySelect = screen.getByLabelText('content-display');
+
+		await fireEvent.change(contentDisplaySelect, {
+			target: {value: 'flex-row'},
+		});
+
+		expect(updateItemConfig).toBeCalledWith(
+			expect.objectContaining({
+				itemConfig: {
+					contentDisplay: 'flex-row',
+				},
+			})
+		);
+	});
+
+	it('shows Align and Justify selects when item is flex container', async () => {
+		renderComponent({
+			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
+		});
+
+		expect(screen.getByLabelText('align-items')).toBeInTheDocument();
+		expect(screen.getByLabelText('justify-content')).toBeInTheDocument();
+	});
+
+	it('sets correct default values for Align and Justify when flex is selected', async () => {
+		renderComponent({
+			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
+		});
+
+		const alignInput = screen.getByLabelText('align-items');
+		const justifyInput = screen.getByLabelText('justify-content');
+
+		expect(alignInput.value).toBe('align-items-stretch');
+		expect(justifyInput.value).toBe('justify-content-start');
 	});
 });

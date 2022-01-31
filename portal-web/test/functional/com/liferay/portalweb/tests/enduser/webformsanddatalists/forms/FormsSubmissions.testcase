@@ -48,7 +48,7 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Required Field");
 
-		Form.closeSidebar();
+		DataEngine.waitForAutoSave();
 
 		Form.gotoAddField(
 			fieldPositionNumber = "1",

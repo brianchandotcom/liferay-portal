@@ -1213,46 +1213,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
-	@priority = "4"
-	test DeleteClickableElementWarning {
-		task ("Edit the Content page to add a button fragment") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Select the button as clickable element") {
-			ABTest.selectElementID();
-		}
-
-		task ("Delete the button as clickable element") {
-			Click(locator1 = "ABTest#TARGET_CLOSE_BUTTON");
-		}
-
-		task ("Assert the warning alert") {
-			AssertTextEquals(
-				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
-				value1 = "An element needs to be selected.");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
-	}
-
 	@description = "LPS-145992 Bug: Run A/B Test with Click Goal of a deleted button"
 	@priority = "4"
 	test DeleteButtonWarning {
@@ -1291,6 +1251,46 @@ definition {
 		task ("Assert the warning alert") {
 			ABTest.openABTestPanel();
 
+			AssertTextEquals(
+				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
+				value1 = "An element needs to be selected.");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
+	}
+
+	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
+	@priority = "4"
+	test DeleteClickableElementWarning {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the button as clickable element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Delete the button as clickable element") {
+			Click(locator1 = "ABTest#TARGET_CLOSE_BUTTON");
+		}
+
+		task ("Assert the warning alert") {
 			AssertTextEquals(
 				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
 				value1 = "An element needs to be selected.");

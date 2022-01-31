@@ -22,7 +22,7 @@ const Assignments = ({setContentName}) => {
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('assignments')}>
-			{!selectedItem.data.assignments ? (
+			{!selectedItem?.data?.assignments ? (
 				<ClayButton
 					className="mr-3"
 					displayType="secondary"
@@ -32,8 +32,8 @@ const Assignments = ({setContentName}) => {
 				</ClayButton>
 			) : (
 				<CurrentAssignments
-				assignments = {selectedItem.data.assignments}
-				setContentName={setContentName}
+					assignments={selectedItem.data.assignments}
+					setContentName={setContentName}
 				/>
 			)}
 		</SidebarPanel>

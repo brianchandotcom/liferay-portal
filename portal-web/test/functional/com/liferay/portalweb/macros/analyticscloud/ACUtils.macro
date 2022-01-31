@@ -609,7 +609,7 @@ definition {
 
 	macro getRequestCommonPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$.[-1:].${property}");
+		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$.[-1:]..${property}");
 
 		return "${value}";
 	}

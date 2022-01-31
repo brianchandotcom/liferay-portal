@@ -634,6 +634,16 @@ definition {
 			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
 	}
 
+	macro chooseAnyLanguage {
+		Click(
+			key_symbolName = "",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+
+		Click(
+			key_newLanguage = "${newLanguage}",
+			locator1 = "ObjectAdmin#CHOOSE_ANY_LANGUAGE");
+	}
+
 	macro clickFieldsSearchableSectionRadioOption {
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",

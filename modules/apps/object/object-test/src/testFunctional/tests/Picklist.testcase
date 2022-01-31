@@ -290,7 +290,7 @@ definition {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaAPI(
-			itemKey = "ItemTest",
+			itemKey = "itemTest",
 			itemName = "Picklist Item",
 			picklistName = "Picklist Test");
 
@@ -301,7 +301,7 @@ definition {
 			picklistOption = "View");
 
 		Picklist.optionsPicklistItem(
-			itemKey = "ItemTest",
+			itemKey = "itemTest",
 			picklistItemOption = "View");
 
 		Picklist.addLanguageOnPicklistItem(
@@ -317,7 +317,7 @@ definition {
 			picklistOption = "View");
 
 		Picklist.optionsPicklistItem(
-			itemKey = "ItemTest",
+			itemKey = "itemTest",
 			picklistItemOption = "View");
 
 		Picklist.assertPicklistItemByLanguage(
@@ -326,12 +326,41 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name when updating it"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetDifferentPicklistItemNameLanguageWhenUpdating {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145709 CanSetDifferentPicklistItemNameLanguageWhenUpdating pending implementation
+		Picklist.gotoPicklists();
 
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.addPicklistItemWithTranslationViaUI(
+			defaultLanguage = "en-US",
+			newItemName = "Teste na lista",
+			newLanguage = "pt-BR",
+			picklistItemName = "Item Test");
+
+		Picklist.clickSaveButton();
+
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "itemTest",
+			picklistItemOption = "View");
+
+		Picklist.assertItemNameAndItemKeyOnModal(
+			itemKey = "itemTest",
+			itemName = "Item Test");
+
+		Picklist.assertPicklistItemByLanguage(
+			language = "pt-BR",
+			nameItem = "Teste na lista");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for a Picklist name"

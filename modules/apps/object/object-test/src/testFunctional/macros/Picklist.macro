@@ -55,6 +55,32 @@ definition {
 		}
 	}
 
+	macro addPicklistItemWithTranslationViaUI {
+		Picklist.addPicklistItemViaUI(picklistItemName = "${picklistItemName}");
+
+		ObjectAdmin.chooseAnyLanguage(
+			newLanguage = "${newLanguage}",
+			symbolName = "");
+
+		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME")) {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+
+			Click(locator1 = "Modal#BODY");
+		}
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+			value1 = "${newItemName}");
+
+		ObjectAdmin.chooseAnyLanguage(
+			newLanguage = "${defaultLanguage}",
+			symbolName = "");
+
+		WaitForSPARefresh();
+	}
+
 	macro addPicklistViaAPI {
 		JSONObject.addPicklist(
 			picklistName = "${picklistName}",
@@ -113,17 +139,29 @@ definition {
 	}
 
 	macro assertItemNameAndItemKeyOnModal {
-		AssertElementPresent(
-			key_itemName = "${itemName}",
-			locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME");
+		if (IsElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME")) {
+			AssertElementPresent(
+				key_itemName = "${itemName}",
+				locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME");
 
-		AssertElementPresent(
-			key_labelName = "${itemName}",
-			locator1 = "ObjectAdmin#VIEW_SIMPLE_TEXT_GENERIC");
+			AssertElementPresent(
+				key_labelName = "${itemName}",
+				locator1 = "ObjectAdmin#VIEW_SIMPLE_TEXT_GENERIC");
 
-		AssertElementPresent(
-			key_itemKey = "${itemKey}",
-			locator1 = "Picklist#VIEW_PICKLIST_ITEM_KEY");
+			AssertElementPresent(
+				key_itemKey = "${itemKey}",
+				locator1 = "Picklist#VIEW_PICKLIST_ITEM_KEY");
+		}
+
+		if (IsElementPresent(locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_NAME")) {
+			AssertElementPresent(
+				key_itemName = "${itemName}",
+				locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_NAME");
+
+			AssertElementPresent(
+				key_itemKey = "${itemKey}",
+				locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_KEY");
+		}
 	}
 
 	macro assertPicklist {

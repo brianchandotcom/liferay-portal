@@ -545,6 +545,11 @@
 		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CHOOSE_ANY_LANGUAGE</td>
+		<td>//*[contains(@class, 'autofit-section') and contains(., '${key_newLanguage}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

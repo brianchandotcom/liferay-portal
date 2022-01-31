@@ -731,7 +731,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			ServiceProxyFactory.newServiceTrackedInstance(
 				LayoutFriendlyURLEntryValidator.class,
 				LayoutLocalServiceHelper.class,
-				"_layoutFriendlyURLEntryValidator", false);
+				"_layoutFriendlyURLEntryValidator", false, true);
 	private static final Pattern _urlSeparatorPattern = Pattern.compile(
 		"/[A-Za-z]");
 

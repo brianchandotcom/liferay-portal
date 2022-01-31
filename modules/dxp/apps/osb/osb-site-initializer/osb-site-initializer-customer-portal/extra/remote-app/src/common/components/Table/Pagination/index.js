@@ -13,21 +13,32 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {getIconSpriteMap} from '../../../providers/ClayProvider';
 
 const TablePagination = ({
-	activeDelta = 5,
 	activePage,
 	ellipsisBuffer = 3,
-	itemsPerPage,
+	itemsPerPage = 5,
 	setActivePage,
+	labels,
+	setItemsPerPage,
 	showDeltasDropDown = false,
+	listItemsPerPage = [],
 	totalItems,
 }) => {
 	if (totalItems > itemsPerPage) {
+		const defaultLabels = {
+			paginationResults: 'Showing {0} to {1} of {2}',
+			perPageItems: '{0} items',
+			selectPerPageItems: '{0} items',
+		};
+
 		return (
-			<div className="mb-3 mx-3">
+			<div className="mb-3 mx-2">
 				<ClayPaginationBarWithBasicItems
-					activeDelta={activeDelta}
+					activeDelta={itemsPerPage}
 					activePage={activePage}
+					deltas={listItemsPerPage}
 					ellipsisBuffer={ellipsisBuffer}
+					labels={labels || defaultLabels}
+					onDeltaChange={setItemsPerPage}
 					onPageChange={(page) => setActivePage(page)}
 					showDeltasDropDown={showDeltasDropDown}
 					spritemap={getIconSpriteMap()}

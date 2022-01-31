@@ -140,7 +140,6 @@ const ModalCardSubscription = ({
 
 				<div>
 					<Table
-						activePage={activePage}
 						columns={
 							provisionedRequiredGroups.includes(
 								subscriptionGroup
@@ -149,6 +148,12 @@ const ModalCardSubscription = ({
 								: columnsWithoutProvisioned(columns)
 						}
 						hasPagination
+						paginationConfig={{
+							activePage,
+							itemsPerPage: 5,
+							setActivePage,
+							totalCount,
+						}}
 						rows={dataAccountSubscriptionTerms.map(
 							({
 								endDate,
@@ -181,9 +186,7 @@ const ModalCardSubscription = ({
 									'-',
 							})
 						)}
-						setActivePage={setActivePage}
 						tableVerticalAlignment="middle"
-						totalCount={totalCount}
 					/>
 				</div>
 			</div>

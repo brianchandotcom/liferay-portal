@@ -12,11 +12,20 @@
 import ClayTable from '@clayui/table';
 import Skeleton from '../Skeleton';
 
-const TableSkeleton = ({itemsPerPage = 5, totalColumns}) => {
+const TableSkeleton = ({hasCheckbox, totalColumns, totalItems}) => {
 	return (
 		<ClayTable.Body>
-			{[...new Array(itemsPerPage)].map((_, rowIndex) => (
+			{[...new Array(totalItems)].map((_, rowIndex) => (
 				<ClayTable.Row key={rowIndex}>
+					{hasCheckbox && (
+						<ClayTable.Cell
+							className="text-center"
+							key={`checkbox-${rowIndex}`}
+						>
+							<input type="checkbox" />
+						</ClayTable.Cell>
+					)}
+
 					{[...new Array(totalColumns)].map((_, cellIndex) => (
 						<ClayTable.Cell
 							align="center"

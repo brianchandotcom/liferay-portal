@@ -10,26 +10,61 @@
  */
 
 import ClayTable from '@clayui/table';
-import React from 'react';
+import classNames from 'classnames';
+
+import {useState} from 'react';
 import TablePagination from './Pagination';
 import TableSkeleton from './Skeleton';
 
 const Table = ({
-	activePage = 1,
 	columns,
+	hasCheckbox,
 	hasPagination,
 	isLoading = false,
-	itemsPerPage = 5,
+	paginationConfig,
 	rows,
-	setActivePage,
-	totalCount,
 	...props
 }) => {
+	const [allCheckboxSelected, setAllCheckboxSelected] = useState(false);
+	const [checked, setChecked] = useState([]);
+
+	const handleCheckboxClick = (event, id) => {
+		const {checked} = event.target;
+
+		if (checked) {
+			return setChecked((prevChecked) => [...prevChecked, id]);
+		}
+
+		setChecked((prevChecked) =>
+			prevChecked.filter((checked) => checked !== id)
+		);
+	};
+
+	const handleToggleAllSelected = () => {
+		setAllCheckboxSelected(
+			(prevAllCheckboxSelected) => !prevAllCheckboxSelected
+		);
+		if (allCheckboxSelected) {
+			return setChecked([]);
+		}
+		setChecked(new Array(rows.length).fill().map((_, index) => index));
+	};
+
 	return (
 		<>
 			<ClayTable {...props}>
 				<ClayTable.Head>
 					<ClayTable.Row>
+						{hasCheckbox && (
+							<ClayTable.Cell className="text-center">
+								<input
+									checked={allCheckboxSelected}
+									onChange={handleToggleAllSelected}
+									type="checkbox"
+								/>
+							</ClayTable.Cell>
+						)}
+
 						{columns.map((column) => (
 							<ClayTable.Cell
 								align={column.align}
@@ -37,11 +72,23 @@ const Table = ({
 									column.header.styles ||
 									'bg-neutral-1 font-weight-bold text-neutral-8'
 								}
-								expanded={column.expanded}
 								headingCell
 								key={column.accessor}
+								noWrap={column.header.noWrap}
 							>
-								{column.header.name}
+								{column.header.description ? (
+									<div>
+										<p className="font-weight-bold m-0 text-neutral-10">
+											{column.header.name}
+										</p>
+
+										<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">
+											{column.header.description}
+										</p>
+									</div>
+								) : (
+									<>{column.header.name}</>
+								)}
 							</ClayTable.Cell>
 						))}
 					</ClayTable.Row>
@@ -50,13 +97,41 @@ const Table = ({
 				{!isLoading ? (
 					<ClayTable.Body>
 						{rows.map((row, rowIndex) => (
-							<ClayTable.Row key={rowIndex}>
+							<ClayTable.Row
+								className={classNames({
+									'common-table-active-row': checked.find(
+										(checkbox) => checkbox === rowIndex
+									),
+								})}
+								key={rowIndex}
+							>
+								{hasCheckbox && (
+									<ClayTable.Cell
+										align="center"
+										className="border-0"
+										key={`checkbox-${rowIndex}`}
+									>
+										<input
+											checked={checked.includes(rowIndex)}
+											onChange={(event) =>
+												handleCheckboxClick(
+													event,
+													rowIndex
+												)
+											}
+											type="checkbox"
+										/>
+									</ClayTable.Cell>
+								)}
+
 								{columns.map((column, columnIndex) => (
 									<ClayTable.Cell
 										align={column.align}
 										className={column.bodyClass}
-										headingTitle={column.headingTitle}
+										columnTextAlignment={column.align}
+										expanded={column.expanded}
 										key={`${rowIndex}-${columnIndex}`}
+										noWrap={column.noWrap}
 									>
 										{row[column.accessor]}
 									</ClayTable.Cell>
@@ -66,18 +141,23 @@ const Table = ({
 					</ClayTable.Body>
 				) : (
 					<TableSkeleton
+						hasCheckbox={hasCheckbox}
 						totalColumns={columns.length}
-						totalItems={itemsPerPage}
+						totalItems={paginationConfig?.itemsPerPage}
 					/>
 				)}
 			</ClayTable>
 
 			{!!hasPagination && !!totalCount && (
 				<TablePagination
-					activePage={activePage}
-					itemsPerPage={itemsPerPage}
-					setActivePage={setActivePage}
-					totalItems={totalCount}
+					activePage={paginationConfig?.activePage || 1}
+					itemsPerPage={paginationConfig?.itemsPerPage || 5}
+					labels={paginationConfig?.labels}
+					listItemsPerPage={paginationConfig?.listItemsPerPage}
+					setActivePage={paginationConfig?.setActivePage}
+					setItemsPerPage={paginationConfig?.setItemsPerPage}
+					showDeltasDropDown={paginationConfig?.showDeltasDropDown}
+					totalItems={paginationConfig?.totalCount}
 				/>
 			)}
 		</>

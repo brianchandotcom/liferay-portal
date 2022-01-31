@@ -128,10 +128,9 @@ const Commerce = ({accountKey, sessionId}) => {
 				/>
 			) : (
 				<Table
-					className="cp-activation-keys-commerce-table mt-4"
+					className="cp-activation-keys-commerce-table mt-4 table-autofit"
 					columns={columns}
 					isLoading={isLoadingActivationInstructions}
-					itemsPerPage={3}
 					rows={ActivationInstructionsData.map(
 						({instructions, version}) => ({
 							instructions: (

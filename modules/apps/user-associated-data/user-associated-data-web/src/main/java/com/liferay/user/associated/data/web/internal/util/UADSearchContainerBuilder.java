@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
@@ -334,8 +336,9 @@ public class UADSearchContainerBuilder {
 
 		searchContainer.setId("UADEntities_" + StringUtil.randomId());
 
-		String orderByCol = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			renderRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+			null);
 
 		if (!ArrayUtil.contains(sortingFieldNames, orderByCol)) {
 			orderByCol = defaultOrderByCol;
@@ -343,10 +346,10 @@ public class UADSearchContainerBuilder {
 
 		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				renderRequest,
+				UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA, "asc"));
 
 		Map<String, String> orderableHeaders = new LinkedHashMap<>();
 

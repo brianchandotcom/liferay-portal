@@ -3869,8 +3869,6 @@ definition {
 			fieldName = "ObjectEdit",
 			pluralLabelName = "Objects Edit");
 
-		CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
 		ObjectAdmin.selectObjectScope(fieldOption = "Company");
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
@@ -3880,8 +3878,6 @@ definition {
 		for (var valueFieldLabel : list "ObjectEdit,Object Edit,Objects Edit") {
 			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
 		}
-
-		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
 
 		CreateObject.assertValuesOnScope(
 			valuePanelCategory = "Control Panel > Object",

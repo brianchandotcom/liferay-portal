@@ -17,6 +17,7 @@ interface IThemeDisplay {
 	getPathThemeImages: () => string;
 	getScopeGroupId: () => number;
 	getSiteGroupId: () => number;
+	getUserName: () => string;
 }
 
 interface ILiferay {
@@ -36,6 +37,7 @@ export const Liferay = window.Liferay || {
 		getPathThemeImages: () => '',
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
+		getUserName: () => 'Test Test',
 	},
 	authToken: '',
 };

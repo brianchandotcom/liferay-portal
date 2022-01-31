@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -231,6 +232,15 @@ const OptionList = ({options = [], icon, type}) => {
 										<ClayIcon symbol={icon} />
 									</div>
 								)}
+
+								{isActive && (
+									<ClaySticker
+										displayType="primary"
+										position="bottom-left"
+									>
+										<ClayIcon symbol="check-circle" />
+									</ClaySticker>
+								)}
 							</ClayCard.AspectRatio>
 
 							<ClayCard.Body>
@@ -258,6 +268,22 @@ const OptionList = ({options = [], icon, type}) => {
 	);
 };
 
+function getDefaultStyleBookLabel(defaultStyleBook, masterLayoutPlid) {
+	const inheritingFromMaster =
+		masterLayoutPlid !== '0' && config.layoutType !== LAYOUT_TYPES.master;
+	const usingThemeStylebook = !defaultStyleBook.name;
+
+	if (usingThemeStylebook) {
+		return Liferay.Language.get('styles-from-theme');
+	}
+
+	if (inheritingFromMaster) {
+		return Liferay.Language.get('styles-from-master');
+	}
+
+	return Liferay.Language.get('styles-by-default');
+}
+
 function getTabs(
 	masterLayoutPlid,
 	selectedStyleBook,
@@ -268,14 +294,9 @@ function getTabs(
 	const styleBooks = [
 		{
 			imagePreviewURL: defaultStyleBook.imagePreviewURL,
-			name:
-				config.layoutType === LAYOUT_TYPES.master
-					? Liferay.Language.get('default-style-book')
-					: Liferay.Language.get('inherited-from-master'),
+			name: getDefaultStyleBookLabel(defaultStyleBook, masterLayoutPlid),
 			styleBookEntryId: '0',
-			subtitle:
-				defaultStyleBook.name ||
-				Liferay.Language.get('provided-by-theme'),
+			subtitle: defaultStyleBook.name,
 		},
 		...config.styleBooks,
 	];

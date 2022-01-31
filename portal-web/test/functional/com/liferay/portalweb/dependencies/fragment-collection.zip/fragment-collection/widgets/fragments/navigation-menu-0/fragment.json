@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Menu Display Widget",
+	"name": "Menu Display",
 	"thumbnailPath": "thumbnail.png",
 	"type": "section"
 }

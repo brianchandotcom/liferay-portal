@@ -466,7 +466,7 @@ definition {
 				item = "Edit",
 				pageTemplateName = "Department Landing Page");
 
-			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display Widget,Members,Asset Publisher") {
+			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display,Members,Asset Publisher") {
 				Portlet.addPG(portletName = "${portletName}");
 			}
 		}
@@ -530,7 +530,7 @@ definition {
 
 			Portlet.viewSpecificPG(portletName = "Members");
 
-			Portlet.viewSpecificPG(portletName = "Menu Display Widget");
+			Portlet.viewSpecificPG(portletName = "Menu Display");
 		}
 	}
 

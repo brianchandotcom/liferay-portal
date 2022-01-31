@@ -891,7 +891,7 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Menu Display Widget");
+		Portlet.addPG(portletName = "Menu Display");
 
 		Staging.markAsReadyForPublication();
 
@@ -911,7 +911,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Portlet.viewPG(portletName = "Menu Display Widget");
+		Portlet.viewPG(portletName = "Menu Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Wiki",

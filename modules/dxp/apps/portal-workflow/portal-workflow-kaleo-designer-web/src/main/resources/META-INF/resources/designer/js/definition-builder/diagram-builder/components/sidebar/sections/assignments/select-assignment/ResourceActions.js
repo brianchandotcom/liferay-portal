@@ -10,13 +10,13 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
 const ResourceActions = () => {
-	const {setSelectedItem} = useContext(DiagramBuilderContext);
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 	const [resourceActions, setResourceActions] = useState('');
 
 	const onChange = ({target: {value}}) => {
@@ -33,6 +33,11 @@ const ResourceActions = () => {
 
 		setResourceActions(value);
 	};
+
+	useEffect(() => {
+		setResourceActions(selectedItem.data.assignments?.resourceAction || '');
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('resource-actions')}>

@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.term.service.impl;
 
+import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifierTable;
+import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.exception.CommerceTermEntryDisplayDateException;
 import com.liferay.commerce.term.exception.CommerceTermEntryExpirationDateException;
 import com.liferay.commerce.term.exception.CommerceTermEntryNameException;
@@ -21,8 +24,16 @@ import com.liferay.commerce.term.exception.CommerceTermEntryPriorityException;
 import com.liferay.commerce.term.exception.CommerceTermEntryTypeException;
 import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.model.CommerceTermEntryRelTable;
+import com.liferay.commerce.term.model.CommerceTermEntryTable;
 import com.liferay.commerce.term.service.CommerceTermEntryRelLocalService;
 import com.liferay.commerce.term.service.base.CommerceTermEntryLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -219,6 +230,22 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 
 		return availableLanguageIds;
+	}
+
+	@Override
+	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceTermEntryTable.INSTANCE),
+				CommerceTermEntryConstants.TYPE_PAYMENT_TERMS
+			).orderBy(
+				CommerceTermEntryTable.INSTANCE.priority.descending()
+			));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -478,6 +505,69 @@ public class CommerceTermEntryLocalServiceImpl
 				userId, commerceTermEntry.getCommerceTermEntryId(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
 		}
+	}
+
+	private GroupByStep _getGroupByStep(
+		Long companyId, Long commerceOrderTypeId,
+		Long commercePaymentMethodGroupRelId, FromStep fromStep, String type) {
+
+		CommerceTermEntryRelTable commerceOrderTypeCommerceTermEntryRel =
+			CommerceTermEntryRelTable.INSTANCE.as(
+				"commerceOrderTypeCommerceTermEntryRel");
+
+		Column<CommerceTermEntryRelTable, Long> classNameIdColumn =
+			commerceOrderTypeCommerceTermEntryRel.classNameId;
+
+		JoinStep joinStep = fromStep.from(
+			CommerceTermEntryTable.INSTANCE
+		).innerJoinON(
+			CommerceTermEntryRelTable.INSTANCE,
+			CommerceTermEntryTable.INSTANCE.commerceTermEntryId.eq(
+				CommerceTermEntryRelTable.INSTANCE.commerceTermEntryId)
+		).leftJoinOn(
+			commerceOrderTypeCommerceTermEntryRel,
+			classNameIdColumn.eq(
+				classNameLocalService.getClassNameId(
+					CommerceOrderType.class.getName())
+			).and(
+				commerceOrderTypeCommerceTermEntryRel.commerceTermEntryId.eq(
+					CommerceTermEntryRelTable.INSTANCE.commerceTermEntryId)
+			)
+		).innerJoinON(
+			CommercePaymentMethodGroupRelQualifierTable.INSTANCE,
+			classNameIdColumn.eq(
+				classNameLocalService.getClassNameId(
+					CommerceTermEntry.class.getName())
+			).and(
+				CommercePaymentMethodGroupRelQualifierTable.INSTANCE.classPK.eq(
+					CommerceTermEntryTable.INSTANCE.commerceTermEntryId)
+			)
+		);
+
+		Column<CommerceTermEntryRelTable, Long> commerceTermEntryRelIdColumn =
+			commerceOrderTypeCommerceTermEntryRel.commerceTermEntryRelId;
+
+		return joinStep.where(
+			CommercePaymentMethodGroupRelQualifierTable.INSTANCE.
+				CommercePaymentMethodGroupRelId.eq(
+					commercePaymentMethodGroupRelId
+				).and(
+					Predicate.withParentheses(
+						commerceTermEntryRelIdColumn.isNull(
+						).or(
+							commerceOrderTypeCommerceTermEntryRel.classPK.eq(
+								commerceOrderTypeId)
+						))
+				).and(
+					CommerceTermEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					CommerceTermEntryTable.INSTANCE.companyId.eq(companyId)
+				).and(
+					CommerceTermEntryTable.INSTANCE.active.eq(true)
+				).and(
+					CommerceTermEntryTable.INSTANCE.type.eq(type)
+				));
 	}
 
 	private CommerceTermEntry _startWorkflowInstance(

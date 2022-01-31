@@ -82,7 +82,6 @@
 		<Logger level="INFO" name="com.liferay.portal.events.StartupHelperUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.image.HookFactory" />
 		<Logger level="ERROR" name="com.liferay.portal.image.ImageToolImpl" />
-		<Logger level="WARN" name="com.liferay.portal.image.SpriteProcessorImpl" />
 		<Logger level="INFO" name="com.liferay.portal.internal.servlet.MainServlet" />
 		<Logger level="WARN" name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
 		<Logger level="WARN" name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />

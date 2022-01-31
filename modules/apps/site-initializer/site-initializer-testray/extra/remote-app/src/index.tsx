@@ -12,27 +12,55 @@
  * details.
  */
 
+import {ApolloProvider} from '@apollo/client';
 import ReactDOM from 'react-dom';
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import ClayIconProvider from './context/ClayIconProvider';
-import Home from './pages/Home';
+import apolloClient from './graphql/apolloClient';
+import Manage from './pages/Manage';
+import Home from './pages/Project/Home';
+import Overview from './pages/Project/Overview';
+import Build from './pages/Project/Routines/Build';
+import Routines from './pages/Project/Routines/Routines';
+import Suites from './pages/Project/Suites';
+import Testflow from './pages/Testflow';
 
 import './styles/index.scss';
 
 const App = () => (
-	<ClayIconProvider>
-		<Layout>
+	<ApolloProvider client={apolloClient}>
+		<ClayIconProvider>
 			<HashRouter>
 				<Routes>
-					<Route element={<Home />} index />
+					<Route element={<Layout />} path="/">
+						<Route element={<Home />} index />
 
-					{/* <Route element={<HelloBar />} path="/hello-bar" /> */}
+						<Route element={<Outlet />} path="project/:project">
+							<Route element={<Home />} index />
+
+							<Route element={<Overview />} path="overview" />
+
+							<Route path="routines">
+								<Route element={<Routines />} index />
+
+								<Route element={<Build />} path="build" />
+							</Route>
+
+							<Route element={<Suites />} path="suites" />
+						</Route>
+
+						<Route element={<Manage />} path="manage" />
+
+						<Route element={<Testflow />} path="testflow" />
+
+						<Route element={<div>Page not found</div>} path="*" />
+					</Route>
 				</Routes>
 			</HashRouter>
-		</Layout>
-	</ClayIconProvider>
+		</ClayIconProvider>
+	</ApolloProvider>
 );
 
 class WebComponent extends HTMLElement {

@@ -1,0 +1,27 @@
+.cp-dxp-activation-key-container {
+	max-width: 1271px;
+}
+
+.cp-dxp-activation-key-table {
+	max-width: 85vw;
+
+	tbody {
+		tr:first-child {
+			td {
+				border-radius: 0 !important;
+				border-top: 1px solid #e1e1e4 !important;
+			}
+		}
+
+		tr:last-child {
+			td {
+				border-radius: 0 !important;
+				border-bottom: 1px solid #e1e1e4 !important;
+			}
+		}
+	}
+}
+
+.cp-dxp-activation-key-cell-small {
+	max-width: 20%;
+}

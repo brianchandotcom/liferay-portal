@@ -19,7 +19,6 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
@@ -186,37 +185,32 @@ public abstract class BaseJobProperty implements JobProperty {
 			return;
 		}
 
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
+		Properties jenkinsBuildProperties =
+			JenkinsResultsParserUtil.getJenkinsBuildProperties();
 
-			String name = JenkinsResultsParserUtil.getPropertyName(
-				buildProperties, _useBasePropertyName, _basePropertyName,
-				_getJobPropertyOptions());
+		String name = JenkinsResultsParserUtil.getPropertyName(
+			jenkinsBuildProperties, _useBasePropertyName, _basePropertyName,
+			_getJobPropertyOptions());
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
-				_readJobProperties = true;
-
-				return;
-			}
-
-			String value = JenkinsResultsParserUtil.getProperty(
-				buildProperties, name);
-
-			if (value == null) {
-				_readJobProperties = true;
-
-				return;
-			}
-
-			_name = name;
-			_value = value;
-			_propertiesFile = null;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
 			_readJobProperties = true;
+
+			return;
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+
+		String value = JenkinsResultsParserUtil.getProperty(
+			jenkinsBuildProperties, name);
+
+		if (value == null) {
+			_readJobProperties = true;
+
+			return;
 		}
+
+		_name = name;
+		_value = value;
+		_propertiesFile = null;
+		_readJobProperties = true;
 	}
 
 	private String[] _getJobPropertyOptions() {

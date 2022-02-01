@@ -41,6 +41,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FILTER_BY_OVERRIDE-->
+<tr>
+	<td>FILTER_BY_OVERRIDE_FILTER_LABEL</td>
+	<td>//li[contains(@class,'tbar')]//span[contains(@class,'label-item-expand')][starts-with(.,'Override')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -89,6 +89,8 @@ definition {
 				locator1 = "Search#SEARCH_INFO",
 				value1 = "1 Results for");
 
+			AssertElementPresent(locator1 = "LanguageOverride#FILTER_BY_OVERRIDE_FILTER_LABEL");
+
 			AssertTextEquals(
 				key_languageKey = "text-contains-error",
 				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",

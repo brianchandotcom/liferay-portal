@@ -1,0 +1,4 @@
+node {
+	global = false
+	useNpm = true
+}

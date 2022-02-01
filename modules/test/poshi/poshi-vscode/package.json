@@ -1,0 +1,36 @@
+{
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"grammars": [
+			{
+				"language": "poshi",
+				"path": "./syntaxes/poshi.tmLanguage.json",
+				"scopeName": "source.poshi"
+			}
+		],
+		"languages": [
+			{
+				"aliases": [
+					"Poshi",
+					"poshi"
+				],
+				"configuration": "./language-configuration.json",
+				"extensions": [
+					".function",
+					".macro",
+					".testcase"
+				],
+				"id": "poshi"
+			}
+		]
+	},
+	"description": "This extension provides language support for the functional testing tool, Poshi",
+	"displayName": "Poshi Language Support",
+	"engines": {
+		"vscode": "^1.63.0"
+	},
+	"name": "@liferay/poshi-vscode",
+	"version": "0.0.1"
+}

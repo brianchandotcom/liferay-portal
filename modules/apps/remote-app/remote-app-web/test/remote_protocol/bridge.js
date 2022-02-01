@@ -27,6 +27,7 @@ describe('remote-app-web', () => {
 	let reply;
 
 	beforeEach(() => {
+		jest.clearAllMocks();
 		jest.resetModules();
 
 		init = require('../../src/main/resources/META-INF/resources/remote_protocol/bridge')
@@ -260,7 +261,7 @@ describe('remote-app-web', () => {
 			});
 		});
 
-		xit('prevents fetching resources cross domain', async () => {
+		it('prevents fetching resources cross domain', async () => {
 			iframe.contentWindow.parent.postMessage(
 				{
 					appID: 'some UUID',

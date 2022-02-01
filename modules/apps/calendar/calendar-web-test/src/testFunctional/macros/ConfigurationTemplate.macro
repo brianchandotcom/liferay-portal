@@ -28,16 +28,16 @@ definition {
 		AssertClick(
      macro gotoCalendarOptions {
         Portlet.gotoPortletOptions(
+	macro gotoCalendarOptions {
+		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "${option}");
-
 	}
 
-    macro saveConfigurationTemplateCalendar {
+	macro saveConfigurationTemplateCalendar {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-        SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-        AssertClick(
+		AssertClick(
 			locator1 = "Configuration#SAVE_CONFIGURATION_TEMPLATE",
 			value1 = "Save Current Configuration as Template");
 

@@ -67,7 +67,7 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No language entries were found.");
 
-			Click(locator1 = "LanguageOverride#VIEW_PAGE_OVERRIDDED_CLOSE");
+			Click(locator1 = "LanguageOverride#FILTER_BY_OVERRIDE_REMOVE_OVERRIDE_FILTER");
 
 			AssertTextEquals(
 				key_languageKey = "0-analytics-cloud-connection",
@@ -97,7 +97,7 @@ definition {
 				value1 = "text-contains-error");
 
 			AssertTextEquals(
-				locator1 = "LanguageOverride#VIEW_PAGE_OVERRIDDEN",
+				locator1 = "LanguageOverride#FILTER_BY_OVERRIDE_LANGUAGE_KEY_OVERRIDDEN_LABEL",
 				value1 = "OVERRIDDEN");
 		}
 	}

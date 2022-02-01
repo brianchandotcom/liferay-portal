@@ -1,0 +1,732 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Designer";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+		}
+	}
+
+	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CaEditTransitionID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72991 CaEditTransitionID pending implementation
+
+	}
+
+	@description = "Verify that Action can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddAction {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72954 CanAddAction pending implementation
+
+	}
+
+	@description = "Verify that Assignment can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddAssignment {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72955 CanAddAssignment pending implementation
+
+	}
+
+	@description = "Verify that Assignment can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleAssignment {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72956 CanAddMultipleAssignment pending implementation
+
+	}
+
+	@description = "Verify that Notification can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddNotification {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72953 CanAddNotification pending implementation
+
+	}
+
+	@description = "Verify that Timers can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddTimers {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72952 CanAddTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can add translations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddTranslations {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72910 CanAddTranslations pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanCancelDelete {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72980 CanCancelDelete pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanCloseDeleteModal {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72979 CanCloseDeleteModal pending implementation
+
+	}
+
+	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateOnlyOneTransitionInSameDirection {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72992 CanCreateOnlyOneTransitionInSameDirection pending implementation
+
+	}
+
+	@description = "Verify that user can create transition between nodes from the edge of node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72918 CanCreateTransition pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteNodeViaDeleteKey {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72977 CanDeleteNodeViaDeleteKey pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete icon in the sidebar"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteNodeViaSidebar {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72978 CanDeleteNodeViaSidebar pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that the user can edit the node description"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEditNodeDescription {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72983 CanEditNodeDescription pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes ID in the sidebar"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditStepID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72974 CanEditStepID pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to view and edit the node's Label in the sidebar"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditStepLabel {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72972 CanEditStepLabel pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user can hide/show the information area"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanHideShowInformationArea {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72981 CanHideShowInformationArea pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanLocalizeStepLabelWhenTranslated {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72982 CanLocalizeStepLabelWhenTranslated pending implementation
+
+	}
+
+	@description = "LPS-140056 - Verify that the user is able to localize the label of the transition"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanLocalizeTransitionLabel {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72990 CanLocalizeTransitionLabel pending implementation
+
+	}
+
+	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMoveNode {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72917 CanMoveNode pending implementation
+
+	}
+
+	@description = "Verify that is not possible to have multiple Start nodes"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotHaveMultipleStartNode {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72940 CanNotHaveMultipleStartNode pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that nodes behave correctly when we import a workflow with the same names for different elements"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotImportProcessWithDuplicatedElementNames {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72988 CanNotImportProcessWithDuplicatedElementNames pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that the collision detection between nodes are working after moving nodes on canvas"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanNotPlaceNodeOverAnother {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73005 CanNotPlaceNodeOverAnother pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotSaveProcessWithDuplicatedNodeID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72986 CanNotSaveProcessWithDuplicatedNodeID pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that is not possible to save a process with the node ID not filled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotSaveProcessWithEmptyNodeID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72987 CanNotSaveProcessWithEmptyNodeID pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanProgressToNextStepWhenParallelTasksCompleted {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72985 CanProgressToNextStepWhenParallelTasksCompleted pending implementation
+
+	}
+
+	@description = "Verify that the user can Publish workflow"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWorkflow {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72944 CanPublishWorkflow pending implementation
+
+	}
+
+	@description = "Verify that user can Save workflow as Draft"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSaveAsDraft {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72945 CanSaveAsDraft pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSeeStartAndEndNodesByDefault {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72970 CanSeeStartAndEndNodesByDefault pending implementation
+
+	}
+
+	@description = "Verify that the user can select each node in Diagram"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectNodeOnDiagram {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72914 CanSelectNodeOnDiagram pending implementation
+
+	}
+
+	@description = "Verify that the user can set transition Default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetDefaultTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72969 CanSetDefaultTransition pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDiagramEditor {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72997 CanViewDiagramEditor pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewSorceEditor {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72995 CanViewSorceEditor pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ChangesOnDiagramAreReflectedOnXML {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73000 ChangesOnDiagramAreReflectedOnXML pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ChangesOnXMLAreReflectedOnDiagram {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72999 ChangesOnXMLAreReflectedOnDiagram pending implementation
+
+	}
+
+	@description = "Verify that Condition Node do not have Timers property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConditionHasNoTimersProperty {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72949 ConditionHasNoTimersProperty pending implementation
+
+	}
+
+	@description = "Verify that the Condition node must have at least two outgoing transitions"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConditionMustHaveMoreThanOneTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72941 ConditionMustHaveMoreThanOneTransition pending implementation
+
+	}
+
+	@description = "Verify that connectors can be deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConnectorCanBeDeleted {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72937 ConnectorCanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the connectors label"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConnectorsLabelCanBeEdited {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72968 ConnectorsLabelCanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that default names for nodes are provided"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefaultLabelsAreProvided {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72911 DefaultLabelsAreProvided pending implementation
+
+	}
+
+	@description = "LPS-140056 - Verify that the changes on Default settings, for transitions, reflects on the diagram"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefaultSettingsChangesReflectsOnDiagram {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72989 DefaultSettingsChangesReflectsOnDiagram pending implementation
+
+	}
+
+	@description = "Verify that the user can Delete a Draft workflow"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DeleteWorkflowDefinitionDraft {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72946 DeleteWorkflowDefinitionDraft pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test DiagramViewToolTipIsDisplayed {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72998 DiagramViewToolTipIsDisplayed pending implementation
+
+	}
+
+	@description = "Verify that the Fork node must have at least two outgoing transitions"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ForkNodeMustHaveMoreThanOneTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72943 ForkNodeMustHaveMoreThanOneTransition pending implementation
+
+	}
+
+	@description = "Verify that each fork node requires a join node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ForkNodeRequiresJoinNode {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72942 ForkNodeRequiresJoinNode pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Actions property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasActionsProperty {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72951 HasActionsProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Description property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasDescriptionProperty {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72947 HasDescriptionProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Notifications property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasNotificationsProperty {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72950 HasNotificationsProperty pending implementation
+
+	}
+
+	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImportedProcessIsShownOnDiagram {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73006 ImportedProcessIsShownOnDiagram pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NodeCoordinatedAreUpdated {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73004 NodeCoordinatedAreUpdated pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NodeInfoIsDisplayedWhenNodeIsSelected {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72971 NodeInfoIsDisplayedWhenNodeIsSelected pending implementation
+
+	}
+
+	@description = "LPS-139388 - Verify that the active node is highlighted on the diagram"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test NodeIsHighlightedWhenActive {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72984 NodeIsHighlightedWhenActive pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PublishButtonTurnsUnavailableAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73001 PublishButtonTurnsUnavailableAfterPublish pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test SourceViewToolTipIsDisplayed {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72996 SourceViewToolTipIsDisplayed pending implementation
+
+	}
+
+	@description = "Verify that Start node can't have incoming transition"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StartNodeCanNotHaveIncomingTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72938 StartNodeCanNotHaveIncomingTransition pending implementation
+
+	}
+
+	@description = "Verify that the Start Node must have an outgoing transition"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StartNodeMustHaveOutgoingTransition {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72939 StartNodeMustHaveOutgoingTransition pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the Node ID is a required field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test StepIDIsRequired {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72975 StepIDIsRequired pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the user can not use the same name for more than one node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test StepIDIsUnique {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72976 StepIDIsUnique pending implementation
+
+	}
+
+	@description = "LPS-139387 - Verify that the Step Label is a required field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test StepLabelIsRequired {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72973 StepLabelIsRequired pending implementation
+
+	}
+
+	@description = "Verify that the Task node has Timers property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TaskNodeHasTimersProperty {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72948 TaskNodeHasTimersProperty pending implementation
+
+	}
+
+	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TransitionDoNotLoseReferenceOnTaskIDChange {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72993 TransitionDoNotLoseReferenceOnTaskIDChange pending implementation
+
+	}
+
+	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TransitionIsDeletedWhenNodeIsDeleted {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-72994 TransitionIsDeletedWhenNodeIsDeleted pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test TranslationDropdownClosesAfterSelection {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73002 TranslationDropdownClosesAfterSelection pending implementation
+
+	}
+
+	@description = "LPS-129928 - Verify that the translation dropdown closes when the user clicks out of it"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test TranslationDropdownClosesClickOut {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		// TODO LRQA-73003 TranslationDropdownClosesClickOut pending implementation
+
+	}
+
+}

@@ -148,10 +148,12 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		return (Long)function.apply(baseModel);
 	}
 
-	private String _getExternalModel(T baseModel, long userId)
-		throws PortalException {
+	private String _getExternalModel(T baseModel, long userId) {
+		User user = _userLocalService.fetchUser(userId);
 
-		User user = _userLocalService.getUser(userId);
+		if (user == null) {
+			return baseModel.toString();
+		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
@@ -163,6 +165,12 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				baseModel.getModelClassName());
 
 		if (dtoConverter == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No DTOConverter found for " +
+						baseModel.getModelClassName());
+			}
+
 			return baseModel.toString();
 		}
 
@@ -173,7 +181,9 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			return _jsonFactory.looseSerializeDeep(externalModel);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		return baseModel.toString();

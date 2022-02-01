@@ -21,9 +21,11 @@ definition {
 	}
 
 	macro viewChangeDetailsInData {
+		var key_columnName = "${columnName}";
+
 		if ("${changeType}" == "Added") {
 			AssertElementPresent(
-				key_displayItem = "PUBLICATION (NEW)",
+				key_displayItem = "Publication (New)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_columnValueInPublication = "${columnValueInPublication}";
@@ -35,7 +37,7 @@ definition {
 
 		if ("${changeType}" == "Deleted") {
 			AssertElementPresent(
-				key_displayItem = "PRODUCTION (DELETED)",
+				key_displayItem = "Production (Deleted)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_columnValueInPublication = "${columnValueInProduction}";
@@ -49,8 +51,6 @@ definition {
 			if (IsElementNotPresent(key_displayItem = "Unified View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
 				PublicationsChangeDetails.changeDisplayItem(displayItem = "Unified View");
 			}
-
-			var key_columnName = "${columnName}";
 
 			if (isSet(diffAddedValue)) {
 				AssertTextEquals.assertPartialText(
@@ -107,7 +107,7 @@ definition {
 	macro viewChangeDetailsInDisplay {
 		if ("${changeType}" == "Added") {
 			AssertElementPresent(
-				key_displayItem = "PUBLICATION (NEW)",
+				key_displayItem = "Publication (New)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_contentValueInPublication = "${contentValueInPublication}";
@@ -119,7 +119,7 @@ definition {
 
 		if ("${changeType}" == "Deleted") {
 			AssertElementPresent(
-				key_displayItem = "PRODUCTION (DELETED)",
+				key_displayItem = "Production (Deleted)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_contentValueInPublication = "${contentValueInProduction}";

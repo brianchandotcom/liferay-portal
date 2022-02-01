@@ -80,6 +80,21 @@
 											},
 											"widgetInstanceId": "nav",
 											"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+										},
+										{
+											"widgetConfig": {
+												"destination": "/search",
+												"displayStyle": "default",
+												"displayStyleGroupId": "[$GROUP_ID$]",
+												"federatedSearchKey": "",
+												"invisible": "false",
+												"keywordsParameterName": "q",
+												"scopeParameterName": "scope",
+												"searchScope": "this-site",
+												"showStagedResults": "false",
+												"useAdvancedSearchSyntax": "false"
+											},
+											"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 										}
 									]
 								},
@@ -231,7 +246,8 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
+								"borderWidth": "0",
+								"textAlign": ""
 							},
 							"layout": {
 								"borderWidth": 0,

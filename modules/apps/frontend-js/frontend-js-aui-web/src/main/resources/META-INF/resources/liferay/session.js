@@ -248,6 +248,8 @@ AUI.add(
 						const sessionState = instance.get('sessionState');
 						const timestamp = instance.get('timestamp');
 
+						// LPS-82336 Maintain session state in multiple tabs
+
 						if (instance._initTimestamp !== timestamp) {
 							instance.set('timestamp', timestamp);
 

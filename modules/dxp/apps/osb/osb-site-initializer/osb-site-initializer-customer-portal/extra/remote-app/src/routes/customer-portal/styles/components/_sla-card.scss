@@ -1,0 +1,48 @@
+.sla-container:hover {
+	.btn {
+		display: inline-block !important;
+		transform: translate(12rem, -3rem);
+		z-index: 100;
+		background-color: white;
+		box-shadow: 0 10px 20px 0 #0b5fff1c;
+		border-color: rgba(11, 95, 255, 0.25);
+		padding: 0.25rem;
+	}
+	.btn:hover {
+		border-color: white;
+	}
+}
+.card {
+	box-shadow: 0 10px 20px 0 #0b5fff12;
+}
+.sla-card-holder {
+	position: relative;
+}
+.sla-card-holder .sla-card {
+	position: absolute;
+	transition: all 0.4s;
+	filter: blur(2px);
+}
+.sla-multiple-card .sla-card-active {
+	z-index: 100;
+	transition: all 0.4s;
+	transform: translate(-1rem, 1rem);
+	filter: blur(0px);
+}
+.sla-platinum {
+	background-color: #f9fafb;
+	border: 1px solid #e1e1e4;
+}
+.sla-gold {
+	border: 1px solid var(--color-brand-secondary-lighten-4);
+}
+.sla-limited {
+	border: 1px solid #0b5fff99;
+}
+.sla-label {
+	font-size: 0.75rem;
+}
+.n-sla-card {
+	width: 12rem;
+	height: 5rem;
+}

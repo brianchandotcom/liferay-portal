@@ -331,6 +331,64 @@ public class SearchResponseResourceImplTest {
 		Assert.assertEquals(responseString, searchResponse.getResponseString());
 	}
 
+	@Test
+	public void testWarningsAndErrors() throws Exception {
+		InvalidElementInstanceException invalidElementInstanceException =
+			InvalidElementInstanceException.at(1);
+
+		Mockito.doThrow(
+			invalidElementInstanceException
+		).when(
+			_sxpBlueprintSearchRequestEnhancer
+		).enhance(
+			Mockito.any(), Mockito.anyString()
+		);
+
+		NumberFormatException numberFormatException =
+			new NumberFormatException();
+
+		Mockito.doThrow(
+			numberFormatException
+		).when(
+			_searcher
+		).search(
+			Mockito.any()
+		);
+
+		SearchResponseResourceImpl searchResponseResourceImpl =
+			_createSearchResponseResourceImpl();
+
+		SearchResponse searchResponse = searchResponseResourceImpl.search(
+			Mockito.mock(Pagination.class), null, new SXPBlueprint());
+
+		Map[] errorMaps = searchResponse.getErrors();
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass",
+				InvalidElementInstanceException.class.getName()
+			).put(
+				"localizedMessage", "Element skipped"
+			).put(
+				"msg", "Invalid element instance at: 1"
+			).put(
+				"severity", "WARN"
+			).put(
+				"sxpElementId", "querySXPElement-1"
+			).build(),
+			errorMaps[0]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", NumberFormatException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"severity", "ERROR"
+			).build(),
+			errorMaps[1]);
+	}
+
 	private void _assertEquals(
 		Map<String, String> expectedMap, Map<String, String> actualMap) {
 

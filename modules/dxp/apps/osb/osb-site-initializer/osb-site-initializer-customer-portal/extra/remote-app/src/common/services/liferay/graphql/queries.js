@@ -301,6 +301,17 @@ export const getListTypeDefinitions = gql`
 	}
 `;
 
+export const getAccounts = gql`
+	query getAccounts {
+		accounts {
+			items {
+				name
+				externalReferenceCode
+			}
+		}
+	}
+`;
+
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {
@@ -312,6 +323,9 @@ export const getUserAccount = gql`
 					id
 					name
 				}
+			}
+			roleBriefs {
+				name
 			}
 			externalReferenceCode
 			id

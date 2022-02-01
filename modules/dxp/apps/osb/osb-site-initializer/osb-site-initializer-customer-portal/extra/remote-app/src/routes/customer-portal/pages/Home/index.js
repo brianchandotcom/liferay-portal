@@ -12,7 +12,10 @@
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
-import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
+import {
+	getAccounts,
+	getKoroneikiAccounts,
+} from '../../../../common/services/liferay/graphql/queries';
 import {SEARCH_PARAMS_KEYS} from '../../../../common/utils/constants';
 import getLiferaySiteName from '../../../../common/utils/getLiferaySiteName';
 import ProjectCard from '../../components/ProjectCard';
@@ -35,76 +38,95 @@ const getStatus = (slaCurrent, slaFuture) => {
 	return STATUS_TAG_TYPES.expired;
 };
 
+const getKoroneikiFilter = (accounts) => {
+	return accounts
+		?.map(
+			({externalReferenceCode}, index, {length: totalAccounts}) =>
+				`accountKey eq '${externalReferenceCode}'${
+					index + 1 < totalAccounts ? ' or' : ''
+				}`
+		)
+		.join(' ');
+};
+
 const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
 	const [projects, setProjects] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const getProjects = async (accountKeysFilter, accountBriefs) => {
-			const {data} = await client.query({
-				query: getKoroneikiAccounts,
-				variables: {
-					filter: accountKeysFilter,
-				},
-			});
+		const getProjects = async (userAccount) => {
+			const hasRoleBriefAdministrator = userAccount?.roleBriefs?.some(
+				(role) => role.name === 'Administrator'
+			);
 
-			if (data) {
-				setProjects(
-					data.c?.koroneikiAccounts?.items.map(
-						({
-							accountKey,
-							code,
-							liferayContactEmailAddress,
-							liferayContactName,
-							liferayContactRole,
-							region,
-							slaCurrent,
-							slaCurrentEndDate,
-							slaFuture,
-						}) => ({
-							accountKey,
-							code,
-							contact: {
-								emailAddress: liferayContactEmailAddress,
-								name: liferayContactName,
-								role: liferayContactRole,
-							},
-							region,
-							sla: {
-								current: slaCurrent,
-								currentEndDate: slaCurrentEndDate,
-								future: slaFuture,
-							},
-							status: getStatus(slaCurrent, slaFuture),
-							title: accountBriefs.find(
-								({externalReferenceCode}) =>
-									externalReferenceCode === accountKey
-							)?.name,
-						})
-					) || []
-				);
+			let accountKeysFilter;
+			let accounts = [];
+
+			if (hasRoleBriefAdministrator) {
+				const {data: dataAccounts} = await client.query({
+					query: getAccounts,
+				});
+
+				if (dataAccounts) {
+					accounts = dataAccounts?.accounts?.items;
+					accountKeysFilter = getKoroneikiFilter(accounts);
+				}
+			} else if (userAccount?.accountBriefs?.length) {
+				accounts = userAccount?.accountBriefs;
+				accountKeysFilter = getKoroneikiFilter(accounts);
 			}
 
-			setIsLoading(false);
+			if (accounts.length) {
+				const {data} = await client.query({
+					query: getKoroneikiAccounts,
+					variables: {
+						filter: accountKeysFilter,
+					},
+				});
+
+				if (data) {
+					setProjects(
+						data.c?.koroneikiAccounts?.items.map(
+							({
+								accountKey,
+								code,
+								liferayContactEmailAddress,
+								liferayContactName,
+								liferayContactRole,
+								region,
+								slaCurrent,
+								slaCurrentEndDate,
+								slaFuture,
+							}) => ({
+								accountKey,
+								code,
+								contact: {
+									emailAddress: liferayContactEmailAddress,
+									name: liferayContactName,
+									role: liferayContactRole,
+								},
+								region,
+								sla: {
+									current: slaCurrent,
+									currentEndDate: slaCurrentEndDate,
+									future: slaFuture,
+								},
+								status: getStatus(slaCurrent, slaFuture),
+								title: accounts.find(
+									({externalReferenceCode}) =>
+										externalReferenceCode === accountKey
+								)?.name,
+							})
+						) || []
+					);
+				}
+
+				setIsLoading(false);
+			}
 		};
 
-		if (userAccount.accountBriefs.length) {
-			const accountKeys = userAccount.accountBriefs
-				?.map(
-					(
-						{externalReferenceCode},
-						index,
-						{length: totalAccountBriefs}
-					) =>
-						`accountKey eq '${externalReferenceCode}'${
-							index + 1 < totalAccountBriefs ? ' or' : ''
-						}`
-				)
-				.join(' ');
-
-			getProjects(accountKeys, userAccount.accountBriefs);
-		}
+		getProjects(userAccount);
 	}, [userAccount]);
 
 	const nextPage = (project) => {

@@ -10,10 +10,6 @@ html#{$cadmin-selector} {
 			justify-content: space-between;
 
 			&__field {
-				&-checkbox {
-					min-height: $pageEditorSpacing * 4;
-				}
-
 				margin-bottom: $pageEditorSpacing * 1.5;
 				width: 100%;
 

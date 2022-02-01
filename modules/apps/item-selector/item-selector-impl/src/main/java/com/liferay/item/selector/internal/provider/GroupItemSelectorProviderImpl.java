@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
@@ -131,7 +131,7 @@ public class GroupItemSelectorProviderImpl
 		for (Group group : groups) {
 			if (group.isCompany() ||
 				permissionChecker.isGroupAdmin(group.getGroupId()) ||
-				GroupPermissionUtil.contains(
+				_groupPermission.contains(
 					permissionChecker, group, ActionKeys.VIEW)) {
 
 				filteredGroups.add(group);
@@ -151,6 +151,9 @@ public class GroupItemSelectorProviderImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private GroupService _groupService;

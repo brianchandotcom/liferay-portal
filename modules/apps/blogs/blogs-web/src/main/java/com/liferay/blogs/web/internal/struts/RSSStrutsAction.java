@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -166,7 +166,7 @@ public class RSSStrutsAction implements StrutsAction {
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		if ((groupId == 0) ||
-			GroupPermissionUtil.contains(
+			_groupPermission.contains(
 				themeDisplay.getPermissionChecker(), groupId,
 				ActionKeys.VIEW)) {
 
@@ -199,6 +199,9 @@ public class RSSStrutsAction implements StrutsAction {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Portal _portal;

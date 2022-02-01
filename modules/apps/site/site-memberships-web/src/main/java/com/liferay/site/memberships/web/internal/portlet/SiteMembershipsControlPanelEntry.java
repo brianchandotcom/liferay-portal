@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -56,7 +57,7 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (GroupPermissionUtil.contains(
+		if (_groupPermission.contains(
 				permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
 
 			return true;
@@ -65,5 +66,8 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 		return super.hasPermissionImplicitlyGranted(
 			permissionChecker, group, portlet);
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 }

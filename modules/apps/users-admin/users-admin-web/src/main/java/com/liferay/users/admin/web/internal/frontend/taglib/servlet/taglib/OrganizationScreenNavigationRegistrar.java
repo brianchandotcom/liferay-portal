@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
@@ -89,7 +89,7 @@ public class OrganizationScreenNavigationRegistrar {
 					}
 
 					try {
-						if (!GroupPermissionUtil.contains(
+						if (!_groupPermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								organization.getGroup(), ActionKeys.UPDATE)) {
 
@@ -197,6 +197,9 @@ public class OrganizationScreenNavigationRegistrar {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

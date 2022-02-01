@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -500,7 +500,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		boolean hasManageLayoutsPermission = GroupPermissionUtil.contains(
+		boolean hasManageLayoutsPermission = _groupPermission.contains(
 			themeDisplay.getPermissionChecker(), groupId,
 			ActionKeys.MANAGE_LAYOUTS);
 		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
@@ -690,6 +690,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private LayoutContentModelResourcePermission

@@ -128,7 +128,7 @@ import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
@@ -1736,15 +1736,12 @@ public class StagingImpl implements Staging {
 
 				long scopeGroupId = stagingGroup.getGroupId();
 
-				boolean hasManageStagingPermission =
-					GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.MANAGE_STAGING);
-				boolean hasPublishStagingPermission =
-					GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.PUBLISH_STAGING);
-				boolean hasViewStagingPermission = GroupPermissionUtil.contains(
+				boolean hasManageStagingPermission = _groupPermission.contains(
+					permissionChecker, scopeGroupId, ActionKeys.MANAGE_STAGING);
+				boolean hasPublishStagingPermission = _groupPermission.contains(
+					permissionChecker, scopeGroupId,
+					ActionKeys.PUBLISH_STAGING);
+				boolean hasViewStagingPermission = _groupPermission.contains(
 					permissionChecker, scopeGroupId, ActionKeys.VIEW_STAGING);
 
 				if (hasManageStagingPermission || hasPublishStagingPermission ||
@@ -3797,7 +3794,7 @@ public class StagingImpl implements Staging {
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
+		_groupPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			exportImportConfiguration.getGroupId(), ActionKeys.PUBLISH_STAGING);
 	}
@@ -4061,6 +4058,9 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private LayoutBranchLocalService _layoutBranchLocalService;

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -134,7 +134,7 @@ public class GroupURLProvider {
 
 		if (includeStagingGroup && group.hasStagingGroup()) {
 			try {
-				if (GroupPermissionUtil.contains(
+				if (_groupPermission.contains(
 						themeDisplay.getPermissionChecker(), group,
 						ActionKeys.VIEW_STAGING)) {
 
@@ -205,6 +205,9 @@ public class GroupURLProvider {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Http _http;

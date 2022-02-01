@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -114,7 +114,7 @@ public class ManageSitePortletConfigurationIcon
 			Group organizationGroup = organization.getGroup();
 
 			if (organizationGroup.isSite() &&
-				(GroupPermissionUtil.contains(
+				(_groupPermission.contains(
 					permissionChecker, organizationGroup,
 					ActionKeys.MANAGE_STAGING) ||
 				 OrganizationPermissionUtil.contains(
@@ -134,6 +134,9 @@ public class ManageSitePortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ManageSitePortletConfigurationIcon.class);
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Portal _portal;

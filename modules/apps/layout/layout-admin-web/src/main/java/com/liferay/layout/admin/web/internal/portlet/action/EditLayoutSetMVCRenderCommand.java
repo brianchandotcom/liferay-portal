@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,6 +30,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -55,7 +56,7 @@ public class EditLayoutSetMVCRenderCommand implements MVCRenderCommand {
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			try {
-				GroupPermissionUtil.check(
+				_groupPermission.check(
 					themeDisplay.getPermissionChecker(), groupId,
 					ActionKeys.VIEW);
 			}
@@ -73,5 +74,8 @@ public class EditLayoutSetMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditLayoutSetMVCRenderCommand.class);
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 }

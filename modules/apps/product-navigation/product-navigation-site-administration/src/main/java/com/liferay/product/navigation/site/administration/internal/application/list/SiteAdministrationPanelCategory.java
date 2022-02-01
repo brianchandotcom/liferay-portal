@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
@@ -112,7 +112,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			return false;
 		}
 
-		if (GroupPermissionUtil.contains(
+		if (_groupPermission.contains(
 				permissionChecker, group,
 				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
 
@@ -130,6 +130,9 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;

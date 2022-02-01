@@ -13,7 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import CheckinModal from './CheckinModal.es';
 
@@ -24,7 +24,6 @@ export default function Checkin({
 }) {
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
-	const bridgeComponentId = `${portletNamespace}DocumentLibraryCheckinModal`;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -34,20 +33,27 @@ export default function Checkin({
 		onClose: handleOnClose,
 	});
 
-	if (!Liferay.component(bridgeComponentId)) {
-		Liferay.component(
-			bridgeComponentId,
-			{
-				open: (callback) => {
-					setCallback(() => callback);
-					setShowModal(true);
+	useEffect(() => {
+		const bridgeComponentId = `${portletNamespace}DocumentLibraryCheckinModal`;
+		if (!Liferay.component(bridgeComponentId)) {
+			Liferay.component(
+				bridgeComponentId,
+				{
+					open: (callback) => {
+						setCallback(() => callback);
+						setShowModal(true);
+					},
 				},
-			},
-			{
-				destroyOnNavigate: true,
-			}
-		);
-	}
+				{
+					destroyOnNavigate: true,
+				}
+			);
+		}
+
+		return () => {
+			Liferay.destroyComponent(bridgeComponentId);
+		};
+	},[portletNamespace]);
 
 	return (
 		<>

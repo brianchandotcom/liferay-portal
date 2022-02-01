@@ -15,9 +15,12 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,6 +48,23 @@ public class PortalImplTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetPortletTitleWithDeployedPortletId() {
+		String portletId = PortletKeys.SERVER_ADMIN;
+
+		Assert.assertEquals(
+			"Server Administration",
+			_portal.getPortletTitle(portletId, LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetPortletTitleWithUndeployedPortletId() {
+		String portletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			portletId, _portal.getPortletTitle(portletId, LocaleUtil.US));
+	}
 
 	@Test
 	public void testGetUploadPortletRequestWithInvalidHttpServletRequest() {

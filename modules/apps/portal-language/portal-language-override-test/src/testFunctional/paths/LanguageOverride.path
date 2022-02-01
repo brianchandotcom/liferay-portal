@@ -27,16 +27,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_PAGE_OVERRIDDEN</td>
-	<td>//span[contains(@class,'label-item-expand') and contains (.,'Overridden')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_PAGE_OVERRIDDED_CLOSE</td>
-	<td>//span[contains(.,'Override')]//following-sibling::span/button[contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -45,6 +35,16 @@
 <tr>
 	<td>FILTER_BY_OVERRIDE_FILTER_LABEL</td>
 	<td>//li[contains(@class,'tbar')]//span[contains(@class,'label-item-expand')][starts-with(.,'Override')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_OVERRIDE_LANGUAGE_KEY_OVERRIDDEN_LABEL</td>
+	<td>//span[contains(@class,'label-item-expand') and contains (.,'Overridden')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_OVERRIDE_REMOVE_OVERRIDE_FILTER</td>
+	<td>//span[contains(.,'Override')]//following-sibling::span/button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

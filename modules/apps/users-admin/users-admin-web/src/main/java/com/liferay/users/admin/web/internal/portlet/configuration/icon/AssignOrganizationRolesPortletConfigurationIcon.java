@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,6 +42,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -117,7 +118,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 			long organizationGroupId = organization.getGroupId();
 
 			if (permissionChecker.isGroupOwner(organizationGroupId) ||
-				OrganizationPermissionUtil.contains(
+				_organizationPermission.contains(
 					permissionChecker, organization,
 					ActionKeys.ASSIGN_USER_ROLES)) {
 
@@ -140,5 +141,8 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssignOrganizationRolesPortletConfigurationIcon.class);
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 }

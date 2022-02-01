@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -102,7 +102,7 @@ public class EditOrganizationPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (OrganizationPermissionUtil.contains(
+			if (_organizationPermission.contains(
 					themeDisplay.getPermissionChecker(),
 					ActionUtil.getOrganization(portletRequest),
 					ActionKeys.UPDATE)) {
@@ -121,6 +121,9 @@ public class EditOrganizationPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditOrganizationPortletConfigurationIcon.class);
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private Portal _portal;

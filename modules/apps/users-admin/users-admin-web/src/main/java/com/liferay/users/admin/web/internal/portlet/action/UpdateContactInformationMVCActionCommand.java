@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WebsiteService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -163,7 +163,7 @@ public class UpdateContactInformationMVCActionCommand
 		throws PortalException {
 
 		if (Objects.equals(className, Organization.class.getName())) {
-			OrganizationPermissionUtil.check(
+			_organizationPermission.check(
 				permissionChecker, classPK, ActionKeys.UPDATE);
 		}
 		else {
@@ -251,6 +251,9 @@ public class UpdateContactInformationMVCActionCommand
 
 	@Reference
 	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private OrgLaborLocalService _orgLaborLocalService;

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -87,7 +87,7 @@ public class UpdateOrganizationReminderQueriesMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		OrganizationPermissionUtil.check(
+		_organizationPermission.check(
 			themeDisplay.getPermissionChecker(), organization,
 			ActionKeys.UPDATE);
 
@@ -102,6 +102,9 @@ public class UpdateOrganizationReminderQueriesMVCActionCommand
 
 		portletPreferences.store();
 	}
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private OrganizationService _organizationService;

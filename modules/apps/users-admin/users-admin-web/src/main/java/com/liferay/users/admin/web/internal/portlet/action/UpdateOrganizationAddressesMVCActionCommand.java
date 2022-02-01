@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -105,7 +105,7 @@ public class UpdateOrganizationAddressesMVCActionCommand
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
-		OrganizationPermissionUtil.check(
+		_organizationPermission.check(
 			themeDisplay.getPermissionChecker(),
 			_organizationService.getOrganization(organizationId),
 			ActionKeys.UPDATE);
@@ -117,6 +117,9 @@ public class UpdateOrganizationAddressesMVCActionCommand
 				Organization.class.getName(), organizationId, addresses);
 		}
 	}
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private OrganizationService _organizationService;

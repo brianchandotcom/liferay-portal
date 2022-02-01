@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ContactLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
@@ -72,7 +72,7 @@ public class UserSearchPermissionFilterContributor
 			long[] userOrgIds = userBag.getUserOrgIds();
 
 			for (long userOrgId : userOrgIds) {
-				if (OrganizationPermissionUtil.contains(
+				if (_organizationPermission.contains(
 						permissionChecker, userOrgId,
 						ActionKeys.MANAGE_USERS)) {
 
@@ -123,6 +123,9 @@ public class UserSearchPermissionFilterContributor
 
 	@Reference
 	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private Portal _portal;

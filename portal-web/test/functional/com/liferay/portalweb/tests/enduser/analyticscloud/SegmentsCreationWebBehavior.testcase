@@ -747,6 +747,8 @@ definition {
 	@description = "Create a Web Behavior using 'has not' segment"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingHasNot {
+		property portal.upstream = "quarantine";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -1129,6 +1131,8 @@ definition {
 	@description = "Create a segment with behavior of viewing a form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentViewingForm {
+		property portal.upstream = "quarantine";
+
 		var username = "ac";
 
 		ACUtils.createFormAndAddToPage();

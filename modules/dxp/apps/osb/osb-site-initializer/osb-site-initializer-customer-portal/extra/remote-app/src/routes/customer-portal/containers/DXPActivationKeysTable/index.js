@@ -395,7 +395,7 @@ const DXPActivationKeysTable = () => {
 								<div className="align-items-start d-flex">
 									{hasVirtualCluster && (
 										<img
-											className="mr-1"
+											className="ml-n4 mr-1"
 											src={`${assetsPath}/assets/virtual_cluster.svg`}
 										/>
 									)}
@@ -424,7 +424,8 @@ const DXPActivationKeysTable = () => {
 							) {
 								activationStatus =
 									ACTIVATION_STATUS.notActivated;
-							} else if (
+							}
+							else if (
 								new Date() >
 								new Date(activationKey.expirationDate)
 							) {

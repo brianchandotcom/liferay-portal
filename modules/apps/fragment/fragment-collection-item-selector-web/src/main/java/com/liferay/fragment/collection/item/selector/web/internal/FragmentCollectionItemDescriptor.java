@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.json.JSONUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -40,6 +41,11 @@ public class FragmentCollectionItemDescriptor
 	@Override
 	public String getImageURL() {
 		return null;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _fragmentCollection.getModifiedDate();
 	}
 
 	@Override

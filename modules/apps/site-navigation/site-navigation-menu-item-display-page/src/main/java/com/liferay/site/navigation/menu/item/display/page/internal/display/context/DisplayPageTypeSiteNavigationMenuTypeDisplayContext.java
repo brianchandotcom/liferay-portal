@@ -25,7 +25,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -263,13 +262,10 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public String getItemDetailsURL() {
 		LiferayPortletURL itemDetailsURL =
-			(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
-				_liferayPortletResponse
-			).setResourceID(
-				"/navigation_menu/get_item_details"
-			);
+			(LiferayPortletURL)_liferayPortletResponse.createResourceURL();
 
 		itemDetailsURL.setCopyCurrentRenderParameters(false);
+		itemDetailsURL.setResourceID("/navigation_menu/get_item_details");
 
 		return itemDetailsURL.toString();
 	}

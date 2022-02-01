@@ -17,9 +17,14 @@ import {IconButton} from '../../../../common/components';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
-import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {
+	getActivationDownloadKey,
+	getActivationLicenseKey,
+} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import downloadFromBlob from '../../../../common/utils/downloadFromBlob';
 import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../context';
+import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../utils/constants';
 import {getPascalCase} from '../../utils/getPascalCase';
 
 const ACTIVATION_KEYS_LICENSE_FILTER_TYPES = {
@@ -201,6 +206,22 @@ const DXPActivationKeysTable = () => {
 		[]
 	);
 
+	const handleClick = async (licenseKey) => {
+		const license = await getActivationDownloadKey(
+			licenseKey,
+			licenseKeyDownloadURL,
+			sessionId
+		);
+
+		if (license.status === STATUS_CODE.success) {
+			const contentType = license.headers.get('content-type');
+			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
+			const licenseBlob = await license.blob();
+
+			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+		}
+	};
+
 	return (
 		<div>
 			<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between">
@@ -292,6 +313,7 @@ const DXPActivationKeysTable = () => {
 						download: (
 							<IconButton
 								displayType="null"
+								onClick={() => handleClick(activationKey.id)}
 								small
 								symbol="download"
 							/>
@@ -402,8 +424,7 @@ const DXPActivationKeysTable = () => {
 							) {
 								activationStatus =
 									ACTIVATION_STATUS.notActivated;
-							}
-							else if (
+							} else if (
 								new Date() >
 								new Date(activationKey.expirationDate)
 							) {

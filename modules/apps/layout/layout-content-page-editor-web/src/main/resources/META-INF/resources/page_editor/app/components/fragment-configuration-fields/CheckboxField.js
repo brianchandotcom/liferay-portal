@@ -33,7 +33,7 @@ export function CheckboxField({field, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group className="mt-1">
-			<div className="align-items-center d-flex justify-content-between">
+			<div className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset__field-checkbox">
 				<ClayCheckbox
 					aria-label={field.label}
 					checked={

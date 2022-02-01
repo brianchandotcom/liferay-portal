@@ -116,6 +116,7 @@ public class FragmentCollectionSiteItemSelectorView
 			itemSelectedEventName, search,
 			new FragmentCollectionItemSelectorViewDescriptor(
 				fragmentCollectionItemSelectorCriterion,
+				themeDisplay.getSiteGroupId(),
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 

@@ -84,7 +84,7 @@ definition {
 			ManagementBar.setFilterAndOrder(filterBy = "Override");
 		}
 
-		task ("Then only see overrides and click overridded buttton to edit the key") {
+		task ("Then user can only view Overridden keys") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
 				value1 = "1 Results for");

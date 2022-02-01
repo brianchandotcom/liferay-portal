@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This test filters to only see Overrides."
-	@priority = "5"
+	@priority = "4"
 	test CanFilterOverrides {
 		task ("Given that assert no existing keys filter by override") {
 			ManagementBar.setFilterAndOrder(filterBy = "Override");

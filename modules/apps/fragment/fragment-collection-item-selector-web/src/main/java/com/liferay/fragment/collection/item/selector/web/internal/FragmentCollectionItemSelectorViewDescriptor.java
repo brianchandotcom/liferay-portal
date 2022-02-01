@@ -39,10 +39,12 @@ public class FragmentCollectionItemSelectorViewDescriptor
 	public FragmentCollectionItemSelectorViewDescriptor(
 		FragmentCollectionItemSelectorCriterion
 			fragmentCollectionItemSelectorCriterion,
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		long groupId, HttpServletRequest httpServletRequest,
+		PortletURL portletURL) {
 
 		_fragmentCollectionItemSelectorCriterion =
 			fragmentCollectionItemSelectorCriterion;
+		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 	}
@@ -104,6 +106,7 @@ public class FragmentCollectionItemSelectorViewDescriptor
 
 	private final FragmentCollectionItemSelectorCriterion
 		_fragmentCollectionItemSelectorCriterion;
+	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 

@@ -61,12 +61,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPALY_CONTENT_VALUE_IN_PRODUCTION</td>
+	<td>DISPLAY_CONTENT_VALUE_IN_PRODUCTION</td>
 	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInProduction}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DISPALY_CONTENT_VALUE_IN_PUBLICATION</td>
+	<td>DISPLAY_CONTENT_VALUE_IN_PUBLICATION</td>
 	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInPublication}')]</td>
 	<td></td>
 </tr>

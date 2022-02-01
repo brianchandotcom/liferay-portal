@@ -113,7 +113,7 @@ definition {
 			var key_contentValueInPublication = "${contentValueInPublication}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+				locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PUBLICATION",
 				value1 = "${contentValueInPublication}");
 		}
 
@@ -125,7 +125,7 @@ definition {
 			var key_contentValueInPublication = "${contentValueInProduction}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+				locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PRODUCTION",
 				value1 = "${contentValueInProduction}");
 		}
 
@@ -154,7 +154,7 @@ definition {
 				var key_contentValueInProduction = "${contentValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PRODUCTION",
 					value1 = "${contentValueInProduction}");
 			}
 
@@ -162,7 +162,7 @@ definition {
 				var key_contentValueInPublication = "${contentValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PUBLICATION",
 					value1 = "${contentValueInPublication}");
 			}
 
@@ -172,7 +172,7 @@ definition {
 				var key_contentValueInProduction = "${contentValueInProduction}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PRODUCTION",
+					locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PRODUCTION",
 					value1 = "${contentValueInProduction}");
 			}
 
@@ -182,7 +182,7 @@ definition {
 				var key_contentValueInPublication = "${contentValueInPublication}";
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "PublicationsChangeDetails#DISPALY_CONTENT_VALUE_IN_PUBLICATION",
+					locator1 = "PublicationsChangeDetails#DISPLAY_CONTENT_VALUE_IN_PUBLICATION",
 					value1 = "${contentValueInPublication}");
 			}
 		}

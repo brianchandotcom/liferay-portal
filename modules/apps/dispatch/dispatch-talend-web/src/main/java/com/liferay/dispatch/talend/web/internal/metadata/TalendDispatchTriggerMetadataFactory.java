@@ -30,9 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,15 +50,19 @@ public class TalendDispatchTriggerMetadataFactory
 		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
 			dispatchTrigger.getDispatchTriggerId());
 
+		TalendDispatchTriggerMetadata.Builder builder =
+			new TalendDispatchTriggerMetadata.Builder();
+
 		if (fileEntry != null) {
-			return new TalendDispatchTriggerMetadata(true);
+			builder.ready(true);
+
+			return builder.build();
 		}
 
-		Map<String, String> errors = new HashMap<>();
+		builder.error("talend-archive-file-misses", null);
+		builder.ready(false);
 
-		errors.put("talend-archive-file-misses", null);
-
-		return new TalendDispatchTriggerMetadata(false, errors);
+		return builder.build();
 	}
 
 	@Activate

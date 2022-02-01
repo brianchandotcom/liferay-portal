@@ -17,6 +17,7 @@ package com.liferay.dispatch.talend.web.internal.metadata;
 import com.liferay.dispatch.metadata.DispatchTriggerMetadata;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,20 +25,9 @@ import java.util.Map;
  */
 public class TalendDispatchTriggerMetadata implements DispatchTriggerMetadata {
 
-	public TalendDispatchTriggerMetadata(boolean ready) {
-		this(ready, Collections.emptyMap());
-	}
-
-	public TalendDispatchTriggerMetadata(
-		boolean ready, Map<String, String> errors) {
-
-		_ready = ready;
-		_errors = Collections.unmodifiableMap(errors);
-	}
-
 	@Override
 	public Map<String, String> getAttributes() {
-		return Collections.emptyMap();
+		return _attributes;
 	}
 
 	@Override
@@ -50,6 +40,43 @@ public class TalendDispatchTriggerMetadata implements DispatchTriggerMetadata {
 		return _ready;
 	}
 
+	public static class Builder {
+
+		public Builder attribute(String key, String value) {
+			_attributes.put(key, value);
+
+			return this;
+		}
+
+		public TalendDispatchTriggerMetadata build() {
+			return new TalendDispatchTriggerMetadata(this);
+		}
+
+		public Builder error(String key, String value) {
+			_errors.put(key, value);
+
+			return this;
+		}
+
+		public Builder ready(boolean ready) {
+			_ready = ready;
+
+			return this;
+		}
+
+		private final Map<String, String> _attributes = new HashMap<>();
+		private final Map<String, String> _errors = new HashMap<>();
+		private boolean _ready;
+
+	}
+
+	private TalendDispatchTriggerMetadata(Builder builder) {
+		_ready = builder._ready;
+		_attributes = Collections.unmodifiableMap(builder._attributes);
+		_errors = Collections.unmodifiableMap(builder._errors);
+	}
+
+	private final Map<String, String> _attributes;
 	private final Map<String, String> _errors;
 	private final boolean _ready;
 

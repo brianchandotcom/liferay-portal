@@ -300,7 +300,7 @@ definition {
 	@description = "LPS-126047: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
 	@priority = "3"
 	test ChangeLanguageInWidgetPage {
-		property test.name.skip.portal.instance = "ContentPerformance#LanguageSelector";
+		property test.name.skip.portal.instance = "ContentPerformance#ChangeLanguageInWidgetPage";
 
 		task ("Set portal to use Localized URL") {
 			SystemSettings.openSystemSettingsAdmin();

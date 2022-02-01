@@ -147,8 +147,9 @@
 	<bean class="com.liferay.portal.kernel.service.permission.CommonPermissionUtil" id="com.liferay.portal.kernel.service.permission.CommonPermissionUtil">
 		<property name="commonPermission" ref="com.liferay.portal.kernel.service.permission.CommonPermission" />
 	</bean>
+	<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.GroupPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.GroupPermissionUtil">
-		<property name="groupPermission" ref="com.liferay.portal.service.permission.GroupPermissionImpl" />
+		<property name="groupPermission" ref="com.liferay.portal.kernel.service.permission.GroupPermission" />
 	</bean>
 	<bean class="com.liferay.portal.service.permission.OrganizationPermissionImpl" id="com.liferay.portal.kernel.service.permission.OrganizationPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil" id="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil">
@@ -344,7 +345,6 @@
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
 	<bean class="com.liferay.portal.language.UnicodeLanguageImpl" id="com.liferay.portal.language.UnicodeLanguageImpl" />
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
-	<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" id="com.liferay.portal.service.permission.GroupPermissionImpl" />
 	<bean class="com.liferay.portal.service.permission.UserPermissionImpl" id="com.liferay.portal.service.permission.UserPermissionImpl" />
 	<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" id="com.liferay.portal.servlet.BrowserSnifferImpl" />
 	<bean class="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" />

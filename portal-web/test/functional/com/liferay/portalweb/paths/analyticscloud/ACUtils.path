@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>GENERIC_BUTTON</td>
-	<td>//button[contains(@class,'button-root')and text()='${key_buttonName}']</td>
+	<td>//*[contains(@class,'button-root')and text()='${key_buttonName}']</td>
 	<td></td>
 </tr>
 <tr>

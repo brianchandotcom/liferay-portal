@@ -136,39 +136,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoColumnLocalService(
-		ExpandoColumnLocalService expandoColumnLocalService) {
-
-		_expandoColumnLocalService = expandoColumnLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoTableLocalService(
-		ExpandoTableLocalService expandoTableLocalService) {
-
-		_expandoTableLocalService = expandoTableLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-
-		_expandoValueLocalService = expandoValueLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _checkPermission(ActionRequest actionRequest)
 		throws PrincipalException {
 
@@ -249,6 +216,7 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditDispatchTalendJobArchiveMVCActionCommand.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -257,13 +225,19 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

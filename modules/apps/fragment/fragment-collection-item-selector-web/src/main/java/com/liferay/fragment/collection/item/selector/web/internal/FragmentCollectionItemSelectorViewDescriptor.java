@@ -24,6 +24,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -90,13 +91,25 @@ public class FragmentCollectionItemSelectorViewDescriptor
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
 			new FragmentCollectionNameComparator(orderByAsc);
 
-		searchContainer.setResultsAndTotal(
-			() -> FragmentCollectionServiceUtil.getFragmentCollections(
-				_fragmentCollectionItemSelectorCriterion.getGroupId(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				fragmentCollectionNameComparator),
-			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-				_fragmentCollectionItemSelectorCriterion.getGroupId()));
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		if (Validator.isNull(keywords)) {
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					_fragmentCollectionItemSelectorCriterion.getGroupId(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					fragmentCollectionNameComparator),
+				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+					_fragmentCollectionItemSelectorCriterion.getGroupId()));
+		}
+		else {
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					new long[] {_groupId}, keywords, searchContainer.getStart(),
+					searchContainer.getEnd(), fragmentCollectionNameComparator),
+				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+					_groupId, keywords));
+		}
 
 		return searchContainer;
 	}

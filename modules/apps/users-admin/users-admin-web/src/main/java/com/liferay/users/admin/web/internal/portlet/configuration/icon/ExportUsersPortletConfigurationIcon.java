@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -83,7 +83,7 @@ public class ExportUsersPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (PortalPermissionUtil.contains(
+		if (_portalPermission.contains(
 				permissionChecker, ActionKeys.EXPORT_USER)) {
 
 			return true;
@@ -117,5 +117,8 @@ public class ExportUsersPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportUsersPortletConfigurationIcon.class);
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 }

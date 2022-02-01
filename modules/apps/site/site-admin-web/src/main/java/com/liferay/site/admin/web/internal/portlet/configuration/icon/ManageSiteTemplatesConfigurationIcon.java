@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
@@ -35,6 +35,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -100,7 +101,7 @@ public class ManageSiteTemplatesConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
+		if (_portalPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				ActionKeys.ADD_LAYOUT_SET_PROTOTYPE)) {
 
@@ -112,5 +113,8 @@ public class ManageSiteTemplatesConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ManageSiteTemplatesConfigurationIcon.class);
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 }

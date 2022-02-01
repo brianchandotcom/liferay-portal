@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.LinkedHashMap;
@@ -75,7 +75,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
+		_portalPermission.check(
 			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_ENTRY);
 
 		return accountEntryLocalService.addAccountEntry(
@@ -99,7 +99,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 				permissionChecker.getCompanyId(), externalReferenceCode);
 
 		if (accountEntry == null) {
-			PortalPermissionUtil.check(
+			_portalPermission.check(
 				permissionChecker, AccountActionKeys.ADD_ACCOUNT_ENTRY);
 		}
 		else {
@@ -260,6 +260,9 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	@Reference
 	private OrganizationPermission _organizationPermission;
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

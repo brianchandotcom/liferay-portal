@@ -17,7 +17,7 @@ package com.liferay.portal.language.override.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,7 +44,7 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 	public void deletePLOEntries(String key) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		PortalPermissionUtil.check(
+		_portalPermission.check(
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		ploEntryLocalService.deletePLOEntries(
@@ -56,7 +57,7 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		PortalPermissionUtil.check(
+		_portalPermission.check(
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		return ploEntryLocalService.deletePLOEntry(
@@ -69,12 +70,15 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		PortalPermissionUtil.check(
+		_portalPermission.check(
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		ploEntryLocalService.setPLOEntries(
 			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
 			key, localizationMap);
 	}
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 }

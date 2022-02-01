@@ -22,11 +22,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -55,7 +56,7 @@ public class SystemPanelCategory extends BasePanelCategory {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (PortalPermissionUtil.contains(
+		if (_portalPermission.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			return true;
@@ -63,5 +64,8 @@ public class SystemPanelCategory extends BasePanelCategory {
 
 		return false;
 	}
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 }

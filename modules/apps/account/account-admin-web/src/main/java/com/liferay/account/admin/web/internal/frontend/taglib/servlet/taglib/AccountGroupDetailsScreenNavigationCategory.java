@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 
 import java.io.IOException;
 
@@ -80,7 +80,7 @@ public class AccountGroupDetailsScreenNavigationCategory
 		if (accountGroupDisplay.getAccountGroupId() ==
 				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
 
-			return PortalPermissionUtil.contains(
+			return portalPermission.contains(
 				PermissionCheckerFactoryUtil.create(user),
 				AccountActionKeys.ADD_ACCOUNT_GROUP);
 		}
@@ -103,5 +103,8 @@ public class AccountGroupDetailsScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
+
+	@Reference
+	protected PortalPermission portalPermission;
 
 }

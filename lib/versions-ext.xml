@@ -2027,18 +2027,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/odmg.jar</file-name>
-				<version>3.0</version>
-				<project-name>ODMG - Object Data Management Group Java Bindings</project-name>
-				<project-url>http://www.odbms.org/odmg</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<copyright-notice>Authored by David Jordan (as Java Editor of the Object Data Management Group)</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/pdfbox.jar</file-name>
 				<version>2.0.24</version>
 				<project-name>PDFBox</project-name>

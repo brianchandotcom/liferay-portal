@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -66,6 +67,11 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String[] getOrderByKeys() {
+		return new String[] {"name"};
+	}
+
+	@Override
 	public SearchContainer<FragmentCollectionContributor> getSearchContainer()
 		throws PortalException {
 
@@ -74,8 +80,22 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 				_getPortletRequest(), _portletURL, null,
 				"there-are-no-items-to-display");
 
+		searchContainer.setOrderByCol(
+			ParamUtil.getString(_httpServletRequest, "orderByCol", "name"));
+
+		boolean orderByAsc = true;
+
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
+
+		if (orderByType.equals("desc")) {
+			orderByAsc = false;
+		}
+
+		searchContainer.setOrderByType(orderByType);
+
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_getFragmentCollectionContributors();
+			_getFragmentCollectionContributors(orderByAsc);
 
 		searchContainer.setResultsAndTotal(
 			() -> ListUtil.subList(
@@ -101,7 +121,7 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 	}
 
 	private List<FragmentCollectionContributor>
-		_getFragmentCollectionContributors() {
+		_getFragmentCollectionContributors(boolean orderByAsc) {
 
 		if (_fragmentCollectionContributorTracker == null) {
 			return Collections.emptyList();
@@ -118,7 +138,7 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 		Collections.sort(
 			fragmentCollectionContributors,
 			new FragmentCollectionContributorNameComparator(
-				themeDisplay.getLocale()));
+				themeDisplay.getLocale(), orderByAsc));
 
 		return fragmentCollectionContributors;
 	}

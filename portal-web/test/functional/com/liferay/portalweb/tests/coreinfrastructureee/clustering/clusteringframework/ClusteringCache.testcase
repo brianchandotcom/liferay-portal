@@ -37,7 +37,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Session Replication Test");
+		PagesAdmin.addPublicPage(pageName = "Session Replication Test");
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
@@ -107,7 +107,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Session Replication Test");
+		PagesAdmin.addPublicPage(pageName = "Session Replication Test");
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 

@@ -17,12 +17,15 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryProtocolException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,13 +57,14 @@ import java.util.Objects;
 public class AttachmentUtil {
 
 	public static FileEntry addFileEntry(
-			Attachment attachment, long groupId, long userId,
-			UniqueFileNameProvider uniqueFileNameProvider)
+			Attachment attachment,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (Validator.isNotNull(attachment.getAttachment())) {
 			return addFileEntry(
-				attachment, groupId, userId, uniqueFileNameProvider);
+				attachment, uniqueFileNameProvider, serviceContext);
 		}
 
 		if (Validator.isNotNull(attachment.getSrc())) {
@@ -78,16 +82,17 @@ public class AttachmentUtil {
 			File file = FileUtil.createTempFile(urlConnection.getInputStream());
 
 			return _addFileEntry(
-				groupId, userId, file, attachment.getContentType(),
-				uniqueFileNameProvider);
+				file, attachment.getContentType(), uniqueFileNameProvider,
+				serviceContext);
 		}
 
 		return null;
 	}
 
 	public static FileEntry addFileEntry(
-			AttachmentBase64 attachmentBase64, long groupId, long userId,
-			UniqueFileNameProvider uniqueFileNameProvider)
+			AttachmentBase64 attachmentBase64,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String base64EncodedContent = attachmentBase64.getAttachment();
@@ -100,13 +105,14 @@ public class AttachmentUtil {
 			Base64.decode(base64EncodedContent));
 
 		return _addFileEntry(
-			groupId, userId, file, attachmentBase64.getContentType(),
-			uniqueFileNameProvider);
+			file, attachmentBase64.getContentType(), uniqueFileNameProvider,
+			serviceContext);
 	}
 
 	public static FileEntry addFileEntry(
-			AttachmentUrl attachmentUrl, long groupId, long userId,
-			UniqueFileNameProvider uniqueFileNameProvider)
+			AttachmentUrl attachmentUrl,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (Validator.isNull(attachmentUrl.getSrc())) {
@@ -117,8 +123,8 @@ public class AttachmentUtil {
 			HttpUtil.URLtoInputStream(attachmentUrl.getSrc()));
 
 		return _addFileEntry(
-			groupId, userId, file, attachmentUrl.getContentType(),
-			uniqueFileNameProvider);
+			file, attachmentUrl.getContentType(), uniqueFileNameProvider,
+			serviceContext);
 	}
 
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
@@ -153,8 +159,7 @@ public class AttachmentUtil {
 		long fileEntryId = 0;
 
 		FileEntry fileEntry = addFileEntry(
-			attachmentBase64, serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), uniqueFileNameProvider);
+			attachmentBase64, uniqueFileNameProvider, serviceContext);
 
 		if (fileEntry != null) {
 			fileEntryId = fileEntry.getFileEntryId();
@@ -208,8 +213,7 @@ public class AttachmentUtil {
 		long fileEntryId = 0;
 
 		FileEntry fileEntry = addFileEntry(
-			attachmentUrl, serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), uniqueFileNameProvider);
+			attachmentUrl, uniqueFileNameProvider, serviceContext);
 
 		if (fileEntry != null) {
 			fileEntryId = fileEntry.getFileEntryId();
@@ -264,8 +268,7 @@ public class AttachmentUtil {
 		long fileEntryId = 0;
 
 		FileEntry fileEntry = addFileEntry(
-			attachment, serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), uniqueFileNameProvider);
+			attachment, uniqueFileNameProvider, serviceContext);
 
 		if (fileEntry != null) {
 			fileEntryId = fileEntry.getFileEntryId();
@@ -305,21 +308,26 @@ public class AttachmentUtil {
 	}
 
 	private static FileEntry _addFileEntry(
-			long groupId, long userId, File file, String contentType,
-			UniqueFileNameProvider uniqueFileNameProvider)
+			File file, String contentType,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String uniqueFileName = uniqueFileNameProvider.provide(
 			file.getName(),
-			curFileName -> _exists(groupId, userId, curFileName));
+			curFileName -> _exists(
+				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+				curFileName));
 
 		if (Validator.isNull(contentType)) {
 			contentType = MimeTypesUtil.getContentType(file);
 		}
 
-		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-			groupId, userId, _TEMP_FILE_NAME, uniqueFileName, file,
-			contentType);
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			null, serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, uniqueFileName,
+			contentType, uniqueFileName, null, StringPool.BLANK, file, null,
+			null, serviceContext);
 
 		FileUtil.delete(file);
 

@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -64,6 +65,26 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	public int getFailureMessagesCount() {
 		return _failureMessages.size();
+	}
+
+	public String getFailureMessagesCSV(Locale locale) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(LanguageUtil.get(locale, "file-name"));
+		sb.append(StringPool.COMMA);
+		sb.append(LanguageUtil.get(locale, "error-message"));
+		sb.append(StringPool.NEW_LINE);
+
+		for (Map.Entry<String, String> stringStringEntry :
+				_failureMessages.entrySet()) {
+
+			sb.append(stringStringEntry.getKey());
+			sb.append(StringPool.COMMA);
+			sb.append(stringStringEntry.getValue());
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
 	}
 
 	public String getFileName() {

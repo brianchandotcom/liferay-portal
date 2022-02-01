@@ -117,12 +117,20 @@ definition {
 	}
 
 	@description = "LPS-137316 - Verify it is not possible to select an unpublished Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSelectUnpublishedObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145729 CannotSelectUnpublishedObject pending implementation
+		FormsAdmin.addForm();
 
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.viewDisplaySelectOptionNotPresent(label = "Custom Object");
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"

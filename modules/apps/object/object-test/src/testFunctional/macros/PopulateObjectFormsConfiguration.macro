@@ -137,4 +137,10 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
 	}
 
+	macro viewDisplaySelectOptionNotPresent{
+		AssertElementNotPresent(
+			key_label = "${label}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
+
 }

@@ -23,7 +23,7 @@
 <portlet:defineObjects />
 
 <%
-ClusterSampleData localData = new ClusterSampleData();
+ClusterSampleData clusterSampleData = new ClusterSampleData();
 %>
 
 <h4>Server Data:</h4>
@@ -32,32 +32,32 @@ ClusterSampleData localData = new ClusterSampleData();
 
 <ul>
 	<li>
-		<b>Computer Name:</b> <%= localData.getComputerName() %>
+		<b>Computer Name:</b> <%= clusterSampleData.getComputerName() %>
 	</li>
 	<li>
-		<b>Liferay Home:</b> <%= localData.getLiferayHome() %>
+		<b>Liferay Home:</b> <%= clusterSampleData.getLiferayHome() %>
 	</li>
 	<li>
-		<b>Current timestamp:</b> <%= localData.getTimestamp() %>
+		<b>Current timestamp:</b> <%= clusterSampleData.getTimestamp() %>
 	</li>
 </ul>
 
 <h4>Session Data:</h4>
 
 <%
-ClusterSampleData sessionData = (ClusterSampleData)portletSession.getAttribute("data");
+ClusterSampleData portletSessionClusterSampleData = (ClusterSampleData)portletSession.getAttribute(ClusterSampleData.class.getName());
 %>
 
 <c:choose>
-	<c:when test="<%= sessionData != null %>">
+	<c:when test="<%= portletSessionClusterSampleData != null %>">
 		<p>Following data is stored in the portlet session:</p>
 
 		<ul>
 			<li>
-				<b>Stored data:</b> <%= sessionData.getData() %>
+				<b>Stored Data:</b> <%= portletSessionClusterSampleData.getData() %>
 			</li>
 			<li>
-				<b>Stored timestamp:</b> <%= sessionData.getTimestamp() %>
+				<b>Stored Timestamp:</b> <%= portletSessionClusterSampleData.getTimestamp() %>
 			</li>
 		</ul>
 
@@ -65,19 +65,19 @@ ClusterSampleData sessionData = (ClusterSampleData)portletSession.getAttribute("
 
 		<ul>
 			<li>
-				<b>Computer Name:</b> <%= sessionData.getComputerName() %>
+				<b>Computer Name:</b> <%= portletSessionClusterSampleData.getComputerName() %>
 			</li>
 			<li>
-				<b>Liferay Home:</b> <%= sessionData.getLiferayHome() %>
+				<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
 			</li>
 		</ul>
 	</c:when>
 	<c:otherwise>
 
 		<%
-		portletSession.setAttribute("data", localData);
+		portletSession.setAttribute(ClusterSampleData.class.getName(), clusterSampleData);
 		%>
 
-		<p>No session data exists, generating a new one with random string: <i><%= localData.getData() %></i></p>
+		<p>No session data exists, generating a new one with random string: <i><%= clusterSampleData.getData() %></i></p>
 	</c:otherwise>
 </c:choose>

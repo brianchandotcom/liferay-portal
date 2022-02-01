@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>STORED_DATA</td>
-	<td>//div[@class='portlet-body']/ul/li[contains(.,'Stored data')]</td>
+	<td>//div[@class='portlet-body']/ul/li[contains(.,'Stored Data')]</td>
 	<td></td>
 </tr>
 </tbody>

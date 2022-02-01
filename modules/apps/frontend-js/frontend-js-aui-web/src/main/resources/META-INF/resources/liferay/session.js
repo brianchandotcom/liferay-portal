@@ -272,17 +272,18 @@ AUI.add(
 							elapsed >= sessionLength - sessionTimeoutOffset;
 						const hasWarned = elapsed >= warningTime;
 
-						if (autoExtend && hasExpiredTimeoutOffset) {
+						if (hasExpired && sessionState !== 'expired') {
+							instance.expire();
+						}
+						else if (autoExtend && hasExpiredTimeoutOffset) {
 							instance.extend();
 						}
-
-						if (!autoExtend) {
-							if (hasExpired && sessionState !== 'expired') {
-								instance.expire();
-							}
-							else if (hasWarned && sessionState !== 'warned') {
-								instance.warn();
-							}
+						else if (
+							!autoExtend &&
+							hasWarned &&
+							sessionState !== 'warned'
+						) {
+							instance.warn();
 						}
 
 						const registered = instance._registered;

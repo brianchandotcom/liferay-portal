@@ -9,13 +9,16 @@
  * distribution rights of the Software.
  */
 
+import SlaCard from '../SlaCard';
 import ProjectContactsSkeleton from './Skeleton';
 
 const ProjectContacts = ({contact}) => {
 	return (
 		<div className="container cp-project-contacs-container mb-5 mx-0">
 			<div className="row">
-				<div className="col-5"></div>
+				<div className="col-5 pb-8">
+					<SlaCard accountKey={contact.accountKey} />
+				</div>
 
 				<div className="col-7">
 					<h5 className="mb-4 rounded-sm text-neutral-10">

@@ -102,7 +102,7 @@ const Overview = ({project, subscriptionGroups}) => {
 	}, [dispatch, project, subscriptionGroups]);
 
 	return (
-		<div className="d-flex flex-column mr-4">
+		<div className="d-flex flex-column mr-4 mt-6">
 			<h3>Subscriptions</h3>
 
 			{!!subscriptionGroupsWithSubscriptions.length && (

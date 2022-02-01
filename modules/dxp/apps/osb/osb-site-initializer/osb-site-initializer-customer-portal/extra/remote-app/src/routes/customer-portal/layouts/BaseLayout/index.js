@@ -19,6 +19,7 @@ const Layout = ({children, hasProjectContact, hasQuickLinks, project}) => {
 				{hasProjectContact && (
 					<ProjectContacts
 						contact={{
+							accountKey: project.accountKey,
 							email: project.liferayContactEmailAddress,
 							name: project.liferayContactName,
 							role: project.liferayContactRole,

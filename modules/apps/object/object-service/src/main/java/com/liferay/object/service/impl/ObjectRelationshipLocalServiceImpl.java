@@ -53,6 +53,9 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -351,8 +354,10 @@ public class ObjectRelationshipLocalServiceImpl
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), "Long"));
 
-			_objectDefinitionLocalService.deployObjectDefinition(
-				objectDefinition2);
+			if (_objectDefinitionLocalService != null) {
+				_objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition2);
+			}
 		}
 
 		return objectField;
@@ -500,8 +505,12 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 	}
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

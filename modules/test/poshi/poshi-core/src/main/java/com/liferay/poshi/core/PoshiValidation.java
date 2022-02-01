@@ -1012,10 +1012,17 @@ public class PoshiValidation {
 
 		List<Method> completeMethods = Arrays.asList(clazz.getMethods());
 
+		List<Element> childElements = element.elements();
+
 		for (Method possibleMethod : completeMethods) {
 			String possibleMethodName = possibleMethod.getName();
 
-			if (methodName.equals(possibleMethodName)) {
+			Class<?>[] methodParameterTypes =
+				possibleMethod.getParameterTypes();
+
+			if (methodName.equals(possibleMethodName) &&
+				(methodParameterTypes.length == childElements.size())) {
+
 				possibleMethods.add(possibleMethod);
 			}
 		}

@@ -52,16 +52,11 @@ function ImportForm({
 		if (dbFields && fileFields && !useTemplateMappingRef.current) {
 			const newFieldsSelection = {};
 
-			const sameFieldFound = fileFields?.filter((f) =>
-				dbFields.some((item) => item.value === f)
-			);
-
 			fileFields?.forEach((field) => {
-				if (sameFieldFound.includes(field)) {
+				newFieldsSelection[field] = null;
+
+				if (dbFields.includes(field)) {
 					newFieldsSelection[field] = field;
-				}
-				else {
-					newFieldsSelection[field] = null;
 				}
 			});
 			setFieldsSelections(newFieldsSelection);

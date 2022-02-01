@@ -23,22 +23,13 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {convertRGBtoHex} from '../../app/utils/convertRGBtoHex';
-import {getValidHexColor} from '../../app/utils/getValidHexColor';
+import {parseColorValue} from '../../app/utils/parseColorValue';
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
 import {DropdownColorPicker} from './DropdownColorPicker';
 
 import './ColorPicker.scss';
-
-const ERROR_MESSAGES = {
-	mutuallyReferenced: Liferay.Language.get(
-		'tokens-cannot-be-mutually-referenced'
-	),
-	selfReferenced: Liferay.Language.get('tokens-cannot-reference-itself'),
-	valueNotExist: Liferay.Language.get('this-token-does-not-exist'),
-};
 
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
@@ -131,72 +122,46 @@ export function ColorPicker({
 	};
 
 	const onBlurAutocompleteInput = ({target}) => {
-		const element = document.createElement('div');
-
-		Object.assign(element.style, {
-			background: target.value,
-			display: 'none',
-		});
-		document.body.appendChild(element);
-
-		const backgroundColor = element.style.background;
-
-		const isHexColor = target.value.startsWith('#');
-		let nextValue = isHexColor
-			? getValidHexColor(target.value)
-			: target.value;
-
-		if (!nextValue) {
+		if (!target.value) {
 			setColor(value);
 
 			return;
 		}
-		else if (nextValue !== value) {
+
+		if (target.value !== value) {
 			const token = tokenColorValues.find(
-				(token) => token.label.toLowerCase() === nextValue
+				(token) =>
+					token.label.toLowerCase() === target.value.toLowerCase()
 			);
 
-			if (token || isHexColor) {
-				nextValue = token?.name || nextValue;
+			const nextValue = parseColorValue({
+				editedTokenValues,
+				field,
+				token,
+				value: target.value,
+			});
 
-				if (nextValue === field.name) {
-					setError(ERROR_MESSAGES.selfReferenced);
-
-					return;
-				}
-
-				if (editedTokenValues?.[nextValue]?.name === field.name) {
-					setError(ERROR_MESSAGES.mutuallyReferenced);
-
-					return;
-				}
-
-				setTokenLabel(!isHexColor ? token.label : null);
-
-				if (isHexColor) {
-					setCustomColors([nextValue.replace('#', '')]);
-				}
-			}
-			else if (backgroundColor) {
-				setCustomColors([
-					convertRGBtoHex(
-						window.getComputedStyle(element).backgroundColor
-					),
-				]);
-
-				element.parentElement.removeChild(element);
-			}
-			else if (!backgroundColor) {
+			if (nextValue.error) {
+				setError(nextValue.error);
 				setCustomColors(['FFFFFF']);
-				setError(ERROR_MESSAGES.valueNotExist);
 
 				return;
 			}
 
-			onValueSelect(field.name, nextValue);
-		}
+			if (nextValue.value) {
+				onValueSelect(field.name, nextValue.value);
+			}
 
-		setColor(nextValue);
+			if (nextValue.label) {
+				setTokenLabel(nextValue.label);
+			}
+
+			if (nextValue.pickerColor) {
+				setCustomColors([nextValue.pickerColor]);
+			}
+
+			setColor(nextValue.color || nextValue.value || value);
+		}
 	};
 
 	const onChangeAutocompleteInput = ({target: {value}}) => {

@@ -11,7 +11,7 @@
 
 import classNames from 'classnames';
 import {useState} from 'react';
-import BaseButton from '../BaseButton';
+import {Button} from '../';
 
 const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
 	const [selectedButton, setSelectedButton] = useState(groupButtons[0].value);
@@ -23,7 +23,7 @@ const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
 			role="group"
 		>
 			{groupButtons.map(({label, value}) => (
-				<BaseButton
+				<Button
 					className={classNames('btn px-4 py-1 rounded-pill', {
 						'bg-transparent text-neutral-4':
 							selectedButton !== value,
@@ -39,7 +39,7 @@ const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
 					{...props}
 				>
 					{label}
-				</BaseButton>
+				</Button>
 			))}
 		</div>
 	);

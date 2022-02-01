@@ -148,7 +148,7 @@ const Table = ({
 				)}
 			</ClayTable>
 
-			{!!hasPagination && !!totalCount && (
+			{!!hasPagination && !!paginationConfig?.totalCount && (
 				<TablePagination
 					activePage={paginationConfig?.activePage || 1}
 					itemsPerPage={paginationConfig?.itemsPerPage || 5}

@@ -16,9 +16,9 @@ import {useEffect, useMemo, useState} from 'react';
 import {IconButton} from '../../../../common/components';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
-import {useApplicationProvider} from '../../../../common/context/ApplicationPropertiesProvider';
+import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {getCurrentEndDate} from '../../../../common/utils';
+import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../context';
 import {getPascalCase} from '../../utils/getPascalCase';
 

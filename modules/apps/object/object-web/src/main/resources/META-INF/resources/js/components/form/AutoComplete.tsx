@@ -17,7 +17,7 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import CustomSelect from '../custom-select/CustomSelect';
+import CustomSelect from '../CustomSelect/CustomSelect';
 import ErrorFeedback from './ErrorFeedback';
 import FeedbackMessage from './FeedbackMessage';
 import RequiredMask from './RequiredMask';

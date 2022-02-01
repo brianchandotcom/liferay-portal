@@ -26,10 +26,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -97,11 +101,38 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
 			_getFragmentCollectionContributors(orderByAsc);
 
-		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				fragmentCollectionContributors, searchContainer.getStart(),
-				searchContainer.getEnd()),
-			fragmentCollectionContributors.size());
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		if (Validator.isNull(keywords)) {
+			searchContainer.setResultsAndTotal(
+				() -> ListUtil.subList(
+					fragmentCollectionContributors, searchContainer.getStart(),
+					searchContainer.getEnd()),
+				fragmentCollectionContributors.size());
+		}
+		else {
+			Stream<FragmentCollectionContributor> stream =
+				fragmentCollectionContributors.stream();
+
+			List<FragmentCollectionContributor>
+				filteredFragmentCollectionContributors = stream.filter(
+					fragmentCollectionContributor -> {
+						String lowerCaseName = StringUtil.toLowerCase(
+							fragmentCollectionContributor.getName());
+
+						return lowerCaseName.contains(
+							StringUtil.toLowerCase(keywords));
+					}
+				).collect(
+					Collectors.toList()
+				);
+
+			searchContainer.setResultsAndTotal(
+				() -> ListUtil.subList(
+					filteredFragmentCollectionContributors,
+					searchContainer.getStart(), searchContainer.getEnd()),
+				filteredFragmentCollectionContributors.size());
+		}
 
 		return searchContainer;
 	}

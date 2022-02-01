@@ -23,12 +23,52 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify it is possible to display a specific entry of Clob type for a specific Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaySpecificEntryClob {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145765 DisplaySpecificEntryClob pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "We make it possible for people to reach their full potential to serve others.");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Blank Page");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "We make it possible for people to reach their full potential to serve others.");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Page");
+
+		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "We make it possible for people to reach their full potential to serve others.");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
@@ -90,8 +130,6 @@ definition {
 			pageName = "Blank Page");
 
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Entry Test");
-
-		
 	}
 
 }

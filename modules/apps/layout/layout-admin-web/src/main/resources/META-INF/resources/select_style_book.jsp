@@ -19,6 +19,7 @@
 <%
 boolean editableMasterLayout = ParamUtil.getBoolean(request, "editableMasterLayout");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectStyleBook");
+long styleBookEntryId = ParamUtil.getLong(request, "styleBookEntryId");
 
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
 
@@ -38,7 +39,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 		<li class="card-page-item card-page-item-asset">
 			<div class="form-check form-check-card">
 				<clay:vertical-card
-					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest) %>"
+					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest, Objects.equals(styleBookEntryId, 0L)) %>"
 				/>
 			</div>
 		</li>
@@ -50,7 +51,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 			<li class="card-page-item card-page-item-asset">
 				<div class="form-check form-check-card">
 					<clay:vertical-card
-						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest) %>"
+						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest, Objects.equals(styleBookEntry.getStyleBookEntryId(), styleBookEntryId)) %>"
 					/>
 				</div>
 			</li>

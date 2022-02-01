@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {createRenderURL, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps,
@@ -23,6 +23,10 @@ export default function propsTransformer({
 		...props,
 		onClick() {
 			const {url} = additionalProps;
+
+			const renderURL = createRenderURL(url, {
+				masterLayoutPlid: getSelectedMasterLayoutPlid(portletNamespace),
+			});
 
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('done'),
@@ -72,8 +76,16 @@ export default function propsTransformer({
 				},
 				selectEventName: `${portletNamespace}selectMasterLayout`,
 				title: Liferay.Language.get('select-master'),
-				url,
+				url: renderURL.toString(),
 			});
 		},
 	};
+}
+
+function getSelectedMasterLayoutPlid(portletNamespace) {
+	const masterLayoutPlidInput = document.getElementById(
+		`${portletNamespace}masterLayoutPlid`
+	);
+
+	return masterLayoutPlidInput ? masterLayoutPlidInput.value : 0;
 }

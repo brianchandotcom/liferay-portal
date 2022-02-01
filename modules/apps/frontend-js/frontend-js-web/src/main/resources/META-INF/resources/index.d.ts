@@ -28,7 +28,7 @@ export function delegate(
 	eventName: string,
 	selector: string,
 	callback: (event: any) => void
-): () => void;
+): {dispose: () => void};
 
 export class AOP {
 

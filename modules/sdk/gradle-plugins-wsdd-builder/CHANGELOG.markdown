@@ -1,5 +1,12 @@
 # Liferay Gradle Plugins WSDD Builder Change Log
 
+## 1.0.17 - 2021-05-18
+
+### Commits
+- [COMMERCE-4584] Fix buildWSDD (9928360b66)
+- [LPS-105380] Partial revert (aafd3818ae)
+- [LPS-105380] Auto SF, XMLDTDVersionCheck (a7cb83d66b)
+
 ## 1.0.16 - 2020-11-02
 
 ### Commits
@@ -240,6 +247,7 @@ resolution (5343a0699e)
 - [LPS-51081] Use Gradle utilities (be5dfc70dc)
 - [LPS-51081] Rename (0285936b82)
 
+[COMMERCE-4584]: https://issues.liferay.com/browse/COMMERCE-4584
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-55043]: https://issues.liferay.com/browse/LPS-55043

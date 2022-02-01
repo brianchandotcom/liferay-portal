@@ -1,5 +1,14 @@
 # Liferay Gradle Plugins CSS Builder Change Log
 
+## 5.0.2 - 2021-05-25
+
+### Commits
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (e2ecb543ee)
+- [LPS-130505] SF, no need to call methods (fd9b92bc08)
+
+### Dependencies
+- [LPS-132730] Update the com.liferay.css.builder dependency to version 3.0.3.
+
 ## 5.0.1 - 2020-11-02
 
 ### Commits
@@ -602,5 +611,7 @@ version 2.4.
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-122393]: https://issues.liferay.com/browse/LPS-122393
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-132730]: https://issues.liferay.com/browse/LPS-132730
 [LRDOCS-3956]: https://issues.liferay.com/browse/LRDOCS-3956
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

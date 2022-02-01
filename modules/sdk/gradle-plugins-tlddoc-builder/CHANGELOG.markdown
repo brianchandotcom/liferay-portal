@@ -1,5 +1,18 @@
 # Liferay Gradle Plugins TLDDoc Builder Change Log
 
+## 1.3.8 - 2021-03-16
+
+### Commits
+- [LPS-105380] Partial revert (b333b86a75)
+
+## 1.3.7 - 2021-03-11
+
+### Commits
+- [LPS-105380] rename (de9faa2d3e)
+- [LPS-84621] Test (b1257fdfe4)
+- [LPS-84621] Check local definition files (f7f3cbd44c)
+- [LPS-105380] Inline (e47639f436)
+
 ## 1.3.6 - 2020-11-02
 
 ### Commits

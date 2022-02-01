@@ -1,5 +1,10 @@
 # Liferay Gradle Plugins Patcher Change Log
 
+## 1.0.20 - 2021-04-07
+
+### Commits
+- [LPS-130119] Fix patch task (8492e06409)
+
 ## 1.0.19 - 2020-11-02
 
 ### Commits
@@ -272,4 +277,5 @@ version 2.4.
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130119]: https://issues.liferay.com/browse/LPS-130119
 [LRQA-19302]: https://issues.liferay.com/browse/LRQA-19302

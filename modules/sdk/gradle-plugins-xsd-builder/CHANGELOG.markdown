@@ -1,5 +1,10 @@
 # Liferay Gradle Plugins XSD Builder Change Log
 
+## 1.0.11 - 2021-05-12
+
+### Commits
+- [LPS-53967] Remove version suffix from jar (8977c6839d)
+
 ## 1.0.10 - 2020-11-02
 
 ### Commits
@@ -180,6 +185,7 @@ version 2.4.
 
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
+[LPS-53967]: https://issues.liferay.com/browse/LPS-53967
 [LPS-55187]: https://issues.liferay.com/browse/LPS-55187
 [LPS-58467]: https://issues.liferay.com/browse/LPS-58467
 [LPS-59564]: https://issues.liferay.com/browse/LPS-59564

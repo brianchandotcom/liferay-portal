@@ -1,5 +1,22 @@
 # Liferay Gradle Plugins Jasper JSPC Change Log
 
+## 2.0.13 - 2021-06-21
+
+### Commits
+- [LPS-134306] Sort (634259c2e9)
+
+## 2.0.12 - 2021-06-17
+
+### Commits
+- [LPS-134306] Disable tag pooling in precompiled jsps (380d4ebed2)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (d4477c5996)
+- [LPS-130505] SF, no need to call methods (54557cd107)
+
+## 2.0.11 - 2021-03-30
+
+### Commits
+- [LPS-129870] Exclude com.liferay.portal dependencies (f8b8323c67)
+
 ## 2.0.10 - 2020-11-02
 
 ### Commits
@@ -316,4 +333,7 @@ are closures, they will be evaluated while running the tasks (b6cddc02e0)
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-129870]: https://issues.liferay.com/browse/LPS-129870
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-134306]: https://issues.liferay.com/browse/LPS-134306
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

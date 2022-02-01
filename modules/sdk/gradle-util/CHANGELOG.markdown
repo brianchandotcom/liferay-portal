@@ -1,5 +1,18 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.46 - 2021-12-29
+
+### Commits
+- [LRCI-2670] Fix npe (0be52938df)
+
+## 1.0.45 - 2021-12-02
+
+### Commits
+- [LPS-143280] use arm arch (81c79fa7db)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (a8fc61bb0e)
+- [LPS-130505] SF, no need to call methods (877d6175a9)
+- [LPS-105380] Inline (e47639f436)
+
 ## 1.0.44 - 2020-11-02
 
 ### Commits
@@ -350,3 +363,6 @@ up-to-date check (59fd9e696c)
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

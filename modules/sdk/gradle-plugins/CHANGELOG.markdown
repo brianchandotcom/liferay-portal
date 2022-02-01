@@ -1,5 +1,1845 @@
 # Liferay Gradle Plugins Change Log
 
+## 13.2.126 - 2022-01-25
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.92.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1194.
+
+## 13.2.125 - 2022-01-21
+
+### Dependencies
+- [LPS-143628] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.91.
+- [LPS-143628] Update the com.liferay.source.formatter dependency to version
+1.0.1193.
+
+## 13.2.124 - 2022-01-14
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.90.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1192.
+
+## 13.2.123 - 2022-01-13
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.89.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1191.
+
+## 13.2.122 - 2022-01-13
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.88.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1190.
+
+## 13.2.121 - 2022-01-12
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.87.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1189.
+
+## 13.2.120 - 2022-01-12
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.86.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1188.
+
+## 13.2.119 - 2022-01-11
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.85.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1187.
+
+## 13.2.118 - 2022-01-09
+
+### Dependencies
+- [LPS-144888] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.84.
+- [LPS-144888] Update the com.liferay.source.formatter dependency to version
+1.0.1186.
+
+## 13.2.117 - 2022-01-09
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.83.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1185.
+
+## 13.2.116 - 2022-01-05
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.82.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1184.
+
+## 13.2.115 - 2022-01-04
+
+### Commits
+- [LPS-105380] prep nex (797e97c019)
+- [LPS-105380] prep nex (14d262d642)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.81.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1183.
+
+## 13.2.114 - 2022-01-04
+
+### Dependencies
+- [LPS-141109] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.80.
+- [LPS-141109] Update the com.liferay.source.formatter dependency to version
+1.0.1182.
+
+## 13.2.113 - 2022-01-03
+
+### Commits
+- [LPS-144756] sort (b8972fb2d1)
+- [LPS-144756] rename (ef10370e56)
+- [LPS-144756] yarn/npm now requires access token to publish (5f10d18aa9)
+
+### Dependencies
+- [LPS-144756] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.14.
+
+## 13.2.112 - 2022-01-03
+
+### Dependencies
+- [LPS-144575] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.13.
+
+## 13.2.111 - 2022-01-03
+
+### Dependencies
+- [LPS-144575] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.12.
+
+## 13.2.110 - 2021-12-30
+
+### Dependencies
+- [LRCI-2605] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.79.
+- [LRCI-2605] Update the com.liferay.source.formatter dependency to version
+1.0.1181.
+
+## 13.2.109 - 2021-12-29
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+
+## 13.2.108 - 2021-12-29
+
+### Dependencies
+- [LPS-144176] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.101.
+- [LPS-144176] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.224.
+
+## 13.2.106 - 2021-12-29
+
+### Commits
+- [LPS-105380] Remove argument 'show.documentation' (924225240e)
+- [LPS-105380] Remove argument 'show.status.updates' (4c9a0de5f3)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.78.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1180.
+- [LPS-144575] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.11.
+
+## 13.2.105 - 2021-12-27
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.77.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1179.
+- [LPS-144176] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.100.
+- [LPS-144176] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.223.
+
+## 13.2.104 - 2021-12-22
+
+### Dependencies
+- [POSHI-83] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.76.
+- [POSHI-83] Update the com.liferay.source.formatter dependency to version
+1.0.1178.
+
+## 13.2.103 - 2021-12-20
+
+### Dependencies
+- [LPS-138984] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.83.
+- [LPS-138984] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.411.
+
+## 13.2.102 - 2021-12-17
+
+### Commits
+- [LPS-143837] [CVE-2021] -42340 in Apache Tomcat (e3ffd8abbf)
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.75.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1177.
+
+## 13.2.101 - 2021-12-10
+
+### Dependencies
+- [LPS-143547] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.74.
+- [LPS-143547] Update the com.liferay.source.formatter dependency to version
+1.0.1176.
+
+## 13.2.100 - 2021-12-09
+
+### Dependencies
+- [LPS-143547] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.73.
+- [LPS-143547] Update the com.liferay.source.formatter dependency to version
+1.0.1175.
+
+## 13.2.99 - 2021-12-08
+
+### Dependencies
+- [LPS-143571] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.99.
+- [LPS-143571] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.222.
+
+## 13.2.97 - 2021-12-08
+
+### Dependencies
+- [LPS-143547] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.72.
+- [LPS-143547] Update the com.liferay.source.formatter dependency to version
+1.0.1174.
+- [LPS-143566] Update the com.liferay.gradle.plugins.lang.builder dependency to
+version 3.0.29.
+- [LPS-143566] Update the com.liferay.lang.builder dependency to version 1.0.46.
+- [LPS-141109] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.71.
+- [LPS-141109] Update the com.liferay.source.formatter dependency to version
+1.0.1173.
+
+## 13.2.95 - 2021-12-07
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.70.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1172.
+- [LPS-128171] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.82.
+- [LPS-128171] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.410.
+
+## 13.2.94 - 2021-12-03
+
+### Dependencies
+- [LPS-143349] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.69.
+- [LPS-143349] Update the com.liferay.source.formatter dependency to version
+1.0.1171.
+
+## 13.2.93 - 2021-12-02
+
+### Dependencies
+- [LPS-143280] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.10.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 13.2.92 - 2021-12-01
+
+### Dependencies
+- [LPS-141109] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.68.
+- [LPS-141109] Update the com.liferay.source.formatter dependency to version
+1.0.1170.
+
+## 13.2.91 - 2021-11-30
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.67.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1169.
+
+## 13.2.90 - 2021-11-24
+
+### Dependencies
+- [LPS-142622] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.98.
+- [LPS-142622] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.221.
+
+## 13.2.88 - 2021-11-18
+
+### Dependencies
+- [LPS-142738] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.97.
+- [LPS-142738] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.220.
+
+## 13.2.87 - 2021-11-17
+
+### Commits
+- [LPS-141250] - Preserve node version for 7.2 and 7.3 (2333c9d0ef)
+- [LPS-141250] - Update node and npm versions to latest LTS (af521362d4)
+
+## 13.2.85 - 2021-11-17
+
+### Commits
+- [LPS-142100] [LPS-141250] revert (eee87baefd)
+- [LPS-142100] Revert "LPS-142100 - Update node and npm versions to latest LTS"
+(5d4aafc512)
+
+### Dependencies
+- [LPS-142086] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.96.
+- [LPS-142086] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.219.
+- [LPS-142100 LPS-141250] Update the com.liferay.gradle.plugins.node dependency
+to version 7.2.9.
+
+## 13.2.84 - 2021-11-17
+
+### Commits
+- [LPS-142100] - Update node and npm versions to latest LTS (72776f6e89)
+
+### Dependencies
+- [LPS-142100] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.8.
+- [LPS-141109] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.66.
+- [LPS-141109] Update the com.liferay.source.formatter dependency to version
+1.0.1168.
+
+## 13.2.83 - 2021-11-13
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.65.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1167.
+
+## 13.2.82 - 2021-11-09
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.64.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1166.
+
+## 13.2.81 - 2021-11-09
+
+### Dependencies
+- [LPS-142231] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.63.
+- [LPS-142231] Update the com.liferay.source.formatter dependency to version
+1.0.1165.
+
+## 13.2.80 - 2021-11-08
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.62.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1164.
+
+## 13.2.79 - 2021-11-04
+
+### Commits
+- [LPS-105380] Use version 1.4.0 (a3c60a486e)
+
+### Dependencies
+- [LPS-123151] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.61.
+- [LPS-123151] Update the com.liferay.source.formatter dependency to version
+1.0.1163.
+
+## 13.2.77 - 2021-11-02
+
+### Dependencies
+- [LPS-141964] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.95.
+- [LPS-141964] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.218.
+- [LPS-129061] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.81.
+- [LPS-129061] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.217.
+
+## 13.2.75 - 2021-11-01
+
+### Dependencies
+- [LPS-141887] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.60.
+- [LPS-141887] Update the com.liferay.source.formatter dependency to version
+1.0.1162.
+- [LPS-141904] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.59.
+- [LPS-141904] Update the com.liferay.source.formatter dependency to version
+1.0.1161.
+
+## 13.2.74 - 2021-11-01
+
+### Dependencies
+- [LPS-141244] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.58.
+- [LPS-141244] Update the com.liferay.source.formatter dependency to version
+1.0.1160.
+
+## 13.2.73 - 2021-10-29
+
+### Dependencies
+- [LPS-135504] Update the com.liferay.source.formatter dependency to version
+1.0.1159.
+- [LPS-141826] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.80.
+- [LPS-141826] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.409.
+
+## 13.2.72 - 2021-10-27
+
+### Dependencies
+- [LPS-141728] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.94.
+- [LPS-141728] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.216.
+- [LPS-137358] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.57.
+- [LPS-137358] Update the com.liferay.source.formatter dependency to version
+1.0.1158.
+
+## 13.2.71 - 2021-10-26
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.56.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1157.
+- [LPS-138282] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.93.
+- [LPS-138282] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.215.
+
+## 13.2.70 - 2021-10-20
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.55.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1156.
+
+## 13.2.69 - 2021-10-19
+
+### Dependencies
+- [LPS-140947] Update the com.liferay.ant.bnd dependency to version 3.2.8.
+
+## 13.2.67 - 2021-10-14
+
+### Dependencies
+- [LPS-139732] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.79.
+- [LPS-139732] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.54.
+- [LPS-139732] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.408.
+- [LPS-139732] Update the com.liferay.source.formatter dependency to version
+1.0.1155.
+
+## 13.2.66 - 2021-10-12
+
+### Dependencies
+- [LPS-138929] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.53.
+- [LPS-138929] Update the com.liferay.source.formatter dependency to version
+1.0.1154.
+
+## 13.2.65 - 2021-10-11
+
+### Commits
+- [LPS-105380] Combine calls using String.valueOf (69cb30ad69)
+
+### Dependencies
+- [LPS-136723] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.52.
+- [LPS-136723] Update the com.liferay.source.formatter dependency to version
+1.0.1153.
+
+## 13.2.64 - 2021-10-07
+
+### Commits
+- [LPS-139835] Make node version unifying in gradle plugins sdk (bb6197fedd)
+
+## 13.2.63 - 2021-10-05
+
+### Dependencies
+- [LPS-139820 LPS-140025] Update the com.liferay.gradle.plugins.rest.builder
+dependency to version 1.1.92.
+- [LPS-139820 LPS-140025] Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.214.
+
+## 13.2.62 - 2021-10-01
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.51.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1152.
+- [LPS-139732] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.78.
+- [LPS-139732] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.407.
+
+## 13.2.61 - 2021-10-01
+
+### Dependencies
+- [LPS-140117] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.91.
+- [LPS-140117] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.213.
+
+## 13.2.60 - 2021-09-30
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.50.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1151.
+
+## 13.2.59 - 2021-09-29
+
+### Commits
+- [LPS-138487] republish (03764ac72b)
+
+### Dependencies
+- [LPS-138673] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.49.
+- [LPS-138673] Update the com.liferay.source.formatter dependency to version
+1.0.1150.
+- [LPS-138487] Update the com.liferay.gradle.plugins.lang.builder dependency to
+version 3.0.28.
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.45.
+
+## 13.2.58 - 2021-09-29
+
+### Dependencies
+- [LPS-136753] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.77.
+- [LPS-136753] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.406.
+
+## 13.2.57 - 2021-09-25
+
+### Commits
+- [LPS-135481] Update tomcat version to 9.0.53 (93b1d8845d)
+
+### Dependencies
+- [LPS-139820] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.90.
+- [LPS-139820] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.212.
+
+## 13.2.56 - 2021-09-21
+
+### Dependencies
+- [LPS-139567] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.89.
+- [LPS-139567] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.211.
+
+## 13.2.55 - 2021-09-21
+
+### Dependencies
+- [LPS-139567] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.88.
+- [LPS-139567] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.210.
+
+## 13.2.54 - 2021-09-20
+
+### Dependencies
+- [COMMERCE-7217] Update the com.liferay.gradle.plugins.rest.builder dependency
+to version 1.1.87.
+- [COMMERCE-7217] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.209.
+
+## 13.2.53 - 2021-09-18
+
+### Dependencies
+- [COMMERCE-7217] Update the com.liferay.gradle.plugins.rest.builder dependency
+to version 1.1.86.
+- [COMMERCE-7217] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.208.
+
+## 13.2.52 - 2021-09-17
+
+### Dependencies
+- [COMMERCE-7217] Update the com.liferay.gradle.plugins.rest.builder dependency
+to version 1.1.85.
+- [COMMERCE-7217] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.207.
+
+## 13.2.51 - 2021-09-17
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.48.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1149.
+
+## 13.2.50 - 2021-09-16
+
+### Dependencies
+- [LPS-136753] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.76.
+- [LPS-136753] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.405.
+
+## 13.2.49 - 2021-09-16
+
+### Dependencies
+- [LPS-139275] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.84.
+- [LPS-139275] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.206.
+
+## 13.2.48 - 2021-09-15
+
+### Commits
+- [LPS-138183] Do not set liferay.mode in gradle (49355b8ba4)
+
+### Dependencies
+- [LPS-105380 LPS-139310] Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 5.1.47.
+- [LPS-105380 LPS-139310] Update the com.liferay.source.formatter dependency to
+version 1.0.1148.
+
+## 13.2.47 - 2021-09-10
+
+### Dependencies
+- [LPS-138087] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.83.
+- [LPS-138087] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.205.
+
+## 13.2.46 - 2021-09-08
+
+### Dependencies
+- [LPS-138909] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.82.
+- [LPS-138909] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.204.
+
+## 13.2.45 - 2021-09-07
+
+### Dependencies
+- [LPS-138487 LPS-138131] Update the com.liferay.gradle.plugins.service.builder
+dependency to version 4.0.75.
+- [LPS-138487 LPS-138131] Update the com.liferay.portal.tools.service.builder
+dependency to version 1.0.404.
+- [LPS-138487] Update the com.liferay.gradle.plugins.lang.builder dependency to
+version 3.0.27.
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.44.
+
+## 13.2.44 - 2021-09-03
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.46.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1147.
+- [LPS-138487] Update the com.liferay.gradle.plugins.lang.builder dependency to
+version 3.0.26.
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.43.
+
+## 13.2.43 - 2021-09-03
+
+### Dependencies
+- [LPS-137974] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.74.
+- [LPS-137974] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.403.
+
+## 13.2.42 - 2021-09-02
+
+### Dependencies
+- [LPS-138282] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.81.
+- [LPS-138282] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.203.
+
+## 13.2.41 - 2021-09-02
+
+### Dependencies
+- [LPS-138282] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.80.
+- [LPS-138282] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.202.
+
+## 13.2.40 - 2021-09-01
+
+### Dependencies
+- [LPS-137720] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.45.
+- [LPS-137720] Update the com.liferay.source.formatter dependency to version
+1.0.1146.
+- [LPS-137720] Update the com.liferay.source.formatter dependency to version
+1.0.1145.
+
+## 13.2.39 - 2021-09-01
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.73.
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.402.
+
+## 13.2.38 - 2021-09-01
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.72.
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.401.
+
+## 13.2.37 - 2021-08-31
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.71.
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.400.
+
+## 13.2.36 - 2021-08-31
+
+### Dependencies
+- [LPS-138373] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.70.
+- [LPS-138373] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.399.
+
+## 13.2.35 - 2021-08-31
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.43.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1144.
+
+## 13.2.34 - 2021-08-30
+
+### Dependencies
+- [LPS-137359] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.79.
+- [LPS-137359] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.201.
+
+## 13.2.33 - 2021-08-25
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.42.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1143.
+
+## 13.2.32 - 2021-08-25
+
+### Dependencies
+- [LPS-133366] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.69.
+- [LPS-133366] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.398.
+
+## 13.2.31 - 2021-08-25
+
+### Dependencies
+- [LPS-137961] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.78.
+- [LPS-137961] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.200.
+
+## 13.2.30 - 2021-08-24
+
+### Dependencies
+- [LPS-137961] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.77.
+- [LPS-137961] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.199.
+
+## 13.2.29 - 2021-08-24
+
+### Dependencies
+- [LPS-130748] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.41.
+- [LPS-130748] Update the com.liferay.source.formatter dependency to version
+1.0.1142.
+- [LPS-130748] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.40.
+- [LPS-130748] Update the com.liferay.source.formatter dependency to version
+1.0.1141.
+
+## 13.2.28 - 2021-08-24
+
+### Dependencies
+- [LPS-136445] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.39.
+- [LPS-136445] Update the com.liferay.source.formatter dependency to version
+1.0.1140.
+
+## 13.2.27 - 2021-08-23
+
+### Dependencies
+- [LPS-136445] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.68.
+- [LPS-136445] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.397.
+
+## 13.2.25 - 2021-08-23
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.38.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1139.
+
+## 13.2.24 - 2021-08-23
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.37.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1138.
+
+## 13.2.23 - 2021-08-23
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.36.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1137.
+- [LPS-137707] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.35.
+- [LPS-137707] Update the com.liferay.source.formatter dependency to version
+1.0.1136.
+
+## 13.2.21 - 2021-08-23
+
+### Dependencies
+- [LPS-137802] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.76.
+- [LPS-137802] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.198.
+- [LPS-137585] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.75.
+- [LPS-137585] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.197.
+
+## 13.2.20 - 2021-08-22
+
+### Dependencies
+- [LPS-137772] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.74.
+- [LPS-137772] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.196.
+
+## 13.2.19 - 2021-08-20
+
+### Commits
+- [LPS-105380] Remove final from parameters (a4e6ca0985)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Revert "LPS-105380 Remove final from parameters" (b2f9eed2c2)
+
+### Dependencies
+- [LPS-133366] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.67.
+- [LPS-133366] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.396.
+
+## 13.2.18 - 2021-08-16
+
+### Commits
+- [LPS-105380] Remove final from parameters (f615ff77ff)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.34.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1135.
+
+## 13.2.17 - 2021-08-13
+
+### Dependencies
+- [LPS-134931] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.66.
+- [LPS-134931] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.395.
+
+## 13.2.16 - 2021-08-13
+
+### Dependencies
+- [LPS-92634] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.73.
+- [LPS-92634] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.195.
+
+## 13.2.15 - 2021-08-12
+
+### Dependencies
+- [LPS-137288] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.72.
+- [LPS-137288] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.194.
+
+## 13.2.14 - 2021-08-10
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.33.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1134.
+
+## 13.2.13 - 2021-08-09
+
+### Dependencies
+- [LPS-137109] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.65.
+- [LPS-137109] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.394.
+
+## 13.2.11 - 2021-08-09
+
+### Dependencies
+- [LPS-137074] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.64.
+- [LPS-137074] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.393.
+- [LPS-136864] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.32.
+- [LPS-136864] Update the com.liferay.source.formatter dependency to version
+1.0.1133.
+- [LPS-137074] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.63.
+- [LPS-137074] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.392.
+
+## 13.2.9 - 2021-08-06
+
+### Dependencies
+- [LPS-92634] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.71.
+- [LPS-92634] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.193.
+- [LPS-92634] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.70.
+
+## 13.2.8 - 2021-08-06
+
+### Dependencies
+- [LPS-92634] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.69.
+- [LPS-92634] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.192.
+- [] Update the com.liferay.whip dependency to version 1.0.3.
+
+## 13.2.7 - 2021-08-02
+
+### Dependencies
+- [LPS-136543 LPS-136542] Update the com.liferay.gradle.plugins.rest.builder
+dependency to version 1.1.68.
+- [LPS-136543 LPS-136542] Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.191.
+- [LPS-136308] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.31.
+- [LPS-136308] Update the com.liferay.source.formatter dependency to version
+1.0.1132.
+
+## 13.2.6 - 2021-07-27
+
+### Dependencies
+- [LPS-135184] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.67.
+- [LPS-135184] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.190.
+
+## 13.2.5 - 2021-07-26
+
+### Dependencies
+- [LPS-136163] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.66.
+- [LPS-136163] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.189.
+
+## 13.2.4 - 2021-07-23
+
+### Dependencies
+- [LPS-124112] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.65.
+- [LPS-124112] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.188.
+- [LPS-136078] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.30.
+- [LPS-136078] Update the com.liferay.source.formatter dependency to version
+1.0.1131.
+
+## 13.2.3 - 2021-07-19
+
+### Dependencies
+- [LPS-135818] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.29.
+- [LPS-135818] Update the com.liferay.source.formatter dependency to version
+1.0.1130.
+
+## 13.2.2 - 2021-07-14
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.28.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1129.
+
+## 13.2.1 - 2021-07-14
+
+### Dependencies
+- [LPS-135644] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.64.
+- [LPS-135644] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.187.
+
+## 13.1.91 - 2021-07-12
+
+### Commits
+- [LPS-135498] Add WEB-INF/shielded-container-lib to classpath (6b4907ef62)
+- [LPS-135498] Configure app servers (457953e437)
+
+## 13.1.90 - 2021-07-12
+
+### Dependencies
+- [LPS-135368] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.63.
+- [LPS-135368] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.186.
+
+## 13.1.89 - 2021-07-12
+
+### Dependencies
+- [LPS-135081] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.27.
+- [LPS-135081] Update the com.liferay.source.formatter dependency to version
+1.0.1128.
+- [LPS-134886] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.62.
+- [LPS-134886] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.391.
+
+## 13.1.88 - 2021-07-08
+
+### Dependencies
+- [LPS-135276] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.61.
+- [LPS-135276] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.390.
+
+## 13.1.87 - 2021-07-05
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.26.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1127.
+
+## 13.1.86 - 2021-07-01
+
+### Dependencies
+- [LPS-135064] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.60.
+- [LPS-135064] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.389.
+
+## 13.1.85 - 2021-07-01
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.25.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1126.
+
+## 13.1.84 - 2021-06-30
+
+### Dependencies
+- [COMMERCE-6834] Update the com.liferay.gradle.plugins.rest.builder dependency
+to version 1.1.62.
+- [COMMERCE-6834] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.185.
+
+## 13.1.83 - 2021-06-29
+
+### Dependencies
+- [LPS-134931] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.59.
+- [LPS-134931] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.388.
+
+## 13.1.81 - 2021-06-29
+
+### Commits
+- [LPS-134486] Update xstream to 1.4.17 (15a8134cfd)
+
+### Dependencies
+- [LPS-132761] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.61.
+- [LPS-132761] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.184.
+
+## 13.1.80 - 2021-06-28
+
+### Dependencies
+- [LPS-134165] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.58.
+- [LPS-134165] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.387.
+
+## 13.1.79 - 2021-06-28
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.24.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1125.
+
+## 13.1.78 - 2021-06-21
+
+### Dependencies
+- [LPS-105380 LPS-134306] Update the com.liferay.gradle.plugins.jasper.jspc
+dependency to version 2.0.13.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.23.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1124.
+
+## 13.1.77 - 2021-06-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.22.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1123.
+
+## 13.1.76 - 2021-06-17
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.21.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1122.
+- [LPS-134306] Update the com.liferay.gradle.plugins.jasper.jspc dependency to
+version 2.0.12.
+
+## 13.1.75 - 2021-06-15
+
+### Dependencies
+- [LPS-134121] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.60.
+- [LPS-134121] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.183.
+
+## 13.1.74 - 2021-06-11
+
+### Commits
+- [LPS-133987] JspAnalyzerPlugin does not know how to parse JSPX syntax for
+taglibs (58aaed5e1d)
+
+### Dependencies
+- [LPS-133987] Update the com.liferay.ant.bnd dependency to version 3.2.7.
+
+## 13.1.72 - 2021-06-10
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.20.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1121.
+
+## 13.1.71 - 2021-06-06
+
+### Dependencies
+- [LPS-132587] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.57.
+- [LPS-132587] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.386.
+
+## 13.1.70 - 2021-06-04
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.19.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1120.
+
+## 13.1.69 - 2021-06-01
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.18.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1119.
+
+## 13.1.68 - 2021-05-26
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.59.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.17.
+- [LPS-105380] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.182.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1118.
+
+## 13.1.67 - 2021-05-26
+
+### Dependencies
+- [LPS-132587] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.56.
+- [LPS-132587] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.385.
+
+## 13.1.66 - 2021-05-25
+
+### Dependencies
+- [LPS-129532] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.16.
+- [LPS-129532] Update the com.liferay.source.formatter dependency to version
+1.0.1117.
+
+## 13.1.65 - 2021-05-25
+
+### Dependencies
+- [LPS-132730] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.2.
+- [LPS-132730] Update the com.liferay.css.builder dependency to version 3.0.3.
+
+## 13.1.64 - 2021-05-24
+
+### Dependencies
+- [LPS-132448] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.55.
+- [LPS-132448] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.384.
+
+## 13.1.63 - 2021-05-24
+
+### Dependencies
+- [LPS-106149] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.7.
+
+## 13.1.62 - 2021-05-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.15.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1116.
+
+## 13.1.61 - 2021-05-18
+
+### Commits
+- [LPS-131906] regen (4fc08f3778)
+
+### Dependencies
+- [LPS-131887] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.14.
+- [LPS-131887] Update the com.liferay.source.formatter dependency to version
+1.0.1115.
+- [COMMERCE-4584] Update the com.liferay.gradle.plugins.wsdd.builder dependency
+to version 1.0.17.
+- [LPS-131906] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.58.
+- [LPS-131906] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.181.
+
+## 13.1.60 - 2021-05-12
+
+### Dependencies
+- [LPS-129260] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.13.
+- [LPS-129260] Update the com.liferay.source.formatter dependency to version
+1.0.1114.
+
+## 13.1.59 - 2021-05-12
+
+### Dependencies
+- [LPS-105380 LPS-119446] Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 5.1.12.
+- [LPS-105380 LPS-119446] Update the com.liferay.source.formatter dependency to
+version 1.0.1113.
+- [LPS-53967] Update the com.liferay.gradle.plugins.xsd.builder dependency to
+version 1.0.11.
+
+## 13.1.58 - 2021-05-11
+
+### Dependencies
+- [LPS-129061] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.57.
+- [LPS-129061] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.180.
+
+## 13.1.57 - 2021-05-10
+
+### Dependencies
+- [LPS-131904] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.56.
+- [LPS-131904] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.179.
+
+## 13.1.56 - 2021-05-10
+
+### Dependencies
+- [LPS-129061] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.55.
+- [LPS-129061] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.178.
+
+## 13.1.55 - 2021-05-08
+
+### Dependencies
+- [LPS-129061] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.54.
+- [LPS-129061] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.177.
+
+## 13.1.54 - 2021-05-06
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.11.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1112.
+- [LPS-131629] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.53.
+- [LPS-131629] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.176.
+
+## 13.1.53 - 2021-05-04
+
+### Dependencies
+- [LPS-131506] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.52.
+- [LPS-131506] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.175.
+
+## 13.1.52 - 2021-05-04
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.10.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1111.
+- [LPS-131277] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.51.
+- [LPS-131277] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.174.
+
+## 13.1.51 - 2021-04-29
+
+### Dependencies
+- [LPS-131175] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.8.
+- [LPS-131175] Update the com.liferay.source.formatter dependency to version
+1.0.1110.
+
+## 13.1.50 - 2021-04-28
+
+### Dependencies
+- [LPS-131251] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.54.
+- [LPS-131251] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.383.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.7.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1109.
+
+## 13.1.49 - 2021-04-27
+
+### Dependencies
+- [LPS-129061] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.50.
+- [LPS-129061] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.173.
+
+## 13.1.48 - 2021-04-26
+
+### Commits
+- [LPS-130505] reverted, republish (a1551030f2)
+- [LPS-130505] reverted, republish (465fa2545b)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (a8fc61bb0e)
+
+### Dependencies
+- [LPS-130505] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.6.
+- [LPS-130505] Update the com.liferay.source.formatter dependency to version
+1.0.1108.
+
+## 13.1.47 - 2021-04-24
+
+### Dependencies
+- [LPS-131092] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.53.
+- [LPS-131092] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.382.
+
+## 13.1.46 - 2021-04-23
+
+### Dependencies
+- [LPS-130475] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.49.
+- [LPS-130475] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.172.
+- [LPS-130920] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.5.
+- [LPS-130920] Update the com.liferay.source.formatter dependency to version
+1.0.1107.
+
+## 13.1.45 - 2021-04-22
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.4.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1106.
+
+## 13.1.44 - 2021-04-21
+
+### Dependencies
+- [LPS-130794] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.48.
+- [LPS-130794] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.171.
+
+## 13.1.43 - 2021-04-20
+
+### Commits
+- [LPS-130505] SF, no need to call methods (877d6175a9)
+
+### Dependencies
+- [LPS-130756] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.47.
+- [LPS-130756] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.170.
+
+## 13.1.42 - 2021-04-19
+
+### Commits
+- [LPS-119446] regen REST Builder (f061107c01)
+
+### Dependencies
+- [LPS-119446] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.46.
+- [LPS-119446] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.169.
+
+## 13.1.41 - 2021-04-19
+
+### Dependencies
+- [LPS-119446] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.3.
+- [LPS-119446] Update the com.liferay.source.formatter dependency to version
+1.0.1105.
+
+## 13.1.40 - 2021-04-19
+
+### Dependencies
+- [LPS-119446] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.2.
+- [LPS-119446] Update the com.liferay.source.formatter dependency to version
+1.0.1104.
+
+## 13.1.39 - 2021-04-16
+
+### Dependencies
+- [LPS-130744] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.1.
+- [LPS-130744] Update the com.liferay.source.formatter dependency to version
+1.0.1103.
+
+## 13.1.38 - 2021-04-15
+
+### Commits
+- [LPS-105380] Sync ant and gradle options for sourceFormatter (a450061682)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1102.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.1.0.
+
+## 13.1.37 - 2021-04-14
+
+### Dependencies
+- [LPS-130568] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.45.
+- [LPS-130568] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.168.
+
+## 13.1.36 - 2021-04-12
+
+### Dependencies
+- [LPS-130464] Update the com.liferay.gradle.plugins.lang.builder dependency to
+version 3.0.25.
+- [LPS-130464] Update the com.liferay.lang.builder dependency to version 1.0.42.
+
+## 13.1.35 - 2021-04-09
+
+### Dependencies
+- [LPS-129722] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.52.
+- [LPS-129722] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.381.
+
+## 13.1.34 - 2021-04-07
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.29.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1101.
+
+## 13.1.33 - 2021-04-07
+
+### Dependencies
+- [LPS-130119] Update the com.liferay.source.formatter dependency to version
+1.0.1100.
+- [LPS-129842] Update the com.liferay.source.formatter dependency to version
+1.0.1099.
+
+## 13.1.32 - 2021-04-02
+
+### Dependencies
+- [LPS-129995] Update the com.liferay.gradle.plugins.test.integration dependency
+to version 3.0.5.
+
+## 13.1.31 - 2021-03-31
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.28.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1098.
+
+## 13.1.30 - 2021-03-31
+
+### Dependencies
+- [LPS-105380 LPS-129940] Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 5.0.27.
+- [LPS-105380 LPS-129940] Update the com.liferay.source.formatter dependency to
+version 1.0.1097.
+
+## 13.1.29 - 2021-03-30
+
+### Dependencies
+- [LPS-129870] Update the com.liferay.gradle.plugins.jasper.jspc dependency to
+version 2.0.11.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.26.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1096.
+
+## 13.1.28 - 2021-03-29
+
+### Dependencies
+- [LPS-129858] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.6.
+
+## 13.1.27 - 2021-03-29
+
+### Dependencies
+- [LPS-129202] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.44.
+- [LPS-129202] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.167.
+- [LPS-129202] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.43.
+- [LPS-129202] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.166.
+
+## 13.1.26 - 2021-03-29
+
+### Dependencies
+- [LPS-129831] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.42.
+- [LPS-129831] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.165.
+
+## 13.1.25 - 2021-03-28
+
+### Dependencies
+- [LPS-128484] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.41.
+- [LPS-128484] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.164.
+- [LPS-129341] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.25.
+- [LPS-129341] Update the com.liferay.source.formatter dependency to version
+1.0.1095.
+
+## 13.1.24 - 2021-03-25
+
+### Dependencies
+- [LPS-129477] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.40.
+- [LPS-129477] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.39.
+- [LPS-129477] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.163.
+
+## 13.1.23 - 2021-03-24
+
+### Commits
+- [LPS-129336] Update xstream to 1.4.16 (eab1e8a600)
+
+### Dependencies
+- [LPS-129711] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.37.
+- [LPS-129711] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.162.
+- [LPS-129711] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.36.
+- [LPS-129711] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.161.
+
+## 13.1.22 - 2021-03-24
+
+### Dependencies
+- [LPS-129478] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.35.
+- [LPS-129478] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.160.
+
+## 13.1.21 - 2021-03-22
+
+### Dependencies
+- [LPS-129351] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.24.
+- [LPS-129351] Update the com.liferay.source.formatter dependency to version
+1.0.1094.
+
+## 13.1.20 - 2021-03-18
+
+### Dependencies
+- [LPS-120745] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.23.
+- [LPS-120745] Update the com.liferay.source.formatter dependency to version
+1.0.1093.
+
+## 13.1.19 - 2021-03-16
+
+### Dependencies
+- [LPS-127081] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.22.
+- [LPS-127081] Update the com.liferay.source.formatter dependency to version
+1.0.1092.
+
+## 13.1.18 - 2021-03-16
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.8.
+
+## 13.1.17 - 2021-03-16
+
+### Commits
+- [LPS-129193] Update Tomcat version to 9.0.43 (bae9cf6a26)
+
+### Dependencies
+- [LPS-129250] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.51.
+- [LPS-129250] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.380.
+
+## 13.1.16 - 2021-03-15
+
+### Dependencies
+- [LPS-128311] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.34.
+- [LPS-128311] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.159.
+
+## 13.1.15 - 2021-03-15
+
+### Dependencies
+- [LPS-126680] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.33.
+- [LPS-126680] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.158.
+
+## 13.1.14 - 2021-03-11
+
+### Commits
+- [LPS-105380] Partial revert (aafd3818ae)
+
+### Dependencies
+- [LPS-84621 LPS-105380] Update the com.liferay.gradle.plugins.tlddoc.builder
+dependency to version 1.3.7.
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.21.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1091.
+
+## 13.1.13 - 2021-03-10
+
+### Dependencies
+- [LPS-128913] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.32.
+- [LPS-128913] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.157.
+
+## 13.1.12 - 2021-03-09
+
+### Dependencies
+- [LPS-128606] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.31.
+- [LPS-128606] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.156.
+
+## 13.1.11 - 2021-03-08
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.20.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1090.
+
+## 13.1.10 - 2021-03-04
+
+### Dependencies
+- [LPS-127899] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.30.
+- [LPS-127899] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.155.
+
+## 13.1.9 - 2021-03-04
+
+### Dependencies
+- [LPS-98797] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.29.
+- [LPS-98797] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.154.
+
+## 13.1.8 - 2021-03-02
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.19.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1089.
+
+## 13.1.6 - 2021-03-01
+
+### Dependencies
+- [LPS-124713] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.50.
+- [LPS-124713] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.379.
+- [LPS-127067] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.28.
+- [LPS-127067] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.153.
+
+## 13.1.5 - 2021-02-25
+
+### Dependencies
+- [LPS-128098] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.49.
+- [LPS-128098] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.378.
+- [LPS-127777] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.27.
+- [LPS-127777] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.152.
+
+## 13.1.4 - 2021-02-24
+
+### Dependencies
+- [LPS-127775] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.26.
+- [LPS-127775] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.151.
+
+## 13.1.3 - 2021-02-23
+
+### Dependencies
+- [LPS-127858] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.1.25.
+- [LPS-127858] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.150.
+
+## 13.1.1 - 2021-02-19
+
+### Dependencies
+- [LPS-128029] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.48.
+- [LPS-128029] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.377.
+
+## 13.0.29 - 2021-02-18
+
+### Commits
+- [LPS-128054] baseline (97a21acd5e)
+- [LPS-128054] Move zipZippableResources (01054dfb0b)
+
+## 13.0.28 - 2021-02-18
+
+### Commits
+- [LPS-105380] Auto SF, XMLDTDVersionCheck (a7cb83d66b)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.18.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1088.
+- [LPS-127445] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.47.
+- [LPS-127445] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.376.
+
+## 13.0.27 - 2021-02-17
+
+### Commits
+- [LPS-105380] Rename variables (a7ac7cfdb2)
+
+### Dependencies
+- [LPS-122094] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 5.0.17.
+- [LPS-122094] Update the com.liferay.source.formatter dependency to version
+1.0.1087.
+
 ## 13.0.26 - 2021-02-04
 
 ### Commits
@@ -16284,12 +18124,17 @@ to version 1.0.2.
 1.0.0.
 
 [COMMERCE-1067]: https://issues.liferay.com/browse/COMMERCE-1067
+[COMMERCE-4584]: https://issues.liferay.com/browse/COMMERCE-4584
+[COMMERCE-6834]: https://issues.liferay.com/browse/COMMERCE-6834
+[COMMERCE-7217]: https://issues.liferay.com/browse/COMMERCE-7217
+[CVE-2021]: https://issues.liferay.com/browse/CVE-2021
 [LPS-10661]: https://issues.liferay.com/browse/LPS-10661
 [LPS-41848]: https://issues.liferay.com/browse/LPS-41848
 [LPS-48290]: https://issues.liferay.com/browse/LPS-48290
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
+[LPS-53967]: https://issues.liferay.com/browse/LPS-53967
 [LPS-55111]: https://issues.liferay.com/browse/LPS-55111
 [LPS-55250]: https://issues.liferay.com/browse/LPS-55250
 [LPS-56564]: https://issues.liferay.com/browse/LPS-56564
@@ -17056,6 +18901,7 @@ to version 1.0.2.
 [LPS-92223]: https://issues.liferay.com/browse/LPS-92223
 [LPS-92311]: https://issues.liferay.com/browse/LPS-92311
 [LPS-92568]: https://issues.liferay.com/browse/LPS-92568
+[LPS-92634]: https://issues.liferay.com/browse/LPS-92634
 [LPS-92677]: https://issues.liferay.com/browse/LPS-92677
 [LPS-92746]: https://issues.liferay.com/browse/LPS-92746
 [LPS-93045]: https://issues.liferay.com/browse/LPS-93045
@@ -17117,6 +18963,7 @@ to version 1.0.2.
 [LPS-98468]: https://issues.liferay.com/browse/LPS-98468
 [LPS-98640]: https://issues.liferay.com/browse/LPS-98640
 [LPS-98680]: https://issues.liferay.com/browse/LPS-98680
+[LPS-98797]: https://issues.liferay.com/browse/LPS-98797
 [LPS-98877]: https://issues.liferay.com/browse/LPS-98877
 [LPS-98879]: https://issues.liferay.com/browse/LPS-98879
 [LPS-98937]: https://issues.liferay.com/browse/LPS-98937
@@ -17365,6 +19212,7 @@ to version 1.0.2.
 [LPS-119019]: https://issues.liferay.com/browse/LPS-119019
 [LPS-119390]: https://issues.liferay.com/browse/LPS-119390
 [LPS-119414]: https://issues.liferay.com/browse/LPS-119414
+[LPS-119446]: https://issues.liferay.com/browse/LPS-119446
 [LPS-119524]: https://issues.liferay.com/browse/LPS-119524
 [LPS-119598]: https://issues.liferay.com/browse/LPS-119598
 [LPS-119653]: https://issues.liferay.com/browse/LPS-119653
@@ -17374,6 +19222,7 @@ to version 1.0.2.
 [LPS-120266]: https://issues.liferay.com/browse/LPS-120266
 [LPS-120350]: https://issues.liferay.com/browse/LPS-120350
 [LPS-120603]: https://issues.liferay.com/browse/LPS-120603
+[LPS-120745]: https://issues.liferay.com/browse/LPS-120745
 [LPS-120746]: https://issues.liferay.com/browse/LPS-120746
 [LPS-121245]: https://issues.liferay.com/browse/LPS-121245
 [LPS-121386]: https://issues.liferay.com/browse/LPS-121386
@@ -17383,6 +19232,7 @@ to version 1.0.2.
 [LPS-121804]: https://issues.liferay.com/browse/LPS-121804
 [LPS-121824]: https://issues.liferay.com/browse/LPS-121824
 [LPS-122032]: https://issues.liferay.com/browse/LPS-122032
+[LPS-122094]: https://issues.liferay.com/browse/LPS-122094
 [LPS-122127]: https://issues.liferay.com/browse/LPS-122127
 [LPS-122190]: https://issues.liferay.com/browse/LPS-122190
 [LPS-122393]: https://issues.liferay.com/browse/LPS-122393
@@ -17390,11 +19240,14 @@ to version 1.0.2.
 [LPS-122599]: https://issues.liferay.com/browse/LPS-122599
 [LPS-122605]: https://issues.liferay.com/browse/LPS-122605
 [LPS-122896]: https://issues.liferay.com/browse/LPS-122896
+[LPS-123151]: https://issues.liferay.com/browse/LPS-123151
 [LPS-123192]: https://issues.liferay.com/browse/LPS-123192
 [LPS-123309]: https://issues.liferay.com/browse/LPS-123309
+[LPS-124112]: https://issues.liferay.com/browse/LPS-124112
 [LPS-124335]: https://issues.liferay.com/browse/LPS-124335
 [LPS-124347]: https://issues.liferay.com/browse/LPS-124347
 [LPS-124476]: https://issues.liferay.com/browse/LPS-124476
+[LPS-124713]: https://issues.liferay.com/browse/LPS-124713
 [LPS-124733]: https://issues.liferay.com/browse/LPS-124733
 [LPS-124961]: https://issues.liferay.com/browse/LPS-124961
 [LPS-125071]: https://issues.liferay.com/browse/LPS-125071
@@ -17410,7 +19263,150 @@ to version 1.0.2.
 [LPS-125871]: https://issues.liferay.com/browse/LPS-125871
 [LPS-125966]: https://issues.liferay.com/browse/LPS-125966
 [LPS-125980]: https://issues.liferay.com/browse/LPS-125980
+[LPS-126680]: https://issues.liferay.com/browse/LPS-126680
+[LPS-127067]: https://issues.liferay.com/browse/LPS-127067
+[LPS-127081]: https://issues.liferay.com/browse/LPS-127081
+[LPS-127445]: https://issues.liferay.com/browse/LPS-127445
+[LPS-127775]: https://issues.liferay.com/browse/LPS-127775
+[LPS-127777]: https://issues.liferay.com/browse/LPS-127777
+[LPS-127858]: https://issues.liferay.com/browse/LPS-127858
+[LPS-127899]: https://issues.liferay.com/browse/LPS-127899
+[LPS-128029]: https://issues.liferay.com/browse/LPS-128029
+[LPS-128054]: https://issues.liferay.com/browse/LPS-128054
+[LPS-128098]: https://issues.liferay.com/browse/LPS-128098
+[LPS-128171]: https://issues.liferay.com/browse/LPS-128171
+[LPS-128311]: https://issues.liferay.com/browse/LPS-128311
+[LPS-128484]: https://issues.liferay.com/browse/LPS-128484
+[LPS-128606]: https://issues.liferay.com/browse/LPS-128606
+[LPS-128913]: https://issues.liferay.com/browse/LPS-128913
+[LPS-129061]: https://issues.liferay.com/browse/LPS-129061
+[LPS-129193]: https://issues.liferay.com/browse/LPS-129193
+[LPS-129202]: https://issues.liferay.com/browse/LPS-129202
+[LPS-129250]: https://issues.liferay.com/browse/LPS-129250
+[LPS-129260]: https://issues.liferay.com/browse/LPS-129260
+[LPS-129336]: https://issues.liferay.com/browse/LPS-129336
+[LPS-129341]: https://issues.liferay.com/browse/LPS-129341
+[LPS-129351]: https://issues.liferay.com/browse/LPS-129351
+[LPS-129477]: https://issues.liferay.com/browse/LPS-129477
+[LPS-129478]: https://issues.liferay.com/browse/LPS-129478
+[LPS-129532]: https://issues.liferay.com/browse/LPS-129532
+[LPS-129711]: https://issues.liferay.com/browse/LPS-129711
+[LPS-129722]: https://issues.liferay.com/browse/LPS-129722
+[LPS-129831]: https://issues.liferay.com/browse/LPS-129831
+[LPS-129842]: https://issues.liferay.com/browse/LPS-129842
+[LPS-129858]: https://issues.liferay.com/browse/LPS-129858
+[LPS-129870]: https://issues.liferay.com/browse/LPS-129870
+[LPS-129940]: https://issues.liferay.com/browse/LPS-129940
+[LPS-129995]: https://issues.liferay.com/browse/LPS-129995
+[LPS-130119]: https://issues.liferay.com/browse/LPS-130119
+[LPS-130464]: https://issues.liferay.com/browse/LPS-130464
+[LPS-130475]: https://issues.liferay.com/browse/LPS-130475
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-130568]: https://issues.liferay.com/browse/LPS-130568
+[LPS-130744]: https://issues.liferay.com/browse/LPS-130744
+[LPS-130748]: https://issues.liferay.com/browse/LPS-130748
+[LPS-130756]: https://issues.liferay.com/browse/LPS-130756
+[LPS-130794]: https://issues.liferay.com/browse/LPS-130794
+[LPS-130920]: https://issues.liferay.com/browse/LPS-130920
+[LPS-131092]: https://issues.liferay.com/browse/LPS-131092
+[LPS-131175]: https://issues.liferay.com/browse/LPS-131175
+[LPS-131251]: https://issues.liferay.com/browse/LPS-131251
+[LPS-131277]: https://issues.liferay.com/browse/LPS-131277
+[LPS-131506]: https://issues.liferay.com/browse/LPS-131506
+[LPS-131629]: https://issues.liferay.com/browse/LPS-131629
+[LPS-131887]: https://issues.liferay.com/browse/LPS-131887
+[LPS-131904]: https://issues.liferay.com/browse/LPS-131904
+[LPS-131906]: https://issues.liferay.com/browse/LPS-131906
+[LPS-132448]: https://issues.liferay.com/browse/LPS-132448
+[LPS-132587]: https://issues.liferay.com/browse/LPS-132587
+[LPS-132730]: https://issues.liferay.com/browse/LPS-132730
+[LPS-132761]: https://issues.liferay.com/browse/LPS-132761
+[LPS-133366]: https://issues.liferay.com/browse/LPS-133366
+[LPS-133987]: https://issues.liferay.com/browse/LPS-133987
+[LPS-134121]: https://issues.liferay.com/browse/LPS-134121
+[LPS-134165]: https://issues.liferay.com/browse/LPS-134165
+[LPS-134306]: https://issues.liferay.com/browse/LPS-134306
+[LPS-134486]: https://issues.liferay.com/browse/LPS-134486
+[LPS-134886]: https://issues.liferay.com/browse/LPS-134886
+[LPS-134931]: https://issues.liferay.com/browse/LPS-134931
+[LPS-135064]: https://issues.liferay.com/browse/LPS-135064
+[LPS-135081]: https://issues.liferay.com/browse/LPS-135081
+[LPS-135184]: https://issues.liferay.com/browse/LPS-135184
+[LPS-135276]: https://issues.liferay.com/browse/LPS-135276
+[LPS-135368]: https://issues.liferay.com/browse/LPS-135368
+[LPS-135481]: https://issues.liferay.com/browse/LPS-135481
+[LPS-135498]: https://issues.liferay.com/browse/LPS-135498
+[LPS-135504]: https://issues.liferay.com/browse/LPS-135504
+[LPS-135644]: https://issues.liferay.com/browse/LPS-135644
+[LPS-135818]: https://issues.liferay.com/browse/LPS-135818
+[LPS-136078]: https://issues.liferay.com/browse/LPS-136078
+[LPS-136163]: https://issues.liferay.com/browse/LPS-136163
+[LPS-136308]: https://issues.liferay.com/browse/LPS-136308
+[LPS-136445]: https://issues.liferay.com/browse/LPS-136445
+[LPS-136542]: https://issues.liferay.com/browse/LPS-136542
+[LPS-136543]: https://issues.liferay.com/browse/LPS-136543
+[LPS-136723]: https://issues.liferay.com/browse/LPS-136723
+[LPS-136753]: https://issues.liferay.com/browse/LPS-136753
+[LPS-136864]: https://issues.liferay.com/browse/LPS-136864
+[LPS-137074]: https://issues.liferay.com/browse/LPS-137074
+[LPS-137109]: https://issues.liferay.com/browse/LPS-137109
+[LPS-137288]: https://issues.liferay.com/browse/LPS-137288
+[LPS-137358]: https://issues.liferay.com/browse/LPS-137358
+[LPS-137359]: https://issues.liferay.com/browse/LPS-137359
+[LPS-137585]: https://issues.liferay.com/browse/LPS-137585
+[LPS-137707]: https://issues.liferay.com/browse/LPS-137707
+[LPS-137720]: https://issues.liferay.com/browse/LPS-137720
+[LPS-137772]: https://issues.liferay.com/browse/LPS-137772
+[LPS-137802]: https://issues.liferay.com/browse/LPS-137802
+[LPS-137961]: https://issues.liferay.com/browse/LPS-137961
+[LPS-137974]: https://issues.liferay.com/browse/LPS-137974
+[LPS-138087]: https://issues.liferay.com/browse/LPS-138087
+[LPS-138131]: https://issues.liferay.com/browse/LPS-138131
+[LPS-138183]: https://issues.liferay.com/browse/LPS-138183
+[LPS-138282]: https://issues.liferay.com/browse/LPS-138282
+[LPS-138373]: https://issues.liferay.com/browse/LPS-138373
+[LPS-138387]: https://issues.liferay.com/browse/LPS-138387
+[LPS-138487]: https://issues.liferay.com/browse/LPS-138487
+[LPS-138673]: https://issues.liferay.com/browse/LPS-138673
+[LPS-138909]: https://issues.liferay.com/browse/LPS-138909
+[LPS-138929]: https://issues.liferay.com/browse/LPS-138929
+[LPS-138984]: https://issues.liferay.com/browse/LPS-138984
+[LPS-139275]: https://issues.liferay.com/browse/LPS-139275
+[LPS-139310]: https://issues.liferay.com/browse/LPS-139310
+[LPS-139567]: https://issues.liferay.com/browse/LPS-139567
+[LPS-139732]: https://issues.liferay.com/browse/LPS-139732
+[LPS-139820]: https://issues.liferay.com/browse/LPS-139820
+[LPS-139835]: https://issues.liferay.com/browse/LPS-139835
+[LPS-140025]: https://issues.liferay.com/browse/LPS-140025
+[LPS-140117]: https://issues.liferay.com/browse/LPS-140117
+[LPS-140947]: https://issues.liferay.com/browse/LPS-140947
+[LPS-141109]: https://issues.liferay.com/browse/LPS-141109
+[LPS-141244]: https://issues.liferay.com/browse/LPS-141244
+[LPS-141250]: https://issues.liferay.com/browse/LPS-141250
+[LPS-141728]: https://issues.liferay.com/browse/LPS-141728
+[LPS-141826]: https://issues.liferay.com/browse/LPS-141826
+[LPS-141887]: https://issues.liferay.com/browse/LPS-141887
+[LPS-141904]: https://issues.liferay.com/browse/LPS-141904
+[LPS-141964]: https://issues.liferay.com/browse/LPS-141964
+[LPS-142086]: https://issues.liferay.com/browse/LPS-142086
+[LPS-142100]: https://issues.liferay.com/browse/LPS-142100
+[LPS-142231]: https://issues.liferay.com/browse/LPS-142231
+[LPS-142622]: https://issues.liferay.com/browse/LPS-142622
+[LPS-142738]: https://issues.liferay.com/browse/LPS-142738
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-143349]: https://issues.liferay.com/browse/LPS-143349
+[LPS-143547]: https://issues.liferay.com/browse/LPS-143547
+[LPS-143566]: https://issues.liferay.com/browse/LPS-143566
+[LPS-143571]: https://issues.liferay.com/browse/LPS-143571
+[LPS-143628]: https://issues.liferay.com/browse/LPS-143628
+[LPS-143837]: https://issues.liferay.com/browse/LPS-143837
+[LPS-144176]: https://issues.liferay.com/browse/LPS-144176
+[LPS-144575]: https://issues.liferay.com/browse/LPS-144575
+[LPS-144756]: https://issues.liferay.com/browse/LPS-144756
+[LPS-144888]: https://issues.liferay.com/browse/LPS-144888
 [LRCI-642]: https://issues.liferay.com/browse/LRCI-642
+[LRCI-2605]: https://issues.liferay.com/browse/LRCI-2605
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-2147]: https://issues.liferay.com/browse/LRDOCS-2147
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
@@ -17429,5 +19425,6 @@ to version 1.0.2.
 [LRQA-51110]: https://issues.liferay.com/browse/LRQA-51110
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072
 [LRQA-54214]: https://issues.liferay.com/browse/LRQA-54214
+[POSHI-83]: https://issues.liferay.com/browse/POSHI-83
 [POSHI-97]: https://issues.liferay.com/browse/POSHI-97
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

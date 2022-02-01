@@ -1,5 +1,237 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.83 - 2021-12-20
+
+### Dependencies
+- [LPS-138984] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.411.
+
+## 4.0.82 - 2021-12-07
+
+### Dependencies
+- [LPS-128171] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.410.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 4.0.80 - 2021-10-29
+
+### Dependencies
+- [LPS-141826] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.409.
+
+## 4.0.79 - 2021-10-14
+
+### Dependencies
+- [LPS-139732] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.408.
+
+## 4.0.78 - 2021-10-01
+
+### Dependencies
+- [LPS-139732] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.407.
+
+## 4.0.77 - 2021-09-29
+
+### Dependencies
+- [LPS-136753] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.406.
+
+## 4.0.76 - 2021-09-16
+
+### Dependencies
+- [LPS-136753] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.405.
+
+## 4.0.75 - 2021-09-07
+
+### Dependencies
+- [LPS-138487 LPS-138131] Update the com.liferay.portal.tools.service.builder
+dependency to version 1.0.404.
+
+## 4.0.74 - 2021-09-03
+
+### Dependencies
+- [LPS-137974] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.403.
+
+## 4.0.73 - 2021-09-01
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.402.
+
+## 4.0.72 - 2021-09-01
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.401.
+
+## 4.0.71 - 2021-08-31
+
+### Dependencies
+- [LPS-138387] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.400.
+
+## 4.0.70 - 2021-08-31
+
+### Dependencies
+- [LPS-138373] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.399.
+
+## 4.0.69 - 2021-08-25
+
+### Dependencies
+- [LPS-133366] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.398.
+
+## 4.0.68 - 2021-08-23
+
+### Dependencies
+- [LPS-136445] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.397.
+
+## 4.0.67 - 2021-08-20
+
+### Dependencies
+- [LPS-133366] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.396.
+
+## 4.0.66 - 2021-08-13
+
+### Dependencies
+- [LPS-134931] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.395.
+
+## 4.0.65 - 2021-08-09
+
+### Dependencies
+- [LPS-137109] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.394.
+
+## 4.0.64 - 2021-08-09
+
+### Dependencies
+- [LPS-137074] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.393.
+
+## 4.0.63 - 2021-08-09
+
+### Dependencies
+- [LPS-137074] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.392.
+
+## 4.0.62 - 2021-07-12
+
+### Dependencies
+- [LPS-134886] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.391.
+
+## 4.0.61 - 2021-07-08
+
+### Dependencies
+- [LPS-135276] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.390.
+
+## 4.0.60 - 2021-07-01
+
+### Dependencies
+- [LPS-135064] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.389.
+
+## 4.0.59 - 2021-06-29
+
+### Dependencies
+- [LPS-134931] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.388.
+
+## 4.0.58 - 2021-06-28
+
+### Dependencies
+- [LPS-134165] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.387.
+
+## 4.0.57 - 2021-06-06
+
+### Dependencies
+- [LPS-132587] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.386.
+
+## 4.0.56 - 2021-05-26
+
+### Dependencies
+- [LPS-132587] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.385.
+
+## 4.0.55 - 2021-05-24
+
+### Dependencies
+- [LPS-132448] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.384.
+
+## 4.0.54 - 2021-04-28
+
+### Commits
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (0cdafd184b)
+
+### Dependencies
+- [LPS-131251] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.383.
+
+## 4.0.53 - 2021-04-24
+
+### Commits
+- [LPS-130505] SF, no need to call methods (b9055a7fc9)
+
+### Dependencies
+- [LPS-131092] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.382.
+
+## 4.0.52 - 2021-04-09
+
+### Dependencies
+- [LPS-129722] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.381.
+
+## 4.0.51 - 2021-03-16
+
+### Commits
+- [LPS-105380] Partial revert (aafd3818ae)
+
+### Dependencies
+- [LPS-129250] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.380.
+
+## 4.0.50 - 2021-03-01
+
+### Dependencies
+- [LPS-124713] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.379.
+
+## 4.0.49 - 2021-02-25
+
+### Dependencies
+- [LPS-128098] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.378.
+
+## 4.0.48 - 2021-02-19
+
+### Commits
+- [LPS-128029] Ignore warnings on JDK 11 (6990192370)
+
+### Dependencies
+- [LPS-128029] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.377.
+
+## 4.0.46 - 2021-02-18
+
+### Commits
+- [LPS-105380] Auto SF, XMLDTDVersionCheck (a7cb83d66b)
+
+### Dependencies
+- [LPS-127445] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.376.
+
 ## 4.0.45 - 2021-01-26
 
 ### Dependencies
@@ -2137,7 +2369,38 @@ version 2.4.
 [LPS-122190]: https://issues.liferay.com/browse/LPS-122190
 [LPS-122896]: https://issues.liferay.com/browse/LPS-122896
 [LPS-124347]: https://issues.liferay.com/browse/LPS-124347
+[LPS-124713]: https://issues.liferay.com/browse/LPS-124713
 [LPS-125672]: https://issues.liferay.com/browse/LPS-125672
+[LPS-127445]: https://issues.liferay.com/browse/LPS-127445
+[LPS-128029]: https://issues.liferay.com/browse/LPS-128029
+[LPS-128098]: https://issues.liferay.com/browse/LPS-128098
+[LPS-128171]: https://issues.liferay.com/browse/LPS-128171
+[LPS-129250]: https://issues.liferay.com/browse/LPS-129250
+[LPS-129722]: https://issues.liferay.com/browse/LPS-129722
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-131092]: https://issues.liferay.com/browse/LPS-131092
+[LPS-131251]: https://issues.liferay.com/browse/LPS-131251
+[LPS-132448]: https://issues.liferay.com/browse/LPS-132448
+[LPS-132587]: https://issues.liferay.com/browse/LPS-132587
+[LPS-133366]: https://issues.liferay.com/browse/LPS-133366
+[LPS-134165]: https://issues.liferay.com/browse/LPS-134165
+[LPS-134886]: https://issues.liferay.com/browse/LPS-134886
+[LPS-134931]: https://issues.liferay.com/browse/LPS-134931
+[LPS-135064]: https://issues.liferay.com/browse/LPS-135064
+[LPS-135276]: https://issues.liferay.com/browse/LPS-135276
+[LPS-136445]: https://issues.liferay.com/browse/LPS-136445
+[LPS-136753]: https://issues.liferay.com/browse/LPS-136753
+[LPS-137074]: https://issues.liferay.com/browse/LPS-137074
+[LPS-137109]: https://issues.liferay.com/browse/LPS-137109
+[LPS-137974]: https://issues.liferay.com/browse/LPS-137974
+[LPS-138131]: https://issues.liferay.com/browse/LPS-138131
+[LPS-138373]: https://issues.liferay.com/browse/LPS-138373
+[LPS-138387]: https://issues.liferay.com/browse/LPS-138387
+[LPS-138487]: https://issues.liferay.com/browse/LPS-138487
+[LPS-138984]: https://issues.liferay.com/browse/LPS-138984
+[LPS-139732]: https://issues.liferay.com/browse/LPS-139732
+[LPS-141826]: https://issues.liferay.com/browse/LPS-141826
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-5050]: https://issues.liferay.com/browse/LRDOCS-5050

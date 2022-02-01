@@ -1,5 +1,32 @@
 # Liferay Gradle Plugins Baseline Change Log
 
+## 6.0.6 - 2021-10-19
+
+### Commits
+- [LPS-105380] Remove final from parameters (a4e6ca0985)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Revert "LPS-105380 Remove final from parameters" (b2f9eed2c2)
+- [LPS-105380] Remove final from parameters (f615ff77ff)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+
+### Dependencies
+- [LPS-140947] Update the com.liferay.ant.bnd dependency to version 3.2.8.
+
+## 6.0.5 - 2021-06-11
+
+### Dependencies
+- [LPS-133987] Update the com.liferay.ant.bnd dependency to version 3.2.7.
+
+## 6.0.4 - 2021-05-25
+
+### Commits
+- [LPS-132729] Ignore package versions less than 1.0.0 (d2ae5c89b7)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (e2ecb543ee)
+- [LPS-130505] SF, no need to call methods (fd9b92bc08)
+- [LPS-105380] Add line breaks (bd1787840d)
+- [LPS-105380] Sort calls (5bee59f272)
+
 ## 6.0.3 - 2020-11-02
 
 ### Commits
@@ -602,4 +629,8 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-116282]: https://issues.liferay.com/browse/LPS-116282
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-132729]: https://issues.liferay.com/browse/LPS-132729
+[LPS-133987]: https://issues.liferay.com/browse/LPS-133987
+[LPS-140947]: https://issues.liferay.com/browse/LPS-140947
 [LRQA-39761]: https://issues.liferay.com/browse/LRQA-39761

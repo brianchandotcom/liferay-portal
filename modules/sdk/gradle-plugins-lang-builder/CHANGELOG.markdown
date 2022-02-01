@@ -1,5 +1,44 @@
 # Liferay Gradle Plugins Lang Builder Change Log
 
+## 3.0.29 - 2021-12-08
+
+### Dependencies
+- [LPS-143566] Update the com.liferay.lang.builder dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 3.0.28 - 2021-09-29
+
+### Commits
+- [LPS-138487] republish (03764ac72b)
+
+### Dependencies
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.45.
+
+## 3.0.27 - 2021-09-07
+
+### Dependencies
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.44.
+
+## 3.0.26 - 2021-09-03
+
+### Commits
+- [LPS-105380] Remove final from parameters (a4e6ca0985)
+- [LPS-105380] Revert "LPS-105380 Remove final from parameters" (b2f9eed2c2)
+- [LPS-105380] Remove final from parameters (f615ff77ff)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (d4477c5996)
+- [LPS-130505] SF, no need to call methods (54557cd107)
+
+### Dependencies
+- [LPS-138487] Update the com.liferay.lang.builder dependency to version 1.0.43.
+
+## 3.0.25 - 2021-04-12
+
+### Commits
+- [LPS-105380] Make var final (12e010029a)
+
+### Dependencies
+- [LPS-130464] Update the com.liferay.lang.builder dependency to version 1.0.42.
+
 ## 3.0.24 - 2020-11-04
 
 ### Dependencies
@@ -538,6 +577,7 @@ version 2.4.
 [LPS-96860]: https://issues.liferay.com/browse/LPS-96860
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-102700]: https://issues.liferay.com/browse/LPS-102700
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-106614]: https://issues.liferay.com/browse/LPS-106614
 [LPS-108328]: https://issues.liferay.com/browse/LPS-108328
@@ -552,4 +592,9 @@ version 2.4.
 [LPS-117015]: https://issues.liferay.com/browse/LPS-117015
 [LPS-122403]: https://issues.liferay.com/browse/LPS-122403
 [LPS-122599]: https://issues.liferay.com/browse/LPS-122599
+[LPS-130464]: https://issues.liferay.com/browse/LPS-130464
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-138487]: https://issues.liferay.com/browse/LPS-138487
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-143566]: https://issues.liferay.com/browse/LPS-143566
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

@@ -1,14 +1,18 @@
 # Liferay Ant JGit Change Log
 
-## 2.0.0 - 2018-03-15
+## 1.0.10 - 2021-03-07
 
 ### Commits
+- [LPS-108380] SF, use String.valueOf (613edb7e63)
+- [LPS-115364] Update ant to 1.9.15 (2c4390c048)
+- [LPS-105380] Rename exception variables (b3173da81b)
+- [LPS-98801] [LPS-96095] auto SF for ant (bf3c0ef390)
+- [LPS-88524] Fix ant update-gradle-cache (unable to delete
+com.liferay.ant.jgit.jar) (eb14de6317)
+- [LPS-80950] Stop using RepositoryCache since it will hold reference to git
+repositories and later cause OOM (8784dc3caf)
 - [LPS-77425] Partial revert of d25f48516a9ad080bcbd50e228979853d3f2dda5
 (60d3a950d6)
-
-## 1.0.10 - 2018-03-13
-
-### Commits
 - [LPS-77425] Increment all major versions (d25f48516a)
 - [LRQA-28693] Ant "taskdef" already looks in "tools/sdk" (ddf2b54259)
 - [LRQA-28693] These are only used from Ant, so the dependency is "provided"
@@ -20,6 +24,9 @@
 (9f689ec1cc)
 
 ### Dependencies
+- [LPS-115364] Update the ant dependency to version 1.9.15.
+- [LPS-98801 LPS-96095] Update the ant dependency to version 1.9.14.
+- [LPS-75049] Update the ant dependency to version 1.9.4.
 - [LRQA-28693] Update the ant dependency to version 1.9.4.
 
 ## 1.0.9 - 2016-03-09
@@ -121,5 +128,13 @@ things up. (36716e688a)
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-61420]: https://issues.liferay.com/browse/LPS-61420
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
+[LPS-75049]: https://issues.liferay.com/browse/LPS-75049
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-88524]: https://issues.liferay.com/browse/LPS-88524
+[LPS-96095]: https://issues.liferay.com/browse/LPS-96095
+[LPS-98801]: https://issues.liferay.com/browse/LPS-98801
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-108380]: https://issues.liferay.com/browse/LPS-108380
+[LPS-115364]: https://issues.liferay.com/browse/LPS-115364
 [LRQA-28693]: https://issues.liferay.com/browse/LRQA-28693

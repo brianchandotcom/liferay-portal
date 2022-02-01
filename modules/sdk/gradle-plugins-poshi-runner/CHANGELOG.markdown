@@ -1,5 +1,91 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 3.0.25 - 2022-01-12
+
+### Commits
+- [POSHI-232] Update to poshi-runner 1.0.329 (1e87a091cc)
+
+## 3.0.24 - 2021-12-29
+
+### Commits
+- [LRCI-2670] Set default 'baseName' for poshi runner resources gradle plugin
+(b6c5110f86)
+- [LRCI-2670] Can't be latest. Bump to explicit latest at 1.0.326 (01070c08dc)
+- [LRCI-2670] Add poshi properties last (06859eaf3c)
+- [LRCI-2670] Add dependency com.liferay.poshi.runner.resources (38bd068a15)
+- [LRCI-2670] Apply webdriver-binaries plugin (b923805cde)
+- [LRCI-2670] Check ext properties file (ae3e6324bf)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LRCI-2670] Update the webdriver-binaries-gradle-plugin dependency to version
+2.4.
+
+## 3.0.23 - 2021-12-07
+
+### Commits
+- [POSHI-224] Update to poshi-runner 1.0.324 (48dfe4d815)
+
+### Dependencies
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 3.0.22 - 2021-12-01
+
+### Commits
+- [POSHI-221] Update default poshi runner to 1.0.322 (0592980ada)
+
+## 3.0.21 - 2021-11-24
+
+### Commits
+- [POSHI-218] Update default poshi runner to 1.0.321 (1f4663c0dc)
+
+## 3.0.20 - 2021-11-22
+
+### Commits
+- [POSHI-215] Update 'com.liferay.gradle.plugins.poshi.runner' to use
+'com.liferay.poshi.runner:1.0.320' (d9acb8e857)
+- [POSHI-214] Update default poshi runner version to 1.0.319 (ba0fd4e891)
+
+## 3.0.19 - 2021-10-15
+
+### Commits
+- [POSHI-200] Update com.liferay.poshi.runner to 1.0.316 (0b76228432)
+- [POSHI-192] Update com.liferay.poshi.runner to 1.0.313 (bb4dd26a52)
+- [POSHI-194] Source formatting (e4df7591e1)
+- [POSHI-194] Add basic documentation for
+'modules/sdk/gradle-plugins-poshi-runner' (1d45999ebf)
+
+## 3.0.17 - 2021-09-01
+
+### Commits
+- [POSHI-189] Update default poshi runner version to 1.0.311 (5891f105aa)
+
+## 3.0.16 - 2021-08-31
+
+### Commits
+- [POSHI-187] Update default poshi runner version to 1.0.310 (20a1e856d0)
+
+## 3.0.15 - 2021-06-29
+
+### Commits
+- [POSHI-181] Update default poshi runner to 1.0.309 (1cdc7cd367)
+- [LPS-105380] Rename: now -> date (74a02e3590)
+
+## 3.0.14 - 2021-06-11
+
+### Commits
+- [POSHI-175] Update default poshi runner to 1.0.307 (76bc32cefe)
+
+## 3.0.12 - 2021-05-12
+
+### Commits
+- [POSHI-162] Update default to 'com.liferay.poshi.runner:1.0.304' (bec6d542da)
+
+## 3.0.11 - 2021-04-22
+
+### Commits
+- [POSHI-160] Update default poshi runner version to 1.0.299 (b76c07aecc)
+
 ## 3.0.10 - 2021-02-04
 
 ### Commits
@@ -532,6 +618,7 @@ up-to-date check (59fd9e696c)
 [LPS-94947]: https://issues.liferay.com/browse/LPS-94947
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
@@ -541,6 +628,7 @@ up-to-date check (59fd9e696c)
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-119415]: https://issues.liferay.com/browse/LPS-119415
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -550,6 +638,7 @@ up-to-date check (59fd9e696c)
 [LRCI-766]: https://issues.liferay.com/browse/LRCI-766
 [LRCI-902]: https://issues.liferay.com/browse/LRCI-902
 [LRCI-1003]: https://issues.liferay.com/browse/LRCI-1003
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRQA-16011]: https://issues.liferay.com/browse/LRQA-16011
 [LRQA-17405]: https://issues.liferay.com/browse/LRQA-17405
 [POSHI-51]: https://issues.liferay.com/browse/POSHI-51
@@ -568,3 +657,18 @@ up-to-date check (59fd9e696c)
 [POSHI-118]: https://issues.liferay.com/browse/POSHI-118
 [POSHI-137]: https://issues.liferay.com/browse/POSHI-137
 [POSHI-146]: https://issues.liferay.com/browse/POSHI-146
+[POSHI-160]: https://issues.liferay.com/browse/POSHI-160
+[POSHI-162]: https://issues.liferay.com/browse/POSHI-162
+[POSHI-175]: https://issues.liferay.com/browse/POSHI-175
+[POSHI-181]: https://issues.liferay.com/browse/POSHI-181
+[POSHI-187]: https://issues.liferay.com/browse/POSHI-187
+[POSHI-189]: https://issues.liferay.com/browse/POSHI-189
+[POSHI-192]: https://issues.liferay.com/browse/POSHI-192
+[POSHI-194]: https://issues.liferay.com/browse/POSHI-194
+[POSHI-200]: https://issues.liferay.com/browse/POSHI-200
+[POSHI-214]: https://issues.liferay.com/browse/POSHI-214
+[POSHI-215]: https://issues.liferay.com/browse/POSHI-215
+[POSHI-218]: https://issues.liferay.com/browse/POSHI-218
+[POSHI-221]: https://issues.liferay.com/browse/POSHI-221
+[POSHI-224]: https://issues.liferay.com/browse/POSHI-224
+[POSHI-232]: https://issues.liferay.com/browse/POSHI-232

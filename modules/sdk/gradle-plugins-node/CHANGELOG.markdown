@@ -1,5 +1,70 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 7.2.14 - 2022-01-03
+
+### Commits
+- [LPS-144756] yarn/npm now requires access token to publish (5f10d18aa9)
+
+## 7.2.13 - 2022-01-03
+
+### Commits
+- [LPS-144575] Set publish registry url (bac2e5160e)
+
+## 7.2.12 - 2022-01-03
+
+### Commits
+- [LPS-144575] Revert "LPS-144575 Set publish registry url" (1ec9c28a31)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+
+## 7.2.11 - 2021-12-29
+
+### Commits
+- [LPS-144575] Set publish registry url (7b0a1c7c46)
+
+## 7.2.10 - 2021-12-02
+
+### Commits
+- [LPS-143280] use arm arch (81c79fa7db)
+
+### Dependencies
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 7.2.9 - 2021-11-17
+
+### Commits
+- [LPS-142100] [LPS-141250] revert (eee87baefd)
+
+## 7.2.8 - 2021-11-17
+
+### Commits
+- [LPS-105380] Remove final from parameters (a4e6ca0985)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Revert "LPS-105380 Remove final from parameters" (b2f9eed2c2)
+- [LPS-105380] Remove final from parameters (f615ff77ff)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+- [LPS-105380] Merge consecutive if-statements (1ec70acda6)
+- [LPS-105380] Increase performance by moving variable declaration after throw
+statement (444d3bb171)
+
+## 7.2.7 - 2021-05-24
+
+### Commits
+- [LPS-106149] Use Gradle incremental cache check (97365d9a4c)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (a442601c7a)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (5bbb659cb8)
+- [LPS-130505] SF, no need to call methods (18d35dc2bb)
+- [LPS-130505] SF, no need to call methods (635298fad3)
+
+## 7.2.6 - 2021-03-29
+
+### Commits
+- [LPS-129858] Add excludes for package.json build outputs (f7d4593da4)
+- [LPS-127478] Document yarnUrl extension in NodePlugin (a68a22b757)
+- [LPS-105380] Inline (e47639f436)
+
 ## 7.2.5 - 2020-11-02
 
 ### Commits
@@ -1005,7 +1070,7 @@ following conditions are met:
 ## 1.0.21 - 2016-08-15
 
 ### Commits
-- [LPS-66906] Stop retrying if Node.js completed successfully (490ff7c860)
+- [LPS-66906] Stop retrying if Node.js completed succesfully (490ff7c860)
 
 ## 1.0.20 - 2016-08-11
 
@@ -1277,6 +1342,15 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-116808]: https://issues.liferay.com/browse/LPS-116808
 [LPS-121567]: https://issues.liferay.com/browse/LPS-121567
+[LPS-127478]: https://issues.liferay.com/browse/LPS-127478
+[LPS-129858]: https://issues.liferay.com/browse/LPS-129858
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-141250]: https://issues.liferay.com/browse/LPS-141250
+[LPS-142100]: https://issues.liferay.com/browse/LPS-142100
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-144575]: https://issues.liferay.com/browse/LPS-144575
+[LPS-144756]: https://issues.liferay.com/browse/LPS-144756
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-3663]: https://issues.liferay.com/browse/LRDOCS-3663
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

@@ -132,7 +132,7 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACUtils.createWCAndAddToPage(
-				webContentContent = '''<div><button class="mybutton-shop product-shop-button" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { for(let i = 0; i < ${customEventsNumber}; i = i + 1) { var message = "Block ${customEventName} N"; var finalMessage = message.replace("N", i); Analytics.track(finalMessage, {category: "wetsuit"});  } } </script>''',
+				webContentContent = '''<div><button class="mybutton-shop product-shop-button" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { for(let i = 0; i < ${customEventsNumber}; i = i %2B 1 ) { var message = "Multiple Custom Event ${customEventName} V"; var finalMessage = message.replace("V", i); Analytics.track(finalMessage, {category: "wetsuit"});  } } </script>''',
 				webContentTitle = "${webContentTitle}");
 		}
 	}

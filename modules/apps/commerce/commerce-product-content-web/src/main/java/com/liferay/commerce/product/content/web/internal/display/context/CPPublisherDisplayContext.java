@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
@@ -90,6 +93,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		if (isSelectionStyleDynamic()) {
 			cpDataSourceResult = _getDynamicCPDataSourceResult(
+				cpContentRequestHelper.getRequest(),
 				_searchContainer.getStart(), _searchContainer.getEnd());
 		}
 		else if (isSelectionStyleDataSource()) {
@@ -165,7 +169,8 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		return _searchContainer;
 	}
 
-	private CPDataSourceResult _getDynamicCPDataSourceResult(int start, int end)
+	private CPDataSourceResult _getDynamicCPDataSourceResult(
+			HttpServletRequest httpServletRequest, int start, int end)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
@@ -173,6 +178,22 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				"commerceAccountGroupIds",
+				() -> {
+					CommerceContext commerceContext =
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT);
+
+					CommerceAccount commerceAccount =
+						commerceContext.getCommerceAccount();
+
+					if (commerceAccount == null) {
+						return null;
+					}
+
+					return commerceContext.getCommerceAccountGroupIds();
+				}
 			).put(
 				"params", new LinkedHashMap<String, Object>()
 			).build());

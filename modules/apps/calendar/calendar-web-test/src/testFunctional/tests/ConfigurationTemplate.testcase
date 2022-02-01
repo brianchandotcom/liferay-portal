@@ -56,12 +56,19 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can apply the selected template"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanApplySelectedTemplate {
 
-		// TODO LRQA-71972 CanApplySelectedTemplate pending implementation
+		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
 
+		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
+		
+		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+
+		ConfigurationTemplate.optionSelectedTemplate(
+			item = "Apply",
+			configurationName = "Configuration Name");
+		
 	}
 
 	@description = "LRQA-71891 - Verify that the user can delete a template"

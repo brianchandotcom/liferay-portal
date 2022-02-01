@@ -38,6 +38,18 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
+     macro gotoCalendarOptions {
+        Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "${option}");
+
+	}
+
+    macro saveConfigurationTemplateCalendar {
+
+        SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+        AssertClick(
 			locator1 = "Configuration#SAVE_CONFIGURATION_TEMPLATE",
 			value1 = "Save Current Configuration as Template");
 
@@ -58,5 +70,14 @@ definition {
         AssertElementPresent(
 			locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME",
 			key_configurationName = "${configurationName}");
+    }
+
+    macro optionSelectedTemplate{
+
+        LexiconTable.clickEllipsisItem(
+			item = "${item}",
+			tableEntry = "${configurationName}");
+
+		Alert.viewSuccessMessage();
     }
 }

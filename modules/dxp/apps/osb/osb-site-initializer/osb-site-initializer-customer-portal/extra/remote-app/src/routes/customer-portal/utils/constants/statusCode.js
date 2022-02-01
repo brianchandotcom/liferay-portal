@@ -10,5 +10,5 @@
  */
 
 export const STATUS_CODE = {
-	sucess: 200,
+	success: 200,
 };

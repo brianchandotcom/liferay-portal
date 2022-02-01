@@ -119,7 +119,7 @@ const ActivationKeysInputs = ({
 			sessionId
 		);
 
-		if (license.status === STATUS_CODE.sucess) {
+		if (license.status === STATUS_CODE.success) {
 			const contentType = license.headers.get('content-type');
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();

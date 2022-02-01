@@ -66,6 +66,11 @@ public class FragmentCollectionContributorItemDescriptor
 		return _fragmentCollectionContributor.getName();
 	}
 
+	@Override
+	public boolean isCompact() {
+		return true;
+	}
+
 	private final FragmentCollectionContributor _fragmentCollectionContributor;
 
 }

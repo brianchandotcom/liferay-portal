@@ -31,13 +31,22 @@ const Selector = {
 };
 
 class CollapseProvider {
+	_transitioning?: boolean;
+	_transitionEndEvent?: any;
+
 	EVENT_HIDDEN = 'liferay.collapse.hidden';
 	EVENT_HIDE = 'liferay.collapse.hide';
 	EVENT_SHOW = 'liferay.collapse.show';
 	EVENT_SHOWN = 'liferay.collapse.shown';
 
 	constructor() {
+
+		// @ts-ignore
+
 		if (Liferay.CollapseProvider) {
+
+			// @ts-ignore
+
 			return Liferay.CollapseProvider;
 		}
 
@@ -50,10 +59,12 @@ class CollapseProvider {
 			this._onTriggerClick
 		);
 
+		// @ts-ignore
+
 		Liferay.CollapseProvider = this;
 	}
 
-	hide = ({panel, trigger}) => {
+	hide = ({panel, trigger}: {panel?: any; trigger?: any}) => {
 		if (panel && !trigger) {
 			trigger = this._getTrigger(panel);
 		}
@@ -109,7 +120,7 @@ class CollapseProvider {
 		}
 	};
 
-	show = ({panel, trigger}) => {
+	show = ({panel, trigger}: {panel?: any; trigger?: any}) => {
 		if (panel && !trigger) {
 			trigger = this._getTrigger(panel);
 		}
@@ -132,7 +143,7 @@ class CollapseProvider {
 					Selector.TRIGGER + ':not(.' + CssClass.COLLAPSED + ')'
 				);
 
-				expandedTriggers.forEach((expandedTrigger) => {
+				expandedTriggers.forEach((expandedTrigger: any) => {
 					if (
 						expandedTrigger !== trigger &&
 						expandedTrigger.dataset.parent === parentId
@@ -183,23 +194,23 @@ class CollapseProvider {
 		}
 	};
 
-	_getDimension(panel) {
+	_getDimension(panel: any) {
 		const hasWidth = panel.classList.contains(Dimension.WIDTH);
 
 		return hasWidth ? Dimension.WIDTH : Dimension.HEIGHT;
 	}
 
-	_getPanel(trigger) {
+	_getPanel(trigger: any) {
 		return document.querySelector(
 			trigger.getAttribute('href') || trigger.dataset.target
 		);
 	}
 
-	_getTrigger(panel) {
+	_getTrigger(panel: any) {
 		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
-	_onTriggerClick = (event) => {
+	_onTriggerClick = (event: any) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {
@@ -230,12 +241,18 @@ class CollapseProvider {
 			OTransition: 'oTransitionEnd otransitionend',
 			WebkitTransition: 'webkitTransitionEnd',
 			transition: 'transitionend',
-		};
+		} as const;
 
 		let eventName = false;
 
 		Object.keys(transitionEndEvents).some((name) => {
+
+			// @ts-ignore
+
 			if (sampleElement.style[name] !== undefined) {
+
+				// @ts-ignore
+
 				eventName = transitionEndEvents[name];
 
 				return true;

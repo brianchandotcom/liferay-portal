@@ -12,12 +12,9 @@
  * details.
  */
 
-import {TObjectLayoutRow} from '../components/Layout/types';
-export declare function findObjectLayoutRowIndex(
-	objectLayoutRows: TObjectLayoutRow[],
-	fieldSize: number
-): number;
-export declare function findObjectFieldIndex(
-	objectFields: any[],
-	objectFieldId: number
-): number;
+import React from 'react';
+interface IRequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
+	required?: boolean;
+}
+declare const RequiredLabel: React.FC<IRequiredLabelProps>;
+export default RequiredLabel;

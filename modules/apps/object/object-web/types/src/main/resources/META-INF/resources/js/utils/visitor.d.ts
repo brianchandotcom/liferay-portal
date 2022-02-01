@@ -17,7 +17,7 @@ import {
 	TObjectLayoutBox,
 	TObjectLayoutColumn,
 	TObjectLayoutTab,
-} from '../components/layout/types';
+} from '../components/Layout/types';
 declare class TabsVisitor {
 	private _layout;
 	constructor(layout: TObjectLayout);

@@ -12,12 +12,11 @@
  * details.
  */
 
-import {TObjectLayoutRow} from '../components/Layout/types';
-export declare function findObjectLayoutRowIndex(
-	objectLayoutRows: TObjectLayoutRow[],
-	fieldSize: number
-): number;
-export declare function findObjectFieldIndex(
-	objectFields: any[],
-	objectFieldId: number
-): number;
+import React from 'react';
+interface IModalAddObjectLayoutBoxProps
+	extends React.HTMLAttributes<HTMLElement> {
+	observer: any;
+	onClose: () => void;
+}
+declare const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps>;
+export default ModalAddObjectLayoutBox;

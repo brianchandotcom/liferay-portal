@@ -12,12 +12,13 @@
  * details.
  */
 
-import {TObjectLayoutRow} from '../components/Layout/types';
-export declare function findObjectLayoutRowIndex(
-	objectLayoutRows: TObjectLayoutRow[],
-	fieldSize: number
-): number;
-export declare function findObjectFieldIndex(
-	objectFields: any[],
-	objectFieldId: number
-): number;
+import React from 'react';
+import {TObjectLayoutColumn} from '../types';
+interface IObjectLayoutColumnsProps extends React.HTMLAttributes<HTMLElement> {
+	boxIndex: number;
+	objectLayoutColumns?: TObjectLayoutColumn[];
+	rowIndex: number;
+	tabIndex: number;
+}
+declare const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps>;
+export default ObjectLayoutColumns;

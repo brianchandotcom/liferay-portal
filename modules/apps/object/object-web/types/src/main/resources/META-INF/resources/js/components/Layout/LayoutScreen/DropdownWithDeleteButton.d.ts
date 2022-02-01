@@ -12,12 +12,8 @@
  * details.
  */
 
-import {TObjectLayoutRow} from '../components/Layout/types';
-export declare function findObjectLayoutRowIndex(
-	objectLayoutRows: TObjectLayoutRow[],
-	fieldSize: number
-): number;
-export declare function findObjectFieldIndex(
-	objectFields: any[],
-	objectFieldId: number
-): number;
+import React from 'react';
+declare const DropdownWithDeleteButton: React.FC<React.HTMLAttributes<
+	HTMLElement
+>>;
+export default DropdownWithDeleteButton;

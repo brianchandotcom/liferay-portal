@@ -19,23 +19,18 @@ String rememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
 %>
 
 <c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">
-
-	<%
-	boolean autoExtend = !themeDisplay.isSignedIn() || PropsValues.SESSION_TIMEOUT_AUTO_EXTEND;
-	%>
-
 	<aui:script require="frontend-js-web/liferay/toast/commands/OpenToast.es as toastCommands">
 		AUI().use(
 			'liferay-session',
 			function() {
 				Liferay.Session = new Liferay.SessionBase(
 					{
-						autoExtend: <%= autoExtend %>,
+						autoExtend: <%= !themeDisplay.isSignedIn() || PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
 						redirectOnExpire: <%= SSOUtil.isSessionRedirectOnExpire(themeDisplay.getCompanyId()) %>,
 						redirectUrl: '<%= HtmlUtil.escapeJS(SSOUtil.getSessionExpirationRedirectURL(themeDisplay.getCompanyId(), themeDisplay.getURLHome())) %>',
 						sessionLength: <%= PropsValues.SESSION_TIMEOUT * 60 %>,
-						sessionTimeoutOffset: <%= autoExtend ? PropsValues.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET : 0 %>,
-						warningLength: <%= autoExtend ? 0 : PropsValues.SESSION_TIMEOUT_WARNING * 60 %>
+						sessionTimeoutOffset: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET %>,
+						warningLength: <%= PropsValues.SESSION_TIMEOUT_WARNING * 60 %>
 					}
 				);
 

@@ -27,6 +27,8 @@ AUI.add(
 			active: 'activated',
 		};
 
+		const SESSION_STATE_CHECK_INTERVAL = 1000;
+
 		var SRC = {};
 
 		var SRC_EVENT_OBJ = {
@@ -109,8 +111,6 @@ AUI.add(
 					var instance = this;
 
 					A.clearInterval(instance._intervalId);
-
-					instance.set('timestamp', 'expired');
 
 					if (event.src === SRC) {
 						instance._expireSession();
@@ -236,113 +236,59 @@ AUI.add(
 				},
 
 				_startTimer() {
-					var instance = this;
+					const instance = this;
 
-					var sessionLength = instance.get('sessionLength');
-
-					var sessionTimeoutOffset = instance.get(
+					const sessionLength = instance.get('sessionLength');
+					const sessionTimeoutOffset = instance.get(
 						'sessionTimeoutOffset'
 					);
-
-					var warningTime = instance.get('warningTime');
-
-					var registered = instance._registered;
-
-					var interval = 1000;
+					const warningTime = instance.get('warningTime');
 
 					instance._intervalId = A.setInterval(() => {
-						var sessionState = instance.get('sessionState');
+						const sessionState = instance.get('sessionState');
+						const timestamp = instance.get('timestamp');
 
-						var timeOffset;
+						if (instance._initTimestamp !== timestamp) {
+							instance.set('timestamp', timestamp);
 
-						var timestamp = instance.get('timestamp');
-
-						var elapsed = sessionLength;
-
-						if (Lang.toInt(timestamp)) {
-							timeOffset =
-								Math.floor((Date.now() - timestamp) / 1000) *
-								1000;
-
-							elapsed = timeOffset;
-
-							if (instance._initTimestamp !== timestamp) {
-								instance.set('timestamp', timestamp);
-
-								if (sessionState !== 'active') {
-									instance.set(
-										'sessionState',
-										'active',
-										SRC_EVENT_OBJ
-									);
-								}
+							if (sessionState !== 'active') {
+								instance.set(
+									'sessionState',
+									'active',
+									SRC_EVENT_OBJ
+								);
 							}
 						}
-						else {
-							timestamp = 'expired';
-						}
 
-						var extend = instance.get('autoExtend');
+						const elapsed =
+							Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
-						var expirationMoment = false;
-						var warningMoment = false;
+						const autoExtend = instance.get('autoExtend');
 
-						var hasExpired = elapsed >= sessionLength;
-						var hasExpiredTimeoutOffset =
+						const hasExpired = elapsed >= sessionLength;
+						const hasExpiredTimeoutOffset =
 							elapsed >= sessionLength - sessionTimeoutOffset;
-						var hasWarned = elapsed >= warningTime;
+						const hasWarned = elapsed >= warningTime;
 
-						if (hasExpiredTimeoutOffset || hasWarned) {
-							if (timestamp === 'expired') {
-								expirationMoment = true;
-								extend = false;
-								hasExpired = true;
-								hasExpiredTimeoutOffset = true;
+						if (autoExtend && hasExpiredTimeoutOffset) {
+							instance.extend();
+						}
+
+						if (!autoExtend) {
+							if (hasExpired && sessionState !== 'expired') {
+								instance.expire();
 							}
-
-							if (
-								hasExpiredTimeoutOffset &&
-								sessionState !== 'expired'
-							) {
-								if (extend && !hasExpired) {
-									expirationMoment = false;
-									hasExpired = false;
-									hasExpiredTimeoutOffset = false;
-									hasWarned = false;
-									warningMoment = false;
-
-									instance.extend();
-								}
-								else {
-									instance.expire();
-
-									expirationMoment = true;
-								}
-							}
-							else if (
-								hasWarned &&
-								!hasExpiredTimeoutOffset &&
-								!extend &&
-								sessionState !== 'warned'
-							) {
+							else if (hasWarned && sessionState !== 'warned') {
 								instance.warn();
-
-								warningMoment = true;
 							}
 						}
 
-						for (var i in registered) {
-							registered[i](
-								elapsed,
-								interval,
-								hasWarned,
-								hasExpired,
-								hasExpiredTimeoutOffset,
-								warningMoment,
-								expirationMoment
-							);
+						const registered = instance._registered;
+
+						for (const i in registered) {
+							registered[i](elapsed, hasWarned, hasExpired);
 						}
-					}, interval);
+					}, SESSION_STATE_CHECK_INTERVAL);
 				},
 
 				_stopTimer() {
@@ -465,22 +411,22 @@ AUI.add(
 				},
 
 				_beforeHostWarned() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance._host;
+					const host = instance._host;
 
-					var sessionLength = host.get('sessionLength');
-					var timestamp = host.get('timestamp');
-					var warningLength = host.get('warningLength');
+					const sessionLength = host.get('sessionLength');
+					const timestamp = host.get('timestamp');
+					const warningLength = host.get('warningLength');
 
-					var elapsed = sessionLength;
+					let elapsed = sessionLength;
 
 					if (Lang.toInt(timestamp)) {
 						elapsed =
 							Math.floor((Date.now() - timestamp) / 1000) * 1000;
 					}
 
-					var remainingTime = sessionLength - elapsed;
+					let remainingTime = sessionLength - elapsed;
 
 					if (remainingTime > warningLength) {
 						remainingTime = warningLength;
@@ -498,37 +444,16 @@ AUI.add(
 					);
 
 					instance._intervalId = host.registerInterval(
-						(
-							elapsed,
-							interval,
-							hasWarned,
-							hasExpired,
-							warningMoment
-						) => {
+						(elapsed, hasWarned, hasExpired) => {
 							if (!hasWarned) {
 								instance._uiSetActivated();
 							}
 							else if (!hasExpired) {
-								if (warningMoment) {
-									if (remainingTime <= 0) {
-										remainingTime = warningLength;
-									}
-								}
-
-								elapsed =
-									Math.floor(
-										(Date.now() - timestamp) / 1000
-									) * 1000;
-
-								remainingTime = sessionLength - elapsed;
-
 								instance._uiSetRemainingTime(
-									remainingTime,
+									sessionLength - elapsed,
 									counterTextNode
 								);
 							}
-
-							remainingTime -= interval;
 						}
 					);
 				},

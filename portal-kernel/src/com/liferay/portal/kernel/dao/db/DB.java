@@ -47,6 +47,10 @@ public interface DB {
 	@Deprecated
 	public static final int DEFAULT = 1;
 
+	public static final int SQL_VARCHAR_MAX_SIZE = Integer.MAX_VALUE;
+
+	public static final int SQL_VARCHAR_MAX_SIZE_THRESHOLD = 9999999;
+
 	public void addIndexes(
 			Connection connection, String indexesSQL,
 			Set<String> validIndexNames)

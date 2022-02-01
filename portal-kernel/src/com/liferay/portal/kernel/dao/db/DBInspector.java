@@ -118,7 +118,10 @@ public class DBInspector {
 			int actualColumnSize = resultSet.getInt("COLUMN_SIZE");
 
 			if ((expectedColumnSize != -1) &&
-				(expectedColumnSize != actualColumnSize)) {
+				(((expectedColumnSize != DB.SQL_VARCHAR_MAX_SIZE) &&
+				  (expectedColumnSize != actualColumnSize)) ||
+				 ((expectedColumnSize == DB.SQL_VARCHAR_MAX_SIZE) &&
+				  (actualColumnSize < DB.SQL_VARCHAR_MAX_SIZE_THRESHOLD)))) {
 
 				return false;
 			}

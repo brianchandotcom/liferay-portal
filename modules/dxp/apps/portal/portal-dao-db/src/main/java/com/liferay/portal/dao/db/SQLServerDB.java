@@ -194,8 +194,6 @@ public class SQLServerDB extends BaseDB {
 
 	private static final int _SQL_STRING_SIZE = 4000;
 
-	private static final int _SQL_TEXT_SIZE = 2147483647;
-
 	private static final int[] _SQL_TYPES = {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.BIT, Types.TIMESTAMP,
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.NVARCHAR,
@@ -203,7 +201,7 @@ public class SQLServerDB extends BaseDB {
 	};
 
 	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, _SQL_TEXT_SIZE
+		_SQL_STRING_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;

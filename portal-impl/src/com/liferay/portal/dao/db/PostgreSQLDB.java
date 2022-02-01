@@ -238,17 +238,13 @@ public class PostgreSQLDB extends BaseDB {
 		" bigint", " text", " text", " varchar", "", "commit"
 	};
 
-	private static final int _SQL_STRING_SIZE = 2147483647;
-
-	private static final int _SQL_TEXT_SIZE = 2147483647;
-
 	private static final int[] _SQL_TYPES = {
 		Types.BIGINT, Types.BINARY, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
 	};
 
 	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, _SQL_TEXT_SIZE
+		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;

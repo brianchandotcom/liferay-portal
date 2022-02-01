@@ -135,17 +135,13 @@ public class HypersonicDB extends BaseDB {
 		" longvarchar", " longvarchar", " varchar", "", "commit"
 	};
 
-	private static final int _SQL_STRING_SIZE = 16777216;
-
-	private static final int _SQL_TEXT_SIZE = 16777216;
-
 	private static final int[] _SQL_TYPES = {
 		Types.BLOB, Types.BLOB, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
 	};
 
 	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, _SQL_TEXT_SIZE
+		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
 
 }

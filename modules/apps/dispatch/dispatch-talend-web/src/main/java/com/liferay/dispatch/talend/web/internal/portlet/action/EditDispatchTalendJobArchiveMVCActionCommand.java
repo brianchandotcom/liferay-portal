@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -95,15 +93,13 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 					new FileInputStream(jobArchiveFile));
 
 				_expandoValueLocalService.addValue(
-					_companyLocalService.getCompanyIdByUserId(
-						_portal.getUserId(actionRequest)),
+					_portal.getCompanyId(actionRequest),
 					DispatchTrigger.class.getName(), "DispatchArchiveFile",
 					"fileName", _portal.getUserId(actionRequest),
 					uploadPortletRequest.getFileName("jobArchive"));
 
 				_expandoValueLocalService.addValue(
-					_companyLocalService.getCompanyIdByUserId(
-						_portal.getUserId(actionRequest)),
+					_portal.getCompanyId(actionRequest),
 					DispatchTrigger.class.getName(), "DispatchArchiveFile",
 					"dispatchTriggerId", _portal.getUserId(actionRequest),
 					String.valueOf(dispatchTriggerId));
@@ -174,9 +170,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		EditDispatchTalendJobArchiveMVCActionCommand.class);
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
 	private DispatchFileRepository _dispatchFileRepository;
 
 	@Reference
@@ -187,8 +180,5 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

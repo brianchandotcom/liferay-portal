@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"main": "index.js",
 	"name": "frontend-js-tabs-support-web",
 	"private": true,
 	"scripts": {

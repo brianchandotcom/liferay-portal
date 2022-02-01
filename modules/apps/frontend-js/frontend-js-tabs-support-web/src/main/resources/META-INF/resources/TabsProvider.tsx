@@ -24,6 +24,9 @@ const Selector = {
 };
 
 class TabsProvider {
+	_transitioning?: boolean;
+	_transitionEndEvent?: any;
+
 	EVENT_HIDDEN = 'liferay.tabs.hidden';
 	EVENT_HIDE = 'liferay.tabs.hide';
 	EVENT_SHOW = 'liferay.tabs.show';
@@ -31,6 +34,9 @@ class TabsProvider {
 
 	constructor() {
 		if (Liferay.TabsProvider) {
+
+			// @ts-ignore
+
 			return Liferay.TabsProvider;
 		}
 
@@ -46,7 +52,7 @@ class TabsProvider {
 		Liferay.TabsProvider = this;
 	}
 
-	hide = ({panel, trigger}) => {
+	hide = ({panel, trigger}: {panel?: any; trigger?: any}) => {
 		if (panel && !trigger) {
 			trigger = this._getTrigger(panel);
 		}
@@ -81,7 +87,7 @@ class TabsProvider {
 		);
 	};
 
-	show = ({panel, trigger}) => {
+	show = ({panel, trigger}: {panel?: any; trigger?: any}) => {
 		if (panel && !trigger) {
 			trigger = this._getTrigger(panel);
 		}
@@ -96,7 +102,7 @@ class TabsProvider {
 
 		const panels = Array.from(panel.parentElement.children);
 
-		const activePanels = panels.filter((item) => {
+		const activePanels = panels.filter((item: any) => {
 			return item.classList.contains(CssClass.SHOW);
 		});
 
@@ -124,15 +130,15 @@ class TabsProvider {
 		}
 	};
 
-	_getPanel(trigger) {
+	_getPanel(trigger: any) {
 		return document.querySelector(trigger.getAttribute('href'));
 	}
 
-	_getTrigger(panel) {
+	_getTrigger(panel: any) {
 		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
-	_onTriggerClick = (event) => {
+	_onTriggerClick = (event: any) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {
@@ -159,7 +165,13 @@ class TabsProvider {
 		let eventName = false;
 
 		Object.keys(transitionEndEvents).some((name) => {
+
+			// @ts-ignore
+
 			if (sampleElement.style[name] !== undefined) {
+
+				// @ts-ignore
+
 				eventName = transitionEndEvents[name];
 
 				return true;

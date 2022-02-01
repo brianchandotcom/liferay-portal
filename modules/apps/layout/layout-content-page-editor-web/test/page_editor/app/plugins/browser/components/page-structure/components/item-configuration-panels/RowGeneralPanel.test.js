@@ -117,7 +117,7 @@ describe('RowGeneralPanel', () => {
 
 		const input = screen.getByLabelText('number-of-modules');
 
-		await fireEvent.change(input, {
+		fireEvent.change(input, {
 			target: {value: '6'},
 		});
 
@@ -134,7 +134,7 @@ describe('RowGeneralPanel', () => {
 
 		const input = screen.getByLabelText('show-gutter');
 
-		await fireEvent.click(input);
+		fireEvent.click(input);
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: false},
@@ -148,7 +148,7 @@ describe('RowGeneralPanel', () => {
 
 		const input = screen.getByLabelText('layout');
 
-		await fireEvent.change(input, {
+		fireEvent.change(input, {
 			target: {value: '2'},
 		});
 
@@ -199,7 +199,7 @@ describe('RowGeneralPanel', () => {
 
 		const input = screen.getByLabelText('vertical-alignment');
 
-		await fireEvent.change(input, {
+		fireEvent.change(input, {
 			target: {value: 'middle'},
 		});
 
@@ -237,7 +237,7 @@ describe('RowGeneralPanel', () => {
 
 		const input = screen.getByLabelText('inverse-order');
 
-		await fireEvent.click(input);
+		fireEvent.click(input);
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {
@@ -256,7 +256,7 @@ describe('RowGeneralPanel', () => {
 		});
 		const input = screen.getByLabelText('layout');
 
-		await fireEvent.change(input, {
+		fireEvent.change(input, {
 			target: {value: '1'},
 		});
 

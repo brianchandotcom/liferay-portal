@@ -138,7 +138,7 @@ describe('ContainerGeneralPanel', () => {
 
 		const containerWidthSelect = screen.getByLabelText('container-width');
 
-		await fireEvent.change(containerWidthSelect, {
+		fireEvent.change(containerWidthSelect, {
 			target: {value: 'fixed'},
 		});
 
@@ -156,7 +156,7 @@ describe('ContainerGeneralPanel', () => {
 
 		const contentDisplaySelect = screen.getByLabelText('content-display');
 
-		await fireEvent.change(contentDisplaySelect, {
+		fireEvent.change(contentDisplaySelect, {
 			target: {value: 'flex-row'},
 		});
 

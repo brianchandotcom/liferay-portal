@@ -13,10 +13,6 @@
  */
 
 import React from 'react';
-import './ModalAddColumnsObjectCustomView.scss';
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	observer: any;
-	onClose: () => void;
-}
-declare const ModalAddColumnsObjectCustomView: React.FC<IProps>;
-export default ModalAddColumnsObjectCustomView;
+import './ViewBuilderScreen.scss';
+declare const ViewBuilderScreen: React.FC<{}>;
+export default ViewBuilderScreen;

@@ -29,7 +29,7 @@ import ViewContext from './context';
 
 import './ViewBuilderScreen.scss';
 
-const ViewBuilderScreen = () => {
+const ViewBuilderScreen: React.FC<{}> = () => {
 	const [{objectView}] = useContext(ViewContext);
 
 	const [visibleModal, setVisibleModal] = useState(false);

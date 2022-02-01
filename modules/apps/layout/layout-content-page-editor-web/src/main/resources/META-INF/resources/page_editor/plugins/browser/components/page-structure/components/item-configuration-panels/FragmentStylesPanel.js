@@ -46,6 +46,12 @@ export function FragmentStylesPanel({item}) {
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
+	const hasCustomStyles = fragmentEntryLink.configuration?.fieldSets?.filter(
+		(fieldSet) =>
+			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style &&
+			selectedViewportSize === VIEWPORT_SIZES.desktop
+	).length;
+
 	const onCustomStyleValueSelect = useCallback(
 		(name, value) => {
 			updateConfigurationValue({
@@ -69,7 +75,11 @@ export function FragmentStylesPanel({item}) {
 				/>
 			)}
 
-			<CommonStyles commonStylesValues={itemConfig.styles} item={item} />
+			<CommonStyles
+				className={hasCustomStyles ? 'mt-3' : null}
+				commonStylesValues={itemConfig.styles}
+				item={item}
+			/>
 		</>
 	);
 }

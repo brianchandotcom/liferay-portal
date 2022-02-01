@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -25,7 +26,7 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet} from './FieldSet';
 
-export function CommonStyles({commonStylesValues, item}) {
+export function CommonStyles({className, commonStylesValues, item}) {
 	const {commonStyles} = config;
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -44,7 +45,9 @@ export function CommonStyles({commonStylesValues, item}) {
 	return (
 		<>
 			<h1 className="sr-only">{Liferay.Language.get('common-styles')}</h1>
-			<div className="page-editor__common-styles">
+			<div
+				className={classNames('page-editor__common-styles', className)}
+			>
 				{styles.map((fieldSet, index) => {
 					return (
 						<FieldSet

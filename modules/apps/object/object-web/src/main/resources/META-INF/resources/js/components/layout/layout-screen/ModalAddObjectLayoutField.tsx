@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import AutoComplete from '../../form/AutoComplete';
+import AutoComplete from '../../Form/AutoComplete';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
 import RequiredLabel from './RequiredLabel';

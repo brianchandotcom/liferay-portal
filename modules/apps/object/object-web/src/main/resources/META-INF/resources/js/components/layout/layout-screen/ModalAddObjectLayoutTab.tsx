@@ -22,8 +22,8 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
 import {separateCamelCase} from '../../../utils/string';
-import AutoComplete from '../../form/AutoComplete';
-import Input from '../../form/Input';
+import AutoComplete from '../../Form/AutoComplete';
+import Input from '../../Form/Input';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
 import {TObjectRelationship} from '../types';
 

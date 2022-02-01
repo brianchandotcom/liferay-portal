@@ -25,7 +25,7 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../utils/string';
-import Input from './form/Input';
+import Input from './Form/Input';
 
 const headers = new Headers({
 	'Accept': 'application/json',

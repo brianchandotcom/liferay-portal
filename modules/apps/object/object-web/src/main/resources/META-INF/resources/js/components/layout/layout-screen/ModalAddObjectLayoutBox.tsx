@@ -18,7 +18,7 @@ import ClayModal from '@clayui/modal';
 import React, {useContext} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import Input from '../../form/Input';
+import Input from '../../Form/Input';
 import LayoutContext, {TYPES} from '../context';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();

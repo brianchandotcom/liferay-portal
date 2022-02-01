@@ -21,8 +21,8 @@ import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
 import {normalizeLanguageId, toCamelCase} from '../utils/string';
-import Input from './form/Input';
-import InputLocalized from './form/InputLocalized/InputLocalized';
+import Input from './Form/Input';
+import InputLocalized from './Form/InputLocalized/InputLocalized';
 
 const defaultLanguageId: string = normalizeLanguageId(
 	Liferay.ThemeDisplay.getDefaultLanguageId()

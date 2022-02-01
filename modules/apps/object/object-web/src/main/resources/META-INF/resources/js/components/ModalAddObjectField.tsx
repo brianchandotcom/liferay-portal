@@ -22,9 +22,9 @@ import React, {useEffect, useState} from 'react';
 import useForm from '../hooks/useForm';
 import {ERRORS} from '../utils/errors';
 import {toCamelCase} from '../utils/string';
-import CustomSelect from './form/CustomSelect/CustomSelect';
-import Input from './form/Input';
-import Select from './form/Select';
+import CustomSelect from './Form/CustomSelect/CustomSelect';
+import Input from './Form/Input';
+import Select from './Form/Select';
 
 const objectFieldTypes = [
 	'BigDecimal',

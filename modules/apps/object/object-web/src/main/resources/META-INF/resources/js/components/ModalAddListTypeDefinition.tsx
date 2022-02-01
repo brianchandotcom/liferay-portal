@@ -20,7 +20,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
-import Input from './form/Input';
+import Input from './Form/Input';
 import {TName} from './layout/types';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();

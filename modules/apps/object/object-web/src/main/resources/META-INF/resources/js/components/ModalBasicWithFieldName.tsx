@@ -20,7 +20,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import useForm from '../hooks/useForm';
-import Input from './form/Input';
+import Input from './Form/Input';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;

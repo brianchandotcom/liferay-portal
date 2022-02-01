@@ -16,7 +16,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
 import Card from '../../Card/Card';
-import Input from '../../form/Input';
+import Input from '../../Form/Input';
 import LayoutContext, {TYPES} from '../context';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();

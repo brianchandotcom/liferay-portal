@@ -52,28 +52,31 @@ definition {
 			var changeOrder = "1";
 		}
 
-		if ("${conflictingChanges}" == "true") {
-			Click(
-				key_entryTitle = "${entryTitle}",
-				locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
-			MenuItem.click(menuItem = "Discard Change");
+		if ("${conflictingChanges}" == "true") {
+			if (IsElementPresent(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON")) {
+				Click(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON");
+			}
+			else if (IsElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN")) {
+				Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
+
+				MenuItem.click(menuItem = "Discard Change");
+			}
+			else {
+				MenuItem.click(menuItem = "Discard Change");
+			}
 		}
 		else {
-			var key_changeCategory = "${changeCategory}";
-			var key_changeTitle = "${changeTitle}";
-
 			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
-			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_ELLIPSIS");
+			Click(locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Discard");
 		}
 
 		AssertElementPresent(locator1 = "PublicationsChanges#DISCARDED_CHANGES_TITLE");
-
-		var key_changeCategory = "${changeCategory}";
-		var key_changeTitle = "${changeTitle}";
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE")) {
 			Click(locator1 = "Pagination#NEXT_LINK");
@@ -116,23 +119,11 @@ definition {
 			var changeOrder = "1";
 		}
 
-		if ("${conflictingChanges}" == "true") {
-			Click(
-				key_entryTitle = "${entryTitle}",
-				locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+		Click(
+			key_changeTitle = "${changeTitle}",
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
 
-			MenuItem.click(menuItem = "Edit Item");
-		}
-		else {
-			var key_changeCategory = "${changeCategory}";
-			var key_changeTitle = "${changeTitle}";
-
-			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
-
-			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Edit");
-		}
+		MenuItem.click(menuItem = "Edit in ${editInLocation}");
 	}
 
 	macro openCommentsSidebar {

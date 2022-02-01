@@ -439,8 +439,8 @@ definition {
 			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
 
 		PublicationsChanges.gotoEditChanges(
-			conflictingChanges = "true",
-			entryTitle = "DM Folder Name");
+			changeTitle = "DM Folder Name",
+			editInLocation = "Publication Name 2");
 
 		PortletEntry.inputName(name = "DM Folder Name Edit");
 

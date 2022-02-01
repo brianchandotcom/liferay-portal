@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>CONFLICTING_CHANGES_DISCARD_ELLIPSIS</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
+	<td>//div[contains(@class,'autofit-col-expand')]//following-sibling::div//button</td>
 	<td></td>
 </tr>
 <tr>

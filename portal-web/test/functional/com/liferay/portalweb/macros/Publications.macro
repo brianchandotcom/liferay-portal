@@ -19,7 +19,7 @@ definition {
 
 		Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
-		AssertElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_ELLIPSIS");
+		AssertElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
 	}
 
 	macro assertScheduledPublicationPublished {

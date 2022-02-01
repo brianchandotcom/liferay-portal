@@ -2,10 +2,10 @@
 	"dependencies": {
 		"@clayui/alert": "3.40.0",
 		"@clayui/button": "3.40.0",
-		"@clayui/drop-down": "3.43.0",
-		"@clayui/form": "3.42.0",
+		"@clayui/drop-down": "3.45.0",
+		"@clayui/form": "3.45.0",
 		"@clayui/icon": "3.40.0",
-		"@clayui/label": "3.40.0",
+		"@clayui/label": "3.45.0",
 		"@clayui/loading-indicator": "3.40.0",
 		"@clayui/management-toolbar": "3.40.0",
 		"@clayui/slider": "3.40.0",

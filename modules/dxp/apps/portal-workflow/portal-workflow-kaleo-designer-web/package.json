@@ -2,8 +2,8 @@
 	"dependencies": {
 		"@clayui/button": "3.40.0",
 		"@clayui/icon": "3.40.0",
-		"@clayui/label": "3.40.0",
-		"@clayui/toolbar": "3.42.0",
+		"@clayui/label": "3.45.0",
+		"@clayui/toolbar": "3.45.0",
 		"dagre": "0.8.2",
 		"frontend-editor-ckeditor-web": "*",
 		"react": "16.12.0",

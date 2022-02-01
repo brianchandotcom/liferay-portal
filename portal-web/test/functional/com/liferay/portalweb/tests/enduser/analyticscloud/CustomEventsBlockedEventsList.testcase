@@ -41,8 +41,16 @@ definition {
 
 		ACUtils.tearDownAC();
 	}
+
+	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10164 | Test Summary: Blocked Events List"
+	@priority = "5"
+	test CheckBlockedEventsListWhenMore100EventsCreated {
 		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createWCWithCustomEventAndAddToPage(
+				customEventName = "${customEventName}",
+				customEventsNumber = "101");
 		}
 
 		task ("Add a new user") {
@@ -73,23 +81,65 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		ACUtils.tearDownDXP();
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		task ("Click on the button to send the events") {
+			ACCustomEvents.createNCustomEvents();
 		}
 
-		JSONUser.tearDownNonAdminUsers();
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
-		ACUtils.tearDownAC();
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Check the custom event limit reached message in the list") {
+			ACCustomEvents.viewAlertLimitReached();
+		}
+
+		task ("Check that the list only has 100 custom events and navigate to the list of blocked custom events") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 20 of 100 entries.");
+
+			ACUtils.clickAnyButton(button = "View Block List");
+		}
+
+		task ("Search for the name of the custom event that was blocked in block list") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+		}
+
+		task ("Try to unblock a custom event with the list having reached the limit") {
+			ACCustomEvents.unblockAllCustomEvents();
+
+			Alert.viewErrorMessage(errorMessage = "Error:Your workspace is over the event limit. Please remove some events from the allow list to continue. Visit our documentation to learn more.");
+
+			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.backNavigation(pageName = "Events");
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Check that the list only has 100 custom events") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 20 of 100 entries.");
+		}
+
 	}
 
 	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10166 | Test Summary: Search Events Blocked List"

@@ -1,0 +1,519 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Poshi",
+	"patterns": [
+		{
+			"include": "#poshi-code"
+		}
+	],
+	"repository": {
+		"annotations": {
+			"patterns": [
+				{
+					"begin": "(@[\\s]*[a-z-0-9]+?)[\\s]*(=)",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.other.annotation.name.poshi"
+						},
+						"2": {
+							"name": "keyword.operator.assignment.poshi"
+						}
+					},
+					"end": "(?=\")",
+					"patterns": [
+						{
+							"include": "#string-quoted-double"
+						}
+					]
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "variable.other.annotation.name.poshi"
+						}
+					},
+					"match": "(@[\\s]*[a-z-0-9]+)"
+				}
+			]
+		},
+		"command-blocks": {
+			"begin": "\\b(function|macro|test)[\\s]+([\\w-]+)",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.type.command.keyword.poshi"
+				},
+				"2": {
+					"name": "entity.name.function.name.poshi"
+				}
+			},
+			"end": "\\b"
+		},
+		"comment-block": {
+			"begin": "/\\*",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.comment.poshi"
+				}
+			},
+			"end": "\\*/",
+			"name": "comment.block.poshi"
+		},
+		"comments": {
+			"patterns": [
+				{
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.poshi"
+						}
+					},
+					"match": "/\\*\\*/",
+					"name": "comment.block.empty.poshi"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.poshi"
+						}
+					},
+					"match": "(//).*$\\n?",
+					"name": "comment.line.double-slash.poshi"
+				},
+				{
+					"include": "#comment-block"
+				}
+			]
+		},
+		"control-blocks": {
+			"begin": "(if|else if|else|task|while)[\\s]*\\(",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.poshi"
+				}
+			},
+			"end": "(?=\\{)",
+			"patterns": [
+				{
+					"include": "#invocations"
+				},
+				{
+					"include": "#string-quoted-double"
+				},
+				{
+					"include": "#variable-assignment"
+				},
+				{
+					"match": "[!=]=",
+					"name": "keyword.operator.comparison.poshi"
+				}
+			]
+		},
+		"for-loops": {
+			"begin": "(for)[\\s]*\\((var)[\\s]+([\\w-]+)[\\s]*:[\\s]*(list)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.for.poshi"
+				},
+				"2": {
+					"name": "storage.type.var.keyword.poshi"
+				},
+				"3": {
+					"name": "variable.name.poshi"
+				},
+				"4": {
+					"name": "storage.modifier.list.poshi"
+				}
+			},
+			"end": "(?=\\{)",
+			"patterns": [
+				{
+					"include": "#parentheses"
+				},
+				{
+					"include": "#strings"
+				}
+			]
+		},
+		"invocations": {
+			"begin": "\\b([A-z_0-9\\.]+?)(?:(\\.)([A-z_0-9]+?)|)(\\()",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.class.poshi"
+				},
+				"2": {
+					"name": "punctuation.separator.period.poshi"
+				},
+				"3": {
+					"name": "entity.name.function.poshi"
+				},
+				"4": {
+					"name": "punctuation.bracket.round.poshi"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.bracket.round.poshi"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#variable-assignment"
+				},
+				{
+					"match": "(?<=\\()([\\w-]+)(?=\\))",
+					"name": "variable.name.poshi"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.poshi"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"match": ";\\b",
+					"name": "punctuation.terminator.poshi"
+				},
+				{
+					"match": "[!=]=",
+					"name": "keyword.operator.comparison.poshi"
+				},
+				{
+					"match": "\\b(return)\\b",
+					"name": "keyword.control.return.poshi"
+				}
+			]
+		},
+		"parentheses": {
+			"patterns": [
+				{
+					"begin": "\\(",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.poshi"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.poshi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#poshi-code"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.poshi"
+						}
+					},
+					"end": "\\]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.poshi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#poshi-code"
+						}
+					]
+				},
+				{
+					"begin": "{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.curly.poshi"
+						}
+					},
+					"end": "}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.curly.poshi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#poshi-code"
+						}
+					]
+				}
+			]
+		},
+		"poshi-code": {
+			"patterns": [
+				{
+					"include": "#annotations"
+				},
+				{
+					"include": "#command-blocks"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#control-blocks"
+				},
+				{
+					"include": "#for-loops"
+				},
+				{
+					"include": "#invocations"
+				},
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#parentheses"
+				},
+				{
+					"include": "#properties"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#structures"
+				},
+				{
+					"include": "#variables"
+				}
+			]
+		},
+		"properties": {
+			"begin": "(property)[\\s]*([a-z0-9\\.]+?)[\\s]*(=)",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.type.property.keyword.poshi"
+				},
+				"2": {
+					"name": "variable.name.property.name.poshi"
+				},
+				"3": {
+					"name": "keyword.operator.assignment.poshi"
+				}
+			},
+			"end": ";",
+			"patterns": [
+				{
+					"include": "#string-quoted-double"
+				}
+			]
+		},
+		"string-quoted-double": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.groovy"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.groovy"
+				}
+			},
+			"name": "string.quoted.double.poshi",
+			"patterns": [
+				{
+					"include": "#string-quoted-double-contents"
+				}
+			]
+		},
+		"string-quoted-double-contents": {
+			"patterns": [
+				{
+					"applyEndPatternLast": 1,
+					"begin": "\\${",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.operator.variable.reference.begin.poshi"
+						}
+					},
+					"end": "}",
+					"endCaptures": {
+						"0": {
+							"name": "keyword.operator.variable.reference.end.poshi"
+						}
+					},
+					"patterns": [
+						{
+							"match": "[\\w-]+",
+							"name": "variable.other.reference.name.poshi"
+						}
+					]
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "entity.name.class.path.file.name.poshi"
+						},
+						"2": {
+							"name": "keyword.operator.separator.pound.poshi"
+						},
+						"3": {
+							"name": "entity.name.function.path.locator.name.poshi"
+						}
+					},
+					"match": "([A-z0-9_-]+)(#)([A-Z0-9_]+)"
+				},
+				{
+					"match": "\\\\(RETURN|SPACE|.)",
+					"name": "constant.character.escape.poshi"
+				}
+			]
+		},
+		"string-quoted-single": {
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.poshi"
+				}
+			},
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.poshi"
+				}
+			},
+			"name": "string.quoted.single.poshi",
+			"patterns": [
+				{
+					"include": "#string-quoted-single-contents"
+				}
+			]
+		},
+		"string-quoted-single-contents": {
+			"patterns": [
+				{
+					"match": "\\\\.",
+					"name": "constant.character.escape.poshi"
+				}
+			]
+		},
+		"string-quoted-single-multiline": {
+			"begin": "'''",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.poshi"
+				}
+			},
+			"end": "'''",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.poshi"
+				}
+			},
+			"name": "string.quoted.single.multiline.poshi",
+			"patterns": [
+				{
+					"include": "#string-quoted-single-contents"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"include": "#string-quoted-double"
+				},
+				{
+					"include": "#string-quoted-single"
+				},
+				{
+					"include": "#string-quoted-single-multiline"
+				}
+			]
+		},
+		"structures": {
+			"begin": "\\b(definition|setUp|tearDown)",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.class.structures.poshi"
+				}
+			},
+			"end": "(?={)"
+		},
+		"variable-assignment": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "variable.name.poshi"
+						},
+						"2": {
+							"name": "keyword.operator.assignment.poshi"
+						}
+					},
+					"match": "([A-z_0-9]+?)[\\s]*?(=)",
+					"name": "parameter.variable"
+				},
+				{
+					"include": "#invocations"
+				},
+				{
+					"include": "#string-quoted-double"
+				},
+				{
+					"include": "#string-quoted-single-multiline"
+				},
+				{
+					"include": "#variable-reference"
+				},
+				{
+					"match": "(\\-|\\+|\\*|\\/)",
+					"name": "keyword.operator.arithmetic.poshi"
+				},
+				{
+					"match": "[0-9]+",
+					"name": "constant.numeric.poshi"
+				}
+			]
+		},
+		"variable-reference": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "variable.name.poshi"
+						}
+					},
+					"match": "\\${([\\w-]+)}",
+					"name": "keyword.operator"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"begin": "(static|)[\\s]+(var)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.static.variable.poshi"
+						},
+						"2": {
+							"name": "storage.type.var.keyword.poshi"
+						}
+					},
+					"end": "(;)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.terminator.poshi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#variable-assignment"
+						}
+					]
+				}
+			]
+		}
+	},
+	"scopeName": "source.poshi"
+}

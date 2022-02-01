@@ -14,7 +14,7 @@
 
 import {delegate} from 'frontend-js-web';
 
-let handle;
+let handle: ReturnType<typeof delegate> | undefined;
 
 export default function main() {
 	if (!handle) {

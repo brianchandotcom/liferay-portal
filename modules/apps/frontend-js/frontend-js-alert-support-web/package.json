@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "index.js",
 	"name": "frontend-js-alert-support-web",
 	"private": true,
 	"scripts": {

@@ -1,0 +1,54 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginTop": "6"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 6,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"displayInDocumentForm": "false",
+									"displayStyle": "ddmTemplate_SEARCH-RESULTS-LIST-FTL",
+									"displayStyleGroupId": "[$GROUP_ID$]",
+									"federatedSearchKey": "",
+									"fieldsToDisplay": "",
+									"highlightEnabled": "true",
+									"paginationDelta": "20",
+									"paginationDeltaParameterName": "delta",
+									"paginationStartParameterName": "start",
+									"viewInContext": "true"
+								},
+								"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "master"
+		}
+	}
+}

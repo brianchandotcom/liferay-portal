@@ -173,3 +173,32 @@ p {
 	color: var(--body-color);
 	padding: 0;
 }
+
+/*SEARCH RESULTS*/
+
+.portlet-search-results .list-group-item {
+	background-color: transparent;
+	border: none;
+	border-top: 1px solid var(--gray-300);
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.portlet-search-results .list-group-item:first-child {
+	border-radius: 0;
+}
+
+.portlet-search-results .list-group-item:last-child {
+	border-bottom: 1px solid var(--gray-300);
+	border-radius: 0;
+}
+
+.portlet-search-results .search-total-label {
+	margin-bottom: var(--spacer-3);
+	margin-top: 0;
+}
+
+.portlet-search-results .sticker {
+	align-items: start;
+	transform: translateY(1px);
+}

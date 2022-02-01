@@ -212,6 +212,14 @@ definition {
 		Click(locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 	}
 
+	macro viewAlertLimitReached {
+		while (IsElementNotPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertElementPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED");
+	}
+
 	macro viewDataAttribute {
 		for (var attributeValue : list "${attributeValueList}") {
 			AssertElementPresent(
@@ -256,14 +264,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro viewAlertLimitReached {
-		while (IsElementNotPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED") && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-		}
-
-		AssertElementPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED");
 	}
 
 }

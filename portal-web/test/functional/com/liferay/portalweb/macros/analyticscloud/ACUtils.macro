@@ -803,18 +803,6 @@ definition {
 		}
 	}
 
-	macro viewPartialNameList {
-		for (var name : list "${nameList}") {
-			var key_nameList = "${name}";
-
-			WaitForPageLoad();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ACUtils#PARTIAL_NAME_LIST",
-				value1 = "${name}");
-		}
-	}
-
 	macro viewNameListInOrder {
 		var key_userName = "${name}";
 		var index = "${index}";
@@ -854,6 +842,18 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
 			value1 = "${itemsPerPage} Items");
+	}
+
+	macro viewPartialNameList {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			WaitForPageLoad();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACUtils#PARTIAL_NAME_LIST",
+				value1 = "${name}");
+		}
 	}
 
 	macro viewResultsMessage {

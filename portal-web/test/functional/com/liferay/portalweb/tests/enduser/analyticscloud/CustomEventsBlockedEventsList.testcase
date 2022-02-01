@@ -42,7 +42,92 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10164 | Test Summary: Blocked Events List"
+	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10166 | Test Summary: Search Events Blocked List"
+	@priority = "3"
+	test BlockedEventsListSearchable {
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Block custom event") {
+			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Search for the name of the custom event that was blocked in block list") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Search for the name of the custom event that was not blocked in block list") {
+			ACUtils.searchBar(searchItem = "DXP");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+	}
+
+	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10164 | Test Summary: Check custom event list and blocked event list when more than 100 events are created"
 	@priority = "5"
 	test CheckBlockedEventsListWhenMore100EventsCreated {
 		task ("Add a Web Content Display to page and display the custom event") {
@@ -138,92 +223,6 @@ definition {
 
 		task ("Check that the list only has 100 custom events") {
 			ACUtils.viewResultsMessage(results = "Showing 1 to 20 of 100 entries.");
-		}
-
-	}
-
-	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10166 | Test Summary: Search Events Blocked List"
-	@priority = "3"
-	test BlockedEventsListSearchable {
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Navigation to block custom event list") {
-			ACCustomEvents.openBlockCustomEventList();
-		}
-
-		task ("Search for the name of the custom event that was blocked in block list") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Search for the name of the custom event that was not blocked in block list") {
-			ACUtils.searchBar(searchItem = "DXP");
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}
 	}
 

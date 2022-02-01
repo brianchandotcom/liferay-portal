@@ -117,7 +117,7 @@ public class DBInspector {
 
 			int actualColumnSize = resultSet.getInt("COLUMN_SIZE");
 
-			if ((expectedColumnSize != -1) &&
+			if ((expectedColumnSize != DB.SQL_SIZE_NONE) &&
 				(((expectedColumnSize != DB.SQL_VARCHAR_MAX_SIZE) &&
 				  (expectedColumnSize != actualColumnSize)) ||
 				 ((expectedColumnSize == DB.SQL_VARCHAR_MAX_SIZE) &&
@@ -283,7 +283,7 @@ public class DBInspector {
 		Matcher matcher = _columnSizePattern.matcher(columnType);
 
 		if (!matcher.matches()) {
-			return -1;
+			return DB.SQL_SIZE_NONE;
 		}
 
 		String columnSize = matcher.group(1);
@@ -308,7 +308,7 @@ public class DBInspector {
 			return dataTypeSize;
 		}
 
-		return -1;
+		return DB.SQL_SIZE_NONE;
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

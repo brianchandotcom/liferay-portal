@@ -276,7 +276,7 @@ public class OracleDB extends BaseDB {
 	};
 
 	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, SQL_VARCHAR_SIZE_NONE
+		_SQL_STRING_SIZE, SQL_SIZE_NONE
 	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;

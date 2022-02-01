@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../../../app/config/index';
-import {ColorPicker} from '../../../common/components/ColorPicker';
+import {ColorPicker} from '../../../common/components/ColorPicker/ColorPicker';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {ColorPaletteField} from './ColorPaletteField';

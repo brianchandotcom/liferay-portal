@@ -12,5 +12,5 @@
  * details.
  */
 
-export {ColorPicker} from '../page_editor/common/components/ColorPicker';
+export {ColorPicker} from '../page_editor/common/components/ColorPicker/ColorPicker';
 export {convertRGBtoHex} from '../page_editor/app/utils/convertRGBtoHex';

@@ -27,8 +27,8 @@ import React, {
 	useState,
 } from 'react';
 
-import {TAB_KEYCODE} from '../../app/config/constants/keycodes';
-import SearchForm from '../../common/components/SearchForm';
+import {TAB_KEYCODE} from '../../../app/config/constants/keycodes';
+import SearchForm from '../../../common/components/SearchForm';
 
 export function DropdownColorPicker({
 	active,

@@ -23,11 +23,11 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {parseColorValue} from '../../app/utils/parseColorValue';
-import {useId} from '../../app/utils/useId';
-import useControlledState from '../../core/hooks/useControlledState';
-import {ConfigurationFieldPropTypes} from '../../prop-types/index';
+import {useId} from '../../../app/utils/useId';
+import useControlledState from '../../../core/hooks/useControlledState';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {DropdownColorPicker} from './DropdownColorPicker';
+import {parseColorValue} from './parseColorValue';
 
 import './ColorPicker.scss';
 

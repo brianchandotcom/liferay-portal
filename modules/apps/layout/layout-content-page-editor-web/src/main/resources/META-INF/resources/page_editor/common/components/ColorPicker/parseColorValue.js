@@ -12,8 +12,8 @@
  * details.
  */
 
-import {convertRGBtoHex} from './convertRGBtoHex';
-import {getValidHexColor} from './getValidHexColor';
+import {convertRGBtoHex} from '../../../app/utils/convertRGBtoHex';
+import {getValidHexColor} from '../../../app/utils/getValidHexColor';
 
 const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(

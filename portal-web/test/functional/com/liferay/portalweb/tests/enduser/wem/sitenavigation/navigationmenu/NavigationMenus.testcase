@@ -612,7 +612,7 @@ definition {
 		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
 
 		task ("Add two Categories with different asset types") {
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Document",
@@ -623,7 +623,7 @@ definition {
 				title = "Document Category Name",
 				vocabularyName = "Vocabulary Name 1");
 
-			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Web Content Article",
@@ -642,7 +642,7 @@ definition {
 		}
 
 		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}

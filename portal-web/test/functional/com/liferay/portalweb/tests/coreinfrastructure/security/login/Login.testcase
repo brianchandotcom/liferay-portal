@@ -50,7 +50,7 @@ definition {
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
 
-			var portalUrl = PropsUtil.get("portal.url");
+			var portalURL = PropsUtil.get("portal.url");
 
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",
@@ -74,7 +74,7 @@ definition {
 			User.firstLoginUI(
 				localization = "ES",
 				password = "test",
-				specificUrl = "${portalUrl}/es",
+				specificURL = "${portalURL}/es",
 				userEmailAddress = "test@liferay.com");
 		}
 	}
@@ -107,7 +107,7 @@ definition {
 			User.firstLoginPG();
 
 			PortalSettings.gotoConfiguration(
-				baseUrl = "http://localhost:8080",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "Instance Configuration",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");

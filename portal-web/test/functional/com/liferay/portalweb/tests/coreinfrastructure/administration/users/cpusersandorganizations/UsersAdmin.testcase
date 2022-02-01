@@ -1778,7 +1778,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalUrl = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given that a user forgot password and send email to set new password") {
 			PortalSettings.gotoConfiguration(
@@ -1805,9 +1805,9 @@ definition {
 
 		task ("And open link to reset password in email") {
 			MockMock.openBodyLink(
-				asset = "${portalUrl}: Reset Your Password",
-				content = "You can reset your password for ${portalUrl}",
-				subject = "${portalUrl}: Reset Your Password");
+				asset = "${portalURL}: Reset Your Password",
+				content = "You can reset your password for ${portalURL}",
+				subject = "${portalURL}: Reset Your Password");
 
 			AssertElementPresent(
 				key_title = "Change Password",

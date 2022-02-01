@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
+
 Group group = layoutsAdminDisplayContext.getGroup();
 
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
@@ -41,62 +43,20 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <aui:input name="masterLayoutPlid" type="hidden" />
 <aui:input name="styleBookEntryId" type="hidden" />
 
-<%
-LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
-
-if (layoutPageTemplateEntry == null) {
-	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
-}
-
-boolean editableMasterLayout = false;
-
-if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
-	editableMasterLayout = true;
-}
-%>
-
-<c:if test="<%= editableMasterLayout %>">
-
-	<%
-	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;
-
-	if (selLayout.getMasterLayoutPlid() > 0) {
-		masterLayoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
-	}
-	%>
-
+<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
 
 		<p>
-			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
+			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= layoutLookAndFeelDisplayContext.getMasterLayoutName() %></span>
 		</p>
 
 		<clay:content-row>
-
-			<%
-			String editMasterLayoutURL = StringPool.BLANK;
-
-			if (selLayout.getMasterLayoutPlid() > 0) {
-				Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
-
-				String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
-
-				editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterLayout.fetchDraftLayout(), themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
-			}
-			%>
-
 			<clay:content-col
-				cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : "mr-4" %>'
+				cssClass='<%= !layoutLookAndFeelDisplayContext.hasMasterLayout() ? "hide" : "mr-4" %>'
 			>
 				<clay:button
-					additionalProps='<%=
-						HashMapBuilder.<String, Object>put(
-							"editableMasterLayout", editableMasterLayout
-						).put(
-							"editMasterLayoutURL", editMasterLayoutURL
-						).build()
-					%>'
+					additionalProps="<%= layoutLookAndFeelDisplayContext.getEditMasterLayoutButtonAdditionalProps() %>"
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
 					label="edit-master"
@@ -105,17 +65,9 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 				/>
 			</clay:content-col>
 
-			<portlet:renderURL var="changeMasterLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/select_master_layout.jsp" />
-			</portlet:renderURL>
-
 			<clay:content-col>
 				<clay:button
-					additionalProps='<%=
-						HashMapBuilder.<String, Object>put(
-							"url", changeMasterLayoutURL.toString()
-						).build()
-					%>'
+					additionalProps="<%= layoutLookAndFeelDisplayContext.getChangeMasterLayoutButtonAdditionalProps() %>"
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
 					label="change-master"
@@ -127,38 +79,18 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 	</clay:sheet-section>
 </c:if>
 
-<%
-StyleBookEntry styleBookEntry = null;
-
-Group liveGroup = StagingUtil.getLiveGroup(group);
-
-boolean hasStyleBooks = StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(liveGroup.getGroupId()) > 0;
-
-if (hasStyleBooks && (selLayout.getStyleBookEntryId() > 0)) {
-	styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(selLayout.getStyleBookEntryId());
-}
-%>
-
 <clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="style-book" /></h3>
 
 	<p>
-		<b><liferay-ui:message key="style-book-name" />:</b> <span id="<portlet:namespace />styleBookName"><%= (styleBookEntry != null) ? styleBookEntry.getName() : LanguageUtil.get(request, "inherited") %></span>
+		<b><liferay-ui:message key="style-book-name" />:</b> <span id="<portlet:namespace />styleBookName"><%= layoutLookAndFeelDisplayContext.getStyleBookEntryName() %></span>
 	</p>
-
-	<portlet:renderURL var="changeStyleBookURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_style_book.jsp" />
-		<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-		<portlet:param name="editableMasterLayout" value="<%= String.valueOf(editableMasterLayout) %>" />
-	</portlet:renderURL>
 
 	<div class="button-holder">
 		<clay:button
-			additionalProps='<%=
-				HashMapBuilder.<String, Object>put(
-					"url", changeStyleBookURL.toString()
-				).build()
-			%>'
+			additionalProps="<%=
+				layoutLookAndFeelDisplayContext.getChangeStyleBookButtonAdditionalProps()
+			%>"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "changeStyleBookButton" %>'
 			label="change-style-book"
@@ -230,7 +162,7 @@ else {
 	);
 </aui:script>
 
-<c:if test="<%= hasStyleBooks %>">
+<c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">
 	<aui:script>
 		var regularInheritLookAndFeel = document.getElementById(
 			'<portlet:namespace />regularInheritLookAndFeel'

@@ -339,4 +339,56 @@ definition {
 		}
 	}
 
+	macro viewDocumentChangeDetailsInDisplay {
+		if (("${changeType}" == "Added") || ("${changeType}" == "Deleted")) {
+			AssertVisible(
+				key_imageSourceURL = "${keyImage}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+
+			if ("${changeType}" == "Added") {
+				AssertElementPresent(
+					key_displayItem = "Publication (New)",
+					locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+			}
+
+			if ("${changeType}" == "Deleted") {
+				AssertElementPresent(
+					key_displayItem = "Production (Deleted)",
+					locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
+			}
+		}
+
+		if ("${changeType}" == "Modified") {
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Split View");
+
+			if (isSet(keyImageInProduction)) {
+				AssertVisible(
+					key_imageSourceURL = "${keyImageInProduction}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+			}
+
+			if (isSet(keyImageInPublication)) {
+				AssertVisible(
+					key_imageSourceURL = "${keyImageInPublication}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+			}
+
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+
+			if (isSet(keyImageInProduction)) {
+				AssertVisible(
+					key_imageSourceURL = "${keyImageInProduction}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+			}
+
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+
+			if (isSet(keyImageInPublication)) {
+				AssertVisible(
+					key_imageSourceURL = "${keyImageInPublication}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+			}
+		}
+	}
+
 }

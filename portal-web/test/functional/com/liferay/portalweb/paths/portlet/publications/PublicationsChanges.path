@@ -66,8 +66,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISCARD_CHANGE_BUTTON</td>
+	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'${key_changeCategory}')]//a[contains(.,'Discard Change')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCARDED_CHANGES_TITLE</td>
 	<td>//h2[contains(.,'Discarded Changes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATIONS_CHANGE_DROPDOWN</td>
+	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'Edit in')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,11 +98,6 @@
 <tr>
 	<td>PUBLICATIONS_CHANGE_USER</td>
 	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[1]/span[contains(@title,'${key_changeUser}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATIONS_CHANGE_ELLIPSIS</td>
-	<td>//div[contains(@class,'autofit-col')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

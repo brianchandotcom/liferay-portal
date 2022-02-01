@@ -803,6 +803,18 @@ definition {
 		}
 	}
 
+	macro viewPartialNameList {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			WaitForPageLoad();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACUtils#PARTIAL_NAME_LIST",
+				value1 = "${name}");
+		}
+	}
+
 	macro viewNameListInOrder {
 		var key_userName = "${name}";
 		var index = "${index}";

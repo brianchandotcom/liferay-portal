@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARTIAL_NAME_LIST</td>
+	<td>//div[contains(@class,'table-title')][contains(normalize-space(),'${key_nameList}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL</td>
 	<td>//label[normalize-space()='${label}']</td>
 	<td></td>

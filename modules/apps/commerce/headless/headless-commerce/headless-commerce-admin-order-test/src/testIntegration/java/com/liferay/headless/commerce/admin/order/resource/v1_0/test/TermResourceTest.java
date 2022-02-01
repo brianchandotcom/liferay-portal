@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -52,6 +53,11 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
+	}
+
+	@Override
+	@Test
+	public void testGetTermsPageWithSortString() throws Exception {
 	}
 
 	@Override
@@ -83,7 +89,7 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 				label = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 				name = RandomTestUtil.randomString();
-				type = RandomTestUtil.randomString();
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.util;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
@@ -206,9 +207,17 @@ public class DDMDataDefinitionConverterImpl
 		for (String fieldName : fieldNames) {
 			long classNameId = _portal.getClassNameId(DDMStructureLayout.class);
 
-			_deDataDefinitionFieldLinkLocalService.addDEDataDefinitionFieldLink(
-				groupId, classNameId, dataLayoutId, dataDefinitionId,
-				fieldName);
+			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
+				_deDataDefinitionFieldLinkLocalService.
+					fetchDEDataDefinitionFieldLinks(
+						classNameId, dataLayoutId, dataDefinitionId, fieldName);
+
+			if (deDataDefinitionFieldLink == null) {
+				_deDataDefinitionFieldLinkLocalService.
+					addDEDataDefinitionFieldLink(
+						groupId, classNameId, dataLayoutId, dataDefinitionId,
+						fieldName);
+			}
 
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 

@@ -19,11 +19,21 @@ import com.liferay.dispatch.metadata.DispatchTriggerMetadataFactory;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
+import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
+import com.liferay.expando.kernel.exception.DuplicateTableNameException;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -54,7 +64,66 @@ public class TalendDispatchTriggerMetadataFactory
 		return new TalendDispatchTriggerMetadata(false, errors);
 	}
 
+	@Activate
+	protected void activate() {
+		_companyLocalService.forEachCompany(
+			company -> {
+				try {
+					_setupExpando(company.getCompanyId());
+				}
+				catch (Exception exception) {
+					_log.error("Unable to setup expando", exception);
+				}
+			});
+	}
+
+	private void _setupExpando(long companyId) throws Exception {
+		ExpandoTable table;
+
+		try {
+			table = _expandoTableLocalService.addTable(
+				companyId, DispatchTrigger.class.getName(),
+				"DispatchArchiveFile");
+		}
+		catch (DuplicateTableNameException duplicateTableNameException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					duplicateTableNameException, duplicateTableNameException);
+			}
+
+			table = _expandoTableLocalService.getTable(
+				companyId, DispatchTrigger.class.getName(),
+				"DispatchArchiveFile");
+		}
+
+		try {
+			_expandoColumnLocalService.addColumn(
+				table.getTableId(), "fileName", ExpandoColumnConstants.STRING);
+			_expandoColumnLocalService.addColumn(
+				table.getTableId(), "dispatchTriggerId",
+				ExpandoColumnConstants.STRING);
+		}
+		catch (DuplicateColumnNameException duplicateColumnNameException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					duplicateColumnNameException, duplicateColumnNameException);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TalendDispatchTriggerMetadataFactory.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	@Reference
 	private DispatchFileRepository _dispatchFileRepository;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

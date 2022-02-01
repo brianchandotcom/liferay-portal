@@ -20,12 +20,6 @@ import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.dispatch.talend.archive.exception.TalendArchiveException;
-import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
-import com.liferay.expando.kernel.exception.DuplicateTableNameException;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -78,9 +72,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 
 		try {
 			_checkPermission(actionRequest);
-			_setupExpando(
-				_companyLocalService.getCompanyIdByUserId(
-					_portal.getUserId(actionRequest)));
 
 			UploadPortletRequest uploadPortletRequest =
 				_portal.getUploadPortletRequest(actionRequest);
@@ -161,40 +152,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		return false;
 	}
 
-	private void _setupExpando(long companyId) throws Exception {
-		ExpandoTable table;
-
-		try {
-			table = _expandoTableLocalService.addTable(
-				companyId, DispatchTrigger.class.getName(),
-				"DispatchArchiveFile");
-		}
-		catch (DuplicateTableNameException duplicateTableNameException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateTableNameException, duplicateTableNameException);
-			}
-
-			table = _expandoTableLocalService.getTable(
-				companyId, DispatchTrigger.class.getName(),
-				"DispatchArchiveFile");
-		}
-
-		try {
-			_expandoColumnLocalService.addColumn(
-				table.getTableId(), "fileName", ExpandoColumnConstants.STRING);
-			_expandoColumnLocalService.addColumn(
-				table.getTableId(), "dispatchTriggerId",
-				ExpandoColumnConstants.STRING);
-		}
-		catch (DuplicateColumnNameException duplicateColumnNameException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateColumnNameException, duplicateColumnNameException);
-			}
-		}
-	}
-
 	private void _updateDispatchTaskSettings(
 			long dispatchTriggerId, InputStream jobArchiveInputStream)
 		throws PortalException {
@@ -224,12 +181,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
-
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;

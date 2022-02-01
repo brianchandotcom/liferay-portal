@@ -36,6 +36,9 @@ class DropdownProvider {
 
 	constructor() {
 		if (Liferay.DropdownProvider) {
+
+			// @ts-ignore
+
 			return Liferay.DropdownProvider;
 		}
 
@@ -51,7 +54,7 @@ class DropdownProvider {
 		Liferay.DropdownProvider = this;
 	}
 
-	hide = ({menu, trigger}) => {
+	hide = ({menu, trigger}: {menu?: any; trigger?: any}) => {
 		if (menu && !trigger) {
 			trigger = this._getTrigger(menu);
 		}
@@ -74,7 +77,7 @@ class DropdownProvider {
 		Liferay.fire(this.EVENT_HIDDEN, {menu, trigger});
 	};
 
-	show = ({menu, trigger}) => {
+	show = ({menu, trigger}: {menu?: any; trigger?: any}) => {
 		if (menu && !trigger) {
 			trigger = this._getTrigger(menu);
 		}
@@ -92,7 +95,7 @@ class DropdownProvider {
 		trigger.parentElement.classList.add(CssClass.SHOW);
 		trigger.setAttribute('aria-expanded', true);
 
-		const clickOutsideHandler = (event) => {
+		const clickOutsideHandler = (event: any) => {
 			if (
 				!menu.contains(event.target) &&
 				!trigger.contains(event.target)
@@ -120,15 +123,15 @@ class DropdownProvider {
 		Liferay.fire(this.EVENT_SHOWN, {menu, trigger});
 	};
 
-	_getMenu(trigger) {
+	_getMenu(trigger: any) {
 		return trigger.parentElement.querySelector('.dropdown-menu');
 	}
 
-	_getTrigger(menu) {
+	_getTrigger(menu: any) {
 		return menu.parentElement.querySelector('.dropdown-toggle');
 	}
 
-	_onKeyDown = (event) => {
+	_onKeyDown = (event: any) => {
 		if (
 			event.keyCode === KEYCODES.ENTER ||
 			event.keyCode === KEYCODES.SPACE
@@ -137,7 +140,7 @@ class DropdownProvider {
 		}
 	};
 
-	_onTriggerClick = (event) => {
+	_onTriggerClick = (event: any) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {

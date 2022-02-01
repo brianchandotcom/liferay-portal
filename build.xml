@@ -129,8 +129,12 @@ lp.version=${lp.version[@{to.branch.name}]}
 release.info.build=${release.info.build[@{to.branch.name}]}
 release.info.date=${release.info.date[@{to.branch.name}]}
 release.info.name=${release.info.name[@{to.branch.name}]}
-release.info.version=${release.info.version[@{to.branch.name}]}
-release.info.version.display.name=${release.info.version.display.name[@{to.branch.name}]}</echo>
+release.info.version.major=${release.info.version.major[@{to.branch.name}]}
+release.info.version.minor=${release.info.version.minor[@{to.branch.name}]}
+release.info.version.bug.fix=${release.info.version.bug.fix[@{to.branch.name}]}
+release.info.version=${release.info.version.major[@{to.branch.name}]}.${release.info.version.minor[@{to.branch.name}]}.${release.info.version.bug.fix[@{to.branch.name}]}
+release.info.version.display.name=${release.info.version.display.name[@{to.branch.name}]}
+release.info.version.file.suffix=${release.info.version.file.suffix[@{to.branch.name}]}</echo>
 
 			<!-- sql/sql.profile-dxp.properties -->
 

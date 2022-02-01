@@ -32,12 +32,66 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaySpecificEntryPicklist {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145749 DisplaySpecificEntryPicklist pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "entryTest",
+			itemName = "Entry Test",
+			picklistName = "Picklist Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Picklist Test",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Entry Test");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Blank Page");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Field Picklist");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Entry Test");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Page");
+
+		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Entry Test");
+
+		
 	}
 
 }

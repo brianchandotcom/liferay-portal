@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfigurationUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
@@ -300,15 +301,27 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterNavigationDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "filter-by-navigation"));
-			}
-		).build();
+		DropdownItemListBuilder.DropdownItemListWrapper filterListBuilder =
+			DropdownItemListBuilder.addGroup(
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(
+						_getFilterNavigationDropdownItems());
+					dropdownGroupItem.setLabel(
+						LanguageUtil.get(
+							_httpServletRequest, "filter-by-navigation"));
+				});
+
+		if (!FFManagementToolbarConfigurationUtil.showDesignImprovements()) {
+			filterListBuilder.addGroup(
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(
+						_getOrderByDropdownItems());
+					dropdownGroupItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "order-by"));
+				});
+		}
+
+		return filterListBuilder.build();
 	}
 
 	@Override
@@ -383,7 +396,9 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
-		if (_isSearch()) {
+		if (_isSearch() ||
+			!FFManagementToolbarConfigurationUtil.showDesignImprovements()) {
+
 			return null;
 		}
 

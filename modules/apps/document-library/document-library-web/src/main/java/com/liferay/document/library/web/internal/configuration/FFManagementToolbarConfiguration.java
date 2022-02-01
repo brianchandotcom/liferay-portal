@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.configuration;
+package com.liferay.document.library.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration"
+	id = "com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfiguration"
 )
 public interface FFManagementToolbarConfiguration {
 

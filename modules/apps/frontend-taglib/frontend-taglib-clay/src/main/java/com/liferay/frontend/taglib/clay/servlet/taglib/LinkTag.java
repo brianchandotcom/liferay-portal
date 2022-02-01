@@ -38,6 +38,10 @@ public class LinkTag extends BaseContainerTag {
 
 		setContainerElement("a");
 
+		if (Validator.isNotNull(_download)) {
+			setDynamicAttribute(StringPool.BLANK, "download", _download);
+		}
+
 		if (Validator.isNotNull(_href)) {
 			setDynamicAttribute(StringPool.BLANK, "href", _href);
 		}

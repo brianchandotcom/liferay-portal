@@ -444,8 +444,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
+	@ignore = "true"
 	@priority = "5"
 	test CanBlogsListSearchable {
+
+		// AC Story ticket: LRAC-10405
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
@@ -479,6 +483,8 @@ definition {
 		ACUtils.viewNameList(nameList = "Test 2");
 
 		ACUtils.searchBar(searchItem = "Should not be here");
+
+		// This test is being ignored due to a history that makes changes to empty state messages.
 
 		ACUtils.viewNoResultsMessage(noResultMessage = "There are no Blogs found.");
 	}

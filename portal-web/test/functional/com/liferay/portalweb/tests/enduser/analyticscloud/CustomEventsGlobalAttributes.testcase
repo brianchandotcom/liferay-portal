@@ -349,8 +349,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10217 | Test Summary: Search for global attribute"
+	@ignore = "true"
 	@priority = "4"
 	test SearchForGlobalAttribute {
+
+		// AC Story ticket: LRAC-9248
+
 		var globalAttributesList = "canonicalUrl,pageDescription,pageTitle";
 
 		task ("Fill fields and create custom event") {
@@ -392,6 +396,8 @@ definition {
 
 		task ("Search for the name of attribute that doesn't exist and verify that it didn't find anything") {
 			ACUtils.searchBar(searchItem = "acqa");
+
+			// This test is being ignored due to a history that makes changes to empty state messages.
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no global attributes found.");
 		}

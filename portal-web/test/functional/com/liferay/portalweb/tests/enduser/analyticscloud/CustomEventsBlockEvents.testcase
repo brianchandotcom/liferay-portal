@@ -76,8 +76,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
+	@ignore = "true"
 	@priority = "5"
 	test CanBlockCustomEvent {
+
+		// AC Story ticket: LRAC-9248
+
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -124,6 +128,8 @@ definition {
 
 		task ("Search for the name of the custom event that was blocked in custom event list") {
 			ACUtils.searchBar(searchItem = "${customEventName1}");
+
+			// This test is being ignored due to a history that makes changes to empty state messages.
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}

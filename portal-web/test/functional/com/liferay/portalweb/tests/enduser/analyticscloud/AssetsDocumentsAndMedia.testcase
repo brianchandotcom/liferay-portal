@@ -336,8 +336,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8396 | Test Summary: Documents list is searchable"
+	@ignore = "true"
 	@priority = "4"
 	test CanDocumentsAndMediaListSearchable {
+
+		// AC Story ticket: LRAC-10405
+
 		var documentNameList = "DM AC Title,New Document";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -382,6 +386,8 @@ definition {
 			}
 
 			ACUtils.searchBar(searchItem = "Should not be here");
+
+			// This test is being ignored due to a history that makes changes to empty state messages.
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Documents and Media found.");
 		}

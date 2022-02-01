@@ -334,8 +334,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10007 | Test Summary: Search for Custom Event"
+	@ignore = "true"
 	@priority = "3"
 	test CustomEventListSearchable {
+
+		// AC Story ticket: LRAC-9248
+
 		task ("Fill fields and create 2 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -384,6 +388,8 @@ definition {
 
 		task ("Search for the name of the custom event that doesn't exist and verify that it didn't find anything") {
 			ACUtils.searchBar(searchItem = "acqa");
+
+			// This test is being ignored due to a history that makes changes to empty state messages.
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}

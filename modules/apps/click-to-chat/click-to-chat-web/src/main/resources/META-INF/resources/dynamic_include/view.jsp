@@ -40,7 +40,7 @@
 			}
 		}
 
-		let clickToChatProviders = {
+		const clickToChatProviders = {
 			chatwoot: function (hide) {
 				if (hide) {
 					document
@@ -81,7 +81,6 @@
 			if (typeof action === 'string') {
 				return handleVisibility(action, hideElement);
 			}
-
 			action(hideElement);
 		});
 	})();

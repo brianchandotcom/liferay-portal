@@ -81,6 +81,9 @@ public class SaveSiteConfigurationMVCActionCommand
 				"guestUsersAllowed",
 				ParamUtil.getBoolean(actionRequest, "guestUsersAllowed")
 			).put(
+				"hideInControlPanel",
+				ParamUtil.getBoolean(actionRequest, "hideInControlPanel")
+			).put(
 				"siteSettingsStrategy",
 				ParamUtil.getBoolean(actionRequest, "siteSettingsStrategy")
 			).build());

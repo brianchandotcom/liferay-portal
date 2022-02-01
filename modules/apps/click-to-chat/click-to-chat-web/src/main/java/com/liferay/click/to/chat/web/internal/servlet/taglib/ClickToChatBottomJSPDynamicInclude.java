@@ -20,6 +20,7 @@ import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -81,6 +82,16 @@ public class ClickToChatBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		if (Validator.isNull(
 				clickToChatConfiguration.chatProviderAccountId()) ||
 			Validator.isNull(clickToChatConfiguration.chatProviderId())) {
+
+			return;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (clickToChatConfiguration.hideInControlPanel() &&
+			layout.isTypeControlPanel()) {
+
+			super.include(httpServletRequest, httpServletResponse, key);
 
 			return;
 		}

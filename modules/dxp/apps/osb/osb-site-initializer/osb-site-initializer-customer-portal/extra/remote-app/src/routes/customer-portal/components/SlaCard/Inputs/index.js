@@ -47,7 +47,6 @@ const SlaCardLayout = ({
 								slaTitle === 'Gold',
 							'text-neutral-7': slaTitle === 'Platinum',
 						})}
-						displayType="title"
 					>
 						{slaTitle}
 					</div>

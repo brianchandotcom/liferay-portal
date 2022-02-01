@@ -133,10 +133,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		long nodeId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(nodeId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		WikiNode node = wikiNodePersistence.create(nodeId);
@@ -657,6 +653,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		WikiNode wikiNode = wikiNodePersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);

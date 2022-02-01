@@ -248,10 +248,6 @@ public class DLFileEntryLocalServiceImpl
 
 		long fileEntryId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(fileEntryId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.create(fileEntryId);
@@ -3482,6 +3478,10 @@ public class DLFileEntryLocalServiceImpl
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);

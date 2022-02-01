@@ -172,10 +172,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		long kbArticleId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(kbArticleId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		validate(title, content, sourceURL);
@@ -2060,6 +2056,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		KBArticle kbArticle = fetchLatestKBArticleByExternalReferenceCode(
 			groupId, externalReferenceCode);

@@ -138,10 +138,6 @@ public class AssetCategoryLocalServiceImpl
 
 		long categoryId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(categoryId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		AssetCategory category = assetCategoryPersistence.create(categoryId);
@@ -808,6 +804,10 @@ public class AssetCategoryLocalServiceImpl
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		AssetCategory assetCategory = assetCategoryPersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);

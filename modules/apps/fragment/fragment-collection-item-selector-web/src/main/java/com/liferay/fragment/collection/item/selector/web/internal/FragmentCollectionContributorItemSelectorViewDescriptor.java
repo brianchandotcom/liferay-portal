@@ -93,7 +93,11 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 
 	@Override
 	public boolean isShowManagementToolbar() {
-		return false;
+		return true;
+	}
+
+	public boolean isShowSearch() {
+		return true;
 	}
 
 	private List<FragmentCollectionContributor>

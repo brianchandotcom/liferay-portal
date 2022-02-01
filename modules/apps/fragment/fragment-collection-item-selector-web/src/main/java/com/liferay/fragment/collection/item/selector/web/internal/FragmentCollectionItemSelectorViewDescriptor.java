@@ -89,7 +89,12 @@ public class FragmentCollectionItemSelectorViewDescriptor
 
 	@Override
 	public boolean isShowManagementToolbar() {
-		return false;
+		return true;
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return true;
 	}
 
 	private PortletRequest _getPortletRequest() {

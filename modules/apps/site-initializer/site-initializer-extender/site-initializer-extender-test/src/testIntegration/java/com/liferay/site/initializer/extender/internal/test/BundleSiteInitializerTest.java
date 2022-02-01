@@ -900,10 +900,10 @@ public class BundleSiteInitializerTest {
 	private void _assertSiteConfiguration(Long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, group.getType());
 		Assert.assertEquals(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			group.getMembershipRestriction());
+		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, group.getType());
 		Assert.assertTrue(group.isManualMembership());
 	}
 

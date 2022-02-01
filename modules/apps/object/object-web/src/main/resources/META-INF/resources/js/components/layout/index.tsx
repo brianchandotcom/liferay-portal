@@ -19,8 +19,8 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
+import InfoScreen from './InfoScreen/InfoScreen';
 import LayoutContext, {LayoutContextProvider, TYPES} from './context';
-import InfoScreen from './info-screen/InfoScreen';
 import LayoutScreen from './layout-screen/LayoutScreen';
 import {
 	TObjectField,

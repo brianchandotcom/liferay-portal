@@ -207,7 +207,6 @@
 	<classpathentry kind="lib" path="lib/portal/mp4parser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/nekohtml.jar"/>
 	<classpathentry kind="lib" path="lib/portal/netcdf.jar"/>
-	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/pdfbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi.jar"/>

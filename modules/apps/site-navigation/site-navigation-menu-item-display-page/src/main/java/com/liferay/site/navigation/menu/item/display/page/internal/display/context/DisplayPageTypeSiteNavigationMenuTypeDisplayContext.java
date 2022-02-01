@@ -267,7 +267,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 				_liferayPortletResponse
 			).setResourceID(
 				"/navigation_menu/get_item_details"
-			);
+			).buildResourceURL();
 
 		itemDetailsURL.setCopyCurrentRenderParameters(false);
 

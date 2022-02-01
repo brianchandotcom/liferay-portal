@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v4_0_0;
 
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,7 +122,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select DDMStructure.structureId, ",
 					"DDMStructure.parentStructureId, DDMStructure.classNameId ",
-					", DDMStructure.structureKey, DDMStructureLayout.groupId, ",
+					", DDMStructure.structureKey, DDMStructure.version, ",
+					"DDMStructureLayout.groupId, ",
 					"DDMStructureLayout.structureLayoutId, ",
 					"DDMStructureLayout.definition as ",
 					"structureLayoutDefinition, ",
@@ -166,8 +169,19 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setLong(
 						2, resultSet.getLong("classNameId"));
-					preparedStatement2.setString(
-						3, resultSet.getString("structureKey"));
+
+					String structureLayoutKey = resultSet.getString(
+						"structureKey");
+
+					if (!StringUtil.equals(
+							resultSet.getString("version"),
+							DDMStructureConstants.VERSION_DEFAULT)) {
+
+						structureLayoutKey = String.valueOf(increment());
+					}
+
+					preparedStatement2.setString(3, structureLayoutKey);
+
 					preparedStatement2.setLong(
 						4, resultSet.getLong("structureLayoutId"));
 

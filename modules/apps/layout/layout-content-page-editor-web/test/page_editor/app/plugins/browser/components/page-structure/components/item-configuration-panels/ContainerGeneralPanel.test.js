@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -74,10 +74,6 @@ function renderComponent(
 }
 
 describe('ContainerGeneralPanel', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('opens link in same tab by default', () => {
 		renderComponent();
 

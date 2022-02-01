@@ -133,7 +133,7 @@ const Overview = ({project, subscriptionGroups}) => {
 						/>
 					</div>
 
-					<div className="d-flex flex-wrap mt-4 overview-cards-subscription">
+					<div className="cp-overview-cards-subscription d-flex flex-wrap mt-4">
 						{subscriptionsCards.length ? (
 							subscriptionsCards.map(
 								(accountSubscription, index) => (

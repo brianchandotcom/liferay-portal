@@ -14,25 +14,25 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		// ProductMenu.gotoPortlet(
+		// 	category = "Site Builder",
+		// 	portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
-			pageName = "Calendar Page",
-			sitePageType = "Widget Page");
+		// PagesAdmin.addPublicPage(
+		// 	pageName = "Calendar Page",
+		// 	sitePageType = "Widget Page");
 
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Calendar Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		// PagesAdmin.configurePage(
+		// 	columnName = "1 Column",
+		// 	pageName = "Calendar Page",
+		// 	privacy = "Public Pages",
+		// 	sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(
-			pageName = "Calendar Page",
-			portletName = "Calendar");
+		// Portlet.addPG(
+		// 	pageName = "Calendar Page",
+		// 	portletName = "Calendar");
 	}
 
 	tearDown {
@@ -102,12 +102,16 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSaveCurrentConfigurationAsTemplate {
 
-		// TODO LRQA-71971 CanSaveCurrentConfigurationAsTemplate pending implementation
+		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
 
+		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
+
+		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+
+	
 	}
 
 }

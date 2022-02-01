@@ -340,6 +340,25 @@ public class DLExportImportPortletPreferencesProcessor
 				}
 			}
 		}
+		else {
+			try {
+				long selectedRepositoryId = GetterUtil.getLong(
+					portletPreferences.getValue("selectedRepositoryId", null));
+
+				if (selectedRepositoryId ==
+						portletDataContext.getSourceGroupId()) {
+
+					portletPreferences.setValue(
+						"selectedRepositoryId",
+						String.valueOf(portletDataContext.getGroupId()));
+				}
+			}
+			catch (ReadOnlyException readOnlyException) {
+				throw new PortletDataException(
+					"Unable to update portlet preferences during import",
+					readOnlyException);
+			}
+		}
 
 		// Root folder is not set, need to import everything
 

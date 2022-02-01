@@ -4,8 +4,20 @@
 @import 'miller_columns/MillerColumns';
 
 .portlet-layouts-admin {
-	.active > .card {
+	.active.card {
 		box-shadow: 0 0 0 2px $primary-l1;
+
+		& .select-master-layout-option-sticker,
+		& .select-style-book-option-sticker {
+			display: block;
+		}
+	}
+
+	.card {
+		& .select-master-layout-option-sticker,
+		& .select-style-book-option-sticker {
+			display: none;
+		}
 	}
 
 	.card-page-item-directory {

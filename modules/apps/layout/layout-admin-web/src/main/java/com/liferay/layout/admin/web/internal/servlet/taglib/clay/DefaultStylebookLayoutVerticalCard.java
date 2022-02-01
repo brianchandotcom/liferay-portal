@@ -48,8 +48,8 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getCssClass() {
-		return "select-master-layout-option card-interactive " +
-			"card-interactive-secondary";
+		return "select-style-book-option card-interactive " +
+			"card-interactive-secondary active";
 	}
 
 	@Override
@@ -77,6 +77,16 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getStickerCssClass() {
+		return "select-style-book-option-sticker sticker-primary";
+	}
+
+	@Override
+	public String getStickerIcon() {
+		return "check-circle";
 	}
 
 	@Override

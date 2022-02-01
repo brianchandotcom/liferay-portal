@@ -70,6 +70,16 @@ public class FragmentCollectionItemDescriptor
 		return _fragmentCollection.getName();
 	}
 
+	@Override
+	public long getUserId() {
+		return _fragmentCollection.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _fragmentCollection.getUserName();
+	}
+
 	private final FragmentCollection _fragmentCollection;
 
 }

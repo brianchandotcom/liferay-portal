@@ -441,8 +441,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8280 | Test Summary: Anon and known visitors legend shown"
 	@priority = "5"
 	test CanShownAnonAndKnownVisitorsLegend {
-		property portal.upstream = "quarantine";
-
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

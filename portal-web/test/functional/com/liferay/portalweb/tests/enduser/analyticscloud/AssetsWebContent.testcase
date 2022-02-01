@@ -209,8 +209,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
-		property portal.upstream = "quarantine";
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 

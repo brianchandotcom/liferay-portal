@@ -440,8 +440,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8431 | Test Summary: Form abandonment card shows the expected amount of form abandonment based on how many times the form was started but not completed"
 	@priority = "5"
 	test FormAbandonmentCardShowsExpectedAmountFormAbandonment {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -689,8 +687,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
-		property portal.upstream = "quarantine";
-
 		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
 
 		for (var n : list "1,2,3") {
@@ -736,7 +732,6 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

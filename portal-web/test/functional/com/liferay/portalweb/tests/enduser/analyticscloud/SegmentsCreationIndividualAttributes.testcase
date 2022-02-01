@@ -280,8 +280,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyTeam {
-		property portal.upstream = "quarantine";
-
 		task ("Assign the site to user") {
 			JSONGroup.assignUserToGroup(
 				groupName = "Site Name",

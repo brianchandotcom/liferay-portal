@@ -285,8 +285,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List By Name"
 	@priority = "4"
 	test OrderSegmentListByName {
-		property portal.upstream = "quarantine";
-
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

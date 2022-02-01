@@ -28,7 +28,7 @@
 	<liferay-ui:error embed="<%= false %>" key="importObjectDefinitionErrorMessage" message="the-structure-was-not-successfully-imported" />
 
 	<react:component
-		module="js/modals/ImportObjectDefinitionModal"
+		module="js/components/ModalImportObjectDefinition"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"importObjectDefinitionURL",

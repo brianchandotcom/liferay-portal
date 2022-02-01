@@ -19,7 +19,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-const ImportObjectDefinitionModal = ({
+const ModalImportObjectDefinition = ({
 	importObjectDefinitionURL,
 	nameMaxLength,
 	portletNamespace,
@@ -184,10 +184,10 @@ const ImportObjectDefinitionModal = ({
 	) : null;
 };
 
-ImportObjectDefinitionModal.propTypes = {
+ModalImportObjectDefinition.propTypes = {
 	importObjectDefinitionURL: PropTypes.string,
 	nameMaxLength: PropTypes.string,
 	portletNamespace: PropTypes.string,
 };
 
-export default ImportObjectDefinitionModal;
+export default ModalImportObjectDefinition;

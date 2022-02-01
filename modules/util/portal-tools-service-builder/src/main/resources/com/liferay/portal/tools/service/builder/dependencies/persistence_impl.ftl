@@ -801,6 +801,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			${entity.name}ModelImpl ${entity.variableName}ModelImpl = (${entity.name}ModelImpl)${entity.variableName};
 		</#if>
 
+		<#if entity.hasExternalReferenceCode() || entity.hasEntityColumn("externalReferenceCode")>
+			if (Validator.isNull(${entity.variableName}.getExternalReferenceCode())) {
+				${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
+			}
+		</#if>
+
 		<#if entity.hasUuid()>
 			if (Validator.isNull(${entity.variableName}.getUuid())) {
 				String uuid = PortalUUIDUtil.generate();

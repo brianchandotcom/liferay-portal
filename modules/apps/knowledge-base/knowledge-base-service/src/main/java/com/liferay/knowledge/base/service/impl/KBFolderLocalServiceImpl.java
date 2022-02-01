@@ -74,10 +74,6 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		long kbFolderId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(kbFolderId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		KBFolder kbFolder = kbFolderPersistence.create(kbFolderId);
@@ -413,6 +409,10 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		KBFolder kbFolder = kbFolderPersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);

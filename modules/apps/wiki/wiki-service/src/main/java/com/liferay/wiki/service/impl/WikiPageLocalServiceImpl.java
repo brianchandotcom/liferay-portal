@@ -256,10 +256,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		long pageId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(pageId);
-		}
-
 		_validateExternalReferenceCode(
 			externalReferenceCode, node.getGroupId());
 
@@ -3419,6 +3415,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		WikiPage wikiPage = fetchLatestPageByExternalReferenceCode(
 			groupId, externalReferenceCode);

@@ -22,8 +22,8 @@ import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -62,16 +62,33 @@ public class FragmentCollectionItemSelectorViewDescriptor
 	}
 
 	@Override
-	public SearchContainer<FragmentCollection> getSearchContainer()
-		throws PortalException {
+	public String[] getOrderByKeys() {
+		return new String[] {"name"};
+	}
 
+	@Override
+	public SearchContainer<FragmentCollection> getSearchContainer() {
 		SearchContainer<FragmentCollection> searchContainer =
 			new SearchContainer<>(
 				_getPortletRequest(), _portletURL, null,
 				"there-are-no-items-to-display");
 
+		searchContainer.setOrderByCol(
+			ParamUtil.getString(_httpServletRequest, "orderByCol", "name"));
+
+		boolean orderByAsc = true;
+
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
+
+		if (orderByType.equals("desc")) {
+			orderByAsc = false;
+		}
+
+		searchContainer.setOrderByType(orderByType);
+
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(true);
+			new FragmentCollectionNameComparator(orderByAsc);
 
 		searchContainer.setResultsAndTotal(
 			() -> FragmentCollectionServiceUtil.getFragmentCollections(

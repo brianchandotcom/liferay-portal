@@ -136,7 +136,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_ERC_V" return-type="KBArticle">
+		<finder name="G_ERC_V" return-type="KBArticle" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="version" />

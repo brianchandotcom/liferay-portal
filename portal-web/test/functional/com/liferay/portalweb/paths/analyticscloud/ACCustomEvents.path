@@ -77,6 +77,11 @@
 	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALERT_LIMIT_REACHED</td>
+	<td>//div[contains(@class,'alert-warning')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -258,4 +258,12 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro viewAlertLimitReached {
+		while (IsElementNotPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertElementPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED");
+	}
+
 }

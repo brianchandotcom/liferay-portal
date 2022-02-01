@@ -13,10 +13,12 @@ themeDisplay.getSiteGroup().getFriendlyURL() /]
 	</button>
 
 	<div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
-		<lfr-widget-nav id="nav"></lfr-widget-nav>
+		<div class="main-navbar-nav">
+			<lfr-widget-nav id="nav"></lfr-widget-nav>
+		</div>
 
-	<button class="btn btn-borderless btn-monospaced btn-search mt-1 mt-lg-0" type="submit">
-			<img alt="" src="[resources:icon_search.svg]" width="18" />
-		</button>
+		<div class="main-navbar-search ml-3">
+			<lfr-widget-search-bar></lfr-widget-search-bar>
+		</div>
 	</div>
 </nav>

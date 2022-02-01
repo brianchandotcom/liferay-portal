@@ -153,7 +153,7 @@
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
 		</finder>
-		<finder name="G_ERC_V" return-type="WikiPage">
+		<finder name="G_ERC_V" return-type="JournalArticle" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="version" />

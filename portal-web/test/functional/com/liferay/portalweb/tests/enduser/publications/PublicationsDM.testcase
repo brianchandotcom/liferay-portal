@@ -393,4 +393,37 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
+	@priority = "4"
+	test ViewPublicationsPreviewForAddedDocuments {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsNavigator.gotoViewChangeDetails(
+			changeCategory = "Document",
+			changeTitle = "Document_1.jpg");
+
+		PublicationsChangeDetails.viewDocumentChangeDetailsInDisplay(
+			changeType = "Added",
+			keyImage = "Document_1.jpg");
+
+		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Data");
+
+		PublicationsChangeDetails.viewChangeDetailsInData(
+			changeType = "Added",
+			columnName = "Title",
+			columnValueInPublication = "Document_1.jpg");
+	}
+
 }

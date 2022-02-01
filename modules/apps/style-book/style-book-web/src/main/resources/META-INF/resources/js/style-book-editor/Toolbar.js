@@ -50,15 +50,15 @@ export default function Toolbar() {
 				</ul>
 
 				<ul className="end navbar-nav">
-					<li className="mr-3 nav-item">
+					<li className="mr-2 nav-item">
 						<DraftStatus />
 					</li>
 
-					<li className="mx-3 nav-item">
+					<li className="mx-2 nav-item">
 						<HelpInformation />
 					</li>
 
-					<li className="ml-3 nav-item">
+					<li className="ml-2 nav-item">
 						<PublishButton />
 					</li>
 				</ul>

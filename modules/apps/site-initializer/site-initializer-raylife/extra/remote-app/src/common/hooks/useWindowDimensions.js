@@ -50,9 +50,7 @@ function getWindowDimensions(dimensions = {}) {
 	return {
 		device: {
 			isDesktop: deviceSize === DEVICES.DESKTOP,
-			isMobile:
-				deviceSize === DEVICES.PHONE &&
-				dimensions.width <= phoneBreakpoint,
+			isMobile: deviceSize === DEVICES.PHONE && width <= phoneBreakpoint,
 			isTablet: deviceSize === DEVICES.TABLET,
 		},
 		deviceSize,

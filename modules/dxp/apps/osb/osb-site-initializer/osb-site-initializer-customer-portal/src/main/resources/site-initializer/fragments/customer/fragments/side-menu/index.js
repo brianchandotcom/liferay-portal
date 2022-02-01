@@ -19,12 +19,8 @@ const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 const pathSplit = pathname.split('/').filter(Boolean);
 
 const htmlElement = (name, key) => {
-	return `<li><button class="align-items-center btn btn-sm btn-menu customer-portal-side-menu-button" value="${name
-		.toLowerCase()
-		.replace(' ', '_')}" type="button">
-    <img class="mr-2" width="16" src="${window.location.origin}/webdav/${
-		pathSplit[1]
-	}/document_library/assets/navigation-menu/${key}_icon_gray.svg" alt="" />
+	return `<li><button class="align-items-center btn btn-sm btn-menu customer-portal-side-menu-button" value="${key}" type="button">
+    <img class="mr-2" width="16" src="${window.location.origin}/webdav/${pathSplit[1]}/document_library/assets/navigation-menu/${key}_icon_gray.svg" alt="" />
     ${name}
   </button></li>`;
 };
@@ -39,8 +35,12 @@ const setSrcIcon = (keybutton) => {
 
 	return srcIcon;
 };
-
-const eventMenuSelected = Liferay.publish('customer-portal-menu-selected');
+const activeProductsId = '#customer-portal-toggle-products';
+const teamMembersId = '#custumer-portal-members';
+const overviewId = '#custumer-portal-overview';
+const activeProducts = fragmentElement.querySelector(activeProductsId);
+const teamMembers = fragmentElement.querySelector(teamMembersId);
+const overview = fragmentElement.querySelector(overviewId);
 
 const arrowToggleElementKey = 'customer-portal-arrow';
 const productsElementKey = '#customer-portal-products';
@@ -60,22 +60,31 @@ let expandedHeightProducts;
 					)
 					.join('\n');
 
+				if (accountSubscriptionGroups) {
+					overview.classList.toggle('skeleton');
+					teamMembers.classList.toggle('skeleton');
+					activeProducts.classList.toggle('skeleton');
+				}
+
 				const buttons =
 					fragmentElement.querySelectorAll(
 						'.customer-portal-side-menu-button'
 					) || [];
 
 				buttons.forEach((button) =>
-					button.addEventListener('click', () =>
-						eventMenuSelected.fire({
-							detail: button.value,
-						})
-					)
+					button.addEventListener('click', () => {
+						window.dispatchEvent(
+							new CustomEvent('customer-portal-menu-selected', {
+								bubbles: true,
+								composed: true,
+								detail: button.value,
+							})
+						);
+					})
 				);
 			}
 		);
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();
@@ -97,8 +106,7 @@ fragmentElement.addEventListener('click', (event) => {
 
 		if (heightProducts < expandedHeightProducts) {
 			currentProducts.style.height = `${expandedHeightProducts}px`;
-		}
-		else {
+		} else {
 			currentProducts.style.height = '0px';
 		}
 
@@ -107,8 +115,7 @@ fragmentElement.addEventListener('click', (event) => {
 		);
 		arrow.classList.toggle('left');
 		arrow.classList.toggle('down');
-	}
-	else if (
+	} else if (
 		lastButton !== currentButton &&
 		currentButton.tagName === 'BUTTON'
 	) {

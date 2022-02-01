@@ -41,10 +41,7 @@
 }
 
 .customer-portal-side-menu .btn-menu.active {
-	background-color: var(
-		--color-action-primary-active-lighten-1,
-		rgb(0, 74, 215, 0.1)
-	);
+	background-color: var(--color-action-primary-active-lighten);
 	color: var(--color-action-primary-active);
 }
 
@@ -53,10 +50,12 @@
 }
 
 .customer-portal-side-menu .btn-menu:hover {
-	background-color: var(
-		--color-action-primary-hover-lighten-7,
-		rgba(0, 83, 240, 0.07)
-	);
+	background-color: var(--color-action-primary-hover-lighten);
 	border-color: var(--btn-default-border-color);
 	color: var(--color-action-primary-hover) !important;
+}
+
+.skeleton {
+	height: 2rem;
+	margin-bottom: 0.25rem;
 }

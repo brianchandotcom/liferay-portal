@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>CURRENT_DISPLAY_ITEM</td>
-	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_displayItem}')]</td>
+	<td>//td[contains(@class,'publications-render-view-divider')]//div[contains(.,'${key_displayItem}')]</td>
 	<td></td>
 </tr>
 <tr>

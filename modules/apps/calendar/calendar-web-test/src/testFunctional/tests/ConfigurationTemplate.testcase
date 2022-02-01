@@ -58,17 +58,15 @@ definition {
 	@description = "LRQA-71891 - Verify that the user can apply the selected template"
 	@priority = "3"
 	test CanApplySelectedTemplate {
-
 		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
 
 		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
-		
+
 		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
 
 		ConfigurationTemplate.optionSelectedTemplate(
-			item = "Apply",
-			configurationName = "Configuration Name");
-		
+			configurationName = "Configuration Name",
+			item = "Apply");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can delete a template"

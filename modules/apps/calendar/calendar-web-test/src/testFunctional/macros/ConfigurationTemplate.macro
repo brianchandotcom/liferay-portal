@@ -40,16 +40,24 @@ definition {
 		AssertClick(
      macro gotoCalendarOptions {
         Portlet.gotoPortletOptions(
+	macro gotoCalendarOptions {
+		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "${option}");
-
 	}
 
-    macro saveConfigurationTemplateCalendar {
+	macro optionSelectedTemplate {
+		LexiconTable.clickEllipsisItem(
+			item = "${item}",
+			tableEntry = "${configurationName}");
 
-        SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		Alert.viewSuccessMessage();
+	}
 
-        AssertClick(
+	macro saveConfigurationTemplateCalendar {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
 			locator1 = "Configuration#SAVE_CONFIGURATION_TEMPLATE",
 			value1 = "Save Current Configuration as Template");
 
@@ -72,12 +80,4 @@ definition {
 			key_configurationName = "${configurationName}");
     }
 
-    macro optionSelectedTemplate{
-
-        LexiconTable.clickEllipsisItem(
-			item = "${item}",
-			tableEntry = "${configurationName}");
-
-		Alert.viewSuccessMessage();
-    }
 }

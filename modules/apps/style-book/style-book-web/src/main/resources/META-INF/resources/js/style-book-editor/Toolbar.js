@@ -41,7 +41,7 @@ export default function Toolbar() {
 					{previewLayout?.url && (
 						<li className="nav-item">
 							<span className="style-book-editor__page-preview-text">
-								{`${Liferay.Language.get('preview')}:`}
+								{`${Liferay.Language.get('preview')}`}
 							</span>
 
 							<PreviewSelector />

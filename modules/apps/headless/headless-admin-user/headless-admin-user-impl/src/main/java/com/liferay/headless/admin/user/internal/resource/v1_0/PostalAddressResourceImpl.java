@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
+import com.liferay.portal.kernel.service.permission.CommonPermission;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,7 +80,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		User user = _userService.getUserById(userAccountId);
 
-		CommonPermissionUtil.check(
+		_commonPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			user.getModelClassName(), user.getUserId(), ActionKeys.VIEW);
 
@@ -100,6 +100,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private AddressService _addressService;
+
+	@Reference
+	private CommonPermission _commonPermission;
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;

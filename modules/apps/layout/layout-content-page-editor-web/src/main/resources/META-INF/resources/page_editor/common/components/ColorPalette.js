@@ -51,7 +51,7 @@ export default function ColorPalette({
 									color.rgbValue === selectedColor ||
 									color.cssClass === selectedColor,
 							})}
-							key={color}
+							key={color.cssClass}
 						>
 							<ClayButton
 								block

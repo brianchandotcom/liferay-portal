@@ -133,10 +133,10 @@ const SubscriptionsNavbar = ({
 											value: subscriptionGroup.name,
 										})
 									)}
-									id="subscription-navbar"
-									onChange={(value) => {
+									handleOnChange={(value) => {
 										setSelectedSubscriptionGroup(value);
 									}}
+									id="subscription-navbar"
 								/>
 							)}
 						</>

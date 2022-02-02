@@ -259,7 +259,7 @@ const DXPActivationKeysTable = () => {
 							value: ACTIVATION_STATUS.expired.id,
 						},
 					]}
-					onChange={(value) => {
+					handleOnChange={(value) => {
 						setFilterStatusBar(value);
 					}}
 				/>

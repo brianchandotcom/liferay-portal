@@ -13,8 +13,10 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import {Button} from '../';
 
-const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
-	const [selectedButton, setSelectedButton] = useState(groupButtons[0].value);
+const RoundedGroupButtons = ({groupButtons, handleOnChange, id, ...props}) => {
+	const [selectedButton, setSelectedButton] = useState(
+		groupButtons[0]?.value
+	);
 
 	return (
 		<div
@@ -22,7 +24,7 @@ const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
 			id={id}
 			role="group"
 		>
-			{groupButtons.map(({label, value}) => (
+			{groupButtons?.map(({label, value}) => (
 				<Button
 					className={classNames('btn px-4 py-1 rounded-pill', {
 						'bg-transparent text-neutral-4':
@@ -33,7 +35,7 @@ const RoundedGroupButtons = ({groupButtons, id = '', onChange, ...props}) => {
 					key={value}
 					onClick={(event) => {
 						setSelectedButton(event.target.value);
-						onChange(event.target.value);
+						handleOnChange(event.target.value);
 					}}
 					value={value}
 					{...props}

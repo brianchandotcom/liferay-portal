@@ -14,9 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_10_2;
 
-import com.liferay.dynamic.data.mapping.internal.io.DDMFormValuesJSONDeserializer;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
@@ -26,15 +24,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.powermock.api.support.membermodification.MemberMatcher;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Carolina Barbosa
  */
-public class DDMContentUpgradeProcessTest
-	extends BaseDDMUpgradeProcessTestCase {
+public class DDMContentUpgradeProcessTest extends BaseDDMTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,7 +41,12 @@ public class DDMContentUpgradeProcessTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_setUpDDMFormValuesJSONDeserializer();
+		setUpDDMFormJSONDeserializer();
+		setUpDDMFormJSONSerializer();
+		setUpDDMFormValuesJSONDeserializer();
+		setUpDDMFormValuesJSONSerializer();
+		setUpJSONFactoryUtil();
+		setUpLanguageUtil();
 	}
 
 	@Test
@@ -62,15 +62,6 @@ public class DDMContentUpgradeProcessTest
 				read("ddm-content-data.json"),
 				read("ddm-structure-version-definition.json")),
 			false);
-	}
-
-	private void _setUpDDMFormValuesJSONDeserializer() throws Exception {
-		MemberMatcher.field(
-			DDMFormValuesJSONDeserializer.class, "_serviceTrackerMap"
-		).set(
-			ddmFormValuesJSONDeserializer,
-			ProxyFactory.newDummyInstance(ServiceTrackerMap.class)
-		);
 	}
 
 }

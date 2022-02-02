@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Set;
 
@@ -34,8 +35,9 @@ import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
@@ -43,15 +45,18 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Carolina Barbosa
  */
-@RunWith(PowerMockRunner.class)
 public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -239,6 +244,10 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 	}
 
 	private void _setUpPollsToDDMUpgradeProcess() throws Exception {
+		_pollsToDDMUpgradeProcess = new PollsToDDMUpgradeProcess(
+			ddmFormLayoutJSONSerializer, null, ddmFormValuesJSONSerializer,
+			null, null);
+
 		MemberMatcher.field(
 			PollsToDDMUpgradeProcess.class, "_availableLocales"
 		).set(
@@ -253,12 +262,9 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 		);
 	}
 
-	private static final PollsToDDMUpgradeProcess _pollsToDDMUpgradeProcess =
-		new PollsToDDMUpgradeProcess(
-			ddmFormLayoutJSONSerializer, null, ddmFormValuesJSONSerializer,
-			null, null);
-
 	@Mock
 	private Localization _localization;
+
+	private PollsToDDMUpgradeProcess _pollsToDDMUpgradeProcess;
 
 }

@@ -134,6 +134,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	public void setUp() throws Exception {
 		setUpPortalClassLoaderUtil();
 		setUpPortalUtil();
+		setUpPropsUtil();
 		setUpResourceBundleUtil();
 	}
 

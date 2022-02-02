@@ -1229,6 +1229,13 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
+"@clayui/empty-state@^3.40.0":
+  version "3.40.0"
+  resolved "https://registry.yarnpkg.com/@clayui/empty-state/-/empty-state-3.40.0.tgz#63ac156ae01d51cc13d7e508fa81e5cd49394d7b"
+  integrity sha512-zuiPhL4qNU163Iz64GaTNslMrF7Hm2NZZlE/R33J3ST/+TPhCWQEs6HvhnIVZVNKMvEy47MAlm4KwJalQLR7SQ==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/form@^3.42.0":
   version "3.42.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.42.0.tgz#c3cdb166f2b56c07110a9c9df85bf7e6b5919109"
@@ -1279,6 +1286,30 @@
     "@clayui/shared" "^3.40.0"
     classnames "^2.2.6"
     warning "^4.0.3"
+
+"@clayui/pagination-bar@^3.43.0":
+  version "3.43.0"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.43.0.tgz#7eb48169880468b4b39770bb54eafce2a499fcbf"
+  integrity sha512-m8HroDKX1Ghs3JtwuUrYhTeKvpui1Jduxdl5tf4mtR6yRp3O1Ge4l2xamj6KZtjo6Bcos8mlxhaKFgP9wBbagA==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/drop-down" "^3.43.0"
+    "@clayui/icon" "^3.40.0"
+    "@clayui/pagination" "^3.43.0"
+    "@clayui/shared" "^3.40.0"
+    classnames "^2.2.6"
+
+"@clayui/pagination@^3.43.0":
+  version "3.43.0"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.43.0.tgz#ac6a1b9bdb90db9cf1d9634a7e060b0c2620c405"
+  integrity sha512-XAZ5bmBSx0oDj4uPYaPD8F+4g3SjXdTDPFtso9flVSwx7qcDVTq2NEDyYtJFv83oQgeTq7LxUe62XLBTroANoA==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/drop-down" "^3.43.0"
+    "@clayui/icon" "^3.40.0"
+    "@clayui/link" "^3.40.0"
+    "@clayui/shared" "^3.40.0"
+    classnames "^2.2.6"
 
 "@clayui/provider@^3.40.0":
   version "3.40.0"

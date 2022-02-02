@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +31,7 @@ public interface RawMetadataProcessor {
 
 	public static final String TIKA_RAW_METADATA = "TIKARAWMETADATA";
 
-	public Map<String, Field[]> getFields();
+	public Map<String, Map<String, Object>> getFields();
 
 	public Map<String, DDMFormValues> getRawMetadataMap(
 			String mimeType, InputStream inputStream)

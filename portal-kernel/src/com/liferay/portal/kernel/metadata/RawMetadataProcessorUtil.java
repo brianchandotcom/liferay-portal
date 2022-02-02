@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-
 import java.util.Map;
 
 /**
@@ -28,7 +26,7 @@ import java.util.Map;
  */
 public class RawMetadataProcessorUtil {
 
-	public static Map<String, Field[]> getFields() {
+	public static Map<String, Map<String, Object>> getFields() {
 		return _rawMetadataProcessor.getFields();
 	}
 

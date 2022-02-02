@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -46,9 +46,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -144,9 +143,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
 
-		Map<String, Field[]> fields = RawMetadataProcessorUtil.getFields();
+		Map<String, Map<String, Object>> fields =
+			RawMetadataProcessorUtil.getFields();
 
-		for (Map.Entry<String, Field[]> entry : fields.entrySet()) {
+		for (Map.Entry<String, Map<String, Object>> entry : fields.entrySet()) {
 			String name = entry.getKey();
 
 			DDMForm ddmForm = _buildDDMForm(entry.getValue(), locale);
@@ -188,7 +188,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		}
 	}
 
-	private DDMForm _buildDDMForm(Field[] fields, Locale locale) {
+	private DDMForm _buildDDMForm(Map<String, Object> fields, Locale locale) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(Collections.singleton(locale));
@@ -196,14 +196,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
-		for (Field field : fields) {
-			Class<?> fieldClass = field.getDeclaringClass();
+		for (Map.Entry<String, Object> entry : fields.entrySet()) {
+			String name = entry.getKey();
 
-			DDMFormField ddmFormField = new DDMFormField(
-				StringBundler.concat(
-					fieldClass.getSimpleName(), StringPool.UNDERLINE,
-					field.getName()),
-				"text");
+			DDMFormField ddmFormField = new DDMFormField(name, "text");
 
 			ddmFormField.setDataType("string");
 			ddmFormField.setIndexType("text");
@@ -218,9 +214,9 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 			label.addString(
 				locale,
-				StringBundler.concat(
-					"metadata.", fieldClass.getSimpleName(), StringPool.PERIOD,
-					field.getName()));
+				"metadata.".concat(
+					StringUtil.replaceFirst(
+						name, CharPool.UNDERLINE, CharPool.PERIOD)));
 			label.setDefaultLocale(locale);
 
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();

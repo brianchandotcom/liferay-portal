@@ -110,11 +110,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9037 | Test Summary: As an Business User, a Property with a duplicate name should have an incrementing identifier appended to it's name"
-	@ignore = "true"
 	@priority = "3"
 	test AutoRenamePropertyWhenDuplicateWithExistingOne {
-
-		// AC Bug ticket: LRAC-10434
+		property portal.upstream = "vini";
 
 		var propertyNameList = "AC Test Property,AC Test Property (1)";
 
@@ -459,11 +457,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
-	@ignore = "true"
 	@priority = "5"
 	test OwnerCanCreateNewProperty {
-
-		// AC Bug ticket: LRAC-10434
+		property portal.upstream = "vini";
 
 		ACUtils.launchAC();
 
@@ -589,11 +585,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"
-	@ignore = "true"
 	@priority = "3"
 	test PropertyFieldDisplayedWhenNoPropertyAvailable {
-
-		// AC Bug ticket: LRAC-10434
+		property portal.upstream = "vini";
 
 		task ("Go to properties") {
 			ACUtils.launchAC();

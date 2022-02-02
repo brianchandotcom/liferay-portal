@@ -96,11 +96,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
-	@ignore = "true"
 	@priority = "3"
 	test ViewPropertyListDefault {
-
-		// AC Bug ticket: LRAC-10434
+		property portal.upstream = "vini";
 
 		task ("go to properties") {
 			ACNavigation.goToSettings();

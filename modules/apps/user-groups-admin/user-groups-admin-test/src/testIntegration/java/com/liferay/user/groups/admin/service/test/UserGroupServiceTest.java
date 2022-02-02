@@ -144,6 +144,8 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetGtUserGroups() throws Exception {
+		_addResourcePermission(UserGroup.class.getName(), ActionKeys.VIEW);
+
 		for (int i = 0; i < 10; i++) {
 			UserGroupTestUtil.addUserGroup();
 		}
@@ -178,6 +180,8 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetUserGroupsLikeName() throws Exception {
+		_addResourcePermission(UserGroup.class.getName(), ActionKeys.VIEW);
+
 		List<UserGroup> allUserGroups = new ArrayList<>(
 			_userGroupLocalService.getUserGroups(
 				TestPropsValues.getCompanyId()));

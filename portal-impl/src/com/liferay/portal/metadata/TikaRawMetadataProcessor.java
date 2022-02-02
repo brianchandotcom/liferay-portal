@@ -274,7 +274,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
-		if (!mimeType.equals(ContentTypes.IMAGE_SVG_XML)) {
+		if (!mimeType.equals(ContentTypes.IMAGE_SVG_XML) ||
+			(metadata == null)) {
+
 			return metadata;
 		}
 
@@ -343,11 +345,11 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		private static Metadata _extractMetadata(File file, Parser parser)
 			throws IOException {
 
-			Metadata metadata = new Metadata();
-
 			if (file.length() == 0) {
-				return metadata;
+				return null;
 			}
+
+			Metadata metadata = new Metadata();
 
 			ParseContext parseContext = new ParseContext();
 

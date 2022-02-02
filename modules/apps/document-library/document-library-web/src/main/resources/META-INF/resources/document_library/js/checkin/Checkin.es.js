@@ -53,7 +53,7 @@ export default function Checkin({
 		return () => {
 			Liferay.destroyComponent(bridgeComponentId);
 		};
-	},[portletNamespace]);
+	}, [portletNamespace]);
 
 	return (
 		<>

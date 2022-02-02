@@ -192,7 +192,8 @@ public class FileEntryInfoItemFieldValuesProvider
 
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
-					FileEntryInfoItemFields.fileNameInfoField, fileEntry.getFileName()));
+					FileEntryInfoItemFields.fileNameInfoField,
+					fileEntry.getFileName()));
 
 			String mimeType = fileEntry.getMimeType();
 
@@ -214,7 +215,8 @@ public class FileEntryInfoItemFieldValuesProvider
 
 				fileEntryFieldValues.add(
 					new InfoFieldValue<>(
-						FileEntryInfoItemFields.fileURLInfoField, fileURLWebImage));
+						FileEntryInfoItemFields.fileURLInfoField,
+						fileURLWebImage));
 			}
 
 			fileEntryFieldValues.add(
@@ -231,7 +233,8 @@ public class FileEntryInfoItemFieldValuesProvider
 					fileEntry.getVersion()));
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
-					FileEntryInfoItemFields.sizeInfoField, fileEntry.getSize()));
+					FileEntryInfoItemFields.sizeInfoField,
+					fileEntry.getSize()));
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
 					FileEntryInfoItemFields.createDateInfoField,
@@ -273,7 +276,8 @@ public class FileEntryInfoItemFieldValuesProvider
 			if (Validator.isNotNull(downloadURL)) {
 				fileEntryFieldValues.add(
 					new InfoFieldValue<>(
-						FileEntryInfoItemFields.downloadURLInfoField, downloadURL));
+						FileEntryInfoItemFields.downloadURLInfoField,
+						downloadURL));
 			}
 
 			String previewURL = _dlURLHelper.getPreviewURL(
@@ -283,7 +287,8 @@ public class FileEntryInfoItemFieldValuesProvider
 			if (Validator.isNotNull(previewURL)) {
 				fileEntryFieldValues.add(
 					new InfoFieldValue<>(
-						FileEntryInfoItemFields.previewURLInfoField, previewURL));
+						FileEntryInfoItemFields.previewURLInfoField,
+						previewURL));
 			}
 
 			WebImage imagePreviewURLWebImage = new WebImage(

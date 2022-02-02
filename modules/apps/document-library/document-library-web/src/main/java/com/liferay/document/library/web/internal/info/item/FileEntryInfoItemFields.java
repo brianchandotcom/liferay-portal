@@ -157,14 +157,15 @@ public class FileEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFields.class, "publish-date")
 		).build();
-	public static final InfoField<TextInfoFieldType> sizeInfoField = InfoField.builder(
-	).infoFieldType(
-		TextInfoFieldType.INSTANCE
-	).name(
-		"size"
-	).labelInfoLocalizedValue(
-		InfoLocalizedValue.localize(FileEntryInfoItemFields.class, "size")
-	).build();
+	public static final InfoField<TextInfoFieldType> sizeInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"size"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(FileEntryInfoItemFields.class, "size")
+		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
 		InfoField.builder(
 		).infoFieldType(

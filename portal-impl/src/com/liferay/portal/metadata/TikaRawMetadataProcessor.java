@@ -133,18 +133,18 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
 		for (Field field : fields) {
+			String value = _getMetadataValue(metadata, field);
+
+			if (value == null) {
+				continue;
+			}
+
 			Class<?> fieldClass = field.getDeclaringClass();
 
 			String fieldClassName = fieldClass.getSimpleName();
 
 			String name = StringBundler.concat(
 				fieldClassName, StringPool.UNDERLINE, field.getName());
-
-			String value = _getMetadataValue(metadata, field);
-
-			if (value == null) {
-				continue;
-			}
 
 			DDMFormField ddmFormField = _createTextDDMFormField(name);
 

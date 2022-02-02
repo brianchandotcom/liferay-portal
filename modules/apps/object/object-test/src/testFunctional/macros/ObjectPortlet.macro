@@ -367,4 +367,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertEntryDetailsLabelNotPresent {
+		AssertNotVisible(
+			key_entryLabel = "${entryLabel}",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
+	}
+
 }

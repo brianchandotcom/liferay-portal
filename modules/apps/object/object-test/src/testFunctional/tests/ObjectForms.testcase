@@ -108,12 +108,47 @@ definition {
 	}
 
 	@description = "LPS-138495 - Verify that Picklist entries cannot be edited in the Forms Sidebar"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotEditPicklistEntries {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145725 CannotEditPicklistEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Picklist Test",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		FormsAdmin.addForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Select from List");
+
+		PopulateObjectFormsConfiguration.mapFormObjectField(
+			fieldLabelName = "Field Picklist",
+			formObjectField = "Choose an Option");
+
+		Form.gotoBasicTab();
+
+		ObjectPortlet.assertEntryDetailsLabelNotPresent(entryLabel = "Create List");
 	}
 
 	@description = "LPS-137316 - Verify it is not possible to select an unpublished Object"

@@ -14,12 +14,10 @@
 
 package com.liferay.search.experiences.blueprint.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Petteri Karttunen
  */
-public class PrivateIPAddressException extends PortalException {
+public class PrivateIPAddressException extends RuntimeException {
 
 	public PrivateIPAddressException() {
 	}

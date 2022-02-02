@@ -60,6 +60,8 @@ definition {
 
 		Clustering.deployClusteringModule(nodePort = "8080");
 
+		Pause(locator1 = "10000");
+
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
 		GogoShell.openGogoShellAdmin();
@@ -114,6 +116,8 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "8080");
 
 		GogoShell.openGogoShellAdmin();
+
+		Pause(locator1 = "10000");
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 

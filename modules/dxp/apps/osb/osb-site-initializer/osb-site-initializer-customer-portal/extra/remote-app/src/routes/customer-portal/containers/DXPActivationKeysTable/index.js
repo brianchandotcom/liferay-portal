@@ -60,6 +60,9 @@ const ACTIVATION_STATUS = {
 
 const VIRTUAL_CLUSTER = 'virtual-cluster';
 
+const MAX_ITEMS = 9999;
+const PAGE = 1;
+
 const DXPActivationKeysTable = () => {
 	const [{assetsPath, project, sessionId}] = useCustomerPortal();
 	const {licenseKeyDownloadURL} = useApplicationProvider();
@@ -89,8 +92,8 @@ const DXPActivationKeysTable = () => {
 				project.accountKey,
 				licenseKeyDownloadURL,
 				encodeURI('active eq true'),
-				1,
-				9999,
+				PAGE,
+				MAX_ITEMS,
 				sessionId
 			);
 			if (items) {
@@ -206,7 +209,7 @@ const DXPActivationKeysTable = () => {
 		[]
 	);
 
-	const handleClick = async (licenseKey) => {
+	const handleDownloadActivationLicenseKey = async (licenseKey) => {
 		const license = await getActivationDownloadKey(
 			licenseKey,
 			licenseKeyDownloadURL,
@@ -313,7 +316,11 @@ const DXPActivationKeysTable = () => {
 						download: (
 							<IconButton
 								displayType="null"
-								onClick={() => handleClick(activationKey.id)}
+								onClick={() =>
+									handleDownloadActivationLicenseKey(
+										activationKey.id
+									)
+								}
 								small
 								symbol="download"
 							/>

@@ -93,16 +93,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 	@Override
 	public Map<String, DDMFormValues> getRawMetadataMap(
-			String mimeType, File file)
-		throws PortalException {
-
-		Metadata metadata = _extractMetadata(mimeType, file);
-
-		return _createDDMFormValuesMap(metadata, getFields());
-	}
-
-	@Override
-	public Map<String, DDMFormValues> getRawMetadataMap(
 			String mimeType, InputStream inputStream)
 		throws PortalException {
 

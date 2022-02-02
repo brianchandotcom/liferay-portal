@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.metadata;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
@@ -31,13 +30,6 @@ public class RawMetadataProcessorUtil {
 
 	public static Map<String, Field[]> getFields() {
 		return _rawMetadataProcessor.getFields();
-	}
-
-	public static Map<String, DDMFormValues> getRawMetadataMap(
-			String mimeType, File file)
-		throws PortalException {
-
-		return _rawMetadataProcessor.getRawMetadataMap(mimeType, file);
 	}
 
 	public static Map<String, DDMFormValues> getRawMetadataMap(

@@ -169,7 +169,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			_objectFieldLocalService.deleteObjectField(
+			_objectFieldLocalService.deleteRelationshipTypeObjectField(
 				objectRelationship.getObjectFieldId2());
 		}
 		else if (Objects.equals(

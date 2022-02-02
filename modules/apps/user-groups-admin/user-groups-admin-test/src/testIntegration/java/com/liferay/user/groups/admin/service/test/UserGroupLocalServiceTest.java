@@ -73,7 +73,7 @@ public class UserGroupLocalServiceTest {
 		_companyId = _role.getCompanyId();
 
 		_count = UserGroupLocalServiceUtil.searchCount(
-			_companyId, null, new LinkedHashMap<String, Object>());
+			_companyId, null, new LinkedHashMap<>());
 
 		_userGroup1 = UserGroupTestUtil.addUserGroup();
 		_userGroup2 = UserGroupTestUtil.addUserGroup();

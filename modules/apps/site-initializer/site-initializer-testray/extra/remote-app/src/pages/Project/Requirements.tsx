@@ -12,8 +12,49 @@
  * details.
  */
 
-import Container from '../../components/Layout/Container';
+import ClayIcon from '@clayui/icon';
 
-const Requirements = () => <Container title="Requirements">...</Container>;
+import Container from '../../components/Layout/Container';
+import ListView from '../../components/ListView/ListView';
+import {getTestrayRequirements} from '../../graphql/queries';
+import {Liferay} from '../../services/liferay/liferay';
+
+const Requirements = () => (
+	<Container title="Requirements">
+		<ListView
+			query={getTestrayRequirements}
+			tableProps={{
+				columns: [
+					{key: 'key', value: 'Key'},
+					{
+						key: 'linkTitle',
+						render: (
+							linkTitle: string,
+							{linkURL}: {linkURL: string}
+						) => (
+							<a
+								href={linkURL}
+								rel="noopener noreferrer"
+								target="_blank"
+							>
+								{linkTitle}
+
+								<ClayIcon className="ml-2" symbol="shortcut" />
+							</a>
+						),
+						value: 'Link',
+					},
+					{key: 'team', value: 'Team'},
+					{key: 'component', value: 'Component'},
+					{key: 'components', value: 'Jira Components'},
+					{key: 'summary', value: 'Summary'},
+					{key: 'description', value: 'Description'},
+				],
+			}}
+			transformData={(data) => data?.c?.testrayRequirements}
+			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+		/>
+	</Container>
+);
 
 export default Requirements;

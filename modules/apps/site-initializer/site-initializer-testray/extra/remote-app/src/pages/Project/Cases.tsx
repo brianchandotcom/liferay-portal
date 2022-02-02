@@ -13,7 +13,28 @@
  */
 
 import Container from '../../components/Layout/Container';
+import ListView from '../../components/ListView/ListView';
+import {getTestrayCases} from '../../graphql/queries';
+import {Liferay} from '../../services/liferay/liferay';
 
-const Cases = () => <Container title="Cases">...</Container>;
+const Cases = () => (
+	<Container title="Cases">
+		<ListView
+			query={getTestrayCases}
+			tableProps={{
+				columns: [
+					{key: 'createdDate', value: 'Create Date'},
+					{key: 'modifiedDate', value: 'Modified Date'},
+					{key: 'priority', value: 'Priority'},
+					{key: 'name', value: 'Case Name'},
+					{key: 'team', value: 'Team'},
+					{key: 'component', value: 'Component'},
+				],
+			}}
+			transformData={(data) => data?.c?.testrayCases}
+			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+		/>
+	</Container>
+);
 
 export default Cases;

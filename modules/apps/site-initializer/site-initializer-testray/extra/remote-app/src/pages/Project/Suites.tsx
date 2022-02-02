@@ -13,7 +13,25 @@
  */
 
 import Container from '../../components/Layout/Container';
+import ListView from '../../components/ListView/ListView';
+import {getTestraySuites} from '../../graphql/queries';
+import {Liferay} from '../../services/liferay/liferay';
 
-const Suites = () => <Container title="Suites">...</Container>;
+const Suites = () => (
+	<Container title="Suites">
+		<ListView
+			query={getTestraySuites}
+			tableProps={{
+				columns: [
+					{key: 'name', value: 'Case Name'},
+					{key: 'description', value: 'Description'},
+					{key: 'type', value: 'Type'},
+				],
+			}}
+			transformData={(data) => data?.c?.testraySuites}
+			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+		/>
+	</Container>
+);
 
 export default Suites;

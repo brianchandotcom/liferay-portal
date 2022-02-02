@@ -950,8 +950,12 @@ public class PortalImpl implements Portal {
 
 		String decodedURL = HttpUtil.decodeURL(url);
 
-		if (Validator.isNotNull(uri.getPath()) &&
-			decodedURL.startsWith(HttpUtil.decodeURL(uri.getPath()))) {
+		String domain = uri.getHost();
+		String path = uri.getPath();
+
+		if ((domain == null) && (path != null) &&
+			!path.equals(StringPool.BLANK) &&
+			decodedURL.startsWith(HttpUtil.decodeURL(path))) {
 
 			// Relative URL
 
@@ -966,8 +970,6 @@ public class PortalImpl implements Portal {
 
 			return null;
 		}
-
-		String domain = uri.getHost();
 
 		if (Validator.isNull(domain)) {
 

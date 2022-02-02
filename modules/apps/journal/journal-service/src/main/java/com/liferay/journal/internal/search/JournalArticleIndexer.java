@@ -362,7 +362,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		document.addKeywordSortable(Field.ARTICLE_ID, articleId);
 
-		Localization localization = _getLocalization();
+		Localization localization = LocalizationUtil.getLocalization();
 
 		String[] contentAvailableLanguageIds =
 			localization.getAvailableLanguageIds(journalArticle.getDocument());
@@ -813,17 +813,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		return content;
 	}
 
-	private Localization _getLocalization() {
-
-		// See LPS-72507
-
-		if (_localization != null) {
-			return _localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	private void _reindexArticles(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery;
 
@@ -996,7 +985,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		_journalArticleResourceLocalService;
 	private JournalContent _journalContent;
 	private JournalConverter _journalConverter;
-	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

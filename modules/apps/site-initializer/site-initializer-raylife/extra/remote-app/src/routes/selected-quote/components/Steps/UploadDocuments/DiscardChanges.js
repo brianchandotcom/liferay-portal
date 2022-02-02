@@ -53,7 +53,7 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 	}, [sections]);
 
 	return (
-		<div className="panel-right">
+		<div className="d-flex flex-row justify-content-end panel-right">
 			<div className="change-link">
 				{checked && !hasError && !expanded && (
 					<span

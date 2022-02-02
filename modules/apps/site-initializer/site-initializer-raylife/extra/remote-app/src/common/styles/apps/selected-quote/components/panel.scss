@@ -1,20 +1,7 @@
 .panel-container {
 	border-bottom: 1px solid $color-neutral-3;
-	padding: 34px 48px;
-	width: 100%;
 
 	.panel-header {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-between;
-
-		.panel-left {
-			color: $color-neutral-9;
-			font-size: 24px;
-			font-weight: 700;
-		}
-
 		.panel-middle {
 			margin-top: 10px;
 
@@ -89,10 +76,6 @@
 		}
 
 		.panel-right {
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-end;
-
 			.change-link {
 				span {
 					color: $color-action-neutral-default;

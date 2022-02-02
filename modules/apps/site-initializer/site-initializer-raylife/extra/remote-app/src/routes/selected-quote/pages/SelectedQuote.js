@@ -39,10 +39,10 @@ const SelectedQuote = () => {
 	}, [sections]);
 
 	return (
-		<div className="selected-quote">
+		<div className="container d-flex flex-row mb-10 w-100">
 			<QuoteInfo />
 
-			<div className="selected-quote-right-page">
+			<div className="ml-0 ml-lg-5 w-100">
 				<Panel
 					Right={CheckButton}
 					id="createAnAccount"

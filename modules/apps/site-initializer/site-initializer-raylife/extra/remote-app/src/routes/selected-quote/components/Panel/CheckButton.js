@@ -19,7 +19,7 @@ const CheckButton = ({checked, expanded, hasError = false}) => {
 	const isChecked = checked && !hasError && !expanded;
 
 	return (
-		<div className="panel-right">
+		<div className="d-flex flex-row justify-content-end panel-right">
 			<div
 				className={classNames(
 					'align-items-center d-flex icon justify-content-center rounded-circle',

@@ -30,9 +30,11 @@ const Panel = ({
 	const show = expanded || hasError;
 
 	return (
-		<div className="panel-container">
-			<div className="panel-header">
-				<div className="panel-left">{title}</div>
+		<div className="p-0 panel-container px-md-6 py-5 w-100">
+			<div className="d-flex flex-row flex-wrap justify-content-between panel-header px-0 px-lg-3">
+				<div className="font-weight-bolder h4 mb-0 text-neutral-9">
+					{title}
+				</div>
 
 				<Middle checked={checked} expanded={expanded} />
 

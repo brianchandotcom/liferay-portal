@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 	}
-
+/*
 	tearDown {
 		Navigator.openURL();
 
@@ -24,7 +24,7 @@ definition {
 
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
-
+*/
 	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
@@ -565,7 +565,18 @@ definition {
 	test AssertProductCardShowsCatalogDefaultImage {
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		var productName = "Simple T-Shirt";
+
+		//CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium");
+
+		var catalog_default_img = "//img[@class='current-image']";
+		var catalog_default_img_src = selenium.getAttribute("${catalog_default_img}@src");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -573,18 +584,19 @@ definition {
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
+			productName = "${productName}",
 			productType = "Simple");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		ClickNoError(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		WaitForPageLoad();
 
-		AssertElementPresent(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
+		var minium_catalog_default_img = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
+		var minium_catalog_default_img_src = selenium.getAttribute("${minium_catalog_default_img}@src");
+
+		TestUtils.assertEquals(
+			actual = "${minium_catalog_default_img_src}",
+			expected = "${catalog_default_img_src}");
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"

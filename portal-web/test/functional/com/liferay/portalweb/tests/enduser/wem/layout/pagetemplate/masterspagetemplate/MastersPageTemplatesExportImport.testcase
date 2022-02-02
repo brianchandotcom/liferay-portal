@@ -185,7 +185,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				panel = "Styles",
+				panelList = "Styles",
 				uploadFileName = "Document_1.png");
 
 			PageEditor.viewContainerStyle(

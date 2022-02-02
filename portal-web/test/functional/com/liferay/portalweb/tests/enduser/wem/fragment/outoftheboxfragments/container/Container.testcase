@@ -147,7 +147,7 @@ definition {
 				justifyContent = "Around",
 				paddingBottom = "4",
 				paddingTop = "2",
-				panel = "Styles");
+				panelList = "General,Styles");
 		}
 
 		task ("Assert the Margin Left and Margin Right fields are disabled") {
@@ -255,7 +255,7 @@ definition {
 				contentDisplay = "Flex Column",
 				height = "1000px",
 				justifyContent = "Between",
-				panel = "Styles");
+				panelList = "General,Styles");
 		}
 
 		task ("View the Container styles") {
@@ -324,7 +324,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panel = "Styles");
+				panelList = "General");
 		}
 
 		task ("View the Container styles") {
@@ -398,7 +398,7 @@ definition {
 				paddingLeft = "2",
 				paddingRight = "2",
 				paddingTop = "2",
-				panel = "Styles");
+				panelList = "General,Styles");
 		}
 
 		task ("View the Container styles") {
@@ -531,7 +531,7 @@ definition {
 				field = "Display Page URL",
 				link = "Mapped URL",
 				navItem = "Web Content",
-				panel = "General");
+				panelList = "General");
 
 			var baseURL = PropsUtil.get("portal.url");
 
@@ -600,7 +600,7 @@ definition {
 				fieldName = "File URL",
 				navItem = "Documents and Media",
 				paddingTop = "2",
-				panel = "Styles");
+				panelList = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -638,7 +638,7 @@ definition {
 
 		task ("Map Manual URL to Container") {
 			PageEditor.editLayoutContainer(
-				panel = "General",
+				panelList = "General",
 				url = "https://liferay.com");
 
 			AssertVisible(
@@ -731,7 +731,7 @@ definition {
 				backgroundImage = "Mapping",
 				entryTitle = "WC WebContent Title",
 				navItem = "Web Content",
-				panel = "Styles");
+				panelList = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -812,7 +812,7 @@ definition {
 				backgroundImage = "Mapping",
 				entryTitle = "WC WebContent Title",
 				navItem = "Web Content",
-				panel = "Styles");
+				panelList = "Styles");
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
@@ -881,7 +881,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Image",
-				panel = "Styles");
+				panelList = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -946,7 +946,7 @@ definition {
 		task ("Configure the Container") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
-				panel = "Styles");
+				panelList = "Styles");
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",

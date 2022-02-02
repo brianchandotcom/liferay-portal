@@ -207,7 +207,7 @@ definition {
 		task ("Directly select an image with width greater than 2000px as background image of Container") {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				panel = "Styles",
+				panelList = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
@@ -275,7 +275,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
 				entryTitle = "high_resolution_photo.jpg",
-				panel = "Styles",
+				panelList = "Styles",
 				position = "2");
 
 			PageEditor.viewContainerStyle(
@@ -448,7 +448,7 @@ definition {
 				entryTitle = "high_resolution_photo.jpg",
 				fieldName = "File URL",
 				navItem = "Documents and Media",
-				panel = "Styles",
+				panelList = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
@@ -627,7 +627,7 @@ definition {
 				navItem = "Documents and Media",
 				paddingBottom = "3",
 				paddingTop = "3",
-				panel = "Styles",
+				panelList = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(

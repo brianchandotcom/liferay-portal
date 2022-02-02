@@ -342,7 +342,7 @@ definition {
 				backgroundImage = "Direct",
 				entryTitle = "Document_1.jpg",
 				navItem = "Documents and Media",
-				panel = "Styles");
+				panelList = "Styles");
 		}
 
 		task ("Add a Heading fragment into Container") {

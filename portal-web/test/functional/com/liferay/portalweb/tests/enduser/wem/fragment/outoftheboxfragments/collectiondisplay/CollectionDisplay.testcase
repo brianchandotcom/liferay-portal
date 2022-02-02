@@ -508,7 +508,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Image",
-				panel = "Styles");
+				panelList = "Styles");
 		}
 
 		task ("Assert the mapping image is shown in Container") {

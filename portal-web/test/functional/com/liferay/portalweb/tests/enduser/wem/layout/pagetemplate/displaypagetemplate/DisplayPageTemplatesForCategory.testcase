@@ -693,7 +693,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Main Image",
-				panel = "Styles");
+				panelList = "Styles");
 
 			PageEditor.clickPublish();
 		}

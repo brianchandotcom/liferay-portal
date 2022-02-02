@@ -130,32 +130,32 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"billingAddressZip", billingAddress.getZip()
 			).put(
-				"billingPhone", billingAddress.getPhoneNumber()
+				"billingAddressPhoneNumber", billingAddress.getPhoneNumber()
 			);
 		}
 
 		hashMapWrapper.put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
-			"companyCode", commerceAccount.getCompanyId()
+			"companyId", commerceAccount.getCompanyId()
 		).put(
-			"companyName", commerceAccount.getName()
+			"commerceAccountName", commerceAccount.getName()
 		).put(
-			"deliveryDate",
-			(commerceOrder.getRequestedDeliveryDate() != null) ?
-				commerceOrder.getRequestedDeliveryDate() : null
+			"requestedDeliveryDate",
+			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
+				commerceOrder.getRequestedDeliveryDate()
 		).put(
 			"locale", themeDisplay.getLocale()
 		).put(
-			"logoUrl", _getLogoURL(themeDisplay)
+			"logoURL", _getLogoURL(themeDisplay)
 		).put(
 			"orderDate",
-			(commerceOrder.getOrderDate() != null) ?
-				commerceOrder.getOrderDate() : null
+			(commerceOrder.getOrderDate() == null) ? null :
+				commerceOrder.getOrderDate()
 		).put(
-			"orderNotes",
-			(commerceOrder.getPrintedNote() != null) ?
-				commerceOrder.getPrintedNote() : ""
+			"printedNote",
+			(commerceOrder.getPrintedNote() == null) ? StringPool.BLANK :
+				commerceOrder.getPrintedNote()
 		).put(
 			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber()
 		);
@@ -198,15 +198,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"shippingAddressZip", shippingAddress.getZip()
 			).put(
-				"shippingAmount", commerceOrder.getShippingMoney()
+				"shippingAmountMoney", commerceOrder.getShippingMoney()
 			).put(
 				"shippingDiscountAmount",
 				_commercePriceFormatter.format(
 					commerceOrder.getCommerceCurrency(),
 					commerceOrder.getShippingDiscountAmount(),
 					themeDisplay.getLocale())
-			).put(
-				"shippingPhone", shippingAddress.getPhoneNumber()
 			);
 		}
 
@@ -214,21 +212,22 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			commerceOrder.getCommerceOrderItems();
 
 		hashMapWrapper.put(
-			"subtotal", commerceOrder.getTotalMoney()
+			"commerceOrderItemListCount", commerceOrderItemList.size()
 		).put(
 			"taxAmount",
 			_commercePriceFormatter.format(
 				commerceOrder.getCommerceCurrency(),
 				commerceOrder.getTaxAmount(), themeDisplay.getLocale())
 		).put(
-			"totalWithTax", commerceOrder.getTotalWithTaxAmountMoney()
+			"totalMoney", commerceOrder.getTotalMoney()
 		).put(
-			"unitsCount", commerceOrderItemList.size()
+			"totalWithTaxAmountMoney",
+			commerceOrder.getTotalWithTaxAmountMoney()
 		);
 
 		FileEntry fileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-				commerceChannel.getGroupId(), "PRINT_ORDER");
+				commerceChannel.getGroupId(), "PRINT_ORDER_TEMPLATE_ERC");
 
 		PortletResponseUtil.write(
 			resourceResponse,

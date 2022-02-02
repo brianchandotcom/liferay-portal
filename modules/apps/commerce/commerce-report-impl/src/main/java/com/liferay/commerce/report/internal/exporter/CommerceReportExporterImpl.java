@@ -15,7 +15,6 @@
 package com.liferay.commerce.report.internal.exporter;
 
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,7 +33,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -65,12 +63,12 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 		InputStream inputStream = null;
 
 		try {
-
-			if (fileEntry != null) {
-				inputStream = fileEntry.getContentStream();
-			} else {
+			if (fileEntry == null) {
 				inputStream = clazz.getResourceAsStream(
 					"dependencies/commerce_order.jrxml");
+			}
+			else {
+				inputStream = fileEntry.getContentStream();
 			}
 
 			JasperExportManager.exportReportToPdfStream(
@@ -84,7 +82,9 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 			_log.error(exception, exception);
 		}
 		finally {
-			inputStream.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		}
 
 		return byteArrayOutputStream.toByteArray();
@@ -92,8 +92,5 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceReportExporterImpl.class);
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 }

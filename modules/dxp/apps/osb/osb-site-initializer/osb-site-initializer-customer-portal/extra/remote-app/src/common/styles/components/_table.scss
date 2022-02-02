@@ -3,5 +3,13 @@
 }
 
 .common-table-active-row {
-	background-color: #f0f5ff !important;
+	td:first-child {
+		border-radius: 8px 0 0 8px;
+	}
+	td:last-child {
+		border-radius: 0 8px 8px 0;
+	}
+	td {
+		background-color: #004ad71a !important;
+	}
 }

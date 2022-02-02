@@ -8,7 +8,6 @@
 	tbody {
 		tr:first-child {
 			td {
-				border-radius: 0 !important;
 				border-top: 1px solid #e1e1e4 !important;
 			}
 		}
@@ -16,7 +15,6 @@
 		tr:last-child {
 			td {
 				border-bottom: 1px solid #e1e1e4 !important;
-				border-radius: 0 !important;
 			}
 		}
 	}

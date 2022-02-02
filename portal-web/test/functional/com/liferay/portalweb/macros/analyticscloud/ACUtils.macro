@@ -704,6 +704,12 @@ definition {
 		}
 	}
 
+	macro orderAnyTable {
+		var key_columnName = "${columnName}";
+
+		Click(locator1 = "ACUtils#GENERIC_ORDER_BUTTON");
+	}
+
 	macro orderArrow {
 		var type = "${type}";
 

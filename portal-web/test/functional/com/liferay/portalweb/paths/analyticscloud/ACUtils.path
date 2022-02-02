@@ -57,6 +57,11 @@
 	<td>//a[contains(@class, 'text-truncate-inline')]/span[contains(@class, 'inline-item-after')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-down')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>GENERIC_ORDER_BUTTON</td>
+	<td>//a[contains(@href,'sortOrder')]//span[text()='${key_columnName}']</td>
+	<td></td>
+</tr>
 <!-- PAGE_PAGINATION-->
 <tr>
 	<td>ACTIVE_PAGE</td>

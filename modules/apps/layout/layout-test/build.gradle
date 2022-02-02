@@ -16,6 +16,7 @@ dependencies {
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
+	testIntegrationCompile project(":apps:layout:layout-taglib")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")

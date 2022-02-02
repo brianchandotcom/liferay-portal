@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.theme;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -523,10 +522,6 @@ public class ThemeDisplay
 	 */
 	public Locale getLocale() {
 		return _locale;
-	}
-
-	public MDRRuleGroupInstance getMDRRuleGroupInstance() {
-		return _mdrRuleGroupInstance;
 	}
 
 	public String getPathApplet() {
@@ -1457,12 +1452,6 @@ public class ThemeDisplay
 			cdnBaseURL + themeStaticResourcePath + theme.getTemplatesPath());
 	}
 
-	public void setMDRRuleGroupInstance(
-		MDRRuleGroupInstance mdrRuleGroupInstance) {
-
-		_mdrRuleGroupInstance = mdrRuleGroupInstance;
-	}
-
 	public void setPathApplet(String pathApplet) {
 		_pathApplet = pathApplet;
 	}
@@ -1908,7 +1897,6 @@ public class ThemeDisplay
 	private boolean _lifecycleRender;
 	private boolean _lifecycleResource;
 	private Locale _locale;
-	private MDRRuleGroupInstance _mdrRuleGroupInstance;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;

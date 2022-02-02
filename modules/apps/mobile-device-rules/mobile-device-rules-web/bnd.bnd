@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Mobile Device Rules Web
-Bundle-SymbolicName: com.liferay.mobile.device.rules.web
-Bundle-Version: 5.0.19
-Web-ContextPath: /mobile-device-rules-web

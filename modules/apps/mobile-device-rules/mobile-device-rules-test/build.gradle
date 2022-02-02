@@ -1,7 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:mobile-device-rules:mobile-device-rules-api")
-	testIntegrationCompile project(":apps:mobile-device-rules:mobile-device-rules-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

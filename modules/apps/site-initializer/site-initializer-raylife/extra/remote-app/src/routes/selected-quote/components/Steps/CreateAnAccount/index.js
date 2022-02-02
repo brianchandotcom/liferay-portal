@@ -100,7 +100,7 @@ export function CreateAnAccount() {
 	const matchAllRules = isMatchingAllRules();
 
 	return (
-		<div className="create-account mb-5 ml-5 mr-0 mt-6">
+		<div className="create-account mb-lg-5 ml-lg-5 mt-0 mt-lg-5">
 			<h5 className="font-weight-bolder mb-5 mx-0">
 				Create a Raylife account to continue. This will be used to login
 				to your dashboard.
@@ -110,7 +110,7 @@ export function CreateAnAccount() {
 				<div className="create-account__form__content-input filled form-condensed form-group mb-1 mt-4">
 					<ClayInput
 						autoComplete="off"
-						className="bg-neutral-0 email"
+						className="bg-neutral-0 email w-100"
 						id="email"
 						name="email"
 						onChange={(event) => {
@@ -143,6 +143,7 @@ export function CreateAnAccount() {
 				>
 					<ClayInput
 						autoComplete="off"
+						className="w-100"
 						id="password"
 						onBlur={() => {
 							if (!password) {
@@ -177,6 +178,7 @@ export function CreateAnAccount() {
 				>
 					<ClayInput
 						autoComplete="off"
+						className="w-100"
 						id="rePassword"
 						onChange={(event) => {
 							setConfirmPassword(event.target.value);
@@ -195,7 +197,7 @@ export function CreateAnAccount() {
 				<ListRules objValidate={objValidate} />
 			</ClayForm>
 
-			<div className="d-flex justify-content-end">
+			<div className="d-flex justify-content-center justify-content-lg-end">
 				<ClayButton
 					className="mb-0 mt-8 mx-0"
 					disabled={!matchAllRules}

@@ -4,7 +4,7 @@
 	}
 
 	&__form {
-		width: 28.5rem;
+		max-width: 28.5rem;
 
 		&__content-input {
 			.email {
@@ -19,7 +19,6 @@
 				background-color: $color-brand-primary-lighten-6;
 				border: none;
 				height: $spacer-5;
-				width: 100%;
 			}
 
 			input:valid {

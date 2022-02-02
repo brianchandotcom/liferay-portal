@@ -72,7 +72,7 @@ function PreviewSidebar({
 		<ClayList className="preview-error-list">
 			{errors.map((error, index) => (
 				<ErrorListItem
-					item={error}
+					error={error}
 					key={index}
 					onFocusSXPElement={onFocusSXPElement}
 				/>

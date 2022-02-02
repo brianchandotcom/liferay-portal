@@ -15,15 +15,6 @@ import ClayLayout from '@clayui/layout';
 import getCN from 'classnames';
 import React, {useState} from 'react';
 
-const ERROR_OMIT_KEYS = [
-	'className',
-	'sxpElementId',
-	'localizedMessage',
-	'msg',
-	'throwable',
-	'severity',
-];
-
 const CONFIGURATION_FIELD_NAME = {
 	advanced_configuration: Liferay.Language.get('advanced-configuration'),
 	aggregation_configuration: Liferay.Language.get(
@@ -37,6 +28,17 @@ const CONFIGURATION_FIELD_NAME = {
 	uiConfigurationJSON: Liferay.Language.get('ui-configuration'),
 };
 
+// `error` object properties that should not be displayed.
+
+const ERROR_OMIT_KEYS = [
+	'className',
+	'sxpElementId',
+	'localizedMessage',
+	'msg',
+	'throwable',
+	'severity',
+];
+
 // Types from search-experiences-blueprints-api/src/main/java/com/liferay/search/experiences/blueprints/message/Severity.java
 
 const SEVERITY_DISPLAY_TYPE = {
@@ -45,29 +47,43 @@ const SEVERITY_DISPLAY_TYPE = {
 	WARN: 'warning',
 };
 
-const getConfigurationFieldName = (rootProperty) => {
+/**
+ * Gets the user-friendly field name for the given JSON property key.
+ *
+ * For example:
+ * getConfigurationFieldName('advanced_configuration')
+ * => 'Advanced Configuration'
+ *
+ * @param {string} rootProperty The blueprint configuration JSON property key.
+ * @returns {string}
+ */
+function getConfigurationFieldName(rootProperty) {
 	const configName = Object.keys(CONFIGURATION_FIELD_NAME).find((key) =>
 		rootProperty?.includes(key)
 	);
 
 	return configName ? CONFIGURATION_FIELD_NAME[configName] : '';
-};
+}
 
 const prettyPrint = (value) => {
 	return JSON.stringify(value, null, 2);
 };
 
-function ErrorListItem({item, onFocusSXPElement}) {
+/**
+ * Displays an alert depending on the `error` object properties.
+ * Used in the preview sidebar.
+ */
+function ErrorListItem({error, onFocusSXPElement}) {
 	const [collapse, setCollapse] = useState(true);
 
 	const _getDescription = () => {
 		const configurationFieldName = getConfigurationFieldName(
-			item.rootProperty
+			error.rootProperty
 		);
 
 		return configurationFieldName
-			? `${item.msg} (${configurationFieldName})`
-			: item.msg;
+			? `${error.msg} (${configurationFieldName})`
+			: error.msg;
 	};
 
 	const _handleCollapse = () => {
@@ -75,12 +91,12 @@ function ErrorListItem({item, onFocusSXPElement}) {
 	};
 
 	const _handleFocusSXPElement = () => {
-		onFocusSXPElement(item.sxpElementId);
+		onFocusSXPElement(error.sxpElementId);
 	};
 
 	const _isCollapsible = () => {
-		return Object.keys(item).some(
-			(property) => item[property] && !ERROR_OMIT_KEYS.includes(property)
+		return Object.keys(error).some(
+			(property) => error[property] && !ERROR_OMIT_KEYS.includes(property)
 		);
 	};
 
@@ -89,19 +105,19 @@ function ErrorListItem({item, onFocusSXPElement}) {
 			className={getCN('error-list-item', {
 				collapsible: _isCollapsible(),
 			})}
-			displayType={SEVERITY_DISPLAY_TYPE[item.severity] || 'danger'}
+			displayType={SEVERITY_DISPLAY_TYPE[error.severity] || 'danger'}
 		>
 			<span className="message" onClick={_handleCollapse}>
 				<span className="title">
-					{item.localizedMessage || Liferay.Language.get('error')}
+					{error.localizedMessage || Liferay.Language.get('error')}
 				</span>
 
-				{item.msg && (
+				{error.msg && (
 					<span className="description">{_getDescription()}</span>
 				)}
 			</span>
 
-			{!!item.sxpElementId && (
+			{!!error.sxpElementId && (
 				<div className="scroll-button">
 					<ClayButton alert onClick={_handleFocusSXPElement} small>
 						{Liferay.Language.get('view-element')}
@@ -122,9 +138,9 @@ function ErrorListItem({item, onFocusSXPElement}) {
 
 			{!collapse && _isCollapsible() && (
 				<ClayAlert.Footer>
-					{Object.keys(item).map(
+					{Object.keys(error).map(
 						(property) =>
-							item[property] &&
+							error[property] &&
 							!ERROR_OMIT_KEYS.includes(property) && (
 								<ClayLayout.Row justify="start" key={property}>
 									<ClayLayout.Col
@@ -136,9 +152,9 @@ function ErrorListItem({item, onFocusSXPElement}) {
 
 									<ClayLayout.Col size={9}>
 										<code>
-											{typeof item[property] === 'object'
-												? prettyPrint(item[property])
-												: item[property]}
+											{typeof error[property] === 'object'
+												? prettyPrint(error[property])
+												: error[property]}
 										</code>
 									</ClayLayout.Col>
 								</ClayLayout.Row>

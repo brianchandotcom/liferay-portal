@@ -40,7 +40,9 @@ public class HighlightSXPSearchRequestBodyContributor
 		HighlightConfiguration highlightConfiguration =
 			configuration.getHighlightConfiguration();
 
-		if (highlightConfiguration == null) {
+		if ((highlightConfiguration == null) ||
+			(highlightConfiguration.getFields() == null)) {
+
 			return;
 		}
 

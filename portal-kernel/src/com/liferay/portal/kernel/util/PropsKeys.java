@@ -1984,15 +1984,6 @@ public interface PropsKeys {
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT =
 		"minifier.inline.content.cache.skip.javascript";
 
-	public static final String MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT =
-		"mobile.device.rules.publish.to.live.by.default";
-
-	public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX =
-		"mobile.device.rules.rule.group.copy.postfix";
-
-	public static final String MOBILE_DEVICE_SESSION_CACHE_ENABLED =
-		"mobile.device.session.cache.enabled";
-
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
 	public static final String MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =

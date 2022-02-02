@@ -64,9 +64,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 
-		GogoShell.viewOutput(outputContent = "Cluster Sample");
+		GogoShell.viewOutput(outputContent = "Cluster Multiple Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 	}
@@ -117,9 +117,9 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 
-		GogoShell.viewOutput(outputContent = "Cluster Sample");
+		GogoShell.viewOutput(outputContent = "Cluster Multiple Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 
@@ -133,11 +133,11 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 
 		GogoShell.viewOutput(outputContent = "false");
 
-		GogoShell.viewNoOutput(outputContent = "Cluster Sample");
+		GogoShell.viewNoOutput(outputContent = "Cluster Multiple Sample");
 
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}

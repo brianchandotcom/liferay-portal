@@ -15,10 +15,7 @@
 package com.liferay.portal.kernel.metadata;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.io.File;
 import java.io.InputStream;
@@ -37,11 +34,6 @@ public interface RawMetadataProcessor {
 
 	public static final String TIKA_RAW_METADATA = "TIKARAWMETADATA";
 
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception;
-
 	public Map<String, Field[]> getFields();
 
 	public Map<String, DDMFormValues> getRawMetadataMap(
@@ -51,10 +43,5 @@ public interface RawMetadataProcessor {
 	public Map<String, DDMFormValues> getRawMetadataMap(
 			String mimeType, InputStream inputStream)
 		throws PortalException;
-
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception;
 
 }

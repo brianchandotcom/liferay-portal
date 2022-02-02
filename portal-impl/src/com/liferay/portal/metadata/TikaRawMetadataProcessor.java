@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessException;
@@ -32,14 +31,12 @@ import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -92,13 +89,6 @@ import org.xml.sax.ContentHandler;
 public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 	@Override
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception {
-	}
-
-	@Override
 	public Map<String, Field[]> getFields() {
 		return _fields;
 	}
@@ -121,13 +111,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		Metadata metadata = _extractMetadata(mimeType, inputStream);
 
 		return _createDDMFormValuesMap(metadata, getFields());
-	}
-
-	@Override
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
 	}
 
 	public void setParser(Parser parser) {

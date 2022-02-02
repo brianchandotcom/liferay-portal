@@ -309,21 +309,19 @@ definition {
 	@priority = "3"
 	test UploadAlreadyMappedNewImage {
 		task ("Given a diagram product with a svg diagram image.") {
-			property portal.acceptance = "false";
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram Product",
+				productType = "diagram");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
-			CPCommerceCatalog.newProductsEntry(
-				productCatalog = "Master",
-				productName = "Diagram T-Shirt",
-				productType = "Diagram");
+			CommerceNavigator.gotoEntry(entryName = "Diagram Product");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
 			CommerceProductImages.addDiagramImages(
-				imageTitles = "Title",
+				imageTitles = "sbd",
 				imageType = "svg",
 				productType = "Diagram");
 
@@ -340,8 +338,8 @@ definition {
 
 		task ("Then verify position is 1 and type is "Linked to a SKU"") {
 			CommerceDiagram.assertPinToolTipInfo(
+				pinNumber = "1",
 				pinType = "SKU",
-				positionNumber = "1",
 				quantity = "1");
 
 			Click(

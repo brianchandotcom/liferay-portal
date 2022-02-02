@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -88,13 +87,10 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -691,7 +687,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 	}
 
-	private Map<String, Query> _addLocalizedFields(
+	private void _addLocalizedFields(
 			BooleanQuery searchQuery, String field, String value, boolean like,
 			SearchContext searchContext)
 		throws Exception {
@@ -700,15 +696,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			_searchLocalizationHelper.getLocalizedFieldNames(
 				new String[] {field}, searchContext);
 
-		Map<String, Query> queries = new HashMap<>();
-
 		for (String localizedFieldName : localizedFieldNames) {
-			Query query = searchQuery.addTerm(localizedFieldName, value, like);
-
-			queries.put(field, query);
+			searchQuery.addTerm(localizedFieldName, value, like);
 		}
-
-		return queries;
 	}
 
 	private void _addLocalizedQuery(
@@ -725,13 +715,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		searchQuery.add(localizedQuery, booleanClauseOccur);
 	}
 
-	private Map<String, Query> _addSearchLocalizedTerm(
+	private void _addSearchLocalizedTerm(
 			BooleanQuery searchQuery, SearchContext searchContext, String field,
 			boolean like)
 		throws Exception {
 
 		if (Validator.isBlank(field)) {
-			return Collections.emptyMap();
+			return;
 		}
 
 		String value = GetterUtil.getString(searchContext.getAttribute(field));
@@ -741,25 +731,20 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		if (Validator.isBlank(value)) {
-			return Collections.emptyMap();
+			return;
 		}
-
-		Map<String, Query> queries = null;
 
 		if (Validator.isBlank(searchContext.getKeywords())) {
 			BooleanQuery localizedQuery = new BooleanQueryImpl();
 
-			queries = _addLocalizedFields(
+			_addLocalizedFields(
 				localizedQuery, field, value, like, searchContext);
 
 			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
 		}
 		else {
-			queries = _addLocalizedFields(
-				searchQuery, field, value, like, searchContext);
+			_addLocalizedFields(searchQuery, field, value, like, searchContext);
 		}
-
-		return queries;
 	}
 
 	private void _deleteDocument(JournalArticle article) throws Exception {

@@ -160,7 +160,7 @@
 		<td>//span[contains(@class,'c-inner') and contains(text(),'${key_itemMenu}')]</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>OBJECT_FIELD_SELECTED</td>
 		<td>//div[@class='form-control results-chosen select-field-trigger']//div[contains(text(),'${key_entrySelected}')]</td>
 		<td></td>

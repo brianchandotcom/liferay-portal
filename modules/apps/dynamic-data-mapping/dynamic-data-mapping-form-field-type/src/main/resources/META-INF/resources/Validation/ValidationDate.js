@@ -48,9 +48,8 @@ const getDateOptionsByType = (label, name) => ({
 	],
 });
 
+/* TODO: enforce parameter type consistency and remove this function */
 function getFromParameter(parameter, key, getLocalizedValue) {
-
-	/* TODO: remove the localization from parameter */
 	let value = getLocalizedValue(parameter) ?? parameter;
 
 	if (value && typeof value === 'string') {

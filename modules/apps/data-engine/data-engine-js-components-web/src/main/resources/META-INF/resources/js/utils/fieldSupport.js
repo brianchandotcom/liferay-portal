@@ -216,6 +216,7 @@ export function getFieldProperties(
 						value.errorMessage[defaultLanguageId];
 				}
 
+				/* TODO: define a proper parameter type and apply it here */
 				if (!value.parameter[editingLanguageId]) {
 					value.parameter[editingLanguageId] =
 						value.parameter[defaultLanguageId];

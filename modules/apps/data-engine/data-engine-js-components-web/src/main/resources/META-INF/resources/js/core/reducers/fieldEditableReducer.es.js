@@ -71,6 +71,30 @@ export function deleteField({
 	});
 }
 
+function isParameterRelatedToField(parameter, fieldName) {
+
+	/* TODO: enforce parameter type consistency and remove this normalization */
+	const json =
+		typeof parameter === 'string' ? parameter : JSON.stringify(parameter);
+
+	return json.includes(fieldName);
+}
+
+/* TODO: enforce parameter type consistency and remove this function */
+function normalizeParameter(parameter, defaultLanguageId) {
+	let normalizedParameter = parameter;
+
+	if (typeof normalizedParameter === 'string') {
+		normalizedParameter = JSON.parse(parameter);
+	}
+
+	if (normalizedParameter[defaultLanguageId]) {
+		normalizedParameter = normalizedParameter[defaultLanguageId];
+	}
+
+	return normalizedParameter;
+}
+
 function updateFieldAffectedByActivatingRepeatable({
 	defaultLanguageId,
 	editingLanguageId,
@@ -81,9 +105,15 @@ function updateFieldAffectedByActivatingRepeatable({
 }) {
 	if (
 		field.type === 'date' &&
-		field.validation.parameter.includes(repeatableFieldName)
+		isParameterRelatedToField(
+			field.validation.parameter,
+			repeatableFieldName
+		)
 	) {
-		const {endsOn, startsFrom} = JSON.parse(field.validation.parameter);
+		const {endsOn, startsFrom} = normalizeParameter(
+			field.validation.parameter,
+			defaultLanguageId
+		);
 
 		const removeDateField = (validation) => {
 			if (repeatableFieldName !== validation.dateFieldName) {
@@ -100,6 +130,8 @@ function updateFieldAffectedByActivatingRepeatable({
 
 		const validation = {
 			...field.validation,
+
+			/* TODO: define a proper parameter type and apply it here */
 			parameter: JSON.stringify({
 				endsOn,
 				startsFrom,

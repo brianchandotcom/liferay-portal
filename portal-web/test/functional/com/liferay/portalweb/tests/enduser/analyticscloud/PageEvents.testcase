@@ -426,10 +426,10 @@ definition {
 			Pause(locator1 = "10000");
 		}
 
-		task ("View the tabBlurred event triggered") {
+		task ("View the pageUnloaded event triggered") {
 			ACUtils.assertEventPresent(
 				applicationId = "Page",
-				eventId = "tabBlurred");
+				eventId = "pageUnloaded");
 		}
 
 		task ("View the viewDuration of pageUnloaded event is greater than 0 ms") {
@@ -514,10 +514,10 @@ definition {
 			Pause(locator1 = "10000");
 		}
 
-		task ("View the tabBlurred event triggered") {
+		task ("View the pageUnloaded event triggered") {
 			ACUtils.assertEventPresent(
 				applicationId = "Page",
-				eventId = "tabBlurred");
+				eventId = "pageUnloaded");
 		}
 
 		task ("View the viewDuration of pageUnloaded event is greater than 0 ms") {

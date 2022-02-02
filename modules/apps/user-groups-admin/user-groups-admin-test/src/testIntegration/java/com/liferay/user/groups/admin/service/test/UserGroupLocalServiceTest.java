@@ -136,10 +136,8 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testDatabaseSearchWithInvalidParamKey() {
-		String keywords = null;
-
 		List<UserGroup> userGroups = _search(
-			keywords,
+			null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 				Long.valueOf(_role.getRoleId())
@@ -152,10 +150,8 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testSearchRoleUserGroups() {
-		String keywords = null;
-
 		List<UserGroup> userGroups = _search(
-			keywords,
+			null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 				Long.valueOf(_role.getRoleId())
@@ -166,10 +162,8 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testSearchRoleUserGroupsWithKeywords() {
-		String keywords = _userGroup2.getName();
-
 		List<UserGroup> userGroups = _search(
-			keywords,
+			_userGroup2.getName(),
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 				Long.valueOf(_role.getRoleId())
@@ -180,11 +174,7 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testSearchUserGroups() {
-		LinkedHashMap<String, Object> emptyParams = new LinkedHashMap<>();
-
-		String keywords = null;
-
-		List<UserGroup> userGroups = _search(keywords, emptyParams);
+		List<UserGroup> userGroups = _search(null, new LinkedHashMap<>());
 
 		Assert.assertEquals(
 			userGroups.toString(), _count + 2, userGroups.size());
@@ -192,11 +182,8 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testSearchUserGroupsWithKeywords() {
-		LinkedHashMap<String, Object> emptyParams = new LinkedHashMap<>();
-
-		String keywords = _userGroup1.getName();
-
-		List<UserGroup> userGroups = _search(keywords, emptyParams);
+		List<UserGroup> userGroups = _search(
+			_userGroup1.getName(), new LinkedHashMap<>());
 
 		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 	}
@@ -209,11 +196,7 @@ public class UserGroupLocalServiceTest {
 			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", Boolean.FALSE);
 
 		try {
-			LinkedHashMap<String, Object> nullParams = null;
-
-			String keywords = null;
-
-			List<UserGroup> userGroups = _search(keywords, nullParams);
+			List<UserGroup> userGroups = _search(null, null);
 
 			Assert.assertEquals(
 				userGroups.toString(), _count + 2, userGroups.size());

@@ -16,7 +16,7 @@ package com.liferay.frontend.theme.browser.support.internal.template;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Chema Balsas
@@ -46,13 +47,16 @@ public class BrowserTemplateContextContributor
 
 		sb.append(GetterUtil.getString(contextObjects.get("bodyCssClass")));
 		sb.append(StringPool.SPACE);
-		sb.append(BrowserSnifferUtil.getBrowserId(httpServletRequest));
+		sb.append(_browserSniffer.getBrowserId(httpServletRequest));
 
-		if (BrowserSnifferUtil.isMobile(httpServletRequest)) {
+		if (_browserSniffer.isMobile(httpServletRequest)) {
 			sb.append(" mobile");
 		}
 
 		contextObjects.put("bodyCssClass", sb.toString());
 	}
+
+	@Reference
+	private BrowserSniffer _browserSniffer;
 
 }

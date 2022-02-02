@@ -23,6 +23,8 @@ import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -104,6 +106,10 @@ public class AddressCommerceCheckoutStepUtil {
 				paramName) &&
 			useAsBilling) {
 
+			if (commerceAddressId < 1) {
+				throw new CommerceOrderShippingAddressException();
+			}
+
 			CommerceAddress commerceAddress =
 				_commerceAddressService.getCommerceAddress(commerceAddressId);
 
@@ -133,6 +139,10 @@ public class AddressCommerceCheckoutStepUtil {
 				commerceOrder.getBillingAddressId()) &&
 			!useAsBilling) {
 
+			if (commerceAddressId < 1) {
+				throw new CommerceOrderShippingAddressException();
+			}
+
 			return updateCommerceOrderAddress(
 				commerceOrder, 0, commerceAddressId, commerceContext);
 		}
@@ -145,6 +155,10 @@ public class AddressCommerceCheckoutStepUtil {
 				commerceOrder.getBillingAddressId()) &&
 			!useAsBilling) {
 
+			if (commerceAddressId < 1) {
+				throw new CommerceOrderShippingAddressException();
+			}
+
 			return updateCommerceOrderAddress(
 				commerceOrder, commerceOrder.getBillingAddressId(),
 				commerceAddressId, commerceContext);
@@ -153,6 +167,10 @@ public class AddressCommerceCheckoutStepUtil {
 		if (Objects.equals(
 				CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME,
 				paramName)) {
+
+			if (commerceAddressId < 1) {
+				throw new CommerceOrderBillingAddressException();
+			}
 
 			return updateCommerceOrderAddress(
 				commerceOrder, commerceAddressId,

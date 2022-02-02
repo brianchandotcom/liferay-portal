@@ -27,8 +27,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -261,34 +259,21 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		}
 	}
 
-	private Object _getFieldValue(Metadata metadata, Field field) {
-		Object fieldValue = null;
-
+	private String _getMetadataValue(Metadata metadata, Field field) {
 		try {
-			fieldValue = field.get(metadata);
+			Object fieldValue = field.get(null);
+
+			if (fieldValue instanceof String) {
+				return metadata.get((String)fieldValue);
+			}
+
+			Property property = (Property)fieldValue;
+
+			return metadata.get(property.getName());
 		}
 		catch (IllegalAccessException illegalAccessException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"The property " + field.getName() +
-						" will not be added to the metatada set",
-					illegalAccessException);
-			}
+			throw new RuntimeException(illegalAccessException);
 		}
-
-		return fieldValue;
-	}
-
-	private String _getMetadataValue(Metadata metadata, Field field) {
-		Object fieldValue = _getFieldValue(metadata, field);
-
-		if (fieldValue instanceof String) {
-			return metadata.get((String)fieldValue);
-		}
-
-		Property property = (Property)fieldValue;
-
-		return metadata.get(property.getName());
 	}
 
 	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
@@ -308,9 +293,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 		return metadata;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TikaRawMetadataProcessor.class);
 
 	private static final Map<String, Field[]> _fields = new HashMap<>();
 	private static volatile ProcessExecutor _processExecutor =

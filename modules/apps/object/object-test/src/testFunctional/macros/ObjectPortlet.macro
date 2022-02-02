@@ -48,6 +48,12 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "//input[@type='checkbox']");
 	}
 
+	macro assertEntryDetailsLabelNotPresent {
+		AssertNotVisible(
+			key_entryLabel = "${entryLabel}",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
+	}
+
 	macro assertEntryDetailsLabelPresent {
 		AssertElementPresent(
 			key_entryLabel = "${entryLabel}",
@@ -110,6 +116,13 @@ definition {
 
 	macro assertFieldLabelName {
 		AssertTextEquals(
+			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			value1 = "${key_fieldLabelName}");
+	}
+
+	macro assertFieldLabelNameNotPresent {
+		AssertTextNotEquals(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "${key_fieldLabelName}");
@@ -365,19 +378,6 @@ definition {
 		}
 
 		WaitForPageLoad();
-	}
-
-	macro assertEntryDetailsLabelNotPresent {
-		AssertNotVisible(
-			key_entryLabel = "${entryLabel}",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-	}
-
-	macro assertFieldLabelNameNotPresent {
-		AssertTextNotEquals(
-			key_fieldLabelName = "${fieldLabelName}",
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
-			value1 = "${key_fieldLabelName}");
 	}
 
 }

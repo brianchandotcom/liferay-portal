@@ -393,6 +393,13 @@ definition {
 			fieldValue = "${key_optionValue}");
 	}
 
+	macro editClobText {
+		Type(
+			key_clobType = "",
+			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY",
+			value1 = "${fieldLong}");
+	}
+
 	macro editColor {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -1195,13 +1202,6 @@ definition {
 		AssertElementPresent(
 			changeAppLanguageTo = "${symbolName}",
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
-	}
-
-	macro editClobText {
-		Type(
-			key_clobType = "",
-			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY",
-			value1 = "${fieldLong}");
 	}
 
 }

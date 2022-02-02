@@ -77,6 +77,12 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
 	}
 
+	macro selectObjectOnly {
+		Click(
+			key_label = "${labelObject}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
+
 	macro selectPicklistObject {
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
 
@@ -89,6 +95,12 @@ definition {
 
 	macro viewDisplaySelectOption {
 		AssertElementPresent(
+			key_label = "${label}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
+
+	macro viewDisplaySelectOptionNotPresent {
+		AssertElementNotPresent(
 			key_label = "${label}",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
@@ -135,18 +147,6 @@ definition {
 			key_fieldLabelName = "${fieldLabelName}",
 			key_fieldType = "${fieldType}",
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
-	}
-
-	macro viewDisplaySelectOptionNotPresent{
-		AssertElementNotPresent(
-			key_label = "${label}",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-	}
-
-	macro selectObjectOnly {
-		Click(
-			key_label = "${labelObject}",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
 }

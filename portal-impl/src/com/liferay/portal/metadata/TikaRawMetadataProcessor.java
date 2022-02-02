@@ -352,14 +352,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	private static class ExtractMetadataProcessCallable
 		implements ProcessCallable<Metadata> {
 
-		public ExtractMetadataProcessCallable(
-			File file, Metadata metadata, Parser parser) {
-
-			_file = file;
-			_metadata = metadata;
-			_parser = parser;
-		}
-
 		@Override
 		public Metadata call() throws ProcessException {
 			Logger logger = Logger.getLogger(
@@ -412,6 +404,14 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			metadata.remove(XMPDM.RELATIVE_PEAK_AUDIO_FILE_PATH.getName());
 
 			return metadata;
+		}
+
+		private ExtractMetadataProcessCallable(
+			File file, Metadata metadata, Parser parser) {
+
+			_file = file;
+			_metadata = metadata;
+			_parser = parser;
 		}
 
 		private static final long serialVersionUID = 1L;

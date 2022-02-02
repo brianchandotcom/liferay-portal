@@ -415,20 +415,17 @@ public class MessageBoardThreadResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			mbThread.getRootMessageId());
+		MBMessage mbMessage = _mbMessageService.updateMessage(
+			mbThread.getRootMessageId(), messageBoardThread.getHeadline(),
+			messageBoardThread.getArticleBody(), null,
+			_toPriority(
+				mbThread.getGroupId(), messageBoardThread.getThreadType()),
+			false,
+			_createServiceContext(mbThread.getGroupId(), messageBoardThread));
 
 		_updateQuestion(mbMessage, messageBoardThread);
 
-		return _toMessageBoardThread(
-			_mbMessageService.updateMessage(
-				mbThread.getRootMessageId(), messageBoardThread.getHeadline(),
-				messageBoardThread.getArticleBody(), null,
-				_toPriority(
-					mbThread.getGroupId(), messageBoardThread.getThreadType()),
-				false,
-				_createServiceContext(
-					mbThread.getGroupId(), messageBoardThread)));
+		return _toMessageBoardThread(mbMessage);
 	}
 
 	@Override
@@ -794,7 +791,8 @@ public class MessageBoardThreadResourceImpl
 		}
 
 		if (GetterUtil.getBoolean(messageBoardThread.getSubscribed())) {
-			_mbMessageService.subscribeMessage(mbMessage.getRootMessageId());
+			_mbMessageLocalService.subscribeMessage(
+				mbMessage.getUserId(), mbMessage.getRootMessageId());
 		}
 	}
 

@@ -67,10 +67,8 @@ public class UserGroupLocalServiceTest {
 	public void setUp() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_companyId = _role.getCompanyId();
-
 		_count = UserGroupLocalServiceUtil.searchCount(
-			_companyId, null, new LinkedHashMap<>());
+			TestPropsValues.getCompanyId(), null, new LinkedHashMap<>());
 
 		_userGroup1 = UserGroupTestUtil.addUserGroup();
 		_userGroup2 = UserGroupTestUtil.addUserGroup();
@@ -132,7 +130,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testDatabaseSearchWithInvalidParamKey() {
+	public void testDatabaseSearchWithInvalidParamKey() throws Exception {
 		List<UserGroup> userGroups = _search(
 			null,
 			LinkedHashMapBuilder.<String, Object>put(
@@ -146,7 +144,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchRoleUserGroups() {
+	public void testSearchRoleUserGroups() throws Exception {
 		List<UserGroup> userGroups = _search(
 			null,
 			LinkedHashMapBuilder.<String, Object>put(
@@ -158,7 +156,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchRoleUserGroupsWithKeywords() {
+	public void testSearchRoleUserGroupsWithKeywords() throws Exception {
 		List<UserGroup> userGroups = _search(
 			_userGroup2.getName(),
 			LinkedHashMapBuilder.<String, Object>put(
@@ -170,7 +168,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchUserGroups() {
+	public void testSearchUserGroups() throws Exception {
 		List<UserGroup> userGroups = _search(null, new LinkedHashMap<>());
 
 		Assert.assertEquals(
@@ -178,7 +176,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchUserGroupsWithKeywords() {
+	public void testSearchUserGroupsWithKeywords() throws Exception {
 		List<UserGroup> userGroups = _search(
 			_userGroup1.getName(), new LinkedHashMap<>());
 
@@ -209,15 +207,15 @@ public class UserGroupLocalServiceTest {
 		throws PortalException {
 
 		Hits hits = UserGroupLocalServiceUtil.search(
-			_companyId, null, new LinkedHashMap<>(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS,
+			TestPropsValues.getCompanyId(), null, new LinkedHashMap<>(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			SortFactoryUtil.getSort(UserGroup.class, "name", "desc"));
 
 		List<UserGroup> expectedUserGroups = UsersAdminUtil.getUserGroups(hits);
 
 		List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
-			_companyId, null, new LinkedHashMap<>(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS,
+			TestPropsValues.getCompanyId(), null, new LinkedHashMap<>(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "desc"));
 
 		Assert.assertEquals(expectedUserGroups, userGroups);
@@ -260,14 +258,15 @@ public class UserGroupLocalServiceTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private List<UserGroup> _search(
-		String keywords, LinkedHashMap<String, Object> params) {
+			String keywords, LinkedHashMap<String, Object> params)
+		throws Exception {
 
 		return UserGroupLocalServiceUtil.search(
-			_companyId, keywords, params, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			TestPropsValues.getCompanyId(), keywords, params, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));
 	}
 
-	private static long _companyId;
 	private static int _count;
 	private static Role _role;
 	private static UserGroup _userGroup1;

@@ -132,14 +132,14 @@ public class UserGroupServiceTest {
 
 		_userGroupLocalService.addUserUserGroup(_user.getUserId(), userGroup);
 
-		_assertSearch(_user, 0);
+		_assertSearch(0);
 
 		Role adminRole = _roleLocalService.getRole(
 			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		RoleLocalServiceUtil.addUserRole(_user.getUserId(), adminRole);
 
-		_assertSearch(_user, 1);
+		_assertSearch(1);
 	}
 
 	@Test
@@ -245,12 +245,12 @@ public class UserGroupServiceTest {
 				TestPropsValues.getCompanyId(), nameSearch));
 	}
 
-	private void _assertSearch(User user, int expected) {
+	private void _assertSearch(int expected) {
 		List<UserGroup> userGroups = _userGroupService.search(
-			user.getCompanyId(), null,
+			_user.getCompanyId(), null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				user.getUserId()
+				_user.getUserId()
 			).build(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));

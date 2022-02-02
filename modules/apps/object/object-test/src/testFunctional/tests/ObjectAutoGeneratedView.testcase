@@ -50,12 +50,38 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify it is possible to edit a entry of Clob field and view the update on entry table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditClobField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145702 CanEditClobField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "We make it possible for people to reach their full potential to serve others.");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "We make it possible for people to reach their full potential to serve others.");
+
+		ObjectPortlet.viewClobEntryDetails(clobEntry = "We make it possible for people to reach their full potential to serve others.");
+
+		ObjectAdmin.editClobEntryName(clobEntry = "All people are inherently valuable; who we are is as important as what we can do.");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "All people are inherently valuable; who we are is as important as what we can do.");
 	}
 
 	@description = "LPS-142659 - Verify that a Clob entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

@@ -91,38 +91,37 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			excludesJobProperties.add(
 				getJobProperty(
 					"modules.excludes.private", modulesDir,
-					JobProperty.Type.MODULE_EXCLUDE_GLOB));
+					JobProperty.Type.EXCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
 				excludesJobProperties.add(
 					getJobProperty(
 						"modules.excludes.private", NAME_STABLE_TEST_SUITE,
-						modulesDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
+						modulesDir, JobProperty.Type.EXCLUDE_GLOB));
 			}
 		}
 		else {
 			excludesJobProperties.add(
 				getJobProperty(
 					"modules.excludes.public", modulesDir,
-					JobProperty.Type.MODULE_EXCLUDE_GLOB));
+					JobProperty.Type.EXCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
 				excludesJobProperties.add(
 					getJobProperty(
 						"modules.excludes.public", NAME_STABLE_TEST_SUITE,
-						modulesDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
+						modulesDir, JobProperty.Type.EXCLUDE_GLOB));
 			}
 		}
 
 		excludesJobProperties.add(
 			getJobProperty(
-				"modules.excludes", modulesDir,
-				JobProperty.Type.MODULE_EXCLUDE_GLOB));
+				"modules.excludes", modulesDir, JobProperty.Type.EXCLUDE_GLOB));
 
 		excludesJobProperties.add(
 			getJobProperty(
 				"modules.excludes." + portalTestClassJob.getBuildProfile(),
-				modulesDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
+				modulesDir, JobProperty.Type.EXCLUDE_GLOB));
 
 		recordJobProperties(excludesJobProperties);
 
@@ -144,38 +143,37 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			includesJobProperties.add(
 				getJobProperty(
 					"modules.includes.private", modulesDir,
-					JobProperty.Type.MODULE_INCLUDE_GLOB));
+					JobProperty.Type.INCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
 				includesJobProperties.add(
 					getJobProperty(
 						"modules.includes.private", NAME_STABLE_TEST_SUITE,
-						modulesDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+						modulesDir, JobProperty.Type.INCLUDE_GLOB));
 			}
 		}
 		else {
 			includesJobProperties.add(
 				getJobProperty(
 					"modules.includes.public", modulesDir,
-					JobProperty.Type.MODULE_INCLUDE_GLOB));
+					JobProperty.Type.INCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
 				includesJobProperties.add(
 					getJobProperty(
 						"modules.includes.public", NAME_STABLE_TEST_SUITE,
-						modulesDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+						modulesDir, JobProperty.Type.INCLUDE_GLOB));
 			}
 		}
 
 		includesJobProperties.add(
 			getJobProperty(
-				"modules.includes", modulesDir,
-				JobProperty.Type.MODULE_INCLUDE_GLOB));
+				"modules.includes", modulesDir, JobProperty.Type.INCLUDE_GLOB));
 
 		includesJobProperties.add(
 			getJobProperty(
 				"modules.includes." + portalTestClassJob.getBuildProfile(),
-				modulesDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+				modulesDir, JobProperty.Type.INCLUDE_GLOB));
 
 		recordJobProperties(includesJobProperties);
 

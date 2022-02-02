@@ -1,0 +1,18 @@
+.avatar {
+	border: solid 2px #fff;
+	position: relative;
+}
+
+.avatar-group {
+	flex-direction: row-reverse;
+	position: relative;
+}
+
+.avatar-group-item {
+	margin-right: -18px;
+	position: relative;
+
+	&:not(:last-child) {
+		left: 0;
+	}
+}

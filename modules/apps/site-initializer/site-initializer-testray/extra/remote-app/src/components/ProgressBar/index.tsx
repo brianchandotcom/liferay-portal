@@ -15,21 +15,21 @@
 import classNames from 'classnames';
 
 type ProgressBarProps = {
-	blocked: number;
-	failed: number;
-	incomplete: number;
-	passed: number;
-	test_fix: number;
+	blocked?: number;
+	failed?: number;
+	incomplete?: number;
+	passed?: number;
+	test_fix?: number;
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
-	const {failed, incomplete, passed, test_fix} = props;
+	const {failed = 0, incomplete = 0, passed = 0, test_fix = 0} = props;
 
 	const total = failed + incomplete + passed + test_fix;
 
 	return (
 		<div className="testray-progress-bar">
-			{['failed', 'incomplete', 'passed', 'test_fix'].map((type) => {
+			{['failed', 'passed', 'incomplete', 'test_fix'].map((type) => {
 				const keyValue = (props as any)[type];
 				const percent = Math.ceil((keyValue * 100) / total);
 

@@ -32,6 +32,7 @@ export default function (props) {
 		false
 	);
 	const [sourceView, setSourceView] = useState(false);
+	const [translations, setTranslations] = useState(props.translations);
 
 	const contextProps = {
 		active,
@@ -52,8 +53,10 @@ export default function (props) {
 		setSelectedLanguageId,
 		setShowInvalidContentMessage,
 		setSourceView,
+		setTranslations,
 		showInvalidContentMessage,
 		sourceView,
+		translations,
 	};
 
 	return (

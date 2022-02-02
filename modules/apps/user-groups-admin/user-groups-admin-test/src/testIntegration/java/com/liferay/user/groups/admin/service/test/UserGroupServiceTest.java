@@ -198,9 +198,7 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetUserGroupsLikeName() throws Exception {
-		List<UserGroup> allUserGroups = new ArrayList<>();
-
-		allUserGroups.addAll(
+		List<UserGroup> allUserGroups = new ArrayList<>(
 			_userGroupLocalService.getUserGroups(
 				TestPropsValues.getCompanyId()));
 

@@ -132,8 +132,10 @@ public class DLExportImportPortletPreferencesProcessor
 					readOnlyException);
 			}
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, folder);
+			if (folder.getGroupId() == portletDataContext.getGroupId()) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletId, folder);
+			}
 
 			return portletPreferences;
 		}

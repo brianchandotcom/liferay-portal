@@ -198,8 +198,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Metadata _extractMetadata(String mimeType, File file) {
-		Metadata metadata = new Metadata();
-
 		boolean forkProcess = false;
 
 		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED &&
@@ -212,7 +210,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 		if (forkProcess) {
 			ExtractMetadataProcessCallable extractMetadataProcessCallable =
-				new ExtractMetadataProcessCallable(file, metadata, _parser);
+				new ExtractMetadataProcessCallable(file, _parser);
 
 			try {
 				ProcessChannel<Metadata> processChannel =
@@ -233,8 +231,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		try {
 			return _postProcessMetadata(
 				mimeType,
-				ExtractMetadataProcessCallable._extractMetadata(
-					file, metadata, _parser));
+				ExtractMetadataProcessCallable._extractMetadata(file, _parser));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -336,20 +333,17 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			logger.setLevel(Level.SEVERE);
 
 			try {
-				return _extractMetadata(_file, _metadata, _parser);
+				return _extractMetadata(_file, _parser);
 			}
 			catch (IOException ioException) {
 				throw new ProcessException(ioException);
 			}
 		}
 
-		private static Metadata _extractMetadata(
-				File file, Metadata metadata, Parser parser)
+		private static Metadata _extractMetadata(File file, Parser parser)
 			throws IOException {
 
-			if (metadata == null) {
-				metadata = new Metadata();
-			}
+			Metadata metadata = new Metadata();
 
 			if (file.length() == 0) {
 				return metadata;
@@ -375,18 +369,14 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			return metadata;
 		}
 
-		private ExtractMetadataProcessCallable(
-			File file, Metadata metadata, Parser parser) {
-
+		private ExtractMetadataProcessCallable(File file, Parser parser) {
 			_file = file;
-			_metadata = metadata;
 			_parser = parser;
 		}
 
 		private static final long serialVersionUID = 1L;
 
 		private final File _file;
-		private final Metadata _metadata;
 		private final Parser _parser;
 
 	}

@@ -178,8 +178,9 @@
 	<bean class="com.liferay.portal.kernel.service.permission.UserPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserPermissionUtil">
 		<property name="userPermission" ref="com.liferay.portal.kernel.service.permission.UserPermission" />
 	</bean>
+	<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" id="com.liferay.portal.kernel.servlet.BrowserSniffer" />
 	<bean class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
-		<property name="browserSniffer" ref="com.liferay.portal.servlet.BrowserSnifferImpl" />
+		<property name="browserSniffer" ref="com.liferay.portal.kernel.servlet.BrowserSniffer" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil">
 		<property name="directRequestDispatcherFactory">
@@ -329,7 +330,6 @@
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
 	<bean class="com.liferay.portal.language.UnicodeLanguageImpl" id="com.liferay.portal.language.UnicodeLanguageImpl" />
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
-	<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" id="com.liferay.portal.servlet.BrowserSnifferImpl" />
 	<bean class="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" />
 	<bean class="com.liferay.portal.servlet.filters.util.LanguageIdCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.LanguageIdCacheFileNameContributor" />
 	<bean class="com.liferay.portal.servlet.filters.util.MinifierTypeCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.MinifierTypeCacheFileNameContributor" />

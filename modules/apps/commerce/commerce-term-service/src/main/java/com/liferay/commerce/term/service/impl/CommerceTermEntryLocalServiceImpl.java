@@ -36,17 +36,30 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -61,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -248,6 +262,30 @@ public class CommerceTermEntryLocalServiceImpl
 			));
 	}
 
+	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CommerceTermEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	public BaseModelSearchResult<CommerceTermEntry> searchCommerceTermEntries(
+			long companyId, long accountEntryId, String keywords,
+			LinkedHashMap<String, String> params, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, accountEntryId, keywords, params, start, end, sort);
+
+		return searchCommerceTermEntries(searchContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTermEntry updateCommerceTermEntry(
@@ -384,6 +422,105 @@ public class CommerceTermEntryLocalServiceImpl
 		commerceTermEntry.setStatusDate(serviceContext.getModifiedDate(date));
 
 		return commerceTermEntryPersistence.update(commerceTermEntry);
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long accountEntryId, String keywords,
+		LinkedHashMap<String, String> params, int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				_FIELD_KEY, keywords
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				Field.NAME, keywords
+			).put(
+				Field.TYPE, params.get("type")
+			).put(
+				"accountEntryId", accountEntryId
+			).build());
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
+	protected List<CommerceTermEntry> getCommerceTermEntries(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceTermEntry> commerceTermEntries = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceTermEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceTermEntry commerceTermEntry = fetchCommerceTermEntry(
+				commerceTermEntryId);
+
+			if (commerceTermEntry == null) {
+				commerceTermEntries = null;
+
+				Indexer<CommerceTermEntry> indexer =
+					IndexerRegistryUtil.getIndexer(CommerceTermEntry.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceTermEntries != null) {
+				commerceTermEntries.add(commerceTermEntry);
+			}
+		}
+
+		return commerceTermEntries;
+	}
+
+	protected BaseModelSearchResult<CommerceTermEntry>
+			searchCommerceTermEntries(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceTermEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceTermEntry> commerceTermEntries =
+				getCommerceTermEntries(hits);
+
+			if (commerceTermEntries != null) {
+				return new BaseModelSearchResult<>(
+					commerceTermEntries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	private List<CTermEntryLocalization> _addCommerceTermEntryLocalizedFields(
@@ -638,6 +775,12 @@ public class CommerceTermEntryLocalServiceImpl
 			throw new CommerceTermEntryPriorityException();
 		}
 	}
+
+	private static final String _FIELD_KEY = "key";
+
+	private static final String[] _SELECTED_FIELD_NAMES = {
+		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTermEntryLocalServiceImpl.class);

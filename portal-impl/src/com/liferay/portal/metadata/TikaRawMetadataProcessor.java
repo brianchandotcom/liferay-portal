@@ -57,9 +57,6 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.ClimateForcast;
 import org.apache.tika.metadata.CreativeCommons;
@@ -80,6 +77,7 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.WriteOutContentHandler;
 
 import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * @author Miguel Pastor
@@ -404,27 +402,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 				parser.parse(
 					inputStream, contentHandler, metadata, parseContext);
 			}
-			catch (Exception exception) {
-				Throwable throwable = ExceptionUtils.getRootCause(exception);
-
-				if (throwable instanceof EncryptedDocumentException ||
-					throwable instanceof UnsupportedZipFeatureException) {
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to extract metadata from an encrypted " +
-								"file");
-					}
-				}
-				else if (exception instanceof TikaException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to extract metadata");
-					}
-				}
-				else {
-					_log.error(exception, exception);
-				}
-
+			catch (SAXException | TikaException exception) {
 				throw new IOException(exception);
 			}
 

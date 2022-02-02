@@ -14,7 +14,7 @@
 	"dependencies": {
 		"@apollo/client": "^3.5.8",
 		"@clayui/button": "^3.40.0",
-		"@clayui/core": "^3.44.1",
+		"@clayui/core": "3.45.1",
 		"@clayui/css": "^3.44.2",
 		"@clayui/icon": "^3.40.0",
 		"@clayui/sticker": "^3.40.0",

@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@apollo/client": "^3.4.17",
 		"@clayui/card": "^3.36.0",
-		"@clayui/core": "^3.36.0",
+		"@clayui/core": "3.45.1",
 		"@clayui/css": "^3.36.0",
 		"@clayui/drop-down": "^3.41.0",
 		"@clayui/form": "^3.36.0",

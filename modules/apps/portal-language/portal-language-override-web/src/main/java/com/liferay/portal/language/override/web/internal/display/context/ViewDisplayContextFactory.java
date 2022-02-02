@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -301,12 +300,9 @@ public class ViewDisplayContextFactory {
 
 		// Pagination
 
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			searchContainer.getStart(), searchContainer.getEnd(),
-			searchContainer.getTotal());
-
 		searchContainer.setResultsAndTotal(
-			() -> languageItemDisplays.subList(startAndEnd[0], startAndEnd[1]),
+			() -> languageItemDisplays.subList(
+				searchContainer.getStart(), searchContainer.getEnd()),
 			languageItemDisplays.size());
 	}
 

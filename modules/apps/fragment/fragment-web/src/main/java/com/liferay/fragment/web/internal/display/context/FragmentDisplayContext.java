@@ -102,7 +102,7 @@ public class FragmentDisplayContext {
 					"/fragment/edit_fragment_collection", "redirect",
 					_themeDisplay.getURLCurrent());
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "collection"));
+					LanguageUtil.get(_httpServletRequest, "fragment-set"));
 			}
 		).add(
 			dropdownItem -> {

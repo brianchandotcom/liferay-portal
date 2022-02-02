@@ -79,7 +79,7 @@ public class SelectFragmentCollectionDisplayContext {
 		SearchContainer<FragmentCollection> fragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, getPortletURL(), null,
-				"there-are-no-collections");
+				"there-are-no-fragment-sets");
 
 		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentCollectionsSearchContainer.setOrderByComparator(

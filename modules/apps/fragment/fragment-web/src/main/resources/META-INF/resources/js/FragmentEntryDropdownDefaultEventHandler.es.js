@@ -31,7 +31,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				}
 			},
 			selectEventName: this.ns('selectFragmentCollection'),
-			title: Liferay.Language.get('select-collection'),
+			title: Liferay.Language.get('select-fragment-set'),
 			url: itemData.selectFragmentCollectionURL,
 		});
 	}

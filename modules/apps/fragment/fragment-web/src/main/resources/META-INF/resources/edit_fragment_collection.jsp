@@ -24,7 +24,7 @@ FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetch
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentDisplayContext.getRedirect());
 
-renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-collection"));
+renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-fragment-set"));
 %>
 
 <portlet:actionURL name="/fragment/edit_fragment_collection" var="editFragmentCollectionURL">

@@ -55,7 +55,7 @@ const ACTIONS = {
 				}
 			},
 			selectEventName: `${portletNamespace}selectFragmentCollection`,
-			title: Liferay.Language.get('select-collection'),
+			title: Liferay.Language.get('select-fragment-set'),
 			url: selectFragmentCollectionURL,
 		});
 	},
@@ -106,7 +106,7 @@ const ACTIONS = {
 				}
 			},
 			selectEventName: `${portletNamespace}selectFragmentCollection`,
-			title: Liferay.Language.get('select-collection'),
+			title: Liferay.Language.get('select-fragment-set'),
 			url: selectFragmentCollectionURL,
 		});
 	},

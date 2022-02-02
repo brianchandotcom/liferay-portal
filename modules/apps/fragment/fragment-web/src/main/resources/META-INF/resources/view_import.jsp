@@ -64,7 +64,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 			DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
+			<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-set-with-the-key-x-already-exists" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= DuplicateFragmentEntryKeyException.class %>">

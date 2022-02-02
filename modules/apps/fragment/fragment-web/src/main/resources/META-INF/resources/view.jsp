@@ -49,7 +49,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 										expand="<%= true %>"
 									>
 										<strong class="text-uppercase">
-											<liferay-ui:message key="collections" />
+											<liferay-ui:message key="fragment-sets" />
 										</strong>
 									</clay:content-col>
 
@@ -249,7 +249,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 							</c:when>
 							<c:otherwise>
 								<p class="text-uppercase">
-									<strong><liferay-ui:message key="collections" /></strong>
+									<strong><liferay-ui:message key="fragment-sets" /></strong>
 								</p>
 
 								<liferay-frontend:empty-result-message
@@ -257,8 +257,8 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 									additionalProps="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
 									buttonPropsTransformer="js/FragmentCollectionViewButtonPropsTransformer"
-									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
-									elementType='<%= LanguageUtil.get(request, "collections") %>'
+									description='<%= LanguageUtil.get(request, "fragment-sets-are-needed-to-create-fragments") %>'
+									elementType='<%= LanguageUtil.get(request, "fragment-sets") %>'
 									propsTransformer="js/FragmentCollectionViewDefaultPropsTransformer"
 									propsTransformerServletContext="<%= application %>"
 								/>

@@ -71,9 +71,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						}
 					},
 					selectEventName: `${portletNamespace}uploadFragmentCollectionResource`,
-					title: Liferay.Language.get(
-						'upload-fragment-collection-resource'
-					),
+					title: Liferay.Language.get('upload-fragment-set-resource'),
 					url: data.itemSelectorURL,
 				});
 			}

@@ -22,7 +22,7 @@ export const ACTIONS = {
 	}) {
 		this.openFragmentCollectionsItemSelector(
 			Liferay.Language.get('delete'),
-			Liferay.Language.get('delete-collection'),
+			Liferay.Language.get('delete-fragment-set'),
 			viewDeleteFragmentCollectionsURL,
 			(selectedItems) => {
 				if (!selectedItems?.length) {
@@ -66,7 +66,7 @@ export const ACTIONS = {
 
 		this.openFragmentCollectionsItemSelector(
 			Liferay.Language.get('export'),
-			Liferay.Language.get('export-collection'),
+			Liferay.Language.get('export-fragment-set'),
 			viewExportFragmentCollectionsURL,
 			(selectedItems) => {
 				if (!selectedItems?.length) {

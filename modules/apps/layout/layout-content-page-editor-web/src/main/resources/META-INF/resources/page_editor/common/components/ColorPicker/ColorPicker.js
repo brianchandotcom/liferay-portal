@@ -23,6 +23,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useSetHasStyleErrors} from '../../../app/contexts/StyleErrorsContext';
 import {useId} from '../../../app/utils/useId';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -63,6 +64,7 @@ export function ColorPicker({
 	const [error, setError] = useState(null);
 	const inputRef = useRef(null);
 	const listboxRef = useRef(null);
+	const setHasStyleErrors = useSetHasStyleErrors();
 	const [tokenLabel, setTokenLabel] = useControlledState(
 		value ? tokenValues[value]?.label : Liferay.Language.get('default')
 	);
@@ -112,8 +114,9 @@ export function ColorPicker({
 	useEffect(() => {
 		if (config.tokenReuseEnabled) {
 			setError(null);
+			setHasStyleErrors(false);
 		}
-	}, [value, config.tokenReuseEnabled]);
+	}, [value, config.tokenReuseEnabled, setHasStyleErrors]);
 
 	const onSetValue = (value, label, name) => {
 		setColor(value);
@@ -142,6 +145,7 @@ export function ColorPicker({
 			});
 
 			if (nextValue.error) {
+				setHasStyleErrors(true);
 				setError(nextValue.error);
 				setCustomColors(['FFFFFF']);
 

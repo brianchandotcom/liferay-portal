@@ -106,7 +106,7 @@ public class AssetEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				AssetEntryInfoItemFields.urlInfoField, assetEntry.getUrl()),
 			new InfoFieldValue<>(
-				AssetEntryInfoItemFields.userProfileImage,
+				AssetEntryInfoItemFields.userProfileImageInfoField,
 				_getUserNameProfileImage(assetEntry.getUserId())));
 	}
 

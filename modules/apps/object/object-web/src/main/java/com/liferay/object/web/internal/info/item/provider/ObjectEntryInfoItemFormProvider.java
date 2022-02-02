@@ -122,7 +122,7 @@ public class ObjectEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.userNameInfoField
 		).infoFieldSetEntry(
-			ObjectEntryInfoItemFields.userProfileImage
+			ObjectEntryInfoItemFields.userProfileImageInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

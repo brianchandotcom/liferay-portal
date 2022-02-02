@@ -112,7 +112,7 @@ public interface AssetEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetEntryInfoItemFields.class, "user-name")
 		).build();
-	public static final InfoField userProfileImage = InfoField.builder(
+	public static final InfoField userProfileImageInfoField = InfoField.builder(
 	).infoFieldType(
 		ImageInfoFieldType.INSTANCE
 	).name(

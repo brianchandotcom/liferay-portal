@@ -85,15 +85,14 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			return false;
 		}
 
-		InfoField infoDisplayField = (InfoField)object;
+		InfoField infoField = (InfoField)object;
 
 		if (Objects.equals(
-				_builder._infoFieldType,
-				infoDisplayField._builder._infoFieldType) &&
+				_builder._infoFieldType, infoField._builder._infoFieldType) &&
 			Objects.equals(
 				_builder._labelInfoLocalizedValue,
-				infoDisplayField._builder._labelInfoLocalizedValue) &&
-			Objects.equals(_builder._name, infoDisplayField._builder._name)) {
+				infoField._builder._labelInfoLocalizedValue) &&
+			Objects.equals(_builder._name, infoField._builder._name)) {
 
 			return true;
 		}

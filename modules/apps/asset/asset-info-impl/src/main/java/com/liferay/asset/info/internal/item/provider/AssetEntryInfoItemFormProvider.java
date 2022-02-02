@@ -76,7 +76,7 @@ public class AssetEntryInfoItemFormProvider
 			).infoFieldSetEntry(
 				AssetEntryInfoItemFields.urlInfoField
 			).infoFieldSetEntry(
-				AssetEntryInfoItemFields.userProfileImage
+				AssetEntryInfoItemFields.userProfileImageInfoField
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "basic-information")
 			).name(

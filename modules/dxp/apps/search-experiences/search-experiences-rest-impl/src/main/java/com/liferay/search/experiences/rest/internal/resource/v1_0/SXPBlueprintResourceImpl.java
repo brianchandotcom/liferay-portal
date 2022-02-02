@@ -183,10 +183,15 @@ public class SXPBlueprintResourceImpl
 							ActionKeys.DELETE, "deleteSXPBlueprint",
 							permissionName, sxpBlueprintId)
 					).put(
-						"view",
+						"get",
 						() -> addAction(
 							ActionKeys.VIEW, "getSXPBlueprint", permissionName,
 							sxpBlueprintId)
+					).put(
+						"update",
+						() -> addAction(
+							ActionKeys.UPDATE, "patchSXPBlueprint",
+							permissionName, sxpBlueprintId)
 					).build());
 
 				return sxpBlueprint;

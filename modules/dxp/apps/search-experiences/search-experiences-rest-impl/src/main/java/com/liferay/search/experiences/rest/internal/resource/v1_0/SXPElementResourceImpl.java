@@ -182,10 +182,15 @@ public class SXPElementResourceImpl
 								permissionName, sxpElementId);
 						}
 					).put(
-						"view",
+						"get",
 						() -> addAction(
 							ActionKeys.VIEW, "getSXPElement", permissionName,
 							sxpElementId)
+					).put(
+						"update",
+						() -> addAction(
+							ActionKeys.UPDATE, "patchSXPElement",
+							permissionName, sxpElementId)
 					).build());
 
 				return sxpElement;

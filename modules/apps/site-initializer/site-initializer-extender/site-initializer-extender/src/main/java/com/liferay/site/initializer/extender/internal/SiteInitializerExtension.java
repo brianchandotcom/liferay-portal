@@ -155,6 +155,14 @@ public class SiteInitializerExtension {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
+		serviceDependency.setCallbacks("setCommerceReferencesHolder", null);
+		serviceDependency.setRequired(false);
+		serviceDependency.setService(CommerceReferencesHolder.class);
+
+		_component.add(serviceDependency);
+
+		serviceDependency = _dependencyManager.createServiceDependency();
+
 		serviceDependency.setCallbacks("setServletContext", null);
 		serviceDependency.setRequired(true);
 		serviceDependency.setService(

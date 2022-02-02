@@ -222,7 +222,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
 		SAPEntryLocalService sapEntryLocalService,
-		ServletContext servletContext, SettingsFactory settingsFactory,
+		SettingsFactory settingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -270,7 +270,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 		_sapEntryLocalService = sapEntryLocalService;
-		_servletContext = servletContext;
 		_settingsFactory = settingsFactory;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
@@ -444,6 +443,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
+	}
+
+	protected void setCommerceReferencesHolder(
+		CommerceReferencesHolder commerceReferencesHolder) {
+
+		_commerceReferencesHolder = commerceReferencesHolder;
+	}
+
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	private void _addAccounts(ServiceContext serviceContext) throws Exception {
@@ -3229,7 +3238,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
 	private final SAPEntryLocalService _sapEntryLocalService;
-	private final ServletContext _servletContext;
+	private ServletContext _servletContext;
 	private final SettingsFactory _settingsFactory;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

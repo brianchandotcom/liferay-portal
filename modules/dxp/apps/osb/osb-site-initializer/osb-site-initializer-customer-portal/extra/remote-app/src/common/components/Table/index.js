@@ -25,29 +25,43 @@ const Table = ({
 	rows,
 	...props
 }) => {
-	const [allCheckboxSelected, setAllCheckboxSelected] = useState(false);
-	const [checked, setChecked] = useState([]);
+	const [isAllCheckboxsSelected, setIsAllCheckboxsSelected] = useState(false);
+	const [checkboxesChecked, setCheckboxesChecked] = useState([]);
+	const {
+		activePage,
+		itemsPerPage,
+		labels,
+		listItemsPerPage,
+		setActivePage,
+		setItemsPerPage,
+		showDeltasDropDown,
+		totalCount,
+	} = paginationConfig;
 
 	const handleCheckboxClick = (event, id) => {
 		const {checked} = event.target;
 
 		if (checked) {
-			return setChecked((prevChecked) => [...prevChecked, id]);
+			return setCheckboxesChecked((prevChecked) => [...prevChecked, id]);
 		}
 
-		setChecked((prevChecked) =>
+		setCheckboxesChecked((prevChecked) =>
 			prevChecked.filter((checked) => checked !== id)
 		);
 	};
 
-	const handleToggleAllSelected = () => {
-		setAllCheckboxSelected(
-			(prevAllCheckboxSelected) => !prevAllCheckboxSelected
+	const handleToggleAllCheckboxsSelected = () => {
+		setIsAllCheckboxsSelected(
+			(previousIsAllCheckboxsSelected) => !previousIsAllCheckboxsSelected
 		);
-		if (allCheckboxSelected) {
-			return setChecked([]);
+		if (isAllCheckboxsSelected) {
+			setCheckboxesChecked([]);
+
+			return;
 		}
-		setChecked(new Array(rows.length).fill().map((_, index) => index));
+		setCheckboxesChecked(
+			new Array(rows.length).fill().map((_, index) => index)
+		);
 	};
 
 	return (
@@ -58,8 +72,8 @@ const Table = ({
 						{hasCheckbox && (
 							<ClayTable.Cell className="text-center">
 								<input
-									checked={allCheckboxSelected}
-									onChange={handleToggleAllSelected}
+									checked={isAllCheckboxsSelected}
+									onChange={handleToggleAllCheckboxsSelected}
 									type="checkbox"
 								/>
 							</ClayTable.Cell>
@@ -99,8 +113,9 @@ const Table = ({
 						{rows.map((row, rowIndex) => (
 							<ClayTable.Row
 								className={classNames({
-									'common-table-active-row': checked.find(
-										(checkbox) => checkbox === rowIndex
+									'common-table-active-row': checkboxesChecked.find(
+										(checkboxChecked) =>
+											checkboxChecked === rowIndex
 									),
 								})}
 								key={rowIndex}
@@ -112,7 +127,9 @@ const Table = ({
 										key={`checkbox-${rowIndex}`}
 									>
 										<input
-											checked={checked.includes(rowIndex)}
+											checked={checkboxesChecked.includes(
+												rowIndex
+											)}
 											onChange={(event) =>
 												handleCheckboxClick(
 													event,
@@ -143,25 +160,38 @@ const Table = ({
 					<TableSkeleton
 						hasCheckbox={hasCheckbox}
 						totalColumns={columns.length}
-						totalItems={paginationConfig?.itemsPerPage}
+						totalItems={itemsPerPage}
 					/>
 				)}
 			</ClayTable>
 
-			{!!hasPagination && !!paginationConfig?.totalCount && (
+			{!!hasPagination && !!totalCount && (
 				<TablePagination
-					activePage={paginationConfig?.activePage || 1}
-					itemsPerPage={paginationConfig?.itemsPerPage || 5}
-					labels={paginationConfig?.labels}
-					listItemsPerPage={paginationConfig?.listItemsPerPage}
-					setActivePage={paginationConfig?.setActivePage}
-					setItemsPerPage={paginationConfig?.setItemsPerPage}
-					showDeltasDropDown={paginationConfig?.showDeltasDropDown}
-					totalItems={paginationConfig?.totalCount}
+					activePage={activePage || 1}
+					itemsPerPage={itemsPerPage || 5}
+					labels={labels}
+					listItemsPerPage={listItemsPerPage}
+					setActivePage={setActivePage}
+					setItemsPerPage={setItemsPerPage}
+					showDeltasDropDown={showDeltasDropDown}
+					totalItems={totalCount}
 				/>
 			)}
 		</>
 	);
+};
+
+Table.defaultProps = {
+	paginationConfig: {
+		activePage: 1,
+		itemsPerPage: 5,
+		labels: '',
+		listItemsPerPage: [],
+		setActivePage: () => {},
+		setItemsPerPage: () => {},
+		showDeltasDropDown: false,
+		totalCount: 1,
+	},
 };
 
 export default Table;

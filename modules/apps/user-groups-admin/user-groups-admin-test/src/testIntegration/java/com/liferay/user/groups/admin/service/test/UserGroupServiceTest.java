@@ -42,6 +42,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -180,29 +181,28 @@ public class UserGroupServiceTest {
 			_userGroupLocalService.getUserGroups(
 				TestPropsValues.getCompanyId()));
 
-		List<UserGroup> likeNameUserGroups = new ArrayList<>();
-
-		String name = RandomTestUtil.randomString(50);
-
-		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-			userGroup.setName(name + i);
-
-			likeNameUserGroups.add(
-				_userGroupLocalService.updateUserGroup(userGroup));
-		}
-
-		allUserGroups.addAll(likeNameUserGroups);
-		allUserGroups.add(UserGroupTestUtil.addUserGroup());
-		allUserGroups.add(UserGroupTestUtil.addUserGroup());
 		allUserGroups.add(UserGroupTestUtil.addUserGroup());
 
-		_assertExpectedUserGroups(likeNameUserGroups, name + "%");
+		UserGroup likeNameUserGroup = UserGroupTestUtil.addUserGroup();
+
+		String name = RandomTestUtil.randomString();
+
+		likeNameUserGroup.setName(name + RandomTestUtil.randomString());
+
+		likeNameUserGroup = _userGroupLocalService.updateUserGroup(
+			likeNameUserGroup);
+
+		allUserGroups.add(likeNameUserGroup);
+
 		_assertExpectedUserGroups(
-			likeNameUserGroups, StringUtil.toLowerCase(name) + "%");
+			Collections.singletonList(likeNameUserGroup), name + "%");
 		_assertExpectedUserGroups(
-			likeNameUserGroups, StringUtil.toUpperCase(name) + "%");
+			Collections.singletonList(likeNameUserGroup),
+			StringUtil.toLowerCase(name) + "%");
+		_assertExpectedUserGroups(
+			Collections.singletonList(likeNameUserGroup),
+			StringUtil.toUpperCase(name) + "%");
+
 		_assertExpectedUserGroups(allUserGroups, null);
 		_assertExpectedUserGroups(allUserGroups, "");
 	}

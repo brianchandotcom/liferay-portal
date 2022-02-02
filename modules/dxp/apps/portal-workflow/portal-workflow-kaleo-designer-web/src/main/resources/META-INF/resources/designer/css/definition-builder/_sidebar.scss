@@ -54,22 +54,29 @@
 		.current-assignments-area {
 			background-color: #fff;
 			border-color: #e7e7ed;
+			border-radius: 0.25rem;
 			border-style: solid;
 			border-width: 0.0625rem;
-			border-radius: 0.25rem;
+			padding-bottom: 3px;
 			padding-left: 30px;
 			padding-right: 15px;
 			padding-top: 3px;
-			padding-bottom: 3px;
-
-			.delete-button {
-				& svg {
-					fill: #6b6c7e;
-				}
-			}
 
 			.current-assignments-row {
 				align-items: center;
+
+				.truncate-container {
+					max-width: 332px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				.delete-button {
+					& svg {
+						fill: #6b6c7e;
+					}
+				}
 			}
 		}
 

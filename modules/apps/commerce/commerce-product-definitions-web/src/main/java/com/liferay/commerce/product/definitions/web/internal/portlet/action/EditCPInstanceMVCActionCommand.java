@@ -377,7 +377,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			Date discontinuedDate = ParamUtil.getDate(
 				actionRequest, "discontinuedDate",
-				DateFormatFactoryUtil.getSimpleDateFormat("MM/dd/yyyy"));
+				DateFormatFactoryUtil.getSimpleDateFormat("MM/dd/yyyy"), null);
 
 			if (discontinuedDate != null) {
 				Calendar calendar = CalendarFactoryUtil.getCalendar(
@@ -386,14 +386,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				discontinuedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
 				discontinuedDateMonth = calendar.get(Calendar.MONTH);
 				discontinuedDateYear = calendar.get(Calendar.YEAR);
-			}
-			else {
-				discontinuedDateMonth = ParamUtil.getInteger(
-					actionRequest, "discontinuedDateMonth");
-				discontinuedDateDay = ParamUtil.getInteger(
-					actionRequest, "discontinuedDateDay");
-				discontinuedDateYear = ParamUtil.getInteger(
-					actionRequest, "discontinuedDateYear");
 			}
 		}
 

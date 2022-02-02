@@ -78,9 +78,7 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testAddOrUpdateUserGroupAddUserGroup() throws Exception {
-		_addResourcePermission(
-			PortletKeys.PORTAL, String.valueOf(TestPropsValues.getCompanyId()),
-			ActionKeys.ADD_USER_GROUP, _user);
+		_addResourcePermission(PortletKeys.PORTAL, ActionKeys.ADD_USER_GROUP);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -107,10 +105,7 @@ public class UserGroupServiceTest {
 		_userGroupLocalService.updateExternalReferenceCode(
 			_addUserGroupAdminUser(), externalReferenceCode);
 
-		_addResourcePermission(
-			UserGroup.class.getName(),
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE,
-			_user);
+		_addResourcePermission(UserGroup.class.getName(), ActionKeys.UPDATE);
 
 		_userGroupService.addOrUpdateUserGroup(
 			externalReferenceCode, RandomTestUtil.randomString(),
@@ -215,15 +210,12 @@ public class UserGroupServiceTest {
 		_assertExpectedUserGroups(allUserGroups, "");
 	}
 
-	private void _addResourcePermission(
-			String resourceName, String primKey, String actionKey, User user)
+	private void _addResourcePermission(String resourceName, String actionKey)
 		throws Exception {
 
 		RoleTestUtil.addResourcePermission(
-			_role, resourceName, ResourceConstants.SCOPE_COMPANY, primKey,
-			actionKey);
-
-		UserLocalServiceUtil.addRoleUser(_role.getRoleId(), user.getUserId());
+			_role, resourceName, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), actionKey);
 	}
 
 	private UserGroup _addUserGroupAdminUser() throws Exception {

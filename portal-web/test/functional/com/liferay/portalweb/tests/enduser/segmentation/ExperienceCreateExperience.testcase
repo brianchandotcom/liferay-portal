@@ -5017,4 +5017,53 @@ definition {
 		}
 	}
 
+	@description = "LPS-139951 Bug: Some fragments break the page editor when added to experiences"
+	@priority = "4"
+	test UseBannerFragmentWithExperience {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create a new Experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Banner Center to default experience") {
+			PageEditor.changeExperience(newExperience = "Default");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Add a Banner Center to created experience") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Title of Banner");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Check that Banner fragment was properly added") {
+			PageEditor.viewFragment(fragmentName = "Button");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
 }

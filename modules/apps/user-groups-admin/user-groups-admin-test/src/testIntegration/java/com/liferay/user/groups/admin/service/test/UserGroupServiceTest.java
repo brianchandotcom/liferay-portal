@@ -128,9 +128,8 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testDatabaseSearchPermissionCheck() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroupLocalService.addUserUserGroup(_user.getUserId(), userGroup);
+		_userGroupLocalService.addUserUserGroup(
+			_user.getUserId(), UserGroupTestUtil.addUserGroup());
 
 		_assertSearch(0);
 

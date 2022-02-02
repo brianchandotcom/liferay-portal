@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ContactLocalService;
@@ -564,26 +565,67 @@ public class UserAccountResourceImpl
 			autoPassword = true;
 		}
 
-		User user = _userService.addUser(
-			contextCompany.getCompanyId(), autoPassword, password, password,
-			false, userAccount.getAlternateName(),
-			userAccount.getEmailAddress(),
-			contextAcceptLanguage.getPreferredLocale(),
-			userAccount.getGivenName(), userAccount.getAdditionalName(),
-			userAccount.getFamilyName(), _getPrefixId(userAccount),
-			_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
-			_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
-			userAccount.getJobTitle(), new long[0], new long[0], new long[0],
-			new long[0], _getAddresses(userAccount),
-			_getServiceBuilderEmailAddresses(userAccount),
-			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
-			Collections.emptyList(), false,
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					User.class.getName(), contextCompany.getCompanyId(),
-					userAccount.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null));
+		User user;
+
+		if (contextUser.isDefaultUser()) {
+			user = _userService.addUser(
+				contextCompany.getCompanyId(), autoPassword, password, password,
+				false, userAccount.getAlternateName(),
+				userAccount.getEmailAddress(),
+				contextAcceptLanguage.getPreferredLocale(),
+				userAccount.getGivenName(), userAccount.getAdditionalName(),
+				userAccount.getFamilyName(), _getPrefixId(userAccount),
+				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+				userAccount.getJobTitle(), new long[0], new long[0],
+				new long[0], new long[0], false,
+				ServiceContextRequestUtil.createServiceContext(
+					CustomFieldsUtil.toMap(
+						User.class.getName(), contextCompany.getCompanyId(),
+						userAccount.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()),
+					contextCompany.getGroupId(), contextHttpServletRequest,
+					null));
+
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			UsersAdminUtil.updateAddresses(
+				Contact.class.getName(), user.getContactId(),
+				_getAddresses(userAccount));
+			UsersAdminUtil.updateEmailAddresses(
+				Contact.class.getName(), user.getContactId(),
+				_getServiceBuilderEmailAddresses(userAccount));
+			UsersAdminUtil.updatePhones(
+				Contact.class.getName(), user.getContactId(),
+				_getServiceBuilderPhones(userAccount));
+			UsersAdminUtil.updateWebsites(
+				Contact.class.getName(), user.getContactId(),
+				_getWebsites(userAccount));
+		}
+		else {
+			user = _userService.addUser(
+				contextCompany.getCompanyId(), autoPassword, password, password,
+				false, userAccount.getAlternateName(),
+				userAccount.getEmailAddress(),
+				contextAcceptLanguage.getPreferredLocale(),
+				userAccount.getGivenName(), userAccount.getAdditionalName(),
+				userAccount.getFamilyName(), _getPrefixId(userAccount),
+				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+				userAccount.getJobTitle(), new long[0], new long[0],
+				new long[0], new long[0], _getAddresses(userAccount),
+				_getServiceBuilderEmailAddresses(userAccount),
+				_getServiceBuilderPhones(userAccount),
+				_getWebsites(userAccount), Collections.emptyList(), false,
+				ServiceContextRequestUtil.createServiceContext(
+					CustomFieldsUtil.toMap(
+						User.class.getName(), contextCompany.getCompanyId(),
+						userAccount.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()),
+					contextCompany.getGroupId(), contextHttpServletRequest,
+					null));
+		}
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -1088,6 +1130,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private UserAccountResourceDTOConverter _userAccountResourceDTOConverter;

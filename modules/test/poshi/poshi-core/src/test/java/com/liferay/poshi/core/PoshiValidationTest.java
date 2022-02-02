@@ -41,6 +41,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.bind.ValidationException;
+
 /**
  * @author Karen Dang
  * @author Michael Hashimoto

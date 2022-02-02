@@ -112,12 +112,32 @@ definition {
 	}
 
 	@description = "LPS-142659 - Text will be truncated on the Object portlet table view if it has more than 56 characters"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ClobLongTextWillTruncate {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145700 ClobLongTextWillTruncate pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "We make it possible for people to reach their full potential to serve others.");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		AssertElementPresent(
+			key_value = "We make it possible for people to reach their full potential to serve others.",
+			locator1 = "ObjectAdmin#BODY_VERTICAL_ELLIPSIS");
 	}
 
 	@description = "LPS-136595 - Verify that a Picklist entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

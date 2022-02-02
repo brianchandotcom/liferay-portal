@@ -48,9 +48,11 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -121,7 +123,7 @@ public class SiteInitializerExtension {
 		_component = _dependencyManager.createComponent();
 
 		_component.setImplementation(
-			new SiteInitializerRegistrar(
+			new BundleSiteInitializer(
 				accountResourceFactory, assetCategoryLocalService,
 				assetListEntryLocalService, bundle, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
@@ -145,6 +147,10 @@ public class SiteInitializerExtension {
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, themeLocalService,
 				userAccountResourceFactory, userLocalService));
+		_component.setInterface(
+			SiteInitializer.class,
+			MapUtil.singletonDictionary(
+				"site.initializer.key", bundle.getSymbolicName()));
 
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();

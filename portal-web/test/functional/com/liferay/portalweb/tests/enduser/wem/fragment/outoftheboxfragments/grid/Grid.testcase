@@ -259,13 +259,10 @@ definition {
 		task ("Configure the Grid") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panel = "General",
-				spaceBetweenColumns = "false");
-
-			PageEditor.editLayoutGrid(
 				inverseOrder = "true",
 				layout = "1 Module per Row",
-				panel = "Styles",
+				panelList = "General",
+				spaceBetweenColumns = "false",
 				verticalAlignment = "Bottom");
 		}
 

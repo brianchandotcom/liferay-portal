@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -74,10 +73,9 @@ import org.apache.tika.metadata.TikaMimeKeys;
 import org.apache.tika.metadata.XMPDM;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.WriteOutContentHandler;
 
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Miguel Pastor
@@ -377,12 +375,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 			parseContext.set(Parser.class, parser);
 
-			ContentHandler contentHandler = new WriteOutContentHandler(
-				new DummyWriter());
-
 			try (InputStream inputStream = new FileInputStream(file)) {
 				parser.parse(
-					inputStream, contentHandler, metadata, parseContext);
+					inputStream, new DefaultHandler(), metadata, parseContext);
 			}
 			catch (SAXException | TikaException exception) {
 				throw new IOException(exception);

@@ -23,12 +23,49 @@ definition {
 	}
 
 	@description = "LPS-139472 - Verify that 'Allow Multiple Selections' option is not available for Select From List field when a form is mapped to an object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AllowMultipleSelectionsNotAvailable {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-145730 AllowMultipleSelectionsNotAvailable pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Picklist Test",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		FormsAdmin.addForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Select from List");
+
+		PopulateObjectFormsConfiguration.mapFormObjectField(
+			fieldLabelName = "Field Picklist",
+			formObjectField = "Choose an Option");
+
+		Form.gotoAdvancedTab();
+
+		AssertNotVisible(
+			key_toggleSwitch = "Allow Multiple Selections",
+			locator1 = "ToggleSwitch#ENABLE_TOGGLE_SWITCH_VIA_SPAN");
 	}
 
 	@description = "LPS-139464 - Verify that it is possible to delete a form mapped to an object after adding entries on it"

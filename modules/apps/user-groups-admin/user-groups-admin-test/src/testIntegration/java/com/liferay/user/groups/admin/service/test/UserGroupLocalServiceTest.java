@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -274,12 +272,6 @@ public class UserGroupLocalServiceTest {
 	private static Role _role;
 	private static UserGroup _userGroup1;
 	private static UserGroup _userGroup2;
-
-	@Inject
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

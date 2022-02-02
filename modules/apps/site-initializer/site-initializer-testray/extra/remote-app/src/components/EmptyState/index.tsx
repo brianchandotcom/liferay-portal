@@ -12,16 +12,28 @@
  * details.
  */
 
-type ContainerProps = {
+import ClayEmptyState from '@clayui/empty-state';
+import React from 'react';
+
+export type EmptyStateProps = {
+	description?: string;
 	title?: string;
 };
 
-const Container: React.FC<ContainerProps> = ({children, title}) => (
-	<div className="bg-white border-1 p-4">
-		{title && <h5>{title}</h5>}
+const EmptyState: React.FC<EmptyStateProps> = ({
+	children,
+	description,
+	title,
+}) => {
+	return (
+		<ClayEmptyState
+			description={description}
+			imgSrc="https://clayui.com/images/success_state.gif"
+			title={title}
+		>
+			{children}
+		</ClayEmptyState>
+	);
+};
 
-		{children}
-	</div>
-);
-
-export default Container;
+export default EmptyState;

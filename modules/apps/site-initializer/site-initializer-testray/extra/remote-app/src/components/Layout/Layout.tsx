@@ -14,6 +14,7 @@
 
 import {Outlet} from 'react-router-dom';
 
+import HeaderContextProvider from '../../context/HeaderContext';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
@@ -24,11 +25,13 @@ const Layout: React.FC = () => {
 				<Sidebar />
 
 				<div className="testray-page">
-					<Header />
+					<HeaderContextProvider>
+						<Header />
 
-					<div className="testray-content">
-						<Outlet />
-					</div>
+						<div className="testray-content">
+							<Outlet />
+						</div>
+					</HeaderContextProvider>
 				</div>
 			</div>
 		</main>

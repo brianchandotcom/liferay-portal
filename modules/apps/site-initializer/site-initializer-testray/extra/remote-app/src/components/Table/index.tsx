@@ -17,7 +17,7 @@ import React from 'react';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
-type TableProps = {
+export type TableProps = {
 	actions?: any[];
 	className?: string;
 	columns: any[];
@@ -49,7 +49,7 @@ const Table: React.FC<TableProps> = ({actions, className, columns, items}) => (
 		<Head>
 			<Row>
 				{columns.map((column, index) => (
-					<Cell headingCell key={index}>
+					<Cell headingTitle key={index}>
 						{column.value}
 					</Cell>
 				))}
@@ -61,8 +61,8 @@ const Table: React.FC<TableProps> = ({actions, className, columns, items}) => (
 		<Body>
 			{items.map((item, index) => (
 				<Row key={index}>
-					{columns.map((column, index) => (
-						<CellWrapper index={index} key={index}>
+					{columns.map((column, columnIndex) => (
+						<CellWrapper index={columnIndex} key={columnIndex}>
 							{column.render
 								? column.render(item[column.key], item)
 								: item[column.key]}

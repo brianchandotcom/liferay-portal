@@ -14,14 +14,17 @@
 
 import {ApolloProvider} from '@apollo/client';
 import ReactDOM from 'react-dom';
-import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import ClayIconProvider from './context/ClayIconProvider';
 import apolloClient from './graphql/apolloClient';
 import Manage from './pages/Manage';
+import Cases from './pages/Project/Cases';
 import Home from './pages/Project/Home';
 import Overview from './pages/Project/Overview';
+import ProjectOutlet from './pages/Project/ProjectOutlet';
+import Requirements from './pages/Project/Requirements';
 import Build from './pages/Project/Routines/Build';
 import Routines from './pages/Project/Routines/Routines';
 import Suites from './pages/Project/Suites';
@@ -37,18 +40,28 @@ const App = () => (
 					<Route element={<Layout />} path="/">
 						<Route element={<Home />} index />
 
-						<Route element={<Outlet />} path="project/:project">
+						<Route
+							element={<ProjectOutlet />}
+							path="project/:projectId"
+						>
 							<Route element={<Home />} index />
 
 							<Route element={<Overview />} path="overview" />
+
+							<Route element={<Suites />} path="suites" />
+
+							<Route element={<Cases />} path="cases" />
+
+							<Route
+								element={<Requirements />}
+								path="requirements"
+							/>
 
 							<Route path="routines">
 								<Route element={<Routines />} index />
 
 								<Route element={<Build />} path="build" />
 							</Route>
-
-							<Route element={<Suites />} path="suites" />
 						</Route>
 
 						<Route element={<Manage />} path="manage" />

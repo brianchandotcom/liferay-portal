@@ -16,6 +16,7 @@ package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.script.PoshiScriptParserUtil;
+import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
@@ -157,8 +158,7 @@ public class PoshiValidation {
 			if (!possibleElementNames.contains(elementName)) {
 				_exceptions.add(
 					new ValidationException(
-						childElement, "Invalid ", elementName, " element\n",
-						filePath));
+						childElement, "Invalid ", elementName, " element"));
 			}
 
 			if (elementName.equals("description") ||
@@ -246,7 +246,7 @@ public class PoshiValidation {
 							commandReturnElement,
 							"No return variables were stated in command ",
 							"declaration, but found return name-value ",
-							"mapping\n", filePath));
+							"mapping"));
 				}
 			}
 		}
@@ -256,7 +256,7 @@ public class PoshiValidation {
 					new ValidationException(
 						element,
 						"Return variable was stated, but no returns were ",
-						"found\n", filePath));
+						"found"));
 			}
 			else {
 				for (Element commandReturnElement : commandReturnElements) {
@@ -268,8 +268,7 @@ public class PoshiValidation {
 							new ValidationException(
 								commandReturnElement,
 								"Return variable was stated as '", returnName,
-								"', but no 'name' attribute was found\n",
-								filePath));
+								"', but no 'name' attribute was found"));
 
 						continue;
 					}
@@ -281,7 +280,7 @@ public class PoshiValidation {
 					_exceptions.add(
 						new ValidationException(
 							commandReturnElement, "'", returnVariableName,
-							"' not listed as a return variable\n"));
+							"' not listed as a return variable"));
 				}
 			}
 		}
@@ -311,7 +310,7 @@ public class PoshiValidation {
 			if (childElements.size() < 2) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Too few child elements\n", filePath));
+						element, "Too few child elements"));
 			}
 
 			for (Element childElement : childElements) {
@@ -395,8 +394,7 @@ public class PoshiValidation {
 		if (!Objects.equals(elementName, "definition")) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Root element name must be definition\n",
-					filePath));
+					element, "Root element name must be definition"));
 		}
 
 		String classType = PoshiGetterUtil.getClassTypeFromFilePath(filePath);
@@ -430,8 +428,7 @@ public class PoshiValidation {
 		if (!possibleElementNames.contains(element.getName())) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing ", possibleElementNames, " element\n",
-					filePath));
+					element, "Missing ", possibleElementNames, " element"));
 		}
 	}
 
@@ -443,7 +440,7 @@ public class PoshiValidation {
 		if (elseElements.size() > 1) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many else elements\n", filePath));
+					element, "Too many else elements"));
 		}
 
 		if (!elseElements.isEmpty()) {
@@ -476,8 +473,7 @@ public class PoshiValidation {
 		else {
 			_exceptions.add(
 				new ValidationException(
-					element, "Invalid ", conditionElementName, " element\n",
-					filePath));
+					element, "Invalid ", conditionElementName, " element"));
 		}
 
 		Element thenElement = element.element("then");
@@ -571,7 +567,7 @@ public class PoshiValidation {
 				if (!possibleChildElementNames.contains(childElementName)) {
 					_exceptions.add(
 						new ValidationException(
-							childElement, "Invalid child element\n", filePath));
+							childElement, "Invalid child element"));
 				}
 			}
 
@@ -588,8 +584,7 @@ public class PoshiValidation {
 
 				_exceptions.add(
 					new ValidationException(
-						element, "Only 1 child element 'return' is allowed\n",
-						filePath));
+						element, "Only 1 child element 'return' is allowed"));
 			}
 
 			Element returnElement = element.element("return");
@@ -615,8 +610,7 @@ public class PoshiValidation {
 					_exceptions.add(
 						new ValidationException(
 							element,
-							"Duplicate variable name: " + varName + "\n",
-							filePath));
+							"Duplicate variable name: " + varName));
 				}
 
 				varNames.add(varName);
@@ -703,8 +697,7 @@ public class PoshiValidation {
 
 					_exceptions.add(
 						new ValidationException(
-							element, "Invalid path name ", pathName, "\n",
-							filePath));
+							element, "Invalid path name ", pathName));
 				}
 				else if (!PoshiContext.isPathLocator(locator, namespace) &&
 						 !PoshiContext.isPathLocator(
@@ -712,8 +705,7 @@ public class PoshiValidation {
 
 					_exceptions.add(
 						new ValidationException(
-							element, "Invalid path locator ", locator, "\n",
-							filePath));
+							element, "Invalid path locator ", locator));
 				}
 			}
 		}
@@ -745,7 +737,7 @@ public class PoshiValidation {
 		if (childElements.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing child elements\n", filePath));
+					element, "Missing child elements"));
 		}
 	}
 
@@ -756,7 +748,7 @@ public class PoshiValidation {
 		if (!multiplePrimaryAttributeNames.equals(attributeNames)) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many attributes\n", filePath));
+					element, "Too many attributes"));
 		}
 	}
 
@@ -775,8 +767,7 @@ public class PoshiValidation {
 
 				_exceptions.add(
 					new ValidationException(
-						element, "Invalid ", attributeName, " attribute\n",
-						filePath));
+						element, "Invalid ", attributeName, " attribute"));
 			}
 		}
 	}
@@ -789,7 +780,7 @@ public class PoshiValidation {
 		if (!childElements.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Invalid child elements\n", filePath));
+					element, "Invalid child elements"));
 		}
 	}
 
@@ -810,13 +801,13 @@ public class PoshiValidation {
 		if (attributeNames.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Invalid or missing attribute\n", filePath));
+					element, "Invalid or missing attribute"));
 		}
 		else if (attributeNames.size() > 1) {
 			if (multiplePrimaryAttributeNames == null) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Too many attributes\n", filePath));
+						element, "Too many attributes"));
 			}
 			else {
 				validateHasMultiplePrimaryAttributeNames(
@@ -871,10 +862,10 @@ public class PoshiValidation {
 		for (String requiredPropertyName : requiredPropertyNames) {
 			if (!properties.containsKey(requiredPropertyName)) {
 				_exceptions.add(
-					new ValidationException(
+					new ValidationException(element,
 						className + "#" + commandName +
 							" is missing required properties ",
-						requiredPropertyNames.toString(), "\n", filePath));
+						requiredPropertyNames.toString()));
 			}
 		}
 	}
@@ -911,8 +902,7 @@ public class PoshiValidation {
 					_exceptions.add(
 						new ValidationException(
 							element,
-							"Missing or invalid if condition element\n",
-							filePath));
+							"Missing or invalid if condition element"));
 				}
 			}
 			else if (childElementName.equals("else")) {
@@ -937,7 +927,7 @@ public class PoshiValidation {
 				_exceptions.add(
 					new ValidationException(
 						childElement, "Invalid ", childElementName,
-						" element\n", filePath));
+						" element"));
 			}
 		}
 	}
@@ -951,7 +941,7 @@ public class PoshiValidation {
 			_exceptions.add(
 				new ValidationException(
 					element, "Invalid macro command name: ", attributeName,
-					". Use 'URL' instead of 'Url'.\n", filePath));
+					". Use 'URL' instead of 'Url'."));
 		}
 	}
 
@@ -978,7 +968,7 @@ public class PoshiValidation {
 				_exceptions.add(
 					new ValidationException(
 						childElement, "Invalid ", childElementName,
-						" element\n", filePath));
+						" element"));
 			}
 
 			if (childElementName.equals("command")) {
@@ -1009,7 +999,7 @@ public class PoshiValidation {
 
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing message attribute\n", filePath));
+					element, "Missing message attribute"));
 		}
 	}
 
@@ -1048,8 +1038,7 @@ public class PoshiValidation {
 		if (fullClassName == null) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Unable to find class ", className, "\n",
-					filePath));
+					element, "Unable to find class ", className));
 
 			return;
 		}
@@ -1057,7 +1046,7 @@ public class PoshiValidation {
 		try {
 			validateUtilityClassName(element, filePath, fullClassName);
 		}
-		catch (Exception exception) {
+		catch (ValidationException exception) {
 			_exceptions.add(exception);
 
 			return;
@@ -1081,7 +1070,7 @@ public class PoshiValidation {
 			_exceptions.add(
 				new ValidationException(
 					element, "Unable to find method ", fullClassName, "#",
-					methodName, "\n", filePath));
+					methodName));
 		}
 	}
 
@@ -1113,8 +1102,7 @@ public class PoshiValidation {
 
 			_exceptions.add(
 				new ValidationException(
-					element, "Invalid ", classType, " class ", className, "\n",
-					filePath));
+					element, "Invalid ", classType, " class ", className));
 		}
 
 		if (!PoshiContext.isCommandElement(
@@ -1125,7 +1113,7 @@ public class PoshiValidation {
 			_exceptions.add(
 				new ValidationException(
 					element, "Invalid ", classType, " command ",
-					namespacedClassCommandName, "\n", filePath));
+					namespacedClassCommandName));
 		}
 	}
 
@@ -1137,17 +1125,17 @@ public class PoshiValidation {
 		if (childElements.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing child elements\n", filePath));
+					element, "Missing child elements"));
 		}
 		else if (childElements.size() > number) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many child elements\n", filePath));
+					element, "Too many child elements"));
 		}
 		else if (childElements.size() < number) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too few child elements\n", filePath));
+					element, "Too few child elements"));
 		}
 	}
 
@@ -1157,7 +1145,7 @@ public class PoshiValidation {
 		if (offElements.size() > 1) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many off elements\n", filePath));
+					element, "Too many off elements"));
 		}
 
 		if (!offElements.isEmpty()) {
@@ -1176,7 +1164,7 @@ public class PoshiValidation {
 		if (onElements.size() > 1) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many on elements\n", filePath));
+					element, "Too many on elements"));
 		}
 
 		if (!onElements.isEmpty()) {
@@ -1197,8 +1185,7 @@ public class PoshiValidation {
 		if (!Objects.equals(rootElementName, "html")) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Invalid ", rootElementName, " element\n",
-					filePath));
+					element, "Invalid ", rootElementName, " element"));
 		}
 
 		validateHasChildElements(element, filePath);
@@ -1247,7 +1234,7 @@ public class PoshiValidation {
 				if (Validator.isNull(locator) != Validator.isNull(locatorKey)) {
 					_exceptions.add(
 						new ValidationException(
-							trElement, "Missing locator\n", filePath));
+							trElement, "Missing locator"));
 				}
 
 				if (locatorKey.equals("EXTEND_ACTION_PATH")) {
@@ -1260,8 +1247,7 @@ public class PoshiValidation {
 					if (pathRootElement == null) {
 						_exceptions.add(
 							new ValidationException(
-								trElement, "Nonexistent parent path file\n",
-								filePath));
+								trElement, "Nonexistent parent path file"));
 					}
 				}
 			}
@@ -1289,13 +1275,12 @@ public class PoshiValidation {
 		if (Validator.isNull(theadClassName)) {
 			_exceptions.add(
 				new ValidationException(
-					trElement, "Missing thead class name\n", filePath));
+					trElement, "Missing thead class name"));
 		}
 		else if (!Objects.equals(theadClassName, className)) {
 			_exceptions.add(
 				new ValidationException(
-					trElement, "Thead class name does not match file name\n",
-					filePath));
+					trElement, "Thead class name does not match file name"));
 		}
 
 		Element headElement = element.element("head");
@@ -1309,8 +1294,7 @@ public class PoshiValidation {
 		if (!Objects.equals(titleElement.getText(), className)) {
 			_exceptions.add(
 				new ValidationException(
-					titleElement, "File name and title are different\n",
-					filePath));
+					titleElement, "File name and title are different"));
 		}
 	}
 
@@ -1325,8 +1309,7 @@ public class PoshiValidation {
 			if (!possibleAttributeNames.contains(attributeName)) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Invalid ", attributeName, " attribute\n",
-						filePath));
+						element, "Invalid ", attributeName, " attribute"));
 			}
 		}
 	}
@@ -1352,7 +1335,7 @@ public class PoshiValidation {
 						new ValidationException(
 							propertyElement, "Invalid property value '",
 							propertyValue.trim(), "' for property name '",
-							propertyName.trim(), "'\n", filePath));
+							propertyName.trim()));
 				}
 			}
 		}
@@ -1384,7 +1367,7 @@ public class PoshiValidation {
 				_exceptions.add(
 					new ValidationException(
 						element, "Missing ", requiredAttributeName,
-						" attribute\n", filePath));
+						" attribute"));
 			}
 		}
 	}
@@ -1408,7 +1391,7 @@ public class PoshiValidation {
 			_exceptions.add(
 				new ValidationException(
 					element, "Missing required ", requiredElementName,
-					" child element\n", filePath));
+					" child element"));
 		}
 	}
 
@@ -1541,7 +1524,7 @@ public class PoshiValidation {
 				_exceptions.add(
 					new ValidationException(
 						childElement, "Invalid ", childElementName,
-						" element\n", filePath));
+						" element"));
 			}
 
 			if (childElementName.equals("command")) {
@@ -1570,7 +1553,7 @@ public class PoshiValidation {
 					_exceptions.add(
 						new ValidationException(
 							childElement, "Duplicate property name ",
-							propertyName, "\n", filePath));
+							propertyName));
 				}
 			}
 			else if (childElementName.equals("set-up") ||
@@ -1605,8 +1588,7 @@ public class PoshiValidation {
 		if (!PoshiContext.isRootElement("test-case", className, namespace)) {
 			_exceptions.add(
 				new ValidationException(
-					"Invalid test case class " + namespace + "." + className +
-						"\n" + filePathLineNumber));
+					"Invalid test case class " + namespace + "." + className));
 		}
 		else if (testName.contains("#")) {
 			String classCommandName =
@@ -1622,8 +1604,7 @@ public class PoshiValidation {
 
 				_exceptions.add(
 					new ValidationException(
-						"Invalid test case command " + commandName + "\n" +
-							filePathLineNumber));
+						"Invalid test case command " + commandName));
 			}
 		}
 	}
@@ -1636,18 +1617,18 @@ public class PoshiValidation {
 		if (thenElements.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing then element\n", filePath));
+					element, "Missing then element"));
 		}
 		else if (thenElements.size() > 1) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Too many then elements\n", filePath));
+					element, "Too many then elements"));
 		}
 	}
 
 	protected static void validateUtilityClassName(
 			Element element, String filePath, String className)
-		throws Exception {
+		throws ValidationException {
 
 		if (!className.startsWith("selenium")) {
 			if (!className.contains(".")) {
@@ -1656,15 +1637,13 @@ public class PoshiValidation {
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
 					throw new ValidationException(
-						element, illegalArgumentException.getMessage(), "\n",
-						filePath);
+						element, illegalArgumentException.getMessage());
 				}
 			}
 
 			if (!PoshiGetterUtil.isValidUtilityClass(className)) {
 				throw new ValidationException(
-					element, className, " is an invalid utility class\n",
-					filePath);
+					element, className, " is an invalid utility class");
 			}
 		}
 	}
@@ -1687,7 +1666,7 @@ public class PoshiValidation {
 
 			_exceptions.add(
 				new ValidationException(
-					element, "Missing value attribute\n", filePath));
+					element, "Missing value attribute"));
 		}
 
 		List<String> possibleAttributeNames = new ArrayList<>();
@@ -1733,7 +1712,7 @@ public class PoshiValidation {
 			try {
 				validateUtilityClassName(element, filePath, className);
 			}
-			catch (Exception exception) {
+			catch (ValidationException exception) {
 				_exceptions.add(exception);
 			}
 
@@ -1758,13 +1737,13 @@ public class PoshiValidation {
 			if (attributes.size() < expectedAttributeCount) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Too few attributes\n", filePath));
+						element, "Too few attributes"));
 			}
 
 			if (attributes.size() > expectedAttributeCount) {
 				_exceptions.add(
 					new ValidationException(
-						element, "Too many attributes\n", filePath));
+						element, "Too many attributes"));
 			}
 		}
 	}
@@ -1794,8 +1773,7 @@ public class PoshiValidation {
 				else {
 					_exceptions.add(
 						new ValidationException(
-							element, "Missing while condition element\n",
-							filePath));
+							element, "Missing while condition element"));
 				}
 			}
 			else if (childElementName.equals("then")) {
@@ -1808,7 +1786,7 @@ public class PoshiValidation {
 				_exceptions.add(
 					new ValidationException(
 						childElement, "Invalid ", childElementName,
-						" element\n", filePath));
+						" element"));
 			}
 		}
 	}
@@ -1842,13 +1820,10 @@ public class PoshiValidation {
 		"^selenium#(?<methodName>get[A-z]+)" +
 			"(?:\\((?<methodParameters>.*|)\\))?$");
 
-	private static class ValidationException extends Exception {
+	private static class ValidationException extends PoshiElementException {
 
 		public ValidationException(Element element, Object... messageParts) {
-			super(
-				_join(
-					_join(messageParts), ":",
-					PoshiGetterUtil.getLineNumber(element)));
+			super(_join(messageParts), (PoshiElement)element);
 		}
 
 		public ValidationException(String... messageParts) {
@@ -1860,7 +1835,9 @@ public class PoshiValidation {
 
 			for (Object object : objects) {
 				sb.append(object.toString());
+
 			}
+
 
 			return sb.toString();
 		}

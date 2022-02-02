@@ -50,9 +50,14 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 	<c:if test="<%= !commerceOrder.isGuestOrder() %>">
 		<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.VIEW_ADDRESSES) %>">
 			<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
-				<c:if test="<%= hasManageAddressesPermission %>">
-					<aui:option label="add-new-address" value="0" />
-				</c:if>
+				<c:choose>
+					<c:when test="<%= hasManageAddressesPermission %>">
+						<aui:option label="add-new-address" value="0" />
+					</c:when>
+					<c:otherwise>
+						<aui:option label="choose-address" value="0" />
+					</c:otherwise>
+				</c:choose>
 
 				<%
 				boolean addressWasFound = false;
@@ -80,7 +85,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 
 	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= paramName %>" type="hidden" value="<%= commerceAddressId %>" />
 
-	<aui:input name="newAddress" type="hidden" value='<%= (commerceAddressId > 0) ? "0" : "1" %>' />
+	<aui:input name="newAddress" type="hidden" value='<%= ((commerceAddressId > 0) || !hasManageAddressesPermission) ? "0" : "1" %>' />
 </div>
 
 <liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
@@ -117,7 +122,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 		</c:when>
 		<c:otherwise>
 			<div class="add-street-link form-group-autofit">
-				<aui:a disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
+				<aui:a hidden="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
 			</div>
 
 			<div class="add-street-fields form-group-autofit hide">
@@ -214,7 +219,10 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 
 				if (commerceAddressVal === '0') {
 					<portlet:namespace />clearAddressFields();
-					<portlet:namespace />toggleAddressFields(false);
+
+					if (<%= hasManageAddressesPermission %>) {
+						<portlet:namespace />toggleAddressFields(false);
+					}
 				}
 				else {
 					<portlet:namespace />updateAddressFields(

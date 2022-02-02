@@ -80,6 +80,7 @@ import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -295,15 +296,19 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.ARTICLE_ID, false);
-		addSearchTerm(searchQuery, searchContext, Field.CLASS_PK, false);
+		_queryHelper.addSearchTerm(
+			searchQuery, searchContext, Field.ARTICLE_ID, false);
+		_queryHelper.addSearchTerm(
+			searchQuery, searchContext, Field.CLASS_PK, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		_queryHelper.addSearchTerm(
+			searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		_queryHelper.addSearchTerm(
+			searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -1029,6 +1034,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private QueryHelper _queryHelper;
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;

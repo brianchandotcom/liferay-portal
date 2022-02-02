@@ -15,15 +15,13 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 
@@ -41,9 +39,6 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(), getClass());
 
 		_selected = selected;
 	}
@@ -104,7 +99,7 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 			return _styleBookEntry.getName();
 		}
 
-		return LanguageUtil.get(_resourceBundle, "provided-by-theme");
+		return StringPool.DASH;
 	}
 
 	@Override
@@ -118,7 +113,6 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 	}
 
 	private final String _name;
-	private final ResourceBundle _resourceBundle;
 	private final boolean _selected;
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;

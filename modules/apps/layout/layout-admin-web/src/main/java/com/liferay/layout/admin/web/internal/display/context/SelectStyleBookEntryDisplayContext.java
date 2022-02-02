@@ -49,19 +49,31 @@ public class SelectStyleBookEntryDisplayContext {
 	}
 
 	public StyleBookEntry getDefaultStyleBookEntry() {
-		return DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_selLayout);
+		if (_defaultStyleBookEntry != null) {
+			return _defaultStyleBookEntry;
+		}
+
+		_defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
+				_selLayout);
+
+		return _defaultStyleBookEntry;
 	}
 
 	public String getDefaultStyleBookLabel() {
-		String defaultStyleBookLabel = LanguageUtil.get(
-			_httpServletRequest, "default-style-book");
+		StyleBookEntry defaultStyleBookEntry = getDefaultStyleBookEntry();
 
-		if (hasEditableMasterLayout()) {
-			defaultStyleBookLabel = LanguageUtil.get(
-				_httpServletRequest, "inherited-from-master");
+		if (defaultStyleBookEntry == null) {
+			return LanguageUtil.get(_httpServletRequest, "styles-from-theme");
 		}
 
-		return defaultStyleBookLabel;
+		if (hasEditableMasterLayout() &&
+			(_selLayout.getMasterLayoutPlid() > 0)) {
+
+			return LanguageUtil.get(_httpServletRequest, "styles-from-master");
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
 	}
 
 	public String getEventName() {
@@ -99,6 +111,7 @@ public class SelectStyleBookEntryDisplayContext {
 		return _hasEditableMasterLayout;
 	}
 
+	private StyleBookEntry _defaultStyleBookEntry;
 	private Boolean _hasEditableMasterLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

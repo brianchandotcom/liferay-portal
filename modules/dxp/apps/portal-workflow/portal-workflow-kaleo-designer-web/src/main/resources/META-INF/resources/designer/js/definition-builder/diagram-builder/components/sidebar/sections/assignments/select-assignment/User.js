@@ -68,7 +68,7 @@ const User = ({identifier, index, sectionsLength, setSections}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const serializer = (values) => {
+	const updateSelectedItem = (values) => {
 		setSelectedItem((previousItem) => ({
 			...previousItem,
 			data: {
@@ -91,7 +91,7 @@ const User = ({identifier, index, sectionsLength, setSections}) => {
 				...item,
 			};
 
-			serializer(prev);
+			updateSelectedItem(prev);
 
 			return prev;
 		});
@@ -105,7 +105,7 @@ const User = ({identifier, index, sectionsLength, setSections}) => {
 				(prevSection) => prevSection.identifier !== identifier
 			);
 
-			serializer(newSections);
+			updateSelectedItem(newSections);
 
 			return newSections;
 		});

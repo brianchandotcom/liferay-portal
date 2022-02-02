@@ -62,7 +62,7 @@ const RoleType = ({displayDelete, identifier, index, setSections}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const serializer = (values) => {
+	const updateSelectedItem = (values) => {
 		setSelectedItem((previousItem) => ({
 			...previousItem,
 			data: {
@@ -83,7 +83,7 @@ const RoleType = ({displayDelete, identifier, index, setSections}) => {
 				(prevSection) => prevSection.identifier !== identifier
 			);
 
-			serializer(newSections);
+			updateSelectedItem(newSections);
 
 			return newSections;
 		});
@@ -158,7 +158,7 @@ const RoleType = ({displayDelete, identifier, index, setSections}) => {
 				...item,
 			};
 
-			serializer(prev);
+			updateSelectedItem(prev);
 
 			return prev;
 		});

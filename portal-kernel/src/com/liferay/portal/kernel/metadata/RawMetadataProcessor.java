@@ -45,11 +45,11 @@ public interface RawMetadataProcessor {
 	public Map<String, Field[]> getFields();
 
 	public Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, File file)
+			String mimeType, File file)
 		throws PortalException;
 
 	public Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, InputStream inputStream)
+			String mimeType, InputStream inputStream)
 		throws PortalException;
 
 	public void importGeneratedFiles(

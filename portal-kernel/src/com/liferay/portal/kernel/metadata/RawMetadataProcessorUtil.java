@@ -34,19 +34,17 @@ public class RawMetadataProcessorUtil {
 	}
 
 	public static Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, File file)
+			String mimeType, File file)
 		throws PortalException {
 
-		return _rawMetadataProcessor.getRawMetadataMap(
-			extension, mimeType, file);
+		return _rawMetadataProcessor.getRawMetadataMap(mimeType, file);
 	}
 
 	public static Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, InputStream inputStream)
+			String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		return _rawMetadataProcessor.getRawMetadataMap(
-			extension, mimeType, inputStream);
+		return _rawMetadataProcessor.getRawMetadataMap(mimeType, inputStream);
 	}
 
 	public static RawMetadataProcessor getRawMetadataProcessor() {

@@ -105,20 +105,20 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 	@Override
 	public Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, File file)
+			String mimeType, File file)
 		throws PortalException {
 
-		Metadata metadata = _extractMetadata(extension, mimeType, file);
+		Metadata metadata = _extractMetadata(mimeType, file);
 
 		return _createDDMFormValuesMap(metadata, getFields());
 	}
 
 	@Override
 	public Map<String, DDMFormValues> getRawMetadataMap(
-			String extension, String mimeType, InputStream inputStream)
+			String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Metadata metadata = _extractMetadata(extension, mimeType, inputStream);
+		Metadata metadata = _extractMetadata(mimeType, inputStream);
 
 		return _createDDMFormValuesMap(metadata, getFields());
 	}
@@ -228,9 +228,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmFormField;
 	}
 
-	private Metadata _extractMetadata(
-		String extension, String mimeType, File file) {
-
+	private Metadata _extractMetadata(String mimeType, File file) {
 		Metadata metadata = new Metadata();
 
 		boolean forkProcess = false;
@@ -275,14 +273,14 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Metadata _extractMetadata(
-		String extension, String mimeType, InputStream inputStream) {
+		String mimeType, InputStream inputStream) {
 
 		File file = FileUtil.createTempFile();
 
 		try {
 			FileUtil.write(file, inputStream);
 
-			return _extractMetadata(extension, mimeType, file);
+			return _extractMetadata(mimeType, file);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

@@ -367,14 +367,23 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		String[] contentAvailableLanguageIds =
 			localization.getAvailableLanguageIds(journalArticle.getDocument());
 
-		for (String contentAvailableLanguageId : contentAvailableLanguageIds) {
-			String content = _extractDDMContent(
-				journalArticle, contentAvailableLanguageId);
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			_portal.getSiteGroupId(journalArticle.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
+			journalArticle.getDDMStructureKey(), true);
 
-			document.addText(
-				localization.getLocalizedName(
-					Field.CONTENT, contentAvailableLanguageId),
-				content);
+		if (ddmStructure != null) {
+			for (String contentAvailableLanguageId :
+					contentAvailableLanguageIds) {
+
+				String content = _extractDDMContent(
+					journalArticle, ddmStructure, contentAvailableLanguageId);
+
+				document.addText(
+					localization.getLocalizedName(
+						Field.CONTENT, contentAvailableLanguageId),
+					content);
+			}
 		}
 
 		String[] descriptionAvailableLanguageIds =
@@ -456,7 +465,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 					LocaleUtil.fromLanguageId(titleAvailableLanguageId)));
 		}
 
-		_addDDMStructureAttributes(document, journalArticle);
+		if (ddmStructure != null) {
+			_addDDMStructureAttributes(ddmStructure, document, journalArticle);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + journalArticle + " indexed successfully");
@@ -642,17 +653,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	protected UIDFactory uidFactory;
 
 	private void _addDDMStructureAttributes(
-			Document document, JournalArticle article)
+			DDMStructure ddmStructure, Document document,
+			JournalArticle article)
 		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return;
-		}
 
 		document.addKeyword(Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
 
@@ -723,17 +726,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			article.getCompanyId(), "UID=" + uidFactory.getUID(article));
 	}
 
-	private String _extractDDMContent(JournalArticle article, String languageId)
+	private String _extractDDMContent(
+			JournalArticle article, DDMStructure ddmStructure,
+			String languageId)
 		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return StringPool.BLANK;
-		}
 
 		DDMFormValues ddmFormValues = null;
 

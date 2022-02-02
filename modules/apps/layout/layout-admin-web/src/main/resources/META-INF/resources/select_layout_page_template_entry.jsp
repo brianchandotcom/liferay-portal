@@ -45,7 +45,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<p class="text-uppercase">
-							<strong><liferay-ui:message key="collections" /></strong>
+							<strong><liferay-ui:message key="page-template-sets" /></strong>
 						</p>
 
 						<ul class="nav nav-stacked">

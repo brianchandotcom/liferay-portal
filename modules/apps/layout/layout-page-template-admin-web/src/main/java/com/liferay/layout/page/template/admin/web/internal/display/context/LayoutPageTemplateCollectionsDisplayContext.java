@@ -82,7 +82,7 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		SearchContainer<LayoutPageTemplateCollection> searchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
-				"there-are-no-collections");
+				"there-are-no-page-template-sets");
 
 		searchContainer.setOrderByCol(_getOrderByCol());
 		searchContainer.setOrderByComparator(

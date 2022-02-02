@@ -53,7 +53,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 										expand="<%= true %>"
 									>
 										<strong class="text-uppercase">
-											<liferay-ui:message key="collections" />
+											<liferay-ui:message key="page-template-sets" />
 										</strong>
 									</clay:content-col>
 
@@ -133,14 +133,14 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							</c:when>
 							<c:otherwise>
 								<p class="text-uppercase">
-									<strong><liferay-ui:message key="collections" /></strong>
+									<strong><liferay-ui:message key="page-template-sets" /></strong>
 								</p>
 
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-page-templates") %>'
-									elementType='<%= LanguageUtil.get(request, "collections") %>'
+									description='<%= LanguageUtil.get(request, "page-template-sets-are-needed-to-create-page-templates") %>'
+									elementType='<%= LanguageUtil.get(request, "page-template-sets") %>'
 								/>
 							</c:otherwise>
 						</c:choose>

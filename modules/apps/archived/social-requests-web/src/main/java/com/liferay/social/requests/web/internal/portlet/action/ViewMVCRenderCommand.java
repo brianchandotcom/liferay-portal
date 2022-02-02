@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.kernel.model.SocialRequest;
@@ -95,7 +95,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			user = _userLocalService.getUserById(group.getClassPK());
 		}
 
-		if (UserPermissionUtil.contains(
+		if (_userPermission.contains(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
 				ActionKeys.UPDATE)) {
 
@@ -114,5 +114,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	private GroupLocalService _groupLocalService;
 	private SocialRequestLocalService _socialRequestLocalService;
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserPermission _userPermission;
 
 }

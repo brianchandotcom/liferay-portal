@@ -103,7 +103,7 @@ public class UserGroupServiceTest {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_userGroupLocalService.updateExternalReferenceCode(
-			_addUserGroupAdminUser(), externalReferenceCode);
+			UserGroupTestUtil.addUserGroup(), externalReferenceCode);
 
 		_addResourcePermission(UserGroup.class.getName(), ActionKeys.UPDATE);
 
@@ -119,7 +119,7 @@ public class UserGroupServiceTest {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_userGroupService.updateExternalReferenceCode(
-			_addUserGroupAdminUser(), externalReferenceCode);
+			UserGroupTestUtil.addUserGroup(), externalReferenceCode);
 
 		_userGroupService.addOrUpdateUserGroup(
 			externalReferenceCode, RandomTestUtil.randomString(),
@@ -220,12 +220,6 @@ public class UserGroupServiceTest {
 		RoleTestUtil.addResourcePermission(
 			_role, resourceName, ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), actionKey);
-	}
-
-	private UserGroup _addUserGroupAdminUser() throws Exception {
-		return _userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
 	private void _assertExpectedUserGroups(

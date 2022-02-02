@@ -43,6 +43,16 @@
 			"name": "caseParameters",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type"
+			},
+			"name": "type",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

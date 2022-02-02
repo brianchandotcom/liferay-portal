@@ -123,6 +123,16 @@
 			"name": "caseNumber",
 			"required": false,
 			"type": "Long"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Issues"
+			},
+			"name": "issues",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

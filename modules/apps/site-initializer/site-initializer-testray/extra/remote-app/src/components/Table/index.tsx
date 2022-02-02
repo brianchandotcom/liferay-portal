@@ -45,7 +45,7 @@ const CellWrapper: React.FC<CellWrapperProps> = ({
 );
 
 const Table: React.FC<TableProps> = ({actions, className, columns, items}) => (
-	<ClayTable className={className} hover={false}>
+	<ClayTable borderless className={className} hover={false}>
 		<Head>
 			<Row>
 				{columns.map((column, index) => (

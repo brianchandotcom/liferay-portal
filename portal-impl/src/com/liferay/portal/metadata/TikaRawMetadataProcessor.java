@@ -103,15 +103,23 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return _createDDMFormValuesMap(metadata);
 	}
 
-	private static void _addFields(Class<?> clazz, Map<String, Object> fields)
+	private static void _addFields(Class<?> clazz, Map<String, String> fields)
 		throws IllegalAccessException {
 
 		for (Field field : clazz.getFields()) {
+			Object value = field.get(null);
+
+			if (value instanceof Property) {
+				Property property = (Property)value;
+
+				value = property.getName();
+			}
+
 			fields.put(
 				StringBundler.concat(
 					clazz.getSimpleName(), StringPool.UNDERLINE,
 					field.getName()),
-				field.get(null));
+				(String)value);
 		}
 	}
 
@@ -134,8 +142,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		ddmFormValues.addAvailableLocale(defaultLocale);
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
-		for (Map.Entry<String, Object> entry : _fields.entrySet()) {
-			String value = _getMetadataValue(metadata, entry.getValue());
+		for (Map.Entry<String, String> entry : _fields.entrySet()) {
+			String value = metadata.get(entry.getValue());
 
 			if (value == null) {
 				continue;
@@ -244,16 +252,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		}
 	}
 
-	private String _getMetadataValue(Metadata metadata, Object value) {
-		if (value instanceof String) {
-			return metadata.get((String)value);
-		}
-
-		Property property = (Property)value;
-
-		return metadata.get(property.getName());
-	}
-
 	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
 		if (!mimeType.equals(ContentTypes.IMAGE_SVG_XML) ||
 			(metadata == null)) {
@@ -274,14 +272,14 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return metadata;
 	}
 
-	private static final Map<String, Object> _fields;
+	private static final Map<String, String> _fields;
 	private static volatile ProcessExecutor _processExecutor =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ProcessExecutor.class, TikaRawMetadataProcessor.class,
 			"_processExecutor", true);
 
 	static {
-		Map<String, Object> fields = new HashMap<>();
+		Map<String, String> fields = new HashMap<>();
 
 		try {
 			_addFields(ClimateForcast.class, fields);

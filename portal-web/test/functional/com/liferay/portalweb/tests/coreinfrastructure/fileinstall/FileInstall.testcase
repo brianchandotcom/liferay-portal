@@ -135,7 +135,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
+		// Ignore assert until LPS-146449 is resolved
+
+		// AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 

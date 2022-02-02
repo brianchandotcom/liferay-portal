@@ -108,9 +108,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			String extension, String mimeType, File file)
 		throws PortalException {
 
-		Metadata metadata = extractMetadata(extension, mimeType, file);
+		Metadata metadata = _extractMetadata(extension, mimeType, file);
 
-		return createDDMFormValuesMap(metadata, getFields());
+		return _createDDMFormValuesMap(metadata, getFields());
 	}
 
 	@Override
@@ -118,9 +118,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			String extension, String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Metadata metadata = extractMetadata(extension, mimeType, inputStream);
+		Metadata metadata = _extractMetadata(extension, mimeType, inputStream);
 
-		return createDDMFormValuesMap(metadata, getFields());
+		return _createDDMFormValuesMap(metadata, getFields());
 	}
 
 	@Override
@@ -134,7 +134,13 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		_parser = parser;
 	}
 
-	protected DDMForm createDDMForm(Locale defaultLocale) {
+	private static void _addFields(Class<?> clazz, List<Field> fields) {
+		for (Field field : clazz.getFields()) {
+			fields.add(field);
+		}
+	}
+
+	private DDMForm _createDDMForm(Locale defaultLocale) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.addAvailableLocale(defaultLocale);
@@ -143,12 +149,12 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmForm;
 	}
 
-	protected DDMFormValues createDDMFormValues(
+	private DDMFormValues _createDDMFormValues(
 		Metadata metadata, Field[] fields) {
 
 		Locale defaultLocale = LocaleUtil.getDefault();
 
-		DDMForm ddmForm = createDDMForm(defaultLocale);
+		DDMForm ddmForm = _createDDMForm(defaultLocale);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -163,13 +169,13 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			String name = StringBundler.concat(
 				fieldClassName, StringPool.UNDERLINE, field.getName());
 
-			String value = getMetadataValue(metadata, field);
+			String value = _getMetadataValue(metadata, field);
 
 			if (value == null) {
 				continue;
 			}
 
-			DDMFormField ddmFormField = createTextDDMFormField(name);
+			DDMFormField ddmFormField = _createTextDDMFormField(name);
 
 			ddmForm.addDDMFormField(ddmFormField);
 
@@ -184,7 +190,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmFormValues;
 	}
 
-	protected Map<String, DDMFormValues> createDDMFormValuesMap(
+	private Map<String, DDMFormValues> _createDDMFormValuesMap(
 		Metadata metadata, Map<String, Field[]> fieldsMap) {
 
 		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
@@ -196,7 +202,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		for (Map.Entry<String, Field[]> entry : fieldsMap.entrySet()) {
 			Field[] fields = entry.getValue();
 
-			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
+			DDMFormValues ddmFormValues = _createDDMFormValues(
+				metadata, fields);
 
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 				ddmFormValues.getDDMFormFieldValuesMap();
@@ -213,7 +220,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmFormValuesMap;
 	}
 
-	protected DDMFormField createTextDDMFormField(String name) {
+	private DDMFormField _createTextDDMFormField(String name) {
 		DDMFormField ddmFormField = new DDMFormField(name, "text");
 
 		ddmFormField.setDataType("string");
@@ -221,7 +228,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmFormField;
 	}
 
-	protected Metadata extractMetadata(
+	private Metadata _extractMetadata(
 		String extension, String mimeType, File file) {
 
 		Metadata metadata = new Metadata();
@@ -259,7 +266,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		try {
 			return _postProcessMetadata(
 				mimeType,
-				ExtractMetadataProcessCallable.extractMetadata(
+				ExtractMetadataProcessCallable._extractMetadata(
 					file, metadata, _parser));
 		}
 		catch (IOException ioException) {
@@ -267,7 +274,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		}
 	}
 
-	protected Metadata extractMetadata(
+	private Metadata _extractMetadata(
 		String extension, String mimeType, InputStream inputStream) {
 
 		File file = FileUtil.createTempFile();
@@ -275,7 +282,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		try {
 			FileUtil.write(file, inputStream);
 
-			return extractMetadata(extension, mimeType, file);
+			return _extractMetadata(extension, mimeType, file);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -285,7 +292,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		}
 	}
 
-	protected Object getFieldValue(Metadata metadata, Field field) {
+	private Object _getFieldValue(Metadata metadata, Field field) {
 		Object fieldValue = null;
 
 		try {
@@ -303,8 +310,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return fieldValue;
 	}
 
-	protected String getMetadataValue(Metadata metadata, Field field) {
-		Object fieldValue = getFieldValue(metadata, field);
+	private String _getMetadataValue(Metadata metadata, Field field) {
+		Object fieldValue = _getFieldValue(metadata, field);
 
 		if (fieldValue instanceof String) {
 			return metadata.get((String)fieldValue);
@@ -313,12 +320,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		Property property = (Property)fieldValue;
 
 		return metadata.get(property.getName());
-	}
-
-	private static void _addFields(Class<?> clazz, List<Field> fields) {
-		for (Field field : clazz.getFields()) {
-			fields.add(field);
-		}
 	}
 
 	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
@@ -392,14 +393,14 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			logger.setLevel(Level.SEVERE);
 
 			try {
-				return extractMetadata(_file, _metadata, _parser);
+				return _extractMetadata(_file, _metadata, _parser);
 			}
 			catch (IOException ioException) {
 				throw new ProcessException(ioException);
 			}
 		}
 
-		protected static Metadata extractMetadata(
+		private static Metadata _extractMetadata(
 				File file, Metadata metadata, Parser parser)
 			throws IOException {
 

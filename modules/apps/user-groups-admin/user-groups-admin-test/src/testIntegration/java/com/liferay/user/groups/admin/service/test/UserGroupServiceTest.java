@@ -270,7 +270,7 @@ public class UserGroupServiceTest {
 				TestPropsValues.getCompanyId(), nameSearch));
 	}
 
-	private void _assertSearch(User user, int expected) throws Exception {
+	private void _assertSearch(User user, int expected) {
 		List<UserGroup> userGroups = _userGroupService.search(
 			user.getCompanyId(), null,
 			LinkedHashMapBuilder.<String, Object>put(

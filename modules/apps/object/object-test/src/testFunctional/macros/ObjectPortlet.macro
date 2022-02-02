@@ -373,4 +373,11 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
+	macro assertFieldLabelNameNotPresent {
+		AssertTextNotEquals(
+			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			value1 = "${key_fieldLabelName}");
+	}
+
 }

@@ -99,11 +99,19 @@ definition {
 	}
 
 	@description = "LPS-136456 - Verify that workflows cannot be added to forms that are mapped to an object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotAddWorkflow {
+		FormsAdmin.addForm();
 
-		// TODO LPS-145724 CannotAddWorkflow pending implementation
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		Click(locator1 = "Modal#HEADER");
+
+		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Select Object");
+
+		ObjectPortlet.assertFieldLabelNameNotPresent(fieldLabelName = "Select a Workflow");
 
 	}
 

@@ -18,7 +18,6 @@ import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.elements.PoshiNode;
 import com.liferay.poshi.core.util.StringUtil;
-import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
 
@@ -129,7 +128,6 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 		setFilePath(url.getPath());
 	}
-
 
 	private static final Set<PoshiScriptParserException>
 		_poshiScriptParserExceptions = Collections.synchronizedSet(

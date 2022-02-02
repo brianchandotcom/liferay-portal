@@ -14,147 +14,142 @@
 
 package com.liferay.poshi.core.elements;
 
-
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 
 /**
  * @author Calum Ragan
  */
-public class PoshiElementException extends Exception{
+public class PoshiElementException extends Exception {
 
-    public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
-        if (Validator.isNotNull(poshiNode.getParent())) {
-            PoshiElement parentPoshiElement =
-                    (PoshiElement)poshiNode.getParent();
+	public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
+		if (Validator.isNotNull(poshiNode.getParent())) {
+			PoshiElement parentPoshiElement =
+				(PoshiElement)poshiNode.getParent();
 
-            return getRootPoshiElement(parentPoshiElement);
-        }
+			return getRootPoshiElement(parentPoshiElement);
+		}
 
-        return (PoshiElement)poshiNode;
-    }
+		return (PoshiElement)poshiNode;
+	}
 
-    public int getErrorLineNumber() {
-        return _errorLineNumber;
-    }
+	public PoshiElementException(String msg) {
+		super(msg);
+	}
 
-    public PoshiNode<?, ?> getPoshiNode() {
-        return _poshiNode;
-    }
+	public PoshiElementException(String msg, PoshiNode<?, ?> poshiNode) {
+		this(msg);
 
-    public String getErrorSnippet() {
-        PoshiElement rootPoshiElement = getRootPoshiElement(getPoshiNode());
+		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
 
-        int errorLineNumber = getErrorLineNumber();
+		URL url = poshiNode.getURL();
 
-        int startingLineNumber = Math.max(
-                errorLineNumber - _ERROR_SNIPPET_PREFIX_SIZE, 1);
+		setFilePath(url.getPath());
 
-        String poshiScript = rootPoshiElement.getPoshiScript();
+		setPoshiNode(poshiNode);
+	}
 
-        String[] lines = poshiScript.split("\n");
+	public int getErrorLineNumber() {
+		return _errorLineNumber;
+	}
 
-        int endingLineNumber = lines.length;
+	public String getErrorSnippet() {
+		PoshiElement rootPoshiElement = getRootPoshiElement(getPoshiNode());
 
-        endingLineNumber = Math.min(
-                errorLineNumber + _ERROR_SNIPPET_POSTFIX_SIZE, endingLineNumber);
+		int errorLineNumber = getErrorLineNumber();
 
-        StringBuilder sb = new StringBuilder();
+		int startingLineNumber = Math.max(
+			errorLineNumber - _ERROR_SNIPPET_PREFIX_SIZE, 1);
 
-        int currentLineNumber = startingLineNumber;
+		String poshiScript = rootPoshiElement.getPoshiScript();
 
-        String lineNumberString = String.valueOf(endingLineNumber);
+		String[] lines = poshiScript.split("\n");
 
-        int pad = lineNumberString.length() + 2;
+		int endingLineNumber = lines.length;
 
-        while (currentLineNumber <= endingLineNumber) {
-            StringBuilder prefix = new StringBuilder();
+		endingLineNumber = Math.min(
+			errorLineNumber + _ERROR_SNIPPET_POSTFIX_SIZE, endingLineNumber);
 
-            if (currentLineNumber == errorLineNumber) {
-                prefix.append(">");
-            }
-            else {
-                prefix.append(" ");
-            }
+		StringBuilder sb = new StringBuilder();
 
-            prefix.append(" ");
+		int currentLineNumber = startingLineNumber;
 
-            prefix.append(currentLineNumber);
+		String lineNumberString = String.valueOf(endingLineNumber);
 
-            sb.append(String.format("%" + pad + "s", prefix.toString()));
-            sb.append(" |");
+		int pad = lineNumberString.length() + 2;
 
-            String line = lines[currentLineNumber - 1];
+		while (currentLineNumber <= endingLineNumber) {
+			StringBuilder prefix = new StringBuilder();
 
-            sb.append(StringUtil.replace(line, "\t", "    "));
+			if (currentLineNumber == errorLineNumber) {
+				prefix.append(">");
+			}
+			else {
+				prefix.append(" ");
+			}
 
-            sb.append("\n");
+			prefix.append(" ");
 
-            currentLineNumber++;
-        }
+			prefix.append(currentLineNumber);
 
-        return sb.toString();
-    }
+			sb.append(String.format("%" + pad + "s", prefix.toString()));
+			sb.append(" |");
 
-    public PoshiElementException(String msg) {
-        super(msg);
+			String line = lines[currentLineNumber - 1];
 
-    }
+			sb.append(StringUtil.replace(line, "\t", "    "));
 
-    public PoshiElementException(String msg, PoshiNode<?, ?> poshiNode) {
-        this(msg);
+			sb.append("\n");
 
-        setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
+			currentLineNumber++;
+		}
 
-        URL url = poshiNode.getURL();
+		return sb.toString();
+	}
 
-        setFilePath(url.getPath());
+	public String getFilePath() {
+		return _filePath;
+	}
 
-        setPoshiNode(poshiNode);
-    }
+	@Override
+	public String getMessage() {
+		StringBuilder sb = new StringBuilder();
 
-    @Override
-    public String getMessage() {
-        StringBuilder sb = new StringBuilder();
+		sb.append(super.getMessage());
+		sb.append(" at:\n");
+		sb.append(getFilePath());
+		sb.append(":");
+		sb.append(getErrorLineNumber());
+		sb.append("\n");
+		sb.append(getErrorSnippet());
 
-        sb.append(super.getMessage());
-        sb.append(" at:\n");
-        sb.append(getFilePath());
-        sb.append(":");
-        sb.append(getErrorLineNumber());
-        sb.append("\n");
-        sb.append(getErrorSnippet());
+		return sb.toString();
+	}
 
-        return sb.toString();
-    }
+	public PoshiNode<?, ?> getPoshiNode() {
+		return _poshiNode;
+	}
 
-    public void setErrorLineNumber(int errorLineNumber) {
-        _errorLineNumber = errorLineNumber;
-    }
+	public void setErrorLineNumber(int errorLineNumber) {
+		_errorLineNumber = errorLineNumber;
+	}
 
-    public void setFilePath(String filePath) {
-        _filePath = filePath;
-    }
+	public void setFilePath(String filePath) {
+		_filePath = filePath;
+	}
 
-    public String getFilePath() {
-        return _filePath;
-    }
+	public void setPoshiNode(PoshiNode<?, ?> poshiNode) {
+		_poshiNode = poshiNode;
+	}
 
-    public void setPoshiNode(PoshiNode<?, ?> poshiNode) {
-        _poshiNode = poshiNode;
-    }
+	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 7;
 
-    private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 7;
+	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 7;
 
-    private static final int _ERROR_SNIPPET_PREFIX_SIZE = 7;
+	private int _errorLineNumber;
+	private String _filePath = "Unknown file";
+	private PoshiNode<?, ?> _poshiNode;
 
-    private int _errorLineNumber;
-    private String _filePath = "Unknown file";
-    private PoshiNode<?, ?> _poshiNode;
 }

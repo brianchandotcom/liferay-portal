@@ -182,10 +182,9 @@
 	<bean class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
 		<property name="browserSniffer" ref="com.liferay.portal.kernel.servlet.BrowserSniffer" />
 	</bean>
+	<bean class="com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory" />
 	<bean class="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil">
-		<property name="directRequestDispatcherFactory">
-			<bean class="com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl" />
-		</property>
+		<property name="directRequestDispatcherFactory" ref="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory" />
 	</bean>
 	<bean class="com.liferay.portal.servlet.DirectServletRegistryImpl" id="com.liferay.portal.kernel.servlet.DirectServletRegistry" />
 	<bean class="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil" id="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil">

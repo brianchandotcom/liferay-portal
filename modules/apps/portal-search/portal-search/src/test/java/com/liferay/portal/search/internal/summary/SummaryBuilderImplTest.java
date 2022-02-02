@@ -118,18 +118,41 @@ public class SummaryBuilderImplTest {
 	}
 
 	@Test
-	public void testMaxContentLengthIgnoredWhenHighlight() {
-		String content = RandomTestUtil.randomString(8);
+	public void testMaxContentLengthWithHighlight() {
+		String content = StringBundler.concat(
+			"alpha ", HighlightUtil.HIGHLIGHT_TAG_OPEN, "bravo",
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " charlie");
 
-		_summaryBuilder.setContent(content);
-
-		_summaryBuilder.setHighlight(true);
-
-		_summaryBuilder.setMaxContentLength(1);
-
-		Summary summary = _summaryBuilder.build();
-
-		Assert.assertEquals(content, summary.getContent());
+		testMaxContentLength(
+			content, -1, true,
+			StringBundler.concat(
+				"alpha ", HighlightUtil.HIGHLIGHTS[0], "bravo",
+				HighlightUtil.HIGHLIGHTS[1], " charlie"));
+		testMaxContentLength(
+			content, 0, true,
+			StringBundler.concat(
+				"alpha ", HighlightUtil.HIGHLIGHTS[0], "bravo",
+				HighlightUtil.HIGHLIGHTS[1], " charlie"));
+		testMaxContentLength(content, 1, true, "a");
+		testMaxContentLength(content, 2, true, "al");
+		testMaxContentLength(content, 3, true, "...");
+		testMaxContentLength(content, 4, true, "a...");
+		testMaxContentLength(content, 13, true, "alpha...");
+		testMaxContentLength(
+			content, 14, true,
+			StringBundler.concat(
+				"alpha ", HighlightUtil.HIGHLIGHTS[0], "bravo",
+				HighlightUtil.HIGHLIGHTS[1], "..."));
+		testMaxContentLength(
+			content, 18, true,
+			StringBundler.concat(
+				"alpha ", HighlightUtil.HIGHLIGHTS[0], "bravo",
+				HighlightUtil.HIGHLIGHTS[1], "..."));
+		testMaxContentLength(
+			content, 19, true,
+			StringBundler.concat(
+				"alpha ", HighlightUtil.HIGHLIGHTS[0], "bravo",
+				HighlightUtil.HIGHLIGHTS[1], " charlie"));
 	}
 
 	@Test
@@ -187,16 +210,24 @@ public class SummaryBuilderImplTest {
 	}
 
 	protected void testMaxContentLength(
-		String content, int maxContentLength, String expected) {
+		String content, int maxContentLength, boolean highlight,
+		String expected) {
 
 		SummaryBuilder summaryBuilder = new SummaryBuilderImpl();
 
 		summaryBuilder.setContent(content);
+		summaryBuilder.setHighlight(highlight);
 		summaryBuilder.setMaxContentLength(maxContentLength);
 
 		Summary summary = summaryBuilder.build();
 
 		Assert.assertEquals(expected, summary.getContent());
+	}
+
+	protected void testMaxContentLength(
+		String content, int maxContentLength, String expected) {
+
+		testMaxContentLength(content, maxContentLength, false, expected);
 	}
 
 	private final SummaryBuilder _summaryBuilder = new SummaryBuilderImpl();

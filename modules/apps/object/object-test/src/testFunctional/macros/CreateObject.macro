@@ -287,18 +287,34 @@ definition {
 
 	macro checkToggleActive {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_ACTIVE");
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro checkToggleCollapsible {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro checkToggleInactive {
 		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_INACTIVE");
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro checkToggleMandatory {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
 	}
 
 	macro chooseEntryOnRelationshipField {

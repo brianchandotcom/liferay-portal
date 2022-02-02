@@ -30,6 +30,7 @@ import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
+import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
@@ -38,6 +39,7 @@ import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import PreviewModal from './PreviewModal';
+import {StyleErrorsModal} from './StyleErrorsModal';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
@@ -55,6 +57,7 @@ function ToolbarBody({className}) {
 	const load = useLoad();
 	const selectItem = useSelectItem();
 	const store = useSelector((state) => state);
+	const hasStyleErrors = useHasStyleErrors();
 
 	const canPublish = selectCanPublish(store);
 
@@ -68,8 +71,16 @@ function ToolbarBody({className}) {
 	} = store;
 
 	const [openPreviewModal, setOpenPreviewModal] = useState(false);
+	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
-	const {observer} = useModal({
+	const {
+		observer: observerStyleErrorsModal,
+		onClose: onCloseStyleErrorsModal,
+	} = useModal({
+		onClose: () => setOpenStyleErrorsModal(false),
+	});
+
+	const {observer: observerPreviewModal} = useModal({
 		onClose: () => {
 			if (isMounted()) {
 				setOpenPreviewModal(false);
@@ -333,17 +344,37 @@ function ToolbarBody({className}) {
 						<ClayButton
 							disabled={config.pending || !canPublish}
 							displayType="primary"
-							onClick={handleSubmit}
+							onClick={
+								config.tokenReuseEnabled && hasStyleErrors
+									? () => setOpenStyleErrorsModal(true)
+									: handleSubmit
+							}
 							small
-							type="submit"
+							type={
+								config.tokenReuseEnabled && hasStyleErrors
+									? 'button'
+									: 'submit'
+							}
 						>
 							{publishButtonLabel}
 						</ClayButton>
 					</form>
 				</li>
+
+				{config.tokenReuseEnabled &&
+					openStyleErrorsModal &&
+					hasStyleErrors && (
+						<StyleErrorsModal
+							observer={observerStyleErrorsModal}
+							onClose={onCloseStyleErrorsModal}
+							onSubmit={handleSubmit}
+						/>
+					)}
 			</ul>
 
-			{openPreviewModal && <PreviewModal observer={observer} />}
+			{openPreviewModal && (
+				<PreviewModal observer={observerPreviewModal} />
+			)}
 		</ClayLayout.ContainerFluid>
 	);
 }

@@ -13,55 +13,43 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import {useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-const tabs = [
-	{
-		active: true,
-		title: 'Overview',
-	},
-	{
-		active: true,
-		title: 'Routines',
-	},
-	{
-		active: true,
-		title: 'Suites',
-	},
-	{
-		active: true,
-		title: 'Cases',
-	},
-	{
-		active: true,
-		title: 'Requirements',
-	},
-];
+import {HeaderContext} from '../../context/HeaderContext';
 
-const Header = () => (
-	<div className="header-container">
-		<span className="d-flex flex-column">
-			<small className="font-weight-bold text-secondary">PROJECT</small>
+const Header = () => {
+	const [{tabs, title}] = useContext(HeaderContext);
+	const navigate = useNavigate();
 
-			<h1 className="font-weight-500">Project Directory</h1>
-		</span>
+	return (
+		<div className="header-container">
+			<span className="d-flex flex-column">
+				<small className="font-weight-bold text-secondary">
+					{title.category}
+				</small>
 
-		<div>
-			<ClayTabs className="header-container-tabs" modern>
-				{tabs.map((tab, index) => (
-					<ClayTabs.Item
-						active={false}
-						innerProps={{
-							'aria-controls': 'tabpanel-1',
-						}}
-						key={index}
-						onClick={() => index}
-					>
-						{tab.title}
-					</ClayTabs.Item>
-				))}
-			</ClayTabs>
+				<h1 className="font-weight-500">{title.title}</h1>
+			</span>
+
+			<div>
+				<ClayTabs className="header-container-tabs" modern>
+					{tabs.map((tab, index) => (
+						<ClayTabs.Item
+							active={tab.active}
+							innerProps={{
+								'aria-controls': `tabpanel-${index}`,
+							}}
+							key={index}
+							onClick={() => navigate(tab.path)}
+						>
+							{tab.title}
+						</ClayTabs.Item>
+					))}
+				</ClayTabs>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default Header;

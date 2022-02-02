@@ -29,6 +29,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -195,13 +196,29 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			long[] groupIds = searchContext.getGroupIds();
 
 			if (ArrayUtil.isNotEmpty(groupIds)) {
-				locale = _portal.getSiteDefaultLocale(groupIds[0]);
+				try {
+					locale = _portal.getSiteDefaultLocale(groupIds[0]);
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							portalException.getMessage(), portalException);
+					}
+				}
 			}
 
-			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
-				ddmStructureFieldName, ddmStructureFieldValue, locale);
+			try {
+				QueryFilter queryFilter =
+					_ddmIndexer.createFieldValueQueryFilter(
+						ddmStructureFieldName, ddmStructureFieldValue, locale);
 
-			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
+				contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception.getMessage(), exception);
+				}
+			}
 		}
 
 		String ddmStructureKey = (String)searchContext.getAttribute(
@@ -470,11 +487,23 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		for (String titleAvailableLanguageId : titleAvailableLanguageIds) {
-			document.addKeywordSortable(
-				localization.getLocalizedName(
-					"urlTitle", titleAvailableLanguageId),
-				journalArticle.getUrlTitle(
-					LocaleUtil.fromLanguageId(titleAvailableLanguageId)));
+			try {
+				document.addKeywordSortable(
+					localization.getLocalizedName(
+						"urlTitle", titleAvailableLanguageId),
+					journalArticle.getUrlTitle(
+						LocaleUtil.fromLanguageId(titleAvailableLanguageId)));
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Unable to obtain friendlyUrl article id:",
+							journalArticle.getId(), " languageId:",
+							titleAvailableLanguageId),
+						portalException);
+				}
+			}
 		}
 
 		if (ddmStructure != null) {

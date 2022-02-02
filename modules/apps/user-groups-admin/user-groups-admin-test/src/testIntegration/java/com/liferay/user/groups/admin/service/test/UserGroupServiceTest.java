@@ -87,7 +87,7 @@ public class UserGroupServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddOrUpdateUserGroupAddWithoutPermission()
+	public void testAddOrUpdateUserGroupAddUserGroupWithoutPermission()
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
@@ -112,7 +112,7 @@ public class UserGroupServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddOrUpdateUserGroupUpdateWithoutPermission()
+	public void testAddOrUpdateUserGroupUpdateUserGroupWithoutPermission()
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();

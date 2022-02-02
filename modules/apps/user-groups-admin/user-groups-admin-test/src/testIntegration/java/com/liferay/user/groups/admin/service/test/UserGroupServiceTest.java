@@ -23,14 +23,11 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -50,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,15 +66,21 @@ public class UserGroupServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_user = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user.getUserId());
+
+		UserTestUtil.setUser(_user);
+	}
+
 	@Test
 	public void testAddOrUpdateUserGroupAddUserGroup() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		UserTestUtil.setUser(user);
-
 		_addResourcePermission(
 			PortletKeys.PORTAL, String.valueOf(TestPropsValues.getCompanyId()),
-			ActionKeys.ADD_USER_GROUP, user);
+			ActionKeys.ADD_USER_GROUP, _user);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -88,8 +92,6 @@ public class UserGroupServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddOrUpdateUserGroupAddWithoutPermission()
 		throws Exception {
-
-		UserTestUtil.setUser(UserTestUtil.addUser());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -105,14 +107,10 @@ public class UserGroupServiceTest {
 		_userGroupLocalService.updateExternalReferenceCode(
 			_addUserGroupAdminUser(), externalReferenceCode);
 
-		User user = UserTestUtil.addUser();
-
-		UserTestUtil.setUser(user);
-
 		_addResourcePermission(
 			UserGroup.class.getName(),
 			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE,
-			user);
+			_user);
 
 		_userGroupService.addOrUpdateUserGroup(
 			externalReferenceCode, RandomTestUtil.randomString(),
@@ -122,8 +120,6 @@ public class UserGroupServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddOrUpdateUserGroupUpdateWithoutPermission()
 		throws Exception {
-
-		UserTestUtil.setUser(UserTestUtil.addUser());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -137,29 +133,18 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testDatabaseSearchPermissionCheck() throws Exception {
-		User user = UserTestUtil.addUser();
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
+		_userGroupLocalService.addUserUserGroup(_user.getUserId(), userGroup);
 
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+		_assertSearch(_user, 0);
 
-			_userGroupLocalService.addUserUserGroup(
-				user.getUserId(), userGroup);
+		Role adminRole = _roleLocalService.getRole(
+			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-			_assertSearch(user, 0);
+		RoleLocalServiceUtil.addUserRole(_user.getUserId(), adminRole);
 
-			Role adminRole = _roleLocalService.getRole(
-				user.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			RoleLocalServiceUtil.addUserRole(user.getUserId(), adminRole);
-
-			_assertSearch(user, 1);
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
+		_assertSearch(_user, 1);
 	}
 
 	@Test
@@ -234,13 +219,11 @@ public class UserGroupServiceTest {
 			String resourceName, String primKey, String actionKey, User user)
 		throws Exception {
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
 		RoleTestUtil.addResourcePermission(
-			role, resourceName, ResourceConstants.SCOPE_COMPANY, primKey,
+			_role, resourceName, ResourceConstants.SCOPE_COMPANY, primKey,
 			actionKey);
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+		UserLocalServiceUtil.addRoleUser(_role.getRoleId(), user.getUserId());
 	}
 
 	private UserGroup _addUserGroupAdminUser() throws Exception {
@@ -283,11 +266,12 @@ public class UserGroupServiceTest {
 		Assert.assertEquals(userGroups.toString(), expected, userGroups.size());
 	}
 
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private User _user;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

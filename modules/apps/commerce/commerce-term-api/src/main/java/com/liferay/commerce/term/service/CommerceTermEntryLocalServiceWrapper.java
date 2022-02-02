@@ -456,6 +456,26 @@ public class CommerceTermEntryLocalServiceWrapper
 		return _commerceTermEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+
+		return _commerceTermEntryLocalService.search(searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.term.model.CommerceTermEntry>
+				searchCommerceTermEntries(
+					long companyId, long accountEntryId, String keywords,
+					java.util.LinkedHashMap<String, String> params, int start,
+					int end, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.searchCommerceTermEntries(
+			companyId, accountEntryId, keywords, params, start, end, sort);
+	}
+
 	/**
 	 * Updates the commerce term entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

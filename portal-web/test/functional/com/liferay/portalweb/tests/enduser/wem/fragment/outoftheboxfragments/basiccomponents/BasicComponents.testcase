@@ -68,13 +68,13 @@ definition {
 		task ("Configure the Button fragment") {
 			PageEditor.gotoConfiguration(fragmentName = "Button");
 
-			PageEditor.configureFragment(type = "Link");
+			PageEditor.configureFragment(
+				size = "Large",
+				type = "Link");
 
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(
-				alignment = "Center",
-				size = "Large");
+			PageEditor.configureFragment(alignment = "Center");
 		}
 
 		task ("View the Button styles") {
@@ -187,13 +187,16 @@ definition {
 		}
 
 		task ("Configure the Card fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Card");
+
+			PageEditor.configureFragment(imageSize = "Fit");
+
 			PageEditor.gotoStyle(fragmentName = "Card");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
 				borderRadius = "Border Radius Small",
 				boxShadow = "Box Shadow Large",
-				imageSize = "Fit",
 				marginBottom = "5");
 		}
 
@@ -316,11 +319,14 @@ definition {
 		}
 
 		task ("Configure the Image") {
+			PageEditor.gotoConfiguration(fragmentName = "Image");
+
+			PageEditor.configureFragment(imageSize = "Original Size");
+
 			PageEditor.gotoStyle(fragmentName = "Image");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				imageSize = "Original Size",
 				marginBottom = "2");
 		}
 
@@ -548,7 +554,7 @@ definition {
 		}
 
 		task ("Configure the Spacer") {
-			PageEditor.gotoStyle(fragmentName = "Spacer");
+			PageEditor.gotoConfiguration(fragmentName = "Spacer");
 
 			PageEditor.configureFragment(height = "4");
 		}

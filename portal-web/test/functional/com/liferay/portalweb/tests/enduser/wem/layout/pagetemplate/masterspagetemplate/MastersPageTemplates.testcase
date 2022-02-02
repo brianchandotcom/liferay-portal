@@ -63,14 +63,15 @@ definition {
 		task ("Configure the Button fragment") {
 			PageEditor.gotoConfiguration(fragmentName = "Button");
 
-			PageEditor.configureFragment(type = "Link");
+			PageEditor.configureFragment(
+				size = "Large",
+				type = "Link");
 
 			PageEditor.gotoStyle(fragmentName = "Button");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				backgroundColor = "Gray 300",
-				size = "Large");
+				backgroundColor = "Gray 300");
 
 			PageEditor.viewFragmentStyle(
 				backgroundColor = "gray-300",

@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {TabsVisitor} from '../../utils/visitor';
@@ -116,7 +117,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectLayoutResponse = await Liferay.Util.fetch(
+			const objectLayoutResponse = await fetch(
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`,
 				{
 					headers: HEADERS,
@@ -129,9 +130,9 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				name,
 				objectDefinitionId,
 				objectLayoutTabs,
-			} = await objectLayoutResponse.json();
+			} = (await objectLayoutResponse.json()) as any;
 
-			const objectFieldsResponse = await Liferay.Util.fetch(
+			const objectFieldsResponse = await fetch(
 				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields`,
 				{
 					headers: HEADERS,
@@ -139,7 +140,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			);
 
-			const objectRelationshipsResponse = await Liferay.Util.fetch(
+			const objectRelationshipsResponse = await fetch(
 				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships`,
 				{
 					headers: HEADERS,
@@ -162,7 +163,9 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			const {
 				items: objectFields,
-			}: {items: TObjectField[]} = await objectFieldsResponse.json();
+			}: {
+				items: TObjectField[];
+			} = (await objectFieldsResponse.json()) as any;
 
 			dispatch({
 				payload: {
@@ -178,7 +181,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				items: objectRelationships,
 			}: {
 				items: TObjectRelationship[];
-			} = await objectRelationshipsResponse.json();
+			} = (await objectRelationshipsResponse.json()) as any;
 
 			dispatch({
 				payload: {
@@ -210,7 +213,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			return;
 		}
 
-		const response = await Liferay.Util.fetch(
+		const response = await fetch(
 			`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`,
 			{
 				body: JSON.stringify(objectLayout),
@@ -238,7 +241,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		else {
 			const {
 				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			} = (await response.json()) as {title: any};
 
 			Liferay.Util.openToast({
 				message: title,

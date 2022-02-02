@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
@@ -61,7 +62,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 		required,
 		type,
 	}: TInitialValues) => {
-		const response = await Liferay.Util.fetch(apiURL, {
+		const response = await fetch(apiURL, {
 			body: JSON.stringify({
 				DBType: type === 'Picklist' ? 'String' : type,
 				indexed: true,
@@ -87,7 +88,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 			window.location.reload();
 		}
 		else {
-			const {type} = await response.json();
+			const {type} = (await response.json()) as any;
 			const isMapped = Object.prototype.hasOwnProperty.call(ERRORS, type);
 			const errorMessage = isMapped
 				? ERRORS[type]
@@ -166,7 +167,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 								objectFieldTypes[Number(value) - 1];
 
 							if (selectedType === 'Picklist') {
-								const result = await Liferay.Util.fetch(
+								const result = await fetch(
 									'/o/headless-admin-list-type/v1.0/list-type-definitions',
 									{
 										headers,
@@ -174,7 +175,9 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 									}
 								);
 
-								const {items = []} = await result.json();
+								const {items = []} = (await result.json()) as {
+									items: [];
+								};
 
 								setPicklist(
 									items.map(({id, name}: TPicklist) => ({

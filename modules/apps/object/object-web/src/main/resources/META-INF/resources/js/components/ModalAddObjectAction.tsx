@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
@@ -58,7 +59,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 		secret,
 		url,
 	}: TInitialValues) => {
-		const response = await Liferay.Util.fetch(apiURL, {
+		const response = await fetch(apiURL, {
 			body: JSON.stringify({
 				active: true,
 				name,
@@ -81,7 +82,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 		else {
 			const {
 				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			} = (await response.json()) as {title?: string};
 
 			setError(title);
 		}

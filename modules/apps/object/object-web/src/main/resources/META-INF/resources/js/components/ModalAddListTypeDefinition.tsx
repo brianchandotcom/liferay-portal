@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
@@ -35,7 +36,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	const [error, setError] = useState<string>('');
 
 	const onSubmit = async ({name_i18n}: TInitialValues) => {
-		const response = await Liferay.Util.fetch(apiURL, {
+		const response = await fetch(apiURL, {
 			body: JSON.stringify({
 				name_i18n,
 			}),
@@ -57,7 +58,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 		else {
 			const {
 				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			} = (await response.json()) as {title: string};
 
 			setError(title);
 		}

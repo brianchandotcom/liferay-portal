@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -272,13 +271,8 @@ public class UserGroupLocalServiceTest {
 
 	private static long _companyId;
 	private static int _count;
-
-	@DeleteAfterTestRun
 	private static Role _role;
-
 	private static UserGroup _userGroup1;
-
-	@DeleteAfterTestRun
 	private static UserGroup _userGroup2;
 
 	@Inject

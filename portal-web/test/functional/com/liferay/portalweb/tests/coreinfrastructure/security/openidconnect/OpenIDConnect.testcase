@@ -144,7 +144,9 @@ definition {
 
 			UserBar.signOut();
 
-			Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+			Navigator.openSpecificURL(
+				domain = "www.baker.com",
+				url = "http://www.baker.com:8080/");
 
 			OpenIDConnect.viewProvider();
 		}
@@ -169,13 +171,15 @@ definition {
 		}
 
 		task ("Goto new CP url and sign in") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/");
+			Navigator.openSpecificURL(
+				domain = "www.able.com",
+				url = "https://www.able.com:8443/");
 
 			OpenIDConnect.viewNoProvider();
 		}
 
 		task ("Enable openID connect CP") {
-			Navigator.openURL();
+			Navigator.openURL(baseURL = "https://localhost:8443");
 
 			SystemSettings.openSystemSettingsAdmin();
 
@@ -202,7 +206,9 @@ definition {
 		}
 
 		task ("Go to able.com and assert openId connect") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/");
+			Navigator.openSpecificURL(
+				domain = "www.able.com",
+				url = "https://www.able.com:8443/");
 
 			OpenIDConnect.viewProvider();
 		}
@@ -213,6 +219,7 @@ definition {
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectOnInstanceLevelSmoke";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
@@ -229,12 +236,13 @@ definition {
 
 		task ("Login at able.com and enable OpenId connect CP") {
 			User.firstLoginUI(
+				domain = "www.able.com",
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificURL = "https://www.able.com:8443",
 				userEmailAddress = "test@www.able.com");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
+				baseURL = "https://www.able.com:8443",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -243,7 +251,7 @@ definition {
 		}
 
 		task ("Add SSO openID connect provider") {
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "https://www.able.com:8443");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -260,7 +268,7 @@ definition {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				specificURL = "http://www.able.com:8080",
+				specificURL = "https://www.able.com:8443",
 				userEmailAddress = "${userEmailAddress}",
 				userPassword = "${userPassword}");
 		}
@@ -270,7 +278,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificURL = "https://www.able.com:8443",
 				userEmailAddress = "test@www.able.com");
 		}
 	}

@@ -189,12 +189,11 @@ public class UserGroupServiceTest {
 
 			userGroup.setName(name + i);
 
-			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
-
-			allUserGroups.add(userGroup);
-			likeNameUserGroups.add(userGroup);
+			likeNameUserGroups.add(
+				_userGroupLocalService.updateUserGroup(userGroup));
 		}
 
+		allUserGroups.addAll(likeNameUserGroups);
 		allUserGroups.add(UserGroupTestUtil.addUserGroup());
 		allUserGroups.add(UserGroupTestUtil.addUserGroup());
 		allUserGroups.add(UserGroupTestUtil.addUserGroup());

@@ -397,40 +397,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-42750. View mobile device families"
-	@priority = "3"
-	test NoXSSVulnerabilityInMobileDeviceFamilies {
-		property test.name.skip.portal.instance = "XSS#ViewMobileDeviceFamilies";
-
-		task ("Add device family CP") {
-			MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
-
-			MobileDevice.addDeviceFamilyCP(deviceFamilyName = '''<script>alert(123);</script>''');
-		}
-
-		task ("Select <script>alert(123);</script> mobile device family and assert name was interpreted correctly") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "Search");
-
-			PagesAdmin.selectMobileDeviceFamily(deviceFamilyName = '''<script>alert(123);</script>''');
-
-			AssertElementNotPresent(locator1 = "//body[.='123']");
-		}
-
-		task ("Assert correct HTML source text") {
-			var actualScript = '''<script>alert(123);</script>''';
-
-			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-		}
-	}
-
 	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Piwik"
 	@priority = "3"
 	test NoXSSVulnerabilityInPiwik {

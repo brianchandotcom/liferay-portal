@@ -32,8 +32,6 @@
 		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet" schema-version="1.0.0" />
 		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_ratings_page_ratings_web_portlet_PageRatingsPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_ratings_page_ratings_web_portlet_PageRatingsPortlet" schema-version="1.0.0" />
 		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet" schema-version="1.0.0" />
-		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_mobile_device_rules_web_portlet_MDRPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_mobile_device_rules_web_portlet_MDRPortlet" schema-version="1.0.0" />
-		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_calendar_web_portlet_CalendarPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_calendar_web_portlet_CalendarPortlet" schema-version="1.0.0" />
 		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet" schema-version="1.0.0" />
 		<portlet layout-id="0" path="/group/33220/portlet/com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet/0/portlet.xml" portlet-configuration="setup,archived-setups,user-preferences" portlet-data="true" portlet-id="com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet" schema-version="1.0.0" />
 	</portlets>
@@ -45,7 +43,6 @@
 		<staged-model manifest-summary-key="com.liferay.calendar.model.Calendar" />
 		<staged-model manifest-summary-key="com.liferay.calendar.model.CalendarResource" />
 		<staged-model manifest-summary-key="com.liferay.polls.model.PollsQuestion" />
-		<staged-model manifest-summary-key="com.liferay.mobile.device.rules.model.MDRRule" />
 		<staged-model manifest-summary-key="com.liferay.journal.model.JournalFolder" />
 		<staged-model manifest-summary-key="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance" />
 		<staged-model manifest-summary-key="com.liferay.calendar.model.CalendarBooking" />
@@ -70,7 +67,6 @@
 		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFileEntry" />
 		<staged-model manifest-summary-key="com.liferay.bookmarks.model.BookmarksFolder" />
 		<staged-model manifest-summary-key="com.liferay.asset.kernel.model.AssetTag" />
-		<staged-model manifest-summary-key="com.liferay.mobile.device.rules.model.MDRAction#com.liferay.portal.kernel.model.Layout" />
 		<staged-model manifest-summary-key="com.liferay.dynamic.data.lists.model.DDLRecord" />
 		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFileEntryType" />
 		<staged-model manifest-summary-key="com.liferay.portal.kernel.model.Team" />

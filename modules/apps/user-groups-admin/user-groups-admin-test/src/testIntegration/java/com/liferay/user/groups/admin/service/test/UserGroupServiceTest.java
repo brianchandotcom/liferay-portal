@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -145,7 +144,7 @@ public class UserGroupServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
-			UserGroup userGroup = _addUserGroup();
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 			_userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup);
@@ -167,7 +166,7 @@ public class UserGroupServiceTest {
 	@Test
 	public void testGetGtUserGroups() throws Exception {
 		for (int i = 0; i < 10; i++) {
-			_userGroups.add(UserGroupTestUtil.addUserGroup());
+			UserGroupTestUtil.addUserGroup();
 		}
 
 		long parentUserGroupId = 0;
@@ -211,7 +210,7 @@ public class UserGroupServiceTest {
 		String name = RandomTestUtil.randomString(50);
 
 		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = _addUserGroup();
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 			userGroup.setName(name + i);
 
@@ -221,9 +220,9 @@ public class UserGroupServiceTest {
 			likeNameUserGroups.add(userGroup);
 		}
 
-		allUserGroups.add(_addUserGroup());
-		allUserGroups.add(_addUserGroup());
-		allUserGroups.add(_addUserGroup());
+		allUserGroups.add(UserGroupTestUtil.addUserGroup());
+		allUserGroups.add(UserGroupTestUtil.addUserGroup());
+		allUserGroups.add(UserGroupTestUtil.addUserGroup());
 
 		_assertExpectedUserGroups(likeNameUserGroups, name + "%");
 		_assertExpectedUserGroups(
@@ -245,14 +244,6 @@ public class UserGroupServiceTest {
 			actionKey);
 
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
-	}
-
-	private UserGroup _addUserGroup() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroups.add(userGroup);
-
-		return userGroup;
 	}
 
 	private UserGroup _addUserGroupAdminUser() throws Exception {
@@ -306,9 +297,6 @@ public class UserGroupServiceTest {
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
-
-	@DeleteAfterTestRun
-	private final List<UserGroup> _userGroups = new ArrayList<>();
 
 	@Inject
 	private UserGroupService _userGroupService;

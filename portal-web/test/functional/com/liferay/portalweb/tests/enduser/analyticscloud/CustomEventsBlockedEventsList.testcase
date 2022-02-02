@@ -127,6 +127,87 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-10359 | Automation ID: LRAC-10360 | Test Summary: Sort blocked events by Event Name and Last Seen"
+	@priority = "4"
+	test CanSortBlockedEventsByNameAndLastSeen {
+		task ("Add a Web Content Display to page and display the custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createWCWithCustomEventAndAddToPage(
+				customEventName = "${customEventName}",
+				customEventsNumber = "3");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Click on the button to send the events") {
+			ACCustomEvents.createNCustomEvents();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Block all custom events") {
+			ACCustomEvents.blockAllCustomEvents();
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Order the list by Last Seen and check if the custom event is present") {
+			for (var n : list "1,2") {
+				ACUtils.orderAnyTable(columnName = "Last Seen");
+
+				ACUtils.viewPartialNameList(nameList = "${customEventName}");
+			}
+		}
+	}
+
 	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10164 | Test Summary: Check custom event list and blocked event list when more than 100 events are created"
 	@priority = "5"
 	test CheckBlockedEventsListWhenMore100EventsCreated {

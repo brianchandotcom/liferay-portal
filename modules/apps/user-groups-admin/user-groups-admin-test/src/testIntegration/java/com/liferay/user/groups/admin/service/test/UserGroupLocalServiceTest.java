@@ -140,7 +140,7 @@ public class UserGroupLocalServiceTest {
 			null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
-				Long.valueOf(_role.getRoleId())
+				_role.getRoleId()
 			).put(
 				"invalidParamKey", "invalidParamValue"
 			).build());
@@ -154,7 +154,7 @@ public class UserGroupLocalServiceTest {
 			null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
-				Long.valueOf(_role.getRoleId())
+				_role.getRoleId()
 			).build());
 
 		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
@@ -166,7 +166,7 @@ public class UserGroupLocalServiceTest {
 			_userGroup2.getName(),
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
-				Long.valueOf(_role.getRoleId())
+				_role.getRoleId()
 			).build());
 
 		Assert.assertEquals(userGroups.toString(), 0, userGroups.size());

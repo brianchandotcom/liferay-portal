@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -133,10 +131,7 @@ public class UserGroupServiceTest {
 
 		_assertSearch(0);
 
-		Role adminRole = _roleLocalService.getRole(
-			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		RoleLocalServiceUtil.addUserRole(_user.getUserId(), adminRole);
+		_addResourcePermission(UserGroup.class.getName(), ActionKeys.VIEW);
 
 		_assertSearch(1);
 	}
@@ -256,10 +251,6 @@ public class UserGroupServiceTest {
 	}
 
 	private Role _role;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
 	private User _user;
 
 	@Inject

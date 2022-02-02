@@ -275,7 +275,7 @@ public class UserGroupServiceTest {
 			user.getCompanyId(), null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				Long.valueOf(user.getUserId())
+				user.getUserId()
 			).build(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));

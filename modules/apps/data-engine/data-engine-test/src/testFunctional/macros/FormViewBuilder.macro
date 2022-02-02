@@ -1197,4 +1197,11 @@ definition {
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
+	macro editClobText {
+		Type(
+			key_clobType = "",
+			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY",
+			value1 = "${fieldLong}");
+	}
+
 }

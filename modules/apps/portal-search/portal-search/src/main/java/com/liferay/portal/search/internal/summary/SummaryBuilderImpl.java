@@ -17,12 +17,15 @@ package com.liferay.portal.search.internal.summary;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 import com.liferay.portal.util.HtmlImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -69,55 +72,106 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 	}
 
 	private String _buildContent() {
-		if (Validator.isNull(_content)) {
+		return _buildText(_content, true);
+	}
+
+	private String _buildText(String text, boolean checkMaxLength) {
+		if (Validator.isNull(text)) {
 			return StringPool.BLANK;
 		}
 
-		if (_highlight) {
-			return _escapeAndHighlight(_content);
+		if (checkMaxLength && (_maxContentLength > 0)) {
+			text = _shorten(text, _maxContentLength);
 		}
 
-		return _buildContentPlain(_content);
-	}
-
-	private String _buildContentPlain(String text) {
 		if (_escape) {
-			text = _html.escape(text);
+			text = _escape(text);
 		}
 
-		if ((_maxContentLength <= 0) || (text.length() <= _maxContentLength)) {
-			return text;
+		if (_highlight) {
+			text = _highlight(text);
 		}
 
-		return StringUtil.shorten(text, _maxContentLength);
+		return text;
 	}
 
 	private String _buildTitle() {
-		if (Validator.isNull(_title)) {
-			return StringPool.BLANK;
-		}
-
-		if (_highlight) {
-			return _escapeAndHighlight(_title);
-		}
-
-		if (_escape) {
-			return _html.escape(_title);
-		}
-
-		return _title;
+		return _buildText(_title, false);
 	}
 
-	private String _escapeAndHighlight(String text) {
+	private String _escape(String text) {
 		text = StringUtil.replace(
 			text, _HIGHLIGHT_TAGS, _ESCAPE_SAFE_HIGHLIGHTS);
 
-		if (_escape) {
-			text = _html.escape(text);
-		}
+		text = _html.escape(text);
 
 		return StringUtil.replace(
-			text, _ESCAPE_SAFE_HIGHLIGHTS, HighlightUtil.HIGHLIGHTS);
+			text, _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHT_TAGS);
+	}
+
+	private String _highlight(String text) {
+		return StringUtil.replace(
+			text, _HIGHLIGHT_TAGS, HighlightUtil.HIGHLIGHTS);
+	}
+
+	private String _shorten(String text, int maxLength) {
+		String originalText = text;
+
+		List<Integer> closeTagIndexes = new ArrayList<>();
+		List<Integer> openTagIndexes = new ArrayList<>();
+
+		while (text.lastIndexOf(HighlightUtil.HIGHLIGHT_TAG_CLOSE) != -1) {
+			closeTagIndexes.add(
+				text.lastIndexOf(HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+
+			text = StringUtil.removeLast(
+				text, HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+
+			openTagIndexes.add(
+				text.lastIndexOf(HighlightUtil.HIGHLIGHT_TAG_OPEN));
+
+			text = StringUtil.removeLast(
+				text, HighlightUtil.HIGHLIGHT_TAG_OPEN);
+		}
+
+		if (text.length() > maxLength) {
+			text = StringUtil.shorten(text, maxLength);
+		}
+		else {
+			return originalText;
+		}
+
+		ListUtil.sort(closeTagIndexes);
+		ListUtil.sort(openTagIndexes);
+
+		for (int i = 0; i < openTagIndexes.size(); i++) {
+			int textEndIndex = text.length();
+
+			if (text.endsWith("...")) {
+				textEndIndex = textEndIndex - 3;
+			}
+
+			int openTagIndex = openTagIndexes.get(i);
+
+			if (openTagIndex < textEndIndex) {
+				text = StringUtil.insert(
+					text, HighlightUtil.HIGHLIGHT_TAG_OPEN, openTagIndex);
+
+				textEndIndex =
+					textEndIndex + HighlightUtil.HIGHLIGHT_TAG_OPEN.length();
+
+				int closeTagIndex = closeTagIndexes.get(i);
+
+				text = StringUtil.insert(
+					text, HighlightUtil.HIGHLIGHT_TAG_CLOSE,
+					Math.min(closeTagIndex, textEndIndex));
+			}
+			else {
+				break;
+			}
+		}
+
+		return text;
 	}
 
 	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {

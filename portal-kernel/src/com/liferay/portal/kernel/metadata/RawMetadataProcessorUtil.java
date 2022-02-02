@@ -20,14 +20,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.io.InputStream;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Miguel Pastor
  */
 public class RawMetadataProcessorUtil {
 
-	public static Map<String, Map<String, Object>> getFields() {
-		return _rawMetadataProcessor.getFields();
+	public static Map<String, Set<String>> getFieldNames() {
+		return _rawMetadataProcessor.getFieldNames();
 	}
 
 	public static Map<String, DDMFormValues> getRawMetadataMap(

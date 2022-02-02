@@ -44,6 +44,7 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -88,8 +89,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	@Override
-	public Map<String, Map<String, Object>> getFields() {
-		return _fields;
+	public Map<String, Set<String>> getFieldNames() {
+		return Collections.singletonMap(TIKA_RAW_METADATA, _fields.keySet());
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 		Metadata metadata = _extractMetadata(mimeType, inputStream);
 
-		return _createDDMFormValuesMap(metadata, getFields());
+		return _createDDMFormValuesMap(metadata);
 	}
 
 	private static void _addFields(Class<?> clazz, Map<String, Object> fields)
@@ -123,9 +124,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmForm;
 	}
 
-	private DDMFormValues _createDDMFormValues(
-		Metadata metadata, Map<String, Object> fields) {
-
+	private DDMFormValues _createDDMFormValues(Metadata metadata) {
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		DDMForm ddmForm = _createDDMForm(defaultLocale);
@@ -135,7 +134,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		ddmFormValues.addAvailableLocale(defaultLocale);
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
-		for (Map.Entry<String, Object> entry : fields.entrySet()) {
+		for (Map.Entry<String, Object> entry : _fields.entrySet()) {
 			String value = _getMetadataValue(metadata, entry.getValue());
 
 			if (value == null) {
@@ -160,7 +159,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Map<String, DDMFormValues> _createDDMFormValuesMap(
-		Metadata metadata, Map<String, Map<String, Object>> fieldsMap) {
+		Metadata metadata) {
 
 		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
@@ -168,24 +167,15 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			return ddmFormValuesMap;
 		}
 
-		for (Map.Entry<String, Map<String, Object>> entry :
-				fieldsMap.entrySet()) {
+		DDMFormValues ddmFormValues = _createDDMFormValues(metadata);
 
-			Map<String, Object> fields = entry.getValue();
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
 
-			DDMFormValues ddmFormValues = _createDDMFormValues(
-				metadata, fields);
+		Set<String> names = ddmFormFieldValuesMap.keySet();
 
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap();
-
-			Set<String> names = ddmFormFieldValuesMap.keySet();
-
-			if (names.isEmpty()) {
-				continue;
-			}
-
-			ddmFormValuesMap.put(entry.getKey(), ddmFormValues);
+		if (!names.isEmpty()) {
+			ddmFormValuesMap.put(TIKA_RAW_METADATA, ddmFormValues);
 		}
 
 		return ddmFormValuesMap;
@@ -284,8 +274,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return metadata;
 	}
 
-	private static final Map<String, Map<String, Object>> _fields =
-		new HashMap<>();
+	private static final Map<String, Object> _fields;
 	private static volatile ProcessExecutor _processExecutor =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ProcessExecutor.class, TikaRawMetadataProcessor.class,
@@ -312,7 +301,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			throw new ExceptionInInitializerError(illegalAccessException);
 		}
 
-		_fields.put(TIKA_RAW_METADATA, fields);
+		_fields = fields;
 	}
 
 	private final Parser _parser;

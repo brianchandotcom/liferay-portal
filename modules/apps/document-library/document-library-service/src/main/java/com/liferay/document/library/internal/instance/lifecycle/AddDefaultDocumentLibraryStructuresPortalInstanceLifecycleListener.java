@@ -54,6 +54,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -143,10 +144,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
 
-		Map<String, Map<String, Object>> fields =
-			RawMetadataProcessorUtil.getFields();
+		Map<String, Set<String>> fieldNames =
+			RawMetadataProcessorUtil.getFieldNames();
 
-		for (Map.Entry<String, Map<String, Object>> entry : fields.entrySet()) {
+		for (Map.Entry<String, Set<String>> entry : fieldNames.entrySet()) {
 			String name = entry.getKey();
 
 			DDMForm ddmForm = _buildDDMForm(entry.getValue(), locale);
@@ -188,7 +189,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		}
 	}
 
-	private DDMForm _buildDDMForm(Map<String, Object> fields, Locale locale) {
+	private DDMForm _buildDDMForm(Set<String> fieldNames, Locale locale) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(Collections.singleton(locale));
@@ -196,9 +197,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
-		for (Map.Entry<String, Object> entry : fields.entrySet()) {
-			String name = entry.getKey();
-
+		for (String name : fieldNames) {
 			DDMFormField ddmFormField = new DDMFormField(name, "text");
 
 			ddmFormField.setDataType("string");

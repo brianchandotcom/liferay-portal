@@ -56,6 +56,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.ClimateForcast;
 import org.apache.tika.metadata.CreativeCommons;
@@ -71,6 +72,7 @@ import org.apache.tika.metadata.TIFF;
 import org.apache.tika.metadata.TikaMetadataKeys;
 import org.apache.tika.metadata.TikaMimeKeys;
 import org.apache.tika.metadata.XMPDM;
+import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 
@@ -83,6 +85,10 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Shuyang Zhou
  */
 public class TikaRawMetadataProcessor implements RawMetadataProcessor {
+
+	public TikaRawMetadataProcessor() throws Exception {
+		_parser = new AutoDetectParser(new TikaConfig());
+	}
 
 	@Override
 	public Map<String, Field[]> getFields() {
@@ -97,10 +103,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		Metadata metadata = _extractMetadata(mimeType, inputStream);
 
 		return _createDDMFormValuesMap(metadata, getFields());
-	}
-
-	public void setParser(Parser parser) {
-		_parser = parser;
 	}
 
 	private static void _addFields(Class<?> clazz, List<Field> fields) {
@@ -335,7 +337,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		_fields.put(TIKA_RAW_METADATA, fields.toArray(new Field[0]));
 	}
 
-	private Parser _parser;
+	private final Parser _parser;
 
 	private static class ExtractMetadataProcessCallable
 		implements ProcessCallable<Metadata> {

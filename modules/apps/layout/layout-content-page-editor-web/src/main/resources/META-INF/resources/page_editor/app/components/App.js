@@ -26,6 +26,7 @@ import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePrev
 import {EditableProcessorContextProvider} from '../contexts/EditableProcessorContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {StoreContextProvider, useSelector} from '../contexts/StoreContext';
+import {StyleErrorsContextProvider} from '../contexts/StyleErrorsContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
@@ -92,17 +93,19 @@ export default function App({state}) {
 
 									<DragPreview />
 
-									<Toolbar />
+									<StyleErrorsContextProvider>
+										<Toolbar />
 
-									<ShortcutManager />
+										<ShortcutManager />
 
-									<GlobalContextProvider>
-										<LayoutViewport />
+										<GlobalContextProvider>
+											<LayoutViewport />
 
-										<StyleBookContextProvider>
-											<Sidebar />
-										</StyleBookContextProvider>
-									</GlobalContextProvider>
+											<StyleBookContextProvider>
+												<Sidebar />
+											</StyleBookContextProvider>
+										</GlobalContextProvider>
+									</StyleErrorsContextProvider>
 								</WidgetsContextProvider>
 							</DisplayPagePreviewItemContextProvider>
 						</EditableProcessorContextProvider>

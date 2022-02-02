@@ -24,7 +24,6 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
@@ -139,43 +138,13 @@ public class ObjectFieldLocalServiceImpl
 	public ObjectField deleteObjectField(ObjectField objectField)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectField.getObjectDefinitionId());
-
-		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
-			!Objects.equals(
-				objectDefinition.getExtensionDBTableName(),
-				objectField.getDBTableName())) {
-
-			throw new RequiredObjectFieldException();
+		if (Validator.isNotNull(objectField.getRelationshipType())) {
+			throw new ObjectFieldRelationshipTypeException(
+				"Object field cannot be deleted because it is of " +
+					"relationship type");
 		}
 
-		objectField = objectFieldPersistence.remove(objectField);
-
-		_objectLayoutColumnPersistence.removeByObjectFieldId(
-			objectField.getObjectFieldId());
-
-		List<ObjectView> objectViews =
-			_objectViewPersistence.findByObjectDefinitionId(
-				objectField.getObjectDefinitionId());
-
-		for (ObjectView objectView : objectViews) {
-			_objectViewColumnPersistence.removeByOVI_OFN(
-				objectView.getObjectViewId(), objectField.getName());
-		}
-
-		if (Objects.equals(
-				objectDefinition.getExtensionDBTableName(),
-				objectField.getDBTableName())) {
-
-			runSQL(
-				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
-					objectField.getDBTableName(),
-					objectField.getDBColumnName()));
-		}
-
-		return objectField;
+		return _deleteObjectField(objectField);
 	}
 
 	@Override
@@ -324,6 +293,39 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 
 		return objectFieldPersistence.update(objectField);
+	}
+
+	private ObjectField _deleteObjectField(ObjectField objectField)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
+			!Objects.equals(
+				objectDefinition.getExtensionDBTableName(),
+				objectField.getDBTableName())) {
+
+			throw new RequiredObjectFieldException();
+		}
+
+		objectField = objectFieldPersistence.remove(objectField);
+
+		_objectLayoutColumnPersistence.removeByObjectFieldId(
+			objectField.getObjectFieldId());
+
+		if (Objects.equals(
+				objectDefinition.getExtensionDBTableName(),
+				objectField.getDBTableName())) {
+
+			runSQL(
+				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
+					objectField.getDBTableName(),
+					objectField.getDBColumnName()));
+		}
+
+		return objectField;
 	}
 
 	private void _validateBusinessType(String businessType)

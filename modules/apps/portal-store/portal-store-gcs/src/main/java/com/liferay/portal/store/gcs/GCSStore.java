@@ -131,14 +131,20 @@ public class GCSStore implements Store {
 
 	@Override
 	public InputStream getFileAsStream(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel) {
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws NoSuchFileException {
 
 		Blob blob = _gcsStore.get(
 			BlobId.of(
 				_gcsStoreConfiguration.bucketName(),
 				_getHeadVersionLabel(
 					companyId, repositoryId, fileName, versionLabel)));
+
+		if (blob == null) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, versionLabel);
+		}
 
 		return Channels.newInputStream(_getReadChannel(blob));
 	}

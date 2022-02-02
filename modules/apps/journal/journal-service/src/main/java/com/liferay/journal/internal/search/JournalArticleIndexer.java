@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -168,7 +169,18 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		addStatus(contextBooleanFilter, searchContext);
 
-		addSearchClassTypeIds(contextBooleanFilter, searchContext);
+		long[] classTypeIds = searchContext.getClassTypeIds();
+
+		if (!ArrayUtil.isEmpty(classTypeIds)) {
+			TermsFilter classTypeIdsTermsFilter = new TermsFilter(
+				Field.CLASS_TYPE_ID);
+
+			classTypeIdsTermsFilter.addValues(
+				ArrayUtil.toStringArray(classTypeIds));
+
+			contextBooleanFilter.add(
+				classTypeIdsTermsFilter, BooleanClauseOccur.MUST);
+		}
 
 		String ddmStructureFieldName = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");

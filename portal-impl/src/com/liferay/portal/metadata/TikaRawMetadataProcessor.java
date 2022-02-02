@@ -198,6 +198,10 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Metadata _extractMetadata(String mimeType, File file) {
+		if (file.length() == 0) {
+			return null;
+		}
+
 		boolean forkProcess = false;
 
 		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED &&
@@ -344,10 +348,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 		private static Metadata _extractMetadata(File file, Parser parser)
 			throws IOException {
-
-			if (file.length() == 0) {
-				return null;
-			}
 
 			Metadata metadata = new Metadata();
 

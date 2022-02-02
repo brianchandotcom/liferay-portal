@@ -60,6 +60,10 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 				<liferay-util:include page="/account_entries_admin/account_entry/default_addresses.jsp" servletContext="<%= application %>" />
 			</c:if>
 
+			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+				<liferay-util:dynamic-include key="com.liferay.commerce.term.web#/default_commerce_term_entries.jsp#" />
+			</c:if>
+
 			<liferay-util:include page="/account_entries_admin/account_entry/categorization.jsp" servletContext="<%= application %>" />
 
 			<liferay-util:include page="/account_entries_admin/account_entry/custom_fields.jsp" servletContext="<%= application %>" />

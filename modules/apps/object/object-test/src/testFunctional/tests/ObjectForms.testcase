@@ -234,12 +234,25 @@ definition {
 	}
 
 	@description = "LPS-139692 - Verify that 'Select Object' field is required"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SelectObjectFieldRequired {
+		FormsAdmin.addForm();
 
-		// TODO LPS-145728 SelectObjectFieldRequired pending implementation
+		Form.editName(formName = "Form 1");
 
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObjectOnly(labelObject = "Object");
+
+		Button.clickDone();
+
+		PopulateObjectFormsConfiguration.publishFormObject();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "You must define an object for the selected storage type.");
 	}
 
 }

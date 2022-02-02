@@ -143,4 +143,10 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
+	macro selectObjectOnly {
+		Click(
+			key_label = "${labelObject}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
+
 }

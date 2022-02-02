@@ -79,31 +79,31 @@
 	</subDataset>
 	<parameter class="java.lang.Long" name="commerceOrderId" />
 	<parameter class="java.util.Date" name="orderDate" />
-	<parameter class="java.lang.String" name="logoUrl" />
 	<parameter class="java.lang.String" name="billingAddressName" />
-	<parameter class="java.lang.String" name="billingAddressStreet1" />
 	<parameter class="java.lang.String" name="billingAddressCity" />
+	<parameter class="java.lang.String" name="billingAddressPhoneNumber" />
 	<parameter class="java.lang.String" name="billingAddressRegion" />
+	<parameter class="java.lang.String" name="billingAddressStreet1" />
 	<parameter class="java.lang.String" name="billingAddressZip" />
-	<parameter class="java.lang.String" name="shippingAddressName" />
-	<parameter class="java.lang.String" name="shippingAddressStreet1" />
+	<parameter class="java.lang.String" name="commerceAccountName" />
+	<parameter class="java.lang.Integer" name="commerceOrderItemListCount" />
+	<parameter class="java.lang.Long" name="companyId" />
+	<parameter class="java.util.Locale" name="locale" />
+	<parameter class="java.lang.String" name="logoURL" />
+	<parameter class="java.lang.String" name="printedNote" />
+	<parameter class="java.lang.String" name="purchaseOrderNumber" />
+	<parameter class="java.util.Date" name="requestedDeliveryDate" />
 	<parameter class="java.lang.String" name="shippingAddressCity" />
+	<parameter class="java.lang.String" name="shippingAddressName" />
 	<parameter class="java.lang.String" name="shippingAddressRegion" />
+	<parameter class="java.lang.String" name="shippingAddressStreet1" />
+	<parameter class="java.lang.String" name="shippingAddressPhoneNumber" />
 	<parameter class="java.lang.String" name="shippingAddressZip" />
-	<parameter class="java.lang.String" name="orderNotes" />
-	<parameter class="java.lang.String" name="companyName" />
-	<parameter class="java.lang.Long" name="companyCode" />
-	<parameter class="java.lang.Integer" name="unitsCount" />
-	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="subtotal" />
-	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="shippingAmount" />
+	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="shippingAmountMoney" />
 	<parameter class="java.lang.String" name="shippingDiscountAmount" />
 	<parameter class="java.lang.String" name="taxAmount" />
-	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalWithTax" />
-	<parameter class="java.lang.String" name="purchaseOrderNumber" />
-	<parameter class="java.lang.String" name="billingPhone" />
-	<parameter class="java.lang.String" name="shippingPhone" />
-	<parameter class="java.util.Locale" name="locale" />
-	<parameter class="java.util.Date" name="deliveryDate" />
+	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalMoney" />
+	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalWithTaxAmountMoney" />
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -121,7 +121,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
 				</reportElement>
-				<imageExpression><![CDATA[$P{logoUrl}]]></imageExpression>
+				<imageExpression><![CDATA[$P{logoURL}]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement height="60" uuid="3166f19c-c38c-4db0-82e9-156930dd1bbf" width="556" x="0" y="60" />
@@ -218,7 +218,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commerceAccountName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement height="14" uuid="043d01ab-ceed-4988-9fa7-ee94f9fb7c05" width="167" x="187" y="150">
@@ -228,7 +228,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{companyCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{companyId}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement height="120" uuid="0c4f2a83-7257-40f5-9b04-a80a96fa57d0" width="556" x="0" y="180" />
@@ -371,7 +371,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{deliveryDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{requestedDeliveryDate}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement height="60" uuid="f50717a6-bcf6-4732-9fbd-e19e325c64c1" width="556" x="0" y="300" />
@@ -396,7 +396,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{orderNotes}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{printedNote}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement height="40" uuid="b8f888bf-2d00-46eb-85fe-ff18920e3916" width="556" x="0" y="380" />
@@ -421,7 +421,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{billingPhone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{billingAddressPhoneNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="21c0a465-d927-453d-a13a-23e606c34295" width="167" x="186" y="280">
@@ -431,7 +431,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{shippingPhone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{shippingAddressPhoneNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -675,7 +675,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{unitsCount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commerceOrderItemListCount}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement height="14" uuid="a7298004-7eb0-470f-ba66-af2123a711d7" width="70" x="470" y="81">
@@ -684,7 +684,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{subtotal}.format($P{locale})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{totalMoney}.format($P{locale})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="17b7027d-fa62-43ee-9d37-04f88bd8aa62" width="70" x="470" y="100">
@@ -693,7 +693,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{shippingAmount}.format($P{locale})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{shippingAmountMoney}.format($P{locale})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="7383ef75-8ba5-41eb-a828-a23eee31b245" width="70" x="470" y="120">
@@ -720,7 +720,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$P{totalWithTax}.format($P{locale})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{totalWithTaxAmountMoney}.format($P{locale})]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

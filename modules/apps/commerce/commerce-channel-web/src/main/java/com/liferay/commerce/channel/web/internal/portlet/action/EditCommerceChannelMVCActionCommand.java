@@ -92,14 +92,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				_updateCommerceChannel(actionRequest);
-
-				long commerceChannelId = ParamUtil.getLong(
-					actionRequest, "commerceChannelId");
-
-				long fileEntryId = ParamUtil.getLong(
-					actionRequest, "fileEntryId");
-
-				_uploadFile(fileEntryId, commerceChannelId);
+				_uploadPrintOrderTemplate(actionRequest);
 			}
 			else if (cmd.equals("selectSite")) {
 				_selectSite(actionRequest);
@@ -119,6 +112,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				SessionErrors.add(actionRequest, exception.getClass());
+
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
@@ -348,70 +342,73 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			workflowDefinitionOVPs);
 	}
 
-	private void _uploadFile(long fileEntryId, long commerceChannelId)
+	private void _uploadPrintOrderTemplate(ActionRequest actionRequest)
 		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		FileEntry currentTemplateFileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-				commerceChannel.getGroupId(), "PRINT_ORDER");
+				commerceChannel.getGroupId(), "PRINT_ORDER_TEMPLATE_ERC");
 
-		if ((fileEntryId == 0) && (currentTemplateFileEntry != null)) {
-			_dlAppLocalService.deleteFileEntry(
-				currentTemplateFileEntry.getFileEntryId());
+		if (fileEntryId == 0) {
+			if (currentTemplateFileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(
+					currentTemplateFileEntry.getFileEntryId());
+			}
+
+			return;
 		}
-		else if (fileEntryId != 0) {
-			FileEntry newTemplateFileEntry = _dlAppLocalService.getFileEntry(
-				fileEntryId);
 
-			if (!Objects.equals(newTemplateFileEntry.getExtension(), "jrxml")) {
-				throw new FileExtensionException();
-			}
+		FileEntry newTemplateFileEntry = _dlAppLocalService.getFileEntry(
+			fileEntryId);
 
-			try {
-				if (currentTemplateFileEntry == null) {
-					String fileName = newTemplateFileEntry.getFileName();
+		if (!Objects.equals(newTemplateFileEntry.getExtension(), "jrxml")) {
+			throw new FileExtensionException();
+		}
 
-					int extensionIndex = fileName.indexOf(
-						newTemplateFileEntry.getExtension());
+		if (currentTemplateFileEntry == null) {
+			_dlAppLocalService.deleteFileEntry(fileEntryId);
 
-					String formattedFileName = StringBundler.concat(
-						fileName.substring(0, extensionIndex - 1), "_",
-						System.currentTimeMillis(), ".",
-						newTemplateFileEntry.getExtension());
+			String fileName = newTemplateFileEntry.getFileName();
 
-					_dlAppLocalService.addFileEntry(
-						"PRINT_ORDER", commerceChannel.getUserId(),
-						commerceChannel.getGroupId(),
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						newTemplateFileEntry.getFileName(),
-						newTemplateFileEntry.getMimeType(), formattedFileName,
-						StringPool.BLANK, StringPool.BLANK,
-						newTemplateFileEntry.getContentStream(),
-						newTemplateFileEntry.getSize(), null, null,
-						new ServiceContext());
-				}
-				else {
-					_dlAppLocalService.updateFileEntry(
-						commerceChannel.getUserId(),
-						currentTemplateFileEntry.getFileEntryId(),
-						newTemplateFileEntry.getFileName(),
-						newTemplateFileEntry.getMimeType(),
-						currentTemplateFileEntry.getTitle(),
-						currentTemplateFileEntry.getDescription(),
-						StringPool.BLANK, DLVersionNumberIncrease.NONE,
-						newTemplateFileEntry.getContentStream(),
-						newTemplateFileEntry.getSize(), null, null,
-						new ServiceContext());
-				}
-			}
-			finally {
-				if (currentTemplateFileEntry == null) {
-					_dlAppLocalService.deleteFileEntry(fileEntryId);
-				}
-			}
+			int extensionIndex = fileName.indexOf(
+				newTemplateFileEntry.getExtension());
+
+			String formattedFileName = StringBundler.concat(
+				fileName.substring(0, extensionIndex - 1), StringPool.UNDERLINE,
+				System.currentTimeMillis(), StringPool.PERIOD,
+				newTemplateFileEntry.getExtension());
+
+			_dlAppLocalService.addFileEntry(
+				"PRINT_ORDER_TEMPLATE_ERC", commerceChannel.getUserId(),
+				commerceChannel.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				newTemplateFileEntry.getFileName(),
+				newTemplateFileEntry.getMimeType(), formattedFileName,
+				StringPool.BLANK, StringPool.BLANK,
+				newTemplateFileEntry.getContentStream(),
+				newTemplateFileEntry.getSize(), null, null,
+				new ServiceContext());
+		}
+		else {
+			_dlAppLocalService.updateFileEntry(
+				commerceChannel.getUserId(),
+				currentTemplateFileEntry.getFileEntryId(),
+				newTemplateFileEntry.getFileName(),
+				newTemplateFileEntry.getMimeType(),
+				currentTemplateFileEntry.getTitle(),
+				currentTemplateFileEntry.getDescription(), StringPool.BLANK,
+				DLVersionNumberIncrease.NONE,
+				newTemplateFileEntry.getContentStream(),
+				newTemplateFileEntry.getSize(), null, null,
+				new ServiceContext());
 		}
 	}
 

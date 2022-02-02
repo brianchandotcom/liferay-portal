@@ -88,72 +88,98 @@ export function TopperLabel({children, itemElement}) {
 				updatePosition();
 			};
 
-			const resizeObserver = new globalContext.window.ResizeObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.target === itemElement) {
-							const boundingClientRect = itemElement.getBoundingClientRect();
-							const computedStyle = globalContext.window.getComputedStyle(
-								itemElement
-							);
+			const updateItemElementSize = (itemElement) => {
+				const boundingClientRect = itemElement.getBoundingClientRect();
+				const computedStyle = globalContext.window.getComputedStyle(
+					itemElement
+				);
 
-							itemElementMarginRight =
-								(computedStyle.marginRight.endsWith('px') &&
-									parseInt(computedStyle.marginRight, 10)) ||
-								0;
+				itemElementMarginRight =
+					(computedStyle.marginRight.endsWith('px') &&
+						parseInt(computedStyle.marginRight, 10)) ||
+					0;
 
-							itemElementMarginLeft =
-								(computedStyle.marginLeft.endsWith('px') &&
-									parseInt(computedStyle.marginLeft, 10)) ||
-								0;
+				itemElementMarginLeft =
+					(computedStyle.marginLeft.endsWith('px') &&
+						parseInt(computedStyle.marginLeft, 10)) ||
+					0;
 
-							itemElementLeft =
-								globalContext.window.scrollX +
-								boundingClientRect.left;
+				itemElementLeft =
+					globalContext.window.scrollX + boundingClientRect.left;
 
-							// We use here body instead of window.innerWidth
-							// to prevent issues if the scrollbar is present.
+				// We use here body instead of window.innerWidth
+				// to prevent issues if the scrollbar is present.
 
-							itemElementRight =
-								globalContext.document.body.getBoundingClientRect()
-									.width -
-								(boundingClientRect.right -
-									globalContext.window.scrollX);
+				itemElementRight =
+					globalContext.document.body.getBoundingClientRect().width -
+					(boundingClientRect.right - globalContext.window.scrollX);
 
-							itemElementTop =
-								globalContext.window.scrollY +
-								boundingClientRect.top;
-						}
-						else if (entry.target === controlMenuContainer) {
-							controlMenuContainerHeight =
-								entry.contentRect.height;
-						}
-						else if (entry.target === pageEditorToolbar) {
-							pageEditorToolbarHeight = entry.contentRect.height;
-						}
-					});
+				itemElementTop =
+					globalContext.window.scrollY + boundingClientRect.top;
+			};
+
+			const resizeObserver = globalContext.window.ResizeObserver
+				? new globalContext.window.ResizeObserver((entries) => {
+						entries.forEach((entry) => {
+							if (entry.target === itemElement) {
+								updateItemElementSize(itemElement);
+							}
+							else if (entry.target === controlMenuContainer) {
+								controlMenuContainerHeight =
+									entry.contentRect.height;
+							}
+							else if (entry.target === pageEditorToolbar) {
+								pageEditorToolbarHeight =
+									entry.contentRect.height;
+							}
+						});
+
+						updatePosition();
+				  })
+				: null;
+
+			let resizeIntervalId = null;
+
+			if (resizeObserver) {
+				resizeObserver.observe(itemElement);
+
+				if (controlMenuContainer) {
+					resizeObserver.observe(controlMenuContainer);
+				}
+
+				if (pageEditorToolbar) {
+					resizeObserver.observe(pageEditorToolbar);
+				}
+			}
+			else {
+				resizeIntervalId = setInterval(() => {
+					updateItemElementSize(itemElement);
+
+					controlMenuContainerHeight =
+						controlMenuContainer?.getBoundingClientRect().height ||
+						0;
+
+					pageEditorToolbarHeight =
+						pageEditorToolbar?.getBoundingClientRect().height || 0;
 
 					updatePosition();
-				}
-			);
+				}, 500);
+			}
 
 			globalContext.window.addEventListener('scroll', handleScroll);
-			resizeObserver.observe(itemElement);
-
-			if (controlMenuContainer) {
-				resizeObserver.observe(controlMenuContainer);
-			}
-
-			if (pageEditorToolbar) {
-				resizeObserver.observe(pageEditorToolbar);
-			}
 
 			return () => {
 				globalContext.window.removeEventListener(
 					'scroll',
 					handleScroll
 				);
-				resizeObserver.disconnect();
+
+				if (resizeObserver) {
+					resizeObserver.disconnect();
+				}
+				else {
+					clearInterval(resizeIntervalId);
+				}
 			};
 		}
 	}, [itemElement, languageId, globalContext]);

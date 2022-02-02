@@ -6294,30 +6294,30 @@ definition {
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowPagesWhenDeleted {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 141635",
+			objectName = "CustomObject141635",
+			pluralLabelName = "Custom Objects 141635");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject141635");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141635");
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 141635");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141635");
 
 		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141635");
 
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
 
@@ -6327,33 +6327,33 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "Custom Object");
+		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "Custom Object 141635");
 
 		ObjectAdmin.openMySubmissions();
 
-		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object");
+		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object 141635");
 
 		ObjectAdmin.openSubmissions();
 
-		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object");
+		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object 141635");
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when inactivated"
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowPagesWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 140865",
+			objectName = "CustomObject140865",
+			pluralLabelName = "Custom Objects 140865");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject140865");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140865");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -6363,16 +6363,16 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 140865");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject140865",
 			value = "Test");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject140865",
 			value = "Test 2");
 
 		ObjectAdmin.openMyWorkflowTasks();
@@ -6389,7 +6389,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 140865");
 
 		CreateObject.checkToggleInactive();
 
@@ -6398,25 +6398,25 @@ definition {
 		ObjectAdmin.openMyWorkflowTasks();
 
 		AssertElementNotPresent(
-			key_workflowAssetTitle = "Custom Object",
+			key_workflowAssetTitle = "Custom Object 140865",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		AssertElementNotPresent(
-			key_workflowAssetTitle = "Custom Object",
+			key_workflowAssetTitle = "Custom Object 140865",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		ObjectAdmin.openMySubmissions();
 
 		AssertElementNotPresent(
-			key_submissionName = "Custom Object",
+			key_submissionName = "Custom Object 140865",
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 
 		ObjectAdmin.openSubmissions();
 
 		AssertElementNotPresent(
-			key_submissionName = "Custom Object",
+			key_submissionName = "Custom Object 140865",
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
@@ -6424,9 +6424,9 @@ definition {
 	@priority = "4"
 	test ObjectEntriesReappearsPageFragmentsWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
+			labelName = "Custom Object 142598",
 			objectName = "CustomObject142598",
-			pluralLabelName = "Custom Objects");
+			pluralLabelName = "Custom Objects 142598");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
@@ -6454,7 +6454,7 @@ definition {
 
 		VisualizeObjectDisplayPage.addItem(
 			frameTitle = "Select",
-			pluralLabelName = "Custom Objects");
+			pluralLabelName = "Custom Objects 142598");
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
 
@@ -6462,7 +6462,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 142598");
 
 		CreateObject.checkToggleInactive();
 
@@ -6470,7 +6470,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 142598");
 
 		CreateObject.checkToggleActive();
 

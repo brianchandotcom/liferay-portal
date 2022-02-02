@@ -197,10 +197,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		return ddmFormField;
 	}
 
-	private Metadata _extractMetadata(String mimeType, File file) {
-		if (file.length() == 0) {
-			return null;
-		}
+	private Metadata _extractMetadata(
+		String mimeType, InputStream inputStream) {
 
 		boolean forkProcess = false;
 
@@ -213,10 +211,18 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		}
 
 		if (forkProcess) {
-			ExtractMetadataProcessCallable extractMetadataProcessCallable =
-				new ExtractMetadataProcessCallable(file, _parser);
+			File file = FileUtil.createTempFile();
 
 			try {
+				FileUtil.write(file, inputStream);
+
+				if (file.length() == 0) {
+					return null;
+				}
+
+				ExtractMetadataProcessCallable extractMetadataProcessCallable =
+					new ExtractMetadataProcessCallable(file, _parser);
+
 				ProcessChannel<Metadata> processChannel =
 					_processExecutor.execute(
 						PortalClassPathUtil.getPortalProcessConfig(),
@@ -230,33 +236,19 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			catch (Exception exception) {
 				throw new SystemException(exception);
 			}
+			finally {
+				file.delete();
+			}
 		}
 
 		try {
 			return _postProcessMetadata(
 				mimeType,
-				ExtractMetadataProcessCallable._extractMetadata(file, _parser));
+				ExtractMetadataProcessCallable._extractMetadata(
+					inputStream, _parser));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
-		}
-	}
-
-	private Metadata _extractMetadata(
-		String mimeType, InputStream inputStream) {
-
-		File file = FileUtil.createTempFile();
-
-		try {
-			FileUtil.write(file, inputStream);
-
-			return _extractMetadata(mimeType, file);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			file.delete();
 		}
 	}
 
@@ -338,15 +330,16 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 			logger.setLevel(Level.SEVERE);
 
-			try {
-				return _extractMetadata(_file, _parser);
+			try (InputStream inputStream = new FileInputStream(_file)) {
+				return _extractMetadata(inputStream, _parser);
 			}
 			catch (IOException ioException) {
 				throw new ProcessException(ioException);
 			}
 		}
 
-		private static Metadata _extractMetadata(File file, Parser parser)
+		private static Metadata _extractMetadata(
+				InputStream inputStream, Parser parser)
 			throws IOException {
 
 			Metadata metadata = new Metadata();
@@ -355,7 +348,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 			parseContext.set(Parser.class, parser);
 
-			try (InputStream inputStream = new FileInputStream(file)) {
+			try {
 				parser.parse(
 					inputStream, new DefaultHandler(), metadata, parseContext);
 			}

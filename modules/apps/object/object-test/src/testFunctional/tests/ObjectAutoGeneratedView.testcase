@@ -136,8 +136,8 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		AssertElementPresent(
-			key_value = "We make it possible for people to reach their full potential to serve others.",
-			locator1 = "ObjectAdmin#BODY_VERTICAL_ELLIPSIS");
+			key_entry = "We make it possible for people to reach their full potential to serve others.",
+			locator1 = "ObjectPortlet#ENTRY_VALUE_WITH_ELLIPSIS");
 	}
 
 	@description = "LPS-136595 - Verify that a Picklist entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

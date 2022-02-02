@@ -2499,6 +2499,110 @@ definition {
 		}
 	}
 
+	@description = "LPS-134692 Given the info panel of an asset
+	When the user clicks on arrow next to the title of a section not collapsed
+	Then the section will be collapsed"
+	@priority = "3"
+	test InfoPanelCollapseSection {
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to the Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Open the info panel and collapse the Categorization section") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			AssertElementPresent(
+				categoryName = "Category Name",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+
+			Click(
+				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
+				sectionName = "Categorization");
+
+			AssertNotVisible(
+				categoryName = "Category Name",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+		}
+	}
+
+	@description = "LPS-134692 Given the info panel of an asset
+	When the user clicks on arrow next to the title of a section collapsed
+	Then the section will be expanded"
+	@priority = "3"
+	test InfoPanelExpandSection {
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to the Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Open the info panel and expand the Categorization section") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			AssertElementPresent(
+				categoryName = "Category Name",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+
+			Click(
+				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
+				sectionName = "Categorization");
+
+			AssertNotVisible(
+				categoryName = "Category Name",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+
+			Click(
+				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
+				sectionName = "Categorization");
+
+			AssertElementPresent(
+				categoryName = "Category Name",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+		}
+	}
+
 	@description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test JustAddingAVocabularyThroughTheFilters {

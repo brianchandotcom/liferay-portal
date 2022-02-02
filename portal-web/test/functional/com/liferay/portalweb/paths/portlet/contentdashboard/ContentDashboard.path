@@ -110,6 +110,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_LABEL_INFO_PANEL</td>
+	<td>//*[contains(@class, 'sidebar-light')]//span[contains(@class,'label-secondary') and contains (.,'${categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_NAME_ELEMENT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'${categoryName}')]</td>
 	<td></td>
@@ -262,6 +267,11 @@
 <tr>
 	<td>INFO_OPTION</td>
 	<td>//*[contains(@data-action, 'showInfo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_SECTION_TITLE</td>
+	<td>//*[contains(@class,'panel-title') and contains(text(),'${sectionName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -56,8 +56,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
-import java.util.function.Supplier;
-
 import javax.servlet.ServletContext;
 
 import org.apache.felix.dm.Component;
@@ -77,7 +75,6 @@ public class SiteInitializerExtension {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
-		Supplier<CommerceReferencesHolder> commerceReferencesHolderSupplier,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -126,8 +123,7 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				accountResourceFactory, assetCategoryLocalService,
-				assetListEntryLocalService, bundle, bundleContext,
-				commerceReferencesHolderSupplier, ddmStructureLocalService,
+				assetListEntryLocalService, bundle, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,

@@ -155,7 +155,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 	<portlet:namespace />onChangeClickToChatSiteSettingsStrategy();
 	<portlet:namespace />toggleClickToChatChatProviderLearnMessage(
-		'<%= clickToChatConfiguration.chatProviderId() %>',
+		document.getElementById('<portlet:namespace />chatProviderId').value,
 		true
 	);
 </script>

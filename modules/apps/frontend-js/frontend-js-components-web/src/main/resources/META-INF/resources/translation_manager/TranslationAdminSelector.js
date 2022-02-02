@@ -140,7 +140,7 @@ const TranslationAdminSelector = ({
 						const isDefaultLocale =
 							activeLocale.id === defaultLanguageId;
 
-						const localeValue = translations[label];
+						const localeValue = translations[activeLocale.id];
 
 						return (
 							<ClayDropDown.Item

@@ -13,7 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import EditTagsContext from './EditTagsContext.es';
 import EditTagsModal from './EditTagsModal.es';
@@ -24,7 +24,6 @@ function EditTags(props) {
 	const [folderId, setFolderId] = useState();
 	const [showModal, setShowModal] = useState();
 	const {namespace} = useContext(EditTagsContext);
-	const bridgeComponentId = `${namespace}EditTagsComponent`;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -34,22 +33,30 @@ function EditTags(props) {
 		onClose: handleOnClose,
 	});
 
-	if (!Liferay.component(bridgeComponentId)) {
-		Liferay.component(
-			bridgeComponentId,
-			{
-				open: (fileEntries, selectAll, folderId) => {
-					setFileEntries(fileEntries);
-					setSelectAll(selectAll);
-					setFolderId(folderId);
-					setShowModal(true);
+	useEffect(() => {
+		const bridgeComponentId = `${namespace}EditTagsComponent`;
+
+		if (!Liferay.component(bridgeComponentId)) {
+			Liferay.component(
+				bridgeComponentId,
+				{
+					open: (fileEntries, selectAll, folderId) => {
+						setFileEntries(fileEntries);
+						setSelectAll(selectAll);
+						setFolderId(folderId);
+						setShowModal(true);
+					},
 				},
-			},
-			{
-				destroyOnNavigate: true,
-			}
-		);
-	}
+				{
+					destroyOnNavigate: true,
+				}
+			);
+		}
+
+		return () => {
+			Liferay.destroyComponent(bridgeComponentId);
+		};
+	}, [namespace]);
 
 	return (
 		<>

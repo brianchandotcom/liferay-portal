@@ -20,7 +20,7 @@ import React, {useContext, useState} from 'react';
 import LayoutContext from '../context';
 import ModalAddObjectLayoutTab from './ModalAddObjectLayoutTab';
 
-const AddNewTabButton = () => {
+const AddNewTabButton: React.FC<{}> = () => {
 	const [{isViewOnly}] = useContext(LayoutContext);
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({

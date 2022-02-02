@@ -783,14 +783,11 @@ public class GitHubWebhookPayloadProcessor {
 
 		String repositoryName = pullRequest.getGitRepositoryName();
 
-		List<String> ciEnabledBranchNames = new ArrayList<>();
+		List<String> ciEnabledBranchNames = _getCIEnabledBranchNames(
+			repositoryName);
 
-		if (!_acRepositories.contains(repositoryName)) {
-			ciEnabledBranchNames = _getCIEnabledBranchNames(repositoryName);
-		}
-
-		if (!ciEnabledBranchNames.contains(branchName) &&
-			!ciEnabledBranchNames.isEmpty()) {
+		if (!_acRepositories.contains(repositoryName) &&
+			!ciEnabledBranchNames.contains(branchName)) {
 
 			StringBuilder sb = new StringBuilder(4);
 

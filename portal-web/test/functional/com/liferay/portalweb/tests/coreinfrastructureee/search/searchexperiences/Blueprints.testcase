@@ -881,6 +881,26 @@ definition {
 		AssertTextPresent(value1 = "Import Element");
 	}
 
+	test HideAndShowAddElementsSidebar {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
+
+		Click(
+			ariaLabel = "Add Query Element",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		AssertNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
+
+		Click(
+			ariaLabel = "Add Query Element",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
+	}
+
 	test HideWebContentViaCustomElement {
 		JSONWebcontent.addWebContent(
 			content = "",

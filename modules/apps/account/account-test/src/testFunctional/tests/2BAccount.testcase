@@ -72,6 +72,8 @@ definition {
 	@description = "This test adds the Add Account Entry permission to Account Admin and assert user can add an account."
 	@priority = "5"
 	test AccountAdminCanAddAccount {
+		property portal.acceptance = "true";
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -135,6 +137,8 @@ definition {
 	@description = "This test asserts that an Account Admin can add a new user to an account"
 	@priority = "5"
 	test AccountAdminCanAddNewUserToAccount {
+		property portal.acceptance = "true";
+
 		JSONAccountEntryUser.addAccountEntryUser(
 			accountEntryName = "Account Name",
 			userEmailAddress = "userea1@liferay.com",
@@ -190,6 +194,8 @@ definition {
 	@description = "This test asserts that an Account Admin can assign roles to users."
 	@priority = "5"
 	test AccountAdminCanAssignRolesToUsers {
+		property portal.acceptance = "true";
+
 		task ("Add a new user into the 'Account Name' account") {
 			JSONAccountEntryUser.addAccountEntryUser(
 				accountEntryName = "Account Name",
@@ -263,6 +269,8 @@ definition {
 	@description = "This test asserts that an Account can be deleted."
 	@priority = "4"
 	test AccountAdminCanDeleteAccount {
+		property portal.acceptance = "true";
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.account.model.AccountEntry",
@@ -281,8 +289,10 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
-	@priority = "4"
+	@priority = "5"
 	test AccountAdminCanEditAccount {
+		property portal.acceptance = "true";
+
 		Accounts.goToEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
@@ -769,6 +779,8 @@ definition {
 	@description = "This test asserts Account Administrators can search for account users"
 	@priority = "5"
 	test AdminCanSearchForAccountUsers {
+		property portal.acceptance = "true";
+
 		task ("Add several users to account") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -1104,6 +1116,8 @@ definition {
 	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
 	@priority = "5"
 	test CannotViewOtherAccounts {
+		property portal.acceptance = "true";
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -1132,6 +1146,8 @@ definition {
 	@description = "This test asserts that only business accounts can be added when the allowed account type is business"
 	@priority = "5"
 	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {
+		property portal.acceptance = "true";
+
 		task ("Add account entry permission to Account Admin") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -1177,6 +1193,8 @@ definition {
 	@description = "This test asserts that only person accounts can be added when the allowed account type is person"
 	@priority = "5"
 	test CanOnlyAddPersonAccountsWhenAllowedAccountTypeIsPerson {
+		property portal.acceptance = "true";
+
 		task ("Add account entry permission to Account Admin") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -1330,6 +1348,8 @@ definition {
 	@description = "This test asserts that an Account Admin can remove a user from an account."
 	@priority = "5"
 	test CanRemoveUserFromAccount {
+		property portal.acceptance = "true";
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -1388,6 +1408,8 @@ definition {
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {
+		property portal.acceptance = "true";
+
 		task ("Sign in as Super User to give permissions to add accounts to the Account Administrator user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",

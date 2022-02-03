@@ -25,6 +25,8 @@ definition {
 	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
 	@priority = "4"
 	test AccountGroupsAreDisplayedInAccountDetailsPage {
+		property portal.acceptance = "true";
+
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Accounts Name",
 			accountEntryType = "Business");
@@ -232,6 +234,8 @@ definition {
 	@description = "This test asserts that only the chosen address type displays when setting default shipping and billing addresses"
 	@priority = "5"
 	test AddressesFilterCorrectlyDefaultAddress {
+		property portal.acceptance = "true";
+
 		task ("Add account") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
@@ -304,6 +308,7 @@ definition {
 	@priority = "5"
 	test AllAccountsEntriesDisplay {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		task ("Add several accounts") {
 			for (var accountNum : list "1,2,3") {
@@ -1397,6 +1402,8 @@ definition {
 	@description = "This test asserts that group scope permissions can be defined in the Accounts Admin Portlet."
 	@priority = "5"
 	test CanDefineGroupScopePermissionsInAccountsAdmin {
+		property portal.acceptance = "true";
+
 		task ("Create an account and account role through Accounts Admin Portlet") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",

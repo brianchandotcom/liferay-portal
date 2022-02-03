@@ -25,6 +25,8 @@ definition {
 	@description = "This test deletes an account group."
 	@priority = "4"
 	test CanDeleteAnAccountGroup {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -54,6 +56,8 @@ definition {
 	@description = "This test edit an account group name and description."
 	@priority = "4"
 	test CanEditAnAccountGroup {
+		property portal.acceptance = "true";
+
 		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.addCP(
@@ -155,6 +159,8 @@ definition {
 	@description = "This test removes an account from Account Group."
 	@priority = "4"
 	test CanRemoveAccountFromGroup {
+		property portal.acceptance = "true";
+
 		for (var accountNumber : list "1,2,3") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Delete Accounts ${accountNumber} from AG",

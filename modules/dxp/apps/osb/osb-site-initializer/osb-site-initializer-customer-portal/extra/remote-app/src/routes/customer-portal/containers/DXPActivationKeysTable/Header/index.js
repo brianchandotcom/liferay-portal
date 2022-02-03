@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useState} from 'react';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 
@@ -66,15 +67,25 @@ const DXPActivationKeysTableHeader = ({selectedKeys}) => {
 
 	return (
 		<div className="align-items-center bg-neutral-1 d-flex p-3 rounded">
-			<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-				{`${selectedKeys.length} Keys Selected`}
-			</p>
+			{!!selectedKeys.length && (
+				<>
+					<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
+						{`${selectedKeys.length} Keys Selected`}
+					</p>
 
-			<Button className="btn-outline-danger cp-deactivate-button mx-2">
-				Deactivate
-			</Button>
+					<Button className="btn-outline-danger cp-deactivate-button mx-2">
+						Deactivate
+					</Button>
+				</>
+			)}
 
-			{currentButton()}
+			<div
+				className={classNames({
+					'ml-auto': !selectedKeys.length,
+				})}
+			>
+				{currentButton()}
+			</div>
 		</div>
 	);
 };

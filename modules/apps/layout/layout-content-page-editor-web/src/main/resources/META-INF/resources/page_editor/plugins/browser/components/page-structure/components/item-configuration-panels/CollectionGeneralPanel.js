@@ -87,7 +87,7 @@ export function CollectionGeneralPanel({item}) {
 		numberOfItems: initialNumberOfItems,
 		numberOfItemsPerPage: initialNumberOfItemsPerPage,
 		paginationType,
-		showAllItems: initialShowAllItems,
+		showAllItems,
 	} = item.config;
 
 	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
@@ -116,9 +116,7 @@ export function CollectionGeneralPanel({item}) {
 		initialNumberOfItemsPerPage
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const [showAllItems, setShowAllItems] = useControlledState(
-		initialShowAllItems
-	);
+
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 
 	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
@@ -236,13 +234,10 @@ export function CollectionGeneralPanel({item}) {
 		[item.itemId, dispatch, segmentsExperienceId]
 	);
 
-	const handleShowAllItemsChanged = (event) => {
-		setShowAllItems(event.target.checked);
-
+	const handleShowAllItemsChanged = (event) =>
 		handleConfigurationChanged({
 			showAllItems: event.target.checked,
 		});
-	};
 
 	useEffect(() => {
 		let errorMessage = null;
@@ -457,7 +452,7 @@ export function CollectionGeneralPanel({item}) {
 						</div>
 					)}
 
-					{(!paginationType || !initialShowAllItems) && (
+					{!paginationType && !showAllItems && (
 						<ClayForm.Group
 							className={classNames({
 								'has-warning': numberOfItemsError,

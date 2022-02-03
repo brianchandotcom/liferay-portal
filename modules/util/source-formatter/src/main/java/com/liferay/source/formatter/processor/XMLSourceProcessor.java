@@ -14,8 +14,8 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checks.util.XMLSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.check.util.XMLSourceUtil;
 
 import java.io.File;
 import java.io.IOException;

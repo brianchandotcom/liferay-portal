@@ -22,7 +22,7 @@ import com.liferay.poshi.core.elements.PoshiNodeFactory;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
 
 import java.io.File;

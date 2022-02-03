@@ -200,12 +200,12 @@
 
 		<!-- Custom checks -->
 
-		<module name="com.liferay.source.formatter.checkstyle.checks.AnonymousClassCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.AnonymousClassCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for serialization issue when using anonymous class." />
 			<message key="anonymous.class.incorrect" value="Do not use anonymous class for variable ''{0}''. This causes (de)serialization issues when passed to method call ''{1}''." />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.AppendCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.AppendCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks instances where literal Strings are appended." />
 			<property name="enabled" value="false" />
@@ -217,18 +217,18 @@
 			<message key="start.character.invalid" value="When appending multiple literal strings, only the first literal string can start with ''{0}''" />
 			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ArquillianCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ArquillianCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for correct use of `com.liferay.arquillian.extension.junit.bridge.junit.Arquillian`." />
 			<message key="import.invalid" value="Use import ''com.liferay.arquillian.extension.junit.bridge.junit.Arquillian'' instead of ''org.jboss.arquillian.junit.Arquillian'', see LPS-68945" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.AssertEqualsCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.AssertEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that additional information is provided when calling `Assert.assertEquals`." />
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 			<message key="assert.use.boolean" value="Use ''Assert.assert{0}'' instead of ''Assert.assertEquals'' when assert boolean" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.AssignAsUsedCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.AssignAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an assign statement can be inlined or moved closer to where it is used." />
 			<message key="string.value.of.use" value="Simplify by using ''String.valueOf'' (combining the statement on line ''{0}'' and ''toString()'' on line ''{1}'')" />
@@ -237,12 +237,12 @@
 			<message key="variable.move.after.branching.statement" value="For better performance, the variable assignment for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
 			<message key="variable.move.inside.if.statement" value="For better performance, the variable assignment for ''{0}'' should be moved inside the {1}-statement on line ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.AttributeOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that attributes in anonymous classes are ordered alphabetically." />
 			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks variable names for correct use of `CamelCase`." />
 			<message key="following.underscore.incorrect" value="''{0}'' should not be followed by ''_'' for variable ''{1}''" />
@@ -250,7 +250,7 @@
 			<message key="preceding.underscore.required" value="''{0}'' should be preceded by ''_'' for variable ''{1}''" />
 			<message key="starting.uppercase.required" value="''{0}'' should start with an uppercase character for {1} ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ChainingCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ChainingCheck">
 			<property name="allowConcatChain" value="true" />
 			<property name="allowedClassNames" value="ActionSemantics,.*[Bb]uilder(s)?,Assertions,Awaitility,.*Consumer,CreationMenuBuilder,DSL.+FactoryUtil,EasyMock,Either,Filter,FormNavigatorEntryConfigurationRetriever,GenericUtil,InfoFieldSet,InfoForm,InfoFormValues,JSONUtil,List,MemberMatcher,Option,Optional,OSGi,Response,RestAssured,(Double|Int|Long)?Stream,.+Table,Try,Validation" />
 			<property name="allowedMethodNames" value="bind,builder,getKeywordsPredicate,newBuilder,put" />
@@ -268,13 +268,13 @@
 			<message key="concat.avoid.too.many" value="Avoid chaining on method 'concat'. Use StringBundler when there are more than 3 parts" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.CompanyIterationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIterationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies" />
 			<property name="enabled" value="false" />
 			<message key="company.local.service.use" value="Use ''CompanyLocalService.{0}'' when iterating over ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ConcatCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks for correct use of `StringBundler.concat`." />
 			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with ''{0}''" />
@@ -284,7 +284,7 @@
 			<message key="start.character.invalid" value="When concatenating multiple literal strings, only the first literal string can start with ''{0}''" />
 			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ConstantNameCheck">
 			<property name="camelCaseTypeNames" value="AggregateTestRule,Atomic.*,CodeCoverageAssertor,LiferayIntegrationTestRule,Log,Pattern,TestRule" />
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that variable names of constants follow correct naming rules." />
@@ -292,28 +292,28 @@
 			<message key="name.invalidConstantPattern" value="{0} constant ''{1}'' must match pattern ''{2}''" />
 			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ConstructorGlobalVariableDeclarationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ConstructorGlobalVariableDeclarationCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks that initial values of global variables are not set in the constructor." />
 			<property name="enabled" value="false" />
 			<message key="global.variable.value.declare" value="Set the value of ''{0}'' when declaring the variable on line ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ConstructorMissingEmptyLineCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ConstructorMissingEmptyLineCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for line breaks when assiging variables in constructor." />
 			<message key="empty.line.missing" value="There should be an empty line before line ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ConsumerTypeAnnotationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ConsumerTypeAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on classes with @ConsumerType annotation." />
 			<message key="default.annotation.redundant" value="No need to specify default ''ConsumerType'' annotation. See https://docs.osgi.org/javadoc/osgi.annotation/8.0.0/org/osgi/annotation/versioning/ConsumerType.html" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ContractionsCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ContractionsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds contractions in Strings (such as `can't` or `you're`)." />
 			<message key="contraction.avoid" value="Avoid using contraction ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.CreationMenuBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.CreationMenuBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `CreationMenuBuilder` is used when possible." />
@@ -324,7 +324,7 @@
 			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedAPICheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.DeprecatedAPICheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds calls to deprecated classes, constructors, fields or methods." />
 			<property name="enabled" value="false" />
@@ -333,80 +333,80 @@
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
 			<message key="type.call.deprecated" value="Type ''{0}'' has been deprecated" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.DTOEnumCreationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.DTOEnumCreationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks the creation of DTO enum." />
 			<message key="create.use" value="Use ''create'' to create DTO enum, instead of ''valueOf''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.EmptyConstructorCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.EmptyConstructorCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds unnecessary empty constructors." />
 			<property name="enabled" value="false" />
 			<message key="empty.constructor.unneeded" value="Empty constructor is not needed" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.EnumConstantDividerCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.EnumConstantDividerCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Find unnecessary empty lines between enum constants." />
 			<message key="empty.line.unnecessary" value="Unnecessary empty line needed between enum constants" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.EnumConstantOrderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.EnumConstantOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks the order of enum constants." />
 			<message key="enum.constant.incorrect.order" value="Enum constant ''{0}'' should come after constant ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.EqualClauseIfStatementsCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.EqualClauseIfStatementsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds consecutive if-statements with identical clauses." />
 			<property name="enabled" value="false" />
 			<message key="if.statements.combine" value="Combine if-statements with identical clauses" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds private methods that throw unnecessary exception." />
 			<message key="exception.unnecessary" value="Method ''{0}'' throws unnecessary {1}. All methods calling ''{0}'' throw ''Exception''." />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionMessageCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionMessageCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Validates messages that are passed to exceptions." />
 			<message key="message.incorrect" value="Incorrect exception message" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionVariableNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionVariableNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Validates variable names that have type `*Exception`." />
 			<message key="variable.rename" value="Rename exception variable ''{0}'' to ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.FactoryCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.FactoryCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases where `*Factory` should be used when creating new instances of an object." />
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.FilterStringWhitespaceCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.FilterStringWhitespaceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`." />
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.FrameworkBundleCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.FrameworkBundleCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks that `org.osgi.framework.Bundle.getHeaders()` is not used." />
 			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeaders()''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.FullyQualifiedNameCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Finds cases where a Fully Qualified Name is used instead of importing a class." />
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.GenericTypeCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.GenericTypeCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime." />
 			<property name="populateTypeNames" value="false" />
 			<message key="generic.type.parameterize" value="Parameterize the generic {0} for ''{1}'" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.InstanceofOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Check the order of `instanceof` calls." />
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ItemBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ItemBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `DropdownItemBuilder`, `LabelItemBuilder` or `NavigationItemBuilder` is used when possible." />
@@ -418,7 +418,7 @@
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ItemListBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ItemListBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `DropdownItemListBuilder`, `LabelItemListBuilder` or `NavigationItemListBuilder` is used when possible." />
@@ -429,7 +429,7 @@
 			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.JavadocCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.JavadocCheck">
 			<property name="category" value="Javadoc" />
 			<property name="description" value="Performs several checks on javadoc." />
 			<message key="javadoc.empty.line" value="First or last line in javadoc should not be empty" />
@@ -437,53 +437,53 @@
 			<message key="javadoc.incorrect.last.line" value="Javadoc should end with ''*/''" />
 			<message key="javadoc.multiple" value="''{0}'' has multiple javadocs" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.JSONNamingCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.JSONNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks if variable names follow naming conventions." />
 			<message key="variable.name.reserved" value="{0} name ending with ''{1}'' is reserved for object ''{2}''" />
 			<message key="variable.rename" value="Rename {0} ''{1}'' to ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.JSONUtilCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.JSONUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `JSONUtil`." />
 			<message key="json.util.put.all.use" value="Use ''JSONUtil.putAll'' instead of chaining on ''JSONUtil.put''" />
 			<message key="json.util.put.use" value="Combine calls ''{0}'' ({1}) and ''{2}'' ({3}) into single call ''{4}''" />
 			<message key="json.util.to.string.use" value="Use ''toString'' instead of ''String.valueOf''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LambdaCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.LambdaCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that `lambda` statements are as simple as possible." />
 			<message key="lambda.simplify" value="Simplify lambda statement with single statement" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ListUtilCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ListUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `ListUtil`." />
 			<message key="array.unneeded" value="Pass arguments directly to ''ListUtil.fromArray'' instead of passing new array" />
 			<message key="list.util.from.array.use" value="Use ''ListUtil.fromArray'' to simplify code" />
 			<message key="list.util.is.empty.use" value="Use ''ListUtil.isEmpty({0})'' to simplify code" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LiteralStringEqualsCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.LiteralStringEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases where `Objects.equals` should be used." />
 			<message key="objects.equals.use.1" value="Use ''Objects.equals'' instead of calling ''equals'' on a literal String" />
 			<message key="objects.equals.use.2" value="Either use ''{0}'' or use ''Objects.equals'' if ''{1}'' can have a ''null'' value, instead of calling ''equals'' on a literal String" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LocalPatternCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.LocalPatternCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks that a `java.util.Pattern` variable is declared globally, so that it is initiated only once." />
 			<message key="pattern.local" value="Create a global variable for Pattern ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LogMessageCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.LogMessageCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Validates messages that are passed to `log.*` calls." />
 			<message key="message.incorrect" value="Incorrect log message" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
+		<module name="com.liferay.source.formatter.checkstyle.check.LPS42924Check">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases where `PortalUtil.getClassName*` (instead of calling `classNameLocalService` directly)." />
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MapBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible." />
@@ -495,12 +495,12 @@
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MapIterationCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks that there are no unnecessary map iterations." />
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MethodNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="checkSearchMethodNames" value="false" />
 			<property name="description" value="Checks that method names follow naming conventions." />
@@ -509,24 +509,24 @@
 			<message key="search.method.incorrect" value="Incorrect name of method ''{0}''. Name should equal ''search'' or start with ''searchBy''." />
 			<property name="enforceTypeNames" value="" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthorCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingAuthorCheck">
 			<property name="category" value="Javadoc" />
 			<property name="description" value="Finds classes that have no `@author` specified." />
 			<message key="author.missing" value="Missing author" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDeprecatedJavadocCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingDeprecatedJavadocCheck">
 			<property name="category" value="Javadoc" />
 			<property name="description" value="Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present." />
 			<message key="javadoc.missing.deprecated" value="Must include both @java.lang.Deprecated annotation and @deprecated Javadoc tag with description" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDiamondOperatorCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingDiamondOperatorCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for missing diamond operator for types that require diamond operator." />
 			<property name="enforceDiamondOperatorClassNames" value="" />
 			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />
 			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLineCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingEmptyLineCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for missing line breaks around variable declarations." />
 			<message key="empty.line.missing.after.method.name" value="There should be an empty line after ''{0}''" />
@@ -536,80 +536,80 @@
 			<message key="empty.line.missing.before.variable.use" value="There should be an empty line between assigning and using variable ''{0}''" />
 			<message key="empty.line.missing.line.number" value="There should be an empty line {0} line ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifierCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingModifierCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Verifies that a method or global variable has a modifier specified." />
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingParenthesesCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MissingParenthesesCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds missing parentheses in conditional statement." />
 			<message key="parentheses.missing.1" value="Missing parentheses between the ''{0}'' operator and the ''{1}'' operator" />
 			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the ''{1}'' operator" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MVCCommandNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.MVCCommandNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming for values of `mvc.command.name`." />
 			<message key="value.incorrect" value="Incorrect value ''{0}'' for ''mvc.command.name''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NestedFieldAnnotationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.NestedFieldAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Verifies that `NestedFieldSupport.class` is used in `service` property of `Component` annotation" />
 			<property name="enabled" value="false" />
 			<message key="service.needed" value="''NestedFieldSupport.class'' is needed in ''service'' property of ''Component'' annotation, because at least one of methods has ''NestedField annotation" />
 			<message key="service.unneeded" value="No need to add ''NestedFieldSupport.class'' in ''service'' property of ''Component'' annotation, because no method has ''NestedField'' annotation" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.NestedIfStatementCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds nested if statements that can be combined." />
 			<message key="if.statements.combine" value="Combine nested if-statements" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NotRequireThisCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.NotRequireThisCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases of unnecessary use of `this.`." />
 			<message key="variable.not.require.this" value="Reference to variable ''{0}'' does not need ''.this''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NullAssertionInIfStatementCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.NullAssertionInIfStatementCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Verifies that null check should always be first in if-statement." />
 			<message key="null.check.move" value="Null check for variable ''{0}'' should always be first in if-statement" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NumberSuffixCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.NumberSuffixCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that uppercase `D`, `F`, or `L` is used when denoting Double/Float/Long." />
 			<message key="suffix.incorrect" value="Use uppercase ''{0}'' as suffix for the type ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOperandCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.OperatorOperandCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that operand do not go over too many lines and make the operator hard to read." />
 			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.OperatorOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that when an operator has a literal string or a number as one of the operands, it is always on the right hand side." />
 			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.OSGiResourceBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.OSGiResourceBuilderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Avoid using *Resource.builder." />
 			<message key="method.call.avoid" value="Avoid using method ''*Resource.builder'' in OSGi component" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ParsePrimitiveTypeCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible." />
 			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceCallCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.PersistenceCallCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds illegal persistence calls across component boundaries." />
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceUpdateCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.PersistenceUpdateCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that there are no stale references in service code from persistence updates." />
 			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.PlusStatementCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Performs several checks to statements where `+` is used for concatenation." />
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
@@ -618,7 +618,7 @@
 			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
 			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.PortletURLBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.PortletURLBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `PortletURLBuilder` is used when possible." />
@@ -633,12 +633,12 @@
 			<message key="keyword.reserved" value="Do not use ''{0}'' to set parameter ''{1}'', use ''{2}'' instead" />
 			<message key="string.cast.unneeded" value="No need to cast parameter to ''String'' when passing to method ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.RedundantBranchingStatementCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.RedundantBranchingStatementCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary branching (`break`, `continue` or `return`) statements." />
 			<message key="branching.statement.redundant" value="Redundant ''{0}'' statement" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ReferenceAnnotationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ReferenceAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on classes with @Reference annotation." />
 			<message key="default.unbind.redundant" value="No need to specify default ''unbind'' method. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />
@@ -648,43 +648,43 @@
 			<message key="unbind.static.policy.missing" value="Specify ''unbind'' method. Use ''unbind = {0}'' when ''unbind'' method is not needed. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />
 			<message key="volatile.missing" value="Variable ''{0}'' should be volatile" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReferenceCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.SelfReferenceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases of unnecessary reference to its own class." />
 			<message key="self.reference.unneeded" value="Reference to method ''{0}'' does not need ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.SemiColonCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.SemiColonCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases of unnecessary semicolon." />
 			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.SingleStatementClauseCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.SingleStatementClauseCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that `for`, `if` or `while` statement always uses curly braces." />
 			<message key="braces.missing" value="Use braces around {0}-statement clause" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZeroCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.SizeIsZeroCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead)." />
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.StaticBlockCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.StaticBlockCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on static blocks." />
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
 			<message key="static.block.unneeded" value="No need to use static block for method call ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.StringBundlerNamingCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.StringBundlerNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming on variables of type 'StringBundler'." />
 			<message key="variable.name.incorrect" value="StringBundler {0} ''{1}'' should end with either ''sb'' or ''SB''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.StringCastCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.StringCastCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where a redundant `toString()` is called on variable type `String`." />
 			<message key="string.cast.unneeded" value="No need to call ''.toString()'' on type String" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.SystemEventCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.SystemEventCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing or redundant usage of @SystemEvent for delete events." />
 			<property name="enabled" value="false" />
@@ -692,45 +692,45 @@
 			<message key="system.event.unneeded.1" value="@SystemEvent on method ''{0}'' is not needed, because the first parameter is not ''{1}''" />
 			<message key="system.event.unneeded.2" value="@SystemEvent on method ''{0}'' is not needed, because ''{1}'' does not implement ''ClassedModel''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.TernaryOperatorCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.TernaryOperatorCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds use of ternary operator in `java` files (use if statement instead)." />
 			<message key="ternary.operator.avoid" value="Use if-else-statement instead of ternary conditional operator for better readability" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.TestClassCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.TestClassCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that names of test classes follow naming conventions." />
 			<message key="test.base.class.invalidName" value="Base test class ''{0}'' should start with ''Base''" />
 			<message key="test.case.class.incorrect.abstract" value="Class ending in *TestCase should be abstract. Either make the class abstract or rename to ''{0}'' if the class contains actual tests" />
 			<message key="test.class.incorrect.abstract" value="Test class ''{0}'' should not be abstract" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.TestClassMissingLiferayUnitTestRuleCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.TestClassMissingLiferayUnitTestRuleCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule ''LiferayUnitTestRule''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadLocalUtilCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ThreadLocalUtilCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead)." />
 			<message key="thread.local.util.use" value="Use ''ThreadLocalUtil.create'' when initializing variable ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ThreadNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that names of threads follow naming conventions." />
 			<message key="thread.rename" value="Rename thread to ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRuleCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.TransactionalTestRuleCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`." />
 			<message key="import.invalid" value="Avoid using import TransactionalTestRule in *StagedModelDataHandlerTest, see LPS-68908" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.TryWithResourcesCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.TryWithResourcesCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Ensures using Try-With-Resources statement to properly close the resource." />
 			<property name="populateTypeNames" value="false" />
 			<message key="try.with.resources.use" value="Use Try-With-Resources statement to declare ''{0}'' instead of closing the resource in the ''finally'' statement using ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnicodePropertiesBuilderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnicodePropertiesBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />
 			<property name="description" value="Checks that `UnicodePropertiesBuilder` is used when possible." />
@@ -742,7 +742,7 @@
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryAssignCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnnecessaryAssignCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary assign statements (when it is either reassigned or returned right after)." />
 			<message key="assign.unnecessary.before.reassign" value="No need to assign call to variable ''{0}'', because ''{0}'' is reassigned another value without being used" />
@@ -751,17 +751,17 @@
 			<message key="assign.unnecessary.unused" value="No need to assign call to variable ''{0}'', because ''{0}'' is not used after the call" />
 			<message key="list.assign.unnecessary.before.return" value="No need to assign List variable ''{0}'' before return, use ''ListUtil.fromArray()'' instead" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryMethodCallCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnnecessaryMethodCallCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds unnecessary method calls." />
 			<message key="method.call.unnecessary" value="Use ''{0}'' instead of calling method ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryTypeCastCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnnecessaryTypeCastCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary Type Casting." />
 			<message key="type.cast.unnecessary" value="No need to apply Type Cast to method ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryVariableDeclarationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnnecessaryVariableDeclarationCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary variable declarations (when it is either reassigned or returned right after)." />
 			<message key="list.declaration.unnecessary.before.return" value="No need to declare List variable ''{0}'' before return, use ''ListUtil.fromArray()'' instead" />
@@ -769,34 +769,34 @@
 			<message key="variable.declaration.unnecessary.before.return" value="No need to declare variable ''{0}'' because it is returned right after" />
 			<message key="variable.declaration.unnecessary.to.string" value="No need to declare variable ''{0}'', use String.valueOf() to combine line ''{1}'' and ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnprocessedExceptionCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnprocessedExceptionCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an `Exception` is swallowed without being processed." />
 			<message key="exception.unprocessed" value="Unprocessed exception ''{0}'', see LPS-36174" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedMethodCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnusedMethodCheck">
 			<property name="allowedMethodNames" value="readObject,writeObject" />
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds private methods that are not used." />
 			<message key="method.unused" value="Method ''{0}'' is unused" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnusedParameterCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds parameters in private methods that are not used." />
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedVariableCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnusedVariableCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds variables that are declared, but not used." />
 			<message key="variable.unused" value="Variable ''{0}'' is unused" />
 			<message key="variable.value.unused" value="Value of variable ''{0}'' is unused" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnwrappedVariableInfoCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UnwrappedVariableInfoCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization." />
 			<message key="variable.info.unwrapped" value="Wrap the variable ''{0}'' into an inner class ''Concealer'' in order to defer array elements initialization, see LPS-72768" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UpgradeDeprecatedAPICheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeDeprecatedAPICheck">
 			<property name="category" value="Upgrade" />
 			<property name="description" value="Finds calls to deprecated classes, constructors, fields or methods after an upgrade" />
 			<message key="constructor.call.deprecated" value="Constructor ''{0}'' has been deprecated in version ''{1}''" />
@@ -804,7 +804,7 @@
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="type.call.deprecated" value="Type ''{0}'' has been deprecated in version ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UpgradeRemovedAPICheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeRemovedAPICheck">
 			<property name="category" value="Upgrade" />
 			<property name="description" value="Finds cases where calls are made to removed API after an upgrade." />
 			<message key="class.not.found.1" value="Class ''{0}'' no longer exists, or has been moved, in version ''{1}''" />
@@ -814,13 +814,13 @@
 			<message key="method.not.found" value="Method ''{0}'' no longer exists, or the signature has changed, in class ''{1}'' for version ''{2}''" />
 			<message key="variable.not.found" value="Variable ''{0}'' no longer exists in class ''{1}'' for version ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ValidatorIsNullCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`." />
 			<message key="method.invalidName" value="Avoid using method ''{0}''" />
 			<message key="method.reserved" value="Method ''{0}'' should only be used for type ''Long'', ''Serializable'' or ''String''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.VariableDeclarationAsUsedCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.VariableDeclarationAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where a variable declaration can be inlined or moved closer to where it is used." />
 			<message key="string.value.of.use" value="Simplify by using ''String.valueOf'' (combining the statement on line ''{0}'' and ''toString()'' on line ''{1}'')" />
@@ -829,7 +829,7 @@
 			<message key="variable.move.after.branching.statement" value="For better performance, the variable declaration for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
 			<message key="variable.move.inside.if.statement" value="For better performance, the variable declaration for ''{0}'' should be moved inside the {1}-statement on line ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.VariableNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.VariableNameCheck">
 			<property name="allowedVariableNames" value="bitMode,metadata,superClass,userName" />
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that variable names follow naming conventions." />

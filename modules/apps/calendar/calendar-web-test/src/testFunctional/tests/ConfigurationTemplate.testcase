@@ -66,12 +66,26 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can delete a template"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteTemplate {
+		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
 
-		// TODO LRQA-71973 CanDeleteTemplate pending implementation
+		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
 
+
+
+		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+
+		ConfigurationTemplate.optionSelectedTemplate(
+			configurationName = "Configuration Name",
+			item = "Delete");
+
+
+
+		ConfigurationTemplate.confirmDeleteSelectedTemplate();
+		
+
+		ConfigurationTemplate.notViewConfigurationTemplateTableName(configurationName = "Configuration Name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Modified Date"

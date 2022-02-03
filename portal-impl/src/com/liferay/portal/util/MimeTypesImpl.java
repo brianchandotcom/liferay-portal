@@ -28,8 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -65,24 +63,15 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			org.apache.tika.mime.MimeTypes.getDefaultMimeTypes());
 	}
 
-	public void afterPropertiesSet() {
-		URL url = org.apache.tika.mime.MimeTypes.class.getResource(
-			"tika-mimetypes.xml");
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		URL customMimeTypesURL = classLoader.getResource(
-			"tika/custom-mimetypes.xml");
-
-		try {
-			read(url.openStream(), _extensionsMap);
-			read(customMimeTypesURL.openStream(), _customExtensionsMap);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to populate extensions map", exception);
-		}
+	public void afterPropertiesSet() throws Exception {
+		read(
+			org.apache.tika.mime.MimeTypes.class.getResourceAsStream(
+				"tika-mimetypes.xml"),
+			_extensionsMap);
+		read(
+			MimeTypesImpl.class.getResourceAsStream(
+				"/tika/custom-mimetypes.xml"),
+			_customExtensionsMap);
 	}
 
 	@Override

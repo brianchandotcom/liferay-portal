@@ -36,7 +36,7 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			blueprintTitle = "Test Blueprint",
+			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
 			value1 = "Test Description");
 	}
@@ -454,6 +454,31 @@ definition {
 		Blueprints.viewEntryTitle(title = "Test Element");
 	}
 
+	test CreateElementWithDescription {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Element");
+
+		PortletEntry.inputDescription(description = "Test Element Description");
+
+		Button.click(button = "Create");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Test Element Description");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Test Element Description");
+	}
+
 	test DefineBlueprintsRolePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -718,7 +743,7 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			blueprintTitle = "Test Blueprint",
+			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
 			value1 = "Edited Description");
 	}

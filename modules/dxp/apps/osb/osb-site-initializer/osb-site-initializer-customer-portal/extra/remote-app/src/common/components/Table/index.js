@@ -12,11 +12,12 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import TablePagination from './Pagination';
 import TableSkeleton from './Skeleton';
 
 const Table = ({
+	checkboxConfig,
 	columns,
 	hasCheckbox,
 	hasPagination,
@@ -26,7 +27,8 @@ const Table = ({
 	...props
 }) => {
 	const [isAllCheckboxsSelected, setIsAllCheckboxsSelected] = useState(false);
-	const [checkboxesChecked, setCheckboxesChecked] = useState([]);
+	const {checkboxesChecked, setCheckboxesChecked} = checkboxConfig;
+
 	const {
 		activePage,
 		itemsPerPage,
@@ -37,6 +39,17 @@ const Table = ({
 		showDeltasDropDown,
 		totalCount,
 	} = paginationConfig;
+
+	useEffect(() => {
+		if (
+			hasCheckbox &&
+			rows.every((row) => checkboxesChecked.includes(row.id))
+		) {
+			return setIsAllCheckboxsSelected(true);
+		}
+
+		return setIsAllCheckboxsSelected(false);
+	}, [checkboxesChecked, hasCheckbox, rows]);
 
 	const handleCheckboxClick = (event, id) => {
 		const {checked} = event.target;
@@ -65,10 +78,7 @@ const Table = ({
 
 			return;
 		}
-
-		setCheckboxesChecked(
-			new Array(rows.length).fill().map((_, index) => index)
-		);
+		setCheckboxesChecked(rows.map((row) => row.id));
 	};
 
 	return (
@@ -122,10 +132,10 @@ const Table = ({
 								className={classNames({
 									'cp-common-table-active-row': checkboxesChecked.find(
 										(checkboxChecked) =>
-											checkboxChecked === rowIndex
+											checkboxChecked === row.id
 									),
 								})}
-								key={rowIndex}
+								key={row.id || rowIndex}
 							>
 								{hasCheckbox && (
 									<ClayTable.Cell
@@ -135,12 +145,12 @@ const Table = ({
 									>
 										<input
 											checked={checkboxesChecked.includes(
-												rowIndex
+												row.id
 											)}
 											onChange={(event) =>
 												handleCheckboxClick(
 													event,
-													rowIndex
+													row.id
 												)
 											}
 											type="checkbox"
@@ -174,8 +184,8 @@ const Table = ({
 
 			{!!hasPagination && !!totalCount && (
 				<TablePagination
-					activePage={activePage || 1}
-					itemsPerPage={itemsPerPage || 5}
+					activePage={activePage}
+					itemsPerPage={itemsPerPage}
 					labels={labels}
 					listItemsPerPage={listItemsPerPage}
 					setActivePage={setActivePage}
@@ -189,6 +199,7 @@ const Table = ({
 };
 
 Table.defaultProps = {
+	checkboxConfig: {checkboxesChecked: [], setCheckboxesChecked: () => {}},
 	paginationConfig: {
 		activePage: 1,
 		itemsPerPage: 5,

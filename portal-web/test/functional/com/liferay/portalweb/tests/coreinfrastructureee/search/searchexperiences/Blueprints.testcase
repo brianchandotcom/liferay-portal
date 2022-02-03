@@ -359,7 +359,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
-		var aggregationConfigurationJson = '''{"cardinality-test":{}}''';
+		var aggregationConfigurationJson = '''{"aggs":{}}''';
 
 		Type.typeCodeMirrorEditorNoError(
 			configurationField = "Aggregation Configuration",
@@ -384,7 +384,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
-		AssertTextNotPresent(value1 = "cardinality-test");
+		AssertTextNotPresent(value1 = "aggs");
 	}
 
 	test CancelChangesToQuerySettings {

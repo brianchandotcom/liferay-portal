@@ -129,21 +129,15 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				"billingAddressStreet3", billingAddress.getStreet3()
 			).put(
 				"billingAddressZip", billingAddress.getZip()
-			).put(
-				"billingAddressPhoneNumber", billingAddress.getPhoneNumber()
 			);
 		}
 
 		hashMapWrapper.put(
+			"commerceAccountName", commerceAccount.getName()
+		).put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
 			"companyId", commerceAccount.getCompanyId()
-		).put(
-			"commerceAccountName", commerceAccount.getName()
-		).put(
-			"requestedDeliveryDate",
-			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
-				commerceOrder.getRequestedDeliveryDate()
 		).put(
 			"locale", themeDisplay.getLocale()
 		).put(
@@ -158,6 +152,10 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				commerceOrder.getPrintedNote()
 		).put(
 			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber()
+		).put(
+			"requestedDeliveryDate",
+			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
+				commerceOrder.getRequestedDeliveryDate()
 		);
 
 		if (shippingAddress != null) {

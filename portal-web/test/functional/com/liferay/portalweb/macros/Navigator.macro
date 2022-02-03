@@ -294,7 +294,7 @@ definition {
 	macro openSpecificURL {
 		Open(locator1 = "${url}");
 
-		Alert.confirmSecurity();
+		Alert.confirmSecurity(domain = "${domain}");
 	}
 
 	macro openStagingSiteURL {

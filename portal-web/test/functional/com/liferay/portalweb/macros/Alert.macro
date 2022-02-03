@@ -16,13 +16,24 @@ definition {
 		if (IsElementPresent(key_title = "Your connection is not private", locator1 = "Header#H1_TITLE")) {
 			Click(locator1 = "Button#ADVANCED");
 
-			AssertElementPresent(
-				key_text = "Proceed to localhost",
-				locator1 = "Link#ANY");
+			if (isSet(domain)) {
+				AssertElementPresent(
+					key_text = "Proceed to ${domain}",
+					locator1 = "Link#ANY");
 
-			Click(
-				key_text = "Proceed to localhost (unsafe)",
-				locator1 = "Link#ANY");
+				Click(
+					key_text = "Proceed to ${domain} (unsafe)",
+					locator1 = "Link#ANY");
+			}
+			else {
+				AssertElementPresent(
+					key_text = "Proceed to localhost",
+					locator1 = "Link#ANY");
+
+				Click(
+					key_text = "Proceed to localhost (unsafe)",
+					locator1 = "Link#ANY");
+			}
 		}
 	}
 

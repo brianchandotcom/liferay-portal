@@ -1930,7 +1930,9 @@ definition {
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
 		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			Navigator.openSpecificURL(
+				domain = "${domain}",
+				url = "${virtualHostsURL}");
 		}
 		else {
 			Navigator.openURL();
@@ -1981,7 +1983,9 @@ definition {
 	@summary = "Log into Liferay using the UI"
 	macro firstLoginUI {
 		if (isSet(specificURL)) {
-			Navigator.openSpecificURL(url = "${specificURL}");
+			Navigator.openSpecificURL(
+				domain = "${domain}",
+				url = "${specificURL}");
 		}
 		else {
 			Navigator.openURL();

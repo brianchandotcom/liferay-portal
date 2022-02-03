@@ -79,22 +79,7 @@ numberFormat.setMinimumIntegerDigits(2);
 		String curTimeZoneId = curTimeZone.getID();
 
 		if (curTimeZoneId.contains("Phoenix")) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			com.liferay.ibm.icu.util.TimeZone icuTimeZone = com.liferay.ibm.icu.util.TimeZone.getTimeZone(curTimeZoneId);
-
-			com.liferay.ibm.icu.text.SimpleDateFormat icuSimpleDateFormat = new com.liferay.ibm.icu.text.SimpleDateFormat();
-
-			TimeZoneFormat icuTimeZoneFormat = icuSimpleDateFormat.getTimeZoneFormat();
-
-			sb.append(icuTimeZoneFormat.format(TimeZoneFormat.Style.ZONE_ID, icuTimeZone, date.getTime()));
-
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			extraDisplayName = sb.toString();
+			extraDisplayName = StringBundler.concat(StringPool.SPACE, StringPool.OPEN_PARENTHESIS, curTimeZoneId, StringPool.CLOSE_PARENTHESIS);
 		}
 	%>
 

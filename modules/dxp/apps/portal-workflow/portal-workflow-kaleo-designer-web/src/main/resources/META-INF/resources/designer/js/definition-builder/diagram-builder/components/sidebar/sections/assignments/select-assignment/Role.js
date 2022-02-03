@@ -43,15 +43,13 @@ const Roles = () => {
 	const loading = networkStatus < 4;
 	const error = networkStatus === 5;
 
-	useEffect(()=>{
-		setFieldValues(
-			{
-				id: selectedItem.data.assignments?.rolesData?.id || '',
-				name: selectedItem.data.assignments?.rolesData?.name || '',
-			}
-		)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[])
+	useEffect(() => {
+		setFieldValues({
+			id: selectedItem.data.assignments?.sectionsData?.id || '',
+			name: selectedItem.data.assignments?.sectionsData?.name || '',
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleInputFocus = () => {
 		setFilter(fieldValues.name === '');
@@ -81,7 +79,7 @@ const Roles = () => {
 				assignments: {
 					assignmentType: ['roleId'],
 					roleId: role.id,
-					rolesData: {
+					sectionsData: {
 						id: role.id,
 						name: role.name,
 						roleType: role.roleType,

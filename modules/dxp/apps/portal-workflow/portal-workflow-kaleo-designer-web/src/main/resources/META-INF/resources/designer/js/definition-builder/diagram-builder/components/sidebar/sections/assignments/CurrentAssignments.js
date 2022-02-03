@@ -49,7 +49,7 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 		if (assignmentType === 'roleId') {
 			setAssignmentsDetails({
 				assignmentsCount: 1,
-				firstName: assignments.rolesData.name,
+				firstName: assignments.sectionsData.name,
 			});
 		}
 		if (assignmentType === 'user') {
@@ -74,7 +74,8 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 	const getAssignmentsDetails = () => {
 		if (assignmentType === 'assetCreator') {
 			return [''];
-		} else if (assignmentsDetails) {
+		}
+		else if (assignmentsDetails) {
 			const result = [': ' + assignmentsDetails.firstName || ''];
 
 			if (assignmentsDetails.assignmentsCount !== 1) {
@@ -87,7 +88,8 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 			}
 
 			return result;
-		} else {
+		}
+		else {
 			return [`: ${assignments[Object.keys(assignments)[1]]}`];
 		}
 	};

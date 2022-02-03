@@ -22,8 +22,6 @@ definition {
 			tableEntry = "${configurationName}");
 	}
 
-	
-
 	macro saveConfigurationTemplateCalendar {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -34,12 +32,9 @@ definition {
 		PortletEntry.inputName(name = "${configurationName}");
 
 		Button.clickSave();
-		
 
 		Alert.viewSuccessMessage();
 	}
-
-	
 
 	macro viewConfigurationTemplateTableName {
 		AssertElementPresent(

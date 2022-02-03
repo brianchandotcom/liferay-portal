@@ -72,18 +72,13 @@ definition {
 
 		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
 
-
-
 		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
 
 		ConfigurationTemplate.optionSelectedTemplate(
 			configurationName = "Configuration Name",
 			item = "Delete");
 
-
-
 		ConfigurationTemplate.confirmDeleteSelectedTemplate();
-		
 
 		ConfigurationTemplate.notViewConfigurationTemplateTableName(configurationName = "Configuration Name");
 	}

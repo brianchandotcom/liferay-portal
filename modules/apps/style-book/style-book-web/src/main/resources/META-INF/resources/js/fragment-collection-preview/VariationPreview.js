@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
@@ -20,6 +21,7 @@ export function VariationPreview({
 	label,
 	namespace,
 	previewURL,
+	showLabel,
 	variation,
 }) {
 	const ref = useRef();
@@ -54,7 +56,13 @@ export function VariationPreview({
 	return (
 		<article className="d-flex flex-column-reverse">
 			<div className="cadmin">
-				<h4 className="mb-0 mt-2 text-secondary">{label}</h4>
+				<h4
+					className={classNames('mb-0 mt-2 text-secondary', {
+						'sr-only': !showLabel,
+					})}
+				>
+					{label}
+				</h4>
 			</div>
 
 			<div

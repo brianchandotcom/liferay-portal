@@ -37,6 +37,4 @@ public interface MimeTypes {
 
 	public Set<String> getExtensions(String contentType);
 
-	public boolean isWebImage(String mimeType);
-
 }

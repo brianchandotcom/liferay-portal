@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -65,9 +64,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	public MimeTypesImpl() {
 		_detector = new DefaultDetector(
 			org.apache.tika.mime.MimeTypes.getDefaultMimeTypes());
-
-		_webImageMimeTypes = SetUtil.fromArray(
-			PropsValues.MIME_TYPES_WEB_IMAGES);
 	}
 
 	public void afterPropertiesSet() {
@@ -215,11 +211,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return extensions;
 	}
 
-	@Override
-	public boolean isWebImage(String mimeType) {
-		return _webImageMimeTypes.contains(mimeType);
-	}
-
 	protected String getCustomContentType(String extension) {
 		if (Validator.isNull(extension)) {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -345,6 +336,5 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		new HashMap<>();
 	private final Detector _detector;
 	private final Map<String, Set<String>> _extensionsMap = new HashMap<>();
-	private final Set<String> _webImageMimeTypes;
 
 }

@@ -17,21 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String catalogNavigationItem = ParamUtil.getString(request, "catalogNavigationItem", "view-all-product-definitions");
-
 CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
-
-request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-portletURL", cpDefinitionsDisplayContext.getPortletURL());
 %>
 
 <%@ include file="/navbar_definitions.jspf" %>
 
 <div id="<portlet:namespace />productDefinitionsContainer">
-	<aui:form action="<%= portletURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form action="<%= cpDefinitionsDisplayContext.getPortletURL() %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" "<%= Constants.DELETE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
 		<clay:headless-data-set-display
@@ -44,7 +40,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

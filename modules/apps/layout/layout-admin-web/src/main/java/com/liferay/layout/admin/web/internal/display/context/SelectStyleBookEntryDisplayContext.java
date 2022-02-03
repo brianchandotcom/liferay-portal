@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -28,6 +30,7 @@ import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,6 +49,18 @@ public class SelectStyleBookEntryDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public Map<String, Object> getContext() {
+		return HashMapBuilder.<String, Object>put(
+			"eventName",
+			() -> HtmlUtil.escape(
+				ParamUtil.getString(
+					_httpServletRequest, "eventName",
+					_liferayPortletResponse.getNamespace() + "selectStyleBook"))
+		).put(
+			"selector", ".select-style-book-option"
+		).build();
 	}
 
 	public StyleBookEntry getDefaultStyleBookEntry() {
@@ -74,12 +89,6 @@ public class SelectStyleBookEntryDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
-	}
-
-	public String getEventName() {
-		return ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_liferayPortletResponse.getNamespace() + "selectStyleBook");
 	}
 
 	public List<StyleBookEntry> getStyleBookEntries() {

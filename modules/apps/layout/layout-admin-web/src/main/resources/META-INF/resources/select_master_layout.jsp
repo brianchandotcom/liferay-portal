@@ -47,42 +47,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 	</ul>
 </aui:form>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	var delegate = delegateModule.default;
-
-	var delegateHandler = delegate(
-		document.body,
-		'click',
-		'.select-master-layout-option',
-		(event) => {
-			var activeCards = document.querySelectorAll('.card.active');
-
-			if (activeCards.length) {
-				activeCards.forEach((card) => {
-					card.classList.remove('active');
-				});
-			}
-
-			var newSelectedCard = event.delegateTarget;
-
-			if (newSelectedCard) {
-				newSelectedCard.classList.add('active');
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escape(eventName) %>',
-				{
-					data: event.delegateTarget.dataset,
-				}
-			);
-		}
-	);
-
-	var onDestroyPortlet = function () {
-		delegateHandler.dipose();
-
-		Liferay.detach('destroyPortlet', onDestroyPortlet);
-	};
-
-	Liferay.on('destroyPortlet', onDestroyPortlet);
-</aui:script>
+<liferay-frontend:component
+	context='<%= HashMapBuilder.<String, Object>put("eventName", HtmlUtil.escape(eventName)).put("selector", ".select-master-layout-option").build() %>'
+	module="js/SelectCardHandler"
+/>

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.util.JS;
 
 import java.io.IOException;
@@ -47,8 +48,10 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	public ImportTranslationResultsDisplayContext(
 		long classNameId, long classPK, long companyId, long groupId,
-		Map<String, String> failureMessages, String fileName,
-		List<String> successMessages, String title, int workflowAction,
+		Map<String, String> failureMessages,
+		FFBulkTranslationConfiguration ffBulkTranslationConfiguration,
+		String fileName, List<String> successMessages, String title,
+		int workflowAction,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		_classNameId = classNameId;
@@ -56,6 +59,7 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 		_companyId = companyId;
 		_groupId = groupId;
 		_failureMessages = failureMessages;
+		_ffBulkTranslationConfiguration = ffBulkTranslationConfiguration;
 		_fileName = fileName;
 		_successMessages = successMessages;
 		_title = title;
@@ -167,6 +171,10 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 		return _title;
 	}
 
+	public boolean isDownloadCSVReportEnabled() {
+		return _ffBulkTranslationConfiguration.enabled();
+	}
+
 	private String _getLayoutSuccessMessageLabel(Locale locale) {
 		if ((getSuccessMessagesCount() > 1) &&
 			(getFailureMessagesCount() == 0)) {
@@ -216,6 +224,8 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 	private final long _classPK;
 	private final long _companyId;
 	private final Map<String, String> _failureMessages;
+	private final FFBulkTranslationConfiguration
+		_ffBulkTranslationConfiguration;
 	private final String _fileName;
 	private final long _groupId;
 	private String _redirect;

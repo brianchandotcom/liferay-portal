@@ -20,6 +20,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,6 +52,7 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
+import com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
@@ -72,13 +74,16 @@ import javax.portlet.ActionResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia Garcia
  */
 @Component(
+	configurationPid = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration",
 	property = {
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
 		"mvc.command.name=/translation/import_translation"
@@ -86,6 +91,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffBulkTranslationConfiguration = ConfigurableUtil.createConfigurable(
+			FFBulkTranslationConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -166,7 +178,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					translationRequestHelper.getModelClassPK(),
 					themeDisplay.getCompanyId(),
 					translationRequestHelper.getGroupId(), failureMessages,
-					fileName, successMessages, title, workflowAction,
+					_ffBulkTranslationConfiguration, fileName, successMessages,
+					title, workflowAction,
 					_workflowDefinitionLinkLocalService));
 		}
 		catch (Exception exception) {
@@ -389,6 +402,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						XLIFFFileException.MustNotHaveMoreThanOne.class,
 						s -> "the-xliff-file-is-invalid"
 					).build();
+
+	private volatile FFBulkTranslationConfiguration
+		_ffBulkTranslationConfiguration;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

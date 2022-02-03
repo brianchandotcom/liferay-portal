@@ -56,6 +56,36 @@ public class DateUtil {
 		return getFormattedDate(offsetDays, "d");
 	}
 
+	public static String getDateOffsetByDays(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.DATE, Integer.valueOf(offset), pattern);
+	}
+
+	public static String getDateOffsetByHours(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.HOUR, Integer.valueOf(offset), pattern);
+	}
+
+	public static String getDateOffsetByMinutes(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.MINUTE, Integer.valueOf(offset), pattern);
+	}
+
+	public static String getDateOffsetByMonths(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.MONTH, Integer.valueOf(offset), pattern);
+	}
+
+	public static String getDateOffsetBySeconds(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.MINUTE, Integer.valueOf(offset), pattern);
+	}
+
+	public static String getDateOffsetByYears(String offset, String pattern) {
+		return getFormattedDate(
+			Calendar.YEAR, Integer.valueOf(offset), pattern);
+	}
+
 	public static String getDayOfWeek(String offsetDays) {
 		return getFormattedDate(offsetDays, "EEEE");
 	}
@@ -68,6 +98,12 @@ public class DateUtil {
 		String pattern, String timeZoneID) {
 
 		return _format(new Date(), pattern, timeZoneID);
+	}
+
+	public static String getFormattedDate(
+		int field, int offset, String pattern) {
+
+		return _format(_getOffsetDate(field, offset), pattern);
 	}
 
 	public static String getFormattedDate(String offsetDays, String pattern) {

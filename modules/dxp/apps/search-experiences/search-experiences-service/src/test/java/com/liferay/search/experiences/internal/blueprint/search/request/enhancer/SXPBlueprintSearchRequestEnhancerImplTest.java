@@ -235,9 +235,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Assert.assertTrue(
 			ListUtil.isEmpty(searchRequest.getComplexQueryParts()));
 
-		Highlight highlight = searchRequest.getHighlight();
-
-		Assert.assertTrue(ListUtil.isEmpty(highlight.getFieldConfigs()));
+		Assert.assertNull(searchRequest.getHighlight());
 
 		Assert.assertTrue(ListUtil.isEmpty(searchRequest.getSorts()));
 

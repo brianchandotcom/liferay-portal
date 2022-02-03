@@ -195,7 +195,7 @@ public class CPAttachmentFileEntriesDisplayContext
 		return _attachmentsConfiguration.imageExtensions();
 	}
 
-	public String getImageItemSelectorUrl() {
+	public String getImageItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());

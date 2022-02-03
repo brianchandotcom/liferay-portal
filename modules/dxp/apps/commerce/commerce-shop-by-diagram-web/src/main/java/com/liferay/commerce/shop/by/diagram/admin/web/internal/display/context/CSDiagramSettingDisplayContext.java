@@ -122,7 +122,7 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramSettingImageConfiguration.imageExtensions();
 	}
 
-	public String getImageItemSelectorUrl() {
+	public String getImageItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());

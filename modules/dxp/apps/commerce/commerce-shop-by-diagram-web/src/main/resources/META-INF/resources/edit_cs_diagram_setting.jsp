@@ -85,7 +85,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 						draggableImage="vertical"
 						fileEntryId='<%= BeanParamUtil.getLong(fileEntry, request, "fileEntryId") %>'
 						itemSelectorEventName="addFileEntry"
-						itemSelectorURL="<%= csDiagramSettingDisplayContext.getImageItemSelectorUrl() %>"
+						itemSelectorURL="<%= csDiagramSettingDisplayContext.getImageItemSelectorURL() %>"
 						maxFileSize="<%= csDiagramSettingDisplayContext.getImageMaxSize() %>"
 						paramName="fileEntry"
 						uploadURL="<%= uploadCSDiagramSettingImageActionURL %>"

@@ -176,7 +176,7 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 								draggableImage="vertical"
 								fileEntryId="<%= fileEntryId %>"
 								itemSelectorEventName="addFileEntry"
-								itemSelectorURL="<%= commerceCatalogDisplayContext.getImageItemSelectorUrl() %>"
+								itemSelectorURL="<%= commerceCatalogDisplayContext.getImageItemSelectorURL() %>"
 								maxFileSize="<%= commerceCatalogDisplayContext.getImageMaxSize() %>"
 								paramName="fileEntry"
 								uploadURL="<%= uploadCommerceMediaDefaultImageActionURL %>"

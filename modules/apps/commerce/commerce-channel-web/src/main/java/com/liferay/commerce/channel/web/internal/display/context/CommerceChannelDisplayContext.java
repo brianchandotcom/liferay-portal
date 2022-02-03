@@ -310,7 +310,7 @@ public class CommerceChannelDisplayContext
 		return headerActionModels;
 	}
 
-	public String getImageItemSelectorUrl() {
+	public String getImageItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());

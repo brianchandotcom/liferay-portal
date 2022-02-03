@@ -271,7 +271,7 @@ if (shippingTaxCategory != null) {
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"itemSelectorURL", commerceChannelDisplayContext.getImageItemSelectorUrl()
+			"itemSelectorURL", commerceChannelDisplayContext.getImageItemSelectorURL()
 		).build()
 	%>'
 	module="js/jrxml"

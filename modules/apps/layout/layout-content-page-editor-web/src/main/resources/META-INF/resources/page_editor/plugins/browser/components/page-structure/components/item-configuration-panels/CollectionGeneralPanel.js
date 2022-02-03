@@ -80,6 +80,16 @@ const ERROR_MESSAGES = {
 };
 
 export function CollectionGeneralPanel({item}) {
+	const {
+		collection,
+		listStyle,
+		numberOfColumns,
+		numberOfItems: initialNumberOfItems,
+		numberOfItemsPerPage: initialNumberOfItemsPerPage,
+		paginationType,
+		showAllItems: initialShowAllItems,
+	} = item.config;
+
 	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
 	const [availableListStyles, setAvailableListStyles] = useState([
 		DEFAULT_LIST_STYLE,
@@ -87,7 +97,7 @@ export function CollectionGeneralPanel({item}) {
 	const [collectionConfiguration, setCollectionConfiguration] = useState(
 		null
 	);
-	const collectionItemType = item.config.collection?.itemType || null;
+	const collectionItemType = collection?.itemType || null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();
@@ -96,18 +106,18 @@ export function CollectionGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const getState = useGetState();
 	const isMaximumValuePerPageError =
-		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
+		initialNumberOfItemsPerPage > config.searchContainerPageMaxDelta;
 	const isMounted = useIsMounted();
 	const listStyleId = useId();
 	const [numberOfItems, setNumberOfItems] = useControlledState(
-		item.config.numberOfItems
+		initialNumberOfItems
 	);
 	const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useControlledState(
-		item.config.numberOfItemsPerPage
+		initialNumberOfItemsPerPage
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [showAllItems, setShowAllItems] = useControlledState(
-		item.config.showAllItems
+		initialShowAllItems
 	);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 
@@ -149,7 +159,7 @@ export function CollectionGeneralPanel({item}) {
 	};
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
-		if (Number(numberOfItems) !== item.config.numberOfItems) {
+		if (Number(numberOfItems) !== initialNumberOfItems) {
 			handleConfigurationChanged({
 				numberOfItems: Number(event.target.value),
 			});
@@ -157,7 +167,7 @@ export function CollectionGeneralPanel({item}) {
 	};
 
 	const handleCollectionNumberOfItemsPerPageBlurred = (event) => {
-		if (Number(numberOfItemsPerPage) !== item.config.numberOfItemsPerPage) {
+		if (Number(numberOfItemsPerPage) !== initialNumberOfItemsPerPage) {
 			handleConfigurationChanged({
 				numberOfItemsPerPage: Number(event.target.value),
 			});
@@ -238,13 +248,13 @@ export function CollectionGeneralPanel({item}) {
 		let errorMessage = null;
 
 		if (totalNumberOfItems) {
-			if (item.config.numberOfItems > totalNumberOfItems) {
+			if (initialNumberOfItems > totalNumberOfItems) {
 				errorMessage = Liferay.Util.sub(
 					ERROR_MESSAGES.maximumItems,
 					totalNumberOfItems
 				);
 			}
-			else if (item.config.numberOfItems < 1) {
+			else if (initialNumberOfItems < 1) {
 				errorMessage = ERROR_MESSAGES.neededItem;
 			}
 		}
@@ -253,7 +263,7 @@ export function CollectionGeneralPanel({item}) {
 		}
 
 		setNumberOfItemsError(errorMessage);
-	}, [totalNumberOfItems, item.config.numberOfItems]);
+	}, [totalNumberOfItems, initialNumberOfItems]);
 
 	useEffect(() => {
 		let errorMessage = null;
@@ -264,12 +274,12 @@ export function CollectionGeneralPanel({item}) {
 				config.searchContainerPageMaxDelta
 			);
 		}
-		else if (item.config.numberOfItemsPerPage < 1) {
+		else if (initialNumberOfItemsPerPage < 1) {
 			errorMessage = ERROR_MESSAGES.neededItem;
 		}
 
 		setNumberOfItemsPerPageError(errorMessage);
-	}, [isMaximumValuePerPageError, item.config.numberOfItemsPerPage]);
+	}, [isMaximumValuePerPageError, initialNumberOfItemsPerPage]);
 
 	useEffect(() => {
 		if (collectionItemType) {
@@ -293,9 +303,9 @@ export function CollectionGeneralPanel({item}) {
 	}, [collectionItemType]);
 
 	useEffect(() => {
-		if (item.config.collection) {
+		if (collection) {
 			CollectionService.getCollectionItemCount({
-				collection: item.config.collection,
+				collection,
 				onNetworkStatus: () => {},
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
@@ -303,18 +313,14 @@ export function CollectionGeneralPanel({item}) {
 				}
 			});
 		}
-	}, [item.config.collection, isMounted]);
+	}, [collection, isMounted]);
 
 	useEffect(() => {
-		if (
-			item.config.collection &&
-			item.config.listStyle &&
-			item.config.listStyle !== LIST_STYLE_GRID
-		) {
+		if (collection && listStyle && listStyle !== LIST_STYLE_GRID) {
 			InfoItemService.getAvailableListItemRenderers({
-				itemSubtype: item.config.collection.itemSubtype,
-				itemType: item.config.collection.itemType,
-				listStyle: item.config.listStyle,
+				itemSubtype: collection.itemSubtype,
+				itemType: collection.itemType,
+				listStyle,
 			})
 				.then((response) => {
 					setAvailableListItemStyles(response);
@@ -323,11 +329,11 @@ export function CollectionGeneralPanel({item}) {
 					setAvailableListItemStyles([]);
 				});
 		}
-	}, [item.config.collection, item.config.listStyle]);
+	}, [collection, listStyle]);
 
 	useEffect(() => {
-		if (item.config.collection?.key) {
-			CollectionService.getCollectionConfiguration(item.config.collection)
+		if (collection?.key) {
+			CollectionService.getCollectionConfiguration(collection)
 				.then((nextCollectionConfiguration) => {
 					if (
 						nextCollectionConfiguration?.fieldSets.some(
@@ -345,19 +351,19 @@ export function CollectionGeneralPanel({item}) {
 		else {
 			setCollectionConfiguration(null);
 		}
-	}, [item.config.collection]);
+	}, [collection]);
 
 	return (
 		<>
 			<CollectionSelector
-				collectionItem={item.config.collection}
+				collectionItem={collection}
 				itemSelectorURL={config.collectionSelectorURL}
 				label={Liferay.Language.get('collection')}
 				onCollectionSelect={handleCollectionSelect}
 				optionsMenuItems={optionsMenuItems}
 				shouldPreventCollectionSelect={shouldPreventCollectionSelect}
 			/>
-			{item.config.collection && (
+			{collection && (
 				<>
 					<ClayForm.Group small>
 						<label htmlFor={listStyleId}>
@@ -373,11 +379,11 @@ export function CollectionGeneralPanel({item}) {
 								})
 							}
 							options={availableListStyles}
-							value={item.config.listStyle}
+							value={listStyle}
 						/>
 					</ClayForm.Group>
 
-					{item.config.listStyle === LIST_STYLE_GRID && (
+					{listStyle === LIST_STYLE_GRID && (
 						<ClayForm.Group small>
 							<label htmlFor={collectionLayoutId}>
 								{Liferay.Language.get('layout')}
@@ -392,12 +398,12 @@ export function CollectionGeneralPanel({item}) {
 									})
 								}
 								options={LAYOUT_OPTIONS}
-								value={item.config.numberOfColumns}
+								value={numberOfColumns}
 							/>
 						</ClayForm.Group>
 					)}
 
-					{item.config.listStyle !== LIST_STYLE_GRID &&
+					{listStyle !== LIST_STYLE_GRID &&
 						availableListItemStyles.length > 0 && (
 							<ClayForm.Group small>
 								<label htmlFor={collectionListItemStyleId}>
@@ -435,11 +441,11 @@ export function CollectionGeneralPanel({item}) {
 								})
 							}
 							options={PAGINATION_TYPE_OPTIONS}
-							value={item.config.paginationType || ''}
+							value={paginationType || ''}
 						/>
 					</ClayForm.Group>
 
-					{item.config.paginationType && (
+					{paginationType && (
 						<div className="mb-1 pt-1">
 							<ClayCheckbox
 								checked={showAllItems}
@@ -451,8 +457,7 @@ export function CollectionGeneralPanel({item}) {
 						</div>
 					)}
 
-					{(!item.config.paginationType ||
-						!item.config.showAllItems) && (
+					{(!paginationType || !initialShowAllItems) && (
 						<ClayForm.Group
 							className={classNames({
 								'has-warning': numberOfItemsError,
@@ -482,7 +487,7 @@ export function CollectionGeneralPanel({item}) {
 						</ClayForm.Group>
 					)}
 
-					{item.config.paginationType && (
+					{paginationType && (
 						<ClayForm.Group
 							className={classNames({
 								'has-warning': numberOfItemsPerPageError,

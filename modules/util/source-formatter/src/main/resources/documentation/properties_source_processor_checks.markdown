@@ -9,7 +9,7 @@ PropertiesDefinitionKeysCheck | [Styling](styling_checks.markdown#styling-checks
 PropertiesDependenciesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts the properties in `dependencies.properties` file. |
 PropertiesEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
 PropertiesImportedFilesContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `imported-files.properties` file. |
-[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there is no HTML markup in language keys. |
+[PropertiesLanguageKeysCheck](check/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there is no HTML markup in language keys. |
 PropertiesLanguageKeysOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sort language keys in `Language.properties` file. |
 PropertiesLiferayPluginPackageFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `liferay-plugin-package.properties` file. |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the version in `liferay-plugin-package.properties` file. |

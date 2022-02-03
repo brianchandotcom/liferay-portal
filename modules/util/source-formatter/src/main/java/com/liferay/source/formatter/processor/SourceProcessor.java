@@ -18,8 +18,8 @@ import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.SourceMismatchException;
-import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
-import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
+import com.liferay.source.formatter.check.configuration.SourceFormatterConfiguration;
+import com.liferay.source.formatter.check.configuration.SourceFormatterSuppressions;
 
 import java.util.List;
 import java.util.Map;

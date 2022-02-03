@@ -29,7 +29,7 @@ import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterExcludes;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaConstructor;

@@ -15,7 +15,7 @@
 package com.liferay.source.formatter.parser;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.List;
 import java.util.Objects;

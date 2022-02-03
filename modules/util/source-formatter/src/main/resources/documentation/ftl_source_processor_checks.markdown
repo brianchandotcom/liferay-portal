@@ -3,7 +3,7 @@
 Check | Category | Description
 ----- | -------- | -----------
 FTLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
-[FTLIfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect use of parentheses in statement. |
+[FTLIfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect use of parentheses in statement. |
 FTLImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.ftl` files. |
 FTLLiferayVariableOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts assign statement of `liferay_*` variables. |
 FTLStringRelationalOperatorCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases of `==` or `!=` where `stringUtil.equals`, `validator.isNotNull` or `validator.isNull` can be used instead. |

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 

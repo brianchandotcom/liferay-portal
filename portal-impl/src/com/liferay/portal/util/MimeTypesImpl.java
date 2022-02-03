@@ -49,7 +49,6 @@ import org.apache.tika.mime.MimeTypesReaderMetKeys;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.xml.sax.InputSource;
@@ -247,71 +246,42 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			throw new SystemException("Invalid configuration file");
 		}
 
-		NodeList nodeList = element.getChildNodes();
+		NodeList nodeList = element.getElementsByTagName(MIME_TYPE_TAG);
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-
-			if (node.getNodeType() != Node.ELEMENT_NODE) {
-				continue;
-			}
-
-			Element childElement = (Element)node;
-
-			if (MIME_TYPE_TAG.equals(childElement.getTagName())) {
-				readMimeType(childElement, extensionsMap);
-			}
+			readMimeType((Element)nodeList.item(i), extensionsMap);
 		}
 	}
 
 	protected void readMimeType(
 		Element element, Map<String, Set<String>> extensionsMap) {
 
-		Set<String> mimeTypes = new HashSet<>();
-
 		Set<String> extensions = new HashSet<>();
 
-		String name = element.getAttribute(MIME_TYPE_TYPE_ATTR);
+		NodeList globNodeList = element.getElementsByTagName(GLOB_TAG);
 
-		mimeTypes.add(name);
+		for (int i = 0; i < globNodeList.getLength(); i++) {
+			Element globElement = (Element)globNodeList.item(i);
 
-		NodeList nodeList = element.getChildNodes();
+			boolean regex = GetterUtil.getBoolean(
+				globElement.getAttribute(ISREGEX_ATTR));
 
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-
-			if (node.getNodeType() != Node.ELEMENT_NODE) {
+			if (regex) {
 				continue;
 			}
 
-			Element childElement = (Element)node;
+			String pattern = globElement.getAttribute(PATTERN_ATTR);
 
-			if (ALIAS_TAG.equals(childElement.getTagName())) {
-				String alias = childElement.getAttribute(ALIAS_TYPE_ATTR);
-
-				mimeTypes.add(alias);
+			if (!pattern.startsWith("*")) {
+				continue;
 			}
-			else if (GLOB_TAG.equals(childElement.getTagName())) {
-				boolean regex = GetterUtil.getBoolean(
-					childElement.getAttribute(ISREGEX_ATTR));
 
-				if (regex) {
-					continue;
-				}
+			String extension = pattern.substring(1);
 
-				String pattern = childElement.getAttribute(PATTERN_ATTR);
+			if (!extension.contains("*") && !extension.contains("?") &&
+				!extension.contains("[")) {
 
-				if (!pattern.startsWith("*")) {
-					continue;
-				}
-
-				String extension = pattern.substring(1);
-
-				if (!extension.contains("*") && !extension.contains("?") &&
-					!extension.contains("[")) {
-
-					extensions.add(extension);
-				}
+				extensions.add(extension);
 			}
 		}
 
@@ -325,8 +295,16 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			extensions = Collections.singleton(iterator.next());
 		}
 
-		for (String mimeType : mimeTypes) {
-			extensionsMap.put(mimeType, extensions);
+		extensionsMap.put(
+			element.getAttribute(MIME_TYPE_TYPE_ATTR), extensions);
+
+		NodeList aliasNodeList = element.getElementsByTagName(ALIAS_TAG);
+
+		for (int i = 0; i < aliasNodeList.getLength(); i++) {
+			Element aliasElement = (Element)aliasNodeList.item(i);
+
+			extensionsMap.put(
+				aliasElement.getAttribute(ALIAS_TYPE_ATTR), extensions);
 		}
 	}
 

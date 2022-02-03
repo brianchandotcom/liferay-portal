@@ -18,11 +18,9 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
-import com.liferay.object.web.internal.configuration.activator.FFSystemObjectRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,15 +71,6 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 	}
 
 	@Override
-	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
-			return _ffSystemObjectRelationshipConfiguration.enabled();
-		}
-
-		return true;
-	}
-
-	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -99,10 +88,6 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 	@Reference
 	private FFOneToOneRelationshipConfigurationActivator
 		_ffOneToOneRelationshipConfigurationActivator;
-
-	@Reference
-	private FFSystemObjectRelationshipConfigurationActivator
-		_ffSystemObjectRelationshipConfiguration;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

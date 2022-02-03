@@ -168,7 +168,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation(value1 = "http://localhost:8080/group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
 		}
 
 		task ("Given the Minium site has a private widget page with a Product Details widget") {
@@ -209,7 +209,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
 
-			AssertLocation(value1 = "http://localhost:8080/group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
 		}
 	}
 
@@ -264,7 +264,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation(value1 = "http://localhost:8080/group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
 		}
 
 		task ("Given the Minium site has a public widget page with a Product Details widget") {
@@ -305,7 +305,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 
-			AssertLocation(value1 = "http://localhost:8080/web/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
 		}
 	}
 

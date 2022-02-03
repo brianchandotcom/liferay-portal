@@ -152,8 +152,8 @@ definition {
 
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
 			ACSites.viewVisitorsOnGraph(
-				visitorsTypeList = "Known,Anonymous,Total",
-				valueVisitorsList = "0,1,1");
+				valueVisitorsList = "0,1,1",
+				visitorsTypeList = "Known,Anonymous,Total");
 		}
 
 		task ("Open DXP") {
@@ -186,8 +186,8 @@ definition {
 
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
 			ACSites.viewVisitorsOnGraph(
-				visitorsTypeList = "Known,Anonymous,Total",
-				valueVisitorsList = "1,0,1");
+				valueVisitorsList = "1,0,1",
+				visitorsTypeList = "Known,Anonymous,Total");
 		}
 	}
 
@@ -380,8 +380,8 @@ definition {
 
 		task ("Hover on the unique visitors graph and assert the elements that are shown on the tooltip") {
 			ACSites.viewVisitorsOnGraph(
-				visitorsTypeList = "Known,Anonymous,Total",
-				valueVisitorsList = "2,1,3");
+				valueVisitorsList = "2,1,3",
+				visitorsTypeList = "Known,Anonymous,Total");
 		}
 	}
 

@@ -799,6 +799,20 @@ definition {
 			value1 = "${infoMessage}");
 	}
 
+	macro viewGenericText {
+		var key_textValue = "${textValue}";
+
+		WaitForPageLoad();
+
+		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertTextEquals(
+			locator1 = "ACUtils#GENERIC_TEXT",
+			value1 = "${textValue}");
+	}
+
 	macro viewNameList {
 		for (var name : list "${nameList}") {
 			var key_nameList = "${name}";
@@ -844,20 +858,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
 			value1 = "${noResultMessage}");
-	}
-
-	macro viewGenericText {
-		var key_textValue = "${textValue}";
-
-		WaitForPageLoad();
-
-		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-		}
-
-		AssertTextEquals(
-			locator1 = "ACUtils#GENERIC_TEXT",
-			value1 = "${textValue}");
 	}
 
 	macro viewNoResultsMessageNotPresent {

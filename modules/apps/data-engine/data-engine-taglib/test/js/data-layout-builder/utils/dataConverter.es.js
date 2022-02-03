@@ -13,7 +13,6 @@
  */
 
 import dataConverter, {
-	getDataDefinitionField,
 	getDefaultDataLayout,
 } from '../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
 
@@ -49,18 +48,6 @@ describe('dataConverter', () => {
 
 		expect(getDefaultDataLayout(dataDefinition)).toMatchObject({
 			dataLayoutPages: [{dataLayoutRows: []}],
-		});
-	});
-
-	it('is getting data definition field', () => {
-		expect(
-			getDataDefinitionField({
-				nestedFields: [],
-				settingsContext: {pages: []},
-			})
-		).toMatchObject({
-			customProperties: {},
-			nestedDataDefinitionFields: [],
 		});
 	});
 });

@@ -12,25 +12,14 @@
  * details.
  */
 
-import {FieldSupport, PagesVisitor} from 'data-engine-js-components-web';
+import {
+	DEFAULT_DDM_FIELD_PROPERTIES,
+	FieldSupport,
+	PagesVisitor,
+} from 'data-engine-js-components-web';
 
 import {getDataDefinitionField as getDataDefinitionFieldUtils} from './dataDefinition.es';
 import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';
-
-const DEFAULT_DDM_FIELD_PROPERTIES = new Set([
-	'defaultValue',
-	'fieldType',
-	'indexable',
-	'indexType',
-	'label',
-	'localizable',
-	'name',
-	'readOnly',
-	'repeatable',
-	'required',
-	'showLabel',
-	'tip',
-]);
 
 export function getDDMFormField({
 	dataDefinition,
@@ -166,44 +155,6 @@ export function getDefaultDataLayout(dataDefinition) {
 			},
 		],
 	};
-}
-
-/**
- * Gets a data definition from a field
- *
- * @param {object} field - The field
- * @param {Object[]} field.nestedFields - The array containing all nested fields.
- * 										  It may be undefined
- * @param {object} field.settingsContext - The settings context of a field
- */
-export function getDataDefinitionField({nestedFields = [], settingsContext}) {
-	const dataDefinition = {
-		customProperties: {},
-		nestedDataDefinitionFields: nestedFields.map((field) =>
-			getDataDefinitionField(field)
-		),
-	};
-	const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
-
-	settingsContextVisitor.mapFields(
-		({fieldName, localizable, localizedValue = {}, value}) => {
-			if (fieldName === 'predefinedValue') {
-				fieldName = 'defaultValue';
-			}
-			else if (fieldName === 'type') {
-				fieldName = 'fieldType';
-			}
-
-			const properties = DEFAULT_DDM_FIELD_PROPERTIES.has(fieldName)
-				? dataDefinition
-				: dataDefinition.customProperties;
-
-			properties[fieldName] = localizable ? localizedValue : value;
-		},
-		false
-	);
-
-	return dataDefinition;
 }
 
 export function getDataDefinitionFieldByFieldName({

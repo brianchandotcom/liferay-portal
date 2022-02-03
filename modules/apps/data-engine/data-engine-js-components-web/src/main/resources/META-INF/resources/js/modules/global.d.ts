@@ -13,11 +13,43 @@
  */
 
 type Direction = 'ltr' | 'rtl';
+
 type FieldChangeEventHandler<T = any> = (event: {
 	target: {
 		value: T;
 	};
 }) => void;
+
+type FieldTypeName =
+	| 'checkbox_multiple'
+	| 'captcha'
+	| 'checkbox'
+	| 'color'
+	| 'date'
+	| 'document_library'
+	| 'fieldset'
+	| 'grid'
+	| 'help_text'
+	| 'image'
+	| 'key_value'
+	| 'localizable_text'
+	| 'multi_language_option_select'
+	| 'numeric'
+	| 'numeric_input_mask'
+	| 'object_field'
+	| 'object-relationship'
+	| 'options'
+	| 'password'
+	| 'paragraph'
+	| 'redirect_button'
+	| 'radio'
+	| 'rich_text'
+	| 'search_location'
+	| 'separator'
+	| 'select'
+	| 'text'
+	| 'validation';
+
 type Locale =
 	| 'ar_SA'
 	| 'ca_ES'
@@ -37,6 +69,34 @@ type LocalizedTextKey =
 	| 'there-are-no-entries'
 	| 'x-entries'
 	| 'x-entry';
+
 type LocalizedValue<T> = {
 	[key in Locale]?: T;
 };
+
+interface DataDefinition {
+	customProperties: {[key: string]: unknown};
+	defaultValue?: unknown;
+	fieldType?: unknown;
+	indexType?: unknown;
+	indexable?: unknown;
+	label?: unknown;
+	localizable?: unknown;
+	name?: unknown;
+	nestedDataDefinitionFields: DataDefinition[];
+	readOnly?: unknown;
+	repeatable?: unknown;
+	required?: unknown;
+	showLabel?: unknown;
+	tip?: unknown;
+}
+
+interface Field<T = unknown> {
+	fieldName: string;
+	localizable?: boolean;
+	localizedValue?: LocalizedValue<T>;
+	nestedFields?: Field[];
+	settingsContext: {pages: unknown[]};
+	type: FieldTypeName;
+	value: T;
+}

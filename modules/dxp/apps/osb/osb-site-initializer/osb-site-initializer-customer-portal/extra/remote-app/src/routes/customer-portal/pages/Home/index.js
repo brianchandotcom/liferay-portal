@@ -39,14 +39,13 @@ const getStatus = (slaCurrent, slaFuture) => {
 };
 
 const getKoroneikiFilter = (accounts) => {
-	return accounts
-		?.map(
-			({externalReferenceCode}, index, {length: totalAccounts}) =>
-				`accountKey eq '${externalReferenceCode}'${
-					index + 1 < totalAccounts ? ' or' : ''
-				}`
-		)
-		.join(' ');
+	return accounts?.reduce(
+		(acc, {externalReferenceCode}, index, {length: totalAccounts}) =>
+			`${acc}accountKey eq '${externalReferenceCode}'${
+				index + 1 < totalAccounts ? ' or ' : ''
+			}`,
+		''
+	);
 };
 
 const Home = ({userAccount}) => {
@@ -72,8 +71,7 @@ const Home = ({userAccount}) => {
 					accounts = dataAccounts?.accounts?.items;
 					accountKeysFilter = getKoroneikiFilter(accounts);
 				}
-			}
-			else if (userAccount?.accountBriefs?.length) {
+			} else if (userAccount?.accountBriefs?.length) {
 				accounts = userAccount?.accountBriefs;
 				accountKeysFilter = getKoroneikiFilter(accounts);
 			}

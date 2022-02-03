@@ -6,8 +6,8 @@
 		display: inline-block !important;
 		padding: 0.25rem;
 		transform: translate(12rem, -3rem);
-		z-index: 100;
 		width: 2.1rem;
+		z-index: 100;
 	}
 	.btn:hover {
 		border-color: white;
@@ -25,7 +25,7 @@
 	transition: all 0.4s;
 }
 .sla-multiple-card .sla-card-active {
-	filter: blur(0px);
+	filter: blur(0);
 	transform: translate(-1rem, 1rem);
 	transition: all 0.4s;
 	z-index: 100;

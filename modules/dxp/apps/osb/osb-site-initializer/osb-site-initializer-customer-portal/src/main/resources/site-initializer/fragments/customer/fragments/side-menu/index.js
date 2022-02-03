@@ -85,7 +85,8 @@ let expandedHeightProducts;
 				);
 			}
 		);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error.message);
 	}
 })();
@@ -107,7 +108,8 @@ fragmentElement.addEventListener('click', (event) => {
 
 		if (heightProducts < expandedHeightProducts) {
 			currentProducts.style.height = `${expandedHeightProducts}px`;
-		} else {
+		}
+		else {
 			currentProducts.style.height = '0px';
 		}
 
@@ -116,7 +118,8 @@ fragmentElement.addEventListener('click', (event) => {
 		);
 		arrow.classList.toggle('left');
 		arrow.classList.toggle('down');
-	} else if (
+	}
+	else if (
 		lastButton !== currentButton &&
 		currentButton.tagName === 'BUTTON'
 	) {

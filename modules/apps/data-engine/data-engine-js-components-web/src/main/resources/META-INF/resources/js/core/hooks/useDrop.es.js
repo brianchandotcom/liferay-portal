@@ -12,9 +12,9 @@
  * details.
  */
 
-import {DataConverter} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
+import {getDDMFormFieldSettingsContext} from '../../utils/dataConverter';
 import * as DRAG_TYPES from '../../utils/dragTypes';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {elementSetAdded} from '../thunks/elementSetAdded.es';
@@ -219,16 +219,17 @@ export function useDrop({
 				case DRAG_DATA_DEFINITION_FIELD_ADD: {
 					const {dataDefinition, name} = data;
 
-					const {
-						fieldType,
-						label,
-						settingsContext,
-					} = DataConverter.getDataDefinitionFieldByFieldName({
-						dataDefinition,
+					const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+						(field) => field.name === name
+					);
+
+					const settingsContext = getDDMFormFieldSettingsContext({
+						dataDefinitionField,
 						editingLanguageId,
-						fieldName: name,
 						fieldTypes,
 					});
+
+					const {fieldType, label} = dataDefinitionField;
 
 					dispatch({
 						payload: {

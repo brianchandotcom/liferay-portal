@@ -97,29 +97,6 @@ export function getDefaultDataLayout(dataDefinition) {
 	};
 }
 
-export function getDataDefinitionFieldByFieldName({
-	dataDefinition,
-	editingLanguageId,
-	fieldName,
-	fieldTypes,
-}) {
-	const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-		(field) => field.name === fieldName
-	);
-
-	const settingsContext = getDDMFormFieldSettingsContext({
-		dataDefinitionField,
-		editingLanguageId,
-		fieldTypes,
-	});
-
-	return {
-		...dataDefinitionField,
-		editingLanguageId,
-		settingsContext,
-	};
-}
-
 /**
  * Converts a FieldSet from data-engine to form-builder data definition
  */

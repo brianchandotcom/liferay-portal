@@ -14,11 +14,15 @@ import NodeInformation from './NodeInformation';
 import Assignments from './assignments/Assignments';
 import SelectAssignment from './assignments/SelectAssignment';
 import SourceCode from './assignments/SourceCode';
+import Notifications from './notifications/Notifications';
+import NotificationsInfo from './notifications/NotificationsInfo';
 
 const sectionComponents = {
 	assignments: Assignments,
 	edgeInformation: EdgeInformation,
 	nodeInformation: NodeInformation,
+	notifications: Notifications,
+	notificationsInfo: NotificationsInfo,
 	selectAssignment: SelectAssignment,
 	sourceCode: SourceCode,
 };

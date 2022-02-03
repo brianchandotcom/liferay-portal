@@ -452,6 +452,17 @@ export function CollectionGeneralPanel({item}) {
 								/>
 							</div>
 
+							{showAllItems && (
+								<p className="mt-1 small text-secondary">
+									{Liferay.Util.sub(
+										Liferay.Language.get(
+											'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x-we-strongly-recommend-using-pagination-instead'
+										),
+										config.searchContainerPageMaxDelta
+									)}
+								</p>
+							)}
+
 							{!showAllItems && (
 								<ClayForm.Group
 									className={classNames({
@@ -461,7 +472,7 @@ export function CollectionGeneralPanel({item}) {
 								>
 									<label htmlFor={collectionNumberOfItemsId}>
 										{Liferay.Language.get(
-											'maximum-number-of-items'
+											'maximum-number-of-items-to-display'
 										)}
 									</label>
 
@@ -479,6 +490,15 @@ export function CollectionGeneralPanel({item}) {
 										type="number"
 										value={numberOfItems || ''}
 									/>
+
+									<p className="mt-1 small text-secondary">
+										{Liferay.Util.sub(
+											Liferay.Language.get(
+												'setting-a-value-above-x-can-affect-page-performance-severely'
+											),
+											config.searchContainerPageMaxDelta
+										)}
+									</p>
 
 									{numberOfItemsError && (
 										<FeedbackMessage

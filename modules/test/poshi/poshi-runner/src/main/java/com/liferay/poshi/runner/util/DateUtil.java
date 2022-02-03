@@ -46,41 +46,34 @@ public class DateUtil {
 		return getFormattedCurrentDate("MMMM");
 	}
 
-	public static String getCurrentUTCTime() {
-		Instant instant = Instant.now();
-
-		return instant.toString();
-	}
-
 	public static String getCurrentYear() {
 		return getFormattedCurrentDate("yyyy");
 	}
 
 	public static String getDate(String offsetDays) {
-		return getFormattedDate("Day", offsetDays, "d");
+		return getFormattedDate(offsetDays, "d");
 	}
 
 	public static String getDayOfWeek(String offsetDays) {
-		return getFormattedDate("Day", offsetDays, "EEEE");
+		return getFormattedDate(offsetDays, "EEEE");
 	}
 
 	public static String getFormattedCurrentDate(String pattern) {
 		return _format(new Date(), pattern);
 	}
 
-	public static String getFormattedDate(
-		String type, String offsetDays, String pattern) {
-
+	public static String getFormattedDate(String offsetDays, String pattern) {
 		return _format(
-			_getOffsetDate(type, Integer.valueOf(offsetDays)), pattern);
+			_getOffsetDate(Calendar.DATE, Integer.valueOf(offsetDays)),
+			pattern);
 	}
 
 	public static String getMonth(String offsetDays) {
-		return getFormattedDate("Day", offsetDays, "M");
+		return getFormattedDate(offsetDays, "M");
 	}
 
 	public static String getMonthName(String offsetDays) {
-		return getFormattedDate("Day", offsetDays, "MMMM");
+		return getFormattedDate(offsetDays, "MMMM");
 	}
 
 	public static String getNanoseconds() {
@@ -92,7 +85,7 @@ public class DateUtil {
 	}
 
 	public static String getYear(String offsetDays) {
-		return getFormattedDate("Day", offsetDays, "yyyy");
+		return getFormattedDate(offsetDays, "yyyy");
 	}
 
 	private static String _format(Date date, String pattern) {
@@ -101,15 +94,10 @@ public class DateUtil {
 		return simpleDateFormat.format(date);
 	}
 
-	private static Date _getOffsetDate(String type, int offset) {
+	private static Date _getOffsetDate(int field, int offset) {
 		Calendar calendar = Calendar.getInstance();
 
-		if (type.equals("Day")) {
-			calendar.add(Calendar.DATE, offset);
-		}
-		else if (type.equals("Minute")) {
-			calendar.add(Calendar.MINUTE, offset);
-		}
+		calendar.add(field, offset);
 
 		return calendar.getTime();
 	}

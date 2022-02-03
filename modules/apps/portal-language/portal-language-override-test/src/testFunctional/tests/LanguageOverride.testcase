@@ -27,6 +27,8 @@ definition {
 	@description = "This test adds a new language key via the Language Override portlet and asserts that a user can search and view it in the main view page."
 	@priority = "5"
 	test CanAddLanguageKey {
+		property portal.acceptance = "true";
+
 		task ("Given that a user is in the Language Override portlet") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Language Override");
 		}
@@ -105,6 +107,8 @@ definition {
 	@description = "This test asserts that a user can remove all translation overrides on the main view page for language keys that are overridden and doing so will delete the language key"
 	@priority = "5"
 	test CanRemoveAllTranslationOverridesViaMenuItem {
+		property portal.acceptance = "true";
+
 		task ("Given that a user has created a new language key") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error",
@@ -169,6 +173,8 @@ definition {
 	@description = "This test can search existing keys and view it in the main view page."
 	@priority = "5"
 	test CanSearchForExistingKeys {
+		property portal.acceptance = "true";
+
 		task ("When the language key is existed and search it in search bar") {
 			Search.searchCP(searchTerm = "2-synced-contact-data");
 		}
@@ -193,6 +199,8 @@ definition {
 	@description = "This test asserts that searching for existing translations will yield accurate results."
 	@priority = "5"
 	test CanSearchForTranslations {
+		property portal.acceptance = "true";
+
 		task ("Given that add a language key") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error",
@@ -248,6 +256,8 @@ definition {
 	@description = "This test clears all overrides for an overridden language key via the Edit page. Doing so will delete the language key."
 	@priority = "5"
 	test ClearingAllOverridesInEditPageWillDeleteCreatedKey {
+		property portal.acceptance = "true";
+
 		task ("Given that a user has created a new language key") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error",
@@ -279,6 +289,8 @@ definition {
 	@description = "This test updates an existing key's translation override values. It then clears all overrides for the existing language key via the Edit page. Doing so will reset all values. It will not delete the key."
 	@priority = "5"
 	test ClearingAllOverridesInEditPageWillResetValuesForExistingKeys {
+		property portal.acceptance = "true";
+
 		task ("Given that a user is in the edit page of a language key that is OOTB") {
 			Search.searchCP(searchTerm = "a-configuration-with-this-name-already-exists");
 		}

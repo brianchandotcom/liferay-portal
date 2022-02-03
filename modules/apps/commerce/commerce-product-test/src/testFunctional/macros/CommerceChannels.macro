@@ -116,6 +116,34 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro chooseDisplayPageFromSidePanel {
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		if (IsElementNotPresent(locator1 = "IFrame#MODAL_BODY")) {
+			SelectFrame.selectFrameTop();
+		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if ("${pageType}" == "Private") {
+			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
+		}
+
+		CommerceNavigator.searchEntry(entryName = "${pageName}");
+
+		LexiconCard.clickCard(card = "${pageName}");
+
+		SelectFrame.selectFrameTop();
+
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			Button.clickDone();
+		}
+	}
+
 	macro configurationPaypal {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "PayPal",

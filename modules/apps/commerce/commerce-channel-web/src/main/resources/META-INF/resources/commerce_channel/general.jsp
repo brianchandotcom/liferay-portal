@@ -122,7 +122,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="fileEntryId" type="hidden" />
 
-				<label>Print Order Template</label>
+				<label><%= LanguageUtil.get(request, "print-order-template") %></label>
 
 				<p class="text-default">
 					<span class="<%= (fileEntry != null) ? "" : "hide" %>" id="<portlet:namespace />fileEntryRemoveIcon" role="button">

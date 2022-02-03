@@ -23,7 +23,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			PortalSettings.tearDownCP();
+			PortalInstances.tearDownCP();
 
 			PagesAdmin.tearDownCP();
 
@@ -66,11 +66,11 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 
-		task ("Add virtual instance raylife.com with the Raylife Initializer") {
+		task ("Add virtual instance raylife.com with the Masterclass Initializer") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
-				siteInitializerKey = "com.liferay.site.initializer.raylife",
+				siteInitializerKey = "com.liferay.site.initializer.masterclass",
 				virtualHost = "www.able.com");
 		}
 
@@ -78,8 +78,10 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 		}
 
-		task ("Assert the Raylife logo is present") {
-			AssertElementPresent(locator1 = "Raylife#RAYLIFE_LOGO");
+		task ("Assert the Masterclass Welcome Page") {
+			AssertElementPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
 		}
 	}
 

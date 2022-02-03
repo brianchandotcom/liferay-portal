@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -104,6 +106,30 @@ public class TestrayS3Bucket {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public TestrayS3Object createTestrayS3Object(String key, String value) {
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		BlobId blobId = BlobId.of(_bucket.getName(), key);
+
+		BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
+
+		BlobInfo blobInfo = blobInfoBuilder.build();
+
+		Blob blob = _storage.create(
+			blobInfo, value.getBytes(StandardCharsets.UTF_8));
+
+		TestrayS3Object testrayS3Object =
+			TestrayS3ObjectFactory.newTestrayS3Object(this, blob);
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Created S3 Object ", testrayS3Object.getURLString(), " in ",
+				JenkinsResultsParserUtil.toDurationString(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+
+		return testrayS3Object;
 	}
 
 	public List<TestrayS3Object> createTestrayS3Objects(File dir) {

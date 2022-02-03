@@ -1169,8 +1169,6 @@ public class TestrayImporter {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
 		List<Integer> testrayBuildIDs = new ArrayList<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
@@ -1182,7 +1180,7 @@ public class TestrayImporter {
 
 			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
-			testrayServer.importCaseResults(jenkinsMaster);
+			testrayServer.importCaseResults(topLevelBuild);
 		}
 
 		_sendPullRequestNotification();

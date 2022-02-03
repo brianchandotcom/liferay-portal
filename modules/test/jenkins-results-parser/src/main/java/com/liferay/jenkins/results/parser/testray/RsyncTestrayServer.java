@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestrayResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,9 @@ public class RsyncTestrayServer extends BaseTestrayServer {
 	}
 
 	@Override
-	public void importCaseResults(JenkinsMaster jenkinsMaster) {
+	public void importCaseResults(TopLevelBuild topLevelBuild) {
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
 		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
 
 		String command = JenkinsResultsParserUtil.combine(

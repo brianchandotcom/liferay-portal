@@ -17,11 +17,11 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestrayResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
-import java.io.IOException;
 
-import java.net.URLEncoder;
+import java.util.Date;
 
 /**
  * @author Michael Hashimoto
@@ -33,36 +33,46 @@ public class S3TestrayServer extends BaseTestrayServer {
 	}
 
 	@Override
-	public void importCaseResults(JenkinsMaster jenkinsMaster) {
-		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
+	public void importCaseResults(TopLevelBuild topLevelBuild) {
+		File resultsDir = getResultsDir();
 
-		for (File resultFile :
-				JenkinsResultsParserUtil.findFiles(getResultsDir(), ".*.xml")) {
+		File resultsTarGzFile = new File(
+			resultsDir.getParentFile(), "results.tar.gz");
 
-			try {
-				String result = JenkinsResultsParserUtil.read(resultFile);
+		TestrayResultsParserUtil.processTestrayResultFiles(resultsDir);
 
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.combine(
-						String.valueOf(getURL()),
-						"/web/guest/home/-/testray/case_results",
-						"/importResults.json"),
-					JenkinsResultsParserUtil.combine(
-						"results=", URLEncoder.encode(result, "UTF-8"),
-						"&type=poshi"));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+		JenkinsResultsParserUtil.tarGzip(resultsDir, resultsTarGzFile);
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Uploaded ",
-					JenkinsResultsParserUtil.getCanonicalPath(resultFile),
-					" by REST API"));
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
-			JenkinsResultsParserUtil.delete(resultFile);
-		}
+		String relativeBuildDirPath = _getRelativeBuildDirPath(topLevelBuild);
+
+		testrayS3Bucket.createTestrayS3Object(
+			relativeBuildDirPath + "/results.tar.gz", resultsTarGzFile);
+
+		testrayS3Bucket.createTestrayS3Object(
+			relativeBuildDirPath + "/test-completed", "");
+	}
+
+	private String _getRelativeBuildDirPath(TopLevelBuild topLevelBuild) {
+		StringBuilder sb = new StringBuilder();
+
+		Date topLevelStartDate = new Date(topLevelBuild.getStartTime());
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				topLevelStartDate, "yyyy-MM", "America/Los_Angeles"));
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append("/");
+		sb.append(jenkinsMaster.getName());
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+
+		return sb.toString();
 	}
 
 }

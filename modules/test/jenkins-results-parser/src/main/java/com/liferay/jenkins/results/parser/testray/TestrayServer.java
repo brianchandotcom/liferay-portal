@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsMaster;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.net.URL;
 
@@ -33,7 +33,7 @@ public interface TestrayServer {
 
 	public URL getURL();
 
-	public void importCaseResults(JenkinsMaster jenkinsMaster);
+	public void importCaseResults(TopLevelBuild topLevelBuild);
 
 	public void writeCaseResult(String fileName, String fileContent);
 

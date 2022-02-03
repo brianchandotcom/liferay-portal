@@ -37,8 +37,8 @@ import org.gradle.util.GUtil;
  */
 public class TestrayPlugin implements Plugin<Project> {
 
-	public static final String EXPORT_TESTRAY_RESULTS_TASK_NAME =
-		"exportTestrayResults";
+	public static final String IMPORT_TESTRAY_RESULTS_TASK_NAME =
+		"importTestrayResults";
 
 	public static final String TESTRAY_CONFIGURATION_NAME = "testray";
 
@@ -51,7 +51,7 @@ public class TestrayPlugin implements Plugin<Project> {
 
 		_addConfigurationTestray(project, testrayExtension);
 
-		final JavaExec exportTestrayResultsTask = _addTaskExportTestrayResults(
+		final JavaExec importTestrayResultsTask = _addTaskImportTestrayResults(
 			project);
 
 		project.afterEvaluate(
@@ -59,8 +59,8 @@ public class TestrayPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					_configureTaskExportTestrayResults(
-						exportTestrayResultsTask, testrayExtension);
+					_configureTaskImportTestrayResults(
+						importTestrayResultsTask, testrayExtension);
 				}
 
 			});
@@ -97,12 +97,12 @@ public class TestrayPlugin implements Plugin<Project> {
 			testrayExtension.getJenkinsResultsParserVersion());
 	}
 
-	private JavaExec _addTaskExportTestrayResults(Project project) {
+	private JavaExec _addTaskImportTestrayResults(Project project) {
 		JavaExec javaExec = GradleUtil.addTask(
-			project, EXPORT_TESTRAY_RESULTS_TASK_NAME, JavaExec.class);
+			project, IMPORT_TESTRAY_RESULTS_TASK_NAME, JavaExec.class);
 
 		javaExec.setClasspath(_getTestrayClasspath(project));
-		javaExec.setDescription("Export Testray results.");
+		javaExec.setDescription("Import Testray results.");
 		javaExec.setGroup("testray");
 		javaExec.setMain(
 			"com.liferay.jenkins.results.parser.testray." +
@@ -111,7 +111,7 @@ public class TestrayPlugin implements Plugin<Project> {
 		return javaExec;
 	}
 
-	private void _configureTaskExportTestrayResults(
+	private void _configureTaskImportTestrayResults(
 		JavaExec javaExec, TestrayExtension testrayExtension) {
 
 		_populateSystemProperties(

@@ -29,6 +29,8 @@ definition {
 	@description = "Verify that the user can Approve a Translation"
 	@priority = "5"
 	test CanApproveTranslation {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
@@ -80,6 +82,8 @@ definition {
 			language = "pt-BR",
 			status = "Approved",
 			title = "Translation of Web Content Title to pt-BR");
+
+			
 	}
 
 	@description = "Verify that a notification is sent when the Translation is rejected"

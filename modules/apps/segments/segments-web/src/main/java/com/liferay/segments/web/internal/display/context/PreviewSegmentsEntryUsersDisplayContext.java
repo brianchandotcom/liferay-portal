@@ -107,15 +107,13 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			else if ((criteria == null) && (segmentsEntry != null)) {
 				userSearchContainer.setResultsAndTotal(
 					() -> {
-						long[] segmentsEntryClassPKs =
-							_segmentsEntryProviderRegistry.
-								getSegmentsEntryClassPKs(
-									segmentsEntry.getSegmentsEntryId(),
-									userSearchContainer.getStart(),
-									userSearchContainer.getEnd());
-
 						LongStream segmentsEntryClassPKsLongStream =
-							Arrays.stream(segmentsEntryClassPKs);
+							Arrays.stream(
+								_segmentsEntryProviderRegistry.
+									getSegmentsEntryClassPKs(
+										segmentsEntry.getSegmentsEntryId(),
+										userSearchContainer.getStart(),
+										userSearchContainer.getEnd()));
 
 						return segmentsEntryClassPKsLongStream.boxed(
 						).map(

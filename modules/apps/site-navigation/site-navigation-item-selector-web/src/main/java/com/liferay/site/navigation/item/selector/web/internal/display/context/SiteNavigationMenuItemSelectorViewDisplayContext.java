@@ -131,11 +131,9 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 				_getPortletRequest(), getPortletURL(), null,
 				"there-are-no-navigation-menus");
 
-		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			_getOrderByComparator(getOrderByCol(), getOrderByType());
-
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			_getOrderByComparator(getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
@@ -154,7 +152,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 				() -> SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
 					siteNavigationMenuGroupIds, getKeywords(),
 					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator),
+					searchContainer.getOrderByComparator()),
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
 					siteNavigationMenuGroupIds, getKeywords()));
 		}
@@ -162,7 +160,8 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			searchContainer.setResultsAndTotal(
 				() -> SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
 					siteNavigationMenuGroupIds, searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
 					siteNavigationMenuGroupIds));
 		}

@@ -150,8 +150,6 @@ public class SynonymsDisplayBuilder {
 				_renderRequest, _getPortletURL(), null, "there-are-no-entries");
 
 		searchContainer.setId("synonymSetsEntries");
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		SearchSynonymSetRequest searchSynonymSetRequest =
 			new SearchSynonymSetRequest(
@@ -166,6 +164,8 @@ public class SynonymsDisplayBuilder {
 				searchSynonymSetResponse.getSearchHits()),
 			searchSynonymSetResponse.getTotalHits());
 
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		searchContainer.setSearch(true);
 
 		return searchContainer;

@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -186,12 +184,6 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, portletURL);
 
-		RowChecker rowChecker = new OrganizationChecker(_renderResponse);
-
-		rowChecker.setRowIds("rowIdsOrganization");
-
-		organizationSearch.setRowChecker(rowChecker);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -224,15 +216,14 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 			organizationParams.put("expandoAttributes", keywords);
 
-			Sort sort = SortFactoryUtil.getSort(
-				Organization.class, organizationSearch.getOrderByCol(),
-				organizationSearch.getOrderByType());
-
 			organizationSearch.setResultsAndTotal(
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(), searchParentOrganizationId,
 					keywords, organizationParams, organizationSearch.getStart(),
-					organizationSearch.getEnd(), sort));
+					organizationSearch.getEnd(),
+					SortFactoryUtil.getSort(
+						Organization.class, organizationSearch.getOrderByCol(),
+						organizationSearch.getOrderByType())));
 		}
 		else {
 			organizationSearch.setResultsAndTotal(
@@ -251,6 +242,13 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 					organizationSearchTerms.getCountryIdObj(),
 					organizationParams));
 		}
+
+		organizationSearch.setRowChecker(
+			new OrganizationChecker(_renderResponse) {
+				{
+					setRowIds("rowIdsOrganization");
+				}
+			});
 
 		_organizationSearch = organizationSearch;
 

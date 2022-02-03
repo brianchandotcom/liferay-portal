@@ -72,14 +72,14 @@ public class SitesDirectoryDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<Group> branchGroups = new ArrayList<>();
-
 		Group group = themeDisplay.getScopeGroup();
 
-		branchGroups.add(group);
-		branchGroups.addAll(group.getAncestors());
-
-		return branchGroups;
+		return new ArrayList<Group>() {
+			{
+				add(group);
+				addAll(group.getAncestors());
+			}
+		};
 	}
 
 	public String getDisplayStyle() {
@@ -95,20 +95,12 @@ public class SitesDirectoryDisplayContext {
 	}
 
 	public Group getRootGroup() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Group rootGroup = null;
 
 		List<Group> branchGroups = getBranchGroups();
 
-		Group group = themeDisplay.getScopeGroup();
-
-		if (Objects.equals(getSites(), _SITES_TOP_LEVEL)) {
-		}
-		else if (Objects.equals(getSites(), _SITES_CHILDREN) &&
-				 !branchGroups.isEmpty()) {
+		if (Objects.equals(getSites(), _SITES_CHILDREN) &&
+			!branchGroups.isEmpty()) {
 
 			rootGroup = branchGroups.get(0);
 		}
@@ -117,16 +109,10 @@ public class SitesDirectoryDisplayContext {
 
 			rootGroup = branchGroups.get(1);
 		}
-		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
-				 group.isRoot()) {
-		}
 		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
 				 (branchGroups.size() > 2)) {
 
 			rootGroup = branchGroups.get(2);
-		}
-		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
-				 (branchGroups.size() == 2)) {
 		}
 
 		return rootGroup;
@@ -210,28 +196,21 @@ public class SitesDirectoryDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (Objects.equals(getSites(), _SITES_TOP_LEVEL)) {
-		}
-		else if (Objects.equals(getSites(), _SITES_CHILDREN) &&
-				 !branchGroups.isEmpty()) {
-		}
-		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
-				 (branchGroups.size() > 1)) {
-		}
-		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
-				 group.isRoot()) {
-		}
-		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
-				 (branchGroups.size() > 2)) {
-		}
-		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
-				 (branchGroups.size() == 2)) {
-		}
-		else {
-			return true;
+		if (Objects.equals(getSites(), _SITES_TOP_LEVEL) ||
+			(Objects.equals(getSites(), _SITES_CHILDREN) &&
+			 !branchGroups.isEmpty()) ||
+			(Objects.equals(getSites(), _SITES_SIBLINGS) &&
+			 (branchGroups.size() > 1)) ||
+			(Objects.equals(getSites(), _SITES_SIBLINGS) && group.isRoot()) ||
+			(Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
+			 (branchGroups.size() > 2)) ||
+			(Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
+			 (branchGroups.size() == 2))) {
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private static final String _SITES_CHILDREN = "children";

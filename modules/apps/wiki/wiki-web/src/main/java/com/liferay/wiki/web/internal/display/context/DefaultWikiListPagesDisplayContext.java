@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -242,17 +241,14 @@ public class DefaultWikiListPagesDisplayContext
 		else if (navigation.equals("all-pages")) {
 			searchContainer.setResultsAndTotal(
 				() -> {
-					OrderByComparator<WikiPage> orderByComparator =
-						WikiPortletUtil.getPageOrderByComparator(
-							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType());
-
 					List<WikiPage> pages = WikiPageServiceUtil.getPages(
 						themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
 						true, themeDisplay.getUserId(), true,
 						WorkflowConstants.STATUS_APPROVED,
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator);
+						WikiPortletUtil.getPageOrderByComparator(
+							searchContainer.getOrderByCol(),
+							searchContainer.getOrderByType()));
 
 					PermissionChecker permissionChecker =
 						_wikiRequestHelper.getPermissionChecker();
@@ -447,7 +443,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		urlMenuItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
 		urlMenuItem.setLabel("add-child-page");
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.createRenderURL(
 				_wikiRequestHelper.getLiferayPortletResponse()
@@ -479,7 +474,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		urlMenuItem.setKey(WikiUIItemKeys.COPY);
 		urlMenuItem.setLabel("copy");
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.createRenderURL(
 				_wikiRequestHelper.getLiferayPortletResponse()
@@ -516,7 +510,6 @@ public class DefaultWikiListPagesDisplayContext
 			deleteMenuItem.setTrash(
 				_trashHelper.isTrashEnabled(
 					_wikiRequestHelper.getScopeGroupId()));
-
 			deleteMenuItem.setURL(
 				PortletURLBuilder.createActionURL(
 					_wikiRequestHelper.getLiferayPortletResponse()
@@ -554,7 +547,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			urlMenuItem.setKey(WikiUIItemKeys.DELETE);
 			urlMenuItem.setLabel("discard-draft");
-
 			urlMenuItem.setURL(
 				PortletURLBuilder.createActionURL(
 					_wikiRequestHelper.getLiferayPortletResponse()
@@ -590,7 +582,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		urlMenuItem.setKey(WikiUIItemKeys.EDIT);
 		urlMenuItem.setLabel("edit");
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.createRenderURL(
 				_wikiRequestHelper.getLiferayPortletResponse()
@@ -616,7 +607,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		urlMenuItem.setKey(WikiUIItemKeys.MOVE);
 		urlMenuItem.setLabel("move");
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.createRenderURL(
 				_wikiRequestHelper.getLiferayPortletResponse()
@@ -651,21 +641,18 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);
 
-		String url = null;
-
 		try {
-			url = PermissionsURLTag.doTag(
-				null, WikiPage.class.getName(), wikiPage.getTitle(), null,
-				String.valueOf(wikiPage.getResourcePrimKey()),
-				LiferayWindowState.POP_UP.toString(), null,
-				_httpServletRequest);
+			urlMenuItem.setURL(
+				PermissionsURLTag.doTag(
+					null, WikiPage.class.getName(), wikiPage.getTitle(), null,
+					String.valueOf(wikiPage.getResourcePrimKey()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_httpServletRequest));
 		}
 		catch (Exception exception) {
 			throw new SystemException(
 				"Unable to create permissions URL", exception);
 		}
-
-		urlMenuItem.setURL(url);
 
 		menuItems.add(urlMenuItem);
 	}
@@ -677,7 +664,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		javaScriptMenuItem.setKey(WikiUIItemKeys.PRINT);
 		javaScriptMenuItem.setLabel("print");
-
 		javaScriptMenuItem.setOnClick(
 			StringBundler.concat(
 				"window.open('",
@@ -742,7 +728,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			urlMenuItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
 			urlMenuItem.setLabel("unsubscribe");
-
 			urlMenuItem.setURL(
 				PortletURLBuilder.createActionURL(
 					_wikiRequestHelper.getLiferayPortletResponse()
@@ -765,7 +750,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			urlMenuItem.setKey(WikiUIItemKeys.SUBSCRIBE);
 			urlMenuItem.setLabel("subscribe");
-
 			urlMenuItem.setURL(
 				PortletURLBuilder.createActionURL(
 					_wikiRequestHelper.getLiferayPortletResponse()

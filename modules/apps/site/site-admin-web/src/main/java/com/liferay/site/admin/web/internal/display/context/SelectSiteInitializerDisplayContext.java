@@ -135,10 +135,9 @@ public class SelectSiteInitializerDisplayContext {
 				themeDisplay.getCompanyId(), true);
 
 		for (SiteInitializer siteInitializer : siteInitializers) {
-			SiteInitializerItem siteInitializerItem = new SiteInitializerItem(
-				siteInitializer, themeDisplay.getLocale());
-
-			siteInitializerItems.add(siteInitializerItem);
+			siteInitializerItems.add(
+				new SiteInitializerItem(
+					siteInitializer, themeDisplay.getLocale()));
 		}
 
 		return ListUtil.sort(

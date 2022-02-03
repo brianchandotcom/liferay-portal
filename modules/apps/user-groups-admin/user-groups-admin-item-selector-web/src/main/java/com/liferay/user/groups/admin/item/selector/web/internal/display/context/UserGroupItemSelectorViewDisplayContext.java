@@ -14,14 +14,12 @@
 
 package com.liferay.user.groups.admin.item.selector.web.internal.display.context;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
@@ -83,17 +81,11 @@ public class UserGroupItemSelectorViewDisplayContext {
 
 		_searchContainer = new UserGroupSearch(_renderRequest, getPortletURL());
 
-		OrderByComparator<UserGroup> orderByComparator =
-			_usersAdmin.getUserGroupOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		RowChecker rowChecker = new UserGroupItemSelectorChecker(
-			_renderResponse, _getCheckedUserGroupIds());
-
 		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByComparator(
+			_usersAdmin.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(rowChecker);
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -105,8 +97,13 @@ public class UserGroupItemSelectorViewDisplayContext {
 		_searchContainer.setResultsAndTotal(
 			() -> _userGroupLocalService.search(
 				companyId, keywords, null, _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator),
+				_searchContainer.getEnd(),
+				_searchContainer.getOrderByComparator()),
 			_userGroupLocalService.searchCount(companyId, keywords, null));
+
+		_searchContainer.setRowChecker(
+			new UserGroupItemSelectorChecker(
+				_renderResponse, _getCheckedUserGroupIds()));
 
 		return _searchContainer;
 	}

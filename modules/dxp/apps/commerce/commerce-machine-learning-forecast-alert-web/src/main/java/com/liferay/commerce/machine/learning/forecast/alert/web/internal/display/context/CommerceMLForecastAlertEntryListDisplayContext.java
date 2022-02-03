@@ -82,9 +82,7 @@ public class CommerceMLForecastAlertEntryListDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			_commerceMLForecastAlertEntryRequestHelper.
 				getLiferayPortletRequest(),
-			getPortletURL(), null, null);
-
-		_searchContainer.setEmptyResultsMessage(
+			getPortletURL(), null,
 			"there-are-no-forecast-alert-entries-to-display");
 
 		_searchContainer.setResultsAndTotal(

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -199,9 +198,6 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long parentOrganizationId =
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
 		OrganizationSearchTerms organizationSearchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
@@ -214,21 +210,21 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 			organizationParams.put(
 				"expandoAttributes", organizationSearchTerms.getKeywords());
 
-			Sort sort = SortFactoryUtil.getSort(
-				Organization.class, organizationSearch.getOrderByCol(),
-				organizationSearch.getOrderByType());
-
 			organizationSearch.setResultsAndTotal(
 				OrganizationLocalServiceUtil.searchOrganizations(
-					themeDisplay.getCompanyId(), parentOrganizationId,
+					themeDisplay.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 					organizationSearchTerms.getKeywords(), organizationParams,
 					organizationSearch.getStart(), organizationSearch.getEnd(),
-					sort));
+					SortFactoryUtil.getSort(
+						Organization.class, organizationSearch.getOrderByCol(),
+						organizationSearch.getOrderByType())));
 		}
 		else {
 			organizationSearch.setResultsAndTotal(
 				() -> OrganizationLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), parentOrganizationId,
+					themeDisplay.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 					organizationSearchTerms.getKeywords(),
 					organizationSearchTerms.getType(),
 					organizationSearchTerms.getRegionIdObj(),
@@ -237,7 +233,8 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 					organizationSearch.getEnd(),
 					organizationSearch.getOrderByComparator()),
 				OrganizationLocalServiceUtil.searchCount(
-					themeDisplay.getCompanyId(), parentOrganizationId,
+					themeDisplay.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 					organizationSearchTerms.getKeywords(),
 					organizationSearchTerms.getType(),
 					organizationSearchTerms.getRegionIdObj(),

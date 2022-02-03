@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -160,11 +159,8 @@ public class GroupSearchProvider {
 				groupParams.put("groupsTree", getAllGroups(portletRequest));
 			}
 			else if (parentGroupId > 0) {
-				List<Group> groupsTree = new ArrayList<>();
-
-				Group parentGroup = _groupLocalService.getGroup(parentGroupId);
-
-				groupsTree.add(parentGroup);
+				List<Group> groupsTree = ListUtil.fromArray(
+					_groupLocalService.getGroup(parentGroupId));
 
 				groupParams.put("groupsTree", groupsTree);
 			}

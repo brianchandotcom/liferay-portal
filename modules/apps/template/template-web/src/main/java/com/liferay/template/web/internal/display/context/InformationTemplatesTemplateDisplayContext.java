@@ -106,18 +106,16 @@ public class InformationTemplatesTemplateDisplayContext
 				"there-are-no-templates");
 
 		templateEntrySearchContainer.setOrderByCol(getOrderByCol());
-		templateEntrySearchContainer.setOrderByComparator(null);
 		templateEntrySearchContainer.setOrderByType(getOrderByType());
-		templateEntrySearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
 		templateEntrySearchContainer.setResultsAndTotal(
 			() -> TemplateEntryLocalServiceUtil.getTemplateEntries(
 				themeDisplay.getScopeGroupId(),
 				templateEntrySearchContainer.getStart(),
-				templateEntrySearchContainer.getEnd(),
-				templateEntrySearchContainer.getOrderByComparator()),
+				templateEntrySearchContainer.getEnd(), null),
 			TemplateEntryLocalServiceUtil.getTemplateEntriesCount(
 				themeDisplay.getScopeGroupId()));
+		templateEntrySearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		_templateEntrySearchContainer = templateEntrySearchContainer;
 

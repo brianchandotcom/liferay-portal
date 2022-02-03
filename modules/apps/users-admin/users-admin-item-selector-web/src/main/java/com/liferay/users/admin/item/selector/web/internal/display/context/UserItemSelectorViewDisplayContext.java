@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.usersadmin.search.UserSearch;
@@ -102,18 +101,11 @@ public class UserItemSelectorViewDisplayContext {
 		_searchContainer = new UserSearch(_portletRequest, getPortletURL());
 
 		_searchContainer.setEmptyResultsMessage("no-users-were-found");
-
-		OrderByComparator<User> orderByComparator =
-			_usersAdmin.getUserOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		RowChecker rowChecker = new UserItemSelectorChecker(
-			_renderResponse, _getCheckedUserIds(), _isCheckedUseIdsEnable());
-
 		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByComparator(
+			_usersAdmin.getUserOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(rowChecker);
 
 		UserSearchTerms userSearchTerms =
 			(UserSearchTerms)_searchContainer.getSearchTerms();
@@ -125,8 +117,14 @@ public class UserItemSelectorViewDisplayContext {
 		_searchContainer.setResultsAndTotal(
 			() -> _userLocalService.search(
 				companyId, keywords, status, null, _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator),
+				_searchContainer.getEnd(),
+				_searchContainer.getOrderByComparator()),
 			_userLocalService.searchCount(companyId, keywords, status, null));
+
+		_searchContainer.setRowChecker(
+			new UserItemSelectorChecker(
+				_renderResponse, _getCheckedUserIds(),
+				_isCheckedUseIdsEnable()));
 
 		return _searchContainer;
 	}

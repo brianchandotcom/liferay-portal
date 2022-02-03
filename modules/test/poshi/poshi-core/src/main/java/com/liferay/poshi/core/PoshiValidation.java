@@ -1584,7 +1584,7 @@ public class PoshiValidation {
 
 		List<Attribute> attributes = element.attributes();
 
-		int minimumAttributeSize = 2;
+		int minimumAttributeSize = 1;
 
 		if ((attributes.size() <= minimumAttributeSize) &&
 			Validator.isNull(element.getText())) {
@@ -1639,11 +1639,7 @@ public class PoshiValidation {
 				_exceptions.add(validationException);
 			}
 
-			int expectedAttributeCount = 1;
-
-			if (element instanceof PoshiElement) {
-				expectedAttributeCount = 0;
-			}
+			int expectedAttributeCount = 0;
 
 			if (Validator.isNotNull(element.attributeValue("name"))) {
 				expectedAttributeCount++;

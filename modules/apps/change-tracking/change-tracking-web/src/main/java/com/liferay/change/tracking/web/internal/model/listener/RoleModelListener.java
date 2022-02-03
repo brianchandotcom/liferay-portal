@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.model.listener;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_2.PublicationsUserRoleUpgradeProcess;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -51,6 +52,11 @@ public class RoleModelListener extends BaseModelListener<Role> {
 				PublicationsUserRoleUpgradeProcess.class.getClassLoader(),
 				"resource-actions/default.xml");
 
+			_resourcePermissionLocalService.addResourcePermission(
+				role.getCompanyId(), "com.liferay.change.tracking",
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				CTActionKeys.ADD_PUBLICATION);
 			_resourcePermissionLocalService.addResourcePermission(
 				role.getCompanyId(), CTPortletKeys.PUBLICATIONS,
 				ResourceConstants.SCOPE_COMPANY,

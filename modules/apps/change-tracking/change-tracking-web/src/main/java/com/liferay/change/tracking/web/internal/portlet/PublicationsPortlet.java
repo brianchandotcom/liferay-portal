@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -114,6 +115,11 @@ public class PublicationsPortlet extends MVCPortlet {
 				Role role = _roleLocalService.getRole(
 					companyId, RoleConstants.PUBLICATIONS_USER);
 
+				_resourcePermissionLocalService.addResourcePermission(
+					role.getCompanyId(), "com.liferay.change.tracking",
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					CTActionKeys.ADD_PUBLICATION);
 				_resourcePermissionLocalService.addResourcePermission(
 					companyId, CTPortletKeys.PUBLICATIONS,
 					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),

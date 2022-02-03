@@ -111,8 +111,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"portraitURL"
 		);
 
-		ContentDashboardItem<?> contentDashboardItem = _getContentDashboardItem(
-			"className", 12345L, user);
+		ContentDashboardItem<?> contentDashboardItem =
+			new ContentDashboardItemBuilder(
+				"className", 12345L
+			).withUser(
+				user
+			).build();
 
 		_initGetContentDashboardItemInfoMVCResourceCommand(
 			contentDashboardItem, user);
@@ -229,8 +233,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutUser() throws Exception {
-		ContentDashboardItem<?> contentDashboardItem = _getContentDashboardItem(
-			"className", 12345L, null);
+		ContentDashboardItem<?> contentDashboardItem =
+			new ContentDashboardItemBuilder(
+				"className", 12345L
+			).build();
 
 		_initGetContentDashboardItemInfoMVCResourceCommand(
 			contentDashboardItem, null);
@@ -257,230 +263,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
-	}
-
-	private ContentDashboardItem _getContentDashboardItem(
-		String className, long classPK, User user) {
-
-		String userName = Optional.ofNullable(
-			user
-		).map(
-			user -> user.getFirstName()
-		).orElseGet(
-			RandomTestUtil::randomString
-		);
-
-		long userId = Optional.ofNullable(
-			user
-		).map(
-			user -> user.getUserId()
-		).orElseGet(
-			RandomTestUtil::randomLong
-		);
-
-		AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
-
-		Mockito.when(
-			assetCategory1.getName()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			assetCategory1.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			assetCategory1.getVocabularyId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		AssetCategory assetCategory2 = Mockito.mock(AssetCategory.class);
-
-		Mockito.when(
-			assetCategory2.getName()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			assetCategory2.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			assetCategory2.getVocabularyId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		AssetTag assetTag = Mockito.mock(AssetTag.class);
-
-		Mockito.when(
-			assetTag.getName()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		return new ContentDashboardItem() {
-
-			@Override
-			public List<AssetCategory> getAssetCategories() {
-				return Arrays.asList(assetCategory1, assetCategory2);
-			}
-
-			@Override
-			public List<AssetCategory> getAssetCategories(long vocabularyId) {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<AssetTag> getAssetTags() {
-				return Collections.singletonList(assetTag);
-			}
-
-			@Override
-			public List<Locale> getAvailableLocales() {
-				return Collections.singletonList(LocaleUtil.US);
-			}
-
-			@Override
-			public List<ContentDashboardItemAction>
-				getContentDashboardItemActions(
-					HttpServletRequest httpServletRequest,
-					ContentDashboardItemAction.Type... types) {
-
-				return Collections.emptyList();
-			}
-
-			@Override
-			public ContentDashboardItemSubtype
-				getContentDashboardItemSubtype() {
-
-				ContentDashboardItemSubtype contentDashboardItemSubtype =
-					Mockito.mock(ContentDashboardItemSubtype.class);
-
-				Mockito.when(
-					contentDashboardItemSubtype.getLabel(
-						Mockito.any(Locale.class))
-				).thenReturn(
-					"subType"
-				);
-
-				return contentDashboardItemSubtype;
-			}
-
-			@Override
-			public Date getCreateDate() {
-				return new Date();
-			}
-
-			@Override
-			public Map<String, Object> getData(Locale locale) {
-				return Collections.emptyMap();
-			}
-
-			@Override
-			public ContentDashboardItemAction
-				getDefaultContentDashboardItemAction(
-					HttpServletRequest httpServletRequest) {
-
-				return null;
-			}
-
-			@Override
-			public Locale getDefaultLocale() {
-				return LocaleUtil.US;
-			}
-
-			@Override
-			public String getDescription(Locale locale) {
-				return "Web Content description";
-			}
-
-			@Override
-			public Object getDisplayFieldValue(
-				String fieldName, Locale locale) {
-
-				return null;
-			}
-
-			@Override
-			public InfoItemReference getInfoItemReference() {
-				return new InfoItemReference(className, classPK);
-			}
-
-			@Override
-			public Date getModifiedDate() {
-				return new Date();
-			}
-
-			@Override
-			public String getScopeName(Locale locale) {
-				return RandomTestUtil.randomString();
-			}
-
-			@Override
-			public JSONObject getSpecificInformationJSONObject(Locale locale) {
-				JSONObject jsonObject = new JSONObjectImpl();
-
-				jsonObject.put(
-					"description", "My very important description"
-				).put(
-					"downloadURL", "www.download.url.com/download"
-				).put(
-					"extension", ".pdf"
-				).put(
-					"fileName", "MyDocument"
-				).put(
-					"previewImageURL", "www.previewImage.url.com/previewImage"
-				).put(
-					"previewURL", "www.previewURL.url.com/previewURL"
-				).put(
-					"size", "5"
-				).put(
-					"viewURL", "www.viewURL.url.com/viewURL"
-				);
-
-				return jsonObject;
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return "title";
-			}
-
-			@Override
-			public String getTypeLabel(Locale locale) {
-				return "Web Content";
-			}
-
-			@Override
-			public long getUserId() {
-				return userId;
-			}
-
-			@Override
-			public String getUserName() {
-				return userName;
-			}
-
-			@Override
-			public List<Version> getVersions(Locale locale) {
-				return Collections.singletonList(
-					new Version("version", "style", "0.1"));
-			}
-
-			@Override
-			public boolean isViewable(HttpServletRequest httpServletRequest) {
-				return true;
-			}
-
-		};
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
@@ -603,5 +385,253 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	private GetContentDashboardItemInfoMVCResourceCommand
 		_getContentDashboardItemInfoMVCResourceCommand;
+
+	private static class ContentDashboardItemBuilder {
+
+		public ContentDashboardItemBuilder(String className, long classPK) {
+			_className = className;
+			_classPK = classPK;
+		}
+
+		public ContentDashboardItem build() {
+			String userName = Optional.ofNullable(
+				_user
+			).map(
+				user -> user.getFirstName()
+			).orElseGet(
+				RandomTestUtil::randomString
+			);
+
+			long userId = Optional.ofNullable(
+				_user
+			).map(
+				user -> user.getUserId()
+			).orElseGet(
+				RandomTestUtil::randomLong
+			);
+
+			AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
+
+			Mockito.when(
+				assetCategory1.getName()
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			Mockito.when(
+				assetCategory1.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			Mockito.when(
+				assetCategory1.getVocabularyId()
+			).thenReturn(
+				RandomTestUtil.randomLong()
+			);
+
+			AssetCategory assetCategory2 = Mockito.mock(AssetCategory.class);
+
+			Mockito.when(
+				assetCategory2.getName()
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			Mockito.when(
+				assetCategory2.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			Mockito.when(
+				assetCategory2.getVocabularyId()
+			).thenReturn(
+				RandomTestUtil.randomLong()
+			);
+
+			AssetTag assetTag = Mockito.mock(AssetTag.class);
+
+			Mockito.when(
+				assetTag.getName()
+			).thenReturn(
+				RandomTestUtil.randomString()
+			);
+
+			return new ContentDashboardItem() {
+
+				@Override
+				public List<AssetCategory> getAssetCategories() {
+					return Arrays.asList(assetCategory1, assetCategory2);
+				}
+
+				@Override
+				public List<AssetCategory> getAssetCategories(
+					long vocabularyId) {
+
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<AssetTag> getAssetTags() {
+					return Collections.singletonList(assetTag);
+				}
+
+				@Override
+				public List<Locale> getAvailableLocales() {
+					return Collections.singletonList(LocaleUtil.US);
+				}
+
+				@Override
+				public List<ContentDashboardItemAction>
+					getContentDashboardItemActions(
+						HttpServletRequest httpServletRequest,
+						ContentDashboardItemAction.Type... types) {
+
+					return Collections.emptyList();
+				}
+
+				@Override
+				public ContentDashboardItemSubtype
+					getContentDashboardItemSubtype() {
+
+					ContentDashboardItemSubtype contentDashboardItemSubtype =
+						Mockito.mock(ContentDashboardItemSubtype.class);
+
+					Mockito.when(
+						contentDashboardItemSubtype.getLabel(
+							Mockito.any(Locale.class))
+					).thenReturn(
+						"subType"
+					);
+
+					return contentDashboardItemSubtype;
+				}
+
+				@Override
+				public Date getCreateDate() {
+					return new Date();
+				}
+
+				@Override
+				public Map<String, Object> getData(Locale locale) {
+					return Collections.emptyMap();
+				}
+
+				@Override
+				public ContentDashboardItemAction
+					getDefaultContentDashboardItemAction(
+						HttpServletRequest httpServletRequest) {
+
+					return null;
+				}
+
+				@Override
+				public Locale getDefaultLocale() {
+					return LocaleUtil.US;
+				}
+
+				@Override
+				public String getDescription(Locale locale) {
+					return "Web Content description";
+				}
+
+				@Override
+				public Object getDisplayFieldValue(
+					String fieldName, Locale locale) {
+
+					return null;
+				}
+
+				@Override
+				public InfoItemReference getInfoItemReference() {
+					return new InfoItemReference(_className, _classPK);
+				}
+
+				@Override
+				public Date getModifiedDate() {
+					return new Date();
+				}
+
+				@Override
+				public String getScopeName(Locale locale) {
+					return RandomTestUtil.randomString();
+				}
+
+				@Override
+				public JSONObject getSpecificInformationJSONObject(
+					Locale locale) {
+
+					JSONObject jsonObject = new JSONObjectImpl();
+
+					jsonObject.put(
+						"description", "My very important description"
+					).put(
+						"downloadURL", "www.download.url.com/download"
+					).put(
+						"extension", ".pdf"
+					).put(
+						"fileName", "MyDocument"
+					).put(
+						"previewImageURL",
+						"www.previewImage.url.com/previewImage"
+					).put(
+						"previewURL", "www.previewURL.url.com/previewURL"
+					).put(
+						"size", "5"
+					).put(
+						"viewURL", "www.viewURL.url.com/viewURL"
+					);
+
+					return jsonObject;
+				}
+
+				@Override
+				public String getTitle(Locale locale) {
+					return "title";
+				}
+
+				@Override
+				public String getTypeLabel(Locale locale) {
+					return "Web Content";
+				}
+
+				@Override
+				public long getUserId() {
+					return userId;
+				}
+
+				@Override
+				public String getUserName() {
+					return userName;
+				}
+
+				@Override
+				public List<Version> getVersions(Locale locale) {
+					return Collections.singletonList(
+						new Version("version", "style", "0.1"));
+				}
+
+				@Override
+				public boolean isViewable(
+					HttpServletRequest httpServletRequest) {
+
+					return true;
+				}
+
+			};
+		}
+
+		public ContentDashboardItemBuilder withUser(User user) {
+			_user = user;
+
+			return this;
+		}
+
+		private final String _className;
+		private final long _classPK;
+		private User _user;
+
+	}
 
 }

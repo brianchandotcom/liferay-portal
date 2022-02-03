@@ -98,13 +98,9 @@ public class BillingAddressCommerceCheckoutStep
 					commerceOrderService, commerceAddressService,
 					commerceOrderModelResourcePermission);
 
-			CommerceOrder commerceOrder =
-				addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
-					actionRequest,
-					CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
-
-			actionRequest.setAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+			addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
+				actionRequest,
+				CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceAddressCityException ||

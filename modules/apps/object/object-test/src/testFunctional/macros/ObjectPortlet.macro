@@ -380,4 +380,8 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro viewWidgetButton {
+		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+	}
+
 }

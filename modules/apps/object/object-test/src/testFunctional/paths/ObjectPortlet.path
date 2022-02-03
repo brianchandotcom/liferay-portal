@@ -175,6 +175,11 @@
 		<td>//div[contains(@class,'dnd-tbody')]//div[contains(.,'${key_entry}')]/following-sibling::div//button</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_WIDGET_BUTTON</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_portlet']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

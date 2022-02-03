@@ -33,12 +33,18 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that a widget button is displayed on the Objects details page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDisplayWidgetButton {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145671 CanDisplayWidgetButton pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectPortlet.viewWidgetButton();
 	}
 
 	@description = "LPS-143122 - Verify that when the widget button is disabled it is not possible to add an Object portlet as a widget on a page"

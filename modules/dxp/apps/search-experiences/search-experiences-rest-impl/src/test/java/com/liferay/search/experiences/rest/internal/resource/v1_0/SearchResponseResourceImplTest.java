@@ -37,6 +37,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
 import com.liferay.search.experiences.blueprint.exception.InvalidParameterException;
 import com.liferay.search.experiences.blueprint.exception.InvalidQueryEntryException;
+import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
+import com.liferay.search.experiences.blueprint.exception.PrivateIPAddressException;
 import com.liferay.search.experiences.blueprint.exception.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.Hit;
@@ -236,6 +238,10 @@ public class SearchResponseResourceImplTest {
 
 		runtimeException.addSuppressed(throwable3);
 
+		runtimeException.addSuppressed(new InvalidWebCacheItemException());
+
+		runtimeException.addSuppressed(new PrivateIPAddressException());
+
 		Mockito.doThrow(
 			runtimeException
 		).when(
@@ -317,6 +323,22 @@ public class SearchResponseResourceImplTest {
 				"sxpElementId", "querySXPElement-3"
 			).build(),
 			errorMaps[4]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", InvalidWebCacheItemException.class.getName()
+			).put(
+				"severity", "WARN"
+			).build(),
+			errorMaps[5]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", PrivateIPAddressException.class.getName()
+			).put(
+				"severity", "WARN"
+			).build(),
+			errorMaps[6]);
 	}
 
 	@Test

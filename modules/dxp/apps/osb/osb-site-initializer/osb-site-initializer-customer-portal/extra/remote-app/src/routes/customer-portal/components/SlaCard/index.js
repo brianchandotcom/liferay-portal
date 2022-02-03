@@ -9,122 +9,111 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import client from '../../../../apolloClient';
-import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
+import {useCustomerPortal} from '../../context';
 import SlaCardLayout from './Inputs';
 
-const SlaCard = ({accountKey}) => {
+const SlaCard = () => {
 	const [slaData, setSlaData] = useState();
 	const [slaSelected, setSlaSelected] = useState('');
+	const [{project}] = useCustomerPortal();
 
 	useEffect(() => {
-		const fetchkoroneikeAccount = async () => {
-			const {data} = await client.query({
-				query: getKoroneikiAccounts,
-				variables: {
-					filter: `accountKey eq '${accountKey}'`,
-				},
-			});
-			if (data) {
-				const dataPath = data.c.koroneikiAccounts.items[0];
-				const formatDate = {
-					day: '2-digit',
-					month: '2-digit',
-					year: 'numeric',
-				};
-				const slaFiltedData = [];
-				const slaName = {
-					current: 'Current',
-					expired: 'Expired',
-					future: 'Future',
-				};
-				const slaPathLabel = {
-					current: slaName.current.toUpperCase(),
-					expired: slaName.expired.toUpperCase(),
-					future: slaName.future.toUpperCase(),
-				};
+		if (project) {
+			const formatDate = {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric',
+			};
+			const slaFiltedData = [];
+			const SLA_NAMES = ['Current', 'Expired', 'Future'];
 
-				const slaNewDate = (sla) => {
-					return new Date(dataPath[sla]).toLocaleDateString(
-						'en-US',
-						formatDate
-					);
-				};
-				const slaGetData = (sla) => {
-					const slaFullTitle = 'sla' + sla;
+			const slaPathLabel = {
+				current: SLA_NAMES[0].toUpperCase(),
+				expired: SLA_NAMES[1].toUpperCase(),
+				future: SLA_NAMES[2].toUpperCase(),
+			};
 
+			const slaNewDate = (slaDate) => {
+				return new Date(project[slaDate])?.toLocaleDateString(
+					'en-US',
+					formatDate
+				);
+			};
+			const slaRawData = SLA_NAMES.map((slaName) => {
+				const slaFullTitle = 'sla' + slaName;
+				if (project[slaFullTitle]) {
 					return {
 						slaDateEnd: `${slaNewDate(slaFullTitle + 'EndDate')}`,
 						slaDateStart: `${slaNewDate(
 							slaFullTitle + 'StartDate'
 						)}`,
-						slaLabel: sla.toUpperCase(),
-						slaTitle: dataPath[slaFullTitle].split(' ')[0],
+						slaLabel: slaName?.toUpperCase(),
+						slaTitle: project[slaFullTitle]?.split(' ')[0],
 					};
-				};
+				}
+			}).filter((sla) => sla);
 
-				const slaRawData = [
-					slaGetData(slaName.current),
-					slaGetData(slaName.expired),
-					slaGetData(slaName.future),
-				].filter((sla) => sla.slaTitle);
-				const slaRaw = {
-					first: slaRawData[0],
-					second: slaRawData[1],
-					third: slaRawData[2],
-				};
+			const slaRaw = {
+				firstSlaRaw: slaRawData[0],
+				secondSlaRaw: slaRawData[1],
+				thirdSlaRaw: slaRawData[2],
+			};
+			if (
+				slaRaw.firstSlaRaw?.slaLabel === slaPathLabel.current &&
+				(slaRaw.secondSlaRaw?.slaTitle ||
+					slaRaw.thirdSlaRaw?.slaTitle) ===
+					slaRaw.firstSlaRaw?.slaTitle
+			) {
+				slaFiltedData.push(slaRaw.firstSlaRaw);
+
 				if (
-					slaRaw.first?.slaLabel === slaPathLabel.current &&
-					(slaRaw.second?.slaTitle || slaRaw.third?.slaTitle) ===
-						slaRaw.first?.slaTitle
+					slaFiltedData[0].slaTitle ===
+						slaRaw.secondSlaRaw.slaTitle &&
+					slaRaw.secondSlaRaw.slaLabel === slaPathLabel.expired
 				) {
-					slaFiltedData.push(slaRaw.first);
-
-					if (
-						slaFiltedData[0].slaTitle === slaRaw.second.slaTitle &&
-						slaRaw.second.slaLabel === slaPathLabel.expired
-					) {
-						slaFiltedData[0].slaDateStart =
-							slaRaw.second.slaDateStart;
-					}
-					if (
-						slaFiltedData[0].slaTitle === slaRaw.second.slaTitle &&
-						slaRaw.second.slaLabel === slaPathLabel.future
-					) {
-						slaFiltedData[0].slaDateEnd = slaRaw.second.slaDateEnd;
-					}
-					if (slaRaw.third) {
-						if (
-							slaRaw.third.slaTitle === slaFiltedData[0].slaTitle
-						) {
-							slaFiltedData[0].slaDateEnd =
-								slaRaw.third.slaDateEnd;
-						} else {
-							slaFiltedData.push(slaRaw.third);
-						}
-					}
-				} else {
-					slaRawData.map((sla) => slaFiltedData.push(sla));
+					slaFiltedData[0].slaDateStart =
+						slaRaw.secondSlaRaw.slaDateStart;
 				}
-				setSlaData(slaFiltedData);
-
-				if (!slaSelected) {
-					const slaSelectedCard = slaFiltedData[0].slaLabel;
-					setSlaSelected(slaSelectedCard);
+				if (
+					slaFiltedData[0].slaTitle ===
+						slaRaw.secondSlaRaw.slaTitle &&
+					slaRaw.secondSlaRaw.slaLabel === slaPathLabel.future
+				) {
+					slaFiltedData[0].slaDateEnd =
+						slaRaw.secondSlaRaw.slaDateEnd;
 				}
+				if (slaRaw.thirdSlaRaw) {
+					if (
+						slaRaw.thirdSlaRaw.slaTitle ===
+						slaFiltedData[0].slaTitle
+					) {
+						slaFiltedData[0].slaDateEnd =
+							slaRaw.thirdSlaRaw.slaDateEnd;
+					} else {
+						slaFiltedData.push(slaRaw.thirdSlaRaw);
+					}
+				}
+			} else {
+				slaRawData.map((sla) => slaFiltedData.push(sla));
 			}
-		};
+			if (slaFiltedData.length > 0) {
+				setSlaData(slaFiltedData);
+			}
 
-		fetchkoroneikeAccount();
-	}, [accountKey, slaSelected]);
+			if (!slaSelected) {
+				const slaSelectedCard = slaFiltedData[0]?.slaLabel;
+				setSlaSelected(slaSelectedCard);
+			}
+		}
+	}, [project, slaSelected]);
 
-	const handleClick = () => {
-		const slaLength = slaData.length;
-		if (slaSelected === slaData[slaLength - 1].slaLabel) {
+	const handleSlaCardClick = () => {
+		if (slaSelected === slaData[slaData.length - 1]?.slaLabel) {
 			setSlaSelected(slaData[0].slaLabel);
-		} else if (slaSelected === slaData[0].slaLabel) {
+		} else if (slaSelected === slaData[0]?.slaLabel) {
 			setSlaSelected(slaData[1].slaLabel);
 		} else {
 			setSlaSelected(slaData[2].slaLabel);
@@ -167,21 +156,9 @@ const SlaCard = ({accountKey}) => {
 					{slaData[1] && (
 						<div
 							className="btn btn-outline-primary d-none hide ml-3 position-relative rounded-circle"
-							onClick={handleClick}
+							onClick={handleSlaCardClick}
 						>
-							<svg
-								className="bi bi-arrow-right-short"
-								fill="currentColor"
-								height="26"
-								viewBox="0 0 16 16"
-								width="26"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
-									fillRule="evenodd"
-								/>
-							</svg>
+							<ClayIcon symbol="angle-right" />
 						</div>
 					)}
 				</div>

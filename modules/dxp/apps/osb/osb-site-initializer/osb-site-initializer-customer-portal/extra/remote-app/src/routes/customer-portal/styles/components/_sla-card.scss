@@ -1,33 +1,34 @@
 .sla-container:hover {
 	.btn {
+		background-color: white;
+		border-color: rgba(11, 95, 255, 0.25);
+		box-shadow: $elevation-fluffy-1;
 		display: inline-block !important;
+		padding: 0.25rem;
 		transform: translate(12rem, -3rem);
 		z-index: 100;
-		background-color: white;
-		box-shadow: 0 10px 20px 0 #0b5fff1c;
-		border-color: rgba(11, 95, 255, 0.25);
-		padding: 0.25rem;
+		width: 2.1rem;
 	}
 	.btn:hover {
 		border-color: white;
 	}
 }
 .card {
-	box-shadow: 0 10px 20px 0 #0b5fff12;
+	box-shadow: $elevation-fluffy-1;
 }
 .sla-card-holder {
 	position: relative;
 }
 .sla-card-holder .sla-card {
+	filter: blur(2px);
 	position: absolute;
 	transition: all 0.4s;
-	filter: blur(2px);
 }
 .sla-multiple-card .sla-card-active {
-	z-index: 100;
-	transition: all 0.4s;
-	transform: translate(-1rem, 1rem);
 	filter: blur(0px);
+	transform: translate(-1rem, 1rem);
+	transition: all 0.4s;
+	z-index: 100;
 }
 .sla-platinum {
 	background-color: #f9fafb;
@@ -43,6 +44,6 @@
 	font-size: 0.75rem;
 }
 .n-sla-card {
-	width: 12rem;
 	height: 5rem;
+	width: 12rem;
 }

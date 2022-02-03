@@ -22,6 +22,11 @@ const SlaCardLayout = ({
 	slaTitle,
 }) => {
 	const slaDate = `${slaDateStart} - ${slaDateEnd}`;
+	const SLA_TITLE = {
+		gold: 'Gold',
+		limited: 'Limited',
+		platinum: 'Platinum',
+	};
 
 	return (
 		<div
@@ -33,19 +38,19 @@ const SlaCardLayout = ({
 			<ClayCard
 				className={classNames('m-0 p-3 rounded-lg', {
 					'bg-brand-secondary-lighten-6 sla-gold':
-						slaTitle === 'Gold',
-					'bg-neutral-0 sla-limited': slaTitle === 'Limited',
-					'sla-platinum': slaTitle === 'Platinum',
+						slaTitle === SLA_TITLE.gold,
+					'bg-neutral-0 sla-limited': slaTitle === SLA_TITLE.limited,
+					'sla-platinum': slaTitle === SLA_TITLE.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<div
 						className={classNames('h5 mb-0', {
 							'text-brand-primary-darken-2':
-								slaTitle === 'Limited',
+								slaTitle === SLA_TITLE.limited,
 							'text-brand-secondary-darken-3':
-								slaTitle === 'Gold',
-							'text-neutral-7': slaTitle === 'Platinum',
+								slaTitle === SLA_TITLE.gold,
+							'text-neutral-7': slaTitle === SLA_TITLE.platinum,
 						})}
 					>
 						{slaTitle}
@@ -58,11 +63,11 @@ const SlaCardLayout = ({
 									'mr-0 p-0 text-small-caps sla-label',
 									{
 										'label-borderless-dark text-neutral-7':
-											slaTitle === 'Platinum',
+											slaTitle === SLA_TITLE.platinum,
 										'label-borderless-primary text-brand-primary-darken-2':
-											slaTitle === 'Limited',
+											slaTitle === SLA_TITLE.limited,
 										'label-borderless-secondary text-brand-secondary-darken-3':
-											slaTitle === 'Gold',
+											slaTitle === SLA_TITLE.gold,
 									}
 								)}
 								displayType="secundary"
@@ -75,9 +80,11 @@ const SlaCardLayout = ({
 
 				<ClayCard.Description
 					className={classNames('', {
-						'text-brand-primary-darken-2': slaTitle === 'Limited',
-						'text-brand-secondary-darken-3': slaTitle === 'Gold',
-						'text-neutral-6': slaTitle === 'Platinum',
+						'text-brand-primary-darken-2':
+							slaTitle === SLA_TITLE.limited,
+						'text-brand-secondary-darken-3':
+							slaTitle === SLA_TITLE.gold,
+						'text-neutral-6': slaTitle === SLA_TITLE.platinum,
 					})}
 					displayType="text"
 					truncate={false}

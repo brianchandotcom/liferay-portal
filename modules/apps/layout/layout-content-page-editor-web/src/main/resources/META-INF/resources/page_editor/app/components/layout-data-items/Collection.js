@@ -212,7 +212,6 @@ const Collection = React.memo(
 		}, [
 			collectionConfig.numberOfItems,
 			collectionConfig.numberOfItemsPerPage,
-			collectionConfig.showAllItems,
 			activePage,
 			totalPages,
 		]);
@@ -384,7 +383,7 @@ const Collection = React.memo(
 Collection.displayName = 'Collection';
 
 function getNumberOfItems(collection, collectionConfig) {
-	return collectionConfig.paginationType && collectionConfig.showAllItems
+	return !collectionConfig.paginationType && collectionConfig.showAllItems
 		? collection.totalNumberOfItems
 		: Math.min(
 				collectionConfig.numberOfItems,

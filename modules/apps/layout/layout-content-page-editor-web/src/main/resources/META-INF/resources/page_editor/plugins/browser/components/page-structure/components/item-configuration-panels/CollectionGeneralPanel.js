@@ -440,46 +440,54 @@ export function CollectionGeneralPanel({item}) {
 						/>
 					</ClayForm.Group>
 
-					{paginationType && (
-						<div className="mb-1 pt-1">
-							<ClayCheckbox
-								checked={showAllItems}
-								label={Liferay.Language.get(
-									'display-all-collection-items'
-								)}
-								onChange={handleShowAllItemsChanged}
-							/>
-						</div>
-					)}
+					{!paginationType && (
+						<>
+							<div className="mb-2 pt-1">
+								<ClayCheckbox
+									checked={showAllItems}
+									label={Liferay.Language.get(
+										'display-all-collection-items'
+									)}
+									onChange={handleShowAllItemsChanged}
+								/>
+							</div>
 
-					{!paginationType && !showAllItems && (
-						<ClayForm.Group
-							className={classNames({
-								'has-warning': numberOfItemsError,
-							})}
-							small
-						>
-							<label htmlFor={collectionNumberOfItemsId}>
-								{Liferay.Language.get(
-									'maximum-number-of-items'
-								)}
-							</label>
+							{!showAllItems && (
+								<ClayForm.Group
+									className={classNames({
+										'has-warning': numberOfItemsError,
+									})}
+									small
+								>
+									<label htmlFor={collectionNumberOfItemsId}>
+										{Liferay.Language.get(
+											'maximum-number-of-items'
+										)}
+									</label>
 
-							<ClayInput
-								id={collectionNumberOfItemsId}
-								min="1"
-								onBlur={handleCollectionNumberOfItemsBlurred}
-								onChange={(event) =>
-									setNumberOfItems(Number(event.target.value))
-								}
-								type="number"
-								value={numberOfItems || ''}
-							/>
+									<ClayInput
+										id={collectionNumberOfItemsId}
+										min="1"
+										onBlur={
+											handleCollectionNumberOfItemsBlurred
+										}
+										onChange={(event) =>
+											setNumberOfItems(
+												Number(event.target.value)
+											)
+										}
+										type="number"
+										value={numberOfItems || ''}
+									/>
 
-							{numberOfItemsError && (
-								<FeedbackMessage message={numberOfItemsError} />
+									{numberOfItemsError && (
+										<FeedbackMessage
+											message={numberOfItemsError}
+										/>
+									)}
+								</ClayForm.Group>
 							)}
-						</ClayForm.Group>
+						</>
 					)}
 
 					{paginationType && (

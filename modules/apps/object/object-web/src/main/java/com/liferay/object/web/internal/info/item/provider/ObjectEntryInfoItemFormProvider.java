@@ -247,7 +247,8 @@ public class ObjectEntryInfoItemFormProvider
 			}
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				ObjectEntry.class.getName(), String.valueOf(objectDefinitionId))
+				"com.liferay.object.model.ObjectDefinition#" +
+					objectDefinitionId)
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(

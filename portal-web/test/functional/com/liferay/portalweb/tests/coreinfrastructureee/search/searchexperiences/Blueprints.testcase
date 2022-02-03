@@ -262,6 +262,13 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "1000");
 
+		Blueprints.searchBlueprintsPreview(searchTerm = "red apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "1",
+			value1 = "reddish apple");
+
 		PortletEntry.save();
 
 		Search.openSearchPage();

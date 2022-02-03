@@ -94,7 +94,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_INDIVIDUAL_CHART</td>
-	<td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill-opacity,'1')]</td>
+	<td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill,'#')]</td>
 	<td></td>
 </tr>
 <tr>

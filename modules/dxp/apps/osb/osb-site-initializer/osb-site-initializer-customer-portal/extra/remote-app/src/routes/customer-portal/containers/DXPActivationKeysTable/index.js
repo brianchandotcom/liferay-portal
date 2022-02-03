@@ -17,7 +17,7 @@ import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {useCustomerPortal} from '../../context';
-import ActivationKeysManagementBar from './Bar';
+import DXPActivationKeysTableHeader from './Header';
 import {
 	ACTIVATION_KEYS_LICENSE_FILTER_TYPES,
 	ACTIVATION_STATUS,
@@ -45,6 +45,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
 	const [totalCount, setTotalCount] = useState(5);
+	const [activationKeysChecked, setActivationKeysChecked] = useState([]);
 
 	const [filterStatusBar, setFilterStatusBar] = useState('all');
 
@@ -53,6 +54,12 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [isLoadingActivationKeys, setIsLoadingActivationKeys] = useState(
 		false
 	);
+
+	useEffect(() => {
+		if (activationKeysFiltered.length) {
+			setActivationKeysChecked([]);
+		}
+	}, [activationKeysFiltered]);
 
 	useEffect(() => {
 		if (filterStatusBar) {
@@ -167,16 +174,21 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 				/>
 			</div>
 
-			<ActivationKeysManagementBar
-				accountKey={project.accountKey}
-				sessionId={sessionId}
-			/>
+			<div className="mt-4 py-2">
+				<DXPActivationKeysTableHeader
+					selectedKeys={activationKeysChecked}
+				/>
+			</div>
 
 			<ClayTooltipProvider
 				contentRenderer={({title}) => getTooltipTitles(title)}
 				delay={100}
 			>
 				<Table
+					checkboxConfig={{
+						checkboxesChecked: activationKeysChecked,
+						setCheckboxesChecked: setActivationKeysChecked,
+					}}
 					className="border-0 cp-dxp-activation-key-table"
 					columns={COLUMNS}
 					hasCheckbox
@@ -224,6 +236,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 								activationKey={activationKey}
 							/>
 						),
+						id: activationKey.id,
 						keyType: (
 							<KeyTypeColumn
 								activationKey={activationKey}

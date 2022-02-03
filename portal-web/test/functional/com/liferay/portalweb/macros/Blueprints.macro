@@ -171,9 +171,11 @@ definition {
 	}
 
 	macro openEntryMenu {
-		Click.waitForMenuToggleJSClick(
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS",
-			title = "${title}");
+		if (IsElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_OPEN_DROPDOWN_MENU")) {
+			Click.waitForMenuToggleJSClick(
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS",
+				title = "${title}");
+		}
 	}
 
 	macro searchBlueprintsPreview {

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.elements.PoshiElement;
@@ -24,7 +25,10 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -89,9 +93,27 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 		_populateFunctionAndMacroFiles();
 
+		System.out.flush();
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		PrintStream printStream = new PrintStream(unsyncByteArrayOutputStream);
+
+		System.setOut(printStream);
+
 		PoshiElement poshiElement =
 			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
 				FileUtil.getURL(file));
+
+		System.out.flush();
+
+		FileOutputStream fileOutputStream = new FileOutputStream(
+			FileDescriptor.out);
+
+		printStream = new PrintStream(fileOutputStream);
+
+		System.setOut(printStream);
 
 		PoshiScriptParserException.throwExceptions(
 			SourceUtil.getAbsolutePath(file));

@@ -121,7 +121,12 @@ public class DLExportImportPortletPreferencesProcessor
 			}
 		}
 
-		if (!_exportImportHelper.isExportPortletData(portletDataContext)) {
+		long selectedRepositoryId = GetterUtil.getLong(
+			portletPreferences.getValue("selectedRepositoryId", null));
+
+		if (!_exportImportHelper.isExportPortletData(portletDataContext) ||
+			(selectedRepositoryId != portletDataContext.getGroupId())) {
+
 			return portletPreferences;
 		}
 

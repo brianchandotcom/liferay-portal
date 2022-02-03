@@ -225,6 +225,24 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet");
 	}
 
+	macro overrideCategoryDisplayPage {
+		CommerceChannels.addCategory(key_card = "${category}");
+
+		CommerceChannels.chooseDisplayPageFromSidePanel(
+			pageName = "${pageName}",
+			pageType = "${pageType}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro removeDefaultDisplayPage {
 		Click(locator1 = "CommerceEntry#DISPLAY_PAGE_ITEM_REMOVE");
 

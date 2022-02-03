@@ -91,9 +91,15 @@ export default function UpperToolbar({displayNames, languageIds, version}) {
 	};
 
 	const onInputBlur = () => {
-		if (definitionTitle && selectedLanguageId) {
+		if (definitionTitle) {
+			let languageId = defaultLanguageId;
+
+			if (selectedLanguageId) {
+				languageId = selectedLanguageId;
+			}
+
 			setTranslations((previous) => {
-				return {...previous, [selectedLanguageId]: definitionTitle};
+				return {...previous, [languageId]: definitionTitle};
 			});
 		}
 	};

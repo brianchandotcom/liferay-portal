@@ -24,6 +24,7 @@ import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -95,7 +96,10 @@ public class PreviewFragmentCollectionDisplayContext {
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntry.getConfiguration())
 				).put(
-					"name", fragmentEntry.getName()
+					"name",
+					LanguageUtil.get(
+						_httpServletRequest.getLocale(),
+						fragmentEntry.getName())
 				).put(
 					"previewURL",
 					_getFragmentEntryRenderURL(

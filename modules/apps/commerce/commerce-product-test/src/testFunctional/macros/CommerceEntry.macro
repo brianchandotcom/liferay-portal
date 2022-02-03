@@ -537,6 +537,17 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro assertCategoryDisplayPageOverride {
+		AssertElementPresent(
+			key_entryName = "${category}",
+			key_table = "Override Default Category Display Page",
+			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+		AssertElementPresent(
+			key_layout = "${layout}",
+			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE_LAYOUT");
+	}
+
 	macro assertDefaultDisplayPage {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(

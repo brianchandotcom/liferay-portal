@@ -78,12 +78,59 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that when widget button is disabled the Object portlet widget disappears from the page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectPortletWidgetDisappearsWhenWidgetDisabled {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145677 ObjectPortletWidgetDisappearsWhenWidgetDisabled pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.addPG(
+			pageName = "Object Page",
+			portletName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		ObjectPortlet.viewWarningMessage(warningMessage = "This object is not available.");
 	}
 
 	@description = "LPS-143122 - Verify that by default the widget button is disabled"

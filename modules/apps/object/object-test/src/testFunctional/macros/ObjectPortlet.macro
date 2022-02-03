@@ -380,6 +380,12 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro viewWarningMessage {
+		AssertElementPresent(
+			locator1 = "Message#ERROR_3_ALT",
+			value1 = "${warningMessage}");
+	}
+
 	macro viewWidgetButton {
 		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 	}

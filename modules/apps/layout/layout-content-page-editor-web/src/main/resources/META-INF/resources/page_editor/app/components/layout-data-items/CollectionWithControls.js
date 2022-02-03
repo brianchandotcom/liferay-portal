@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import {
 	useHoveredItemId,
 	useHoveredItemType,
@@ -26,6 +27,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../topper/Topper';
 import Collection from './Collection';
+import OldCollection from './OldCollection';
 import isHovered from './isHovered';
 
 const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
@@ -44,6 +46,10 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const {display} = responsiveConfig.styles;
 
+	const CollectionComponent = config.paginationImprovementsEnabled
+		? Collection
+		: OldCollection;
+
 	return (
 		<>
 			<HoverHandler
@@ -59,9 +65,9 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 				itemElement={itemElement}
 				style={{display}}
 			>
-				<Collection item={item} ref={setRef}>
+				<CollectionComponent item={item} ref={setRef}>
 					{children}
-				</Collection>
+				</CollectionComponent>
 			</Topper>
 		</>
 	);

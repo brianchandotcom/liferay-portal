@@ -22,7 +22,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resour
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import CollectionSelector from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
-import {CollectionGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/CollectionGeneralPanel';
+import {OldCollectionGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/OldCollectionGeneralPanel';
 
 jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -86,7 +86,7 @@ const renderComponent = ({
 				segmentsExperienceId: '0',
 			})}
 		>
-			<CollectionGeneralPanel
+			<OldCollectionGeneralPanel
 				item={{
 					children: [],
 					config,

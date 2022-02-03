@@ -15,3 +15,4 @@
 import {State} from '@liferay/frontend-js-state-web';
 
 export const activeLanguageIdsAtom = State.atom('activeLocaleIds', []);
+export const selectedLanguageIdAtom = State.atom('selectedLocaleId', []);

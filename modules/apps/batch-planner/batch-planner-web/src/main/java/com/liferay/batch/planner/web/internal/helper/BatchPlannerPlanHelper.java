@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.web.internal.helper;
 
+import com.liferay.batch.engine.BatchEngineImportTaskStrategy;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
@@ -105,6 +106,11 @@ public class BatchPlannerPlanHelper {
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "headlessEndpoint",
 			ParamUtil.getString(portletRequest, "headlessEndpoint"));
+		_batchPlannerPolicyService.addBatchPlannerPolicy(
+			batchPlannerPlan.getBatchPlannerPlanId(), "importStrategy",
+			ParamUtil.getString(
+				portletRequest, "importStrategy",
+				BatchEngineImportTaskStrategy.ON_ERROR_FAIL.toString()));
 
 		List<BatchPlannerMapping> batchPlannerMappings =
 			_getImportBatchPlannerMappings(portletRequest);

@@ -21,6 +21,7 @@ import com.liferay.batch.planner.internal.jaxrs.uri.EmptyUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerMappingModel;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
@@ -129,6 +130,15 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
+	private String _getImportStrategy(BatchPlannerPlan batchPlannerPlan)
+		throws Exception {
+
+		BatchPlannerPolicy batchPlannerPolicy =
+			batchPlannerPlan.getBatchPlannerPolicy("importStrategy");
+
+		return batchPlannerPolicy.getValue();
+	}
+
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
@@ -179,6 +189,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				_getFieldNameMapping(
 					_batchPlannerMappingLocalService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId())),
+				_getImportStrategy(batchPlannerPlan),
 				batchPlannerPlan.getTaskItemDelegateName(),
 				MultipartBody.of(
 					Collections.singletonMap(

@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.depot.model.DepotEntry;
@@ -28,6 +29,7 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -1048,6 +1050,28 @@ public class ObjectEntryLocalServiceTest {
 			20);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
+	}
+
+	@Test
+	public void testUpdateAsset() throws Exception {
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition.getObjectDefinitionId(), "emailAddress");
+
+		_objectDefinitionLocalService.updateTitleObjectFieldId(
+			_objectDefinition.getObjectDefinitionId(),
+			objectField.getObjectFieldId());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		Assert.assertEquals("john@liferay.com", assetEntry.getTitle());
 	}
 
 	@Test

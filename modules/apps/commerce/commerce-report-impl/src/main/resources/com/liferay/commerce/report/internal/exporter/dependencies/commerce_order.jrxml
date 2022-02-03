@@ -78,7 +78,6 @@
 		<field class="java.lang.Long" name="commerceOrderItemId" />
 	</subDataset>
 	<parameter class="java.lang.Long" name="commerceOrderId" />
-	<parameter class="java.util.Date" name="orderDate" />
 	<parameter class="java.lang.String" name="billingAddressName" />
 	<parameter class="java.lang.String" name="billingAddressCity" />
 	<parameter class="java.lang.String" name="billingAddressPhoneNumber" />
@@ -90,14 +89,15 @@
 	<parameter class="java.lang.Long" name="companyId" />
 	<parameter class="java.util.Locale" name="locale" />
 	<parameter class="java.lang.String" name="logoURL" />
+	<parameter class="java.util.Date" name="orderDate" />
 	<parameter class="java.lang.String" name="printedNote" />
 	<parameter class="java.lang.String" name="purchaseOrderNumber" />
 	<parameter class="java.util.Date" name="requestedDeliveryDate" />
 	<parameter class="java.lang.String" name="shippingAddressCity" />
 	<parameter class="java.lang.String" name="shippingAddressName" />
+	<parameter class="java.lang.String" name="shippingAddressPhoneNumber" />
 	<parameter class="java.lang.String" name="shippingAddressRegion" />
 	<parameter class="java.lang.String" name="shippingAddressStreet1" />
-	<parameter class="java.lang.String" name="shippingAddressPhoneNumber" />
 	<parameter class="java.lang.String" name="shippingAddressZip" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="shippingAmountMoney" />
 	<parameter class="java.lang.String" name="shippingDiscountAmount" />
@@ -107,12 +107,12 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field class="java.util.Map" name="nameMap" />
-	<field class="java.lang.String" name="sku" />
-	<field class="java.lang.Integer" name="quantity" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="discountAmountMoney" />
-	<field class="java.util.Date" name="requestedDeliveryDate" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="finalPriceMoney" />
+	<field class="java.util.Map" name="nameMap" />
+	<field class="java.lang.Integer" name="quantity" />
+	<field class="java.util.Date" name="requestedDeliveryDate" />
+	<field class="java.lang.String" name="sku" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="unitPriceMoney" />
 	<title>
 		<band height="425" splitType="Stretch">

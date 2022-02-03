@@ -609,7 +609,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.deleteElement(element = "Edited Element");
+		Blueprints.deleteEntry(title = "Edited Element");
 
 		Blueprints.viewNoEntry(element = "Edited Element");
 	}
@@ -631,7 +631,7 @@ definition {
 
 		Blueprints.createElement(title = "Test Element");
 
-		Blueprints.deleteElement(element = "Test Element");
+		Blueprints.deleteEntry(title = "Test Element");
 
 		Blueprints.viewNoEntry(title = "Test Element");
 	}
@@ -832,6 +832,53 @@ definition {
 		Navigator.gotoNavTab(navTab = "Configuration");
 
 		AssertTextPresent(value1 = "aggs");
+	}
+
+	test ExportImportElement {
+		Blueprints.openBlueprintsAdmin();
+
+		var elementSourceJson = '''
+{
+	"description_i18n": {
+		"en_US": "Import Element"
+	},
+	"elementDefinition": {
+		"configuration": {},
+		"uiConfiguration": {}
+	},
+	"title_i18n": {
+		"en_US": "Test Element"
+	}
+}
+			''';
+
+		Blueprints.createElement(
+			elementSourceJson = "${elementSourceJson}",
+			title = "Test Element");
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "Export",
+			title = "Test Element");
+
+		Blueprints.deleteEntry(title = "Test Element");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Import");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		UploadTempFile.uploadTempFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "Test Element.json");
+
+		Click(
+			key_text = "Import",
+			locator1 = "Button#ANY");
+
+		Blueprints.editElement(element = "Test Element");
+
+		AssertTextPresent(value1 = "Import Element");
 	}
 
 	test HideWebContentViaCustomElement {

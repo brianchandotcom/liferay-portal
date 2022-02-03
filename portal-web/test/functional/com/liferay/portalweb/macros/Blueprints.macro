@@ -101,10 +101,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteElement {
-		Blueprints.deleteEntry(title = "${element}");
-	}
-
 	macro deleteEntry {
 		Blueprints.gotoEntryMenuItem(
 			menuItem = "Delete",

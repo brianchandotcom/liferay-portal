@@ -16,11 +16,14 @@ import {DefinitionBuilderContextProvider} from '../../src/main/resources/META-IN
 
 export default function MockDefinitionBuilderContext({children}) {
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
+	const [translations, setTranslations] = useState({});
 
 	const contextProps = {
 		defaultLanguageId: themeDisplay.getLanguageId(),
 		selectedLanguageId,
 		setSelectedLanguageId,
+		setTranslations,
+		translations,
 	};
 
 	return (

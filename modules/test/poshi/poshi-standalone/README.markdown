@@ -69,3 +69,63 @@ To run a test, use the following command:
 ```
 gradlew runPoshi -DtestNames=Liferay#Smoke
 ```
+
+### Importing Testray Results
+To import the results into Testray use the following command:
+```
+gradlew importTestrayResults
+```
+
+### Configuring Testray Properties
+
+Default properties have been set in [testray.properties](testray.properties) and additional properties can be set in a `testray-ext.properties` file.
+
+#### Testray Information
+
+The Testray Server URL can be set using the following:
+
+```
+testrayServerURL=https://testray.liferay.com
+```
+
+The Testray Project Name can be set using the following:
+
+```
+testrayProjectName=DXP Cloud Client
+```
+
+The Testray Routine Name can be set using the following:
+
+```
+testrayRoutineName=DXP Cloud Client Routine
+```
+
+The Testray Build Name can be set using the following:
+
+```
+testrayBuildName=DXP Cloud Client Build - $(start.time)
+```
+
+The Testray Team Name can be set using the following:
+
+```
+testrayTeamName=DXP Cloud Client Team
+```
+
+The Testray Component Name can be set using the following:
+
+```
+testrayComponentName=DXP Cloud Client Component
+```
+
+The Testray Product Version can be set using the following:
+
+```
+testrayProductVersion=1.x
+```
+
+The Testray Environment Information can be set using the following:
+```
+environmentBrowserName=Google Chrome 86
+environmentOperatingSystemName=OSX 12.2 64-Bit
+```

@@ -19,15 +19,13 @@
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = commerceOrderListDisplayContext.getPortletURL();
-
-request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-portletURL", commerceOrderListDisplayContext.getPortletURL());
 %>
 
 <div id="<portlet:namespace />orderDefinitionsContainer">
-	<aui:form action="<%= portletURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form action="<%= commerceOrderListDisplayContext.getPortletURL() %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" "<%= Constants.DELETE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(commerceOrderListDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
 		<clay:headless-data-set-display

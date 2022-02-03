@@ -48,12 +48,33 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that when the widget button is disabled it is not possible to add an Object portlet as a widget on a page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotAddObjectPortletWhenWidgetDisabled {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145676 CannotAddObjectPortletWhenWidgetDisabled pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.viewCannotAddPG(portletName = "Custom Objects");
 	}
 
 	@description = "LPS-143122 - Verify that when widget button is disabled the Object portlet widget disappears from the page"

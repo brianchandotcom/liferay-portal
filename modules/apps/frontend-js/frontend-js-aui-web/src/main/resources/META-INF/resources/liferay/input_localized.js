@@ -443,6 +443,12 @@ AUI.add(
 						);
 				},
 
+				_onSelectedLanguageIdChange(languageId) {
+					var instance = this;
+
+					instance.selectFlag(languageId);
+				},
+
 				_onSelectFlag(event) {
 					var instance = this;
 
@@ -452,6 +458,12 @@ AUI.add(
 							source: instance,
 						});
 					}
+
+					var State = instance._State;
+
+					var languageId = event.item.getAttribute('data-value');
+
+					State.writeAtom(instance._selectedLanguageIdAtom, languageId);
 				},
 
 				_onSubmit(event, input) {
@@ -541,6 +553,10 @@ AUI.add(
 						instance._bindManageTranslationsButton();
 					}
 				},
+
+				_selectedLanguageIdAtom: null,
+
+				_selectedLanguageIdSubscription: null,
 
 				_updateHelpMessage(languageId) {
 					var instance = this;
@@ -676,6 +692,10 @@ AUI.add(
 					if (instance._availableLanguagesSubscription) {
 						instance._availableLanguagesSubscription.dispose();
 					}
+
+					if (instance._selectedLanguageIdSubscription) {
+						instance._selectedLanguageIdSubscription.dispose();
+					}
 				},
 
 				getSelectedLanguageId() {
@@ -756,6 +776,24 @@ AUI.add(
 					);
 					instance._flags = boundingBox.one('.palette-container');
 
+					instance._State = instance.get(
+						'frontendJsStateWebModule'
+					).State;
+
+					var State = instance._State;
+
+					instance._selectedLanguageIdAtom = instance.get(
+						'frontendJsComponentsWebModule'
+					).selectedLanguageIdAtom;
+
+					var selectedLanguageIdAtom =
+						instance._selectedLanguageIdAtom;
+
+					instance._selectedLanguageIdSubscription = State.subscribe(
+						selectedLanguageIdAtom,
+						A.bind('_onSelectedLanguageIdChange', instance)
+					);
+
 					var activeLanguageIds = instance.get('activeLanguageIds');
 
 					if (activeLanguageIds) {
@@ -763,17 +801,12 @@ AUI.add(
 							'frontendJsComponentsWebModule'
 						).activeLanguageIdsAtom;
 
-						instance._State = instance.get(
-							'frontendJsStateWebModule'
-						).State;
-
 						instance._flagsInitialContent = instance._flags.cloneNode(
 							true
 						);
 
 						instance._renderActiveLanguageIds();
 
-						var State = instance._State;
 						var activeLanguageIdsAtom =
 							instance._activeLanguageIdsAtom;
 

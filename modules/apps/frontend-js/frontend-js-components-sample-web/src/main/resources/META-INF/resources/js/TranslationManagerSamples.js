@@ -17,6 +17,7 @@ import {State} from '@liferay/frontend-js-state-web';
 import {
 	TranslationAdminSelector,
 	activeLanguageIdsAtom,
+	selectedLanguageIdAtom,
 } from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -33,11 +34,16 @@ export default function TranslationManagerSamples({
 
 	useEffect(() => {
 		State.subscribe(activeLanguageIdsAtom, setActiveLanguageIds);
+		State.subscribe(selectedLanguageIdAtom, setSelectedLanguageId);
 	}, []);
 
 	useEffect(() => {
 		State.writeAtom(activeLanguageIdsAtom, activeLanguageIds);
 	}, [activeLanguageIds]);
+
+	useEffect(() => {
+		State.writeAtom(selectedLanguageIdAtom, selectedLanguageId);
+	}, [selectedLanguageId]);
 
 	return (
 		<>

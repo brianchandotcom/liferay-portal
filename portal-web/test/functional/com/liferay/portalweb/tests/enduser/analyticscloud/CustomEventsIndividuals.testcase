@@ -175,6 +175,100 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10512 | Test Summary: Individual activities chart tooltip events and sessions shown"
+	@priority = "5"
+	test AssertChartTooltipEventsAndSessions {
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+        task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "ac1 ac1");
+
+			ACNavigation.openItem(itemName = "ac1 ac1");
+		}
+
+        task ("Select Last 24 hours time period in Individuals Events chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Events");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
+			ACIndividualsDashboard.viewActivitiesOnGraph(
+				typeList = "Events,Sessions",
+				valueList = "12,1");
+		}
+
+		task ("Go to DXP and create a new custom event") {
+			ACUtils.launchDXP(userEmailAddress = "ac1@liferay.com");
+
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+        task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "ac1 ac1");
+
+			ACNavigation.openItem(itemName = "ac1 ac1");
+		}
+
+        task ("Select Last 24 hours time period in Individuals Events chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Events");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
+			ACIndividualsDashboard.viewActivitiesOnGraph(
+				typeList = "Events,Sessions",
+				valueList = "24,2");
+		}
+	}
+
     @description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10513 | Test Summary: Empty individual events state"
 	@priority = "3"
 	test AssertEmptyIndividualEvents {

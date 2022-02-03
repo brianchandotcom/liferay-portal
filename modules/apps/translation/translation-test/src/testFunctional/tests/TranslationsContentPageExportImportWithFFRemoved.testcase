@@ -507,7 +507,7 @@ definition {
 			text = "Titulo");
 	}
 
-	@description = "This ensures that the translation files contians multiple content pages can be imported from a zip."
+	@description = "This ensures that the translation files contains multiple content pages can be imported from a zip."
 	@priority = "5"
 	test CanImportMultiplePages {
 		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";

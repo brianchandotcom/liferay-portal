@@ -17,7 +17,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/journal/journal-service/service.xml,\
-	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/mobile-device-rules/mobile-device-rules-service/service.xml,\
 	com/liferay/portlet/messageboards/service.xml=../../../modules/apps/message-boards/message-boards-service/service.xml,\
 	@checkstyle-[0-9.]*.jar!/com/puppycrawl/tools/checkstyle/JavaParser.class,\
 	@checkstyle-[0-9.]*.jar!/com/puppycrawl/tools/checkstyle/api/CheckstyleException.class,\

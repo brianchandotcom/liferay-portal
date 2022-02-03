@@ -22,7 +22,7 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 
 <c:choose>
 	<c:when test="<%= compact %>">
-		<p class="text-muted">
+		<p class="text-secondary">
 			<liferay-ui:message key="<%= message %>" />
 		</p>
 	</c:when>

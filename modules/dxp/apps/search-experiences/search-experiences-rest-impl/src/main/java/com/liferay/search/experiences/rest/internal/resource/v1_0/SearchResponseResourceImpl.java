@@ -37,6 +37,8 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
+import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
+import com.liferay.search.experiences.blueprint.exception.PrivateIPAddressException;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.exception.SXPExceptionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
@@ -213,8 +215,11 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 				inheritMap.put("sxpElementId", sxpElementId);
 			}
-			else {
+			else if (!(throwable1 instanceof PrivateIPAddressException) &&
+					 !(throwable1 instanceof InvalidWebCacheItemException)) {
+
 				errorMap.put("localizedMessage", "Error");
+				errorMap.put("severity", "ERROR");
 			}
 
 			maps.add(errorMap);

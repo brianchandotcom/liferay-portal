@@ -40,6 +40,34 @@ const getTypeByPropertyName = (propertyName, properties) => {
 };
 
 /**
+ * Handles the single quotes present in the value.
+ * Should escape the single quotes present in the value before hit the backend.
+ * @param {string} value
+ * @returns {string}
+ */
+function escapeSingleQuotes(value) {
+	if (typeof value !== 'string') {
+		return value;
+	}
+
+	return `'${value.replace(/'/g, "''")}'`;
+}
+
+/**
+ * Handles the single quotes present in the value.
+ * Should un-escape the single quotes present in odata format before rendering.
+ * @param {string} value
+ * @returns {string}
+ */
+function unescapeSingleQuotes(value) {
+	if (typeof value !== 'string') {
+		return value;
+	}
+
+	return value.replace(/''/g, "'");
+}
+
+/**
  * Decides whether to add quotes to value.
  * @param {boolean | string} value
  * @param {boolean | date | number | string} type
@@ -59,7 +87,7 @@ function valueParser(value, type) {
 		case PROPERTY_TYPES.COLLECTION:
 		case PROPERTY_TYPES.STRING:
 		default:
-			parsedValue = `'${value}'`;
+			parsedValue = escapeSingleQuotes(value);
 			break;
 	}
 
@@ -165,4 +193,4 @@ function isValueType(types, value) {
 	return Object.values(types).includes(value);
 }
 
-export {buildQueryString};
+export {buildQueryString, unescapeSingleQuotes};

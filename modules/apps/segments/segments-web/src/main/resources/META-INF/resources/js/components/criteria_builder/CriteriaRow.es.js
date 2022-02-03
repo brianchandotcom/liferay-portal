@@ -25,6 +25,7 @@ import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import ThemeContext from '../../ThemeContext.es';
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
+import {unescapeSingleQuotes} from '../../utils/odata.es';
 import {
 	createNewGroup,
 	dateToInternationalHuman,
@@ -258,7 +259,7 @@ class CriteriaRow extends Component {
 
 				<span className="mr-1 operator">{operatorLabel}</span>
 
-				<b>{parsedValue}</b>
+				<b>{unescapeSingleQuotes(parsedValue)}</b>
 			</span>
 		);
 	};

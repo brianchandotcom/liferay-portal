@@ -141,6 +141,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						%>
 
 					</ul>
+
 					<div class="btn-group" role="group">
 						<div class="btn-group-item">
 							<clay:link
@@ -151,11 +152,12 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 								type="button"
 							/>
 						</div>
+
 						<div class="btn-group-item">
 							<clay:link
 								displayType="secondary"
 								download="translation-error.csv"
-								href='<%= "data:text/csv;charset=utf-8," + URLCodec.encodeURL(importTranslationResultsDisplayContext.getFailureMessagesCSV(locale)) %>'
+								href="<%= importTranslationResultsDisplayContext.getFailureMessagesCSVDataURL(locale) %>"
 								label="download-csv-report"
 								small="<%= true %>"
 								target="_blank"

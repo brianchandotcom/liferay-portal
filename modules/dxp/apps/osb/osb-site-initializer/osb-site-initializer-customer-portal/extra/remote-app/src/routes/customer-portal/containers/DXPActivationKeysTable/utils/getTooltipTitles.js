@@ -13,14 +13,16 @@ export function getTooltipTitles(title) {
 	const activationNames = title?.split(',');
 
 	return (
-		<div>
-			<p className="font-weight-bold m-0">{activationNames[0] || ''}</p>
+		!!activationNames.length && (
+			<div>
+				<p className="font-weight-bold m-0">{activationNames[0]}</p>
 
-			{activationNames?.length > 1 && (
-				<p className="font-weight-normal m-0 text-paragraph-sm">
-					{activationNames[1]}
-				</p>
-			)}
-		</div>
+				{activationNames.length > 1 && (
+					<p className="font-weight-normal m-0 text-paragraph-sm">
+						{activationNames[1]}
+					</p>
+				)}
+			</div>
+		)
 	);
 }

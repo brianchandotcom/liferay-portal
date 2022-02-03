@@ -16,10 +16,12 @@ package com.liferay.poshi.runner.util;
 
 import java.text.SimpleDateFormat;
 
-import java.time.Instant;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,6 +64,12 @@ public class DateUtil {
 		return _format(new Date(), pattern);
 	}
 
+	public static String getFormattedCurrentDate(
+		String pattern, String timeZoneID) {
+
+		return _format(new Date(), pattern, timeZoneID);
+	}
+
 	public static String getFormattedDate(String offsetDays, String pattern) {
 		return _format(
 			_getOffsetDate(Calendar.DATE, Integer.valueOf(offsetDays)),
@@ -90,6 +98,24 @@ public class DateUtil {
 
 	private static String _format(Date date, String pattern) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(date);
+	}
+
+	private static String _format(
+		Date date, String pattern, String timeZoneID) {
+
+		List<String> availableTimeZoneIDs = new ArrayList<>(
+			Arrays.asList(TimeZone.getAvailableIDs()));
+
+		if (!availableTimeZoneIDs.contains(timeZoneID)) {
+			throw new IllegalArgumentException(
+				"Invalid time zone ID: " + timeZoneID);
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone(timeZoneID));
 
 		return simpleDateFormat.format(date);
 	}

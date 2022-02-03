@@ -90,31 +90,35 @@ public class CommerceChannelDisplayContext
 	extends BaseCommerceChannelDisplayContext {
 
 	public CommerceChannelDisplayContext(
+		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		ModelResourcePermission<CommerceChannel>
 			commerceChannelModelResourcePermission,
-		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
 		CommerceCurrencyService commerceCurrencyService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		ConfigurationProvider configurationProvider,
-		HttpServletRequest httpServletRequest, Portal portal,
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionManager workflowDefinitionManager,
 		CPTaxCategoryLocalService cpTaxCategoryLocalService,
-		ItemSelector itemSelector, DLAppLocalService dlAppLocalService) {
+		DLAppLocalService dlAppLocalService,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		Portal portal,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		super(httpServletRequest);
 
-		_commerceChannelModelResourcePermission =
-			commerceChannelModelResourcePermission;
 		_commerceChannelHealthStatusRegistry =
 			commerceChannelHealthStatusRegistry;
+		_commerceChannelModelResourcePermission =
+			commerceChannelModelResourcePermission;
 		_commerceChannelService = commerceChannelService;
 		_commerceChannelTypeRegistry = commerceChannelTypeRegistry;
 		_commerceCurrencyService = commerceCurrencyService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
 		_configurationProvider = configurationProvider;
+		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+		_dlAppLocalService = dlAppLocalService;
+		_itemSelector = itemSelector;
 		_portal = portal;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
@@ -122,10 +126,6 @@ public class CommerceChannelDisplayContext
 
 		_commerceChannelRequestHelper = new CommerceChannelRequestHelper(
 			httpServletRequest);
-
-		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
-		_itemSelector = itemSelector;
-		_dlAppLocalService = dlAppLocalService;
 	}
 
 	public FileEntry fetchFileEntry() throws PortalException {

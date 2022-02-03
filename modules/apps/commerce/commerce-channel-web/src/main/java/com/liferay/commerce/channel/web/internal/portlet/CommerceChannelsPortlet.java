@@ -94,13 +94,15 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 		CommerceChannelDisplayContext commerceChannelDisplayContext =
 			new CommerceChannelDisplayContext(
+				_commerceChannelHealthStatusRegistry,
 				_commerceChannelModelResourcePermission,
-				_commerceChannelHealthStatusRegistry, _commerceChannelService,
-				_commerceChannelTypeRegistry, _commerceCurrencyService,
-				_commercePaymentMethodRegistry, _configurationProvider,
-				_portal.getHttpServletRequest(renderRequest), _portal,
-				_workflowDefinitionLinkLocalService, _workflowDefinitionManager,
-				_cpTaxCategoryLocalService, _itemSelector, _dlAppLocalService);
+				_commerceChannelService, _commerceChannelTypeRegistry,
+				_commerceCurrencyService, _commercePaymentMethodRegistry,
+				_configurationProvider, _cpTaxCategoryLocalService,
+				_dlAppLocalService,
+				_portal.getHttpServletRequest(renderRequest), _itemSelector,
+				_portal, _workflowDefinitionLinkLocalService,
+				_workflowDefinitionManager);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceChannelDisplayContext);

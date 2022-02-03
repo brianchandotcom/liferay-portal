@@ -50,34 +50,34 @@ public class SiteCommerceChannelTypeDisplayContext
 	extends CommerceChannelDisplayContext {
 
 	public SiteCommerceChannelTypeDisplayContext(
+		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		ModelResourcePermission<CommerceChannel>
 			commerceChannelModelResourcePermission,
-		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
 		CommerceCurrencyService commerceCurrencyService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		ConfigurationProvider configurationProvider,
+		CPTaxCategoryLocalService cpTaxCategoryLocalService,
+		DLAppLocalService dlAppLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionManager workflowDefinitionManager,
-		CPTaxCategoryLocalService cpTaxCategoryLocalService,
-		DLAppLocalService dlAppLocalService) {
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		super(
-			commerceChannelModelResourcePermission,
-			commerceChannelHealthStatusRegistry, commerceChannelService,
+			commerceChannelHealthStatusRegistry,
+			commerceChannelModelResourcePermission, commerceChannelService,
 			commerceChannelTypeRegistry, commerceCurrencyService,
 			commercePaymentMethodRegistry, configurationProvider,
-			httpServletRequest, portal, workflowDefinitionLinkLocalService,
-			workflowDefinitionManager, cpTaxCategoryLocalService, itemSelector,
-			dlAppLocalService);
+			cpTaxCategoryLocalService, dlAppLocalService, httpServletRequest,
+			itemSelector, portal, workflowDefinitionLinkLocalService,
+			workflowDefinitionManager);
 
+		_dlAppLocalService = dlAppLocalService;
 		_groupLocalService = groupLocalService;
 		_itemSelector = itemSelector;
-		_dlAppLocalService = dlAppLocalService;
 	}
 
 	public Group getChannelSite() throws PortalException {

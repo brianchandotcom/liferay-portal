@@ -111,15 +111,14 @@ public class CommerceChannelSiteScreenNavigationCategory
 		SiteCommerceChannelTypeDisplayContext
 			siteCommerceChannelTypeDisplayContext =
 				new SiteCommerceChannelTypeDisplayContext(
-					_commerceChannelModelResourcePermission,
 					_commerceChannelHealthStatusRegistry,
+					_commerceChannelModelResourcePermission,
 					_commerceChannelService, _commerceChannelTypeRegistry,
 					_commerceCurrencyService, _commercePaymentMethodRegistry,
-					_configurationProvider, _groupLocalService,
-					httpServletRequest, _itemSelector, _portal,
-					_workflowDefinitionLinkLocalService,
-					_workflowDefinitionManager, _cpTaxCategoryLocalService,
-					_dlAppLocalService);
+					_configurationProvider, _cpTaxCategoryLocalService,
+					_dlAppLocalService, _groupLocalService, httpServletRequest,
+					_itemSelector, _portal, _workflowDefinitionLinkLocalService,
+					_workflowDefinitionManager);
 
 		httpServletRequest.setAttribute(
 			"site.jsp-portletDisplayContext",

@@ -81,6 +81,24 @@ describe('odata-util', () => {
 			});
 		});
 
+		it('translate a query string with apostrophes, escaping them', () => {
+			const translatedMap = {
+				conjunctionName: 'and',
+				groupId: 'group_01',
+				items: [
+					{
+						operatorName: 'eq',
+						propertyName: 'firstName',
+						value: "Peep''o's",
+					},
+				],
+			};
+
+			const testQuery = "(firstName eq 'Peep''''o''s')";
+
+			testConversionToQueryString(translatedMap, testQuery, {properties});
+		});
+
 		it('translate a query string with special characters to map and back to string', () => {
 			const translatedMap = {
 				conjunctionName: 'and',

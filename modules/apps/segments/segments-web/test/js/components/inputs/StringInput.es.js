@@ -51,6 +51,28 @@ describe('StringInput', () => {
 		});
 	});
 
+	it('renders type string with apostrophes in the value', () => {
+		const mockOnChange = jest.fn();
+
+		const valueWithEscapedApostrophes = "Peep''''o''s";
+		const valueWithUnescapedApostrophes = "Peep''o's";
+
+		const {getByTestId} = render(
+			<StringInput
+				onChange={mockOnChange}
+				value={valueWithEscapedApostrophes}
+			/>
+		);
+
+		const element = getByTestId(SIMPLE_STRING_INPUT_TESTID);
+
+		testControlledInput({
+			element,
+			mockFunc: mockOnChange,
+			value: valueWithUnescapedApostrophes,
+		});
+	});
+
 	it('renders type string with options', () => {
 		const mockOnChange = jest.fn();
 

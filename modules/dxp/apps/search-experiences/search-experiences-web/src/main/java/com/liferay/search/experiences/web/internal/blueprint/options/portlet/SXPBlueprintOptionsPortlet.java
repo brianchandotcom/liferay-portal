@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=portlet-sxp-blueprint-options",
 		"com.liferay.portlet.display-category=category.search",
 		"com.liferay.portlet.header-portlet-css=/sxp_blueprint_options/css/main.css",
+		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/sxp_blueprint_options/",
 		"javax.portlet.init-param.view-template=/sxp_blueprint_options/view.jsp",
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_OPTIONS,

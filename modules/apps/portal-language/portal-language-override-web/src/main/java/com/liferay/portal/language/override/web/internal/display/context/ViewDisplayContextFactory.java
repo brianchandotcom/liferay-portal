@@ -302,7 +302,7 @@ public class ViewDisplayContextFactory {
 
 		searchContainer.setResultsAndTotal(
 			() -> languageItemDisplays.subList(
-				searchContainer.getStart(), searchContainer.getEnd()),
+				searchContainer.getStart(), searchContainer.getResultEnd()),
 			languageItemDisplays.size());
 	}
 

@@ -1,0 +1,8 @@
+.cp-deactivate-button {
+	color: var(--color-state-error);
+	background-color: white;
+
+	&:hover {
+		color: white;
+	}
+}

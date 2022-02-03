@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -97,47 +95,30 @@ public class DLExportImportPortletPreferencesProcessor
 
 		// Root folder ID is set, only export that
 
-		String portletId = portletDataContext.getPortletId();
-
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = null;
-
 			try {
-				folder = _dlAppLocalService.getFolder(rootFolderId);
-			}
-			catch (PortalException portalException) {
-				StringBundler sb = new StringBundler(4);
+				Folder folder = _getFolder(rootFolderId, portletDataContext);
 
-				sb.append("Portlet ");
-				sb.append(portletId);
-				sb.append(" refers to an invalid root folder ID ");
-				sb.append(rootFolderId);
-
-				_log.error(sb.toString());
-
-				throw new PortletDataException(sb.toString(), portalException);
-			}
-
-			try {
 				portletPreferences.setValue(
 					"selectedRepositoryId",
 					String.valueOf(folder.getRepositoryId()));
+
+				if (folder.getGroupId() == portletDataContext.getGroupId()) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletDataContext.getPortletId(),
+						folder);
+				}
+
+				return portletPreferences;
 			}
 			catch (ReadOnlyException readOnlyException) {
 				throw new PortletDataException(
 					"Unable to update portlet preferences during import",
 					readOnlyException);
 			}
-
-			if (folder.getGroupId() == portletDataContext.getGroupId()) {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, folder);
-			}
-
-			return portletPreferences;
 		}
 
 		if (!_exportImportHelper.isExportPortletData(portletDataContext)) {
@@ -161,9 +142,9 @@ public class DLExportImportPortletPreferencesProcessor
 		}
 
 		try {
-			String namespace = _dlPortletDataHandler.getNamespace();
+			if (portletDataContext.getBooleanParameter(
+					_dlPortletDataHandler.getNamespace(), "folders")) {
 
-			if (portletDataContext.getBooleanParameter(namespace, "folders")) {
 				StagedModelRepository<?> stagedModelRepository =
 					StagedModelRepositoryRegistryUtil.getStagedModelRepository(
 						DLFolder.class.getName());
@@ -178,18 +159,18 @@ public class DLExportImportPortletPreferencesProcessor
 							return;
 						}
 
-						Folder folder = _dlAppLocalService.getFolder(
-							dlFolder.getFolderId());
-
 						StagedModelDataHandlerUtil.exportReferenceStagedModel(
-							portletDataContext, portletId, folder);
+							portletDataContext,
+							portletDataContext.getPortletId(),
+							_dlAppLocalService.getFolder(
+								dlFolder.getFolderId()));
 					});
 
 				folderActionableDynamicQuery.performActions();
 			}
 
 			if (portletDataContext.getBooleanParameter(
-					namespace, "documents")) {
+					_dlPortletDataHandler.getNamespace(), "documents")) {
 
 				StagedModelRepository<?> stagedModelRepository =
 					StagedModelRepositoryRegistryUtil.getStagedModelRepository(
@@ -200,19 +181,18 @@ public class DLExportImportPortletPreferencesProcessor
 						portletDataContext);
 
 				fileEntryActionableDynamicQuery.setPerformActionMethod(
-					(DLFileEntry dlFileEntry) -> {
-						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-							dlFileEntry.getFileEntryId());
-
+					(DLFileEntry dlFileEntry) ->
 						StagedModelDataHandlerUtil.exportReferenceStagedModel(
-							portletDataContext, portletId, fileEntry);
-					});
+							portletDataContext,
+							portletDataContext.getPortletId(),
+							_dlAppLocalService.getFileEntry(
+								dlFileEntry.getFileEntryId())));
 
 				fileEntryActionableDynamicQuery.performActions();
 			}
 
 			if (portletDataContext.getBooleanParameter(
-					namespace, "document-types")) {
+					_dlPortletDataHandler.getNamespace(), "document-types")) {
 
 				StagedModelRepository<?> stagedModelRepository =
 					StagedModelRepositoryRegistryUtil.getStagedModelRepository(
@@ -227,7 +207,8 @@ public class DLExportImportPortletPreferencesProcessor
 						if (dlFileEntryType.isExportable()) {
 							StagedModelDataHandlerUtil.
 								exportReferenceStagedModel(
-									portletDataContext, portletId,
+									portletDataContext,
+									portletDataContext.getPortletId(),
 									dlFileEntryType);
 						}
 					});
@@ -236,7 +217,7 @@ public class DLExportImportPortletPreferencesProcessor
 			}
 
 			if (portletDataContext.getBooleanParameter(
-					namespace, "repositories")) {
+					_dlPortletDataHandler.getNamespace(), "repositories")) {
 
 				StagedModelRepository<?> stagedModelRepository =
 					StagedModelRepositoryRegistryUtil.getStagedModelRepository(
@@ -249,13 +230,14 @@ public class DLExportImportPortletPreferencesProcessor
 				repositoryActionableDynamicQuery.setPerformActionMethod(
 					(Repository repository) ->
 						StagedModelDataHandlerUtil.exportReferenceStagedModel(
-							portletDataContext, portletId, repository));
+							portletDataContext,
+							portletDataContext.getPortletId(), repository));
 
 				repositoryActionableDynamicQuery.performActions();
 			}
 
 			if (portletDataContext.getBooleanParameter(
-					namespace, "shortcuts")) {
+					_dlPortletDataHandler.getNamespace(), "shortcuts")) {
 
 				StagedModelRepository<?> stagedModelRepository =
 					StagedModelRepositoryRegistryUtil.getStagedModelRepository(
@@ -266,14 +248,12 @@ public class DLExportImportPortletPreferencesProcessor
 						portletDataContext);
 
 				fileShortcutActionableDynamicQuery.setPerformActionMethod(
-					(DLFileShortcut dlFileShortcut) -> {
-						FileShortcut fileShortcut =
-							_dlAppLocalService.getFileShortcut(
-								dlFileShortcut.getFileShortcutId());
-
+					(DLFileShortcut dlFileShortcut) ->
 						StagedModelDataHandlerUtil.exportReferenceStagedModel(
-							portletDataContext, portletId, fileShortcut);
-					});
+							portletDataContext,
+							portletDataContext.getPortletId(),
+							_dlAppLocalService.getFileShortcut(
+								dlFileShortcut.getFileShortcutId())));
 
 				fileShortcutActionableDynamicQuery.performActions();
 			}
@@ -448,6 +428,27 @@ public class DLExportImportPortletPreferencesProcessor
 		}
 
 		return portletPreferences;
+	}
+
+	private Folder _getFolder(
+			long folderId, PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		try {
+			return _dlAppLocalService.getFolder(folderId);
+		}
+		catch (PortalException portalException) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Portlet ");
+			sb.append(portletDataContext.getPortletId());
+			sb.append(" refers to an invalid root folder ID ");
+			sb.append(folderId);
+
+			_log.error(sb.toString());
+
+			throw new PortletDataException(sb.toString(), portalException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

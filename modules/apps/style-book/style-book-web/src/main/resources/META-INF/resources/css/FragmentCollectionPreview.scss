@@ -31,4 +31,8 @@ html#{$cadmin-selector} {
 
 .variation-preview__content {
 	background-color: #f7f8f9;
+
+	> * {
+		flex-grow: 1;
+	}
 }

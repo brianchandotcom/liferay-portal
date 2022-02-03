@@ -16,7 +16,7 @@
 
 import {PagesVisitor} from './visitors.es';
 
-export const DEFAULT_DDM_FIELD_PROPERTIES = new Set([
+const DEFAULT_DDM_FIELD_PROPERTIES = new Set([
 	'defaultValue',
 	'fieldType',
 	'indexable',
@@ -72,4 +72,88 @@ export function fieldToDataDefinition({
 	);
 
 	return dataDefinition;
+}
+
+export function getDDMFormFieldSettingsContext({
+	dataDefinitionField,
+	defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale,
+	editingLanguageId = defaultLanguageId,
+	fieldTypes,
+}: {
+	dataDefinitionField: DataDefinition;
+	defaultLanguageId: Locale;
+	editingLanguageId: Locale;
+	fieldTypes: FieldType[];
+}) {
+	const {settingsContext} = fieldTypes.find(({name}) => {
+		return name === dataDefinitionField.fieldType;
+	}) as FieldType;
+
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields((field: Field) => {
+			const {fieldName, localizable, type} = field;
+			const {customProperties} = dataDefinitionField;
+			const propertyName = _fromDDMFormToDataDefinitionPropertyName(
+				fieldName
+			);
+
+			const propertyValue =
+				customProperties &&
+				!DEFAULT_DDM_FIELD_PROPERTIES.has(propertyName)
+					? customProperties[propertyName]
+					: // @ts-ignore
+
+					  dataDefinitionField[propertyName];
+
+			const value = propertyValue ?? field.value;
+
+			let localizedValue = {};
+
+			if (localizable) {
+				localizedValue = {...propertyValue};
+			}
+
+			if (Object.keys(localizedValue).length === 0) {
+				localizedValue = {[defaultLanguageId]: ''};
+			}
+
+			const newField = {
+				...field,
+				defaultLanguageId,
+				locale: defaultLanguageId,
+				localizedValue,
+				value,
+			};
+
+			if (type === 'select' && fieldName === 'predefinedValue') {
+				newField.multiple =
+					dataDefinitionField.customProperties.multiple;
+				newField.options = (dataDefinitionField.customProperties
+					.options as LocalizedValue<unknown>)[editingLanguageId];
+			}
+
+			return newField;
+		}),
+	};
+}
+
+/**
+ * **Private function** exported for test purpose only
+ */
+export function _fromDDMFormToDataDefinitionPropertyName(propertyName: string) {
+	switch (propertyName) {
+		case 'fieldName':
+			return 'name';
+		case 'nestedFields':
+			return 'nestedDataDefinitionFields';
+		case 'predefinedValue':
+			return 'defaultValue';
+		case 'type':
+			return 'fieldType';
+		default:
+			return propertyName;
+	}
 }

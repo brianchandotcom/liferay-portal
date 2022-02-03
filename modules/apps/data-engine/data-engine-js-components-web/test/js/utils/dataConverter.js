@@ -12,9 +12,30 @@
  * details.
  */
 
-import {fieldToDataDefinition} from '../../../src/main/resources/META-INF/resources/js/utils/dataConverter';
+import {
+	_fromDDMFormToDataDefinitionPropertyName,
+	fieldToDataDefinition,
+} from '../../../src/main/resources/META-INF/resources/js/utils/dataConverter';
 
 describe('dataConverter', () => {
+	it('is getting component form data property', () => {
+		expect(_fromDDMFormToDataDefinitionPropertyName('fieldName')).toBe(
+			'name'
+		);
+		expect(_fromDDMFormToDataDefinitionPropertyName('nestedFields')).toBe(
+			'nestedDataDefinitionFields'
+		);
+		expect(
+			_fromDDMFormToDataDefinitionPropertyName('predefinedValue')
+		).toBe('defaultValue');
+		expect(_fromDDMFormToDataDefinitionPropertyName('type')).toBe(
+			'fieldType'
+		);
+		expect(_fromDDMFormToDataDefinitionPropertyName('otherProperty')).toBe(
+			'otherProperty'
+		);
+	});
+
 	it('is getting data definition field', () => {
 		expect(
 			fieldToDataDefinition({

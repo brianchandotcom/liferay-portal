@@ -15,7 +15,7 @@
 // Utils
 
 export {default as compose} from './utils/compose.es';
-export {DEFAULT_DDM_FIELD_PROPERTIES} from './utils/dataConverter';
+export {getDDMFormFieldSettingsContext} from './utils/dataConverter';
 export * as DRAG_TYPES from './utils/dragTypes';
 export {convertToFormData, makeFetch} from './utils/fetch.es';
 export {getFields, normalizeFieldName} from './utils/fields.es';

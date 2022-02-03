@@ -13,9 +13,9 @@
  */
 
 import {
-	DEFAULT_DDM_FIELD_PROPERTIES,
 	FieldSupport,
 	PagesVisitor,
+	getDDMFormFieldSettingsContext,
 } from 'data-engine-js-components-web';
 
 import {getDataDefinitionField as getDataDefinitionFieldUtils} from './dataDefinition.es';
@@ -76,66 +76,6 @@ export function getDDMFormField({
 	}
 
 	return ddmFormField;
-}
-
-function getDDMFormFieldSettingsContext({
-	dataDefinitionField,
-	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	editingLanguageId = defaultLanguageId,
-	fieldTypes,
-}) {
-	const {settingsContext} = fieldTypes.find(({name}) => {
-		return name === dataDefinitionField.fieldType;
-	});
-
-	const visitor = new PagesVisitor(settingsContext.pages);
-
-	return {
-		...settingsContext,
-		pages: visitor.mapFields((field) => {
-			const {fieldName, localizable} = field;
-			const propertyValue = _getDataDefinitionFieldPropertyValue(
-				dataDefinitionField,
-				_fromDDMFormToDataDefinitionPropertyName(fieldName)
-			);
-
-			const value = propertyValue ?? field.value;
-
-			let localizedValue = {};
-
-			if (localizable) {
-				localizedValue = {...propertyValue};
-			}
-
-			if (Object.keys(localizedValue).length === 0) {
-				localizedValue = {[defaultLanguageId]: ''};
-			}
-
-			let multiple = field.multiple;
-			let options = field.options;
-
-			if (
-				field.type === 'select' &&
-				field.fieldName === 'predefinedValue'
-			) {
-				multiple = dataDefinitionField.customProperties.multiple;
-				options =
-					dataDefinitionField.customProperties.options[
-						editingLanguageId
-					];
-			}
-
-			return {
-				...field,
-				defaultLanguageId,
-				locale: defaultLanguageId,
-				localizedValue,
-				multiple,
-				options,
-				value,
-			};
-		}),
-	};
 }
 
 export function getDefaultDataLayout(dataDefinition) {
@@ -231,33 +171,3 @@ export function getFieldSetDDMForm({
 		title: name[editingLanguageId] ?? name[defaultLanguageId],
 	};
 }
-
-// private
-
-function _fromDDMFormToDataDefinitionPropertyName(propertyName) {
-	const map = {
-		fieldName: 'name',
-		nestedFields: 'nestedDataDefinitionFields',
-		predefinedValue: 'defaultValue',
-		type: 'fieldType',
-	};
-
-	return map[propertyName] || propertyName;
-}
-
-function _getDataDefinitionFieldPropertyValue(
-	dataDefinitionField,
-	propertyName
-) {
-	const {customProperties} = dataDefinitionField;
-
-	return customProperties && !DEFAULT_DDM_FIELD_PROPERTIES.has(propertyName)
-		? customProperties[propertyName]
-		: dataDefinitionField[propertyName];
-}
-
-// For test purpose only
-
-export default {
-	_fromDDMFormToDataDefinitionPropertyName,
-};

@@ -12,35 +12,9 @@
  * details.
  */
 
-import dataConverter, {
-	getDefaultDataLayout,
-} from '../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
+import {getDefaultDataLayout} from '../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
 
 describe('dataConverter', () => {
-	it('is getting component form data property', () => {
-		expect(
-			dataConverter._fromDDMFormToDataDefinitionPropertyName('fieldName')
-		).toBe('name');
-		expect(
-			dataConverter._fromDDMFormToDataDefinitionPropertyName(
-				'nestedFields'
-			)
-		).toBe('nestedDataDefinitionFields');
-		expect(
-			dataConverter._fromDDMFormToDataDefinitionPropertyName(
-				'predefinedValue'
-			)
-		).toBe('defaultValue');
-		expect(
-			dataConverter._fromDDMFormToDataDefinitionPropertyName('type')
-		).toBe('fieldType');
-		expect(
-			dataConverter._fromDDMFormToDataDefinitionPropertyName(
-				'otherProperty'
-			)
-		).toBe('otherProperty');
-	});
-
 	it('is getting defaultDataLayout', () => {
 		const dataDefinition = {
 			dataDefinitionFields: [],

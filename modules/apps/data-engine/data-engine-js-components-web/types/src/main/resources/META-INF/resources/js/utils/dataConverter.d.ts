@@ -12,8 +12,6 @@
  * details.
  */
 
-export declare const DEFAULT_DDM_FIELD_PROPERTIES: Set<string>;
-
 /**
  * Gets a data definition from a field
  *
@@ -26,3 +24,23 @@ export declare function fieldToDataDefinition({
 	nestedFields,
 	settingsContext,
 }: Field): DataDefinition;
+export declare function getDDMFormFieldSettingsContext({
+	dataDefinitionField,
+	defaultLanguageId,
+	editingLanguageId,
+	fieldTypes,
+}: {
+	dataDefinitionField: DataDefinition;
+	defaultLanguageId: Locale;
+	editingLanguageId: Locale;
+	fieldTypes: FieldType[];
+}): {
+	pages: any;
+};
+
+/**
+ * **Private function** exported for test purpose only
+ */
+export declare function _fromDDMFormToDataDefinitionPropertyName(
+	propertyName: string
+): string;

@@ -75,7 +75,7 @@ type LocalizedValue<T> = {
 };
 
 interface DataDefinition {
-	customProperties: {[key: string]: unknown};
+	customProperties: DataDefinitionCustomProperties;
 	defaultValue?: unknown;
 	fieldType?: unknown;
 	indexType?: unknown;
@@ -91,12 +91,24 @@ interface DataDefinition {
 	tip?: unknown;
 }
 
+interface DataDefinitionCustomProperties {
+	options?: LocalizedValue<unknown>;
+	[key: string]: unknown;
+}
+
 interface Field<T = unknown> {
 	fieldName: string;
 	localizable?: boolean;
 	localizedValue?: LocalizedValue<T>;
+	multiple?: unknown;
 	nestedFields?: Field[];
+	options?: unknown;
 	settingsContext: {pages: unknown[]};
 	type: FieldTypeName;
 	value: T;
+}
+
+interface FieldType {
+	name: string;
+	settingsContext: {pages: unknown[]};
 }

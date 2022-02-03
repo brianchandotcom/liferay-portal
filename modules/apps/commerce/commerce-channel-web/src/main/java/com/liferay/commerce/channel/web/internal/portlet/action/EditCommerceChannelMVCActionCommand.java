@@ -355,7 +355,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 		FileEntry currentTemplateFileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-				commerceChannel.getGroupId(), "PRINT_ORDER_TEMPLATE_ERC");
+				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
 		if ((fileEntryId == 0) && (currentTemplateFileEntry != null)) {
 			_dlAppLocalService.deleteFileEntry(
@@ -384,7 +384,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 			try {
 				_dlAppLocalService.addFileEntry(
-					"PRINT_ORDER_TEMPLATE_ERC", commerceChannel.getUserId(),
+					"ORDER_PRINT_TEMPLATE", commerceChannel.getUserId(),
 					commerceChannel.getGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					newTemplateFileEntry.getFileName(),

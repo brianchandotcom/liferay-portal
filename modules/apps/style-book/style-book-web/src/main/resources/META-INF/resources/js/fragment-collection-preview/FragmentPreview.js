@@ -28,7 +28,10 @@ export function FragmentPreview({fragment, namespace}) {
 				<h3 className="mb-3">{fragment.name}</h3>
 			</div>
 
-			<div className="fragment-preview__list">
+			<div
+				className="fragment-preview__list"
+				style={{'--variation-count': variations.length}}
+			>
 				{variations.map((variation) => {
 					const label = `${fragment.name} ${variation
 						.map((part) => part.label)

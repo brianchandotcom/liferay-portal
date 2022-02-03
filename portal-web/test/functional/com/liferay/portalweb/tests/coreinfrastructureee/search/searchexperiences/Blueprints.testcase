@@ -1422,6 +1422,55 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_EMPTY");
 	}
 
+	test SearchWithSelectedAssetType {
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "red apple");
+
+		JSONBlog.addEntry(
+			entryContent = "",
+			entryTitle = "green apple");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Selected Types");
+
+		Button.click(button = "Select Asset Types");
+
+		Check.checkNotVisible(
+			assetType = "Web Content Article",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
+		Button.clickDone();
+
+		PortletEntry.save();
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		AssertElementPresent(
+			assetType = "Web Content Article",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "red apple");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "green apple");
+	}
+
 	@description = "This is a use case for LPS-145977."
 	test SearchWithUsersLanguageOption {
 		JSONWebcontent.addWebContent(

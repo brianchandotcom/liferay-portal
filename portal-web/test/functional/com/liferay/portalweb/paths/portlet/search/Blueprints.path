@@ -221,6 +221,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED</td>
+	<td>//div[contains(@class,'searchable-types')]//p[contains(@class,'table-list-title') and contains(.,'${assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CODE_MIRROR_EDITOR</td>
 	<td>//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>

@@ -897,17 +897,17 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
 	}
 
+	macro viewRequiredAlert {
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "${requiredAlert}");
+	}
+
 	macro viewSystemObject {
 		AssertElementPresent(
 			key_name = "${name}",
 			key_system = "Yes",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
-	macro viewRequiredAlert {
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "${requiredAlert}");
 	}
 
 }

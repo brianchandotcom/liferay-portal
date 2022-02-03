@@ -195,7 +195,6 @@ definition {
 			whenAction = "On After Add");
 
 		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
-
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
@@ -218,16 +217,28 @@ definition {
 			urlAction = "http://localhost:8080");
 
 		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
-
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotLeaveURLBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145714 CannotLeaveURLBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			whenAction = "On After Add");
+
+		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
 	}
 
 	@description = "LPS-139008 - Verify that Actions will work again after reactivated"

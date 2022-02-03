@@ -9,20 +9,18 @@
  * distribution rights of the Software.
  */
 
-export function getTooltipTitles({title}) {
-	const activationNames = title.split(',');
+export function getTooltipTitles(title) {
+	const activationNames = title?.split(',');
 
-	if (activationNames.length) {
-		return (
-			<div>
-				<p className="font-weight-bold m-0">{activationNames[0]}</p>
+	return (
+		<div>
+			<p className="font-weight-bold m-0">{activationNames[0] || ''}</p>
 
+			{activationNames?.length > 1 && (
 				<p className="font-weight-normal m-0 text-paragraph-sm">
 					{activationNames[1]}
 				</p>
-			</div>
-		);
-	}
-
-	return activationNames[0];
+			)}
+		</div>
+	);
 }

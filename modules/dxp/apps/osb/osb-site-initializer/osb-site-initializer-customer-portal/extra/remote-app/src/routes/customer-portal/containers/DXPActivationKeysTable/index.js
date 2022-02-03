@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {ButtonWithIcon} from '@clayui/core';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useEffect, useState} from 'react';
-import {IconButton} from '../../../../common/components';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
@@ -94,6 +94,7 @@ const DXPActivationKeysTable = () => {
 
 			setIsLoadingActivationKeys(false);
 		};
+
 		fetchActivationKeysData();
 	}, [licenseKeyDownloadURL, project, sessionId]);
 
@@ -107,18 +108,49 @@ const DXPActivationKeysTable = () => {
 						  )
 						: Boolean
 			);
-			setTotalCount(activationKeysFilterData.length || 5);
-			const activationKeysFilterByPage = activationKeysFilterData.slice(
+
+			setTotalCount(activationKeysFilterData?.length || 5);
+
+			const activationKeysFilterByPage = activationKeysFilterData?.slice(
 				itemsPerPage * activePage - itemsPerPage,
 				itemsPerPage * activePage
 			);
+
 			setActivationKeysFiltered(
-				activationKeysFilterByPage.length
+				activationKeysFilterByPage?.length
 					? activationKeysFilterByPage
 					: activationKeysFilterData
 			);
 		}
 	}, [activationKeys, activePage, filterStatusBar, itemsPerPage]);
+
+	const groupButtons = [
+		getGroupButtons(ACTIVATION_STATUS.all, statusBar?.allTotalCount),
+		getGroupButtons(ACTIVATION_STATUS.active, statusBar?.activeTotalCount),
+		getGroupButtons(
+			ACTIVATION_STATUS.notActivated,
+			statusBar?.notActiveTotalCount
+		),
+		getGroupButtons(
+			ACTIVATION_STATUS.expired,
+			statusBar?.expiredTotalCount
+		),
+	];
+
+	const paginationConfig = {
+		activePage,
+		itemsPerPage,
+		labels: {
+			paginationResults: 'Showing {0} to {1} of {2}',
+			perPageItems: 'Show {0} Items',
+			selectPerPageItems: '{0} Items',
+		},
+		listItemsPerPage: [{label: 5}, {label: 10}, {label: 20}, {label: 50}],
+		setActivePage,
+		setItemsPerPage,
+		showDeltasDropDown: true,
+		totalCount,
+	};
 
 	return (
 		<div>
@@ -126,34 +158,13 @@ const DXPActivationKeysTable = () => {
 				<h3 className="m-0">Activation Keys</h3>
 
 				<RoundedGroupButtons
-					groupButtons={[
-						getGroupButtons(
-							ACTIVATION_STATUS.all,
-							statusBar?.allTotalCount
-						),
-						getGroupButtons(
-							ACTIVATION_STATUS.active,
-							statusBar?.activeTotalCount
-						),
-						getGroupButtons(
-							ACTIVATION_STATUS.notActivated,
-							statusBar?.notActiveTotalCount
-						),
-						getGroupButtons(
-							ACTIVATION_STATUS.expired,
-							statusBar?.expiredTotalCount
-						),
-					]}
-					handleOnChange={(value) => {
-						setFilterStatusBar(value);
-					}}
+					groupButtons={groupButtons}
+					handleOnChange={(value) => setFilterStatusBar(value)}
 				/>
 			</div>
 
 			<ClayTooltipProvider
-				contentRenderer={(props) => {
-					return getTooltipTitles(props);
-				}}
+				contentRenderer={({title}) => getTooltipTitles(title)}
 				delay={100}
 			>
 				<Table
@@ -162,28 +173,10 @@ const DXPActivationKeysTable = () => {
 					hasCheckbox
 					hasPagination
 					isLoading={isLoadingActivationKeys}
-					paginationConfig={{
-						activePage,
-						itemsPerPage,
-						labels: {
-							paginationResults: 'Showing {0} to {1} of {2}',
-							perPageItems: 'Show {0} Items',
-							selectPerPageItems: '{0} Items',
-						},
-						listItemsPerPage: [
-							{label: 5},
-							{label: 10},
-							{label: 20},
-							{label: 50},
-						],
-						setActivePage,
-						setItemsPerPage,
-						showDeltasDropDown: true,
-						totalCount,
-					}}
+					paginationConfig={paginationConfig}
 					rows={activationKeysFiltered.map((activationKey) => ({
 						download: (
-							<IconButton
+							<ButtonWithIcon
 								displayType="null"
 								onClick={() =>
 									downloadActivationLicenseKey(

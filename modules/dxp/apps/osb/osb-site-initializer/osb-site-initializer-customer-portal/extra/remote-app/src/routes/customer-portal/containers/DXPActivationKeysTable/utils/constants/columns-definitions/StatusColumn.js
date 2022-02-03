@@ -15,11 +15,12 @@ import ClaySticker from '@clayui/sticker';
 
 const StatusColumn = ({activationKey}) => {
 	let activationStatus = ACTIVATION_STATUS.active;
+	const today = new Date();
 
-	if (new Date() < new Date(activationKey.startDate)) {
+	if (today < new Date(activationKey.startDate)) {
 		activationStatus = ACTIVATION_STATUS.notActivated;
 	}
-	else if (new Date() > new Date(activationKey.expirationDate)) {
+	else if (today > new Date(activationKey.expirationDate)) {
 		activationStatus = ACTIVATION_STATUS.expired;
 	}
 

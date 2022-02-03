@@ -42,11 +42,16 @@ const Table = ({
 		const {checked} = event.target;
 
 		if (checked) {
-			return setCheckboxesChecked((prevChecked) => [...prevChecked, id]);
+			return setCheckboxesChecked((previousCheckboxesChecked) => [
+				...previousCheckboxesChecked,
+				id,
+			]);
 		}
 
-		setCheckboxesChecked((prevChecked) =>
-			prevChecked.filter((checked) => checked !== id)
+		setCheckboxesChecked((previousCheckboxesChecked) =>
+			previousCheckboxesChecked.filter(
+				(CheckboxChecked) => CheckboxChecked !== id
+			)
 		);
 	};
 
@@ -54,11 +59,13 @@ const Table = ({
 		setIsAllCheckboxsSelected(
 			(previousIsAllCheckboxsSelected) => !previousIsAllCheckboxsSelected
 		);
+
 		if (isAllCheckboxsSelected) {
 			setCheckboxesChecked([]);
 
 			return;
 		}
+
 		setCheckboxesChecked(
 			new Array(rows.length).fill().map((_, index) => index)
 		);
@@ -101,7 +108,7 @@ const Table = ({
 										</p>
 									</div>
 								) : (
-									<>{column.header.name}</>
+									column.header.name
 								)}
 							</ClayTable.Cell>
 						))}
@@ -113,7 +120,7 @@ const Table = ({
 						{rows.map((row, rowIndex) => (
 							<ClayTable.Row
 								className={classNames({
-									'common-table-active-row': checkboxesChecked.find(
+									'cp-common-table-active-row': checkboxesChecked.find(
 										(checkboxChecked) =>
 											checkboxChecked === rowIndex
 									),

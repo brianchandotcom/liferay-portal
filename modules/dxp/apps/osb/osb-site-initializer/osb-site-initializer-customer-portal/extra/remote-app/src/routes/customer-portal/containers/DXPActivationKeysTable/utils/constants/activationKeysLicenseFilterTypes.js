@@ -10,9 +10,11 @@
  */
 
 export const ACTIVATION_KEYS_LICENSE_FILTER_TYPES = {
-	active: ({expirationDate, startDate}) =>
-		new Date(startDate) < new Date() &&
-		new Date(expirationDate) > new Date(),
+	active: ({expirationDate, startDate}) => {
+		const today = new Date();
+
+		return new Date(startDate) < today && new Date(expirationDate) > today;
+	},
 	expired: ({expirationDate}) => new Date(expirationDate) < new Date(),
 	notActivated: ({startDate}) => new Date(startDate) > new Date(),
 };

@@ -56,6 +56,10 @@ for (String portletId : PortletCategoryUtil.getFirstChildPortletIds(portletCateg
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <c:if test="<%= !portletCategories.isEmpty() || !portlets.isEmpty() %>">
 	<liferay-ui:panel
 		collapsible="<%= true %>"

@@ -11,6 +11,7 @@
 
 export {default as Badge} from './Badge';
 export {default as Button} from './Button';
+export {default as ButtonDropDown} from './ButtonDropDown';
 export {default as Input} from './formik-fields/Input';
 export {default as Select} from './formik-fields/Select';
 export {default as Skeleton} from './Skeleton';

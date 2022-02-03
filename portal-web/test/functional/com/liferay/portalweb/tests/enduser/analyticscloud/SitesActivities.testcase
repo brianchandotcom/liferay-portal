@@ -151,14 +151,9 @@ definition {
 		}
 
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
-			for (var current : list "Known-0,Anonymous-1,Total-1") {
-				var visitorsType = StringUtil.extractFirst("${current}", "-");
-				var valueVisitors = StringUtil.extractLast("${current}", "-");
-
-				ACSites.viewVisitorsOnGraph(
-					valueVisitors = "${valueVisitors}",
-					visitorsType = "${visitorsType}");
-			}
+			ACSites.viewVisitorsOnGraph(
+				visitorsTypeList = "Known,Anonymous,Total",
+				valueVisitorsList = "0,1,1");
 		}
 
 		task ("Open DXP") {
@@ -190,14 +185,9 @@ definition {
 		}
 
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
-			for (var current : list "Known-1,Anonymous-0,Total-1") {
-				var visitorsType = StringUtil.extractFirst("${current}", "-");
-				var valueVisitors = StringUtil.extractLast("${current}", "-");
-
-				ACSites.viewVisitorsOnGraph(
-					valueVisitors = "${valueVisitors}",
-					visitorsType = "${visitorsType}");
-			}
+			ACSites.viewVisitorsOnGraph(
+				visitorsTypeList = "Known,Anonymous,Total",
+				valueVisitorsList = "1,0,1");
 		}
 	}
 
@@ -389,14 +379,9 @@ definition {
 		}
 
 		task ("Hover on the unique visitors graph and assert the elements that are shown on the tooltip") {
-			for (var current : list "Known-2,Anonymous-1,Total-3") {
-				var visitorsType = StringUtil.extractFirst("${current}", "-");
-				var valueVisitors = StringUtil.extractLast("${current}", "-");
-
-				ACSites.viewVisitorsOnGraph(
-					valueVisitors = "${valueVisitors}",
-					visitorsType = "${visitorsType}");
-			}
+			ACSites.viewVisitorsOnGraph(
+				visitorsTypeList = "Known,Anonymous,Total",
+				valueVisitorsList = "2,1,3");
 		}
 	}
 

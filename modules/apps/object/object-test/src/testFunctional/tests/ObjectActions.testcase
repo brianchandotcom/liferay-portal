@@ -177,11 +177,24 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotLeaveActionThenBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145713 CannotLeaveActionThenBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			whenAction = "On After Add");
+
+		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
 
 	}
 

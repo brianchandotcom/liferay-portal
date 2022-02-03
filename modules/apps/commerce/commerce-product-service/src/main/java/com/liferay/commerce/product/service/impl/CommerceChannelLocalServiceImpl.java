@@ -18,8 +18,16 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelSiteGroupIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelTable;
 import com.liferay.commerce.product.service.base.CommerceChannelLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -294,6 +302,38 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceChannel> getCommerceChannels(
+			long companyId, String keywords, int start, int end)
+		throws PortalException {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceChannelTable.INSTANCE
+				).from(
+					CommerceChannelTable.INSTANCE
+				),
+				companyId, keywords, CommerceChannelTable.INSTANCE.name
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getCommerceChannelsCount(long companyId, String keywords)
+		throws PortalException {
+
+		return dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceChannelTable.INSTANCE.commerceChannelId
+				).from(
+					CommerceChannelTable.INSTANCE
+				),
+				companyId, keywords, CommerceChannelTable.INSTANCE.name));
+	}
+
+	@Override
 	public List<CommerceChannel> search(long companyId) throws PortalException {
 		return search(
 			companyId, StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -475,9 +515,35 @@ public class CommerceChannelLocalServiceImpl
 		}
 	}
 
+	private GroupByStep _getGroupByStep(
+			JoinStep joinStep, Long companyId, String keywords,
+			Expression<String> keywordsPredicateExpression)
+		throws PortalException {
+
+		return joinStep.where(
+			CommerceChannelTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (Validator.isNotNull(keywords)) {
+						return Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									keywordsPredicateExpression),
+								_customSQL.keywords(keywords, true)));
+					}
+
+					return null;
+				}
+			));
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;

@@ -172,6 +172,37 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceChannel> getCommerceChannels(
+			long companyId, String keywords, int start, int end)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceChannelModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
+
+		return commerceChannelLocalService.getCommerceChannels(
+			companyId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelsCount(long companyId, String keywords)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceChannelModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
+
+		return commerceChannelLocalService.getCommerceChannelsCount(
+			companyId, keywords);
+	}
+
+	@Override
 	public List<CommerceChannel> search(long companyId) throws PortalException {
 		return commerceChannelLocalService.search(companyId);
 	}

@@ -114,6 +114,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		ContentDashboardItem<?> contentDashboardItem =
 			new ContentDashboardItemBuilder(
 				"className", 12345L
+			).withSubtype(
+				"subType"
 			).withUser(
 				user
 			).build();
@@ -229,6 +231,33 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			expectedVersionJSONObject.toString(),
 			actualVersionJSONObject.toString());
+	}
+
+	@Test
+	public void testServeResourceWithoutSubtype() throws Exception {
+		ContentDashboardItem<?> contentDashboardItem =
+			new ContentDashboardItemBuilder(
+				"className", 12345L
+			).build();
+
+		_initGetContentDashboardItemInfoMVCResourceCommand(
+			contentDashboardItem, null);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_getContentDashboardItemInfoMVCResourceCommand.serveResource(
+			_getMockLiferayResourceRequest(contentDashboardItem),
+			mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(byteArrayOutputStream.toByteArray()));
+
+		Assert.assertEquals(StringPool.BLANK, jsonObject.getString("subType"));
 	}
 
 	@Test
@@ -502,7 +531,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						contentDashboardItemSubtype.getLabel(
 							Mockito.any(Locale.class))
 					).thenReturn(
-						"subType"
+						_subtype
 					);
 
 					return contentDashboardItemSubtype;
@@ -622,6 +651,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			};
 		}
 
+		public ContentDashboardItemBuilder withSubtype(String subtype) {
+			_subtype = subtype;
+
+			return this;
+		}
+
 		public ContentDashboardItemBuilder withUser(User user) {
 			_user = user;
 
@@ -630,6 +665,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		private final String _className;
 		private final long _classPK;
+		private String _subtype;
 		private User _user;
 
 	}

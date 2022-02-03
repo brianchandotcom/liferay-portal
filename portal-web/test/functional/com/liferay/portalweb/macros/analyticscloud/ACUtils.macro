@@ -308,6 +308,14 @@ definition {
 			value1 = "${pageTitle}");
 	}
 
+	macro assertPageTitleNotPresent {
+		var key_pageTitle = "${pageTitle}";
+
+		AssertElementNotPresent(
+			locator1 = "ACUtils#PAGE_TITLE",
+			value1 = "${pageTitle}");
+	}
+
 	macro assertRequestCommonPropertiesValue {
 		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
 

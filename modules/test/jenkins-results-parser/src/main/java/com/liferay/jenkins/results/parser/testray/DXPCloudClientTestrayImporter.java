@@ -330,7 +330,7 @@ public class DXPCloudClientTestrayImporter {
 		}
 
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
-			_testrayServerURL);
+			_testrayServerURL, "S3");
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(
 			_testrayProjectName);

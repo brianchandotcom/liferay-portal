@@ -133,24 +133,33 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
-	public static TestrayServer newTestrayServer(
-		String testrayServerURLString) {
+	public static TestrayServer newTestrayServer(String testrayServerURL) {
+		return newTestrayServer(testrayServerURL, "RSYNC");
+	}
 
-		TestrayServer testrayServer = _testrayServers.get(
-			testrayServerURLString);
+	public static TestrayServer newTestrayServer(
+		String testrayServerURL, String testrayServerType) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
+			testrayServerType = "RSYNC";
+		}
+
+		String key = testrayServerURL + "_" + testrayServerType;
+
+		TestrayServer testrayServer = _testrayServers.get(key);
 
 		if (testrayServer != null) {
 			return testrayServer;
 		}
 
-		if (testrayServerURLString.startsWith("https://testray.liferay.com")) {
-			testrayServer = new RsyncTestrayServer(testrayServerURLString);
+		if (testrayServerType.equals("S3")) {
+			testrayServer = new S3TestrayServer(testrayServerURL);
 		}
 		else {
-			testrayServer = new S3TestrayServer(testrayServerURLString);
+			testrayServer = new RsyncTestrayServer(testrayServerURL);
 		}
 
-		_testrayServers.put(testrayServerURLString, testrayServer);
+		_testrayServers.put(key, testrayServer);
 
 		return testrayServer;
 	}

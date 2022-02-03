@@ -1338,12 +1338,18 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:Title,pt_BR:Título");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Language Selector Page");
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
-			layoutName = "Search",
+			layoutName = "Language Selector Page",
 			widgetName = "Language Selector");
 
-		Search.openSearchPage();
+		Navigator.openSitePage(
+			pageName = "Language Selector Page",
+			siteName = "Guest");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "pt_BR",

@@ -1,0 +1,302 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
+import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
+import PropTypes from 'prop-types';
+import React, {useContext} from 'react';
+
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
+import SidebarPanel from '../../SidebarPanel';
+
+const executionTypeOptions = [
+	{
+		label: Liferay.Language.get('on-assignment'),
+		value: 'onAssignment',
+	},
+	{
+		label: Liferay.Language.get('on-entry'),
+		value: 'onEntry',
+	},
+	{
+		label: Liferay.Language.get('on-exit'),
+		value: 'onExit',
+	},
+];
+
+const notificationsTypeOptions = [
+	{
+		label: Liferay.Language.get('email'),
+		value: 'email',
+	},
+	{
+		label: Liferay.Language.get('user-notification'),
+		value: 'userNotification',
+	},
+];
+
+const recipientTypeOptions = [
+	{
+		label: Liferay.Language.get('asset-creator'),
+		value: 'assetCreator',
+	},
+	{
+		label: Liferay.Language.get('role'),
+		value: 'role',
+	},
+	{
+		disabled: true,
+		label: Liferay.Language.get('role-type'),
+		value: 'roleType',
+	},
+	{
+		label: Liferay.Language.get('scripted-recipient'),
+		value: 'scriptedRecipient',
+	},
+	{
+		disabled: true,
+		label: Liferay.Language.get('user'),
+		value: 'user',
+	},
+	{
+		label: Liferay.Language.get('task-assignees'),
+		value: 'taskAssignees',
+	},
+];
+
+const templateLanguageOptions = [
+	{
+		label: Liferay.Language.get('freemarker'),
+		value: 'freeMarker',
+	},
+	{
+		label: Liferay.Language.get('text'),
+		value: 'text',
+	},
+	{
+		label: Liferay.Language.get('velocity'),
+		value: 'velocity',
+	},
+];
+
+const NotificationsInfo = () => {
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+
+	return (
+		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
+			<ClayForm.Group>
+				<label htmlFor="notificationName">
+					{Liferay.Language.get('name')}
+				</label>
+
+				<ClayInput
+					id="notificationName"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									name: target.value,
+								},
+							},
+						})
+					}
+					placeholder={Liferay.Language.get('notification')}
+					type="text"
+					value={selectedItem?.data.notifications?.name || ''}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="notificationDescription">
+					{Liferay.Language.get('description')}
+				</label>
+
+				<ClayInput
+					id="notificationDescription"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									description: target.value,
+								},
+							},
+						})
+					}
+					type="text"
+					value={selectedItem?.data.notifications?.description || ''}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="template-language">
+					{Liferay.Language.get('template-language')}
+				</label>
+
+				<ClaySelect
+					aria-label="Select"
+					id="template-language"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									templateLanguage: target.value,
+								},
+							},
+						})
+					}
+				>
+					{templateLanguageOptions.map((item) => (
+						<ClaySelect.Option
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					))}
+				</ClaySelect>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="template">
+					{Liferay.Language.get('template')}
+				</label>
+
+				<ClayInput
+					component="textarea"
+					id="template"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									template: target.value,
+								},
+							},
+						})
+					}
+					placeholder="${userName} sent you a ${entryType} for review in the workflow."
+					type="text"
+					value={selectedItem?.data.notifications?.template || ''}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="notifications-type">
+					{Liferay.Language.get('notifications-type')}
+				</label>
+
+				<ClaySelect
+					aria-label="Select"
+					defaultValue={Liferay.Language.get('select')}
+					id="notifications-type"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									notificationsType: target.value,
+								},
+							},
+						})
+					}
+				>
+					{notificationsTypeOptions.map((item) => (
+						<ClaySelect.Option
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					))}
+				</ClaySelect>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="execution-type">
+					{Liferay.Language.get('execution-type')}
+				</label>
+
+				<ClaySelect
+					aria-label="Select"
+					id="execution-type"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									executionType: target.value,
+								},
+							},
+						})
+					}
+				>
+					{executionTypeOptions.map((item) => (
+						<ClaySelect.Option
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					))}
+				</ClaySelect>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="recipient-type">
+					{Liferay.Language.get('recipient-type')}
+				</label>
+
+				<ClaySelect
+					aria-label="Select"
+					id="recipient-type"
+					onChange={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								notifications: {
+									...selectedItem.data.notifications,
+									recipientType: target.value,
+								},
+							},
+						})
+					}
+				>
+					{recipientTypeOptions.map((item) => (
+						<ClaySelect.Option
+							disabled={item.disabled}
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					))}
+				</ClaySelect>
+			</ClayForm.Group>
+		</SidebarPanel>
+	);
+};
+
+NotificationsInfo.propTypes = {
+	setContentName: PropTypes.func.isRequired,
+};
+
+export default NotificationsInfo;

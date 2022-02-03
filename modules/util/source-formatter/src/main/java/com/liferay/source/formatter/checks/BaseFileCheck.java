@@ -167,12 +167,6 @@ public abstract class BaseFileCheck
 			return portalVersion;
 		}
 
-		Matcher matcher = _portalVersionPattern.matcher(portalVersion);
-
-		if (matcher.find()) {
-			portalVersion = matcher.group(1) + ".0";
-		}
-
 		return portalVersion;
 	}
 
@@ -274,9 +268,17 @@ public abstract class BaseFileCheck
 
 				properties.load(new FileInputStream(releasePropertiesFile));
 
-				if (properties.containsKey("release.info.version")) {
-					_publicPortalVersion = properties.getProperty(
-						"release.info.version");
+				String releaseInfoVersionMajor = properties.getProperty(
+					"release.info.version.major");
+				String releaseInfoVersionMinor = properties.getProperty(
+					"release.info.version.minor");
+
+				if (Validator.isNotNull(releaseInfoVersionMajor) &&
+					Validator.isNotNull(releaseInfoVersionMinor)) {
+
+					_publicPortalVersion = StringBundler.concat(
+						releaseInfoVersionMajor, ".", releaseInfoVersionMinor,
+						".0");
 				}
 			}
 		}
@@ -287,8 +289,6 @@ public abstract class BaseFileCheck
 	private static final String _RELEASE_PROPERTIES_FILE_NAME =
 		"release.properties";
 
-	private static final Pattern _portalVersionPattern = Pattern.compile(
-		"(\\w+\\.\\w+)\\.\\w+");
 	private static final Pattern _privateBranchNamePattern = Pattern.compile(
 		"private.branch.name=(.*)\n");
 

@@ -107,6 +107,8 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry Test");
 
+		FormPortlet.submitSuccessfully();
+
 		Navigator.openURL();
 
 		PopulateObjectFormsConfiguration.openForm();

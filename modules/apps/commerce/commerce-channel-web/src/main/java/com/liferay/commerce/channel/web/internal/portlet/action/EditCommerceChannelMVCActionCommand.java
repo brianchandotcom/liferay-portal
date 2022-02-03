@@ -357,11 +357,9 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				commerceChannel.getGroupId(), "PRINT_ORDER_TEMPLATE_ERC");
 
-		if (fileEntryId == 0) {
-			if (currentTemplateFileEntry != null) {
-				_dlAppLocalService.deleteFileEntry(
-					currentTemplateFileEntry.getFileEntryId());
-			}
+		if ((fileEntryId == 0) && (currentTemplateFileEntry != null)) {
+			_dlAppLocalService.deleteFileEntry(
+				currentTemplateFileEntry.getFileEntryId());
 
 			return;
 		}
@@ -374,8 +372,6 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (currentTemplateFileEntry == null) {
-			_dlAppLocalService.deleteFileEntry(fileEntryId);
-
 			String fileName = newTemplateFileEntry.getFileName();
 
 			int extensionIndex = fileName.indexOf(
@@ -386,16 +382,21 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 				System.currentTimeMillis(), StringPool.PERIOD,
 				newTemplateFileEntry.getExtension());
 
-			_dlAppLocalService.addFileEntry(
-				"PRINT_ORDER_TEMPLATE_ERC", commerceChannel.getUserId(),
-				commerceChannel.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				newTemplateFileEntry.getFileName(),
-				newTemplateFileEntry.getMimeType(), formattedFileName,
-				StringPool.BLANK, StringPool.BLANK,
-				newTemplateFileEntry.getContentStream(),
-				newTemplateFileEntry.getSize(), null, null,
-				new ServiceContext());
+			try {
+				_dlAppLocalService.addFileEntry(
+					"PRINT_ORDER_TEMPLATE_ERC", commerceChannel.getUserId(),
+					commerceChannel.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					newTemplateFileEntry.getFileName(),
+					newTemplateFileEntry.getMimeType(), formattedFileName,
+					StringPool.BLANK, StringPool.BLANK,
+					newTemplateFileEntry.getContentStream(),
+					newTemplateFileEntry.getSize(), null, null,
+					new ServiceContext());
+			}
+			finally {
+				_dlAppLocalService.deleteFileEntry(fileEntryId);
+			}
 		}
 		else {
 			_dlAppLocalService.updateFileEntry(

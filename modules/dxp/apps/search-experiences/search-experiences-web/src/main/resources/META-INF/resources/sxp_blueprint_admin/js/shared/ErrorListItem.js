@@ -67,9 +67,13 @@ function getConfigurationFieldName(rootProperty) {
 	return configName ? CONFIGURATION_FIELD_NAME[configName] : '';
 }
 
-const prettyPrint = (value) => {
+function getTextCSSClass(severity) {
+	return 'text-' + (SEVERITY_DISPLAY_TYPE[severity] || 'danger');
+}
+
+function prettyPrint(value) {
 	return JSON.stringify(value, null, 2);
-};
+}
 
 /**
  * Displays an alert depending on the `error` object properties.
@@ -136,7 +140,10 @@ function ErrorListItem({error, onFocusSXPElement}) {
 							: Liferay.Language.get('collapse')
 					}
 					borderless
-					className="collapse-button text-danger"
+					className={getCN(
+						'collapse-button',
+						getTextCSSClass(error.severity)
+					)}
 					displayType="unstyled"
 					onClick={_handleCollapse}
 					small
@@ -159,7 +166,11 @@ function ErrorListItem({error, onFocusSXPElement}) {
 									</ClayLayout.Col>
 
 									<ClayLayout.Col size={9}>
-										<code>
+										<code
+											className={getTextCSSClass(
+												error.severity
+											)}
+										>
 											{typeof error[property] === 'object'
 												? prettyPrint(error[property])
 												: error[property]}

@@ -91,10 +91,10 @@ public class CommerceChannelItemSelectorViewDisplayContext
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
-			() -> _commerceChannelService.search(
+			() -> _commerceChannelService.getCommerceChannels(
 				cpRequestHelper.getCompanyId(), getKeywords(),
-				_searchContainer.getStart(), _searchContainer.getEnd(), null),
-			_commerceChannelService.searchCommerceChannelsCount(
+				_searchContainer.getStart(), _searchContainer.getEnd()),
+			_commerceChannelService.getCommerceChannelsCount(
 				cpRequestHelper.getCompanyId(), getKeywords()));
 		_searchContainer.setRowChecker(
 			new CommerceChannelItemSelectorChecker(

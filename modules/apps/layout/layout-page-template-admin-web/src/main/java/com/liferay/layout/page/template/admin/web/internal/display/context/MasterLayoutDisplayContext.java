@@ -119,16 +119,22 @@ public class MasterLayoutDisplayContext {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 				new ArrayList<>();
 
-			if (masterLayoutsSearchContainer.getStart() == 0) {
+			int start = masterLayoutsSearchContainer.getStart();
+			int end = masterLayoutsSearchContainer.getEnd();
+
+			if (start == 0) {
+				end -= 1;
 				layoutPageTemplateEntries.add(_addBlankMasterLayout());
+			}
+			else {
+				start -= 1;
 			}
 
 			layoutPageTemplateEntries.addAll(
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-					masterLayoutsSearchContainer.getStart(),
-					masterLayoutsSearchContainer.getEnd(),
+					start, end,
 					masterLayoutsSearchContainer.getOrderByComparator()));
 
 			int layoutPageTemplateEntriesCount =
@@ -138,13 +144,9 @@ public class MasterLayoutDisplayContext {
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_MASTER_LAYOUT);
 
-			if (masterLayoutsSearchContainer.getStart() == 0) {
-				layoutPageTemplateEntriesCount++;
-			}
-
 			masterLayoutsSearchContainer.setResultsAndTotal(
 				() -> layoutPageTemplateEntries,
-				layoutPageTemplateEntriesCount);
+				layoutPageTemplateEntriesCount + 1);
 		}
 
 		masterLayoutsSearchContainer.setRowChecker(

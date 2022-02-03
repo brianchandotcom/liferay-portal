@@ -9,56 +9,28 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
-import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {IconButton} from '../../../../common/components';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
-import {
-	getActivationDownloadKey,
-	getActivationLicenseKey,
-} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import downloadFromBlob from '../../../../common/utils/downloadFromBlob';
-import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
+import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {useCustomerPortal} from '../../context';
-import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../utils/constants';
-import {getPascalCase} from '../../utils/getPascalCase';
-
-const ACTIVATION_KEYS_LICENSE_FILTER_TYPES = {
-	active: ({expirationDate, startDate}) =>
-		new Date(startDate) < new Date() &&
-		new Date(expirationDate) > new Date(),
-	expired: ({expirationDate}) => new Date(expirationDate) < new Date(),
-	notActivated: ({startDate}) => new Date(startDate) > new Date(),
-};
-
-const ACTIVATION_STATUS = {
-	active: {
-		color: 'success',
-		id: 'active',
-		title: 'Active',
-	},
-	all: {
-		color: 'none',
-		id: 'all',
-		title: 'All',
-	},
-	expired: {
-		color: 'danger',
-		id: 'expired',
-		title: 'Expired',
-	},
-	notActivated: {
-		color: 'info',
-		id: 'notActivated',
-		title: 'Not Activated',
-	},
-};
-
-const VIRTUAL_CLUSTER = 'virtual-cluster';
+import {
+	ACTIVATION_KEYS_LICENSE_FILTER_TYPES,
+	ACTIVATION_STATUS,
+	COLUMNS,
+} from './utils/constants';
+import {
+	EnvironmentTypeColumn,
+	ExpirationDateColumn,
+	KeyTypeColumn,
+	StatusColumn,
+} from './utils/constants/columns-definitions';
+import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey';
+import {getGroupButtons} from './utils/getGroupButtons';
+import {getTooltipTitles} from './utils/getTooltipTitles';
 
 const MAX_ITEMS = 9999;
 const PAGE = 1;
@@ -67,7 +39,9 @@ const DXPActivationKeysTable = () => {
 	const [{assetsPath, project, sessionId}] = useCustomerPortal();
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 
-	const [activationKeys, setActivationKeys] = useState({data: []});
+	const [activationKeys, setActivationKeys] = useState([]);
+	const [statusBar, setStatusBar] = useState({});
+
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
 	const [totalCount, setTotalCount] = useState(5);
 
@@ -97,37 +71,35 @@ const DXPActivationKeysTable = () => {
 				sessionId
 			);
 			if (items) {
-				setActivationKeys({
-					data: items,
-					statusBar: {
-						activeTotalCount: items.filter((activationKey) =>
-							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.active(
-								activationKey
-							)
-						).length,
-						allTotalCount: items.length,
-						expiredTotalCount: items.filter((activationKey) =>
-							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(
-								activationKey
-							)
-						).length,
-						notActiveTotalCount: items.filter((activationKey) =>
-							ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
-								activationKey
-							)
-						).length,
-					},
+				setActivationKeys(items);
+				setStatusBar({
+					activeTotalCount: items.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.active(
+							activationKey
+						)
+					).length,
+					allTotalCount: items.length,
+					expiredTotalCount: items.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(
+							activationKey
+						)
+					).length,
+					notActiveTotalCount: items.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
+							activationKey
+						)
+					).length,
 				});
 			}
 
 			setIsLoadingActivationKeys(false);
 		};
 		fetchActivationKeysData();
-	}, [licenseKeyDownloadURL, project.accountKey, sessionId]);
+	}, [licenseKeyDownloadURL, project, sessionId]);
 
 	useEffect(() => {
-		if (activationKeys.data.length) {
-			const activationKeysFilterData = activationKeys.data.filter(
+		if (activationKeys.length) {
+			const activationKeysFilterData = activationKeys.filter(
 				(activationKey) =>
 					ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
 						? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar](
@@ -148,83 +120,6 @@ const DXPActivationKeysTable = () => {
 		}
 	}, [activationKeys, activePage, filterStatusBar, itemsPerPage]);
 
-	const columns = useMemo(
-		() => [
-			{
-				accessor: 'envName',
-				bodyClass: 'border-0',
-				expanded: true,
-				header: {
-					description: 'Description',
-					name: 'Environment Name',
-					styles: 'bg-transparent',
-				},
-			},
-			{
-				accessor: 'keyType',
-				bodyClass: 'border-0',
-				header: {
-					description: 'Host Name / Cluster Size',
-					name: 'Key Type',
-					noWrap: true,
-					styles: 'bg-transparent',
-				},
-			},
-			{
-				accessor: 'envType',
-				bodyClass: 'border-0',
-				header: {
-					name: 'Environment Type',
-					styles: 'bg-transparent text-neutral-10 font-weight-bold',
-				},
-			},
-			{
-				accessor: 'expirationDate',
-				bodyClass: 'border-0',
-				header: {
-					name: 'Exp. Date',
-					styles: 'bg-transparent text-neutral-10 font-weight-bold',
-				},
-				noWrap: true,
-			},
-			{
-				accessor: 'status',
-				align: 'center',
-				bodyClass: 'border-0',
-				header: {
-					name: 'Status',
-					styles: 'bg-transparent text-neutral-10 font-weight-bold',
-				},
-			},
-			{
-				accessor: 'download',
-				align: 'center',
-				bodyClass: 'border-0',
-				header: {
-					name: <ClayIcon symbol="download" />,
-					styles: 'bg-transparent text-neutral-10 font-weight-bold',
-				},
-			},
-		],
-		[]
-	);
-
-	const handleDownloadActivationLicenseKey = async (licenseKey) => {
-		const license = await getActivationDownloadKey(
-			licenseKey,
-			licenseKeyDownloadURL,
-			sessionId
-		);
-
-		if (license.status === STATUS_CODE.success) {
-			const contentType = license.headers.get('content-type');
-			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
-			const licenseBlob = await license.blob();
-
-			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
-		}
-	};
-
 	return (
 		<div>
 			<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between">
@@ -232,32 +127,22 @@ const DXPActivationKeysTable = () => {
 
 				<RoundedGroupButtons
 					groupButtons={[
-						{
-							label: `${ACTIVATION_STATUS.all.title} (${
-								activationKeys?.statusBar?.allTotalCount || 0
-							})`,
-							value: ACTIVATION_STATUS.all.id,
-						},
-						{
-							label: `${ACTIVATION_STATUS.active.title} (${
-								activationKeys?.statusBar?.activeTotalCount || 0
-							})`,
-							value: ACTIVATION_STATUS.active.id,
-						},
-						{
-							label: `${ACTIVATION_STATUS.notActivated.title} (${
-								activationKeys?.statusBar
-									?.notActiveTotalCount || 0
-							})`,
-							value: ACTIVATION_STATUS.notActivated.id,
-						},
-						{
-							label: `${ACTIVATION_STATUS.expired.title} (${
-								activationKeys?.statusBar?.expiredTotalCount ||
-								0
-							})`,
-							value: ACTIVATION_STATUS.expired.id,
-						},
+						getGroupButtons(
+							ACTIVATION_STATUS.all,
+							statusBar?.allTotalCount
+						),
+						getGroupButtons(
+							ACTIVATION_STATUS.active,
+							statusBar?.activeTotalCount
+						),
+						getGroupButtons(
+							ACTIVATION_STATUS.notActivated,
+							statusBar?.notActiveTotalCount
+						),
+						getGroupButtons(
+							ACTIVATION_STATUS.expired,
+							statusBar?.expiredTotalCount
+						),
 					]}
 					handleOnChange={(value) => {
 						setFilterStatusBar(value);
@@ -267,29 +152,13 @@ const DXPActivationKeysTable = () => {
 
 			<ClayTooltipProvider
 				contentRenderer={(props) => {
-					const activationNames = props.title.split(',');
-
-					if (activationNames.length) {
-						return (
-							<div>
-								<p className="font-weight-bold m-0">
-									{activationNames[0]}
-								</p>
-
-								<p className="font-weight-normal m-0 text-paragraph-sm">
-									{activationNames[1]}
-								</p>
-							</div>
-						);
-					}
-
-					return activationNames[0];
+					return getTooltipTitles(props);
 				}}
 				delay={100}
 			>
 				<Table
 					className="border-0 cp-dxp-activation-key-table mt-5"
-					columns={columns}
+					columns={COLUMNS}
 					hasCheckbox
 					hasPagination
 					isLoading={isLoadingActivationKeys}
@@ -317,8 +186,10 @@ const DXPActivationKeysTable = () => {
 							<IconButton
 								displayType="null"
 								onClick={() =>
-									handleDownloadActivationLicenseKey(
-										activationKey.id
+									downloadActivationLicenseKey(
+										activationKey.id,
+										licenseKeyDownloadURL,
+										sessionId
 									)
 								}
 								small
@@ -341,120 +212,23 @@ const DXPActivationKeysTable = () => {
 								</p>
 							</div>
 						),
-						envType: (() => {
-							const productName = getPascalCase(
-								activationKey.licenseEntryType
-							)
-								.split('-')
-								.join(' ');
-
-							const productDescription = activationKey.complimentary
-								? 'Complimentary'
-								: 'Subscription';
-
-							return (
-								<div>
-									<p className="font-weight-bold m-0 text-neutral-10">
-										{productName.replace(
-											'Production',
-											'Prod'
-										)}
-									</p>
-
-									<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">
-										{productDescription}
-									</p>
-								</div>
-							);
-						})(),
-						expirationDate: (() => {
-							const unlimitedLicenseDate = new Date().setFullYear(
-								new Date().getFullYear() + 100
-							);
-							if (
-								new Date(activationKey.expirationDate) >=
-								new Date(unlimitedLicenseDate)
-							) {
-								return (
-									<p
-										className="cp-dxp-activation-key-cell-small font-weight-bold m-0 text-neutral-10"
-										title={['This key does not expire']}
-									>
-										DNE
-									</p>
-								);
-							}
-
-							return (
-								<p className="font-weight-bold m-0 text-neutral-10">
-									{getCurrentEndDate(
-										activationKey.expirationDate
-									)}
-								</p>
-							);
-						})(),
-						keyType: (() => {
-							const hasVirtualCluster =
-								activationKey.licenseEntryType ===
-								VIRTUAL_CLUSTER;
-
-							return (
-								<div className="align-items-start d-flex">
-									{hasVirtualCluster && (
-										<img
-											className="ml-n4 mr-1"
-											src={`${assetsPath}/assets/virtual_cluster.svg`}
-										/>
-									)}
-
-									<div>
-										<p className="font-weight-bold m-0 text-neutral-10">
-											{hasVirtualCluster
-												? 'Virtual Cluster'
-												: 'On-Premise'}
-										</p>
-
-										<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-											{hasVirtualCluster
-												? `${activationKey.maxClusterNodes} Cluster Nodes (Keys)`
-												: activationKey.hostName || '-'}
-										</p>
-									</div>
-								</div>
-							);
-						})(),
-						status: (() => {
-							let activationStatus = ACTIVATION_STATUS.active;
-
-							if (
-								new Date() < new Date(activationKey.startDate)
-							) {
-								activationStatus =
-									ACTIVATION_STATUS.notActivated;
-							}
-							else if (
-								new Date() >
-								new Date(activationKey.expirationDate)
-							) {
-								activationStatus = ACTIVATION_STATUS.expired;
-							}
-
-							return (
-								<div
-									className="w-100"
-									title={[activationStatus.title]}
-								>
-									<ClaySticker
-										className="bg-transparent"
-										displayType={activationStatus.color}
-										shape="circle"
-										size="sm"
-									>
-										<ClayIcon symbol="circle" />
-									</ClaySticker>
-								</div>
-							);
-						})(),
+						envType: (
+							<EnvironmentTypeColumn
+								activationKey={activationKey}
+							/>
+						),
+						expirationDate: (
+							<ExpirationDateColumn
+								activationKey={activationKey}
+							/>
+						),
+						keyType: (
+							<KeyTypeColumn
+								activationKey={activationKey}
+								assetsPath={assetsPath}
+							/>
+						),
+						status: <StatusColumn activationKey={activationKey} />,
 					}))}
 				/>
 			</ClayTooltipProvider>

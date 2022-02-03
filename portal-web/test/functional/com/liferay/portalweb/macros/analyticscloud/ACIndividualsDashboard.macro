@@ -273,4 +273,51 @@ definition {
 			value1 = "${activitiesNumber}");
 	}
 
+	macro viewActivitiesOnGraph {
+		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		Click(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+
+		MouseOver(
+			key_cardTitle = "Individual Events",
+			locator1 = "ACCards#CARD_TITLE");
+
+		var list1 = ListUtil.newListFromString("${typeList}");
+		var list2 = ListUtil.newListFromString("${valueList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var type = ListUtil.get("${list1}", "${i}");
+			var value = ListUtil.get("${list2}", "${i}");
+
+			while (IsElementNotPresent(key_value = "${value}", key_visitors = "${type}", locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				Click(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+
+				MouseOver(
+					key_cardTitle = "Individual Events",
+					locator1 = "ACCards#CARD_TITLE");
+			}
+
+			AssertElementPresent(
+				key_value = "${value}",
+				key_visitors = "${type}",
+				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
 }

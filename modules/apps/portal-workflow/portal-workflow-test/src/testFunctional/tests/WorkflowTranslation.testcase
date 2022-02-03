@@ -82,8 +82,6 @@ definition {
 			language = "pt-BR",
 			status = "Approved",
 			title = "Translation of Web Content Title to pt-BR");
-
-			
 	}
 
 	@description = "Verify that a notification is sent when the Translation is rejected"

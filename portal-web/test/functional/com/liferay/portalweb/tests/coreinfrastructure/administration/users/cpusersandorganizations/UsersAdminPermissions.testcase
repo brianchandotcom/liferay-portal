@@ -122,4 +122,75 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
 	}
 
+	@description = "This test automates LPS-134264 and asserts that a user with Update User permissions cannot view the sites another user is a member of."
+	@priority = "4"
+	test SitesDoNotDisplayForUsersWithOnlyUpdateUserPermissions {
+		task ("Given two users are created") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+		}
+
+		task ("And given the first user is assigned to a new regular role with permissions to update and view users") {
+			JSONRole.addRegularRole(roleTitle = "New Regular Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com");
+
+			for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceAction}",
+					resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+					roleTitle = "New Regular Role");
+			}
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceAction}",
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "New Regular Role");
+			}
+		}
+
+		task ("When logged in as the first user with update permissions and viewing the sites of the second user") {
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn2");
+
+			UserNavigator.gotoMemberships();
+
+			Click(
+				locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
+				value1 = "SELECT");
+		}
+
+		task ("Then no sites should be displayed") {
+			SelectFrame(
+				key_title = "Select Site",
+				locator1 = "IFrame#MODAL_ANY");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No sites were found.");
+		}
+	}
+
 }

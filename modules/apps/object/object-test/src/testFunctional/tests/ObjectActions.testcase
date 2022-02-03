@@ -186,11 +186,25 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotLeaveActionWhenBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145712 CannotLeaveActionWhenBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080");
+
+		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
 
 	}
 

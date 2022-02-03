@@ -666,12 +666,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		boolean visible = false;
-
-		if (objectEntry.isApproved()) {
-			visible = true;
-		}
-
 		String title = StringPool.BLANK;
 
 		try {
@@ -688,7 +682,8 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			visible, null, null, null, null, ContentTypes.TEXT_PLAIN, title,
+			objectEntry.isApproved(), null, null, null, null,
+			ContentTypes.TEXT_PLAIN, title,
 			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
 			0, priority);
 

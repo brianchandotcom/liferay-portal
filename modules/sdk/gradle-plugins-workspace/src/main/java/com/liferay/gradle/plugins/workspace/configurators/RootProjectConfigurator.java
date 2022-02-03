@@ -1322,24 +1322,24 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						if (Objects.nonNull(productInfo)) {
 							verifyProductTask.setBundleUrl(
 								productInfo.getBundleUrl());
-							verifyProductTask.setTargetPlatformVersion(
-								productInfo.getTargetPlatformVersion());
 							verifyProductTask.setDockerImageLiferay(
 								productInfo.getLiferayDockerImage());
+							verifyProductTask.setTargetPlatformVersion(
+								productInfo.getTargetPlatformVersion());
 						}
 						else {
 							throw new GradleException(
-								"please check setting of product key in " +
-									"liferay workspace ");
+								"Please check the product key in Liferay " +
+									"workspace");
 						}
 					}
 					else {
 						verifyProductTask.setBundleUrl(
 							workspaceExtension.getBundleUrl());
-						verifyProductTask.setTargetPlatformVersion(
-							workspaceExtension.getTargetPlatformVersion());
 						verifyProductTask.setDockerImageLiferay(
 							workspaceExtension.getDockerImageLiferay());
+						verifyProductTask.setTargetPlatformVersion(
+							workspaceExtension.getTargetPlatformVersion());
 					}
 				}
 

@@ -40,8 +40,13 @@ const getStatus = (slaCurrent, slaFuture) => {
 
 const getKoroneikiFilter = (accounts) => {
 	return accounts?.reduce(
-		(acc, {externalReferenceCode}, index, {length: totalAccounts}) =>
-			`${acc}accountKey eq '${externalReferenceCode}'${
+		(
+			koroneikiFilterAccumulator,
+			{externalReferenceCode},
+			index,
+			{length: totalAccounts}
+		) =>
+			`${koroneikiFilterAccumulator}accountKey eq '${externalReferenceCode}'${
 				index + 1 < totalAccounts ? ' or ' : ''
 			}`,
 		''

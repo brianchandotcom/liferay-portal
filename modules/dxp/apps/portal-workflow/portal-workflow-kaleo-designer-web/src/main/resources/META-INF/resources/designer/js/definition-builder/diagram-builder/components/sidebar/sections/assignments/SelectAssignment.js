@@ -47,7 +47,7 @@ const options = [
 	},
 ];
 
-const AssignmentSectionComponents = {
+const assignmentSectionComponents = {
 	assetCreator: AssetCreator,
 	resourceActions: ResourceActions,
 	role: Role,
@@ -60,7 +60,7 @@ const SelectAssignment = (props) => {
 	const [section, setSection] = useState('');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
-	const AssignmentSectionComponent = AssignmentSectionComponents[section];
+	const AssignmentSectionComponent = assignmentSectionComponents[section];
 
 	return (
 		<>

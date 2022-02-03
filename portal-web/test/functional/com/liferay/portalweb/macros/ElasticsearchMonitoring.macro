@@ -19,6 +19,14 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ELASTICSEARCH_MONITORING");
 
+		SetWindowSize(value1 = "500,500");
+
+		Click(
+			ariaLabel = "Closes this modal window",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		SetWindowSize(value1 = "800,800");
+
 		AssertTextPresent(
 			locator1 = "ElasticsearchMonitoring#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");

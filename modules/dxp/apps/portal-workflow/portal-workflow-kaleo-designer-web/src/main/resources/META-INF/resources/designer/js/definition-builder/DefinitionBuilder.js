@@ -19,7 +19,7 @@ import {defaultNodes} from './diagram-builder/components/nodes/utils';
 import UpperToolbar from './shared/components/toolbar/UpperToolbar';
 import SourceBuilder from './source-builder/SourceBuilder';
 
-export default function (props) {
+export default function DefinitionBuilder(props) {
 	const [active, setActive] = useState(true);
 	const [currentEditor, setCurrentEditor] = useState(null);
 	const [definitionDescription, setDefinitionDescription] = useState('');

@@ -163,6 +163,10 @@ public class ObjectEntryInfoItemFormProvider
 				}
 			}
 		).infoFieldSetEntry(
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				"com.liferay.object.model.ObjectDefinition#" +
+					objectDefinitionId)
+		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
@@ -245,10 +249,6 @@ public class ObjectEntryInfoItemFormProvider
 						).build());
 				}
 			}
-		).infoFieldSetEntry(
-			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				"com.liferay.object.model.ObjectDefinition#" +
-					objectDefinitionId)
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(

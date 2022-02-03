@@ -1706,6 +1706,62 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
 	}
 
+	test ViewCollapsibleAddedElements {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Proximity");
+
+		Click(
+			ariaLabel = "Collapse",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		AssertElementNotPresent(
+			elementName = "Boost Proximity",
+			fieldName = "Field",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		Click(
+			ariaLabel = "Expand",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		AssertElementPresent(
+			elementName = "Boost Proximity",
+			fieldName = "Field",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.addElement(element = "Boost Freshness");
+
+		Click(
+			key_text = "Collapse All",
+			locator1 = "Button#ANY");
+
+		AssertElementNotPresent(
+			elementName = "",
+			fieldName = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			ariaLabel = "Collapse",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		Click(
+			key_text = "Expand All",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			elementName = "",
+			fieldName = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			ariaLabel = "Expand",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+	}
+
 	test ViewDefaultElement {
 		Blueprints.openBlueprintsAdmin();
 

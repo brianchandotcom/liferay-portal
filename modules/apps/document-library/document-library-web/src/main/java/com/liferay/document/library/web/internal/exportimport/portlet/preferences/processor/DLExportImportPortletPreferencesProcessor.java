@@ -295,30 +295,28 @@ public class DLExportImportPortletPreferencesProcessor
 			List<Element> folderElements = foldersElement.elements();
 
 			if (!folderElements.isEmpty()) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, folderElements.get(0));
-
-				Map<Long, Long> folderIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class + ".folderIdsAndRepositoryEntryIds");
-
-				rootFolderId = MapUtil.getLong(
-					folderIds, rootFolderId, rootFolderId);
-
 				try {
-					portletPreferences.setValue(
-						"rootFolderId", String.valueOf(rootFolderId));
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, folderElements.get(0));
 
-					Folder folder = _dlAppLocalService.getFolder(rootFolderId);
+					Map<Long, Long> folderIds =
+						(Map<Long, Long>)
+							portletDataContext.getNewPrimaryKeysMap(
+								Folder.class +
+									".folderIdsAndRepositoryEntryIds");
+
+					long importedRootFolderId = MapUtil.getLong(
+						folderIds, rootFolderId, rootFolderId);
+
+					portletPreferences.setValue(
+						"rootFolderId", String.valueOf(importedRootFolderId));
+
+					Folder folder = _getFolder(
+						importedRootFolderId, portletDataContext);
 
 					portletPreferences.setValue(
 						"selectedRepositoryId",
 						String.valueOf(folder.getRepositoryId()));
-				}
-				catch (PortalException portalException) {
-					throw new PortletDataException(
-						"Invalid root folder ID " + rootFolderId,
-						portalException);
 				}
 				catch (ReadOnlyException readOnlyException) {
 					throw new PortletDataException(
@@ -364,69 +362,67 @@ public class DLExportImportPortletPreferencesProcessor
 			throw portletDataException;
 		}
 
-		String namespace = _dlPortletDataHandler.getNamespace();
+		if (portletDataContext.getBooleanParameter(
+				_dlPortletDataHandler.getNamespace(), "folders")) {
 
-		if (portletDataContext.getBooleanParameter(namespace, "folders")) {
 			Element foldersElement =
 				portletDataContext.getImportDataGroupElement(DLFolder.class);
 
-			List<Element> folderElements = foldersElement.elements();
-
-			for (Element folderElement : folderElements) {
+			for (Element folderElement : foldersElement.elements()) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, folderElement);
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(namespace, "documents")) {
+		if (portletDataContext.getBooleanParameter(
+				_dlPortletDataHandler.getNamespace(), "documents")) {
+
 			Element fileEntriesElement =
 				portletDataContext.getImportDataGroupElement(DLFileEntry.class);
 
-			List<Element> fileEntryElements = fileEntriesElement.elements();
-
-			for (Element fileEntryElement : fileEntryElements) {
+			for (Element fileEntryElement : fileEntriesElement.elements()) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileEntryElement);
 			}
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				namespace, "document-types")) {
+				_dlPortletDataHandler.getNamespace(), "document-types")) {
 
 			Element fileEntryTypesElement =
 				portletDataContext.getImportDataGroupElement(
 					DLFileEntryType.class);
 
-			List<Element> fileEntryTypeElements =
-				fileEntryTypesElement.elements();
+			for (Element fileEntryTypeElement :
+					fileEntryTypesElement.elements()) {
 
-			for (Element fileEntryTypeElement : fileEntryTypeElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileEntryTypeElement);
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(namespace, "repositories")) {
+		if (portletDataContext.getBooleanParameter(
+				_dlPortletDataHandler.getNamespace(), "repositories")) {
+
 			Element repositoriesElement =
 				portletDataContext.getImportDataGroupElement(Repository.class);
 
-			List<Element> repositoryElements = repositoriesElement.elements();
-
-			for (Element repositoryElement : repositoryElements) {
+			for (Element repositoryElement : repositoriesElement.elements()) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, repositoryElement);
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(namespace, "shortcuts")) {
+		if (portletDataContext.getBooleanParameter(
+				_dlPortletDataHandler.getNamespace(), "shortcuts")) {
+
 			Element fileShortcutsElement =
 				portletDataContext.getImportDataGroupElement(
 					DLFileShortcut.class);
 
-			List<Element> fileShortcutElements =
-				fileShortcutsElement.elements();
+			for (Element fileShortcutElement :
+					fileShortcutsElement.elements()) {
 
-			for (Element fileShortcutElement : fileShortcutElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileShortcutElement);
 			}

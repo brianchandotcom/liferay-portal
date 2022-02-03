@@ -24,10 +24,6 @@ import {getAssignmentType} from './utils';
 
 const options = [
 	{
-		label: '',
-		value: '',
-	},
-	{
 		assignmentType: 'assetCreator',
 		label: Liferay.Language.get('asset-creator'),
 	},
@@ -68,7 +64,7 @@ const SelectAssignment = (props) => {
 
 	const assignmentType = getAssignmentType(assignments);
 
-	const [section, setSection] = useState(assignmentType || '');
+	const [section, setSection] = useState(assignmentType || 'assetCreator');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
 	const AssignmentSectionComponent = AssignmentSectionComponents[section];

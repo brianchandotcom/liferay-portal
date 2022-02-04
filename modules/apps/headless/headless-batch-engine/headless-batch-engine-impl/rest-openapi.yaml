@@ -56,6 +56,21 @@ components:
                     minimum: 0
                     type: integer
             type: object
+        FailedItem:
+            properties:
+                item:
+                    description:
+                        The item which failed to be imported.
+                    type: string
+                itemIndex:
+                    description:
+                        Position of the item in the import file. For CSV file it will represent a line number, for JSON
+                        file it will represent an array index etc.
+                    type: integer
+                message:
+                    description:
+                        Message describing the reason of import failure.
+                    type: string
         ImportTask:
             # @review
             properties:
@@ -86,6 +101,10 @@ components:
                     enum: [COMPLETED, FAILED, INITIAL, STARTED]
                     example: INITIALIZED
                     type: string
+                failedItems:
+                    items:
+                        $ref: "#/components/schemas/FailedItem"
+                    type: array
                 id:
                     description:
                         The task's ID.
@@ -93,6 +112,11 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                importStrategy:
+                    description:
+                        Defines if import task will fail when error occurs or continue importing rest of the items.
+                    enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                    type: string
                 operation:
                     description:
                         The operation of import task.
@@ -228,6 +252,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: importStrategy
+                  schema:
+                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                      type: string
+                - in: query
                   name: taskItemDelegateName
                   schema:
                       type: string
@@ -283,6 +312,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: importStrategy
+                  schema:
+                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                      type: string
+                - in: query
                   name: taskItemDelegateName
                   schema:
                       type: string
@@ -332,6 +366,11 @@ paths:
                 - in: query
                   name: callbackURL
                   schema:
+                      type: string
+                - in: query
+                  name: importStrategy
+                  schema:
+                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
                       type: string
                 - in: query
                   name: taskItemDelegateName

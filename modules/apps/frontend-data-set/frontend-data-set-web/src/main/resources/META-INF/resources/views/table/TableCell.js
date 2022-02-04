@@ -77,10 +77,19 @@ function TableCell({
 }) {
 	let dataRenderer = DefaultRenderer;
 
-	const {inlineEditingSettings} = useContext(DataSetContext);
+	const {customDataRenderers, inlineEditingSettings} = useContext(
+		DataSetContext
+	);
 
-	if (view.contentRenderer) {
-		dataRenderer = getDataRendererById(view.contentRenderer);
+	const contentRenderer = view.contentRenderer;
+
+	if (contentRenderer) {
+		if (customDataRenderers && customDataRenderers[contentRenderer]) {
+			dataRenderer = customDataRenderers[contentRenderer];
+		}
+		else {
+			dataRenderer = getDataRendererById(view.contentRenderer);
+		}
 	}
 
 	if (view.contentRendererModuleURL) {

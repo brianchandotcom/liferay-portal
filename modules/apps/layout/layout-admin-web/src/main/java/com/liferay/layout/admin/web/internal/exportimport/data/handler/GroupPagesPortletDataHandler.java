@@ -88,7 +88,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(LayoutPageTemplateEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "page-template-collections", true, true, null,
+				NAMESPACE, "page-template-sets", true, true, null,
 				LayoutPageTemplateCollection.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-templates", true, false, null,

@@ -182,9 +182,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 								error && error.layoutPageTemplateCollectionId
 							}
 							id={`${config.portletNamespace}layoutPageTemplateCollectionId`}
-							name={Liferay.Language.get(
-								'page-template-collection'
-							)}
+							name={Liferay.Language.get('page-template-set')}
 						>
 							<select
 								className="form-control"

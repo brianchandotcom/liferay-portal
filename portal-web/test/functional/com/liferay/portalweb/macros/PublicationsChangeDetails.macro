@@ -325,9 +325,9 @@ definition {
 			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
 
 			AssertTextEquals.assertPartialText(
-				key_displayItem = "${publicationName}",
+				key_displayItem = "Publication",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM",
-				value1 = "${publicationName}");
+				value1 = "Publication");
 
 			if (isSet(fieldValueInPublication)) {
 				var key_fieldValueInPublication = "${fieldValueInPublication}";

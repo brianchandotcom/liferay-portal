@@ -57,6 +57,12 @@ export function VariationPreview({
 			return;
 		}
 
+		const loadingIndicator = document.createElement('span');
+		loadingIndicator.setAttribute('aria-hidden', 'true');
+		loadingIndicator.className = 'flex-grow-0 loading-animation m-0';
+
+		element.appendChild(loadingIndicator);
+
 		fetch(previewURL, {
 			body: objectToFormData({
 				[`_${namespace}_configurationValues`]: JSON.stringify(

@@ -17,7 +17,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,9 +25,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectStyleBookEntryDisplayContext {
 
 	public SelectStyleBookEntryDisplayContext(
-		HttpServletRequest httpServletRequest, Layout selLayout,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_selLayout = selLayout;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -63,69 +61,29 @@ public class SelectStyleBookEntryDisplayContext {
 		).build();
 	}
 
-	public StyleBookEntry getDefaultStyleBookEntry() {
-		if (_defaultStyleBookEntry != null) {
-			return _defaultStyleBookEntry;
-		}
-
-		_defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
-				_selLayout);
-
-		return _defaultStyleBookEntry;
-	}
-
-	public String getDefaultStyleBookLabel() {
-		StyleBookEntry defaultStyleBookEntry = getDefaultStyleBookEntry();
-
-		if (defaultStyleBookEntry == null) {
-			return LanguageUtil.get(_httpServletRequest, "styles-from-theme");
-		}
-
-		if (hasEditableMasterLayout() &&
-			(_selLayout.getMasterLayoutPlid() > 0)) {
-
-			return LanguageUtil.get(_httpServletRequest, "styles-from-master");
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
-	}
-
 	public List<StyleBookEntry> getStyleBookEntries() {
-		return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-			StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StyleBookEntryNameComparator(true));
+		List<StyleBookEntry> styleBookEntries = new ArrayList<>();
+
+		StyleBookEntry styleFromThemeStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.create();
+
+		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
+		styleFromThemeStyleBookEntry.setName(
+			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
+
+		styleBookEntries.add(styleFromThemeStyleBookEntry);
+
+		styleBookEntries.addAll(
+			StyleBookEntryLocalServiceUtil.getStyleBookEntries(
+				StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StyleBookEntryNameComparator(true)));
+
+		return styleBookEntries;
 	}
 
-	public long getStyleBookEntryId() {
-		if (_styleBookEntryId != null) {
-			return _styleBookEntryId;
-		}
-
-		_styleBookEntryId = ParamUtil.getLong(
-			_httpServletRequest, "styleBookEntryId");
-
-		return _styleBookEntryId;
-	}
-
-	public boolean hasEditableMasterLayout() {
-		if (_hasEditableMasterLayout != null) {
-			return _hasEditableMasterLayout;
-		}
-
-		_hasEditableMasterLayout = ParamUtil.getBoolean(
-			_httpServletRequest, "editableMasterLayout");
-
-		return _hasEditableMasterLayout;
-	}
-
-	private StyleBookEntry _defaultStyleBookEntry;
-	private Boolean _hasEditableMasterLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final Layout _selLayout;
-	private Long _styleBookEntryId;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -17,29 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectStyleBookEntryDisplayContext selectStyleBookEntryDisplayContext = new SelectStyleBookEntryDisplayContext(request, layoutsAdminDisplayContext.getSelLayout(), liferayPortletResponse);
-
-List<StyleBookEntry> styleBookEntries = selectStyleBookEntryDisplayContext.getStyleBookEntries();
+SelectStyleBookEntryDisplayContext selectStyleBookEntryDisplayContext = new SelectStyleBookEntryDisplayContext(request, liferayPortletResponse);
 %>
 
 <aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<ul class="card-page card-page-equal-height">
-		<li class="card-page-item card-page-item-asset">
-			<div class="form-check form-check-card">
-				<clay:vertical-card
-					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(selectStyleBookEntryDisplayContext.getDefaultStyleBookLabel(), selectStyleBookEntryDisplayContext.getDefaultStyleBookEntry(), renderRequest, Objects.equals(selectStyleBookEntryDisplayContext.getStyleBookEntryId(), 0L)) %>"
-				/>
-			</div>
-		</li>
 
 		<%
-		for (StyleBookEntry styleBookEntry : styleBookEntries) {
+		for (StyleBookEntry styleBookEntry : selectStyleBookEntryDisplayContext.getStyleBookEntries()) {
 		%>
 
 			<li class="card-page-item card-page-item-asset">
 				<div class="form-check form-check-card">
 					<clay:vertical-card
-						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest, Objects.equals(styleBookEntry.getStyleBookEntryId(), selectStyleBookEntryDisplayContext.getStyleBookEntryId())) %>"
+						verticalCard="<%= new SelectStylebookLayoutVerticalCard(renderRequest, layoutsAdminDisplayContext.getSelLayout(), styleBookEntry) %>"
 					/>
 				</div>
 			</li>

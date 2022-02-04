@@ -12,12 +12,12 @@
 import SlaCard from '../SlaCard';
 import ProjectContactsSkeleton from './Skeleton';
 
-const ProjectContacts = ({contact}) => {
+const ProjectContacts = ({contact, project}) => {
 	return (
 		<div className="container cp-project-contacs-container mb-5 mx-0">
 			<div className="row">
 				<div className="col-5 pb-8">
-					<SlaCard accountKey={contact.accountKey} />
+					<SlaCard project={project} />
 				</div>
 
 				<div className="col-7">

@@ -31,16 +31,17 @@ const SlaCardLayout = ({
 	return (
 		<div
 			className={classNames('align-items-center d-flex', {
-				'sla-card': slaLabel !== slaSelected,
-				'sla-card-active': slaLabel === slaSelected,
+				'cp-sla-card': slaLabel !== slaSelected,
+				'cp-sla-card-active': slaLabel === slaSelected,
 			})}
 		>
 			<ClayCard
 				className={classNames('m-0 p-3 rounded-lg', {
-					'bg-brand-secondary-lighten-6 sla-gold':
+					'bg-brand-secondary-lighten-6 cp-sla-gold':
 						slaTitle === SLA_TITLE.gold,
-					'bg-neutral-0 sla-limited': slaTitle === SLA_TITLE.limited,
-					'sla-platinum': slaTitle === SLA_TITLE.platinum,
+					'bg-neutral-0 cp-sla-limited':
+						slaTitle === SLA_TITLE.limited,
+					'cp-sla-platinum': slaTitle === SLA_TITLE.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
@@ -60,7 +61,7 @@ const SlaCardLayout = ({
 						<ClayCard.Caption>
 							<ClayLabel
 								className={classNames(
-									'mr-0 p-0 text-small-caps sla-label',
+									'mr-0 p-0 text-small-caps cp-sla-label',
 									{
 										'label-borderless-dark text-neutral-7':
 											slaTitle === SLA_TITLE.platinum,

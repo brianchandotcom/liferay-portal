@@ -12,96 +12,77 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import {useCustomerPortal} from '../../context';
-import SlaCardLayout from './Inputs';
+import {FORMAT_DATE} from '../../../../common/utils/constants/slaCardDate';
+import {SLA_NAMES} from '../../../../common/utils/constants/slaCardNames';
+import SlaCardLayout from './Layout';
 
-const SlaCard = () => {
+const SlaCard = ({project}) => {
 	const [slaData, setSlaData] = useState();
 	const [slaSelected, setSlaSelected] = useState('');
-	const [{project}] = useCustomerPortal();
+	const SLA_DATA = {};
 
 	useEffect(() => {
 		if (project) {
-			const formatDate = {
-				day: '2-digit',
-				month: '2-digit',
-				year: 'numeric',
-			};
 			const slaFiltedData = [];
-			const SLA_NAMES = ['Current', 'Expired', 'Future'];
-
-			const slaPathLabel = {
-				current: SLA_NAMES[0].toUpperCase(),
-				expired: SLA_NAMES[1].toUpperCase(),
-				future: SLA_NAMES[2].toUpperCase(),
-			};
-
 			const slaNewDate = (slaDate) => {
-				return new Date(project[slaDate])?.toLocaleDateString(
+				return new Date(slaDate)?.toLocaleDateString(
 					'en-US',
-					formatDate
+					FORMAT_DATE
 				);
 			};
-			const slaRawData = SLA_NAMES.map((slaName) => {
-				const slaFullTitle = 'sla' + slaName;
-				if (project[slaFullTitle]) {
-					return {
-						slaDateEnd: `${slaNewDate(slaFullTitle + 'EndDate')}`,
-						slaDateStart: `${slaNewDate(
-							slaFullTitle + 'StartDate'
-						)}`,
-						slaLabel: slaName?.toUpperCase(),
-						slaTitle: project[slaFullTitle]?.split(' ')[0],
-					};
-				}
-			}).filter((sla) => sla);
 
-			const slaRaw = {
-				firstSlaRaw: slaRawData[0],
-				secondSlaRaw: slaRawData[1],
-				thirdSlaRaw: slaRawData[2],
+			const slaRawData = {
+				current: {
+					slaDateEnd: slaNewDate(project.slaCurrentEndDate),
+					slaDateStart: slaNewDate(project.slaCurrentStartDate),
+					slaLabel: SLA_NAMES.current.toUpperCase(),
+					slaTitle: project.slaCurrent?.split(' ')[0],
+				},
+				expired: {
+					slaDateEnd: slaNewDate(project.slaExpiredEndDate),
+					slaDateStart: slaNewDate(project.slaExpiredStartDate),
+					slaLabel: SLA_NAMES.expired.toUpperCase(),
+					slaTitle: project.slaExpired?.split(' ')[0],
+				},
+				future: {
+					slaDateEnd: slaNewDate(project.slaFutureEndDate),
+					slaDateStart: slaNewDate(project.slaFutureStartDate),
+					slaLabel: SLA_NAMES.future.toUpperCase(),
+					slaTitle: project.slaFuture?.split(' ')[0],
+				},
 			};
-			if (
-				slaRaw.firstSlaRaw?.slaLabel === slaPathLabel.current &&
-				(slaRaw.secondSlaRaw?.slaTitle ||
-					slaRaw.thirdSlaRaw?.slaTitle) ===
-					slaRaw.firstSlaRaw?.slaTitle
-			) {
-				slaFiltedData.push(slaRaw.firstSlaRaw);
 
-				if (
-					slaFiltedData[0].slaTitle ===
-						slaRaw.secondSlaRaw.slaTitle &&
-					slaRaw.secondSlaRaw.slaLabel === slaPathLabel.expired
-				) {
-					slaFiltedData[0].slaDateStart =
-						slaRaw.secondSlaRaw.slaDateStart;
-				}
-				if (
-					slaFiltedData[0].slaTitle ===
-						slaRaw.secondSlaRaw.slaTitle &&
-					slaRaw.secondSlaRaw.slaLabel === slaPathLabel.future
-				) {
-					slaFiltedData[0].slaDateEnd =
-						slaRaw.secondSlaRaw.slaDateEnd;
-				}
-				if (slaRaw.thirdSlaRaw) {
-					if (
-						slaRaw.thirdSlaRaw.slaTitle ===
-						slaFiltedData[0].slaTitle
-					) {
-						slaFiltedData[0].slaDateEnd =
-							slaRaw.thirdSlaRaw.slaDateEnd;
-					} else {
-						slaFiltedData.push(slaRaw.thirdSlaRaw);
-					}
-				}
+			if (
+				slaRawData.current.slaTitle === slaRawData.expired.slaTitle &&
+				slaRawData.current.slaTitle === slaRawData.future.slaTitle
+			) {
+				slaRawData.current.slaDateStart =
+					slaRawData.expired.slaDateStart;
+				slaRawData.current.slaDateEnd = slaRawData.future.slaDateEnd;
+				slaFiltedData.push(slaRawData.current);
+			} else if (
+				slaRawData.current.slaTitle === slaRawData.expired.slaTitle
+			) {
+				slaRawData.current.slaDateStart =
+					slaRawData.expired.slaDateStart;
+				slaFiltedData.push(slaRawData.current);
+				slaFiltedData.push(slaRawData.future);
+			} else if (
+				slaRawData.current.slaTitle === slaRawData.future.slaTitle
+			) {
+				slaRawData.current.slaDateEnd = slaRawData.future.slaDateEnd;
+				slaFiltedData.push(slaRawData.current);
+				slaFiltedData.push(slaRawData.expired);
 			} else {
-				slaRawData.map((sla) => slaFiltedData.push(sla));
+				slaFiltedData.push(slaRawData.current);
+				slaFiltedData.push(slaRawData.expired);
+				slaFiltedData.push(slaRawData.future);
 			}
-			if (slaFiltedData.length > 0) {
-				setSlaData(slaFiltedData);
-			}
+
+			setSlaData(slaFiltedData.filter((sla) => sla.slaTitle));
+
+			// eslint-disable-next-line no-console
+			console.log(slaFiltedData);
 
 			if (!slaSelected) {
 				const slaSelectedCard = slaFiltedData[0]?.slaLabel;
@@ -110,32 +91,39 @@ const SlaCard = () => {
 		}
 	}, [project, slaSelected]);
 
+	if (slaData) {
+		SLA_DATA.firstData = slaData[0];
+		SLA_DATA.secondData = slaData[1];
+		SLA_DATA.thirdData = slaData[2];
+	}
+
 	const handleSlaCardClick = () => {
 		if (slaSelected === slaData[slaData.length - 1]?.slaLabel) {
-			setSlaSelected(slaData[0].slaLabel);
-		} else if (slaSelected === slaData[0]?.slaLabel) {
-			setSlaSelected(slaData[1].slaLabel);
+			setSlaSelected(SLA_DATA.firstData.slaLabel);
+		} else if (slaSelected === SLA_DATA.firstData.slaLabel) {
+			setSlaSelected(SLA_DATA.secondData.slaLabel);
 		} else {
-			setSlaSelected(slaData[2].slaLabel);
+			setSlaSelected(SLA_DATA.thirdData.slaLabel);
 		}
 	};
 
 	return (
-		<div className="position-absolute sla-container">
+		<div className="cp-sla-container position-absolute">
 			<h5 className="mb-4">Support Level</h5>
 
 			{slaData ? (
 				<div>
 					<div
 						className={classNames({
-							'ml-2': slaData[1],
+							'ml-2': slaData.length > 1,
 						})}
 					>
 						<div
 							className={classNames(
-								'align-items-center d-flex sla-card-holder',
+								'align-items-center d-flex cp-sla-card-holder',
 								{
-									'sla-multiple-card ml-2': slaData[1],
+									'cp-sla-multiple-card ml-2':
+										slaData.length > 1,
 								}
 							)}
 						>
@@ -153,7 +141,7 @@ const SlaCard = () => {
 						</div>
 					</div>
 
-					{slaData[1] && (
+					{slaData.length > 1 && (
 						<div
 							className="btn btn-outline-primary d-none hide ml-3 position-relative rounded-circle"
 							onClick={handleSlaCardClick}
@@ -163,7 +151,7 @@ const SlaCard = () => {
 					)}
 				</div>
 			) : (
-				<div className="bg-neutral-1 n-sla-card rounded-lg">
+				<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
 					<p className="p-3 text-neutral-7 text-paragraph-sm">
 						The project&apos;s Support Level is displayed here for
 						projects with ticketing support.

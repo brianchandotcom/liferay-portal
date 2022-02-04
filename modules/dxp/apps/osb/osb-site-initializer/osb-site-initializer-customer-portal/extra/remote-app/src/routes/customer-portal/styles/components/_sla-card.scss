@@ -1,4 +1,4 @@
-.sla-container:hover {
+.cp-sla-container:hover {
 	.btn {
 		background-color: white;
 		border-color: rgba(11, 95, 255, 0.25);
@@ -9,41 +9,42 @@
 		width: 2.1rem;
 		z-index: 100;
 	}
+
 	.btn:hover {
 		border-color: white;
 	}
 }
-.card {
+.cp-card {
 	box-shadow: $elevation-fluffy-1;
 }
-.sla-card-holder {
+.cp-sla-card-holder {
 	position: relative;
 }
-.sla-card-holder .sla-card {
+.cp-sla-card-holder .cp-sla-card {
 	filter: blur(2px);
 	position: absolute;
 	transition: all 0.4s;
 }
-.sla-multiple-card .sla-card-active {
+.cp-sla-multiple-card .cp-sla-card-active {
 	filter: blur(0);
 	transform: translate(-1rem, 1rem);
 	transition: all 0.4s;
 	z-index: 100;
 }
-.sla-platinum {
+.cp-sla-platinum {
 	background-color: #f9fafb;
 	border: 1px solid #e1e1e4;
 }
-.sla-gold {
+.cp-sla-gold {
 	border: 1px solid var(--color-brand-secondary-lighten-4);
 }
-.sla-limited {
+.cp-sla-limited {
 	border: 1px solid #0b5fff99;
 }
-.sla-label {
+.cp-sla-label {
 	font-size: 0.75rem;
 }
-.n-sla-card {
+.cp-n-sla-card {
 	height: 5rem;
 	width: 12rem;
 }

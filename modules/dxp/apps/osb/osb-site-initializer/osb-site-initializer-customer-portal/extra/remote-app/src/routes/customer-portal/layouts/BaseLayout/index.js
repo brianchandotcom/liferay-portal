@@ -24,6 +24,7 @@ const Layout = ({children, hasProjectContact, hasQuickLinks, project}) => {
 							name: project.liferayContactName,
 							role: project.liferayContactRole,
 						}}
+						project={project}
 					/>
 				)}
 

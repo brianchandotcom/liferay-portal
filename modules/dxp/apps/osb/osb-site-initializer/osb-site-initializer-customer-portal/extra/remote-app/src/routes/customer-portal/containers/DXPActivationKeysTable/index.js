@@ -10,12 +10,14 @@
  */
 
 import {ButtonWithIcon} from '@clayui/core';
+import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useEffect, useState} from 'react';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import ModalKeyDetails from '../../components/ModalKeyDetails';
 import {useCustomerPortal} from '../../context';
 import DXPActivationKeysTableHeader from './Header';
 import {
@@ -54,6 +56,12 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [isLoadingActivationKeys, setIsLoadingActivationKeys] = useState(
 		false
 	);
+
+	const [isVisibleModal, setIsVisibleModal] = useState(false);
+	const [currentActivationKey, setCurrentActivationKey] = useState();
+	const {observer, onClose} = useModal({
+		onClose: () => setIsVisibleModal(false),
+	});
 
 	useEffect(() => {
 		if (activationKeysFiltered.length) {
@@ -164,94 +172,113 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	};
 
 	return (
-		<ClayTooltipProvider
-			contentRenderer={({title}) => getTooltipContentRenderer(title)}
-			delay={100}
-		>
-			<div>
-				<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between mb-2">
-					<h3 className="m-0">Activation Keys</h3>
-
-					<RoundedGroupButtons
-						groupButtons={groupButtons}
-						handleOnChange={(value) => setFilterStatusBar(value)}
-					/>
-				</div>
-
-				<div className="mt-4 py-2">
-					<DXPActivationKeysTableHeader
-						accountKey={project.accountKey}
-						activationKeys={activationKeysFiltered}
-						licenseKeyDownloadURL={licenseKeyDownloadURL}
-						selectedKeys={activationKeysChecked}
-						sessionId={sessionId}
-					/>
-				</div>
-
-				<Table
-					checkboxConfig={{
-						checkboxesChecked: activationKeysChecked,
-						setCheckboxesChecked: setActivationKeysChecked,
-					}}
-					className="border-0 cp-dxp-activation-key-table"
-					columns={COLUMNS}
-					hasCheckbox
-					hasPagination
-					isLoading={isLoadingActivationKeys}
-					paginationConfig={paginationConfig}
-					rows={activationKeysFiltered.map((activationKey) => ({
-						download: (
-							<ButtonWithIcon
-								displayType="null"
-								onClick={() =>
-									downloadActivationLicenseKey(
-										activationKey.id,
-										licenseKeyDownloadURL,
-										sessionId
-									)
-								}
-								small
-								symbol="download"
-							/>
-						),
-						envName: (
-							<div
-								title={[
-									activationKey.name,
-									activationKey.description,
-								]}
-							>
-								<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
-									{activationKey.name}
-								</p>
-
-								<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-									{activationKey.description}
-								</p>
-							</div>
-						),
-						envType: (
-							<EnvironmentTypeColumn
-								activationKey={activationKey}
-							/>
-						),
-						expirationDate: (
-							<ExpirationDateColumn
-								activationKey={activationKey}
-							/>
-						),
-						id: activationKey.id,
-						keyType: (
-							<KeyTypeColumn
-								activationKey={activationKey}
-								assetsPath={assetsPath}
-							/>
-						),
-						status: <StatusColumn activationKey={activationKey} />,
-					}))}
+		<>
+			{isVisibleModal && (
+				<ModalKeyDetails
+					ACTIVATION_STATUS={ACTIVATION_STATUS}
+					activationKeys={currentActivationKey}
+					isVisibleModal={isVisibleModal}
+					observer={observer}
+					onClose={onClose}
 				/>
-			</div>
-		</ClayTooltipProvider>
+			)}
+			<ClayTooltipProvider
+				contentRenderer={({title}) => getTooltipContentRenderer(title)}
+				delay={100}
+			>
+				<div>
+					<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between mb-2">
+						<h3 className="m-0">Activation Keys</h3>
+
+						<RoundedGroupButtons
+							groupButtons={groupButtons}
+							handleOnChange={(value) =>
+								setFilterStatusBar(value)
+							}
+						/>
+					</div>
+
+					<div className="mt-4 py-2">
+						<DXPActivationKeysTableHeader
+							accountKey={project.accountKey}
+							activationKeys={activationKeysFiltered}
+							licenseKeyDownloadURL={licenseKeyDownloadURL}
+							selectedKeys={activationKeysChecked}
+							sessionId={sessionId}
+						/>
+					</div>
+
+					<Table
+						checkboxConfig={{
+							checkboxesChecked: activationKeysChecked,
+							setCheckboxesChecked: setActivationKeysChecked,
+						}}
+						className="border-0 cp-dxp-activation-key-table"
+						columns={COLUMNS}
+						hasCheckbox
+						hasPagination
+						isLoading={isLoadingActivationKeys}
+						paginationConfig={paginationConfig}
+						rows={activationKeysFiltered.map((activationKey) => ({
+							customClickOnRow: () => {
+								setCurrentActivationKey(activationKey);
+								setIsVisibleModal(true);
+							},
+							download: (
+								<ButtonWithIcon
+									displayType="null"
+									onClick={() =>
+										downloadActivationLicenseKey(
+											activationKey.id,
+											licenseKeyDownloadURL,
+											sessionId
+										)
+									}
+									small
+									symbol="download"
+								/>
+							),
+							envName: (
+								<div
+									title={[
+										activationKey.name,
+										activationKey.description,
+									]}
+								>
+									<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
+										{activationKey.name}
+									</p>
+
+									<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
+										{activationKey.description}
+									</p>
+								</div>
+							),
+							envType: (
+								<EnvironmentTypeColumn
+									activationKey={activationKey}
+								/>
+							),
+							expirationDate: (
+								<ExpirationDateColumn
+									activationKey={activationKey}
+								/>
+							),
+							id: activationKey.id,
+							keyType: (
+								<KeyTypeColumn
+									activationKey={activationKey}
+									assetsPath={assetsPath}
+								/>
+							),
+							status: (
+								<StatusColumn activationKey={activationKey} />
+							),
+						}))}
+					/>
+				</div>
+			</ClayTooltipProvider>
+		</>
 	);
 };
 

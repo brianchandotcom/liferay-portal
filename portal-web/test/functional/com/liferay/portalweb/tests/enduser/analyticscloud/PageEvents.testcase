@@ -256,12 +256,14 @@ definition {
 			ProxyUtil.startHarRecording("pageDepthReached");
 		}
 
-		task ("Scroll down by 25") {
-			ScrollBy(value1 = "0,25");
+		task ("Scroll down to view the eighth blogs entry") {
+			ScrollWebElementIntoView(
+				key_entryTitle = "Blogs Entry Title 2",
+				locator1 = "BlogsEntry#TITLE");
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "10000");
+			Pause(locator1 = "5000");
 		}
 
 		task ("View the depth of pageDepthReached event is 75") {

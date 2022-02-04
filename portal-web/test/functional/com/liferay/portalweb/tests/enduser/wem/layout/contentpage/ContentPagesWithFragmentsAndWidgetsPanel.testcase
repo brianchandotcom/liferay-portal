@@ -154,6 +154,7 @@ definition {
 				value1 = "Blogs");
 
 			DragOver(
+				key_indexItem = "1",
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
@@ -223,10 +224,12 @@ definition {
 				value1 = "Blogs");
 
 			MouseOver(
+				key_indexItem = "1",
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET");
 
 			AssertCssValue(
+				key_indexItem = "1",
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "box-shadow",

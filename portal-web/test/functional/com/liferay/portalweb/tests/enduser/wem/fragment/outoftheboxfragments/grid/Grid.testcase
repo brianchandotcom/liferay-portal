@@ -342,6 +342,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_columnNumber = "1",
+				key_indexItem = "1",
 				key_portletName = "Web Content Display",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",

@@ -194,6 +194,7 @@ NO CSS
 				value1 = "Asset Publisher");
 
 			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+				key_indexItem = "1",
 				key_portletName = "Asset Publisher",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",

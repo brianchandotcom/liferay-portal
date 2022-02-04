@@ -53,7 +53,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
-			PageEditor.addWidget(portletName = "Menu Display");
+			PageEditor.addWidget(
+				indexItem = "2",
+				portletName = "Menu Display");
 		}
 
 		task ("Select the List Menu as display template in Navigation Menu") {

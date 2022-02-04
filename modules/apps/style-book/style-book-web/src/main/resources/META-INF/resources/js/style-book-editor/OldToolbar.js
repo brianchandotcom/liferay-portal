@@ -14,8 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
+import {
+	StyleErrorsModal,
+	useHasStyleErrors,
+} from '@liferay/layout-content-page-editor-web';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
@@ -29,8 +34,34 @@ const STATUS_TO_LABEL = {
 
 export default function OldToolbar() {
 	const {draftStatus} = useContext(StyleBookContext);
+	const formRef = useRef();
+	const hasStyleErrors = useHasStyleErrors();
+	const [openPublishModal, setOpenPublishModal] = useState(false);
+	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
+
+	const {
+		observer: observerStyleErrorsModal,
+		onClose: onCloseStyleErrorsModal,
+	} = useModal({
+		onClose: () => setOpenStyleErrorsModal(false),
+	});
+
+	const {
+		observer: observerPublishModal,
+		onClose: onClosePublishModal,
+	} = useModal({
+		onClose: () => setOpenPublishModal(false),
+	});
 
 	const handleSubmit = (event) => {
+		if (config.tokenReuseEnabled) {
+			if (formRef.current) {
+				formRef.current.submit();
+			}
+
+			return;
+		}
+
 		if (
 			!confirm(
 				Liferay.Language.get(
@@ -65,7 +96,7 @@ export default function OldToolbar() {
 				</span>
 			</div>
 
-			<form action={config.publishURL} method="POST">
+			<form action={config.publishURL} method="POST" ref={formRef}>
 				<input
 					name={`${config.namespace}redirect`}
 					type="hidden"
@@ -81,12 +112,76 @@ export default function OldToolbar() {
 				<ClayButton
 					disabled={config.pending}
 					displayType="primary"
-					onClick={handleSubmit}
+					onClick={
+						config.tokenReuseEnabled
+							? hasStyleErrors
+								? () => setOpenStyleErrorsModal(true)
+								: () => setOpenPublishModal(true)
+							: handleSubmit
+					}
 					small
-					type="submit"
+					type={config.tokenReuseEnabled ? 'button' : 'submit'}
 				>
 					{Liferay.Language.get('publish')}
 				</ClayButton>
+
+				{config.tokenReuseEnabled && (
+					<>
+						{openStyleErrorsModal && hasStyleErrors && (
+							<StyleErrorsModal
+								observer={observerStyleErrorsModal}
+								onClose={onCloseStyleErrorsModal}
+								onSubmit={() => {
+									onCloseStyleErrorsModal();
+									setOpenPublishModal(true);
+								}}
+							/>
+						)}
+
+						{openPublishModal && (
+							<ClayModal
+								observer={observerPublishModal}
+								size="lg"
+								status="info"
+							>
+								<ClayModal.Header>
+									{Liferay.Language.get('publishing-info')}
+								</ClayModal.Header>
+
+								<ClayModal.Body>
+									<p>
+										{Liferay.Language.get(
+											'once-published-these-changes-will-affect-all-instances-of-the-site-using-these-properties-do-you-want-to-publish-now'
+										)}
+									</p>
+								</ClayModal.Body>
+
+								<ClayModal.Footer
+									last={
+										<ClayButton.Group spaced>
+											<ClayButton
+												displayType="secondary"
+												onClick={onClosePublishModal}
+											>
+												{Liferay.Language.get('cancel')}
+											</ClayButton>
+
+											<ClayButton
+												displayType="info"
+												onClick={handleSubmit}
+												type="submit"
+											>
+												{Liferay.Language.get(
+													'continue'
+												)}
+											</ClayButton>
+										</ClayButton.Group>
+									}
+								/>
+							</ClayModal>
+						)}
+					</>
+				)}
 			</form>
 		</div>
 	);

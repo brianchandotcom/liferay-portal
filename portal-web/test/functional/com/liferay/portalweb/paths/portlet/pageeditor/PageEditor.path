@@ -556,7 +556,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_WIDGET</td>
-	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_portletName}']</td>
+	<td>xpath=(//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_portletName}'])[${key_indexItem}]</td>
 	<td></td>
 </tr>
 <tr>

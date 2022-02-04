@@ -45,7 +45,8 @@ const TableKeyDetails = ({
 
 	if (new Date() < new Date(activationKeys.startDate)) {
 		activationStatus = ACTIVATION_STATUS.notActivated;
-	} else if (new Date() > new Date(activationKeys.expirationDate)) {
+	}
+	else if (new Date() > new Date(activationKeys.expirationDate)) {
 		activationStatus = ACTIVATION_STATUS.expired;
 	}
 

@@ -53,11 +53,11 @@ function ImportForm({
 		if (dbFields && fileFields && !useTemplateMappingRef.current) {
 			const newFieldsSelection = {};
 
-			fileFields?.forEach((field) => {
-				newFieldsSelection[field] = null;
+			dbFields?.forEach((field) => {
+				newFieldsSelection[field.value] = null;
 
-				if (dbFields.includes(field)) {
-					newFieldsSelection[field] = field;
+				if (fileFields.includes(field.value)) {
+					newFieldsSelection[field.value] = field.value;
 				}
 			});
 			setFieldsSelections(newFieldsSelection);

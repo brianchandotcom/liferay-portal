@@ -80,13 +80,32 @@ gradlew importTestrayResults
 
 Default properties have been set in [testray.properties](testray.properties) and additional properties can be set in a `testray-ext.properties` file.
 
-#### Testray Information
+#### Testray Import Credentials
 
 The Testray Server URL can be set using the following:
 
 ```
 testrayServerURL=https://testray.liferay.com
 ```
+
+To import results into Testray without attachments the following credentials are required:
+
+```
+testrayUserName=[liferay_user_name]@liferay.com
+testrayUserPassword=[liferay_user_password]
+```
+
+To import results into Testray with attachments the `GOOGLE_APPLICATION_CREDENTIALS` must be set as an environment variable:
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS=/home/user/Downloads/service-account-file.json
+```
+
+See this [article](https://cloud.google.com/docs/authentication/getting-started) for more details on how to setup google cloud.
+
+The specific bucket that your google account needs read/write access to is the [testray-results](https://console.cloud.google.com/storage/browser/testray-results) bucket. In order to get access please contact IT for access.
+
+#### Testray Import Data
 
 The Testray Project Name can be set using the following:
 
@@ -125,6 +144,7 @@ testrayProductVersion=1.x
 ```
 
 The Testray Environment Information can be set using the following:
+
 ```
 environmentBrowserName=Google Chrome 86
 environmentOperatingSystemName=OSX 12.2 64-Bit

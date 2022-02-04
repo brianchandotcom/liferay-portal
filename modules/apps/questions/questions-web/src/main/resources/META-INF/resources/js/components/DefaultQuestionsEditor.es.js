@@ -79,9 +79,9 @@ export default forwardRef(
 								editorConfig={{
 									readOnly: question && question.locked,
 								}}
-								onChange={(event) => {
-									setContent(event.editor.getData());
-								}}
+								onChange={(event) =>
+									setContent(event.editor.getData())
+								}
 								{...otherProps}
 							/>
 						</div>

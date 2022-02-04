@@ -14,95 +14,24 @@
 
 import CKEditor from 'ckeditor4-react';
 import PropTypes from 'prop-types';
-import React, {forwardRef, useCallback, useEffect, useRef} from 'react';
+import React, {forwardRef, useEffect} from 'react';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 
-const Editor = forwardRef(
-	({contents = '', name, onChange, onChangeMethodName, ...props}, ref) => {
-		const editorRef = useRef();
-
-		useEffect(() => {
-			Liferay.once('beforeScreenFlip', () => {
-				if (
-					window.CKEDITOR &&
-					Object.keys(window.CKEDITOR.instances).length === 0
-				) {
-					delete window.CKEDITOR;
-				}
-			});
-		}, []);
-
-		const getHTML = useCallback(() => {
-			let data = contents;
-
-			const editor = editorRef.current.editor;
-
-			if (editor && editor.instanceReady) {
-				data = editor.getData();
-
-				if (
-					CKEDITOR.env.gecko &&
-					CKEDITOR.tools.trim(data) === '<br />'
-				) {
-					data = '';
-				}
-
-				data = data.replace(/(\u200B){7}/, '');
+const Editor = forwardRef(({contents = '', name, ...props}, ref) => {
+	useEffect(() => {
+		Liferay.once('beforeScreenFlip', () => {
+			if (
+				window.CKEDITOR &&
+				Object.keys(window.CKEDITOR.instances).length === 0
+			) {
+				delete window.CKEDITOR;
 			}
+		});
+	}, []);
 
-			return data;
-		}, [contents]);
-
-		const onChangeCallback = () => {
-			if (!onChangeMethodName && !onChange) {
-				return;
-			}
-
-			const editor = editorRef.current.editor;
-
-			if (editor.checkDirty()) {
-				if (onChangeMethodName) {
-					window[onChangeMethodName](getHTML());
-				}
-				else {
-					onChange(getHTML());
-				}
-
-				editor.resetDirty();
-			}
-		};
-
-		const editorRefsCallback = useCallback(
-			(element) => {
-				if (ref) {
-					ref.current = element;
-				}
-				editorRef.current = element;
-			},
-			[ref, editorRef]
-		);
-
-		useEffect(() => {
-			window[name] = {
-				getHTML,
-				getText() {
-					return contents;
-				},
-			};
-		}, [contents, getHTML, name]);
-
-		return (
-			<CKEditor
-				contents={contents}
-				name={name}
-				onChange={onChangeCallback}
-				ref={editorRefsCallback}
-				{...props}
-			/>
-		);
-	}
-);
+	return <CKEditor contents={contents} name={name} ref={ref} {...props} />;
+});
 
 CKEditor.editorUrl = `${BASEPATH}ckeditor.js`;
 window.CKEDITOR_BASEPATH = BASEPATH;
@@ -110,8 +39,6 @@ window.CKEDITOR_BASEPATH = BASEPATH;
 Editor.propTypes = {
 	contents: PropTypes.string,
 	name: PropTypes.string,
-	onChange: PropTypes.func,
-	onChangeMethodName: PropTypes.string,
 };
 
 export {Editor};

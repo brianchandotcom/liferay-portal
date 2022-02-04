@@ -15,10 +15,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Editor} from './Editor';
 import DEFAULT_BALLOON_EDITOR_CONFIG from './config/DefaultBalloonEditorConfiguration';
 
 import '../css/main.scss';
+import BaseEditor from './BaseEditor';
 
 const EMPTY_OBJECT = {};
 
@@ -38,7 +38,7 @@ const BalloonEditor = ({
 	}
 
 	return (
-		<Editor
+		<BaseEditor
 			config={editorConfig}
 			data={contents}
 			name={name}

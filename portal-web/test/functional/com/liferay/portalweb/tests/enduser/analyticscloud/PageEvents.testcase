@@ -316,8 +316,8 @@ definition {
 			ProxyUtil.startHarRecording("pageDepthReached");
 		}
 
-		task ("Scroll down by 200") {
-			ScrollBy(value1 = "0,200");
+		task ("Scroll down by 4000") {
+			ScrollBy(value1 = "0, 4000");
 		}
 
 		task ("Wait for sending requests") {

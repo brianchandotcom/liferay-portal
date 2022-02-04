@@ -60,6 +60,8 @@ definition {
 
 	@summary = "Asserts the property saved in settings"
 	macro assertNewCreatedProperty {
+		WaitForElementPresent(locator1 = "ACSettings#PROPERTY_NAME");
+
 		AssertTextEquals(
 			locator1 = "ACSettings#PROPERTY_NAME",
 			value1 = "${propertyName}");

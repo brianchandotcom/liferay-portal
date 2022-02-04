@@ -74,7 +74,7 @@ public class CommerceProductAttachmentDataSetDataProvider
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-				CPAttachmentFileEntryConstants.TYPE_OTHER,
+				filter.getKeywords(), CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_ANY, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
@@ -142,7 +142,7 @@ public class CommerceProductAttachmentDataSetDataProvider
 
 		return _cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
 			_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-			CPAttachmentFileEntryConstants.TYPE_OTHER,
+			filter.getKeywords(), CPAttachmentFileEntryConstants.TYPE_OTHER,
 			WorkflowConstants.STATUS_ANY);
 	}
 

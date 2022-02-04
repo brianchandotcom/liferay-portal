@@ -81,9 +81,6 @@ const SlaCard = ({project}) => {
 
 			setSlaData(slaFiltedData.filter((sla) => sla.slaTitle));
 
-			// eslint-disable-next-line no-console
-			console.log(slaFiltedData);
-
 			if (!slaSelected) {
 				const slaSelectedCard = slaFiltedData[0]?.slaLabel;
 				setSlaSelected(slaSelectedCard);

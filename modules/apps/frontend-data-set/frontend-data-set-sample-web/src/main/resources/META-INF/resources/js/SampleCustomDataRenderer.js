@@ -12,21 +12,16 @@
  * details.
  */
 
-import SampleCustomDataRenderer from './SampleCustomDataRenderer';
+import ClayIcon from '@clayui/icon';
+import React from 'react';
 
-export default function propsTransformer({
-	additionalProps: {greeting},
-	...otherProps
-}) {
-	return {
-		...otherProps,
-		customDataRenderers: {
-			sampleCustomDataRenderer: SampleCustomDataRenderer,
-		},
-		onActionDropdownItemClick({action, itemData}) {
-			if (action.data.id === 'sampleMessage') {
-				alert(`${greeting} ${itemData.title}!`);
-			}
-		},
-	};
-}
+const SampleCustomDataRenderer = ({value}) => {
+	return (
+		<>
+			<ClayIcon symbol="user" />
+			{value}
+		</>
+	);
+};
+
+export default SampleCustomDataRenderer;

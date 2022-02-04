@@ -54,7 +54,12 @@ public class SampleTableFDSView extends BaseTableFDSView {
 
 		statusFDSTableSchemaField.setContentRenderer("status");
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("creator.name", "author");
+		FDSTableSchemaField authorFDSTableSchemaField =
+			fdsTableSchemaBuilder.addFDSTableSchemaField(
+				"creator.name", "author");
+
+		authorFDSTableSchemaField.setContentRenderer(
+			"sampleCustomDataRenderer");
 
 		return fdsTableSchemaBuilder.build();
 	}

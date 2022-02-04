@@ -268,6 +268,42 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, String keywords, int type,
+			int status, int start, int end)
+		throws PortalException {
+
+		checkCPAttachmentFileEntryPermissions(
+			classNameId, classPK, ActionKeys.VIEW);
+
+		List<CPAttachmentFileEntry> filteredCPAttachmentFileEntries =
+			new ArrayList<>();
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+				classNameId, classPK, keywords, type, status, start, end);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				cpAttachmentFileEntry.getFileEntryId());
+
+			if ((dlFileEntry != null) &&
+				_dlFileEntryModelResourcePermission.contains(
+					getPermissionChecker(), dlFileEntry, ActionKeys.VIEW)) {
+
+				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
+			}
+			else if (cpAttachmentFileEntry.isCDNEnabled()) {
+				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
+			}
+		}
+
+		return filteredCPAttachmentFileEntries;
+	}
+
+	@Override
 	public int getCPAttachmentFileEntriesCount(
 			long classNameId, long classPK, int type, int status)
 		throws PortalException {
@@ -277,6 +313,20 @@ public class CPAttachmentFileEntryServiceImpl
 
 		return cpAttachmentFileEntryLocalService.
 			getCPAttachmentFileEntriesCount(classNameId, classPK, type, status);
+	}
+
+	@Override
+	public int getCPAttachmentFileEntriesCount(
+			long classNameId, long classPK, String keywords, int type,
+			int status)
+		throws PortalException {
+
+		checkCPAttachmentFileEntryPermissions(
+			classNameId, classPK, ActionKeys.VIEW);
+
+		return cpAttachmentFileEntryLocalService.
+			getCPAttachmentFileEntriesCount(
+				classNameId, classPK, keywords, type, status);
 	}
 
 	@Override

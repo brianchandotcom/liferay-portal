@@ -36,6 +36,8 @@ dependencies {
 	compileOnly project(":apps:site-navigation:site-navigation-menu-item-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:style-book:style-book-api")
+	compileOnly project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+
 }

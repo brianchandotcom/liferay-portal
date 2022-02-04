@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
@@ -120,7 +121,8 @@ public class SiteInitializerExtender
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
-				_userAccountResourceFactory, _userLocalService);
+				_userAccountResourceFactory, _userLocalService,
+				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
 
@@ -301,5 +303,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowDefinitionResource.Factory
+		_workflowDefinitionResourceFactory;
 
 }

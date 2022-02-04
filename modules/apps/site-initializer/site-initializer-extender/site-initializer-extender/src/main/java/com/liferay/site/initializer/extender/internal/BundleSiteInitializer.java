@@ -52,6 +52,8 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -240,7 +242,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_accountResourceFactory = accountResourceFactory;
 		_accountRoleLocalService = accountRoleLocalService;
@@ -293,6 +296,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_themeLocalService = themeLocalService;
 		_userAccountResourceFactory = userAccountResourceFactory;
 		_userLocalService = userLocalService;
+		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -385,6 +389,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addTaxonomyVocabularies(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
 			_invoke(() -> _updateLayoutSets(serviceContext));
+			_invoke(() -> _addWorkflows(serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -3026,6 +3031,47 @@ public class BundleSiteInitializer implements SiteInitializer {
 					accountRole.getAccountRoleId(), emailAddress);
 		}
 	}
+	
+	private void _addWorkflows(ServiceContext serviceContext) throws Exception {
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/workflows");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		WorkflowDefinitionResource.Builder workflowDefinitionResourceBuilder =
+			_workflowDefinitionResourceFactory.create();
+
+		WorkflowDefinitionResource workflowDefinitionResource =
+			workflowDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				_read(resourcePath + "workflow.json"));
+
+			jsonObject.put(
+				"content",
+				StringUtil.replace(
+					_read(resourcePath + "workflow.xml"),
+					new String[] {
+						"[$WORKFLOW-DEFINITION-DESCRIPTION$]",
+						"[$WORKFLOW-DEFINITION-NAME$]"
+					},
+					new String[] {
+						jsonObject.getString("description"),
+						jsonObject.getString("name")
+					}));
+
+			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
+				jsonObject.toString());
+
+			workflowDefinitionResource.postWorkflowDefinitionDeploy(
+				workflowDefinition);
+		}
+	}
 
 	private long[] _getAssetCategoryIds(
 		long groupId, String[] externalReferenceCodes) {
@@ -3401,6 +3447,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserLocalService _userLocalService;
+	private final WorkflowDefinitionResource.Factory
+		_workflowDefinitionResourceFactory;
 
 	private class SiteNavigationMenuItemSetting {
 

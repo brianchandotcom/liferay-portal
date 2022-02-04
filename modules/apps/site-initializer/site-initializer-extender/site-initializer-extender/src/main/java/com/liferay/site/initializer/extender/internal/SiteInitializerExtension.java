@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
@@ -120,7 +121,8 @@ public class SiteInitializerExtension {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_dependencyManager = new DependencyManager(bundle.getBundleContext());
 
@@ -151,7 +153,8 @@ public class SiteInitializerExtension {
 				structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, themeLocalService,
-				userAccountResourceFactory, userLocalService));
+				userAccountResourceFactory, userLocalService,
+				workflowDefinitionResourceFactory));
 		_component.setInterface(
 			SiteInitializer.class,
 			MapUtil.singletonDictionary(

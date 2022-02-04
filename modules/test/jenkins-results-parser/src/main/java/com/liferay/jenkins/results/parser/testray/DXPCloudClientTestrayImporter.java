@@ -62,6 +62,16 @@ public class DXPCloudClientTestrayImporter {
 		}
 
 		if (!_isGoogleApplicationCredentialsSet()) {
+			JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization = null;
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserPassword)) {
+
+				httpAuthorization =
+					new JenkinsResultsParserUtil.BasicHTTPAuthorization(
+						_testrayUserPassword, _testrayUserName);
+			}
+
 			JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
 					_testrayServerURL, "/web/guest/home/-/testray/case_results",
@@ -69,7 +79,8 @@ public class DXPCloudClientTestrayImporter {
 				JenkinsResultsParserUtil.combine(
 					"results=",
 					URLEncoder.encode(Dom4JUtil.format(rootElement), "UTF-8"),
-					"&type=poshi"));
+					"&type=poshi"),
+				httpAuthorization);
 
 			return;
 		}
@@ -485,6 +496,18 @@ public class DXPCloudClientTestrayImporter {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayTeamName)) {
 			_testrayTeamName = testrayTeamName;
 		}
+
+		String testrayUserName = _getEnvVarValue("testrayUserName");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayUserName)) {
+			_testrayUserName = testrayUserName;
+		}
+
+		String testrayUserPassword = _getEnvVarValue("testrayUserPassword");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayUserPassword)) {
+			_testrayUserPassword = testrayUserPassword;
+		}
 	}
 
 	private static boolean _isGoogleApplicationCredentialsSet() {
@@ -548,5 +571,7 @@ public class DXPCloudClientTestrayImporter {
 	private static String _testrayRoutineName = "DXP Cloud Client Routine";
 	private static String _testrayServerURL = "https://testray.liferay.com";
 	private static String _testrayTeamName = "DXP Cloud Client Team";
+	private static String _testrayUserName;
+	private static String _testrayUserPassword;
 
 }

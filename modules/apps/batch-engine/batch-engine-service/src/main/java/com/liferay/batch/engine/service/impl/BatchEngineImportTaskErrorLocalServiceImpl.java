@@ -14,8 +14,11 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskErrorLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +31,34 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchEngineImportTaskErrorLocalServiceImpl
 	extends BatchEngineImportTaskErrorLocalServiceBaseImpl {
+
+	@Override
+	public BatchEngineImportTaskError addBatchEngineImportTaskError(
+		long companyId, long userId, long batchEngineImportTaskId, String item,
+		int itemIndex, String message) {
+
+		BatchEngineImportTaskError batchEngineImportTaskError =
+			batchEngineImportTaskErrorPersistence.create(
+				counterLocalService.increment());
+
+		batchEngineImportTaskError.setCompanyId(companyId);
+		batchEngineImportTaskError.setUserId(userId);
+		batchEngineImportTaskError.setBatchEngineImportTaskId(
+			batchEngineImportTaskId);
+		batchEngineImportTaskError.setItem(item);
+		batchEngineImportTaskError.setItemIndex(itemIndex);
+		batchEngineImportTaskError.setMessage(message);
+
+		return batchEngineImportTaskErrorPersistence.update(
+			batchEngineImportTaskError);
+	}
+
+	@Override
+	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
+		long batchEngineImportTaskId) {
+
+		return batchEngineImportTaskErrorPersistence.
+			findByBatchEngineImportTaskId(batchEngineImportTaskId);
+	}
+
 }

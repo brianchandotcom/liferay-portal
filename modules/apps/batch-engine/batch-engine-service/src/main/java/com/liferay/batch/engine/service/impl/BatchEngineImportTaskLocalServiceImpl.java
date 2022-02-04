@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.BatchEngineImportTaskStrategy;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
@@ -50,8 +51,8 @@ public class BatchEngineImportTaskLocalServiceImpl
 			long companyId, long userId, long batchSize, String callbackURL,
 			String className, byte[] content, String contentType,
 			String executeStatus, Map<String, String> fieldNameMappingMap,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName)
+			int importStrategy, String operation,
+			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws PortalException {
 
 		if ((parameters != null) && !parameters.isEmpty()) {
@@ -81,11 +82,29 @@ public class BatchEngineImportTaskLocalServiceImpl
 			batchEngineImportTask.setFieldNameMapping((Map)fieldNameMappingMap);
 		}
 
+		batchEngineImportTask.setImportStrategy(importStrategy);
 		batchEngineImportTask.setOperation(operation);
 		batchEngineImportTask.setParameters(parameters);
 		batchEngineImportTask.setTaskItemDelegateName(taskItemDelegateName);
 
 		return batchEngineImportTaskPersistence.update(batchEngineImportTask);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public BatchEngineImportTask addBatchEngineImportTask(
+			long companyId, long userId, long batchSize, String callbackURL,
+			String className, byte[] content, String contentType,
+			String executeStatus, Map<String, String> fieldNameMappingMap,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException {
+
+		return addBatchEngineImportTask(
+			companyId, userId, batchSize, callbackURL, className, content,
+			contentType, executeStatus, fieldNameMappingMap,
+			BatchEngineImportTaskStrategy.ON_ERROR_FAIL.getStrategy(),
+			operation, parameters, taskItemDelegateName);
 	}
 
 	@Override

@@ -205,21 +205,13 @@ export default function DatePicker({
 	}, [momentFormat]);
 
 	const handleValueChange = (value) => {
-
-		/**
-		 * TODO When Clay change their implementation of the default time
-		 * value to '--:--' remember to change the code bellow of formattedTime
-		 */
-
 		let formattedDate = value;
 		if (isDateTime) {
 			const firstSpace = value.indexOf(' ');
 			formattedDate = value.substring(0, firstSpace);
-			let formattedTime = value.substring(firstSpace);
-			formattedTime =
-				use12Hours && formattedTime === ' 00:00'
-					? ' 12:00 AM'
-					: formattedTime.replaceAll('-', '_');
+			const formattedTime = value
+				.substring(firstSpace)
+				.replaceAll('-', '_');
 			formattedDate = `${formattedDate}${formattedTime}`;
 		}
 		const nextState = {

@@ -69,10 +69,21 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			org.apache.tika.mime.MimeTypes.class.getResourceAsStream(
 				"tika-mimetypes.xml"),
 			_extensionsMap);
+
+		Map<String, Set<String>> customExtensionsMap = new HashMap<>();
+
 		read(
 			MimeTypesImpl.class.getResourceAsStream(
 				"/tika/custom-mimetypes.xml"),
-			_customExtensionsMap);
+			customExtensionsMap);
+
+		for (Map.Entry<String, Set<String>> entry :
+				customExtensionsMap.entrySet()) {
+
+			for (String mimeType : entry.getValue()) {
+				_customMimeTypes.put(mimeType, entry.getKey());
+			}
+		}
 	}
 
 	@Override
@@ -104,7 +115,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		String contentType = getCustomContentType(_getExtension(fileName));
+		String contentType = _customMimeTypes.getOrDefault(
+			_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
 
 		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 			Metadata metadata = new Metadata();
@@ -153,7 +165,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		String contentType = null;
 
 		try {
-			contentType = getCustomContentType(_getExtension(fileName));
+			contentType = _customMimeTypes.getOrDefault(
+				_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
 
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();
@@ -196,24 +209,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 
 		return extensions;
-	}
-
-	protected String getCustomContentType(String extension) {
-		if (extension == null) {
-			return ContentTypes.APPLICATION_OCTET_STREAM;
-		}
-
-		for (Map.Entry<String, Set<String>> entry :
-				_customExtensionsMap.entrySet()) {
-
-			Set<String> set = entry.getValue();
-
-			if (set.contains(extension)) {
-				return entry.getKey();
-			}
-		}
-
-		return ContentTypes.APPLICATION_OCTET_STREAM;
 	}
 
 	protected void read(
@@ -312,8 +307,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	private static final Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);
 
-	private final Map<String, Set<String>> _customExtensionsMap =
-		new HashMap<>();
+	private final Map<String, String> _customMimeTypes = new HashMap<>();
 	private final Detector _detector;
 	private final Map<String, Set<String>> _extensionsMap = new HashMap<>();
 

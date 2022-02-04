@@ -102,6 +102,8 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		List<JobProperty> excludesJobProperties = new ArrayList<>();
 
+		excludesJobProperties.addAll(getDefaultExcludesJobProperties());
+
 		for (File modifiedModuleDir : modifiedModuleDirsList) {
 			excludesJobProperties.add(
 				getJobProperty(

@@ -25,7 +25,12 @@ if ((accountGroupId > 0) && AccountGroupPermission.contains(permissionChecker, a
 	filterManageableAccountEntries = false;
 }
 
-SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse, filterManageableAccountEntries);
+SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.createWithParams(
+	liferayPortletRequest, liferayPortletResponse,
+	LinkedHashMapBuilder.<String, Object>put(
+		"allowNewUserMembership", Boolean.TRUE
+	).build(),
+	filterManageableAccountEntries);
 
 if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));

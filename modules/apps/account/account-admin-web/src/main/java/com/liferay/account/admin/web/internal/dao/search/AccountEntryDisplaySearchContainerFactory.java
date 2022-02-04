@@ -77,6 +77,18 @@ public class AccountEntryDisplaySearchContainerFactory {
 			false);
 	}
 
+	public static SearchContainer<AccountEntryDisplay> createWithParams(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			LinkedHashMap<String, Object> params,
+			boolean filterManageableAccountEntries)
+		throws PortalException {
+
+		return _create(
+			liferayPortletRequest, liferayPortletResponse, params,
+			filterManageableAccountEntries);
+	}
+
 	public static SearchContainer<AccountEntryDisplay> createWithUserId(
 			long userId, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

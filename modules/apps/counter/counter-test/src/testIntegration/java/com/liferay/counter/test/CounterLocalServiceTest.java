@@ -189,19 +189,28 @@ public class CounterLocalServiceTest {
 		}
 	}
 
-	private String _prependClassPath(String baseClassPath, Class<?> clazz)
+	private String _prependClassPath(String baseClassPath, Class<?>... classes)
 		throws Exception {
 
-		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
+		StringBundler sb = new StringBundler(classes.length + 1);
 
-		CodeSource codeSource = protectionDomain.getCodeSource();
+		for (Class<?> clazz : classes) {
+			ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
-		URL url = codeSource.getLocation();
+			CodeSource codeSource = protectionDomain.getCodeSource();
 
-		File file = new File(url.toURI());
+			URL url = codeSource.getLocation();
 
-		return StringBundler.concat(
-			file.getPath(), File.pathSeparator, baseClassPath);
+			File file = new File(url.toURI());
+
+			sb.append(file.getPath());
+
+			sb.append(File.pathSeparator);
+		}
+
+		sb.append(baseClassPath);
+
+		return sb.toString();
 	}
 
 	private static final String _COUNTER_NAME =

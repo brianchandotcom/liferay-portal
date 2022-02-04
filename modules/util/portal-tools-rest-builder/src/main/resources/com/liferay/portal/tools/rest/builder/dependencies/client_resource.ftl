@@ -202,7 +202,7 @@ public interface ${schemaName}Resource {
 				HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 				<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete", "patch", "post", "put")>
-					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
+					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && freeMarkerTool.hasParameter(javaMethodSignature, "multipartBody")>
 						httpInvoker.multipart();
 
 						httpInvoker.part("${schemaVarName}", ${schemaName}SerDes.toJSON(${schemaVarName}));

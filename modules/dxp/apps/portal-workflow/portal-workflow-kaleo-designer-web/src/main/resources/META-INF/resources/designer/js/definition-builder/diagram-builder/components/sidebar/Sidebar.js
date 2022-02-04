@@ -12,6 +12,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {isNode} from 'react-flow-renderer';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
@@ -89,11 +90,12 @@ const contents = {
 };
 
 const errorsDefaultValues = {
-	id: {duplicated: false, empty: false},
+	id: false,
 	label: false,
 };
 
 export default function Sidebar() {
+	const {setBlockingErrors} = useContext(DefinitionBuilderContext);
 	const {selectedItem, setSelectedItem, setSelectedItemNewId} = useContext(
 		DiagramBuilderContext
 	);
@@ -109,6 +111,21 @@ export default function Sidebar() {
 		setSelectedItemNewId(null);
 		clearErrors();
 	};
+
+	useEffect(() => {
+		setBlockingErrors((prev) => {
+			if (errors.label === true || errors.id.empty === true) {
+				return {...prev, errorType: 'emptyField'};
+			}
+			if (errors.id.duplicated === true) {
+				return {...prev, errorType: 'duplicated'};
+			}
+			else {
+				return {...prev, errorType: ''};
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [errors]);
 
 	useEffect(() => {
 		setSelectedItemNewId(null);

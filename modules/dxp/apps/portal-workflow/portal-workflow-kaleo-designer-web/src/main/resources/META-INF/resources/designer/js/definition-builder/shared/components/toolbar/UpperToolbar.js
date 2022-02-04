@@ -36,6 +36,7 @@ import {isObjectEmpty} from '../../../util/utils';
 export default function UpperToolbar({displayNames, languageIds, version}) {
 	const {
 		active,
+		blockingErrors,
 		currentEditor,
 		definitionDescription,
 		definitionId,
@@ -60,6 +61,19 @@ export default function UpperToolbar({displayNames, languageIds, version}) {
 		displayNames,
 		languageIds
 	);
+
+	const errorTitle = () => {
+		if (blockingErrors.errorType === 'duplicated') {
+			return Liferay.Language.get('you-have-the-same-id-in-2-nodes');
+		}
+
+		if (blockingErrors.errorType === 'emptyField') {
+			return Liferay.Language.get('some-fields-need-to-be-filled');
+		}
+		else {
+			return Liferay.Language.get('error');
+		}
+	};
 
 	const getXMLContent = (publishing = false) => {
 		let xmlContent;
@@ -147,23 +161,38 @@ export default function UpperToolbar({displayNames, languageIds, version}) {
 
 	const saveDefinition = () => {
 		const successMessage = Liferay.Language.get('workflow-saved');
+		const duplicatedAlertMessage = Liferay.Language.get(
+			'please-rename-this-with-another-words'
+		);
+		const emptyFieldAlertMessage = Liferay.Language.get(
+			'please-fill-out-the-fields-before-saving-or-publishing'
+		);
 
-		setAlertMessage(successMessage);
+		if (blockingErrors.errorType === 'emptyField') {
+			setAlertMessage(emptyFieldAlertMessage);
+			setShowDangerAlert(true);
+		}
 
-		saveDefinitionRequest({
-			active,
-			content: getXMLContent(),
-			name: definitionId,
-			title: definitionTitle,
-			title_i18n: translations,
-			version,
-		}).then((response) => {
-			if (response.ok) {
-				setShowSuccessAlert(true);
+		if (blockingErrors.errorType === 'duplicated') {
+			setAlertMessage(duplicatedAlertMessage);
+			setShowDangerAlert(true);
+		}
 
-				window.history.back();
-			}
-		});
+		if (blockingErrors.errorType === '') {
+			saveDefinitionRequest({
+				active,
+				content: getXMLContent(),
+				name: definitionId,
+				title: definitionTitle,
+				version,
+			}).then((response) => {
+				if (response.ok) {
+					setAlertMessage(successMessage);
+					setShowSuccessAlert(true);
+					window.history.back();
+				}
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -316,7 +345,7 @@ export default function UpperToolbar({displayNames, languageIds, version}) {
 						autoClose={5000}
 						displayType="danger"
 						onClose={() => setShowDangerAlert(false)}
-						title={`${Liferay.Language.get('error')}:`}
+						title={errorTitle()}
 					>
 						{alertMessage}
 					</ClayAlert>

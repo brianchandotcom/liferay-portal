@@ -33,9 +33,11 @@ export default function DefinitionBuilder(props) {
 	);
 	const [sourceView, setSourceView] = useState(false);
 	const [translations, setTranslations] = useState(props.translations);
+	const [blockingErrors, setBlockingErrors] = useState({errorType: ''});
 
 	const contextProps = {
 		active,
+		blockingErrors,
 		currentEditor,
 		definitionDescription,
 		definitionId,
@@ -44,6 +46,7 @@ export default function DefinitionBuilder(props) {
 		elements,
 		selectedLanguageId,
 		setActive,
+		setBlockingErrors,
 		setCurrentEditor,
 		setDefinitionDescription,
 		setDefinitionId,

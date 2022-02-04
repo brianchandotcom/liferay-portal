@@ -15,8 +15,8 @@
 package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.elements.PoshiElement;
-import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.elements.PoshiElementException;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
@@ -404,8 +404,7 @@ public class PoshiValidation {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"extends", "ignore", "ignore-command-names", "line-number");
 
-			validatePossibleAttributeNames(
-				element, possibleAttributeNames, filePath);
+			validatePossibleAttributeNames(element, possibleAttributeNames);
 		}
 	}
 
@@ -1401,11 +1400,9 @@ public class PoshiValidation {
 		}
 	}
 
-	protected static void validateTakeScreenshotElement(
-		Element element, String filePath) {
-
-		validateHasNoAttributes(element, filePath);
-		validateHasNoChildElements(element, filePath);
+	protected static void validateTakeScreenshotElement(Element element) {
+		validateHasNoAttributes(element);
+		validateHasNoChildElements(element);
 	}
 
 	protected static void validateTaskElement(

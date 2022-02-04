@@ -162,30 +162,30 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
-		String contentType = null;
+		String contentType = _customMimeTypes.getOrDefault(
+			_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
 
-		try {
-			contentType = _customMimeTypes.getOrDefault(
-				_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
+		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
+			Metadata metadata = new Metadata();
 
-			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
-				Metadata metadata = new Metadata();
+			metadata.set(
+				Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
-				metadata.set(
-					Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
-
+			try {
 				contentType = String.valueOf(_detector.detect(null, metadata));
 			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
-			if (!contentType.contains("tika")) {
-				return contentType;
-			}
-			else if (_log.isDebugEnabled()) {
-				_log.debug("Retrieved invalid content type " + contentType);
+				return ContentTypes.APPLICATION_OCTET_STREAM;
 			}
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+
+		if (!contentType.contains("tika")) {
+			return contentType;
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug("Retrieved invalid content type " + contentType);
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;

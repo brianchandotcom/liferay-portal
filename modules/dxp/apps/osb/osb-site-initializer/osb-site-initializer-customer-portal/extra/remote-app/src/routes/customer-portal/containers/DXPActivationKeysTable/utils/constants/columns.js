@@ -14,7 +14,7 @@ import ClayIcon from '@clayui/icon';
 export const COLUMNS = [
 	{
 		accessor: 'envName',
-		bodyClass: 'border-0',
+		bodyClass: 'border-0 cursor-pointer',
 		expanded: true,
 		header: {
 			description: 'Description',
@@ -24,7 +24,7 @@ export const COLUMNS = [
 	},
 	{
 		accessor: 'keyType',
-		bodyClass: 'border-0',
+		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			description: 'Host Name / Cluster Size',
 			name: 'Key Type',
@@ -34,7 +34,7 @@ export const COLUMNS = [
 	},
 	{
 		accessor: 'envType',
-		bodyClass: 'border-0',
+		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			name: 'Environment Type',
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
@@ -42,7 +42,7 @@ export const COLUMNS = [
 	},
 	{
 		accessor: 'expirationDate',
-		bodyClass: 'border-0',
+		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			name: 'Exp. Date',
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
@@ -52,7 +52,7 @@ export const COLUMNS = [
 	{
 		accessor: 'status',
 		align: 'center',
-		bodyClass: 'border-0',
+		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			name: 'Status',
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
@@ -62,6 +62,7 @@ export const COLUMNS = [
 		accessor: 'download',
 		align: 'center',
 		bodyClass: 'border-0',
+		disableCustomClickOnRow: true,
 		header: {
 			name: <ClayIcon symbol="download" />,
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',

@@ -156,6 +156,14 @@ const Table = ({
 										expanded={column.expanded}
 										key={`${rowIndex}-${columnIndex}`}
 										noWrap={column.noWrap}
+										onClick={() => {
+											if (
+												!column.disableCustomClickOnRow &&
+												row.customClickOnRow
+											) {
+												return row.customClickOnRow();
+											}
+										}}
 									>
 										{row[column.accessor]}
 									</ClayTable.Cell>

@@ -10,12 +10,14 @@
  */
 
 import {ButtonWithIcon} from '@clayui/core';
+import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useEffect, useState} from 'react';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import ModalKeyDetails from '../../components/ModalKeyDetails';
 import {useCustomerPortal} from '../../context';
 import ActivationKeysManagementBar from './Bar';
 import {
@@ -53,6 +55,12 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [isLoadingActivationKeys, setIsLoadingActivationKeys] = useState(
 		false
 	);
+
+	const [isVisibleModal, setIsVisibleModal] = useState(false);
+	const [currentActivationKey, setCurrentActivationKey] = useState();
+	const {observer, onClose} = useModal({
+		onClose: () => setIsVisibleModal(false),
+	});
 
 	useEffect(() => {
 		if (filterStatusBar) {
@@ -184,6 +192,10 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					isLoading={isLoadingActivationKeys}
 					paginationConfig={paginationConfig}
 					rows={activationKeysFiltered.map((activationKey) => ({
+						customClickOnRow: () => {
+							setCurrentActivationKey(activationKey);
+							setIsVisibleModal(true);
+						},
 						download: (
 							<ButtonWithIcon
 								displayType="null"
@@ -234,6 +246,16 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					}))}
 				/>
 			</ClayTooltipProvider>
+
+			{isVisibleModal && (
+				<ModalKeyDetails
+					ACTIVATION_STATUS={ACTIVATION_STATUS}
+					activationKeys={currentActivationKey}
+					isVisibleModal={isVisibleModal}
+					observer={observer}
+					onClose={onClose}
+				/>
+			)}
 		</div>
 	);
 };

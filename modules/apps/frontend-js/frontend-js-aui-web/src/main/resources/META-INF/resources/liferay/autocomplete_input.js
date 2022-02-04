@@ -141,9 +141,15 @@ AUI.add(
 
 				var tplReplace = instance.get('tplReplace');
 
+				var mentionsResult = document.getElementById(
+					'_com_liferay_mentions_web_portlet_MentionsPortlet_mentionsResult'
+				);
+
 				if (tplReplace) {
 					text = Lang.sub(tplReplace, event.result.raw);
 				}
+
+				mentionsResult.style.display = 'none';
 
 				instance._inputNode.focus();
 

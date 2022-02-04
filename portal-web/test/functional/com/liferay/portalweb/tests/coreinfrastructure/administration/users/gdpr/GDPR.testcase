@@ -183,6 +183,8 @@ definition {
 
 	@priority = "5"
 	test AnonymizeEntryFromApplication {
+		property portal.acceptance = "true";
+
 		User.logoutPG();
 
 		User.loginUserPG(
@@ -1248,6 +1250,8 @@ definition {
 
 	@priority = "5"
 	test DeleteEntryFromApplication {
+		property portal.acceptance = "true";
+
 		User.logoutPG();
 
 		User.loginUserPG(

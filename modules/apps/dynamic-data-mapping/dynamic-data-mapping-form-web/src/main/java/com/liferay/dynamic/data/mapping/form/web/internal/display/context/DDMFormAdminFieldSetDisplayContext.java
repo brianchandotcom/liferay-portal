@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFDateTimeDDMFormFieldTypeConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper.FieldSetPermissionCheckerHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -115,8 +114,6 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService,
-		FFDateTimeDDMFormFieldTypeConfiguration
-			ffDateTimeDDMFormFieldTypeConfiguration,
 		FFSubmissionsSettingsConfigurationActivator
 			ffSubmissionsSettingsConfigurationActivator,
 		JSONFactory jsonFactory, NPMResolver npmResolver,
@@ -135,9 +132,8 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormTemplateContextFactory, ddmFormValuesFactory,
 			ddmFormValuesMerger, ddmFormWebConfiguration,
 			ddmStorageAdapterTracker, ddmStructureLocalService,
-			ddmStructureService, ffDateTimeDDMFormFieldTypeConfiguration,
-			ffSubmissionsSettingsConfigurationActivator, jsonFactory,
-			npmResolver, objectDefinitionLocalService, portal);
+			ddmStructureService, ffSubmissionsSettingsConfigurationActivator,
+			jsonFactory, npmResolver, objectDefinitionLocalService, portal);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			ddmFormAdminRequestHelper);

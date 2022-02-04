@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFDateTimeDDMFormFieldTypeConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper.DDMFormAdminRequestHelper;
@@ -112,7 +111,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -125,6 +123,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -173,8 +172,6 @@ public class DDMFormAdminDisplayContext {
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService,
-		FFDateTimeDDMFormFieldTypeConfiguration
-			ffDateTimeDDMFormFieldTypeConfiguration,
 		FFSubmissionsSettingsConfigurationActivator
 			ffSubmissionsSettingsConfigurationActivator,
 		JSONFactory jsonFactory, NPMResolver npmResolver,
@@ -202,8 +199,6 @@ public class DDMFormAdminDisplayContext {
 		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
-		_ffDateTimeDDMFormFieldTypeConfiguration =
-			ffDateTimeDDMFormFieldTypeConfiguration;
 		_ffSubmissionsSettingsConfigurationActivator =
 			ffSubmissionsSettingsConfigurationActivator;
 		_npmResolver = npmResolver;
@@ -1736,16 +1731,11 @@ public class DDMFormAdminDisplayContext {
 	private List<DDMFormFieldType> _removeDDMFormFieldTypesOutOfScope(
 		List<DDMFormFieldType> ddmFormFieldTypes) {
 
-		List<String> ddmFormFieldTypesOutOfScope = ListUtil.fromArray(
+		List<String> ddmFormFieldTypesOutOfScope = Arrays.asList(
 			DDMFormFieldTypeConstants.DDM_IMAGE,
 			DDMFormFieldTypeConstants.GEOLOCATION,
 			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 			LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT);
-
-		if (!_ffDateTimeDDMFormFieldTypeConfiguration.enabled()) {
-			ddmFormFieldTypesOutOfScope.add(
-				DDMFormFieldTypeConstants.DATE_TIME);
-		}
 
 		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
 
@@ -1827,8 +1817,6 @@ public class DDMFormAdminDisplayContext {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private String _displayStyle;
-	private final FFDateTimeDDMFormFieldTypeConfiguration
-		_ffDateTimeDDMFormFieldTypeConfiguration;
 	private final FFSubmissionsSettingsConfigurationActivator
 		_ffSubmissionsSettingsConfigurationActivator;
 	private final FormInstancePermissionCheckerHelper

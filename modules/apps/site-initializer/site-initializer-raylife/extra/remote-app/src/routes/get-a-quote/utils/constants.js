@@ -29,7 +29,7 @@ export const SUBSECTION_KEYS = {
 	BUSINESS_ANUAL_GROSS_REVENUE:
 		'What is your estimated annual gross revenue for the next 12 months?',
 	BUSINESS_EMAIL: 'Business Email',
-	BUSINESS_FEDERAL_EMPLOYER_ID:
+	BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER:
 		'Does your business have a Federal Employer Identification Number (FEIN)?',
 	BUSINESS_WEBSITE: 'Business Website',
 	BUSINESS_YEAR_OPERATION: 'Does your business operate year round?',
@@ -41,6 +41,8 @@ export const SUBSECTION_KEYS = {
 	EMPLOYEES_AMOUNT: 'How many full or part time employees do you have?',
 	EMPLOYEES_ANNUAL_PAYROLL:
 		'What do you anticipate your annual payroll will be for all employees over the next 12 months?',
+	FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER:
+		'Federal Employer Identification Number (FEIN)',
 	LEGAL_ENTITY: 'Legal Entity',
 	OWNERS_ANNUAL_PAYROLL:
 		'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?',
@@ -173,7 +175,8 @@ export const AVAILABLE_STEPS = {
 				active: true,
 				hideContinueButton: true,
 				hideInputLabel: false,
-				title: SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_ID,
+				title:
+					SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER,
 			},
 			{
 				active: false,

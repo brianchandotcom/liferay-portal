@@ -58,7 +58,7 @@ export function FormEmployees({form}) {
 			<MobileContainer
 				{...mobileContainerProps}
 				mobileSubSection={getMobileSubSection(
-					SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_ID
+					SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER
 				)}
 			>
 				<div className="mb-4">
@@ -66,10 +66,21 @@ export function FormEmployees({form}) {
 						control={control}
 						inputProps={{
 							onChange: (value) => {
-								AVAILABLE_STEPS.EMPLOYEES.mobileSubSections[0].hideContinueButton = false;
+								AVAILABLE_STEPS.EMPLOYEES.mobileSubSections.map(
+									(mobileSubSection) => {
+										if (
+											mobileSubSection.title ===
+											SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER
+										) {
+											mobileSubSection.hideContinueButton = false;
+										}
+									}
+								);
+
 								setValue(setFormPath('hasFein'), value, {
 									shouldValidate: true,
 								});
+
 								if (value === 'false') {
 									setValue(setFormPath('fein'), '');
 								}
@@ -78,7 +89,7 @@ export function FormEmployees({form}) {
 						label={
 							mobileContainerProps.isMobile
 								? ''
-								: 'Does your business have a Federal Employer Identification Number (FEIN)?'
+								: SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER
 						}
 						name={setFormPath('hasFein')}
 						rules={{required: true}}
@@ -87,7 +98,9 @@ export function FormEmployees({form}) {
 
 				<FEINControlledInput
 					control={control}
-					label="Federal Employer Identification Number (FEIN)"
+					label={
+						SUBSECTION_KEYS.FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER
+					}
 					moreInfoProps={{
 						callback: () => updateState(setFormPath('fein')),
 						event: TIP_EVENT,
@@ -115,7 +128,7 @@ export function FormEmployees({form}) {
 			>
 				<YearControlledInput
 					control={control}
-					label="What year did you start your business?"
+					label={SUBSECTION_KEYS.YEAR_BUSINESS_STARTED}
 					name={setFormPath('startBusinessAtYear')}
 					rules={{required: 'This field is required'}}
 				/>
@@ -129,7 +142,7 @@ export function FormEmployees({form}) {
 			>
 				<ControlledSwitch
 					control={control}
-					label="Does your business operate year round?"
+					label={SUBSECTION_KEYS.BUSINESS_YEAR_OPERATION}
 					name={setFormPath('businessOperatesYearRound')}
 					onSelect={nextStep}
 					rules={{required: true}}
@@ -144,7 +157,7 @@ export function FormEmployees({form}) {
 			>
 				<NumberControlledInput
 					control={control}
-					label="How many full or part time employees do you have?"
+					label={SUBSECTION_KEYS.EMPLOYEES_AMOUNT}
 					moreInfoProps={{
 						callback: () =>
 							updateState(setFormPath('partTimeEmployees')),
@@ -175,7 +188,7 @@ export function FormEmployees({form}) {
 			>
 				<CurrencyControlledInput
 					control={control}
-					label="What is your estimated annual gross revenue for the next 12 months?"
+					label={SUBSECTION_KEYS.BUSINESS_ANUAL_GROSS_REVENUE}
 					name={setFormPath('estimatedAnnualGrossRevenue')}
 					rules={{required: 'This field is required'}}
 				/>
@@ -189,7 +202,7 @@ export function FormEmployees({form}) {
 			>
 				<CurrencyControlledInput
 					control={control}
-					label="What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?"
+					label={SUBSECTION_KEYS.OWNERS_ANNUAL_PAYROLL}
 					name={setFormPath('annualPayrollForOwner')}
 					rules={{required: 'This field is required'}}
 				/>
@@ -203,7 +216,7 @@ export function FormEmployees({form}) {
 			>
 				<CurrencyControlledInput
 					control={control}
-					label="What do you anticipate your annual payroll will be for all employees over the next 12 months?"
+					label={SUBSECTION_KEYS.EMPLOYEES_ANNUAL_PAYROLL}
 					name={setFormPath('annualPayrollForEmployees')}
 					rules={{required: 'This field is required'}}
 				/>

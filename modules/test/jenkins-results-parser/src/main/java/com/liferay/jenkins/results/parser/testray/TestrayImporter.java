@@ -1593,6 +1593,14 @@ public class TestrayImporter {
 		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
 		string = _replaceEnvVarsTopLevelBuild(string);
 
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String jobName = topLevelBuild.getJobName();
+
+		if (jobName.contains("subrepository")) {
+			string = _replaceEnvVarsSubrepository(string);
+		}
+
 		return string;
 	}
 
@@ -1863,6 +1871,16 @@ public class TestrayImporter {
 			"$(qa.websites.project.name)",
 			JenkinsResultsParserUtil.join(
 				",", qaWebsitesTopLevelBuild.getProjectNames()));
+	}
+
+	private String _replaceEnvVarsSubrepository(String string) {
+		string = string.replace(
+			"$(github.upstream.branch.name)",
+			_topLevelBuild.getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME"));
+
+		return string.replace(
+			"$(repository.name)",
+			_topLevelBuild.getParameterValue("REPOSITORY_NAME"));
 	}
 
 	private String _replaceEnvVarsTopLevelBuild(String string) {

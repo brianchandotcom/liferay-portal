@@ -98,8 +98,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
 	@priority = "3"
 	test ViewPropertyListDefault {
-		property portal.upstream = "vini";
-
 		var propertyNameList = "New property 1,New property 2";
 
 		task ("Go to properties") {

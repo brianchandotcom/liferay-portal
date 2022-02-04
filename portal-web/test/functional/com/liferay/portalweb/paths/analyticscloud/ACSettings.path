@@ -276,7 +276,7 @@
 </tr>
 <tr>
 	<td>PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION</td>
-	<td>//span[contains(@class,'secondary-info') and contains(text(),'Create a property to get started. Access our documentation to learn more')]</td>
+	<td>//*[contains(text(),'${key_messageValue}')]</td>
 	<td></td>
 </tr>
 <tr>

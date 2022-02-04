@@ -70,7 +70,9 @@ definition {
 	macro assertNoProperties {
 		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
 
-		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
+		for (var key_messageValue : list "Create a property to get started.,Access our documentation to learn more.") {
+			AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
+		}
 	}
 
 	macro assertPropertyHeader {

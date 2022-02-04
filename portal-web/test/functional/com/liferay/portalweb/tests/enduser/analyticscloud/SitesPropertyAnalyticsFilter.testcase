@@ -271,8 +271,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
 	@priority = "4"
 	test UserLostAccess {
-		property portal.upstream = "vini";
-
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
 
@@ -343,8 +341,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8322 | Test Summary: A user (independent of user role) should only see the properties they are invited to by the AC admin or the properties which the user is owner"
 	@priority = "4"
 	test UserShouldOnlySeePropertiesAreInvitedByACAdminOrPropertiesWhichUserOwner {
-		property portal.upstream = "vini";
-
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
 

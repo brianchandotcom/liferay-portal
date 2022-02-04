@@ -112,8 +112,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9037 | Test Summary: As an Business User, a Property with a duplicate name should have an incrementing identifier appended to it's name"
 	@priority = "3"
 	test AutoRenamePropertyWhenDuplicateWithExistingOne {
-		property portal.upstream = "vini";
-
 		var propertyNameList = "AC Test Property,AC Test Property (1)";
 
 		task ("Add a new property on AC") {
@@ -459,8 +457,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@priority = "5"
 	test OwnerCanCreateNewProperty {
-		property portal.upstream = "vini";
-
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();

@@ -706,6 +706,8 @@ definition {
 
 	@priority = "4"
 	test AssignUserGroupToUser {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -951,6 +953,8 @@ definition {
 
 	@priority = "5"
 	test ChangeUserPassword {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1124,6 +1128,8 @@ definition {
 	@description = "This is a use case for LPS-121271."
 	@priority = "3"
 	test EditAlertsandAnnouncementsDelivery {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2056,6 +2062,8 @@ definition {
 
 	@priority = "5"
 	test SearchUser {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

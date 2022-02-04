@@ -241,6 +241,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8320 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "4"
 	test PropertyFieldWhenNoProperty {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
 		task ("AC launch and delete all properties") {
 			ACUtils.launchAC();
 
@@ -248,7 +252,7 @@ definition {
 		}
 
 		task ("Asset that no longer properties exists") {
-			AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
+			ACProperties.assertNoProperties();
 		}
 
 		task ("Asset that there are no more properties on the sites page") {

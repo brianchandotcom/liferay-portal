@@ -82,7 +82,7 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 
 		return AccountRolePermission.contains(
 			PermissionCheckerFactoryUtil.create(user),
-			accountRole.getAccountRoleId(), ActionKeys.UPDATE);
+			accountRole.getAccountRoleId(), ActionKeys.DEFINE_PERMISSIONS);
 	}
 
 	@Override

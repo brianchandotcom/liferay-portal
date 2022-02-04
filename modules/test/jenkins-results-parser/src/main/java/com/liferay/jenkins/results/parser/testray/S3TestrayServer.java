@@ -51,7 +51,7 @@ public class S3TestrayServer extends BaseTestrayServer {
 			relativeBuildDirPath + "/results.tar.gz", resultsTarGzFile);
 
 		testrayS3Bucket.createTestrayS3Object(
-			relativeBuildDirPath + "/test-completed", "");
+			relativeBuildDirPath + "/.lfr-testray-completed", "");
 	}
 
 	private String _getRelativeBuildDirPath(TopLevelBuild topLevelBuild) {

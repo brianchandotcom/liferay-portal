@@ -26,8 +26,9 @@ const TOPPER_BAR_HEIGHT = 24;
 const TOPPER_BAR_BORDER_WIDTH = 2;
 
 export function TopperLabel({children, itemElement}) {
-	const languageId = useSelector(selectLanguageId);
 	const globalContext = useGlobalContext();
+	const languageId = useSelector(selectLanguageId);
+	const layoutData = useSelector((state) => state.layoutData);
 	const [positionConfig, setPositionConfig] = useState({
 		isInset: false,
 		style: {},
@@ -182,7 +183,7 @@ export function TopperLabel({children, itemElement}) {
 				}
 			};
 		}
-	}, [itemElement, languageId, globalContext]);
+	}, [globalContext, itemElement, languageId, layoutData]);
 
 	return (
 		<ReactPortal container={globalContext.document.body} wrapper={false}>

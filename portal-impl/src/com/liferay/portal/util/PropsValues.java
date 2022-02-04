@@ -1550,10 +1550,6 @@ public class PropsValues {
 	public static final String[] LOGOUT_EVENTS_PRE = PropsUtil.getArray(
 		PropsKeys.LOGOUT_EVENTS_PRE);
 
-	public static final boolean LOOK_AND_FEEL_MODIFIABLE =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LOOK_AND_FEEL_MODIFIABLE));
-
 	public static final String MAIL_AUDIT_TRAIL = PropsUtil.get(
 		PropsKeys.MAIL_AUDIT_TRAIL);
 

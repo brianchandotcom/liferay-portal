@@ -103,41 +103,40 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		String contentType = null;
+		String contentType = getCustomContentType(
+			FileUtil.getExtension(fileName));
 
-		try (TikaInputStream tikaInputStream = TikaInputStream.get(
-				new CloseShieldInputStream(inputStream))) {
+		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
+			Metadata metadata = new Metadata();
 
-			contentType = getCustomContentType(FileUtil.getExtension(fileName));
+			metadata.set(
+				Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
-			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
-				Metadata metadata = new Metadata();
-
-				metadata.set(
-					Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
+			try (TikaInputStream tikaInputStream = TikaInputStream.get(
+					new CloseShieldInputStream(inputStream))) {
 
 				contentType = String.valueOf(
 					_detector.detect(tikaInputStream, metadata));
 			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
-			if (contentType.contains("tika")) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Retrieved invalid content type " + contentType);
-				}
-
-				contentType = getContentType(fileName);
-			}
-
-			if (contentType.contains("tika")) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Retrieved invalid content type " + contentType);
-				}
-
-				contentType = ContentTypes.APPLICATION_OCTET_STREAM;
+				return ContentTypes.APPLICATION_OCTET_STREAM;
 			}
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+
+		if (contentType.contains("tika")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Retrieved invalid content type " + contentType);
+			}
+
+			contentType = getContentType(fileName);
+		}
+
+		if (contentType.contains("tika")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Retrieved invalid content type " + contentType);
+			}
 
 			contentType = ContentTypes.APPLICATION_OCTET_STREAM;
 		}

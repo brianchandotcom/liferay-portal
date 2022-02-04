@@ -63,6 +63,10 @@ public class LinkTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
+	public boolean getBlock() {
+		return _block;
+	}
+
 	public boolean getBorderless() {
 		return _borderless;
 	}
@@ -101,6 +105,10 @@ public class LinkTag extends BaseContainerTag {
 
 	public String getType() {
 		return _type;
+	}
+
+	public void setBlock(boolean block) {
+		_block = block;
 	}
 
 	public void setBorderless(boolean borderless) {
@@ -147,6 +155,7 @@ public class LinkTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_block = false;
 		_borderless = false;
 		_displayType = null;
 		_download = null;
@@ -171,6 +180,8 @@ public class LinkTag extends BaseContainerTag {
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("icon", _icon);
+
+		props.put("button", _type.equals("button"));
 
 		if (Validator.isNotNull(_label)) {
 			props.put(
@@ -252,6 +263,7 @@ public class LinkTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:link:";
 
+	private boolean _block;
 	private boolean _borderless;
 	private String _displayType;
 	private String _download;

@@ -581,8 +581,6 @@ definition {
 
 			for (var n : list "1,2,3,4,5") {
 				AssertVisible(
-					key_entryContent = "//div[contains(text(),'Category')]",
-					key_fragmentName = "Collection Display",
 					key_position = "${n}",
 					locator1 = "Masterclass#COLUMNS_NUMBER");
 			}
@@ -1332,8 +1330,6 @@ definition {
 
 			for (var n : list "1,2,3") {
 				AssertVisible(
-					key_entryContent = "//div[contains(text(),'Category')]",
-					key_fragmentName = "Collection Display",
 					key_position = "${n}",
 					locator1 = "Masterclass#COLUMNS_NUMBER");
 			}
@@ -1356,8 +1352,6 @@ definition {
 
 			for (var n : list "1,2,3") {
 				AssertVisible(
-					key_entryContent = "//div[contains(text(),'Category')]",
-					key_fragmentName = "Collection Display",
 					key_position = "${n}",
 					locator1 = "Masterclass#COLUMNS_NUMBER");
 			}

@@ -59,7 +59,7 @@
 </tr>
 <tr>
 	<td>COLUMNS_NUMBER</td>
-	<td>xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'row')]//div[contains(@class,'col-md')])[${key_position}]${key_entryContent}</td>
+	<td>xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'row')]//div[contains(@class,'col-md')])[${key_position}]</td>
 	<td></td>
 </tr>
 <!--NAVBAR-->

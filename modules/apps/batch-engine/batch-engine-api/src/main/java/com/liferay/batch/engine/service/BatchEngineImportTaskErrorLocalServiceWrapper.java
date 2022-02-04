@@ -59,6 +59,18 @@ public class BatchEngineImportTaskErrorLocalServiceWrapper
 			addBatchEngineImportTaskError(batchEngineImportTaskError);
 	}
 
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineImportTaskError
+		addBatchEngineImportTaskError(
+			long companyId, long userId, long batchEngineImportTaskId,
+			String item, int itemIndex, String message) {
+
+		return _batchEngineImportTaskErrorLocalService.
+			addBatchEngineImportTaskError(
+				companyId, userId, batchEngineImportTaskId, item, itemIndex,
+				message);
+	}
+
 	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
@@ -292,6 +304,15 @@ public class BatchEngineImportTaskErrorLocalServiceWrapper
 
 		return _batchEngineImportTaskErrorLocalService.
 			getBatchEngineImportTaskErrors(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
+			getBatchEngineImportTaskErrors(long batchEngineImportTaskId) {
+
+		return _batchEngineImportTaskErrorLocalService.
+			getBatchEngineImportTaskErrors(batchEngineImportTaskId);
 	}
 
 	/**

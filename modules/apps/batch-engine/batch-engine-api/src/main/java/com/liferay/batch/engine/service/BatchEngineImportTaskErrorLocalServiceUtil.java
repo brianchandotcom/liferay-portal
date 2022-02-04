@@ -62,6 +62,15 @@ public class BatchEngineImportTaskErrorLocalServiceUtil {
 			batchEngineImportTaskError);
 	}
 
+	public static BatchEngineImportTaskError addBatchEngineImportTaskError(
+		long companyId, long userId, long batchEngineImportTaskId, String item,
+		int itemIndex, String message) {
+
+		return getService().addBatchEngineImportTaskError(
+			companyId, userId, batchEngineImportTaskId, item, itemIndex,
+			message);
+	}
+
 	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
@@ -259,6 +268,13 @@ public class BatchEngineImportTaskErrorLocalServiceUtil {
 		getBatchEngineImportTaskErrors(int start, int end) {
 
 		return getService().getBatchEngineImportTaskErrors(start, end);
+	}
+
+	public static List<BatchEngineImportTaskError>
+		getBatchEngineImportTaskErrors(long batchEngineImportTaskId) {
+
+		return getService().getBatchEngineImportTaskErrors(
+			batchEngineImportTaskId);
 	}
 
 	/**

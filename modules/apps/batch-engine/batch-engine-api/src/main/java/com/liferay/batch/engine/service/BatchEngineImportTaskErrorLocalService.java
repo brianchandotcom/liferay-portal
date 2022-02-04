@@ -76,6 +76,10 @@ public interface BatchEngineImportTaskErrorLocalService
 	public BatchEngineImportTaskError addBatchEngineImportTaskError(
 		BatchEngineImportTaskError batchEngineImportTaskError);
 
+	public BatchEngineImportTaskError addBatchEngineImportTaskError(
+		long companyId, long userId, long batchEngineImportTaskId, String item,
+		int itemIndex, String message);
+
 	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
@@ -234,6 +238,10 @@ public interface BatchEngineImportTaskErrorLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
+		long batchEngineImportTaskId);
 
 	/**
 	 * Returns the number of batch engine import task errors.

@@ -72,7 +72,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				CommerceNotificationType.class,
 				new ObjectDefinitionCommerceNotificationType(
 					"delete", objectDefinition.getClassName() + "#delete",
-					objectDefinition.getName()),
+					objectDefinition.getShortName()),
 				HashMapDictionaryBuilder.put(
 					"commerce.notification.type.key",
 					objectDefinition.getClassName() + "#delete"
@@ -81,7 +81,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				CommerceNotificationType.class,
 				new ObjectDefinitionCommerceNotificationType(
 					"update", objectDefinition.getClassName() + "#update",
-					objectDefinition.getName()),
+					objectDefinition.getShortName()),
 				HashMapDictionaryBuilder.put(
 					"commerce.notification.type.key",
 					objectDefinition.getClassName() + "#update"

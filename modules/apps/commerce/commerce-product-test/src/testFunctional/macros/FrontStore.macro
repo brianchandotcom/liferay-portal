@@ -1,16 +1,7 @@
 definition {
 
 	macro addInitializerProductToCart {
-		CommerceNavigator.gotoMiniCart();
-
-		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
-
-		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
-			var newItemCount = "${currentItemCount}";
-		}
-		else {
-			var newItemCount = ${currentItemCount} + 1;
-		}
+		var newItemCount = FrontStore.getCurrentCartItemCount();
 
 		Refresh();
 
@@ -29,16 +20,7 @@ definition {
 	}
 
 	macro addToCartFromProductDetails {
-		CommerceNavigator.gotoMiniCart();
-
-		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
-
-		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
-			var newItemCount = "${currentItemCount}";
-		}
-		else {
-			var newItemCount = ${currentItemCount} + 1;
-		}
+		var newItemCount = FrontStore.getCurrentCartItemCount();
 
 		Refresh();
 
@@ -62,6 +44,21 @@ definition {
 		WaitForElementPresent(
 			key_itemCount = "${newItemCount}",
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+	}
+
+	macro getCurrentCartItemCount {
+		CommerceNavigator.gotoMiniCart();
+
+		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
+
+		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
+			var newItemCount = "${currentItemCount}";
+		}
+		else {
+			var newItemCount = ${currentItemCount} + 1;
+		}
+
+		return "${newItemCount}";
 	}
 
 	macro selectAssociatedFSOptionsValue {

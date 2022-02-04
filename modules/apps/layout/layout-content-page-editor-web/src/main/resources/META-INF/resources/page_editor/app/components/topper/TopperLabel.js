@@ -168,6 +168,8 @@ export function TopperLabel({children, itemElement}) {
 			}
 
 			globalContext.window.addEventListener('scroll', handleScroll);
+			updateItemElementSize(itemElement);
+			updatePosition();
 
 			return () => {
 				globalContext.window.removeEventListener(

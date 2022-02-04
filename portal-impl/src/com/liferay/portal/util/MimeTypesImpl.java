@@ -14,14 +14,15 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -103,8 +104,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		String contentType = getCustomContentType(
-			FileUtil.getExtension(fileName));
+		String contentType = getCustomContentType(_getExtension(fileName));
 
 		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 			Metadata metadata = new Metadata();
@@ -153,7 +153,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		String contentType = null;
 
 		try {
-			contentType = getCustomContentType(FileUtil.getExtension(fileName));
+			contentType = getCustomContentType(_getExtension(fileName));
 
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();
@@ -199,7 +199,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	protected String getCustomContentType(String extension) {
-		if (Validator.isNull(extension)) {
+		if (extension == null) {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
@@ -208,7 +208,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 			Set<String> set = entry.getValue();
 
-			if (set.contains(".".concat(extension))) {
+			if (set.contains(extension)) {
 				return entry.getKey();
 			}
 		}
@@ -294,6 +294,20 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			extensionsMap.put(
 				aliasElement.getAttribute(ALIAS_TYPE_ATTR), extensions);
 		}
+	}
+
+	private String _getExtension(String fileName) {
+		if (fileName == null) {
+			return null;
+		}
+
+		int pos = fileName.lastIndexOf(CharPool.PERIOD);
+
+		if (pos > 0) {
+			return StringUtil.toLowerCase(fileName.substring(pos));
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);

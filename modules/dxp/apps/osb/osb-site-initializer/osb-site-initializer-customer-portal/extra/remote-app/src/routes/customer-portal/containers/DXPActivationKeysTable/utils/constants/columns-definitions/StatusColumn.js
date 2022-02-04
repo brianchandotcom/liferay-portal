@@ -14,7 +14,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 
 const StatusColumn = ({activationKey}) => {
-	let activationStatus = ACTIVATION_STATUS.active;
+	let activationStatus = ACTIVATION_STATUS.activated;
 	const today = new Date();
 
 	if (today < new Date(activationKey.startDate)) {

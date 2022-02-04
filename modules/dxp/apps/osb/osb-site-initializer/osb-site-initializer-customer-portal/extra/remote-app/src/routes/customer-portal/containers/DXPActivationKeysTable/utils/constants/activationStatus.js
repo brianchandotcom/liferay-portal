@@ -10,10 +10,10 @@
  */
 
 export const ACTIVATION_STATUS = {
-	active: {
+	activated: {
 		color: 'success',
-		id: 'active',
-		title: 'Active',
+		id: 'activated',
+		title: 'Activated',
 	},
 	all: {
 		color: 'none',

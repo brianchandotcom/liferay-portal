@@ -73,8 +73,8 @@ const DXPActivationKeysTable = () => {
 			if (items) {
 				setActivationKeys(items);
 				setStatusBar({
-					activeTotalCount: items.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.active(
+					activatedTotalCount: items.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.activated(
 							activationKey
 						)
 					).length,
@@ -126,7 +126,10 @@ const DXPActivationKeysTable = () => {
 
 	const groupButtons = [
 		getGroupButtons(ACTIVATION_STATUS.all, statusBar?.allTotalCount),
-		getGroupButtons(ACTIVATION_STATUS.active, statusBar?.activeTotalCount),
+		getGroupButtons(
+			ACTIVATION_STATUS.activated,
+			statusBar?.activatedTotalCount
+		),
 		getGroupButtons(
 			ACTIVATION_STATUS.notActivated,
 			statusBar?.notActiveTotalCount

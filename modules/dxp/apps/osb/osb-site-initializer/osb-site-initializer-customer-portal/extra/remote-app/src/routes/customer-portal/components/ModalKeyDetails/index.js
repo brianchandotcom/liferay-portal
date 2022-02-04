@@ -61,7 +61,7 @@ const ModalKeyDetails = ({
 							}
 						/>
 
-						<div className="d-flex justify-content-end m-4">
+						<div className="d-flex justify-content-end my-4">
 							<Button displayType="secondary" onClick={onClose}>
 								Close
 							</Button>

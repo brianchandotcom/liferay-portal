@@ -7,6 +7,10 @@
 .cp-dxp-activation-key-table {
 	max-width: 85vw;
 
+	.cursor-pointer {
+		cursor: pointer;
+	}
+
 	tbody {
 		tr:first-child {
 			td {

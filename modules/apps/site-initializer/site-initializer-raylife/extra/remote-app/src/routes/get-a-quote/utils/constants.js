@@ -26,20 +26,31 @@ export const TOTAL_OF_FIELD = {
 };
 
 export const SUBSECTION_KEYS = {
+	BUSINESS_ANUAL_GROSS_REVENUE:
+		'What is your estimated annual gross revenue for the next 12 months?',
 	BUSINESS_EMAIL: 'Business Email',
+	BUSINESS_FEDERAL_EMPLOYER_ID:
+		'Does your business have a Federal Employer Identification Number (FEIN)?',
 	BUSINESS_WEBSITE: 'Business Website',
+	BUSINESS_YEAR_OPERATION: 'Does your business operate year round?',
 	DO_YOU_HAVE_RAYLIFE_POLICY: 'Do you have a Raylife Auto policy?',
 	DO_YOU_SELL_PRODUCTS_UNDER_OWN_BRAND:
 		'Do you sell products under your own brand or label?',
 	DO_YOU_STORE_PERSONALITY_IDENTIFIABLE:
 		'Do you store personally identifiable information about your customers?',
+	EMPLOYEES_AMOUNT: 'How many full or part time employees do you have?',
+	EMPLOYEES_ANNUAL_PAYROLL:
+		'What do you anticipate your annual payroll will be for all employees over the next 12 months?',
 	LEGAL_ENTITY: 'Legal Entity',
+	OWNERS_ANNUAL_PAYROLL:
+		'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?',
 	PERCENT_OF_SALES_FROM_MERCHANDISE:
 		'Percent of sales from used merchandise?',
 	PHONE: 'Phone',
 	PHYSICAL_ADDRESS: 'Physical Address',
 	WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY:
 		'What percentage of overall sales involve delivery?',
+	YEAR_BUSINESS_STARTED: 'What year did you start your business?',
 	YEAR_OF_INDUSTRY_EXPERIENCE: 'Years of industry experience?',
 	YOUR_NAME: 'Your Name',
 };
@@ -157,6 +168,50 @@ export const AVAILABLE_STEPS = {
 		active: false,
 		id: 'EMPLOYEES',
 		index: 4,
+		mobileSubSections: [
+			{
+				active: true,
+				hideContinueButton: true,
+				hideInputLabel: false,
+				title: SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_ID,
+			},
+			{
+				active: false,
+				hideContinueButton: false,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.YEAR_BUSINESS_STARTED,
+			},
+			{
+				active: false,
+				hideContinueButton: true,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.BUSINESS_YEAR_OPERATION,
+			},
+			{
+				active: false,
+				hideContinueButton: false,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.EMPLOYEES_AMOUNT,
+			},
+			{
+				active: false,
+				hideContinueButton: false,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.BUSINESS_ANUAL_GROSS_REVENUE,
+			},
+			{
+				active: false,
+				hideContinueButton: false,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.OWNERS_ANNUAL_PAYROLL,
+			},
+			{
+				active: false,
+				hideContinueButton: false,
+				hideInputLabel: true,
+				title: SUBSECTION_KEYS.EMPLOYEES_ANNUAL_PAYROLL,
+			},
+		],
 		section: 'employees',
 		subsection: '',
 		title: 'Tell us about your employees!',

@@ -143,14 +143,13 @@ public class CounterLocalServiceTest {
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(
-			_prependClassPath(
-				portalProcessConfig.getBootstrapClassPath(),
-				LiferayIntegrationTestRule.class));
+			portalProcessConfig.getBootstrapClassPath());
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(
 			_prependClassPath(
 				portalProcessConfig.getRuntimeClassPath(),
-				CounterLocalServiceTest.class));
+				CounterLocalServiceTest.class,
+				LiferayIntegrationTestRule.class));
 
 		ProcessConfig processConfig = builder.build();
 

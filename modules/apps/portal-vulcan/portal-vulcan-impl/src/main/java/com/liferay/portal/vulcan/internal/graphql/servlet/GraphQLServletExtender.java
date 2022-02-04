@@ -62,6 +62,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.contributor.GraphQLContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
+import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
@@ -1786,6 +1787,32 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			new GraphQLObjectType.Builder();
+
+		String creatorGraphQLObjectTypeName = StringUtil.replace(
+			Creator.class.getName(), '.', '_');
+
+		graphQLTypes.put(
+			creatorGraphQLObjectTypeName,
+			graphQLObjectTypeBuilder.name(
+				creatorGraphQLObjectTypeName
+			).field(
+				_addField(Scalars.GraphQLString, "additionalName")
+			).field(
+				_addField(Scalars.GraphQLString, "contentType")
+			).field(
+				_addField(Scalars.GraphQLString, "familyName")
+			).field(
+				_addField(Scalars.GraphQLLong, "id")
+			).field(
+				_addField(Scalars.GraphQLString, "image")
+			).field(
+				_addField(Scalars.GraphQLString, "name")
+			).field(
+				_addField(Scalars.GraphQLString, "profileURL")
+			).build());
+
 		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
 
@@ -1801,8 +1828,7 @@ public class GraphQLServletExtender {
 				_addInputField(_mapGraphQLScalarType, "name_i18n")
 			).build());
 
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
-			new GraphQLObjectType.Builder();
+		graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
 
 		graphQLTypes.put(
 			"ListEntry",
@@ -2287,6 +2313,9 @@ public class GraphQLServletExtender {
 		if (Boolean.class.equals(clazz)) {
 			return Scalars.GraphQLBoolean;
 		}
+		else if (Date.class.equals(clazz)) {
+			return _dateGraphQLScalarType;
+		}
 		else if (Integer.class.equals(clazz)) {
 			return Scalars.GraphQLInt;
 		}
@@ -2301,6 +2330,14 @@ public class GraphQLServletExtender {
 		}
 
 		String key = (input ? "Input" : "") + clazz.getSimpleName();
+
+		if (graphQLTypes.containsKey(key)) {
+			return graphQLTypes.get(key);
+		}
+
+		key =
+			(input ? "Input" : "") +
+				StringUtil.replace(clazz.getName(), '.', '_');
 
 		if (graphQLTypes.containsKey(key)) {
 			return graphQLTypes.get(key);

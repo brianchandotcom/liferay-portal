@@ -190,7 +190,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 			_getGroupByStep(
 				accountEntryId, null, companyId, commerceChannelId,
 				commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -204,7 +204,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				accountEntryId, null, companyId, commerceChannelId, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -218,7 +218,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				accountEntryId, null, companyId, null, commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -232,7 +232,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				accountEntryId, null, companyId, null, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -249,7 +249,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 			_getGroupByStep(
 				null, accountGroupIds, companyId, commerceChannelId,
 				commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -263,7 +263,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, accountGroupIds, companyId, commerceChannelId, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -277,7 +277,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, accountGroupIds, companyId, null, commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -291,7 +291,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, accountGroupIds, companyId, null, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -305,7 +305,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, null, companyId, commerceChannelId, commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -319,7 +319,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, null, companyId, commerceChannelId, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -333,7 +333,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, null, companyId, null, commerceOrderTypeId,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()
@@ -368,7 +368,7 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		return dslQuery(
 			_getGroupByStep(
 				null, null, companyId, null, null,
-				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+				DSLQueryFactoryUtil.select(COREntryTable.INSTANCE)
 			).orderBy(
 				COREntryTable.INSTANCE.type.descending(),
 				COREntryTable.INSTANCE.priority.descending()

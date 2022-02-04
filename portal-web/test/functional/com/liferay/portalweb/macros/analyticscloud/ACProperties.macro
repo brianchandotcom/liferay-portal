@@ -69,6 +69,8 @@ definition {
 
 	macro assertNoProperties {
 		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
+
+		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
 	}
 
 	macro assertPropertyHeader {

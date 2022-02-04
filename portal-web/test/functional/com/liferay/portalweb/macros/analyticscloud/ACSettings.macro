@@ -895,12 +895,6 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_HEADER_DESCRIPTION");
 	}
 
-	macro viewPropertyListDefaultMessage {
-		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
-
-		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
-	}
-
 	macro viewUserNotSelectable {
 		AssertElementPresent(
 			locator1 = "ACSettings#USER_UNSELECTABLE",

@@ -66,8 +66,6 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 				"entityid", accountEntryDisplay.getAccountEntryId()
 			).put(
 				"entityname", accountEntryDisplay.getName()
-			).put(
-				"type", LanguageUtil.get(request, accountEntryDisplay.getType())
 			).build();
 
 			row.setData(data);

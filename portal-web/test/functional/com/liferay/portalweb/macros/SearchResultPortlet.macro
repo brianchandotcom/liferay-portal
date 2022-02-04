@@ -14,6 +14,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if ("${disableHighlighting}" == "true") {
+			Uncheck(
+				checkboxName = "Enable Highlighting",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",

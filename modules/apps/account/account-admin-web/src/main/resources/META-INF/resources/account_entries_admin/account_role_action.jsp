@@ -45,7 +45,9 @@ Role role = accountRoleDisplay.getRole();
 			message="edit"
 			url="<%= editAccountRoleURL %>"
 		/>
+	</c:if>
 
+	<c:if test="<%= !AccountRoleConstants.isSharedRole(role) && AccountRolePermission.contains(permissionChecker, accountRoleDisplay.getAccountRoleId(), ActionKeys.DEFINE_PERMISSIONS) %>">
 		<liferay-ui:icon
 			message="define-permissions"
 			url='<%= HttpUtil.setParameter(editAccountRoleURL, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_DEFINE_PERMISSIONS) %>'

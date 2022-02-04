@@ -1,0 +1,92 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+import ClayAlert from '@clayui/alert';
+import ClayModal from '@clayui/modal';
+import React, {useState} from 'react';
+import Button from '../../../../common/components/Button';
+import {getIconSpriteMap} from '../../../../common/providers/ClayProvider';
+import TableKeyDetails from '../TableKeyDetails';
+
+const ModalKeyDetails = ({
+	ACTIVATION_STATUS,
+	activationKeys,
+	isVisibleModal,
+	observer,
+	onClose,
+}) => {
+	const [isCopyTextToClipboard, setIsCopyTextToClipboard] = useState(false);
+	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
+
+	return (
+		<>
+			{isVisibleModal && (
+				<ClayModal center observer={observer} size="lg">
+					<div className="pt-4 px-4">
+						<div className="d-flex justify-content-between mb-4">
+							<div className="flex-row mb-1">
+								<h6 className="text-brand-primary">
+									ACTIVATION KEY DETAILS
+								</h6>
+
+								<h2 className="text-neutral-10">
+									{activationKeys.name}
+								</h2>
+
+								<p>{activationKeys.name}</p>
+							</div>
+
+							<Button
+								appendIcon="times"
+								aria-label="close"
+								className="align-self-start"
+								displayType="unstyled"
+								onClick={onClose}
+							/>
+						</div>
+
+						<TableKeyDetails
+							ACTIVATION_STATUS={ACTIVATION_STATUS}
+							activationKeys={activationKeys}
+							setIsCopyTextToClipboard={setIsCopyTextToClipboard}
+							setValueToCopyToClipboard={
+								setValueToCopyToClipboard
+							}
+						/>
+
+						<div className="d-flex justify-content-end m-4">
+							<Button displayType="secondary" onClick={onClose}>
+								Close
+							</Button>
+
+							<Button appendIcon="download" className="ml-2">
+								Download Key
+							</Button>
+						</div>
+					</div>
+
+					{isCopyTextToClipboard && (
+						<ClayAlert.ToastContainer>
+							<ClayAlert
+								autoClose={2000}
+								displayType="success"
+								onClose={() => setIsCopyTextToClipboard(false)}
+								spritemap={getIconSpriteMap()}
+							>
+								{valueToCopyToClipboard} copied to clipboard
+							</ClayAlert>
+						</ClayAlert.ToastContainer>
+					)}
+				</ClayModal>
+			)}
+		</>
+	);
+};
+export default ModalKeyDetails;

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -35,9 +34,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
-import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,13 +193,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			_httpServletRequest, "selectedTab", "basic-templates");
 
 		return _selectedTab;
-	}
-
-	public List<StyleBookEntry> getStyleBookEntries() {
-		return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-			StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StyleBookEntryNameComparator(true));
 	}
 
 	public List<String> getTypes() {

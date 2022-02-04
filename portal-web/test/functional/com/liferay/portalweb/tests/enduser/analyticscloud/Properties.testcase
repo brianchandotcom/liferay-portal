@@ -584,30 +584,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"
-	@priority = "3"
-	test PropertyFieldDisplayedWhenNoPropertyAvailable {
-		property portal.upstream = "vini";
-
-		task ("Go to properties") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Delete all properties") {
-			ACSettings.deleteAllProperties();
-		}
-
-		task ("assert empty state on properties page") {
-			ACSettings.goToProperties();
-
-			ACProperties.assertNoProperties();
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9106 | Test Summary: [AC] Property name with the maximum and minimal char quantity validation"
 	@priority = "3"
 	test PropertyNameWithCharQuantityValidation {

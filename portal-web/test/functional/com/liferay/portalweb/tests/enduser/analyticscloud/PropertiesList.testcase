@@ -100,18 +100,30 @@ definition {
 	test ViewPropertyListDefault {
 		property portal.upstream = "vini";
 
-		task ("go to properties") {
+		var propertyNameList = "New property 1,New property 2";
+
+		task ("Go to properties") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToProperties();
 		}
 
-		task ("delete all properties and assert default view") {
+		task ("Assert empty state on properties page") {
+			ACProperties.assertNoProperties();
+		}
+
+		task ("Create two new properties") {
+			for (var propertyName : list "${propertyNameList}") {
+				ACProperties.addNewProperty(propertyName = "${propertyName}");
+
+				ACSettings.goToProperties();
+			}
+		}
+
+		task ("Assert empty state on properties page") {
 			ACSettings.deleteAllProperties();
 
-			ACSettings.goToProperties();
-
-			ACSettings.viewPropertyListDefaultMessage();
+			ACProperties.assertNoProperties();
 		}
 	}
 

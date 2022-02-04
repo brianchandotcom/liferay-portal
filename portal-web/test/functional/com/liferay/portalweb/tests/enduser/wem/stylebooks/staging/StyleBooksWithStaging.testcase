@@ -95,9 +95,9 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			AssertTextEquals(
-				key_styleBookName = "Inherited",
+				key_styleBookName = "Styles from Theme",
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Inherited");
+				value1 = "Styles from Theme");
 
 			AssertClick(
 				key_text = "Change Style Book",
@@ -177,12 +177,12 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "Change Style Book");
 
-			StyleBooks.selectStyleBook(styleBookName = "Inherited from Master");
+			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
 
 			AssertTextEquals(
-				key_styleBookName = "Inherited from Master",
+				key_styleBookName = "Styles from Theme",
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Inherited from Master");
+				value1 = "Styles from Theme");
 
 			Button.clickSave();
 
@@ -287,7 +287,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Style Book");
 
 			AssertElementPresent(
-				key_card = "Inherited from Master",
+				key_card = "Styles from Theme",
 				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
@@ -346,7 +346,7 @@ definition {
 				key_card = "Test Style Book Name",
 				locator1 = "Card#CARD_SELECTED");
 
-			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Inherited from Master");
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Styles from Theme");
 
 			AssertCssValue(
 				fragmentName = "button",
@@ -460,9 +460,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
-				key_styleBookName = "Inherited",
+				key_styleBookName = "Styles from Theme",
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Inherited");
+				value1 = "Styles from Theme");
 
 			AssertClick(
 				key_text = "Change Style Book",
@@ -516,12 +516,12 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "Change Style Book");
 
-			StyleBooks.selectStyleBook(styleBookName = "Inherited from Master");
+			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
 
 			AssertTextEquals(
-				key_styleBookName = "Inherited from Master",
+				key_styleBookName = "Styles from Theme",
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Inherited from Master");
+				value1 = "Styles from Theme");
 
 			Button.clickSave();
 
@@ -696,7 +696,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Style Book");
 
 			AssertElementPresent(
-				key_card = "Inherited from Master",
+				key_card = "Styles from Theme",
 				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");

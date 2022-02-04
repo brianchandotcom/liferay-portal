@@ -191,7 +191,7 @@ public class CounterLocalServiceTest {
 	private String _prependClassPath(String baseClassPath, Class<?>... classes)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(classes.length + 1);
+		StringBundler sb = new StringBundler((classes.length * 2) + 1);
 
 		for (Class<?> clazz : classes) {
 			ProtectionDomain protectionDomain = clazz.getProtectionDomain();

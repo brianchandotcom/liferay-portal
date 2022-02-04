@@ -162,6 +162,8 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "${portletName}");
 
+			var key_indexItem = "${position}";
+
 			if (isSet(targetFragmentName) && ("${height}" == "Short")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 					key_portletName = "${portletName}",
@@ -275,6 +277,7 @@ definition {
 
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_elementType = "Container",
+					key_indexItem = "${position}",
 					key_portletName = "${portletName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
@@ -339,6 +342,10 @@ definition {
 			var displayStyle = "list";
 		}
 
+		if (!(isSet(indexItem))) {
+			var indexItem = "1";
+		}
+
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
@@ -387,6 +394,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_element = "//div[contains(@class,'page-editor__root page-editor__topper')]",
+				key_indexItem = "${indexItem}",
 				key_portletName = "${portletName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
@@ -426,6 +434,10 @@ definition {
 			var displayStyle = "list";
 		}
 
+		if (!(isSet(indexItem))) {
+			var indexItem = "1";
+		}
+
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
@@ -476,6 +488,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_index = "${index}",
+				key_indexItem = "${indexItem}",
 				key_portletName = "${portletName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
@@ -807,7 +820,12 @@ definition {
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 			value1 = "${portletName}");
 
+		if (!(isSet(indexItem))) {
+			var indexItem = "1";
+		}
+
 		var key_portletName = "${portletName}";
+		var key_indexItem = "${indexItem}";
 
 		if (isSet(scope) && ("${dropTarget}" == "Header")) {
 			DragAndDrop.javaScriptDragAndDropToUp(

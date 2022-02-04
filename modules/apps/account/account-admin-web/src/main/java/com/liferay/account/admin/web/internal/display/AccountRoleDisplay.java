@@ -14,10 +14,15 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
@@ -64,6 +69,30 @@ public class AccountRoleDisplay {
 		}
 
 		return LanguageUtil.get(locale, "owned");
+	}
+
+	public boolean isShowRowURL(PermissionChecker permissionChecker) {
+		if (AccountRoleConstants.isSharedRole(getRole()) &&
+			!AccountRolePermission.contains(
+				permissionChecker, getAccountRoleId(),
+				AccountActionKeys.ASSIGN_USERS)) {
+
+			return false;
+		}
+
+		if (!AccountRolePermission.contains(
+				permissionChecker, getAccountRoleId(),
+				AccountActionKeys.ASSIGN_USERS) &&
+			!AccountRolePermission.contains(
+				permissionChecker, getAccountRoleId(),
+				ActionKeys.DEFINE_PERMISSIONS) &&
+			!AccountRolePermission.contains(
+				permissionChecker, getAccountRoleId(), ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private AccountRoleDisplay(AccountRole accountRole) throws Exception {

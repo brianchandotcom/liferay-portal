@@ -62,7 +62,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				</portlet:renderURL>
 
 				<%
-				if (!AccountRolePermission.contains(permissionChecker, accountRoleDisplay.getAccountRoleId(), ActionKeys.UPDATE)) {
+				if (!accountRoleDisplay.isShowRowURL(permissionChecker)) {
 					rowURL = null;
 				}
 				%>

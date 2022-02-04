@@ -13,4 +13,9 @@
  */
 
 export {ColorPicker} from '../page_editor/common/components/ColorPicker/ColorPicker';
+export {StyleErrorsModal} from '../page_editor/app/components/StyleErrorsModal';
 export {convertRGBtoHex} from '../page_editor/app/utils/convertRGBtoHex';
+export {
+	useHasStyleErrors,
+	StyleErrorsContextProvider,
+} from '../page_editor/app/contexts/StyleErrorsContext';

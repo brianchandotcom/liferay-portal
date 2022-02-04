@@ -12,6 +12,7 @@
  * details.
  */
 
+import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -84,7 +85,9 @@ const StyleBookEditor = ({
 				<div className="d-flex">
 					<LayoutPreview />
 
-					<Sidebar />
+					<StyleErrorsContextProvider>
+						<Sidebar />
+					</StyleErrorsContextProvider>
 				</div>
 			</div>
 		</StyleBookContextProvider>

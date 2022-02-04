@@ -47,7 +47,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.deleteImportTask(
-			name, callbackURL, _getTaskItemDelegateName(), object);
+			name, callbackURL, _getImportStrategy(), _getTaskItemDelegateName(),
+			object);
 	}
 
 	@Override
@@ -58,7 +59,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.postImportTask(
-			name, callbackURL, fields, _getTaskItemDelegateName(), object);
+			name, callbackURL, fields, _getImportStrategy(),
+			_getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -68,7 +70,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.putImportTask(
-			name, callbackURL, _getTaskItemDelegateName(), object);
+			name, callbackURL, _getImportStrategy(), _getTaskItemDelegateName(),
+			object);
 	}
 
 	@Override
@@ -98,14 +101,18 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_contextUser = contextUser;
 	}
 
-	private String _getTaskItemDelegateName() {
+	private String _getImportStrategy() {
+		return _getQueryParamValue("importStrategy");
+	}
+
+	private String _getQueryParamValue(String queryParam) {
 		MultivaluedMap<String, String> queryParameters =
 			_contextUriInfo.getQueryParameters();
 
 		for (Map.Entry<String, List<String>> entry :
 				queryParameters.entrySet()) {
 
-			if (!Objects.equals(entry.getKey(), "taskItemDelegateName")) {
+			if (!Objects.equals(entry.getKey(), queryParam)) {
 				continue;
 			}
 
@@ -119,6 +126,10 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		}
 
 		return null;
+	}
+
+	private String _getTaskItemDelegateName() {
+		return _getQueryParamValue("taskItemDelegateName");
 	}
 
 	private void _initializeContext() {

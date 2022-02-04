@@ -637,6 +637,35 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByAllowNewUserMembership() throws Exception {
+		AccountEntry businessAccountEntry1 = _addAccountEntry();
+		AccountEntry businessAccountEntry2 = _addAccountEntry();
+		AccountEntry personAccountEntry1 = _addPersonAccountEntry();
+		AccountEntry personAccountEntry2 = _addPersonAccountEntry();
+
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			businessAccountEntry2.getAccountEntryId(), user.getUserId());
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			personAccountEntry2.getAccountEntryId(), user.getUserId());
+
+		_assertSearchWithParams(
+			Arrays.asList(
+				businessAccountEntry1, businessAccountEntry2,
+				personAccountEntry1, personAccountEntry2),
+			new LinkedHashMap<>());
+		_assertSearchWithParams(
+			Arrays.asList(
+				businessAccountEntry1, businessAccountEntry2,
+				personAccountEntry1),
+			_getLinkedHashMap("allowNewUserMembership", Boolean.TRUE));
+		_assertSearchWithParams(
+			Collections.singletonList(personAccountEntry2),
+			_getLinkedHashMap("allowNewUserMembership", Boolean.FALSE));
+	}
+
+	@Test
 	public void testSearchByDomains() throws Exception {
 		_addAccountEntries();
 

@@ -21,7 +21,7 @@ import {titleCase} from '../../../../../../util/utils';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const RoleType = ({displayDelete, identifier, index, setSections}) => {
+const RoleType = ({identifier, index, sectionsLength, setSections}) => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);
 	const [checked, setChecked] = useState(true);
 	const [accountRoles, setAccountRoles] = useState([]);
@@ -304,7 +304,7 @@ const RoleType = ({displayDelete, identifier, index, setSections}) => {
 						</span>
 					</div>
 
-					{displayDelete && (
+					{sectionsLength > 1 && (
 						<ClayButtonWithIcon
 							className="delete-button"
 							displayType="unstyled"

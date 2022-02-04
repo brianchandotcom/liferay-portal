@@ -20,39 +20,39 @@ import sectionComponents from './sections/sectionComponents';
 const contents = {
 	'assignments': {
 		backButton: (setContentName) => () => setContentName('task'),
-		sections: ['selectAssignment'],
+		sections: ['assignments'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('assignments'),
 	},
 	'condition': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('condition-node'),
 	},
 	'end': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('end'),
 	},
 	'fork': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('fork-node'),
 	},
 	'join': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('join-node'),
 	},
 	'join-xor': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('join-xor-node'),
 	},
 	'notifications': {
 		backButton: (setContentName, selectedItemType) => () =>
 			setContentName(selectedItemType),
-		sections: ['notificationsInfo'],
+		sections: ['notifications'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('notifications'),
 	},
@@ -63,17 +63,21 @@ const contents = {
 		title: Liferay.Language.get('scripted-assignment'),
 	},
 	'start': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('start'),
 	},
 	'state': {
-		sections: ['nodeInformation', 'notifications'],
+		sections: ['nodeInformation', 'notificationsSummary'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('state'),
 	},
 	'task': {
-		sections: ['nodeInformation', 'assignments', 'notifications'],
+		sections: [
+			'nodeInformation',
+			'assignmentsSummary',
+			'notificationsSummary',
+		],
 		showDeleteButton: true,
 		title: Liferay.Language.get('task'),
 	},

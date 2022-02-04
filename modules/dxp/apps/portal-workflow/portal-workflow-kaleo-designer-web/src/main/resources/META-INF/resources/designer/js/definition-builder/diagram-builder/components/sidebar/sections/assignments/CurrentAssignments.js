@@ -16,7 +16,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import lang from '../../../../../util/lang';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
-import {options} from './SelectAssignment';
+import {options} from './select-assignment/SelectAssignment';
 import {getAssignmentType} from './utils';
 
 const CurrentAssignments = ({assignments, setContentName}) => {

@@ -12,18 +12,18 @@
 import EdgeInformation from './EdgeInformation';
 import NodeInformation from './NodeInformation';
 import Assignments from './assignments/Assignments';
-import {SelectAssignment} from './assignments/SelectAssignment';
+import AssignmentsSummary from './assignments/AssignmentsSummary';
 import SourceCode from './assignments/SourceCode';
 import Notifications from './notifications/Notifications';
-import NotificationsInfo from './notifications/NotificationsInfo';
+import NotificationsSummary from './notifications/NotificationsSummary';
 
 const sectionComponents = {
 	assignments: Assignments,
+	assignmentsSummary: AssignmentsSummary,
 	edgeInformation: EdgeInformation,
 	nodeInformation: NodeInformation,
 	notifications: Notifications,
-	notificationsInfo: NotificationsInfo,
-	selectAssignment: SelectAssignment,
+	notificationsSummary: NotificationsSummary,
 	sourceCode: SourceCode,
 };
 

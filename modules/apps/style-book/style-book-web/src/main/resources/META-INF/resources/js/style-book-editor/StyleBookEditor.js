@@ -80,15 +80,15 @@ const StyleBookEditor = ({
 			}}
 		>
 			<div className="cadmin style-book-editor">
-				{config.templatesPreviewEnabled && <Toolbar />}
+				<StyleErrorsContextProvider>
+					{config.templatesPreviewEnabled && <Toolbar />}
 
-				<div className="d-flex">
-					<LayoutPreview />
+					<div className="d-flex">
+						<LayoutPreview />
 
-					<StyleErrorsContextProvider>
 						<Sidebar />
-					</StyleErrorsContextProvider>
-				</div>
+					</div>
+				</StyleErrorsContextProvider>
 			</div>
 		</StyleBookContextProvider>
 	);

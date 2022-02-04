@@ -107,7 +107,7 @@ Checks are configured in the following files:
    - [.eslintignore, .prettierignore or .properties](src/main/resources/documentation/properties_source_processor_checks.markdown#checks-for-eslintignore-prettierignore-or-properties)
    - [.expect or .sh](src/main/resources/documentation/sh_source_processor_checks.markdown#checks-for-expect-or-sh)
    - [.ftl](src/main/resources/documentation/ftl_source_processor_checks.markdown#checks-for-ftl)
-   - [.function, .macro or .testcase](src/main/resources/documentation/poshi_source_processor_checks.markdown#checks-for-function-macro-or-testcase)
+   - [.function, .jar, .lar, .macro, .path, .testcase, .war or .zip](src/main/resources/documentation/poshi_source_processor_checks.markdown#checks-for-function-jar-lar-macro-path-testcase-war-or-zip)
    - [.gradle](src/main/resources/documentation/gradle_source_processor_checks.markdown#checks-for-gradle)
    - [.groovy](src/main/resources/documentation/groovy_source_processor_checks.markdown#checks-for-groovy)
    - [.html or .path](src/main/resources/documentation/html_source_processor_checks.markdown#checks-for-html-or-path)

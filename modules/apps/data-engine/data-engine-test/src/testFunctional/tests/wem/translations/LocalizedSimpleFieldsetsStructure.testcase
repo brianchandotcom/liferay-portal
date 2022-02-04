@@ -127,9 +127,7 @@ definition {
 			key_fieldFieldLabel = "Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		Translations.addLanguageManageTranslations(key_language = "pt-BR");
-
-		PortletEntry.changeLocale(
+		DataEngine.changeLocale(
 			locale = "pt-BR",
 			modal = "true");
 
@@ -160,6 +158,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset en-US");
+
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text",

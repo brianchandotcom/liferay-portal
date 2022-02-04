@@ -51,7 +51,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.changeLocale(
+		DataEngine.changeLocale(
 			locale = "pt-BR",
 			modal = "true");
 

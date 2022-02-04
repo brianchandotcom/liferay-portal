@@ -9,9 +9,10 @@
  * distribution rights of the Software.
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
@@ -86,8 +87,71 @@ const templateLanguageOptions = [
 	},
 ];
 
-const NotificationsInfo = () => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+const NotificationsInfo = ({
+	identifier,
+	index,
+	sectionsLength,
+	setSections,
+}) => {
+	const {setSelectedItem} = useContext(DiagramBuilderContext);
+	const [executionType, setExecutionType] = useState('');
+	const [notificationDescription, setNotificationDescription] = useState('');
+	const [notificationName, setNotificationName] = useState('');
+	const [notificationType, setNotificationType] = useState('');
+	const [recipientType, setRecipientType] = useState('');
+	const [template, setTemplate] = useState('');
+	const [templateLanguage, setTemplateLanguage] = useState('');
+
+	const updateSelectedItem = (values) => {
+		setSelectedItem((previousItem) => ({
+			...previousItem,
+			data: {
+				...previousItem.data,
+				notifications: {
+					description: values.map(({description}) => description),
+					executionType: values.map(
+						({executionType}) => executionType
+					),
+					name: values.map(({name}) => name),
+					notificationType: values.map(
+						({notificationType}) => notificationType
+					),
+					recipientType: values.map(
+						({recipientType}) => recipientType
+					),
+					template: values.map(({template}) => template),
+					templateLanguage: values.map(
+						({templateLanguage}) => templateLanguage
+					),
+				},
+			},
+		}));
+	};
+
+	const deleteSection = () => {
+		setSections((prevSections) => {
+			const newSections = prevSections.filter(
+				(prevSection) => prevSection.identifier !== identifier
+			);
+
+			updateSelectedItem(newSections);
+
+			return newSections;
+		});
+	};
+
+	const selectRecipientType = (item) => {
+		setSections((prev) => {
+			prev[index] = {
+				...prev[index],
+				...item,
+			};
+
+			updateSelectedItem(prev);
+
+			return prev;
+		});
+	};
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
@@ -98,21 +162,10 @@ const NotificationsInfo = () => {
 
 				<ClayInput
 					id="notificationName"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									name: target.value,
-								},
-							},
-						})
-					}
+					onChange={({target}) => setNotificationName(target.value)}
 					placeholder={Liferay.Language.get('notification')}
 					type="text"
-					value={selectedItem?.data.notifications?.name || ''}
+					value={notificationName}
 				/>
 			</ClayForm.Group>
 
@@ -124,19 +177,10 @@ const NotificationsInfo = () => {
 				<ClayInput
 					id="notificationDescription"
 					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									description: target.value,
-								},
-							},
-						})
+						setNotificationDescription(target.value)
 					}
 					type="text"
-					value={selectedItem?.data.notifications?.description || ''}
+					value={notificationDescription}
 				/>
 			</ClayForm.Group>
 
@@ -148,18 +192,7 @@ const NotificationsInfo = () => {
 				<ClaySelect
 					aria-label="Select"
 					id="template-language"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									templateLanguage: target.value,
-								},
-							},
-						})
-					}
+					onChange={({target}) => setTemplateLanguage(target.value)}
 				>
 					{templateLanguageOptions.map((item) => (
 						<ClaySelect.Option
@@ -179,21 +212,10 @@ const NotificationsInfo = () => {
 				<ClayInput
 					component="textarea"
 					id="template"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									template: target.value,
-								},
-							},
-						})
-					}
+					onChange={({target}) => setTemplate(target.value)}
 					placeholder="${userName} sent you a ${entryType} for review in the workflow."
 					type="text"
-					value={selectedItem?.data.notifications?.template || ''}
+					value={template}
 				/>
 			</ClayForm.Group>
 
@@ -206,18 +228,7 @@ const NotificationsInfo = () => {
 					aria-label="Select"
 					defaultValue={Liferay.Language.get('select')}
 					id="notifications-type"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									notificationsType: target.value,
-								},
-							},
-						})
-					}
+					onChange={({target}) => setNotificationType(target.value)}
 				>
 					{notificationsTypeOptions.map((item) => (
 						<ClaySelect.Option
@@ -237,18 +248,7 @@ const NotificationsInfo = () => {
 				<ClaySelect
 					aria-label="Select"
 					id="execution-type"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									executionType: target.value,
-								},
-							},
-						})
-					}
+					onChange={({target}) => setExecutionType(target.value)}
 				>
 					{executionTypeOptions.map((item) => (
 						<ClaySelect.Option
@@ -260,7 +260,7 @@ const NotificationsInfo = () => {
 				</ClaySelect>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group className="recipient-type-form-group">
 				<label htmlFor="recipient-type">
 					{Liferay.Language.get('recipient-type')}
 				</label>
@@ -268,16 +268,16 @@ const NotificationsInfo = () => {
 				<ClaySelect
 					aria-label="Select"
 					id="recipient-type"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								notifications: {
-									...selectedItem.data.notifications,
-									recipientType: target.value,
-								},
-							},
+					onChange={({target}) => setRecipientType(target.value)}
+					onClickCapture={() =>
+						selectRecipientType({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationType,
+							recipientType,
+							template,
+							templateLanguage,
 						})
 					}
 				>
@@ -291,6 +291,37 @@ const NotificationsInfo = () => {
 					))}
 				</ClaySelect>
 			</ClayForm.Group>
+
+			<div className="sheet-subtitle" />
+
+			<div className="section-buttons-area">
+				<ClayButton
+					className="mr-3"
+					disabled={
+						notificationName.trim() === '' || template.trim() === ''
+					}
+					displayType="secondary"
+					onClick={() =>
+						setSections((prev) => {
+							return [
+								...prev,
+								{identifier: `${Date.now()}-${prev.length}`},
+							];
+						})
+					}
+				>
+					{Liferay.Language.get('new-notification')}
+				</ClayButton>
+
+				{sectionsLength > 1 && (
+					<ClayButtonWithIcon
+						className="delete-button"
+						displayType="unstyled"
+						onClick={deleteSection}
+						symbol="trash"
+					/>
+				)}
+			</div>
 		</SidebarPanel>
 	);
 };

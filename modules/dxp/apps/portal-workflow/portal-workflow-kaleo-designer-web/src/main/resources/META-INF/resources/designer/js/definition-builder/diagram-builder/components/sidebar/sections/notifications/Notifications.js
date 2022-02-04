@@ -9,26 +9,23 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-import SidebarPanel from '../../SidebarPanel';
+import NotificationsInfo from './NotificationsInfo';
 
-const Notifications = ({setContentName}) => (
-	<SidebarPanel panelTitle={Liferay.Language.get('notifications')}>
-		<ClayButton
-			className="mr-3"
-			displayType="secondary"
-			onClick={() => setContentName('notifications')}
-		>
-			{Liferay.Language.get('new')}
-		</ClayButton>
-	</SidebarPanel>
-);
+const Notifications = (props) => {
+	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
-Notifications.propTypes = {
-	setContentName: PropTypes.func.isRequired,
+	return sections.map(({identifier}, index) => (
+		<NotificationsInfo
+			{...props}
+			identifier={identifier}
+			index={index}
+			key={`section-${identifier}`}
+			sectionsLength={sections?.length}
+			setSections={setSections}
+		/>
+	));
 };
 
 export default Notifications;

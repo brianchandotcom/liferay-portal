@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO_DEPOT</td>
-	<td>//p[contains(@class,'text-muted')]</td>
+	<td>//p[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMPTY_INFO_DEPOT_HIDE</td>
-	<td>//div[not(contains(@class,'hide'))]//p[contains(@class,'text-muted')]</td>
+	<td>//div[not(contains(@class,'hide'))]//p[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -138,7 +138,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 
 		User user = _getUser(group.getCompanyId());
 
-		String friendlyURL = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+		String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
 			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -366,6 +366,9 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 		WelcomeSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

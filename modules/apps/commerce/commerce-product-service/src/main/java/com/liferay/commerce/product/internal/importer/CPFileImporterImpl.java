@@ -75,7 +75,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -424,7 +424,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		friendlyURL = friendlyURL.trim();
 
-		friendlyURL = FriendlyURLNormalizerUtil.normalize(friendlyURL);
+		friendlyURL = _friendlyURLNormalizer.normalize(friendlyURL);
 
 		friendlyURL = CharPool.SLASH + friendlyURL;
 
@@ -1031,6 +1031,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -400,7 +400,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			_friendlyURLNormalizer.normalizeWithEncoding(
 				_getFullURLTitle(friendlyURL));
 
 		JournalArticle journalArticle =
@@ -427,9 +427,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		}
 
 		if (journalArticle == null) {
-			normalizedUrlTitle =
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(
-					_getURLTitle(friendlyURL));
+			normalizedUrlTitle = _friendlyURLNormalizer.normalizeWithEncoding(
+				_getURLTitle(friendlyURL));
 
 			double version = _getVersion(friendlyURL);
 
@@ -447,9 +446,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		}
 
 		if (journalArticle == null) {
-			normalizedUrlTitle =
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(
-					_getURLTitle(friendlyURL));
+			normalizedUrlTitle = _friendlyURLNormalizer.normalizeWithEncoding(
+				_getURLTitle(friendlyURL));
 
 			long id = _getId(friendlyURL);
 
@@ -555,6 +553,9 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private Http _http;

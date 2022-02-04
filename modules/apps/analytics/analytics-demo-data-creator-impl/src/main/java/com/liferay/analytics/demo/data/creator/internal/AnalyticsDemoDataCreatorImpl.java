@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -292,8 +292,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 					null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
 					new HashMap<>(), GroupConstants.TYPE_SITE_OPEN, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-					StringPool.SLASH +
-						FriendlyURLNormalizerUtil.normalize(name),
+					StringPool.SLASH + _friendlyURLNormalizer.normalize(name),
 					true, true, null);
 			}
 			catch (DuplicateGroupException duplicateGroupException) {
@@ -434,6 +433,9 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 	private long _defaultGroupId;
 	private long _defaultUserId;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

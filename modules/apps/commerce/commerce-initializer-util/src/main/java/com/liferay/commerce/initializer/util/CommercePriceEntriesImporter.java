@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 
 import java.math.BigDecimal;
 
@@ -157,7 +157,7 @@ public class CommercePriceEntriesImporter {
 		String name = jsonObject.getString("priceList");
 
 		String priceListExternalReferenceCode =
-			FriendlyURLNormalizerUtil.normalize(name);
+			_friendlyURLNormalizer.normalize(name);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchByExternalReferenceCode(
@@ -170,7 +170,7 @@ public class CommercePriceEntriesImporter {
 
 		String sku = jsonObject.getString("sku");
 
-		String externalReferenceCode = FriendlyURLNormalizerUtil.normalize(sku);
+		String externalReferenceCode = _friendlyURLNormalizer.normalize(sku);
 
 		CPInstance cpInstance =
 			_cpInstanceLocalService.fetchByExternalReferenceCode(
@@ -220,6 +220,9 @@ public class CommercePriceEntriesImporter {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private UserLocalService _userLocalService;

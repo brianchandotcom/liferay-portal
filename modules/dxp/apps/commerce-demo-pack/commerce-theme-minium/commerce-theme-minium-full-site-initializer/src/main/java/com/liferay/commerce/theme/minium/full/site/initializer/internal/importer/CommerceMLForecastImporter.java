@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.time.LocalDateTime;
@@ -172,7 +172,7 @@ public class CommerceMLForecastImporter {
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.fetchByExternalReferenceCode(
 				serviceContext.getCompanyId(),
-				FriendlyURLNormalizerUtil.normalize(accountName));
+				_friendlyURLNormalizer.normalize(accountName));
 
 		if (commerceAccount == null) {
 			if (_log.isDebugEnabled()) {
@@ -204,7 +204,7 @@ public class CommerceMLForecastImporter {
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.fetchByExternalReferenceCode(
 				serviceContext.getCompanyId(),
-				FriendlyURLNormalizerUtil.normalize(accountName));
+				_friendlyURLNormalizer.normalize(accountName));
 
 		if (commerceAccount == null) {
 			if (_log.isDebugEnabled()) {
@@ -273,6 +273,9 @@ public class CommerceMLForecastImporter {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private UserLocalService _userLocalService;

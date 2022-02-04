@@ -74,7 +74,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -532,7 +532,7 @@ public class CPDefinitionsImporter {
 				cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 
 				String cpInstanceExternalReferenceCode =
-					FriendlyURLNormalizerUtil.normalize(sku);
+					_friendlyURLNormalizer.normalize(sku);
 
 				cpInstance.setExternalReferenceCode(
 					cpInstanceExternalReferenceCode);
@@ -669,7 +669,7 @@ public class CPDefinitionsImporter {
 
 			for (int i = 0; i < filterAccountGroupsJSONArray.length(); i++) {
 				String accountGroupExternalReferenceCode =
-					FriendlyURLNormalizerUtil.normalize(
+					_friendlyURLNormalizer.normalize(
 						filterAccountGroupsJSONArray.getString(i));
 
 				CommerceAccountGroup commerceAccountGroup =
@@ -760,7 +760,7 @@ public class CPDefinitionsImporter {
 		CPOptionValue cpOptionValue =
 			_cpOptionValueLocalService.getCPOptionValue(
 				cpDefinitionOptionRel.getCPOptionId(),
-				FriendlyURLNormalizerUtil.normalize(key));
+				_friendlyURLNormalizer.normalize(key));
 
 		return _cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
@@ -877,7 +877,7 @@ public class CPDefinitionsImporter {
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		String externalReferenceCode = FriendlyURLNormalizerUtil.normalize(sku);
+		String externalReferenceCode = _friendlyURLNormalizer.normalize(sku);
 
 		boolean overrideSubscriptionInfo = false;
 		boolean subscriptionEnabled = false;
@@ -1043,6 +1043,9 @@ public class CPDefinitionsImporter {
 
 	@Reference
 	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private UserLocalService _userLocalService;

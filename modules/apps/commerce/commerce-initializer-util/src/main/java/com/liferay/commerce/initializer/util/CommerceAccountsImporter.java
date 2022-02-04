@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.FileNotFoundException;
@@ -119,7 +119,7 @@ public class CommerceAccountsImporter {
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.fetchCommerceAccountByReferenceCode(
 				serviceContext.getCompanyId(),
-				FriendlyURLNormalizerUtil.normalize(name));
+				_friendlyURLNormalizer.normalize(name));
 
 		if (commerceAccount != null) {
 			return;
@@ -141,7 +141,7 @@ public class CommerceAccountsImporter {
 		commerceAccount = _commerceAccountLocalService.addCommerceAccount(
 			name, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID, email,
 			taxId, commerceAccountType, true,
-			FriendlyURLNormalizerUtil.normalize(name), serviceContext);
+			_friendlyURLNormalizer.normalize(name), serviceContext);
 
 		String twoLetterISOCode = jsonObject.getString("country");
 
@@ -243,7 +243,7 @@ public class CommerceAccountsImporter {
 			for (int i = 0; i < priceListsJSONArray.length(); i++) {
 				try {
 					String externalReferenceCode =
-						FriendlyURLNormalizerUtil.normalize(
+						_friendlyURLNormalizer.normalize(
 							priceListsJSONArray.getString(i));
 
 					CommercePriceList commercePriceList =
@@ -279,7 +279,7 @@ public class CommerceAccountsImporter {
 						i);
 
 					String externalReferenceCode =
-						FriendlyURLNormalizerUtil.normalize(accountGroupName);
+						_friendlyURLNormalizer.normalize(accountGroupName);
 
 					CommerceAccountGroup commerceAccountGroup =
 						_commerceAccountGroupLocalService.
@@ -354,6 +354,9 @@ public class CommerceAccountsImporter {
 
 	@Reference
 	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

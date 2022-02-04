@@ -305,8 +305,8 @@ export const getAccounts = gql`
 	query getAccounts {
 		accounts {
 			items {
-				name
 				externalReferenceCode
+				name
 			}
 		}
 	}
@@ -324,13 +324,13 @@ export const getUserAccount = gql`
 					name
 				}
 			}
-			roleBriefs {
-				name
-			}
 			externalReferenceCode
 			id
 			image
 			name
+			roleBriefs {
+				name
+			}
 		}
 	}
 `;

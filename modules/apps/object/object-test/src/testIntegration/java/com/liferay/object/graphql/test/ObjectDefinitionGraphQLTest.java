@@ -275,6 +275,40 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	@Test
+	public void testGetObjectEntryMetadataFields() throws Exception {
+		String key = StringUtil.lowerCaseFirstLetter(_objectDefinitionName);
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"query",
+				new GraphQLField(
+					"c",
+					new GraphQLField(
+						key,
+						HashMapBuilder.<String, Object>put(
+							_objectDefinitionPrimaryKeyName,
+							_objectEntry.getObjectEntryId()
+						).build(),
+						new GraphQLField(_objectFieldName),
+						new GraphQLField("dateCreated"),
+						new GraphQLField("dateModified"),
+						new GraphQLField("status")))));
+
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/dateCreated"));
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/dateModified"));
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/status"));
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		String value = RandomTestUtil.randomString();
 

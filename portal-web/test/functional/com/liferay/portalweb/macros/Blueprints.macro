@@ -20,18 +20,10 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON");
 	}
 
-	macro applyBlueprintViaLLSO {
-		SearchPortlets.addWidgets(searchPortletList = "Low Level Search Options");
-
-		var blueprintId = Blueprints.getBlueprintID(title = "${blueprintTitle}");
-
-		SearchPortlets.configureLowLevelSearchOptions(
-			attributesKey = "search.experiences.blueprint.id",
-			attributesValue = "${blueprintId}");
-	}
-
 	macro applyBlueprintViaOptionsWidget {
-		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+		if (!(IsElementPresent(key_portletName = "Blueprints Options", locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON"))) {
+			SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+		}
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",

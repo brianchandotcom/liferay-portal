@@ -46,6 +46,7 @@ public class AccountEntryModelPreFilterContributor
 
 		_filterByAccountGroupIds(booleanFilter, searchContext);
 		_filterByAccountUserIds(booleanFilter, searchContext);
+		_filterByAllowNewUserMembership(booleanFilter, searchContext);
 		_filterByDomains(booleanFilter, searchContext);
 		_filterByOrganizationIds(booleanFilter, searchContext);
 		_filterByParentAccountEntryId(booleanFilter, searchContext);
@@ -80,6 +81,18 @@ public class AccountEntryModelPreFilterContributor
 			termsFilter.addValues(ArrayUtil.toStringArray(accountUserIds));
 
 			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	private void _filterByAllowNewUserMembership(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		Boolean allowNewUserMembership = (Boolean)searchContext.getAttribute(
+			"allowNewUserMembership");
+
+		if (allowNewUserMembership != null) {
+			booleanFilter.addRequiredTerm(
+				"allowNewUserMembership", allowNewUserMembership);
 		}
 	}
 

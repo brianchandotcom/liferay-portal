@@ -877,6 +877,14 @@ public class AccountEntryLocalServiceImpl
 			searchContext.setAttribute("domains", domains);
 		}
 
+		Boolean allowNewUserMembership = (Boolean)params.get(
+			"allowNewUserMembership");
+
+		if (allowNewUserMembership != null) {
+			searchContext.setAttribute(
+				"allowNewUserMembership", allowNewUserMembership);
+		}
+
 		long[] organizationIds = (long[])params.get("organizationIds");
 
 		if (ArrayUtil.isNotEmpty(organizationIds)) {

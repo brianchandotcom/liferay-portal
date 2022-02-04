@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelModel;
 import com.liferay.account.model.AccountGroupRel;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,11 +51,23 @@ public class AccountEntryModelDocumentContributor
 		document.addText(Field.DESCRIPTION, accountEntry.getDescription());
 		document.addText(Field.NAME, accountEntry.getName());
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
-		document.addKeyword(Field.TYPE, accountEntry.getType());
+
+		String type = accountEntry.getType();
+
+		document.addKeyword(Field.TYPE, type);
+
 		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
 		document.addKeyword(
 			"accountGroupIds", _getAccountGroupIds(accountEntry));
-		document.addKeyword("accountUserIds", _getAccountUserIds(accountEntry));
+
+		long[] accountUserIds = _getAccountUserIds(accountEntry);
+
+		document.addKeyword("accountUserIds", accountUserIds);
+
+		document.addKeyword(
+			"allowNewUserMembership",
+			_isAllowNewUserMembership(accountUserIds, type));
+
 		document.addKeyword("domains", _getDomains(accountEntry));
 		document.addKeyword(
 			"externalReferenceCode", accountEntry.getExternalReferenceCode());
@@ -89,6 +104,18 @@ public class AccountEntryModelDocumentContributor
 				getAccountEntryOrganizationRels(
 					accountEntry.getAccountEntryId()),
 			AccountEntryOrganizationRelModel::getOrganizationId);
+	}
+
+	private boolean _isAllowNewUserMembership(
+		long[] accountUserIds, String type) {
+
+		if (Objects.equals(type, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) &&
+			ArrayUtil.isNotEmpty(accountUserIds)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference

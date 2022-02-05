@@ -221,6 +221,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_CHECKED</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//tr[contains(@class,'table-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_UNCHECKED</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//tr[not(contains(@class,'table-active'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_REMOVE_SELECTED</td>
+	<td>//div[contains(@class,'searchable-types')]//tr[.//p[contains(@class,'table-list-title') and contains(.,'${assetType}')]]//button[@aria-label='Delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//ul[.//*[contains(.,'Select All')]]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//a[contains(.,'Select All')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED</td>
 	<td>//div[contains(@class,'searchable-types')]//p[contains(@class,'table-list-title') and contains(.,'${assetType}')]</td>
 	<td></td>

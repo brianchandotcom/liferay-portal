@@ -1353,15 +1353,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			// Begin LPS-146172
-
 			String fileName = url.getFile();
 
 			if (fileName.endsWith("/")) {
 				continue;
 			}
-
-			// End LPS-146172
 
 			if (StringUtil.endsWith(
 					fileName, "fragment-composition-definition.json")) {

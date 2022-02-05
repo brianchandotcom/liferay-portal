@@ -1357,24 +1357,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String fileName = url.getFile();
 
-			int index = fileName.lastIndexOf(CharPool.FORWARD_SLASH);
-
 			if (fileName.endsWith("/")) {
-				continue;
-			}
-
-			fileName = fileName.substring(index + 1);
-
-			if (Validator.isNull(fileName)) {
 				continue;
 			}
 
 			// End LPS-146172
 
-			String urlPath = url.getPath();
-
 			if (StringUtil.endsWith(
-					urlPath, "fragment-composition-definition.json")) {
+					fileName, "fragment-composition-definition.json")) {
 
 				String json = StringUtil.read(url.openStream());
 
@@ -1398,13 +1388,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						urlPath, "/site-initializer/fragments/"),
+						fileName, "/site-initializer/fragments/"),
 					json);
 			}
 			else {
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						urlPath, "/site-initializer/fragments/"),
+						fileName, "/site-initializer/fragments/"),
 					url.openStream());
 			}
 		}

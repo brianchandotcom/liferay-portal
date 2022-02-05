@@ -27,6 +27,7 @@ import ErrorListItem from '../shared/ErrorListItem';
 import {PreviewModalWithCopyDownload} from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
 import {sub} from '../utils/language';
+import {TEST_IDS} from '../utils/testIds';
 import useDidUpdateEffect from '../utils/useDidUpdateEffect';
 import {isDefined, parseAndPrettifyJSON} from '../utils/utils';
 import PreviewAttributesModal from './PreviewAttributesModal';
@@ -191,6 +192,7 @@ function PreviewSidebar({
 			className={getCN('preview-sidebar', 'sidebar', 'sidebar-light', {
 				open: visible,
 			})}
+			data-testid={TEST_IDS.PREVIEW_SIDEBAR}
 		>
 			<div className="sidebar-header">
 				<h4 className="component-title">
@@ -220,7 +222,7 @@ function PreviewSidebar({
 			</div>
 
 			<nav
-				aria-label="preview-searchbar"
+				aria-label={Liferay.Language.get('search')}
 				className="component-tbar sidebar-search tbar"
 			>
 				<div className="container-fluid">

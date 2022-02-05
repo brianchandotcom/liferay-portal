@@ -54,3 +54,23 @@ export function addParams(url, params) {
 
 	return fetchURL;
 }
+
+/**
+ * A wrapper function to fetch data for the preview sidebar. This was split into
+ * a separate function primarily to make it easier to mock in tests.
+ * @param {object} urlParameters The parameters to be added to the url.
+ * @param {object} options Additional fetch options. For example, `{body: ...}`
+ * @returns
+ */
+export function fetchPreviewSearch(urlParameters, options) {
+	return fetch(
+		addParams('/o/search-experiences-rest/v1.0/search', urlParameters),
+		{
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+			method: 'POST',
+			...options,
+		}
+	);
+}

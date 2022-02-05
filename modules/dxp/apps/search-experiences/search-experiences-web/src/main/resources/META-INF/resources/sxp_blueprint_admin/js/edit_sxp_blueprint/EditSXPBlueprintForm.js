@@ -27,8 +27,9 @@ import PageToolbar from '../shared/PageToolbar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
-import {addParams, fetchData} from '../utils/fetch';
+import {fetchData, fetchPreviewSearch} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
+import {TEST_IDS} from '../utils/testIds';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 import {
 	cleanUIConfiguration,
@@ -644,12 +645,12 @@ function EditSXPBlueprintForm({
 			});
 		};
 
-		return fetch(
-			addParams('/o/search-experiences-rest/v1.0/search', {
+		return fetchPreviewSearch(
+			{
 				page,
 				pageSize: delta,
 				query,
-			}),
+			},
 			{
 				body: JSON.stringify({
 					configuration: {
@@ -667,10 +668,6 @@ function EditSXPBlueprintForm({
 					},
 					elementInstances,
 				}),
-				headers: new Headers({
-					'Content-Type': 'application/json',
-				}),
-				method: 'POST',
 			}
 		)
 			.then((response) => {
@@ -888,6 +885,7 @@ function EditSXPBlueprintForm({
 						className={getCN({
 							active: openSidebar === SIDEBARS.PREVIEW,
 						})}
+						data-testid={TEST_IDS.PREVIEW_SIDEBAR_BUTTON}
 						displayType="secondary"
 						onClick={_handleToggleSidebar(SIDEBARS.PREVIEW)}
 						small

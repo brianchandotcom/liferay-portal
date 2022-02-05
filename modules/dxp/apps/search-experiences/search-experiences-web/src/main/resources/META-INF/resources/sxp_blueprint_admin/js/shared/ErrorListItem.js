@@ -15,6 +15,8 @@ import ClayLayout from '@clayui/layout';
 import getCN from 'classnames';
 import React, {useState} from 'react';
 
+import {TEST_IDS} from '../utils/testIds';
+
 const CONFIGURATION_FIELD_NAME = {
 	advanced_configuration: Liferay.Language.get('advanced-configuration'),
 	aggregation_configuration: Liferay.Language.get(
@@ -105,6 +107,7 @@ function ErrorListItem({error, onFocusSXPElement}) {
 			className={getCN('error-list-item', {
 				collapsible: _isCollapsible(),
 			})}
+			data-testid={TEST_IDS.ERROR_LIST_ITEM}
 			displayType={SEVERITY_DISPLAY_TYPE[error.severity] || 'danger'}
 		>
 			<span className="message" onClick={_handleCollapse}>

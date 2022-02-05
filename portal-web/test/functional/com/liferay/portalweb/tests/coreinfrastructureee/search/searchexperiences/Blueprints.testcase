@@ -1782,6 +1782,28 @@ definition {
 			resultTitle = "Título");
 	}
 
+	test ViewBlueprintsPreviewValidationForInvalidJSONProperty {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Custom JSON Element");
+
+		var customJson = '''{"elementDefinitionnnnnnn": {}}''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${customJson}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Alert.viewErrorMessage(errorMessage = "The property &quot;elementDefinitionnnnnnn&quot; is not defined in SXPElement.");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "");
+	}
+
 	test ViewClauseContributorsUI {
 		Blueprints.openBlueprintsAdmin();
 

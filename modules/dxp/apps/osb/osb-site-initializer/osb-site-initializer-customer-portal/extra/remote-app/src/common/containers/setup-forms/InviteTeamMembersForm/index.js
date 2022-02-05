@@ -19,6 +19,7 @@ import {useApplicationProvider} from '../../../context/AppPropertiesProvider';
 import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
+	associateUserAccountWithAccountAndAccountRole,
 	getAccountRoles,
 } from '../../../services/liferay/graphql/queries';
 import {ROLE_TYPES} from '../../../utils/constants';
@@ -27,13 +28,19 @@ import Layout from '../Layout';
 import TeamMemberInputs from './TeamMemberInputs';
 
 const MAXIMUM_INVITES_COUNT = 10;
+const INITIAL_INVITES_COUNT = 3;
 
 const SLA = {
 	gold: 'Gold',
 	platinum: 'Platinum',
 };
 
-const InvitesPage = ({
+const ROLE_NAME_KEY = {
+	[ROLE_TYPES.admin.key]: ROLE_TYPES.admin.name,
+	[ROLE_TYPES.member.key]: ROLE_TYPES.member.name,
+};
+
+const InviteTeamMembersPage = ({
 	errors,
 	handlePage,
 	leftButton,
@@ -45,19 +52,30 @@ const InvitesPage = ({
 }) => {
 	const {supportLink} = useApplicationProvider();
 
-	const [rolesData, setRolesData] = useState();
-
-	const [AddTeamMemberInvitation, {called, error}] = useMutation(
+	const [addTeamMemberInvitation, {error: addTeamMemberError}] = useMutation(
 		addTeamMembersInvitation
 	);
 
+	const [
+		associateUserAccount,
+		{error: associateUserAccountError},
+	] = useMutation(associateUserAccountWithAccountAndAccountRole);
+
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState();
 	const [hasInitialError, setInitialError] = useState();
-
+	const [accountMemberRole, setAccountMemberRole] = useState();
+	const [accountRolesOptions, setAccountRolesOptions] = useState([]);
 	const [accountRoles, setAccountRoles] = useState([]);
 	const [availableAdminsRoles, setAvailableAdminsRoles] = useState(1);
 
+	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
+	const projectHasSLAGoldPlatinum =
+		project?.slaCurrent?.includes(SLA.gold) ||
+		project?.slaCurrent?.includes(SLA.platinum);
+
 	useEffect(() => {
+		const isProjectPartner = project.partner;
+
 		const getRoles = async () => {
 			const {data} = await client.query({
 				query: getAccountRoles,
@@ -67,43 +85,153 @@ const InvitesPage = ({
 			});
 
 			if (data) {
-				setRolesData(data.accountAccountRoles?.items);
+				const roles = data.accountAccountRoles?.items?.reduce(
+					(rolesAccumulator, role) => {
+						let isValidRole = true;
+
+						if (!projectHasSLAGoldPlatinum) {
+							isValidRole =
+								role.name !== ROLE_TYPES.requestor.key;
+						}
+
+						if (!isProjectPartner) {
+							isValidRole =
+								role.name !== ROLE_TYPES.partnerManager.key &&
+								role.name !== ROLE_TYPES.partnerMember.key;
+						}
+
+						if (isValidRole) {
+							const roleName =
+								ROLE_NAME_KEY[role.name] || role.name;
+
+							rolesAccumulator.push({
+								...role,
+								name: roleName,
+							});
+						}
+
+						return rolesAccumulator;
+					},
+					[]
+				);
+
+				const accountMember = roles?.find(
+					({name}) => name === ROLE_TYPES.member.name
+				);
+
+				setAccountMemberRole(accountMember);
+
+				setFieldValue(
+					'invites[0].role',
+					maxRequestors < 2
+						? accountMember
+						: roles?.find(
+								({name}) =>
+									name === ROLE_TYPES.requestor.name ||
+									name === ROLE_TYPES.admin.name
+						  )
+				);
+
+				for (let i = 1; i < INITIAL_INVITES_COUNT; i++) {
+					setFieldValue(`invites[${i}].role`, accountMember);
+				}
+
+				setAccountRoles(roles);
+				setAccountRolesOptions(
+					roles?.map((role) => ({
+						disabled: false,
+						label: role.name,
+						value: role.id,
+					}))
+				);
 			}
 		};
 
 		getRoles();
-	}, [project]);
+	}, [maxRequestors, project, projectHasSLAGoldPlatinum, setFieldValue]);
 
-	const totalEmails = values?.invites?.length || 0;
-	const failedEmails = errors?.invites?.filter((email) => email).length || 0;
-	const filledEmails = values?.invites?.filter(({email}) => email).length;
-	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
+	useEffect(() => {
+		if (values && accountRoles?.length) {
+			const totalAdmins = values.invites?.reduce(
+				(totalInvites, currentInvite) => {
+					if (
+						currentInvite.role.name === ROLE_TYPES.requestor.name ||
+						currentInvite.role.name === ROLE_TYPES.admin.name
+					) {
+						return ++totalInvites;
+					}
 
-	const handleSubmit = async () => {
-		const invites = values?.invites || [];
-
-		if (filledEmails && !called && invites.length) {
-			await Promise.all(
-				invites
-					.filter(({email}) => email)
-					.map(({email, roleId}) =>
-						AddTeamMemberInvitation({
-							variables: {
-								TeamMembersInvitation: {
-									email,
-									role: roleId,
-								},
-								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-							},
-						})
-					)
+					return totalInvites;
+				},
+				1
 			);
 
-			if (!error) {
+			const remainingAdmins = maxRequestors - totalAdmins;
+
+			if (remainingAdmins < 1) {
+				setAccountRolesOptions((previousAccountRoles) =>
+					previousAccountRoles.map((previousAccountRole) => ({
+						...previousAccountRole,
+						disabled:
+							previousAccountRole.label ===
+								ROLE_TYPES.requestor.name ||
+							previousAccountRole.label === ROLE_TYPES.admin.name,
+					}))
+				);
+			}
+
+			setAvailableAdminsRoles(remainingAdmins);
+		}
+	}, [values, project, maxRequestors, accountRoles]);
+
+	useEffect(() => {
+		const filledEmails =
+			values?.invites?.filter(({email}) => email)?.length || 0;
+		const totalEmails = values?.invites?.length || 0;
+		const failedEmails =
+			errors?.invites?.filter((email) => email)?.length || 0;
+
+		if (filledEmails) {
+			const sucessfullyEmails = totalEmails - failedEmails;
+
+			setInitialError(false);
+			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
+		} else if (touched['invites']?.some((field) => field?.email)) {
+			setInitialError(true);
+			setBaseButtonDisabled(true);
+		}
+	}, [touched, values, errors]);
+
+	const handleSubmit = async () => {
+		const filledEmails = values?.invites?.filter(({email}) => email) || [];
+
+		if (filledEmails.length) {
+			await Promise.all(
+				filledEmails.map(({email, role}) => {
+					addTeamMemberInvitation({
+						variables: {
+							TeamMembersInvitation: {
+								email,
+								role: role.name,
+							},
+							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+						},
+					});
+
+					associateUserAccount({
+						variables: {
+							accountKey: project.accountKey,
+							accountRoleId: role.id,
+							emailAddress: email,
+						},
+					});
+				})
+			);
+
+			if (!addTeamMemberError && !associateUserAccountError) {
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -111,139 +239,6 @@ const InvitesPage = ({
 			});
 		}
 	};
-
-	const disableAdminOptions = (isDisabled) => {
-		setAccountRoles((prevAccountRoles) => {
-			const requestorRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === ROLE_TYPES.requestor.key
-			);
-
-			if (requestorRoleIndex !== -1) {
-				prevAccountRoles[requestorRoleIndex] = {
-					...prevAccountRoles[requestorRoleIndex],
-					disabled: isDisabled,
-				};
-			}
-
-			const adminRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === ROLE_TYPES.admin.key
-			);
-
-			if (adminRoleIndex !== -1) {
-				prevAccountRoles[adminRoleIndex] = {
-					...prevAccountRoles[adminRoleIndex],
-					disabled: isDisabled,
-				};
-			}
-
-			return prevAccountRoles;
-		});
-	};
-
-	useEffect(() => {
-		if (rolesData) {
-			let filterRoles = [...new Set(rolesData.map(({name}) => name))];
-			const SLA_CURRENT = project.slaCurrent;
-			const isPartner = project.partner;
-
-			if (
-				SLA_CURRENT?.includes(SLA.gold) ||
-				SLA_CURRENT?.includes(SLA.platinum)
-			) {
-				const requestorIndex = filterRoles.findIndex(
-					(label) => label === ROLE_TYPES.requestor.key
-				);
-
-				if (requestorIndex === -1) {
-					filterRoles = [...filterRoles, ROLE_TYPES.requestor.key];
-				}
-			}
-
-			if (isPartner) {
-				const partnerManagerIndex = filterRoles.findIndex(
-					(label) => label === ROLE_TYPES.partnerManager.key
-				);
-				const partnerMemberIndex = filterRoles.findIndex(
-					(label) => label === ROLE_TYPES.partnerMember.key
-				);
-
-				if (partnerManagerIndex === -1) {
-					filterRoles = [
-						...filterRoles,
-						ROLE_TYPES.partnerManager.key,
-					];
-				}
-
-				if (partnerMemberIndex === -1) {
-					filterRoles = [
-						...filterRoles,
-						ROLE_TYPES.partnerMember.key,
-					];
-				}
-			}
-
-			setFieldValue(
-				'invites[0].roleId',
-				maxRequestors === 1
-					? ROLE_TYPES.member.key
-					: filterRoles.find(
-							(role) => role === ROLE_TYPES.requestor.key
-					  ) || ROLE_TYPES.admin.key
-			);
-
-			const mapRolesName = filterRoles.sort().map((role) => {
-				const roleProperty = Object.values(ROLE_TYPES).find(
-					({key}) => key === role
-				);
-
-				return {
-					disabled: false,
-					label: roleProperty?.name || role,
-					value: roleProperty?.key || role,
-				};
-			});
-			setAccountRoles(mapRolesName);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [project, rolesData]);
-
-	useEffect(() => {
-		if (values && rolesData) {
-			const totalAdmins = values.invites.reduce(
-				(totalInvites, currentInvite) => {
-					if (
-						currentInvite.roleId === ROLE_TYPES.requestor.key ||
-						currentInvite.roleId === ROLE_TYPES.admin.key
-					) {
-						const total = totalInvites + 1;
-
-						return total;
-					}
-
-					return totalInvites;
-				},
-				1
-			);
-			const remainingAdmins = maxRequestors - totalAdmins;
-
-			disableAdminOptions(remainingAdmins === 0);
-
-			setAvailableAdminsRoles(remainingAdmins);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values, project, rolesData]);
-
-	useEffect(() => {
-		if (filledEmails) {
-			const sucessfullyEmails = totalEmails - failedEmails;
-			setInitialError(false);
-			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
-			setInitialError(true);
-			setBaseButtonDisabled(true);
-		}
-	}, [touched, failedEmails, filledEmails, totalEmails]);
 
 	return (
 		<Layout
@@ -288,29 +283,35 @@ const InvitesPage = ({
 				</div>
 
 				<ClayForm.Group className="m-0">
-					{values.invites.map((invite, index) => (
+					{values?.invites?.map((invite, index) => (
 						<TeamMemberInputs
 							disableError={hasInitialError}
 							id={index}
 							invite={invite}
 							key={index}
-							options={accountRoles}
+							options={accountRolesOptions}
 							placeholderEmail={`username@${
-								project ? project.code.toLowerCase() : 'example'
+								project?.code?.toLowerCase() || 'example'
 							}.com`}
+							selectOnChange={(roleId) =>
+								setFieldValue(
+									`invites[${index}].role`,
+									accountRoles?.find(({id}) => id === +roleId)
+								)
+							}
 						/>
 					))}
 				</ClayForm.Group>
 
-				{values.invites.length < MAXIMUM_INVITES_COUNT && (
+				{values?.invites?.length < MAXIMUM_INVITES_COUNT && (
 					<Button
 						borderless
 						className="mb-3 ml-3 mt-2 text-brand-primary"
 						onClick={() => {
 							setBaseButtonDisabled(false);
 							setFieldValue('invites', [
-								...values.invites,
-								getInitialInvite(ROLE_TYPES.member.key),
+								...values?.invites,
+								getInitialInvite(accountMemberRole),
 							]);
 						}}
 						prependIcon="plus"
@@ -325,8 +326,7 @@ const InvitesPage = ({
 				<div className="mx-3 pt-3">
 					<h5 className="text-neutral-7">
 						{`${
-							project?.slaCurrent?.includes(SLA.gold) ||
-							project?.slaCurrent?.includes(SLA.platinum)
+							projectHasSLAGoldPlatinum
 								? ROLE_TYPES.requestor.name
 								: ROLE_TYPES.admin.name
 						}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
@@ -354,21 +354,21 @@ const InvitesPage = ({
 	);
 };
 
-const Invites = (props) => {
+const InviteTeamMembersForm = (props) => {
 	return (
 		<Formik
 			initialValues={{
-				invites: [
-					getInitialInvite(),
-					getInitialInvite(ROLE_TYPES.member.key),
-					getInitialInvite(ROLE_TYPES.member.key),
-				],
+				invites: [...new Array(INITIAL_INVITES_COUNT)].map(() =>
+					getInitialInvite()
+				),
 			}}
 			validateOnChange
 		>
-			{(formikProps) => <InvitesPage {...props} {...formikProps} />}
+			{(formikProps) => (
+				<InviteTeamMembersPage {...props} {...formikProps} />
+			)}
 		</Formik>
 	);
 };
 
-export default Invites;
+export default InviteTeamMembersForm;

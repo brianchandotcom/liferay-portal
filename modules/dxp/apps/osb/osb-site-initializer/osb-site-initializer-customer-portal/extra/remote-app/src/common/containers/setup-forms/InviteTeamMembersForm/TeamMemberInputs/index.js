@@ -23,6 +23,7 @@ const TeamMemberInputs = ({
 	invite,
 	options,
 	placeholderEmail,
+	selectOnChange,
 }) => {
 	const debouncedEmail = useDebounce(invite?.email, 500);
 	const [bannedDomain, setBannedDomain] = useState(debouncedEmail);
@@ -65,12 +66,9 @@ const TeamMemberInputs = ({
 				<Select
 					groupStyle="m-0"
 					label="Role"
-					name={`invites[${id}].roleId`}
-					options={options.map(({disabled, label, value}) => ({
-						disabled,
-						label,
-						value,
-					}))}
+					name={`invites[${id}].role.id`}
+					onChange={(event) => selectOnChange(event.target.value)}
+					options={options}
 				/>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>

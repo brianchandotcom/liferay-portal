@@ -9,9 +9,12 @@
  * distribution rights of the Software.
  */
 
-export default function getInitialInvite(roleId = '') {
+export default function getInitialInvite(initialRole) {
 	return {
 		email: '',
-		roleId,
+		role: initialRole || {
+			id: 0,
+			name: '',
+		},
 	};
 }

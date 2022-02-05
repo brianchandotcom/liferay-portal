@@ -37,7 +37,7 @@ public class UnicodePropertiesBuilderCheck extends BaseBuilderCheck {
 		return ListUtil.fromArray(
 			new BaseBuilderCheck.BuilderInformation(
 				"UnicodeProperties", "UnicodePropertiesBuilder", "fastLoad",
-				"load", "put", "putAll", "setProperties"));
+				"load", "put", "putAll", "setProperty"));
 	}
 
 	@Override

@@ -1359,7 +1359,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			int index = fileName.lastIndexOf(CharPool.FORWARD_SLASH);
 
-			if ((index == -1) || (index >= (fileName.length() - 1))) {
+			if (fileName.endsWith("/")) {
 				continue;
 			}
 

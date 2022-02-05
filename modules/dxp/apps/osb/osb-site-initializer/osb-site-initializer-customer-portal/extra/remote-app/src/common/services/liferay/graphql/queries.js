@@ -210,6 +210,24 @@ export const addTeamMembersInvitation = gql`
 	}
 `;
 
+export const associateUserAccountWithAccountAndAccountRole = gql`
+	mutation associateUserAccountWithAccountAndAccountRole(
+		$emailAddress: String!
+		$accountKey: String!
+		$accountRoleId: Long!
+	) {
+		createAccountUserAccountByExternalReferenceCodeByEmailAddress(
+			emailAddress: $emailAddress
+			externalReferenceCode: $accountKey
+		)
+		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+			accountRoleId: $accountRoleId
+			emailAddress: $emailAddress
+			externalReferenceCode: $accountKey
+		)
+	}
+`;
+
 export const getAccountFlags = gql`
 	query getAccountFlags($filter: String) {
 		c {

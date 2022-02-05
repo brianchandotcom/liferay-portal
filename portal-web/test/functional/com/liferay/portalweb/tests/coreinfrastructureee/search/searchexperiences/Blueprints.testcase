@@ -1935,9 +1935,23 @@ definition {
 	test ViewDefaultElement {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editElement(
-			element = "Boost All Keywords Match",
-			searchForElement = "true");
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Search.searchCP(searchTerm = "Boost All Keywords Match");
+
+		Blueprints.openEntryMenu(title = "Boost All Keywords Match");
+
+		AssertElementPresent(
+			key_menuItem = "Export",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementNotPresent(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "View",
+			title = "Boost All Keywords Match");
 
 		AssertElementPresent(locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR");
 
@@ -1952,10 +1966,6 @@ definition {
 		Click(
 			key_text = "Close",
 			locator1 = "Link#ANY");
-
-		AssertElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",

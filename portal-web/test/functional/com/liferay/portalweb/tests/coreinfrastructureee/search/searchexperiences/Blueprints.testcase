@@ -125,6 +125,67 @@ definition {
 			value1 = "hits");
 	}
 
+	test ApplyBlueprintToContentPageViaBlueprintsOptions {
+		JSONBlog.addEntry(
+			entryContent = "",
+			entryTitle = "apple apple apple");
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			title = "WC Title");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Asset Type",
+			option = "Web Content Article");
+
+		Type(
+			elementName = "Boost Asset Type",
+			fieldLabel = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "1000");
+
+		PortletEntry.save();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Content Search Page",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Search Page",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Search Bar");
+
+		PageEditor.addWidget(
+			collectionName = "Search",
+			portletName = "Search Results",
+			targetFragmentName = "Search Bar");
+
+		PageEditor.addWidget(
+			portletName = "Blueprints Options",
+			targetFragmentName = "Search Bar");
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Search Page",
+			siteName = "Guest");
+
+		SearchPortlets.searchWidget(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+	}
+
 	test ApplyBlueprintToContentPageViaLLSO {
 		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintToContentPageViaLLSO";
 

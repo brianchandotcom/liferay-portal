@@ -349,6 +349,21 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			friendlyURL,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, siteNavigationMenuItem));
+
+		SiteNavigationMenuItemType defaultSiteNavigationMenuItemType =
+			new SiteNavigationMenuItemType() {
+
+				@Override
+				public String getLabel(Locale locale) {
+					return null;
+				}
+
+			};
+
+		Assert.assertEquals(
+			defaultSiteNavigationMenuItemType.getStatusIcon(
+				siteNavigationMenuItem),
+			siteNavigationMenuItemType.getStatusIcon(siteNavigationMenuItem));
 	}
 
 	@Test

@@ -1331,7 +1331,7 @@ definition {
 		PortletEntry.inputName(name = "${pageTemplateName}");
 
 		Select(
-			key_fieldLabel = "Page Template Collection",
+			key_fieldLabel = "Page Template Set",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${collectionName}");
 

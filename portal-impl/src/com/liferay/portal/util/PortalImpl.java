@@ -4583,8 +4583,7 @@ public class PortalImpl implements Portal {
 
 		Locale locale = portletRequest.getLocale();
 
-		String portletTitle = _getPortletTitle(
-			PortletIdCodec.decodePortletName(portletId), portletConfig, locale);
+		String portletTitle = null;
 
 		if (portletConfig == null) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -4597,6 +4596,11 @@ public class PortalImpl implements Portal {
 				(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 			portletTitle = getPortletTitle(portlet, servletContext, locale);
+		}
+		else {
+			portletTitle = _getPortletTitle(
+				PortletIdCodec.decodePortletName(portletId), portletConfig,
+				locale);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

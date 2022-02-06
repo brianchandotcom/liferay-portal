@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -605,6 +606,14 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 				nextSiblingDetailAST, variableName, builderMethodNames);
 
 			if (fullIdent != null) {
+				if (_hasVariableNameInMethodCall(
+						nextSiblingDetailAST.findFirstToken(
+							TokenTypes.METHOD_CALL),
+						variableName)) {
+
+					return;
+				}
+
 				log(
 					assignDetailAST, _MSG_INCLUDE_BUILDER, fullIdent.getText(),
 					fullIdent.getLineNo(), builderClassName,
@@ -1598,6 +1607,24 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 			int rangeEnd = range[1];
 
 			if ((rangeStart < start) || (rangeEnd > end)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _hasVariableNameInMethodCall(
+		DetailAST methodCallDetailAST, String variableName) {
+
+		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		for (DetailAST identDetailAST :
+				DetailASTUtil.getAllChildTokens(
+					elistDetailAST, true, TokenTypes.IDENT)) {
+
+			if (variableName.equals(identDetailAST.getText())) {
 				return true;
 			}
 		}

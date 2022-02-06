@@ -613,6 +613,10 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			themeDisplay.getURLCurrent() + StringPool.POUND,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, siteNavigationMenuItem));
+
+		Assert.assertEquals(
+			"warning-full",
+			siteNavigationMenuItemType.getStatusIcon(siteNavigationMenuItem));
 	}
 
 	private SiteNavigationMenuItem _createSiteNavigationMenuItem(

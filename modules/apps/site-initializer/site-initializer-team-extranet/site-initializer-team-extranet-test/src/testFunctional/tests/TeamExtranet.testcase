@@ -1,4 +1,4 @@
-@component-name = "portal-lol"
+@component-name = "portal-liferay-online"
 definition {
 
 	property osgi.modules.includes = "site-initializer-team-extranet";

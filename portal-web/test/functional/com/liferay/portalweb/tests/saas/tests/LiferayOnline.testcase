@@ -1,4 +1,4 @@
-@component-name = "portal-lol"
+@component-name = "portal-liferay-online"
 definition {
 
 	property osgi.modules.includes = "site-initializer-team-extranet";
@@ -6,7 +6,7 @@ definition {
 	property liferay.online.properties = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "LOL";
+	property testray.main.component.name = "Liferay Online";
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -41,8 +43,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.tika.detect.DefaultDetector;
 import org.apache.tika.detect.Detector;
-import org.apache.tika.io.CloseShieldInputStream;
-import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MimeTypesReaderMetKeys;
 
@@ -97,7 +97,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		try (InputStream inputStream = TikaInputStream.get(file)) {
+		try (InputStream inputStream = new FileInputStream(file)) {
 			return getContentType(inputStream, fileName);
 		}
 		catch (IOException ioException) {
@@ -125,14 +125,16 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		metadata.set(Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
-		try (TikaInputStream tikaInputStream = TikaInputStream.get(
-				new CloseShieldInputStream(inputStream))) {
-
-			contentType = String.valueOf(
-				_detector.detect(tikaInputStream, metadata));
+		if (!inputStream.markSupported()) {
+			inputStream = new UnsyncBufferedInputStream(inputStream);
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+
+		try {
+			contentType = String.valueOf(
+				_detector.detect(inputStream, metadata));
+		}
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		return contentType;

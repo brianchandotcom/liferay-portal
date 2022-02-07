@@ -172,7 +172,7 @@ public class ObjectEntryItemSelectorView
 					WebKeys.THEME_DISPLAY);
 
 			return JSONUtil.put(
-				"className", ObjectEntry.class.getName()
+				"className", _objectDefinition.getClassName()
 			).put(
 				"classNameId",
 				_portal.getClassNameId(_objectDefinition.getClassName())

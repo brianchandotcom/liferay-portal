@@ -137,9 +137,9 @@ AUI.add(
 			_defSelectFn(event) {
 				var instance = this;
 
-				var text = event.result.text;
-
 				var tplReplace = instance.get('tplReplace');
+
+				var text = event.result.text;
 
 				var mentionsResult = document.getElementById(
 					'_com_liferay_mentions_web_portlet_MentionsPortlet_mentionsResult'

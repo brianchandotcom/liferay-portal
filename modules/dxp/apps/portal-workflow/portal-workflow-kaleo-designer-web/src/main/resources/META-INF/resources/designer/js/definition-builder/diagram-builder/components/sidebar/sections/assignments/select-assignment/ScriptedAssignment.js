@@ -9,25 +9,72 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import React from 'react';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
 const ScriptedAssignment = ({setContentName}) => {
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+
+	const [showScriptData, setShowScriptData] = useState(
+		selectedItem?.data.assignments?.script
+	);
+
 	const addSourceButtonName = Liferay.Language.get('add-source-code');
 	const panelTitle = `${Liferay.Language.get(
 		'source-code'
 	)} (${Liferay.Language.get('groovy')})`;
 
+	const goToEditor = () => setContentName('scripted-assignment');
+
+	const deleteScript = () => {
+		setSelectedItem((previous) => {
+			return {
+				...previous,
+				data: {...previous.data, assignments: null},
+			};
+		});
+	};
+
+	useEffect(() => {
+		setShowScriptData(selectedItem?.data.assignments?.script);
+	}, [selectedItem]);
+
 	return (
 		<SidebarPanel panelTitle={panelTitle}>
-			<ClayButton
-				displayType="secondary"
-				onClick={() => setContentName('scripted-assignment')}
-			>
-				{addSourceButtonName.toUpperCase()}
-			</ClayButton>
+			{showScriptData ? (
+				<ClayLayout.ContentCol className="current-node-data-area" float>
+					<ClayLayout.Row
+						className="current-node-data-row"
+						justify="between"
+					>
+						<ClayLink
+							button={false}
+							className="truncate-container"
+							displayType="secondary"
+							href="#"
+							onClick={goToEditor}
+						>
+							<span>{Liferay.Language.get('script')}</span>
+						</ClayLink>
+
+						<ClayButtonWithIcon
+							className="delete-button text-secondary trash-button"
+							displayType="unstyled"
+							onClick={deleteScript}
+							symbol="trash"
+						/>
+					</ClayLayout.Row>
+				</ClayLayout.ContentCol>
+			) : (
+				<ClayButton displayType="secondary" onClick={goToEditor}>
+					{addSourceButtonName.toUpperCase()}
+				</ClayButton>
+			)}
 		</SidebarPanel>
 	);
 };

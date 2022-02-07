@@ -28,6 +28,14 @@
 	.sidebar-body {
 		overflow: hidden;
 
+		.delete-button {
+			& svg {
+				fill: #6b6c7e;
+				height: 16px;
+				width: 16px;
+			}
+		}
+
 		.panel .sheet-subtitle {
 			align-items: center;
 			cursor: pointer;
@@ -48,29 +56,19 @@
 
 			.delete-button {
 				align-items: flex-end;
-
-				& svg {
-					fill: #6b6c7e;
-				}
 			}
 		}
 
-		.current-assignments-area {
-			background-color: #fff;
-			border-color: #e7e7ed;
-			border-radius: 0.25rem;
-			border-style: solid;
-			border-width: 0.0625rem;
-			padding-bottom: 3px;
-			padding-left: 30px;
-			padding-right: 15px;
-			padding-top: 3px;
+		.current-node-data-area {
+			border: 1px solid #e7e7ed;
+			border-radius: 4px;
+			padding: 3px 15px 3px 30px;
 
-			.current-assignments-row {
+			.current-node-data-row {
 				align-items: center;
 
 				.truncate-container {
-					max-width: 332px;
+					max-width: 200px;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
@@ -123,6 +121,10 @@
 			.custom-control {
 				margin-bottom: 0;
 			}
+		}
+
+		.delete-button {
+			align-items: flex-end;
 		}
 
 		.trash-button {

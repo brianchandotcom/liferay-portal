@@ -498,8 +498,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Unable to obtain friendlyUrl article id:",
-							journalArticle.getId(), " languageId:",
+							"Unable to obtain friendlyUrl for article id ",
+							journalArticle.getId(), " and languageId ",
 							titleAvailableLanguageId),
 						portalException);
 				}

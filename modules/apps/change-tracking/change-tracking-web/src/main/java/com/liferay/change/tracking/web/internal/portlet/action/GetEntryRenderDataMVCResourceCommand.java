@@ -191,39 +191,17 @@ public class GetEntryRenderDataMVCResourceCommand
 					ctEntry.getModelClassNameId());
 
 				if (Validator.isNotNull(editURL)) {
-					long activeCTCollectionId = ParamUtil.getLong(
-						resourceRequest, "activeCTCollectionId");
-
-					editInPublicationJSONObject = JSONUtil.put(
-						"editURL", editURL
-					).put(
-						"label",
+					editInPublicationJSONObject = _getEditJSONObject(
+						_language.format(
+							httpServletRequest,
+							"you-are-currently-working-on-production.-work-" +
+								"on-x",
+							new Object[] {ctCollection.getName()}, false),
+						ctCollection.getCtCollectionId(), editURL,
 						_language.format(
 							httpServletRequest, "edit-in-x",
-							new Object[] {ctCollection.getName()}, false)
-					);
-
-					if (activeCTCollectionId !=
-							ctCollection.getCtCollectionId()) {
-
-						editInPublicationJSONObject.put(
-							"checkoutURL",
-							PublicationsPortletURLUtil.getHref(
-								resourceResponse.createActionURL(),
-								ActionRequest.ACTION_NAME,
-								"/change_tracking/checkout_ct_collection",
-								"redirect", editURL, "ctCollectionId",
-								String.valueOf(
-									ctCollection.getCtCollectionId()))
-						).put(
-							"confirmationMessage",
-							_language.format(
-								httpServletRequest,
-								"you-are-currently-working-on-production.-" +
-									"work-on-x",
-								new Object[] {ctCollection.getName()}, false)
-						);
-					}
+							new Object[] {ctCollection.getName()}, false),
+						resourceRequest, resourceResponse);
 				}
 
 				if (localize) {
@@ -316,40 +294,16 @@ public class GetEntryRenderDataMVCResourceCommand
 						ctEntry.getModelClassNameId());
 
 					if (Validator.isNotNull(editURL)) {
-						long activeCTCollectionId = ParamUtil.getLong(
-							resourceRequest, "activeCTCollectionId");
-
-						editInProductionJSONObject = JSONUtil.put(
-							"editURL", editURL
-						).put(
-							"label",
+						editInProductionJSONObject = _getEditJSONObject(
+							_language.format(
+								httpServletRequest,
+								"you-are-currently-working-on-x.-work-on-" +
+									"production",
+								new Object[] {ctCollection.getName()}, false),
+							CTConstants.CT_COLLECTION_ID_PRODUCTION, editURL,
 							_language.get(
-								httpServletRequest, "edit-in-production")
-						);
-
-						if (activeCTCollectionId !=
-								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-
-							editInProductionJSONObject.put(
-								"checkoutURL",
-								PublicationsPortletURLUtil.getHref(
-									resourceResponse.createActionURL(),
-									ActionRequest.ACTION_NAME,
-									"/change_tracking/checkout_ct_collection",
-									"redirect", editURL, "ctCollectionId",
-									String.valueOf(
-										CTConstants.
-											CT_COLLECTION_ID_PRODUCTION))
-							).put(
-								"confirmationMessage",
-								_language.format(
-									httpServletRequest,
-									"you-are-currently-working-on-x.-work-on-" +
-										"production",
-									new Object[] {ctCollection.getName()},
-									false)
-							);
-						}
+								httpServletRequest, "edit-in-production"),
+							resourceRequest, resourceResponse);
 					}
 
 					String leftVersionName = ctDisplayRenderer.getVersionName(
@@ -419,40 +373,16 @@ public class GetEntryRenderDataMVCResourceCommand
 						ctEntry.getModelClassNameId());
 
 					if (Validator.isNotNull(editURL)) {
-						long activeCTCollectionId = ParamUtil.getLong(
-							resourceRequest, "activeCTCollectionId");
-
-						editInProductionJSONObject = JSONUtil.put(
-							"editURL", editURL
-						).put(
-							"label",
+						editInProductionJSONObject = _getEditJSONObject(
+							_language.format(
+								httpServletRequest,
+								"you-are-currently-working-on-x.-work-on-" +
+									"production",
+								new Object[] {ctCollection.getName()}, false),
+							CTConstants.CT_COLLECTION_ID_PRODUCTION, editURL,
 							_language.get(
-								httpServletRequest, "edit-in-production")
-						);
-
-						if (activeCTCollectionId !=
-								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-
-							editInProductionJSONObject.put(
-								"checkoutURL",
-								PublicationsPortletURLUtil.getHref(
-									resourceResponse.createActionURL(),
-									ActionRequest.ACTION_NAME,
-									"/change_tracking/checkout_ct_collection",
-									"redirect", editURL, "ctCollectionId",
-									String.valueOf(
-										CTConstants.
-											CT_COLLECTION_ID_PRODUCTION))
-							).put(
-								"confirmationMessage",
-								_language.format(
-									httpServletRequest,
-									"you-are-currently-working-on-x.-work-on-" +
-										"production",
-									new Object[] {ctCollection.getName()},
-									false)
-							);
-						}
+								httpServletRequest, "edit-in-production"),
+							resourceRequest, resourceResponse);
 					}
 				}
 
@@ -735,6 +665,36 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private JSONObject _getEditJSONObject(
+		String confirmationMessage, long ctCollectionId, String editURL,
+		String label, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse) {
+
+		JSONObject editInProductionJSONObject = JSONUtil.put(
+			"editURL", editURL
+		).put(
+			"label", label
+		);
+
+		long activeCTCollectionId = ParamUtil.getLong(
+			resourceRequest, "activeCTCollectionId");
+
+		if (activeCTCollectionId != ctCollectionId) {
+			editInProductionJSONObject.put(
+				"checkoutURL",
+				PublicationsPortletURLUtil.getHref(
+					resourceResponse.createActionURL(),
+					ActionRequest.ACTION_NAME,
+					"/change_tracking/checkout_ct_collection", "redirect",
+					editURL, "ctCollectionId", String.valueOf(ctCollectionId))
+			).put(
+				"confirmationMessage", confirmationMessage
+			);
+		}
+
+		return editInProductionJSONObject;
 	}
 
 	private JSONObject _getLocaleJSONObject(String languageId) {

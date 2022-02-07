@@ -4350,6 +4350,8 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141614",
 			objectName = "CustomObject141614",
@@ -7970,6 +7972,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the other object is inactivated (Many to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedManyToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",

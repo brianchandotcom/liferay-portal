@@ -653,9 +653,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	protected UIDFactory uidFactory;
 
 	private void _addDDMStructureAttributes(
-			DDMStructure ddmStructure, Document document,
-			JournalArticle article)
-		throws Exception {
+		DDMStructure ddmStructure, Document document, JournalArticle article) {
 
 		document.addKeyword(Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
 
@@ -727,9 +725,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private String _extractDDMContent(
-			JournalArticle article, DDMStructure ddmStructure,
-			String languageId)
-		throws Exception {
+		JournalArticle article, DDMStructure ddmStructure, String languageId) {
 
 		DDMFormValues ddmFormValues = null;
 

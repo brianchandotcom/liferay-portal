@@ -93,16 +93,12 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	@Override
 	public String getContentType(File file, String fileName) {
-		if ((file == null) || !file.exists()) {
-			return getContentType(fileName);
-		}
-
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return getContentType(inputStream, fileName);
 		}
-		catch (IOException ioException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -111,10 +107,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	@Override
 	public String getContentType(InputStream inputStream, String fileName) {
-		if (inputStream == null) {
-			return getContentType(fileName);
-		}
-
 		String contentType = _customMimeTypes.get(_getExtension(fileName));
 
 		if (contentType != null) {
@@ -123,9 +115,12 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		Metadata metadata = new Metadata();
 
-		metadata.set(Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
+		if (Validator.isNotNull(fileName)) {
+			metadata.set(
+				Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
+		}
 
-		if (!inputStream.markSupported()) {
+		if ((inputStream != null) && !inputStream.markSupported()) {
 			inputStream = new UnsyncBufferedInputStream(inputStream);
 		}
 
@@ -142,28 +137,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	@Override
 	public String getContentType(String fileName) {
-		if (Validator.isNull(fileName)) {
-			return ContentTypes.APPLICATION_OCTET_STREAM;
-		}
-
-		String contentType = _customMimeTypes.get(_getExtension(fileName));
-
-		if (contentType != null) {
-			return contentType;
-		}
-
-		Metadata metadata = new Metadata();
-
-		metadata.set(Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
-
-		try {
-			contentType = String.valueOf(_detector.detect(null, metadata));
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		return contentType;
+		return getContentType((InputStream)null, fileName);
 	}
 
 	@Override

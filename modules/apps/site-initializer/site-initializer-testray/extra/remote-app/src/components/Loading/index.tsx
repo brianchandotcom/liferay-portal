@@ -12,19 +12,41 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 
-type ContainerProps = {
+type LoadingProps = {
 	className?: string;
-	title?: string;
 };
 
-const Container: React.FC<ContainerProps> = ({children, className, title}) => (
-	<div className={classNames('bg-white border-1 rounded-xs p-4', className)}>
-		{title && <h5>{title}</h5>}
+type LoadingWrapperProps = {
+	isLoading: boolean;
+} & LoadingProps;
 
-		{children}
+const Loading: React.FC<LoadingProps> = ({className}) => (
+	<div
+		className={classNames(
+			'align-items-center',
+			'd-flex',
+			'w-100',
+			className
+		)}
+	>
+		<ClayLoadingIndicator />
 	</div>
 );
 
-export default Container;
+const LoadingWrapper: React.FC<LoadingWrapperProps> = ({
+	children,
+	isLoading,
+}) => {
+	if (isLoading) {
+		return <Loading />;
+	}
+
+	return <>{children}</>;
+};
+
+export {LoadingWrapper};
+
+export default Loading;

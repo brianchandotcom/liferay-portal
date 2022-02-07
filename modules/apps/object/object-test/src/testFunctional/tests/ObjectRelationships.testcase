@@ -22,6 +22,53 @@ definition {
 		}
 	}
 
+	@description = "LPS-145393 - Verify it is possible to relate 2 entries from a Custom Object entry with the same Native Object entry in a One-to-Many relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleOneToManyRelationsWithNativeObject {
+
+		// TODO LPS-146867 CanAddMultipleOneToManyRelationsWithNativeObject pending implementation
+
+	}
+
+	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object entry with a Native Object entry"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddOneToManyRelationWithNativeObject {
+		property portal.acceptance = "true";
+
+		// TODO LPS-146866 CanAddOneToManyRelationWithNativeObject pending implementation
+
+	}
+
+	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateOneToManyForNativeObject {
+		property portal.acceptance = "true";
+
+		// TODO LPS-146865 CanCreateOneToManyForNativeObject pending implementation
+
+	}
+
+	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
+
+		// TODO LPS-146868 CanRelateOneToManyNativeObjectWithCustomSiteScoped pending implementation
+
+	}
+
+	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetTitleFieldForNativeObject {
+
+		// TODO LPS-146864 CanSetTitleFieldForNativeObject pending implementation
+
+	}
+
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"
 	@priority = "4"
 	test CanViewAndAddObjectEntriesAfterCreateRelationship {

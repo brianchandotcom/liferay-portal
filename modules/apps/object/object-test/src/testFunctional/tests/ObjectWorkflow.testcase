@@ -1,0 +1,44 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-145228 - Verify that the user is able to preview the entry's information inside of the My Workflow Tasks"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPreviewEntryInformationOnMyWorkflowTasks {
+		property portal.acceptance = "true";
+
+		// TODO LPS-146873 CanPreviewEntryInformationOnMyWorkflowTasks pending implementation
+
+	}
+
+	@description = "LPS-145228 - Verify that the user is able to view the entire entry's information by clicking on View button"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEntryInformationThroughViewButtonMyWorkflowTasks {
+
+		// TODO LPS-146874 CanViewEntryInformationThroughViewButtonMyWorkflowTasks pending implementation
+
+	}
+
+}

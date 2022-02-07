@@ -8,20 +8,12 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {getProductDescription, getProductName} from '..';
 
-const EnvironmentTypeColumn = ({activationKey}) => {
-	return (
-		<div>
-			<p className="font-weight-bold m-0 text-neutral-10">
-				{getProductName(activationKey).replace('Production', 'Prod')}
-			</p>
+const VIRTUAL_CLUSTER = 'virtual-cluster';
 
-			<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">
-				{getProductDescription(activationKey)}
-			</p>
-		</div>
-	);
-};
+export function hasVirtualCluster(activationKey) {
+	const hasVirtualCluster =
+		activationKey.licenseEntryType === VIRTUAL_CLUSTER;
 
-export {EnvironmentTypeColumn};
+	return hasVirtualCluster;
+}

@@ -301,27 +301,24 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		DropdownItemListBuilder.DropdownItemListWrapper filterListBuilder =
-			DropdownItemListBuilder.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						_getFilterNavigationDropdownItems());
-					dropdownGroupItem.setLabel(
-						LanguageUtil.get(
-							_httpServletRequest, "filter-by-navigation"));
-				});
-
-		if (!FFManagementToolbarConfigurationUtil.enableDesignImprovements()) {
-			filterListBuilder.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						_getOrderByDropdownItems());
-					dropdownGroupItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "order-by"));
-				});
-		}
-
-		return filterListBuilder.build();
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterNavigationDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "filter-by-navigation"));
+			}
+		).addGroup(
+			() ->
+				!FFManagementToolbarConfigurationUtil.
+					enableDesignImprovements(),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "order-by"));
+			}
+		).build();
 	}
 
 	@Override

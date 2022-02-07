@@ -11,6 +11,7 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
+import {useApplicationProvider} from '../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
@@ -19,6 +20,7 @@ import {
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
 import {searchParams} from '../../../common/services/liferay/searchParams';
+import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
 import {
 	ROLE_TYPES,
 	ROUTE_TYPES,
@@ -32,10 +34,12 @@ import reducer, {actionTypes} from './reducer';
 const AppContext = createContext();
 
 const AppContextProvider = ({assetsPath, children}) => {
+	const {oktaSessionURL} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		koroneikiAccount: {},
 		project: undefined,
+		sessionId: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
@@ -95,6 +99,17 @@ const AppContextProvider = ({assetsPath, children}) => {
 			}
 		};
 
+		const getSessionId = async () => {
+			const session = await getCurrentSession(oktaSessionURL);
+
+			if (session) {
+				dispatch({
+					payload: session.id,
+					type: actionTypes.UPDATE_SESSION_ID,
+				});
+			}
+		};
+
 		const getSubscriptionGroups = async (accountKey) => {
 			const {data} = await client.query({
 				query: getAccountSubscriptionGroups,
@@ -139,6 +154,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 				if (accountBrief) {
 					getProject(projectExternalReferenceCode, accountBrief);
 					getSubscriptionGroups(projectExternalReferenceCode);
+					getSessionId();
 
 					client.mutate({
 						mutation: addAccountFlag,
@@ -155,7 +171,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		fetchData();
-	}, []);
+	}, [oktaSessionURL]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

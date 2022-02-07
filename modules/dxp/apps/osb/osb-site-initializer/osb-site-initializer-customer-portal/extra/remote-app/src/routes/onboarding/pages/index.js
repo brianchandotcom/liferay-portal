@@ -23,7 +23,10 @@ import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {
-	const [{project, step, subscriptionGroups}, dispatch] = useOnboarding();
+	const [
+		{project, sessionId, step, subscriptionGroups},
+		dispatch,
+	] = useOnboarding();
 
 	const invitesPageHandle = () => {
 		const hasSubscriptionsDXPCloud = !!subscriptionGroups?.length;
@@ -48,6 +51,7 @@ const Pages = () => {
 					handlePage={invitesPageHandle}
 					leftButton="Skip for now"
 					project={project}
+					sessionId={sessionId}
 				/>
 			),
 		},

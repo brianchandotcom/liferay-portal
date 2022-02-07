@@ -15,7 +15,15 @@ import Button from '../../../../common/components/Button';
 import {AUTO_CLOSE_ALERT_TIME} from '../../utils/constants/autoCloseAlertTime';
 import TableKeyDetails from '../TableKeyDetails';
 
-const ModalKeyDetails = ({activationKeys, assetsPath, observer, onClose}) => {
+const ModalKeyDetails = ({
+	activationKeys,
+	assetsPath,
+	downloadActivationLicenseKey,
+	licenseKeyDownloadURL,
+	observer,
+	onClose,
+	sessionId,
+}) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
 	return (
@@ -54,7 +62,17 @@ const ModalKeyDetails = ({activationKeys, assetsPath, observer, onClose}) => {
 						Close
 					</Button>
 
-					<Button appendIcon="download" className="ml-2">
+					<Button
+						appendIcon="download"
+						className="ml-2"
+						onClick={() =>
+							downloadActivationLicenseKey(
+								activationKeys.id,
+								licenseKeyDownloadURL,
+								sessionId
+							)
+						}
+					>
 						Download Key
 					</Button>
 				</div>

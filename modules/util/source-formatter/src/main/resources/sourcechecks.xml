@@ -811,6 +811,7 @@
 		<check name="LogParametersCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the values of parameters passed to `_log.*` calls." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="ResourceBundleCheck">
 			<category name="Bug Prevention" />
@@ -1092,6 +1093,7 @@
 		<check name="LogParametersCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the values of parameters passed to `_log.*` calls." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="ResourceBundleCheck">
 			<category name="Bug Prevention" />

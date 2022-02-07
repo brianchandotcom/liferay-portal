@@ -53,7 +53,7 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({bars, data}) => {
 
 				<Tooltip />
 
-				<Legend />
+				<Legend align="right" verticalAlign="top" />
 
 				{bars.map(({fill, ...bar}, index) => (
 					<Bar

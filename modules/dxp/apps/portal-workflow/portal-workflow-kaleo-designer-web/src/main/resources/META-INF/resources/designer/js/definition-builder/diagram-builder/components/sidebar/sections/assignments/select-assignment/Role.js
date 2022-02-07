@@ -15,7 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {headers} from '../../../../../../util/fetchUtil';
+import {headers, userBaseURL} from '../../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
@@ -35,7 +35,7 @@ const Roles = () => {
 			},
 		},
 		fetchPolicy: 'cache-first',
-		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
+		link: `${window.location.origin}${userBaseURL}/roles`,
 		onNetworkStatusChange: setNetworkStatus,
 	});
 

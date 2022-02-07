@@ -16,7 +16,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {headers} from '../../../../../../util/fetchUtil';
+import {headers, userBaseURL} from '../../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
@@ -39,7 +39,7 @@ const User = ({identifier, index, sectionsLength, setSections}) => {
 				'x-csrf-token': Liferay.authToken,
 			},
 		},
-		link: `${window.location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+		link: `${window.location.origin}${userBaseURL}/user-accounts`,
 		onNetworkStatusChange: setNetworkStatus,
 		variables: {search},
 	});

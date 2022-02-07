@@ -27,4 +27,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-nio")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+
+	testCompile group: "com.liferay", name: "com.ibm.icu4j", version: "54.1.1.LIFERAY-PATCHED-2"
+	testCompile project(":apps:normalizer:normalizer-impl")
 }

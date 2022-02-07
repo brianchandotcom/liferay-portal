@@ -14,15 +14,19 @@
 
 package com.liferay.friendly.url.internal.util;
 
+import com.liferay.normalizer.internal.NormalizerImpl;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.HttpImpl;
 
 import java.net.URLEncoder;
 
 import java.nio.charset.CharsetEncoder;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,6 +40,15 @@ public class FriendlyURLNormalizerImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		ReflectionTestUtil.setFieldValue(
+			_friendlyURLNormalizerImpl, "_http", new HttpImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_friendlyURLNormalizerImpl, "_normalizer", new NormalizerImpl());
+	}
 
 	@Test
 	public void testNormalizeBlank() {
@@ -197,7 +210,7 @@ public class FriendlyURLNormalizerImplTest {
 			_friendlyURLNormalizerImpl.normalizeWithEncoding(s));
 	}
 
-	private final FriendlyURLNormalizerImpl _friendlyURLNormalizerImpl =
+	private static final FriendlyURLNormalizerImpl _friendlyURLNormalizerImpl =
 		new FriendlyURLNormalizerImpl();
 
 }

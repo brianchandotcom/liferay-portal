@@ -242,6 +242,67 @@ public abstract class BaseUserGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/user-groups/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserGroup patchUserGroupByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			UserGroup userGroup)
+		throws Exception {
+
+		UserGroup existingUserGroup = getUserGroupByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (userGroup.getActions() != null) {
+			existingUserGroup.setActions(userGroup.getActions());
+		}
+
+		if (userGroup.getDescription() != null) {
+			existingUserGroup.setDescription(userGroup.getDescription());
+		}
+
+		if (userGroup.getExternalReferenceCode() != null) {
+			existingUserGroup.setExternalReferenceCode(
+				userGroup.getExternalReferenceCode());
+		}
+
+		if (userGroup.getName() != null) {
+			existingUserGroup.setName(userGroup.getName());
+		}
+
+		if (userGroup.getUsersCount() != null) {
+			existingUserGroup.setUsersCount(userGroup.getUsersCount());
+		}
+
+		preparePatch(userGroup, existingUserGroup);
+
+		return putUserGroupByExternalReferenceCode(
+			externalReferenceCode, existingUserGroup);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(

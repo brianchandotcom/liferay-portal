@@ -75,6 +75,10 @@ public interface UserGroupResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public UserGroup patchUserGroupByExternalReferenceCode(
+			String externalReferenceCode, UserGroup userGroup)
+		throws Exception;
+
 	public UserGroup putUserGroupByExternalReferenceCode(
 			String externalReferenceCode, UserGroup userGroup)
 		throws Exception;

@@ -608,6 +608,38 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchUserGroupByExternalReferenceCode() throws Exception {
+		UserGroup postUserGroup =
+			testPatchUserGroupByExternalReferenceCode_addUserGroup();
+
+		UserGroup randomPatchUserGroup = randomPatchUserGroup();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup patchUserGroup =
+			userGroupResource.patchUserGroupByExternalReferenceCode(
+				postUserGroup.getExternalReferenceCode(), randomPatchUserGroup);
+
+		UserGroup expectedPatchUserGroup = postUserGroup.clone();
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchUserGroup, randomPatchUserGroup);
+
+		UserGroup getUserGroup =
+			userGroupResource.getUserGroupByExternalReferenceCode(
+				patchUserGroup.getExternalReferenceCode());
+
+		assertEquals(expectedPatchUserGroup, getUserGroup);
+		assertValid(getUserGroup);
+	}
+
+	protected UserGroup testPatchUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutUserGroupByExternalReferenceCode() throws Exception {
 		UserGroup postUserGroup =
 			testPutUserGroupByExternalReferenceCode_addUserGroup();

@@ -300,13 +300,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			searchQuery, searchContext, Field.ARTICLE_ID, false);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.CLASS_PK, false);
-		addSearchLocalizedTerm(
+		_addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
-		addSearchLocalizedTerm(
+		_addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		_addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.USER_NAME, false);
 
@@ -332,44 +332,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				searchContext);
 
 		queryConfig.addHighlightFieldNames(localizedFieldNames);
-	}
-
-	@Override
-	protected Map<String, Query> addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field,
-			boolean like)
-		throws Exception {
-
-		if (Validator.isBlank(field)) {
-			return Collections.emptyMap();
-		}
-
-		String value = GetterUtil.getString(searchContext.getAttribute(field));
-
-		if (Validator.isBlank(value)) {
-			value = searchContext.getKeywords();
-		}
-
-		if (Validator.isBlank(value)) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, Query> queries = null;
-
-		if (Validator.isBlank(searchContext.getKeywords())) {
-			BooleanQuery localizedQuery = new BooleanQueryImpl();
-
-			queries = _addLocalizedFields(
-				localizedQuery, field, value, like, searchContext);
-
-			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
-		}
-		else {
-			queries = _addLocalizedFields(
-				searchQuery, field, value, like, searchContext);
-		}
-
-		return queries;
 	}
 
 	@Override
@@ -761,6 +723,43 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		searchQuery.add(localizedQuery, booleanClauseOccur);
+	}
+
+	private Map<String, Query> _addSearchLocalizedTerm(
+			BooleanQuery searchQuery, SearchContext searchContext, String field,
+			boolean like)
+		throws Exception {
+
+		if (Validator.isBlank(field)) {
+			return Collections.emptyMap();
+		}
+
+		String value = GetterUtil.getString(searchContext.getAttribute(field));
+
+		if (Validator.isBlank(value)) {
+			value = searchContext.getKeywords();
+		}
+
+		if (Validator.isBlank(value)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Query> queries = null;
+
+		if (Validator.isBlank(searchContext.getKeywords())) {
+			BooleanQuery localizedQuery = new BooleanQueryImpl();
+
+			queries = _addLocalizedFields(
+				localizedQuery, field, value, like, searchContext);
+
+			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
+		}
+		else {
+			queries = _addLocalizedFields(
+				searchQuery, field, value, like, searchContext);
+		}
+
+		return queries;
 	}
 
 	private void _deleteDocument(JournalArticle article) throws Exception {

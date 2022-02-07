@@ -2339,6 +2339,8 @@ definition {
 
 		Refresh();
 
+		AssertAlertNotPresent();
+
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");

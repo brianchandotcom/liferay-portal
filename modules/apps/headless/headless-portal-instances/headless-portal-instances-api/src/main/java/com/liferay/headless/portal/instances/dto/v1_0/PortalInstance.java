@@ -114,7 +114,7 @@ public class PortalInstance implements Serializable {
 	@GraphQLField(
 		description = "The portal instance's administrator. This field is optional and is only used in the portal instance creation."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Admin admin;
 
 	@Schema(description = "internal unique key.")

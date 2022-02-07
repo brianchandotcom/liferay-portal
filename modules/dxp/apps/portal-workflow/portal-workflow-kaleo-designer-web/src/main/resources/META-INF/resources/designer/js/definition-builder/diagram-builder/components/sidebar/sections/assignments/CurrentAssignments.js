@@ -46,13 +46,13 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 				firstName: resourceActionsArray[0],
 			});
 		}
-		if (assignmentType === 'roleId') {
+		else if (assignmentType === 'roleId') {
 			setAssignmentsDetails({
 				assignmentsCount: 1,
 				firstName: assignments.sectionsData.name,
 			});
 		}
-		if (assignmentType === 'user') {
+		else if (assignmentType === 'user') {
 			setAssignmentsDetails({
 				assignmentsCount: assignments.sectionsData.length,
 				firstName: assignments.sectionsData
@@ -76,7 +76,7 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 			return [''];
 		}
 		else if (assignmentsDetails) {
-			const result = [': ' + assignmentsDetails.firstName || ''];
+			const result = [assignmentsDetails.firstName || ''];
 
 			if (assignmentsDetails.assignmentsCount !== 1) {
 				result.push(
@@ -90,28 +90,50 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 			return result;
 		}
 		else {
-			return [`: ${assignments[Object.keys(assignments)[1]]}`];
+			if (assignmentType === 'roleType') {
+				const assignmentSummary = assignments.roleName;
+
+				const result = [assignmentSummary[0]];
+
+				if (assignmentSummary.length > 1) {
+					result.push(
+						' ' +
+							lang.sub(Liferay.Language.get('and-x-more'), [
+								assignmentSummary.length - 1,
+							])
+					);
+				}
+
+				return result;
+			}
+
+			return [assignments[Object.keys(assignments)[1]]];
 		}
 	};
 
 	return (
-		<ClayLayout.ContentCol className="current-assignments-area" float>
-			<ClayLayout.Row
-				className="current-assignments-row"
-				justify="between"
-			>
+		<ClayLayout.ContentCol className="current-node-data-area" float>
+			<ClayLayout.Row className="current-node-data-row" justify="between">
 				<ClayLink
 					button={false}
-					className="truncate-container"
 					displayType="secondary"
 					href="#"
 					onClick={() => setContentName('assignments')}
 				>
-					{options.find(optionFilter)?.label}
+					<div className="d-flex">
+						{options.find(optionFilter)?.label}
 
-					{getAssignmentsDetails().map((content, index) => (
-						<span key={index}>{content}</span>
-					))}
+						{assignmentType !== 'assetCreator' && ':'}
+
+						{getAssignmentsDetails().map((content, index) => (
+							<div
+								className="ml-2 truncate-container"
+								key={index}
+							>
+								{content}
+							</div>
+						))}
+					</div>
 				</ClayLink>
 
 				<ClayButtonWithIcon

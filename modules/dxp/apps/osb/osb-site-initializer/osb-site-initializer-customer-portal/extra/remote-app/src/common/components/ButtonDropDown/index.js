@@ -10,15 +10,17 @@
  */
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import {useState} from 'react';
 
 const ButtonDropDown = ({
 	label,
 	align = Align.BottomRight,
-	active,
-	setActive,
 	items,
 	...props
 }) => {
+	const [active, setActive] = useState(false);
+
 	return (
 		<ClayDropDown
 			active={active}
@@ -34,9 +36,16 @@ const ButtonDropDown = ({
 			{...props}
 		>
 			<ClayDropDown.ItemList>
-				{items.map(({icon, label, onClick}) => (
+				{items.map(({disabled, icon, label, onClick}) => (
 					<ClayDropDown.Item
-						className="common-drop-down-item font-weight-semi-bold px-3 rounded-xs text-neutral-8"
+						className={classNames(
+							'font-weight-semi-bold px-3 rounded-xs',
+							{
+								'common-drop-down-item text-neutral-8': !disabled,
+								'text-neutral-5': disabled,
+							}
+						)}
+						disabled={disabled}
 						key={label}
 						onClick={onClick}
 					>

@@ -14,13 +14,11 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.processor.JavaSourceProcessor;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -39,12 +37,6 @@ public class LogParametersCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
-
-		if ((getSourceProcessor() instanceof JavaSourceProcessor) &&
-			content.contains("import com.liferay.portal.kernel.log.Log;")) {
-
-			return content;
-		}
 
 		return _formatLogParameters(content);
 	}
@@ -85,15 +77,16 @@ public class LogParametersCheck extends BaseFileCheck {
 					matcher.start(2));
 			}
 
-			if ((parameterList.size() == 1) &&
+			if ((parameterList.size() == 2) &&
 				variableTypeName.endsWith("Exception")) {
 
-				return StringUtil.replaceFirst(
-					content, firstParameter,
-					StringBundler.concat(
-						firstParameter, StringPool.COMMA_AND_SPACE,
-						firstParameter),
-					matcher.start(2));
+				String secondParameter = StringUtil.trim(parameterList.get(1));
+
+				if (firstParameter.equals(secondParameter)) {
+					return StringUtil.replaceFirst(
+						content, firstParameter + StringPool.COMMA,
+						StringPool.BLANK, matcher.start(2));
+				}
 			}
 		}
 

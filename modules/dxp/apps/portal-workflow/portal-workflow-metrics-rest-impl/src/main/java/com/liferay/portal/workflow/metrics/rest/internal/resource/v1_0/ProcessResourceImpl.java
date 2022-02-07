@@ -26,6 +26,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.ProcessUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchProcessException;
@@ -133,14 +134,33 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Override
 	public Process postProcess(Process process) throws Exception {
+		AddProcessRequest.Builder builder = new AddProcessRequest.Builder();
+
 		return ProcessUtil.toProcess(
 			_processWorkflowMetricsIndexer.addProcess(
-				process.getActive(), contextCompany.getCompanyId(),
-				process.getDateModified(), process.getDescription(),
-				process.getDateModified(), process.getName(), process.getId(),
-				process.getTitle(),
-				LocalizedMapUtil.getLocalizedMap(process.getTitle_i18n()),
-				process.getVersion()),
+				builder.active(
+					process.getActive()
+				).companyId(
+					contextCompany.getCompanyId()
+				).createDate(
+					process.getDateCreated()
+				).description(
+					process.getDescription()
+				).modifiedDate(
+					process.getDateModified()
+				).name(
+					process.getName()
+				).processId(
+					process.getId()
+				).title(
+					process.getTitle()
+				).titleMap(
+					LocalizedMapUtil.getLocalizedMap(process.getTitle_i18n())
+				).version(
+					process.getVersion()
+				).versions(
+					new String[] {process.getVersion()}
+				).build()),
 			contextAcceptLanguage.getPreferredLocale());
 	}
 

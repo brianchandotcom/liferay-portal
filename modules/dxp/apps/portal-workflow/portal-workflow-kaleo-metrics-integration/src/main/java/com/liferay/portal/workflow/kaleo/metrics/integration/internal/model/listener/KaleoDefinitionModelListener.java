@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
@@ -37,18 +38,8 @@ public class KaleoDefinitionModelListener
 	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			kaleoDefinition.getTitle());
-
 		_processWorkflowMetricsIndexer.addProcess(
-			kaleoDefinition.isActive(), kaleoDefinition.getCompanyId(),
-			kaleoDefinition.getCreateDate(), kaleoDefinition.getDescription(),
-			kaleoDefinition.getModifiedDate(), kaleoDefinition.getName(),
-			kaleoDefinition.getKaleoDefinitionId(),
-			kaleoDefinition.getTitle(defaultLanguageId),
-			kaleoDefinition.getTitleMap(),
-			StringBundler.concat(
-				kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+			_indexerHelper.createAddProcessRequest(0L, kaleoDefinition));
 	}
 
 	@Override
@@ -78,6 +69,9 @@ public class KaleoDefinitionModelListener
 			kaleoDefinition.getCompanyId(),
 			kaleoDefinition.getKaleoDefinitionId());
 	}
+
+	@Reference
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;

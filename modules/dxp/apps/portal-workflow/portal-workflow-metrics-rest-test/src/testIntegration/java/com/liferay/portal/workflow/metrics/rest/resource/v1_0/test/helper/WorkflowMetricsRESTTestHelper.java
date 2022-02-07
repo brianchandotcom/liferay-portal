@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
+import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
@@ -345,27 +347,44 @@ public class WorkflowMetricsRESTTestHelper {
 	public Process addProcess(long companyId, Process process)
 		throws Exception {
 
+		AddProcessRequest.Builder builder = new AddProcessRequest.Builder();
+
 		_processWorkflowMetricsIndexer.addProcess(
-			Optional.ofNullable(
-				process.getActive()
-			).orElseGet(
-				() -> Boolean.TRUE
-			),
-			companyId,
-			Optional.ofNullable(
-				process.getDateCreated()
-			).orElseGet(
-				Date::new
-			),
-			process.getDescription(),
-			Optional.ofNullable(
-				process.getDateModified()
-			).orElseGet(
-				Date::new
-			),
-			process.getName(), process.getId(), process.getTitle(),
-			LocalizedMapUtil.getLocalizedMap(process.getTitle_i18n()),
-			process.getVersion());
+			builder.active(
+				Optional.ofNullable(
+					process.getActive()
+				).orElseGet(
+					() -> Boolean.TRUE
+				)
+			).companyId(
+				companyId
+			).createDate(
+				Optional.ofNullable(
+					process.getDateCreated()
+				).orElseGet(
+					Date::new
+				)
+			).description(
+				process.getDescription()
+			).modifiedDate(
+				Optional.ofNullable(
+					process.getDateModified()
+				).orElseGet(
+					Date::new
+				)
+			).name(
+				process.getName()
+			).processId(
+				process.getId()
+			).title(
+				process.getTitle()
+			).titleMap(
+				LocalizedMapUtil.getLocalizedMap(process.getTitle_i18n())
+			).version(
+				process.getVersion()
+			).versions(
+				new String[] {process.getVersion()}
+			).build());
 
 		_assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
@@ -1009,15 +1028,37 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public void restoreProcess(Document document) throws Exception {
+		AddProcessRequest.Builder builder = new AddProcessRequest.Builder();
+
+		builder.active(
+			document.getBoolean("active")
+		).companyId(
+			document.getLong("companyId")
+		).createDate(
+			_parseDate(document.getDate("createDate"))
+		).description(
+			document.getString("description")
+		).modifiedDate(
+			_parseDate(document.getDate("modifiedDate"))
+		).name(
+			document.getString("name")
+		).processId(
+			document.getLong("processId")
+		).title(
+			document.getString("title")
+		).titleMap(
+			_createLocalizationMap(document.getString("title"))
+		);
+
+		String version = StringBundler.concat(
+			document.getString("version"), CharPool.PERIOD, 0);
+
 		_processWorkflowMetricsIndexer.addProcess(
-			document.getBoolean("active"), document.getLong("companyId"),
-			_parseDate(document.getDate("createDate")),
-			document.getString("description"),
-			_parseDate(document.getDate("modifiedDate")),
-			document.getString("name"), document.getLong("processId"),
-			document.getString("title"),
-			_createLocalizationMap(document.getString("title")),
-			document.getString("version"));
+			builder.version(
+				version
+			).versions(
+				new String[] {version}
+			).build());
 
 		_assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(

@@ -37,7 +37,7 @@ const ModalKeyDetails = ({
 								{activationKeys.name}
 							</h2>
 
-							<p>{activationKeys.name}</p>
+							<p>{activationKeys.description}</p>
 						</div>
 
 						<Button

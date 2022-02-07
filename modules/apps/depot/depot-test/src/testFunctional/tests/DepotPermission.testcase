@@ -264,6 +264,8 @@ definition {
 	@priority = "5"
 	test CanAddFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -340,6 +342,8 @@ definition {
 	@priority = "5"
 	test CanAddImageToFolderViaMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -437,6 +441,8 @@ definition {
 	@priority = "5"
 	test CanDeleteFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -535,6 +541,8 @@ definition {
 	@priority = "5"
 	test CanDeleteImageInMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -643,6 +651,8 @@ definition {
 	@priority = "5"
 	test CanEditFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -745,6 +755,8 @@ definition {
 	@priority = "5"
 	test CanEditImageInMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -858,6 +870,9 @@ definition {
 	@description = "This ensures that assets stored in the asset library folder cannot be viewed without permissions Via DM on a connected site."
 	@priority = "4"
 	test CannotViewFileInDMWidgetWithoutPermission {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONDepot.connectSite(
@@ -908,6 +923,9 @@ definition {
 	@description = "This ensures that an image stored in asset library folder cannot be viewed by a guest without permissions via MG on a connected site."
 	@priority = "4"
 	test CannotViewImageInMGAsGuest {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONGroup.addGroup(groupName = "Site Name");

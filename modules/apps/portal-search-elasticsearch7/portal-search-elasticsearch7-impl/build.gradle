@@ -57,6 +57,7 @@ dependencies {
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-geo", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-lz4", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-x-content", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-client", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-high-level-client", version: elasticsearchClientVersion

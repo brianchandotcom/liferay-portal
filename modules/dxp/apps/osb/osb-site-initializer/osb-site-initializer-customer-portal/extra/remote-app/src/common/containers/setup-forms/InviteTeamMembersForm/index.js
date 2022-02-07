@@ -22,6 +22,7 @@ import {
 	associateUserAccountWithAccountAndAccountRole,
 	getAccountRoles,
 } from '../../../services/liferay/graphql/queries';
+import {associateContactRoleNameByEmailByProject} from '../../../services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES} from '../../../utils/constants';
 import getInitialInvite from '../../../utils/getInitialInvite';
 import Layout from '../Layout';
@@ -45,12 +46,13 @@ const InviteTeamMembersPage = ({
 	handlePage,
 	leftButton,
 	project,
+	sessionId,
 	setFieldValue,
 	setTouched,
 	touched,
 	values,
 }) => {
-	const {supportLink} = useApplicationProvider();
+	const {licenseKeyDownloadURL, supportLink} = useApplicationProvider();
 
 	const [addTeamMemberInvitation, {error: addTeamMemberError}] = useMutation(
 		addTeamMembersInvitation
@@ -196,8 +198,7 @@ const InviteTeamMembersPage = ({
 
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -208,7 +209,7 @@ const InviteTeamMembersPage = ({
 
 		if (filledEmails.length) {
 			await Promise.all(
-				filledEmails.map(({email, role}) => {
+				filledEmails.map(async ({email, role}) => {
 					addTeamMemberInvitation({
 						variables: {
 							TeamMembersInvitation: {
@@ -226,14 +227,21 @@ const InviteTeamMembersPage = ({
 							emailAddress: email,
 						},
 					});
+
+					associateContactRoleNameByEmailByProject(
+						project.accountKey,
+						licenseKeyDownloadURL,
+						sessionId,
+						encodeURI(email),
+						role.name
+					);
 				})
 			);
 
 			if (!addTeamMemberError && !associateUserAccountError) {
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

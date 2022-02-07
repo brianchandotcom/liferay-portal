@@ -217,7 +217,7 @@ definition {
 
 		BlogsEntry.addCustomURL(
 			customURL = "hola-adiós",
-			viewNoHistory = "true");
+			viewHistory = "true");
 
 		PortletEntry.publish();
 

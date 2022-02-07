@@ -403,6 +403,7 @@ UnwrappedVariableInfoCheck | [Bug Prevention](bug_prevention_checks.markdown#bug
 UpgradeDeprecatedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 UpgradeJavaCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Performs upgrade checks for `java` files |
 UpgradeRemovedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Finds cases where calls are made to removed API after an upgrade. |
+UpgradeUnusedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where calls are unused after an upgrade. |
 [ValidatorEqualsCheck](check/validator_equals_check.markdown#validatorequalscheck) | [Performance](performance_checks.markdown#performance-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no calls to `Validator.equals(Object, Object)`. |
 ValidatorIsNullCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`. |
 VariableDeclarationAsUsedCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds cases where a variable declaration can be inlined or moved closer to where it is used. |

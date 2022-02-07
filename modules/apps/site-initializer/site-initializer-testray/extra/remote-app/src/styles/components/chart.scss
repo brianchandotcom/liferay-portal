@@ -1,0 +1,42 @@
+.legend-container {
+	list-style: none;
+
+	.legend-color-block {
+		height: 14px;
+		width: 14px;
+	}
+
+	.legend-item {
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+		margin-bottom: 5px;
+		margin-left: 10px;
+
+		&-label {
+			color: $color-gray;
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 1em;
+			padding-top: 5px;
+			text-transform: uppercase;
+		}
+
+		.legend-item-key {
+			margin-right: 10px;
+		}
+
+		.legend-item-numbers {
+			.primary {
+				font-size: 1.1em;
+				font-weight: $font-header-weight;
+				line-height: 1;
+			}
+		}
+	}
+}
+
+.tooltip-container-chart {
+	background-color: rgba(255, 255, 255, 0.95);
+	padding: 20px;
+}

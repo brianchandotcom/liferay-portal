@@ -133,9 +133,14 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
+		long userId = serviceContext.getUserId();
+
+		if (userId == 0) {
+			userId = layoutPageTemplateEntry.getUserId();
+		}
+
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getUserId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			userId, layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			nameMap.get(defaultLocale), status);
 
 		return layoutPrototype;

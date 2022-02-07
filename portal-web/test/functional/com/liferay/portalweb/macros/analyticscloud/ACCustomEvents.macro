@@ -73,6 +73,56 @@ definition {
 		}
 	}
 
+	macro copySampleJavascript {
+		if (isSet(disableAttributesList)) {
+			ACCustomEvents.disableAttributes(disableAttributesList = "${disableAttributesList}");
+		}
+
+		Copy(locator1 = "//code");
+
+		ACUtils.clickAnyButton(button = "Edit");
+
+		Paste(locator1 = "TextArea#DESCRIPTION");
+
+		static var sampleJavascript = selenium.getText("TextArea#DESCRIPTION");
+
+		for (var attribute : list "${attributesList}") {
+			var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'${attribute}'", "${attribute}");
+		}
+
+		var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'", "\"");
+		var sampleJavascript = StringUtil.replace("${sampleJavascript}", " ", "");
+		var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldCustomEventName}", "${newCustomEventName}");
+
+		if (isSet(oldAttributeList)) {
+			var list1 = ListUtil.newListFromString("${oldAttributeList}");
+			var list2 = ListUtil.newListFromString("${newAttributeList}");
+			var size = ListUtil.size("${list1}");
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var oldAttribute = ListUtil.get("${list1}", "${i}");
+				var newAttribute = ListUtil.get("${list2}", "${i}");
+				var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldAttribute}", "${newAttribute}");
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+
+			var list3 = ListUtil.newListFromString("${oldValueList}");
+			var list4 = ListUtil.newListFromString("${newValueList}");
+			var size = ListUtil.size("${list3}");
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var oldValue = ListUtil.get("${list3}", "${i}");
+				var newValue = ListUtil.get("${list4}", "${i}");
+				var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldValue}", "${newValue}");
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+		}
+	}
+
 	macro createCustomEvent {
 		if (!(isSet(attributesName))) {
 			var attributesName = "category,price,temp,birthdate,like";
@@ -134,6 +184,12 @@ definition {
 			ACUtils.createWCAndAddToPage(
 				webContentContent = '''<div><button class="mybutton-shop product-shop-button" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { for(let i = 0; i < ${customEventsNumber}; i = i %2B 1 ) { var message = "Multiple Custom Event ${customEventName} V"; var finalMessage = message.replace("V", i); Analytics.track(finalMessage, {category: "wetsuit"});  } } </script>''',
 				webContentTitle = "${webContentTitle}");
+		}
+	}
+
+	macro disableAttributes {
+		for (var key_tableMember : list "${disableAttributesList}") {
+			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 		}
 	}
 
@@ -264,66 +320,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro disableAttributes {
-		for (var key_tableMember : list "${disableAttributesList}") {
-			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
-		}
-	}
-
-	macro copySampleJavascript {
-		if (isSet(disableAttributesList)) {
-			ACCustomEvents.disableAttributes(disableAttributesList = "${disableAttributesList}");
-		}
-
-		Copy(locator1 = "//code");
-
-		ACUtils.clickAnyButton(button = "Edit");
-
-		Paste(locator1 = "TextArea#DESCRIPTION");
-
-		static var sampleJavascript = selenium.getText("TextArea#DESCRIPTION");
-
-		for (var attribute : list "${attributesList}") {
-			sampleJavascript = StringUtil.replace("${sampleJavascript}", "'${attribute}'", "${attribute}");
-		}
-
-		sampleJavascript = StringUtil.replace("${sampleJavascript}", "'", "\"");
-		sampleJavascript = StringUtil.replace("${sampleJavascript}", " ", "");
-		sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldCustomEventName}", "${newCustomEventName}");
-
-		if (isSet(oldAttributeList)) {
-			var list1 = ListUtil.newListFromString("${oldAttributeList}");
-			var list2 = ListUtil.newListFromString("${newAttributeList}");
-			var size = ListUtil.size("${list1}");
-			var i = "0";
-
-			while ("${i}" != "${size}") {
-				var oldAttribute = ListUtil.get("${list1}", "${i}");
-				var newAttribute = ListUtil.get("${list2}", "${i}");
-
-				sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldAttribute}", "${newAttribute}");
-
-				var i = ${i} + 1;
-				var i = StringUtil.valueOf("${i}");
-			}
-
-			var list3 = ListUtil.newListFromString("${oldValueList}");
-			var list4 = ListUtil.newListFromString("${newValueList}");
-			var size = ListUtil.size("${list3}");
-			var i = "0";
-
-			while ("${i}" != "${size}") {
-				var oldValue = ListUtil.get("${list3}", "${i}");
-				var newValue = ListUtil.get("${list4}", "${i}");
-
-				sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldValue}", "${newValue}");
-
-				var i = ${i} + 1;
-				var i = StringUtil.valueOf("${i}");
-			}
-		}
 	}
 
 }

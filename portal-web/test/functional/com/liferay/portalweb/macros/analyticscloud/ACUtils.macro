@@ -838,6 +838,20 @@ definition {
 			value1 = "${noResultMessage}");
 	}
 
+	macro viewGenericText {
+		var key_textValue = "${textValue}";
+
+		WaitForPageLoad();
+
+		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertTextEquals(
+			locator1 = "ACUtils#GENERIC_TEXT",
+			value1 = "${textValue}");
+	}
+
 	macro viewNoResultsMessageNotPresent {
 		AssertElementNotPresent(
 			key_noResultMessage = "${noResultMessage}",

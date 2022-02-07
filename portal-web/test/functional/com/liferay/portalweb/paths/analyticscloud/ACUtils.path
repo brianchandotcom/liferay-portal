@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_TEXT</td>
+	<td>//*[text()='${key_textValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL</td>
 	<td>//label[normalize-space()='${label}']</td>
 	<td></td>

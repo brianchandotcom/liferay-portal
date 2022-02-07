@@ -568,6 +568,13 @@ definition {
 		}
 	}
 
+	macro assertNoDisplayPageOverride {
+		AssertElementNotPresent(
+			key_entryName = "${entryName}",
+			key_layout = "${layout}",
+			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
+	}
+
 	macro changePinColor {
 		Type(
 			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",

@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
@@ -28,11 +29,13 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -126,11 +129,33 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
-	public List<HashMap<String, String>> getObjectFieldBusinessTypes(
+	public List<Map<String, String>> getObjectFieldBusinessTypesData(
 		Locale locale) {
 
-		return _objectFieldBusinessTypeServicesTracker.
-			getObjectFieldBusinessTypes(locale);
+		List<Map<String, String>> objectFieldBusinessTypes = new ArrayList<>();
+
+		for (ObjectFieldBusinessType objectFieldBusinessType :
+				_objectFieldBusinessTypeServicesTracker.
+					getObjectFieldBusinessTypes(locale)) {
+
+			if (!objectFieldBusinessType.isVisible()) {
+				continue;
+			}
+
+			objectFieldBusinessTypes.add(
+				HashMapBuilder.put(
+					"businessType", objectFieldBusinessType.getName()
+				).put(
+					"dbType", objectFieldBusinessType.getDBType()
+				).put(
+					"description",
+					objectFieldBusinessType.getDescription(locale)
+				).put(
+					"label", objectFieldBusinessType.getLabel(locale)
+				).build());
+		}
+
+		return objectFieldBusinessTypes;
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

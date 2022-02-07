@@ -42,10 +42,10 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="type" required="<%= true %>">
 
 						<%
-						for (HashMap<String, String> objectFieldBusinessType : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypes(locale)) {
+						for (Map<String, String> objectFieldBusinessTypeData : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypesData(locale)) {
 						%>
 
-							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessType.get("label")) : GetterUtil.getString(objectFieldBusinessType.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessType.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessType.get("businessType")) %>' />
+							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessTypeData.get("label")) : GetterUtil.getString(objectFieldBusinessTypeData.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessTypeData.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessTypeData.get("businessType")) %>' />
 
 						<%
 						}
@@ -117,7 +117,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypes(locale)
+			"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypesData(locale)
 		).put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).build()

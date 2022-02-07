@@ -51,7 +51,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"ffObjectFieldBusinessTypeConfigurationEnabled", objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled()
 			).put(
-				"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypes(locale)
+				"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypesData(locale)
 			).build()
 		%>'
 	/>

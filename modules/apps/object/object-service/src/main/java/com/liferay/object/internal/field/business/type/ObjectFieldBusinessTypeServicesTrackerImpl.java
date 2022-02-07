@@ -18,10 +18,8 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -47,33 +45,11 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 	}
 
 	@Override
-	public List<HashMap<String, String>> getObjectFieldBusinessTypes(
+	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes(
 		Locale locale) {
 
-		List<HashMap<String, String>> objectFieldBusinessTypes =
-			new ArrayList<>();
-
-		for (ObjectFieldBusinessType objectFieldBusinessType :
-				_objectFieldBusinessTypeServiceTrackerMap.values()) {
-
-			if (!objectFieldBusinessType.isVisible()) {
-				continue;
-			}
-
-			objectFieldBusinessTypes.add(
-				HashMapBuilder.put(
-					"businessType", objectFieldBusinessType.getName()
-				).put(
-					"dbType", objectFieldBusinessType.getDBType()
-				).put(
-					"description",
-					objectFieldBusinessType.getDescription(locale)
-				).put(
-					"label", objectFieldBusinessType.getLabel(locale)
-				).build());
-		}
-
-		return objectFieldBusinessTypes;
+		return new ArrayList(
+			_objectFieldBusinessTypeServiceTrackerMap.values());
 	}
 
 	@Override

@@ -17,7 +17,7 @@ package com.liferay.object.constants;
 /**
  * @author Marcela Cunha
  */
-public class ObjectFieldTypeConstants {
+public class ObjectFieldConstants {
 
 	public static final String BUSINESS_TYPE_BOOLEAN = "Boolean";
 

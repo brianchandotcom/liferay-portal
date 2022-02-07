@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.field.business.type;
 
-import com.liferay.object.constants.ObjectFieldTypeConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "object.field.business.type.name=" + ObjectFieldTypeConstants.BUSINESS_TYPE_LARGE_FILE,
+	property = "object.field.business.type.name=" + ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
 	service = {
 		LargeFileObjectFieldBusinessType.class, ObjectFieldBusinessType.class
 	}
@@ -38,7 +38,7 @@ public class LargeFileObjectFieldBusinessType
 
 	@Override
 	public String getDBType() {
-		return ObjectFieldTypeConstants.DB_TYPE_BLOB;
+		return ObjectFieldConstants.DB_TYPE_BLOB;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class LargeFileObjectFieldBusinessType
 
 	@Override
 	public String getName() {
-		return ObjectFieldTypeConstants.BUSINESS_TYPE_LARGE_FILE;
+		return ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE;
 	}
 
 	@Override

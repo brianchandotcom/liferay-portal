@@ -15,7 +15,7 @@
 package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.object.constants.ObjectFieldTypeConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "object.field.business.type.name=" + ObjectFieldTypeConstants.BUSINESS_TYPE_BOOLEAN,
+	property = "object.field.business.type.name=" + ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 	service = {
 		BooleanObjectFieldBusinessType.class, ObjectFieldBusinessType.class
 	}
@@ -38,7 +38,7 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getDBType() {
-		return ObjectFieldTypeConstants.DB_TYPE_BOOLEAN;
+		return ObjectFieldConstants.DB_TYPE_BOOLEAN;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getName() {
-		return ObjectFieldTypeConstants.BUSINESS_TYPE_BOOLEAN;
+		return ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN;
 	}
 
 }

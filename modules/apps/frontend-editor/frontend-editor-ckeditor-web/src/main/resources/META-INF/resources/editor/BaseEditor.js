@@ -12,14 +12,30 @@
  * details.
  */
 
+import CKEditor from 'ckeditor4-react';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useCallback, useEffect, useRef} from 'react';
 
-import {Editor} from './Editor';
+const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 
+/**
+ * This component contains shared code between
+ * DXP implementations of CKEditor. Please don't import it directly.
+ */
 const BaseEditor = forwardRef(
 	({contents, name, onChange, onChangeMethodName, ...props}, ref) => {
 		const editorRef = useRef();
+
+		useEffect(() => {
+			Liferay.once('beforeScreenFlip', () => {
+				if (
+					window.CKEDITOR &&
+					Object.keys(window.CKEDITOR.instances).length === 0
+				) {
+					delete window.CKEDITOR;
+				}
+			});
+		}, []);
 
 		const getHTML = useCallback(() => {
 			let data = contents;
@@ -81,7 +97,7 @@ const BaseEditor = forwardRef(
 		}, [contents, getHTML, name]);
 
 		return (
-			<Editor
+			<CKEditor
 				onChange={onChangeCallback}
 				ref={editorRefsCallback}
 				{...props}
@@ -89,6 +105,9 @@ const BaseEditor = forwardRef(
 		);
 	}
 );
+
+CKEditor.editorUrl = `${BASEPATH}ckeditor.js`;
+window.CKEDITOR_BASEPATH = BASEPATH;
 
 BaseEditor.propTypes = {
 	contents: PropTypes.string,

@@ -18,6 +18,9 @@ import React, {forwardRef, useEffect} from 'react';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 
+/**
+ * @deprecated As of Cavanaugh (7.4.x), replaced by ClassicEditor
+ */
 const Editor = forwardRef(({contents = '', name, ...props}, ref) => {
 	useEffect(() => {
 		Liferay.once('beforeScreenFlip', () => {

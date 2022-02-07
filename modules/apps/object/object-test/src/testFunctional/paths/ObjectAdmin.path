@@ -555,6 +555,26 @@
 		<td>//textarea[contains(@type,'text') and contains(text(),'${key_clobType}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SELECT_ACTION_ON_REGULAR_ROLES</td>
+		<td>//tr[contains(@class,'   ') and contains(.,'${key_actionName}')]/td[1]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CHANGE_SCOPE_ACTION_ON_REGULAR_ROLES</td>
+		<td>//*[contains(@class,'   ') and contains(.,'${key_scopeActionName}')]//*[contains(@class,'btn btn-unstyle')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_SITE_CARD</td>
+		<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, '${key_siteCard}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_SHEET_ON_DEFINE_PERMISSIONS</td>
+		<td>//div[(@class='sheet sheet-lg')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

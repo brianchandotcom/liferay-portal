@@ -631,6 +631,27 @@ definition {
 			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
 	}
 
+	macro changeScopeOnDefinePermissions {
+		ObjectAdmin.searchInDefinePermissions(search = "Custom Objects");
+
+		Click(
+			key_scopeActionName = "${scopeActionName}",
+			locator1 = "ObjectAdmin#CHANGE_SCOPE_ACTION_ON_REGULAR_ROLES",
+			value1 = "${scopeActionName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
+
+		Click(
+			key_siteCard = "${siteCard}",
+			locator1 = "ObjectAdmin#VIEW_SITE_CARD");
+
+		SelectFrame(locator1 = "ObjectAdmin#VIEW_SHEET_ON_DEFINE_PERMISSIONS");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro chooseAnyLanguage {
 		Click(
 			key_symbolName = "",
@@ -809,6 +830,24 @@ definition {
 		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");
 	}
 
+	macro gotoRolesAndSelectCustomObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Search.searchCP(searchTerm = "${roleName}");
+
+		AssertClick(
+			key_itemName = "${roleName}",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "${key_itemName}");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		ObjectAdmin.searchInDefinePermissions(search = "Custom Objects");
+	}
+
 	macro markLayoutAsDefault {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
@@ -856,12 +895,51 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
+	macro searchInDefinePermissions {
+		Type(
+			locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+			value1 = "${search}");
+
+		AssertClick(
+			key_navItem = "${search}",
+			locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM",
+			value1 = "${search}");
+	}
+
+	macro selectActionsOnRoles {
+		for (var actions : list "${actionsList}") {
+			Click(
+				key_actionName = "${actions}",
+				locator1 = "ObjectAdmin#SELECT_ACTION_ON_REGULAR_ROLES");
+		}
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro selectKebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
 			key_kebabOption = "${kebabOption}",
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+	}
+
+	macro selectMySite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			ApplicationsMenu.gotoSite(site = "${site}");
+		}
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+
+		Navigator.gotoNavItem(navItem = "My Sites");
+
+		SiteSelector.selectSite(site = "${site}");
 	}
 
 	macro selectObjectScope {
@@ -895,6 +973,16 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
+	}
+
+	macro viewObjectPresentOnSite {
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "${category}");
+
+		AssertElementPresent(
+			key_portlet = "${portlet}",
+			locator1 = "ProductMenu#PORTLET");
 	}
 
 	macro viewRequiredAlert {

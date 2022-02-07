@@ -582,12 +582,90 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
 
-		// TODO LPS-140535 CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		for (var letter : list "A,B") {
+			JSONGroup.addGroup(groupName = "Site ${letter}");
+		}
+
+		ObjectAdmin.gotoRolesAndSelectCustomObject(roleName = "Regular Role");
+
+		ObjectAdmin.selectActionsOnRoles(actionsList = "Access in Site and Asset Library Administration,View");
+
+		for (var scopePermissions : list "Access in Site and Asset Library Administration,View") {
+			ObjectAdmin.changeScopeOnDefinePermissions(
+				scopeActionName = "${scopePermissions}",
+				siteCard = "Site A");
+		}
+
+		for (var resourceAction : list "VIEW,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Regular Role");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.addAssignee(
+			assigneeName = "Site A",
+			assigneeType = "Sites",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.selectMySite(site = "Site B");
+
+		AssertElementNotPresent(
+			key_portlet = "Custom Objects",
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "Custom Objects");
+
+		ObjectAdmin.selectMySite(site = "Site A");
+
+		ObjectAdmin.viewObjectPresentOnSite(
+			category = "Content & Data",
+			portlet = "Custom Objects");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to cancel the submition of an entry"

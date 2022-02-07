@@ -13,15 +13,11 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {
-	HeaderContext,
-	HeaderTypes,
-	initialState,
-} from '../../context/HeaderContext';
-import {getTestrayProject} from '../../graphql/queries';
+import {getTestrayProject} from '../../graphql/queries/testrayProject';
+import useHeader from '../../hooks/useHeader';
 
 type TestrayProject = {
 	c: {
@@ -33,8 +29,9 @@ type TestrayProject = {
 };
 
 const ProjectOutlet = () => {
-	const [, dispatch] = useContext(HeaderContext);
 	const {projectId} = useParams();
+
+	const {setHeading, setTabs} = useHeader();
 
 	const {data} = useQuery<TestrayProject>(getTestrayProject, {
 		variables: {testrayProjectId: projectId},
@@ -63,51 +60,41 @@ const ProjectOutlet = () => {
 	);
 
 	useEffect(() => {
-		dispatch({
-			payload: [
-				{
-					...getPath('overview'),
-					title: 'Overview',
-				},
-				{
-					...getPath('routines'),
-					title: 'Routines',
-				},
-				{
-					...getPath('suites'),
-					title: 'Suites',
-				},
-				{
-					...getPath('cases'),
-					title: 'Cases',
-				},
-				{
-					...getPath('requirements'),
-					title: 'Requirements',
-				},
-			],
-			type: HeaderTypes.SET_TABS,
-		});
-
-		return () => dispatch({payload: [], type: HeaderTypes.SET_TABS});
-	}, [pathname, dispatch, getPath]);
+		if (testrayProject) {
+			setHeading([{category: 'PROJECT', title: testrayProject.name}]);
+		}
+	}, []);
 
 	useEffect(() => {
-		if (testrayProject) {
-			dispatch({
-				payload: {category: 'PROJECT', title: testrayProject.name},
-				type: HeaderTypes.SET_TITLE,
-			});
-		}
+		setTabs([
+			{
+				...getPath('overview'),
+				title: 'Overview',
+			},
+			{
+				...getPath('routines'),
+				title: 'Routines',
+			},
+			{
+				...getPath('suites'),
+				title: 'Suites',
+			},
+			{
+				...getPath('cases'),
+				title: 'Cases',
+			},
+			{
+				...getPath('requirements'),
+				title: 'Requirements',
+			},
+		]);
+	}, [getPath, setTabs]);
 
-		return () =>
-			dispatch({
-				payload: initialState.title,
-				type: HeaderTypes.SET_TITLE,
-			});
-	}, [testrayProject, dispatch]);
+	if (testrayProject) {
+		return <Outlet context={{testrayProject}} />;
+	}
 
-	return <Outlet />;
+	return null;
 };
 
 export default ProjectOutlet;

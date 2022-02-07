@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter.checkstyle.checks;
+package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;

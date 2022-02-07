@@ -115,26 +115,26 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		String contentType = _customMimeTypes.getOrDefault(
-			_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
+		String contentType = _customMimeTypes.get(_getExtension(fileName));
 
-		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
-			Metadata metadata = new Metadata();
+		if (contentType != null) {
+			return contentType;
+		}
 
-			metadata.set(
-				Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
+		Metadata metadata = new Metadata();
 
-			try (TikaInputStream tikaInputStream = TikaInputStream.get(
-					new CloseShieldInputStream(inputStream))) {
+		metadata.set(Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
-				contentType = String.valueOf(
-					_detector.detect(tikaInputStream, metadata));
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
+		try (TikaInputStream tikaInputStream = TikaInputStream.get(
+				new CloseShieldInputStream(inputStream))) {
 
-				return ContentTypes.APPLICATION_OCTET_STREAM;
-			}
+			contentType = String.valueOf(
+				_detector.detect(tikaInputStream, metadata));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
 		if (contentType.contains("tika")) {
@@ -162,23 +162,23 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
-		String contentType = _customMimeTypes.getOrDefault(
-			_getExtension(fileName), ContentTypes.APPLICATION_OCTET_STREAM);
+		String contentType = _customMimeTypes.get(_getExtension(fileName));
 
-		if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
-			Metadata metadata = new Metadata();
+		if (contentType != null) {
+			return contentType;
+		}
 
-			metadata.set(
-				Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
+		Metadata metadata = new Metadata();
 
-			try {
-				contentType = String.valueOf(_detector.detect(null, metadata));
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
+		metadata.set(Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
-				return ContentTypes.APPLICATION_OCTET_STREAM;
-			}
+		try {
+			contentType = String.valueOf(_detector.detect(null, metadata));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
 		if (!contentType.contains("tika")) {

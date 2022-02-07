@@ -45,6 +45,20 @@ const Assignments = (props) => {
 		if (assignmentType === 'user') {
 			setSections(assignments.sectionsData);
 		}
+		else if (assignmentType === 'roleType') {
+			const sectionsData = [];
+
+			for (let i = 0; i < assignments.roleType.length; i++) {
+				sectionsData.push({
+					autoCreate: assignments.autoCreate[i],
+					identifier: `${Date.now()}-${i}`,
+					roleName: assignments.roleName[i],
+					roleType: assignments.roleType[i],
+				});
+			}
+
+			setSections(sectionsData);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -56,11 +70,12 @@ const Assignments = (props) => {
 				setSections={setSections}
 			/>
 
-			{sections.map(({identifier}, index) => {
+			{sections.map(({identifier, ...restProps}, index) => {
 				return (
 					AssignmentSectionComponent && (
 						<AssignmentSectionComponent
 							{...props}
+							{...restProps}
 							identifier={identifier}
 							index={index}
 							key={`section-${identifier}`}

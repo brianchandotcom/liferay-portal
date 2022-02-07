@@ -25,17 +25,25 @@ import {titleCase} from '../../../../../../util/utils';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const RoleType = ({identifier, index, sectionsLength, setSections}) => {
+const RoleType = ({
+	autoCreate = true,
+	identifier,
+	index,
+	roleName = '',
+	roleType = '',
+	sectionsLength,
+	setSections,
+}) => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);
-	const [checked, setChecked] = useState(true);
 	const [accountRoles, setAccountRoles] = useState([]);
+	const [checked, setChecked] = useState(autoCreate);
 	const [filterRoleName, setFilterRoleName] = useState(true);
 	const [filterRoleType, setFilterRoleType] = useState(true);
 	const [networkStatus, setNetworkStatus] = useState(4);
-	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
 	const [roleNameDropdownActive, setRoleNameDropdownActive] = useState(false);
-	const [selectedRoleName, setSelectedRoleName] = useState('');
-	const [selectedRoleType, setSelectedRoleType] = useState('');
+	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
+	const [selectedRoleName, setSelectedRoleName] = useState(roleName);
+	const [selectedRoleType, setSelectedRoleType] = useState(roleType);
 
 	const {resource} = useResource({
 		fetchOptions: {

@@ -236,7 +236,9 @@ definition {
 		}
 
 		task ("Click the header title") {
-			Click(locator1 = "ControlMenu#HEADING");
+			Click(
+				key_formName = "Created Form Name",
+				locator1 = "Form#PUBLISH_FORM_NAME_FIELD");
 		}
 
 		task ("Wait for sending requests") {

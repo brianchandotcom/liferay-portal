@@ -16,28 +16,30 @@ import {createContext, useReducer} from 'react';
 
 import {ActionMap} from '../types';
 
-type Tabs = {
+export type HeaderTabs = {
 	active: boolean;
 	path: string;
 	title: string;
 };
 
-type HeaderTitle = {
+export type HeaderTitle = {
 	category: string;
 	title: string;
 };
 
 type InitialState = {
-	tabs: Tabs[];
-	title: HeaderTitle;
+	heading: HeaderTitle[];
+	tabs: HeaderTabs[];
 };
 
 export const initialState: InitialState = {
+	heading: [
+		{
+			category: 'PROJECT',
+			title: 'Project Directory',
+		},
+	],
 	tabs: [],
-	title: {
-		category: 'PROJECT',
-		title: 'Project Directory',
-	},
 };
 
 export const HeaderContext = createContext<
@@ -47,13 +49,13 @@ export const HeaderContext = createContext<
 export enum HeaderTypes {
 	SET_RESET_HEADER = 'SET_RESET_HEADER',
 	SET_TABS = 'SET_TABS',
-	SET_TITLE = 'SET_TITLE',
+	SET_HEADING = 'SET_HEADING',
 }
 
 export type HeaderActionsPayload = {
+	[HeaderTypes.SET_HEADING]: {append?: boolean; heading: HeaderTitle[]};
 	[HeaderTypes.SET_RESET_HEADER]: null;
-	[HeaderTypes.SET_TABS]: Tabs[];
-	[HeaderTypes.SET_TITLE]: HeaderTitle;
+	[HeaderTypes.SET_TABS]: HeaderTabs[];
 };
 
 export type AppActions = ActionMap<HeaderActionsPayload>[keyof ActionMap<
@@ -69,10 +71,12 @@ const reducer = (state: InitialState, action: AppActions): InitialState => {
 			};
 		}
 
-		case HeaderTypes.SET_TITLE: {
+		case HeaderTypes.SET_HEADING: {
+			const {append, heading} = action.payload;
+
 			return {
 				...state,
-				title: action.payload,
+				heading: append ? [...state.heading, ...heading] : heading,
 			};
 		}
 

@@ -19,18 +19,20 @@ import {useNavigate} from 'react-router-dom';
 import {HeaderContext} from '../../context/HeaderContext';
 
 const Header = () => {
-	const [{tabs, title}] = useContext(HeaderContext);
+	const [{heading, tabs}] = useContext(HeaderContext);
 	const navigate = useNavigate();
 
 	return (
 		<div className="header-container">
-			<span className="d-flex flex-column">
-				<small className="font-weight-bold text-secondary">
-					{title.category}
-				</small>
+			{heading.map((header, index) => (
+				<span className="d-flex flex-column" key={index}>
+					<small className="font-weight-bold text-secondary">
+						{header.category}
+					</small>
 
-				<h1 className="font-weight-500">{title.title}</h1>
-			</span>
+					<h1 className="font-weight-500">{header.title}</h1>
+				</span>
+			))}
 
 			<div>
 				<ClayTabs className="header-container-tabs" modern>

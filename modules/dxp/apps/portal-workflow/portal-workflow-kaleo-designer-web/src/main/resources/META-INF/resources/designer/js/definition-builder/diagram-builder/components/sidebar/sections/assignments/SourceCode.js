@@ -20,18 +20,20 @@ const SourceCode = () => {
 	const editorRef = useRef();
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
-	const getEditorContent = (editor) => {
-		setSelectedItem((previousValue) => ({
-			...previousValue,
-			data: {
-				...previousValue.data,
-				assignments: {
-					assignmentType: ['scriptedAssignment'],
-					script: [editor.getData()],
-					scriptLanguage: [DEFAULT_LANGUAGE],
+	const updateSelectedItem = (editor) => {
+		if (editor.getData().trim() !== '') {
+			setSelectedItem((previousValue) => ({
+				...previousValue,
+				data: {
+					...previousValue.data,
+					assignments: {
+						assignmentType: ['scriptedAssignment'],
+						script: [editor.getData()],
+						scriptLanguage: [DEFAULT_LANGUAGE],
+					},
 				},
-			},
-		}));
+			}));
+		}
 	};
 
 	return (
@@ -40,22 +42,23 @@ const SourceCode = () => {
 			onInstanceReady={({editor}) => {
 				editor.setMode('source');
 
-				if (selectedItem.data?.assignments?.scriptedAssignment) {
-					editor.setData(
-						selectedItem.data.assignments.scriptedAssignment
-					);
+				if (selectedItem.data?.assignments?.script) {
+					editor.setData(selectedItem.data.assignments.script[0]);
 				}
 
 				document
 					.querySelector('div.sidebar-body')
 					.addEventListener('keyup', () => {
-						getEditorContent(editor);
+						updateSelectedItem(editor);
 					});
 
 				return () => {
 					document
 						.querySelector('div.sidebar-body')
-						.removeEventListener('keyup', getEditorContent(editor));
+						.removeEventListener(
+							'keyup',
+							updateSelectedItem(editor)
+						);
 				};
 			}}
 			ref={editorRef}

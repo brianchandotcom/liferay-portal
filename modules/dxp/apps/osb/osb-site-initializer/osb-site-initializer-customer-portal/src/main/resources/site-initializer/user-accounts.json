@@ -118,5 +118,13 @@
 		"familyName": "Test",
 		"givenName": "Test",
 		"name": "Test Test"
+	},
+	{
+		"alternateName": "test",
+		"emailAddress": "test@liferay.com",
+		"externalReferenceCode": "ERC-008",
+		"familyName": "Test",
+		"givenName": "Test",
+		"name": "Test Test"
 	}
 ]

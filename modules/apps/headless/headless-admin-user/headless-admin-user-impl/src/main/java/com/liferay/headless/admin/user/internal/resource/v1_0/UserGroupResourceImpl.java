@@ -210,6 +210,12 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					ActionKeys.UPDATE, userGroupId, "patchUserGroup",
 					_userGroupModelResourcePermission)
 			).put(
+				"patch-by-external-reference-code",
+				addAction(
+					ActionKeys.UPDATE, userGroupId,
+					"patchUserGroupByExternalReferenceCode",
+					_userGroupModelResourcePermission)
+			).put(
 				"post-user-group-users",
 				addAction(
 					ActionKeys.ASSIGN_MEMBERS, userGroupId,

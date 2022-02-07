@@ -89,20 +89,46 @@ function getLocationValue(field, context) {
 					}
 					else {
 						for (const item of child.children) {
-							const childNodesAttributes = getChildAttributes(
-								item.childNodes
-							);
+							if (item.children.length) {
+								for (const itemChild of item.children) {
+									const childNodesAttributes = getChildAttributes(
+										itemChild.childNodes
+									);
 
-							let itemContent;
+									let itemContent;
 
-							if (childNodesAttributes.length) {
-								itemContent = childNodesAttributes;
+									if (childNodesAttributes.length) {
+										itemContent = childNodesAttributes;
+									}
+									else {
+										itemContent = itemChild.textContent;
+									}
+
+									if (!childContent[itemChild.tagName]) {
+										childContent[itemChild.tagName] = [];
+									}
+
+									childContent[itemChild.tagName].push(
+										itemContent
+									);
+								}
 							}
 							else {
-								itemContent = item.textContent;
-							}
+								const childNodesAttributes = getChildAttributes(
+									item.childNodes
+								);
 
-							childContent[item.tagName] = itemContent;
+								let itemContent;
+
+								if (childNodesAttributes.length) {
+									itemContent = childNodesAttributes;
+								}
+								else {
+									itemContent = item.textContent;
+								}
+
+								childContent[item.tagName] = itemContent;
+							}
 						}
 					}
 

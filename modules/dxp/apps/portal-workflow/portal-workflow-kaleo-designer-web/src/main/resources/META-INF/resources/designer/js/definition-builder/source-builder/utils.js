@@ -11,32 +11,50 @@
 
 export default function parseAssignments(node) {
 	const assignments = {};
+	const autoCreateValues = [];
+	const roleNames = [];
+	const roleTypes = [];
 	const users = [];
 
 	node.assignments.forEach((item) => {
-		for (const [key, value] of Object.entries(item)) {
-			if (key === 'user') {
-				assignments.assignmentType = ['user'];
-			}
-			else if (key === 'resource-action') {
-				assignments.assignmentType = ['resourceActions'];
-				assignments.resourceAction = value;
-			}
-			else if (key === 'role') {
-				assignments.assignmentType = ['roleId'];
-				assignments.roleId = parseInt(value, 10);
-			}
-			else if (key === 'email-address') {
-				if (!assignments.assignmentType) {
-					assignments.assignmentType = ['user'];
-				}
-				users.push(value);
-			}
+		const itemKeys = Object.keys(item);
+
+		if (itemKeys.includes('resource-action')) {
+			assignments.assignmentType = ['resourceActions'];
+			assignments.resourceAction = item['resource-action'];
+		}
+		else if (itemKeys.includes('role-id')) {
+			assignments.assignmentType = ['roleId'];
+			assignments.roleId = parseInt(item['role-id'], 10);
+		}
+		else if (itemKeys.includes('role-type')) {
+			assignments.assignmentType = ['roleType'];
+			autoCreateValues.push(item['auto-create']);
+			roleNames.push(item.name);
+			roleTypes.push(item['role-type']);
+		}
+		else if (itemKeys.includes('script')) {
+			assignments.assignmentType = ['scriptedAssignment'];
+			assignments.script = [item.script];
+			assignments.scriptLanguage = item['script-language'];
+		}
+		else if (itemKeys.includes('user')) {
+			assignments.assignmentType = ['user'];
+		}
+		else if (itemKeys.includes('email-address')) {
+			assignments.assignmentType = ['user'];
+			users.push(item['email-address']);
 		}
 	});
 
 	if (users.length) {
 		assignments.emailAddress = users;
+	}
+
+	if (assignments.assignmentType[0] === 'roleType') {
+		assignments.autoCreate = autoCreateValues[0];
+		assignments.roleName = roleNames[0];
+		assignments.roleType = roleTypes[0];
 	}
 
 	return assignments;

@@ -1,0 +1,218 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "4",
+						"marginTop": "10",
+						"paddingBottom": "5",
+						"paddingTop": "5",
+						"textAlign": "center"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "0",
+								"paddingTop": "5"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "0",
+								"paddingBottom": "5",
+								"paddingTop": "5"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "0",
+								"marginTop": "0",
+								"paddingTop": "5"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"align": "Center",
+						"borderWidth": 0,
+						"contentDisplay": "FlexColumn",
+						"marginBottom": 2,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 4,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 4,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "1",
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "404"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"marginBottom": "2",
+								"textAlign": ""
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h2"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Page not Found"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"marginBottom": "2",
+								"textAlign": ""
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "text-block"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis semper convallis euismod vestibulum in pharetra."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"maxWidth": "100%",
+								"paddingLeft": "2",
+								"paddingRight": "2",
+								"textAlign": "center",
+								"width": "520px"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "button"
+							},
+							"fragmentConfig": {
+								"buttonSize": "sm",
+								"buttonVariant": "primary",
+								"buttonWidth": "v-auto"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/home"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "t3"
+																}
+															]
+														}
+													}
+												}
+											},
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Go to home page"
+											}
+										}
+									}
+								}
+							]
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "master"
+		}
+	}
+}

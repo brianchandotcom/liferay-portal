@@ -12,10 +12,12 @@
  * details.
  */
 
-import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListView';
-import {getTestrayCases} from '../../graphql/queries';
-import {Liferay} from '../../services/liferay/liferay';
+import {Link} from 'react-router-dom';
+
+import Container from '../../../components/Layout/Container';
+import ListView from '../../../components/ListView/ListView';
+import {getTestrayCases} from '../../../graphql/queries/testrayCase';
+import {Liferay} from '../../../services/liferay/liferay';
 
 const Cases = () => (
 	<Container title="Cases">
@@ -23,12 +25,29 @@ const Cases = () => (
 			query={getTestrayCases}
 			tableProps={{
 				columns: [
-					{key: 'createdDate', value: 'Create Date'},
-					{key: 'modifiedDate', value: 'Modified Date'},
+					{
+						key: 'name',
+						render: (name: string, {testrayCaseId}: any) => (
+							<Link to={`${testrayCaseId}`}>{name}</Link>
+						),
+						value: 'Case Name',
+					},
 					{key: 'priority', value: 'Priority'},
-					{key: 'name', value: 'Case Name'},
+					{key: 'type', value: 'Case Type'},
 					{key: 'team', value: 'Team'},
 					{key: 'component', value: 'Component'},
+					{key: 'issues', value: 'Issues'},
+
+					{
+						key: 'createdDate',
+						render: () => 'dez 13, 2021 12:00 PM',
+						value: 'Create Date',
+					},
+					{
+						key: 'modifiedDate',
+						render: () => 'dez 13, 2021 12:00 PM',
+						value: 'Modified Date',
+					},
 				],
 			}}
 			transformData={(data) => data?.c?.testrayCases}

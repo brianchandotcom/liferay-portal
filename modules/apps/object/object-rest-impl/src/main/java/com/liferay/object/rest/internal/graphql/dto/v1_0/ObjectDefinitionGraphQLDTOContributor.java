@@ -212,7 +212,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		return (T)_toMap(
-			_objectEntryManager.getObjectEntry(
+			_objectEntryManager.fetchObjectEntry(
 				dtoConverterContext, null, (long)relationshipId),
 			relationshipIdName);
 	}
@@ -271,6 +271,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private Map<String, Object> _toMap(
 		ObjectEntry objectEntry, String objectEntryIdName) {
+
+		if (objectEntry == null) {
+			return null;
+		}
 
 		Map<String, Object> properties = objectEntry.getProperties();
 

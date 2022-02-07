@@ -274,6 +274,14 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("monitor.jvm.gc.enabled", StringPool.FALSE);
 	}
 
+	private void _disableXpack() {
+		put("xpack.ml.enabled", false);
+		put("xpack.monitoring.enabled", false);
+		put("xpack.security.enabled", false);
+		put("xpack.sql.enabled", false);
+		put("xpack.watcher.enabled", false);
+	}
+
 	private void _loadAdditionalConfigurations() {
 		_settingsBuilder.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
@@ -305,7 +313,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_configureTestMode();
 
-		put("transport.type", "netty4");
+		_disableXpack();
 	}
 
 	private void _loadSettingsContributors() {

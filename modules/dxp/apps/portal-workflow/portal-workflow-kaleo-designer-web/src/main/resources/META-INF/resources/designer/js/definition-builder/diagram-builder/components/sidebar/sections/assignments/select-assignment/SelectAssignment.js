@@ -10,6 +10,7 @@
  */
 
 import ClayForm, {ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import SidebarPanel from '../../../SidebarPanel';
@@ -48,7 +49,17 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 				<label htmlFor="assignment-type">
 					{Liferay.Language.get('assignment-type')}
 
-					<span className="ml-1 mr-1 text-warning">*</span>
+					<span
+						className="ml-2"
+						title={Liferay.Language.get(
+							'select-the-assignment-type'
+						)}
+					>
+						<ClayIcon
+							className="text-muted"
+							symbol="question-circle-full"
+						/>
+					</span>
 				</label>
 
 				<ClaySelect

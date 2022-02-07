@@ -9,26 +9,19 @@
  * distribution rights of the Software.
  */
 
-import {ACTIVATION_STATUS} from '..';
+import {getStatusActivationTag} from '..';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 
 const StatusColumn = ({activationKey}) => {
-	let activationStatus = ACTIVATION_STATUS.activated;
-	const today = new Date();
-
-	if (today < new Date(activationKey.startDate)) {
-		activationStatus = ACTIVATION_STATUS.notActivated;
-	}
-	else if (today > new Date(activationKey.expirationDate)) {
-		activationStatus = ACTIVATION_STATUS.expired;
-	}
-
 	return (
-		<div className="w-100" title={[activationStatus.title]}>
+		<div
+			className="w-100"
+			title={[getStatusActivationTag(activationKey).title]}
+		>
 			<ClaySticker
 				className="bg-transparent"
-				displayType={activationStatus.color}
+				displayType={getStatusActivationTag(activationKey).color}
 				shape="circle"
 				size="sm"
 			>

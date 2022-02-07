@@ -79,7 +79,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		setIsLoadingActivationKeys(true);
 		const fetchActivationKeysData = async () => {
 			const {items} = await getActivationLicenseKey(
-				project.accountKey,
+				'KOR-3809080',
 				licenseKeyDownloadURL,
 				encodeURI('active eq true'),
 				PAGE,
@@ -175,11 +175,14 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		<>
 			{isVisibleModal && (
 				<ModalKeyDetails
-					ACTIVATION_STATUS={ACTIVATION_STATUS}
 					activationKeys={currentActivationKey}
+					assetsPath={assetsPath}
+					downloadActivationLicenseKey={downloadActivationLicenseKey}
 					isVisibleModal={isVisibleModal}
+					licenseKeyDownloadURL={licenseKeyDownloadURL}
 					observer={observer}
 					onClose={onClose}
+					sessionId={sessionId}
 				/>
 			)}
 			<ClayTooltipProvider

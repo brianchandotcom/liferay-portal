@@ -137,6 +137,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
+	protected UserGroup testPatchUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		return _postUserGroup();
+	}
+
+	@Override
 	protected UserGroup testPostUserGroup_addUserGroup(UserGroup userGroup)
 		throws Exception {
 

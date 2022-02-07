@@ -52,6 +52,11 @@ public class RemoteAppEntryWorkflowHandler
 	}
 
 	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
 	public RemoteAppEntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

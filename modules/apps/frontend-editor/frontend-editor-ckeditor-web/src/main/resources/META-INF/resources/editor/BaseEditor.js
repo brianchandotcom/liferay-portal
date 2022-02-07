@@ -98,7 +98,9 @@ const BaseEditor = forwardRef(
 
 		return (
 			<CKEditor
+				name={name}
 				onChange={onChangeCallback}
+				onChangeMethodName={onChangeMethodName}
 				ref={editorRefsCallback}
 				{...props}
 			/>
@@ -109,9 +111,11 @@ const BaseEditor = forwardRef(
 CKEditor.editorUrl = `${BASEPATH}ckeditor.js`;
 window.CKEDITOR_BASEPATH = BASEPATH;
 
+BaseEditor.displayName = 'BaseEditor';
+
 BaseEditor.propTypes = {
 	contents: PropTypes.string,
-	name: PropTypes.string,
+	name: PropTypes.string.isRequired,
 	onChange: PropTypes.func,
 	onChangeMethodName: PropTypes.string,
 };

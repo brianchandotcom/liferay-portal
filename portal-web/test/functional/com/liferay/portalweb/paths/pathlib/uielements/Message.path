@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>EMPTY_DEPOT_ROLE</td>
-	<td>//div[contains(@id,'depotRoles')]/p[contains(@class,'text-muted')]</td>
+	<td>//div[contains(@id,'depotRoles')]/p[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

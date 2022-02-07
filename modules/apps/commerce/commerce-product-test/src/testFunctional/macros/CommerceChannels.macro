@@ -23,7 +23,9 @@ definition {
 	}
 
 	macro addCategory {
-		Click(locator1 = "Button#PLUS");
+		if ("${edit}" != "true") {
+			Click(locator1 = "Button#PLUS");
+		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -217,6 +219,36 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();
+	}
+
+	macro editOverrideCategoryDisplayPage {
+		Click(
+			key_value = "${category}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		if (isSet(newCategory)) {
+			CommerceChannels.addCategory(
+				edit = "true",
+				key_card = "${newCategory}");
+		}
+
+		if (isSet(newPageName) && isSet(newPageType)) {
+			CommerceChannels.chooseDisplayPageFromSidePanel(
+				pageName = "${newPageName}",
+				pageType = "${newPageType}");
+		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
 	}
 
 	macro openChannelsAdmin {

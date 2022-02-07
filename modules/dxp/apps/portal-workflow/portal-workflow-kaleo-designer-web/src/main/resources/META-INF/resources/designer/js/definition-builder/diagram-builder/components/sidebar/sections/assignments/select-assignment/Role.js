@@ -102,8 +102,6 @@ const Roles = () => {
 				<ClayAutocomplete>
 					<label htmlFor="role-name">
 						{Liferay.Language.get('role')}
-
-						<span className="ml-1 mr-1 text-warning">*</span>
 					</label>
 
 					<ClayAutocomplete.Input

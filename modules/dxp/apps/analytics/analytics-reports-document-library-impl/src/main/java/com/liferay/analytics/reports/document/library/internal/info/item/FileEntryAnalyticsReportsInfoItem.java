@@ -51,8 +51,8 @@ public class FileEntryAnalyticsReportsInfoItem
 
 	public List<Action> getActions() {
 		return Arrays.asList(
-			Action.HISTORICAL_READS, Action.HISTORICAL_VIEWS,
-			Action.TOTAL_READS, Action.TOTAL_VIEWS, Action.TRAFFIC_CHANNELS);
+			Action.HISTORICAL_VIEWS, Action.TOTAL_VIEWS,
+			Action.TRAFFIC_CHANNELS);
 	}
 
 	@Override

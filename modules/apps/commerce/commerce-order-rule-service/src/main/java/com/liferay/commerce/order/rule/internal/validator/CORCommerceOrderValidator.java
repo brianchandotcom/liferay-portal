@@ -244,6 +244,19 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 			return new CommerceOrderValidatorResult(false, errorMessage);
 		}
 
+		corEntries = _corEntryLocalService.getUnqualifiedCOREntries(
+			commerceOrder.getCompanyId());
+
+		if (!corEntries.isEmpty()) {
+			String errorMessage = _validate(commerceOrder, corEntries, locale);
+
+			if (Validator.isBlank(errorMessage)) {
+				return new CommerceOrderValidatorResult(true);
+			}
+
+			return new CommerceOrderValidatorResult(false, errorMessage);
+		}
+
 		return new CommerceOrderValidatorResult(true);
 	}
 

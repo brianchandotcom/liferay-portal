@@ -763,6 +763,18 @@ definition {
 		}
 	}
 
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    Then the variations list always contains the 'Anyone' variation"
+	@priority = "4"
+	test DefaultVariationForDynamicCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
+    Then the variations list always contains the 'Anyone' variation"
+	@priority = "4"
+	test DefaultVariationForManualCollection {
+	}
+
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
 	@priority = "5"
 	test DeleteAssetList {
@@ -791,6 +803,41 @@ definition {
 		task ("Assert the taglib that displays when there are no entries displays") {
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 		}
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    When the user opens the elipsis menu of a variation and clicks on Delete
+    Then the variation name is removed from the list of personalized variations"
+	@priority = "3"
+	test DeleteVariationForDynamicCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
+    When the user opens the elipsis menu of a variation and clicks on Delete
+    Then the variation name is removed from the list of personalized variations"
+	@priority = "3"
+	test DeleteVariationForManualCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    When the user opens the elipsis menu of the last variation of the list
+    Then the Deprioritize option of the elipsis menu is disabled"
+	@priority = "3"
+	test DeprioritizeDisabledForDynamicCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    When the user opens the elipsis menu of a variation and clicks on Deprioritize
+    Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
+	@priority = "3"
+	test DeprioritizeVariationForDynamicCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
+    When the user opens the elipsis menu of a variation and clicks on Deprioritize
+    Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
+	@priority = "3"
+	test DeprioritizeVariationForManualCollection {
 	}
 
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
@@ -885,6 +932,20 @@ definition {
 				var n = ${n} + 1;
 			}
 		}
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    When the user creates a new variation
+    Then the new variation is positioned at the end of the variations list"
+	@priority = "4"
+	test NewVariationPriorityForDynamicCollection {
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
+    When the user creates a new variation
+    Then the new variation is positioned at the end of the variations list"
+	@priority = "4"
+	test NewVariationPriorityForManualCollection {
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set does not show assets for the personalized views that the user doesn't belongs to when the configuration is enabled"
@@ -1143,6 +1204,13 @@ definition {
 				key_tableEntry = "Segment Test 1",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 		}
+	}
+
+	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
+    When the user opens the elipsis menu of the first variation of the list
+    Then the Prioritize option of the elipsis menu is disabled"
+	@priority = "3"
+	test PrioritizeDisabledForDynamicCollection {
 	}
 
 	@description = "LPS-87232: Validate if, The content recommendation not will works if it is disabled, so in this way, the Liferay will show all content for the user"

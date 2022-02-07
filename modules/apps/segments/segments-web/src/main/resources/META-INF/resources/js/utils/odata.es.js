@@ -42,8 +42,8 @@ const getTypeByPropertyName = (propertyName, properties) => {
 /**
  * Handles the single quotes present in the value.
  * Should escape the single quotes present in the value before hit the backend.
- * @param {string} value
- * @returns {string}
+ * @param {string | *} value
+ * @returns {string | *}
  */
 function escapeSingleQuotes(value) {
 	if (typeof value !== 'string') {
@@ -56,8 +56,8 @@ function escapeSingleQuotes(value) {
 /**
  * Handles the single quotes present in the value.
  * Should un-escape the single quotes present in odata format before rendering.
- * @param {string} value
- * @returns {string}
+ * @param {string | *} value
+ * @returns {string | *}
  */
 function unescapeSingleQuotes(value) {
 	if (typeof value !== 'string') {

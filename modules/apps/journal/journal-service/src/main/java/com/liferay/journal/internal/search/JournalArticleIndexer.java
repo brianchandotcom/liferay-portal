@@ -296,13 +296,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			searchQuery, searchContext, Field.ARTICLE_ID, false);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.CLASS_PK, false);
-		_addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.CONTENT, false);
-		_addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
+		_addSearchLocalizedTerm(searchQuery, searchContext, Field.CONTENT);
+		_addSearchLocalizedTerm(searchQuery, searchContext, Field.DESCRIPTION);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		_addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		_addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE);
 		_queryHelper.addSearchTerm(
 			searchQuery, searchContext, Field.USER_NAME, false);
 
@@ -688,7 +686,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addLocalizedFields(
-			BooleanQuery searchQuery, String field, String value, boolean like,
+			BooleanQuery searchQuery, String field, String value,
 			SearchContext searchContext)
 		throws Exception {
 
@@ -697,7 +695,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				new String[] {field}, searchContext);
 
 		for (String localizedFieldName : localizedFieldNames) {
-			searchQuery.addTerm(localizedFieldName, value, like);
+			searchQuery.addTerm(localizedFieldName, value, false);
 		}
 	}
 
@@ -716,8 +714,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field,
-			boolean like)
+			BooleanQuery searchQuery, SearchContext searchContext, String field)
 		throws Exception {
 
 		if (Validator.isBlank(field)) {
@@ -737,13 +734,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		if (Validator.isBlank(searchContext.getKeywords())) {
 			BooleanQuery localizedQuery = new BooleanQueryImpl();
 
-			_addLocalizedFields(
-				localizedQuery, field, value, like, searchContext);
+			_addLocalizedFields(localizedQuery, field, value, searchContext);
 
 			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
 		}
 		else {
-			_addLocalizedFields(searchQuery, field, value, like, searchContext);
+			_addLocalizedFields(searchQuery, field, value, searchContext);
 		}
 	}
 

@@ -9,13 +9,12 @@
  * distribution rights of the Software.
  */
 
-export default function downloadFromBlob(blob, filename) {
-	const a = document.createElement('a');
-	a.href = window.URL.createObjectURL(blob);
-	a.download = filename;
-	document.body.appendChild(a);
-	a.click();
-	a.remove();
+import ClayIcon from '@clayui/icon';
 
-	return true;
-}
+export const ACTIVATION_KEYS_ACTIONS_ITEMS = [
+	{
+		icon: <ClayIcon className="mr-1 text-neutral-4" symbol="download" />,
+		label: 'Export All Key Details (csv)',
+		onClick: () => {},
+	},
+];

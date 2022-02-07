@@ -91,7 +91,26 @@ export async function getActivationDownloadKey(
 	return response;
 }
 
-export async function exportLicenseKeys(
+export async function getAggregatedActivationDownloadKey(
+	selectedKeysIDs,
+	licenseKeyDownloadURL,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/license-keys/download?${selectedKeysIDs}`,
+
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+		}
+	);
+
+	return response;
+}
+
+export async function getExportedLicenseKeys(
 	accountKey,
 	licenseKeyDownloadURL,
 	sessionId

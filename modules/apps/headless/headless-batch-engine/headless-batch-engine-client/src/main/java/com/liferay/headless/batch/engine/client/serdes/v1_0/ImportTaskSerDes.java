@@ -14,6 +14,7 @@
 
 package com.liferay.headless.batch.engine.client.serdes.v1_0;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -129,6 +131,26 @@ public class ImportTaskSerDes {
 			sb.append("\"");
 		}
 
+		if (importTask.getFailedItems() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"failedItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < importTask.getFailedItems().length; i++) {
+				sb.append(String.valueOf(importTask.getFailedItems()[i]));
+
+				if ((i + 1) < importTask.getFailedItems().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (importTask.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -137,6 +159,20 @@ public class ImportTaskSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(importTask.getId());
+		}
+
+		if (importTask.getImportStrategy() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"importStrategy\": ");
+
+			sb.append("\"");
+
+			sb.append(importTask.getImportStrategy());
+
+			sb.append("\"");
 		}
 
 		if (importTask.getOperation() != null) {
@@ -248,11 +284,27 @@ public class ImportTaskSerDes {
 				"executeStatus", String.valueOf(importTask.getExecuteStatus()));
 		}
 
+		if (importTask.getFailedItems() == null) {
+			map.put("failedItems", null);
+		}
+		else {
+			map.put("failedItems", String.valueOf(importTask.getFailedItems()));
+		}
+
 		if (importTask.getId() == null) {
 			map.put("id", null);
 		}
 		else {
 			map.put("id", String.valueOf(importTask.getId()));
+		}
+
+		if (importTask.getImportStrategy() == null) {
+			map.put("importStrategy", null);
+		}
+		else {
+			map.put(
+				"importStrategy",
+				String.valueOf(importTask.getImportStrategy()));
 		}
 
 		if (importTask.getOperation() == null) {
@@ -337,10 +389,29 @@ public class ImportTaskSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "failedItems")) {
+				if (jsonParserFieldValue != null) {
+					importTask.setFailedItems(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FailedItemSerDes.toDTO((String)object)
+						).toArray(
+							size -> new FailedItem[size]
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					importTask.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "importStrategy")) {
+				if (jsonParserFieldValue != null) {
+					importTask.setImportStrategy(
+						ImportTask.ImportStrategy.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "operation")) {

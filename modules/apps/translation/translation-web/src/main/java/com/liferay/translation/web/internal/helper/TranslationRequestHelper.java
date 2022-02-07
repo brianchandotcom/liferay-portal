@@ -27,6 +27,8 @@ import com.liferay.segments.model.SegmentsExperience;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Adolfo Pérez
  */
@@ -34,10 +36,19 @@ public class TranslationRequestHelper {
 
 	public TranslationRequestHelper(
 		InfoItemServiceTracker infoItemServiceTracker,
-		PortletRequest portletRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		_infoItemServiceTracker = infoItemServiceTracker;
-		_portletRequest = portletRequest;
+		_httpServletRequest = httpServletRequest;
+	}
+
+	public TranslationRequestHelper(
+		InfoItemServiceTracker infoItemServiceTracker,
+		PortletRequest portletRequest) {
+
+		this(
+			infoItemServiceTracker,
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public String getClassName(long segmentsExperienceId) {
@@ -65,7 +76,7 @@ public class TranslationRequestHelper {
 			return _classNameId;
 		}
 
-		_classNameId = ParamUtil.getLong(_portletRequest, "classNameId");
+		_classNameId = ParamUtil.getLong(_httpServletRequest, "classNameId");
 
 		return _classNameId;
 	}
@@ -97,7 +108,7 @@ public class TranslationRequestHelper {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_portletRequest, "groupId");
+		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
 
 		return _groupId;
 	}
@@ -127,7 +138,8 @@ public class TranslationRequestHelper {
 			return _modelClassPKs;
 		}
 
-		_modelClassPKs = ParamUtil.getLongValues(_portletRequest, "classPK");
+		_modelClassPKs = ParamUtil.getLongValues(
+			_httpServletRequest, "classPK");
 
 		if (_modelClassPKs.length != 0) {
 			return _modelClassPKs;
@@ -137,7 +149,7 @@ public class TranslationRequestHelper {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemIdentifierTranslator.class, getModelClassName());
 
-		String[] keys = ParamUtil.getStringValues(_portletRequest, "key");
+		String[] keys = ParamUtil.getStringValues(_httpServletRequest, "key");
 
 		long[] modelClassPKs = new long[keys.length];
 
@@ -158,9 +170,9 @@ public class TranslationRequestHelper {
 
 	private Long _classNameId;
 	private Long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _modelClassName;
 	private long[] _modelClassPKs;
-	private final PortletRequest _portletRequest;
 
 }

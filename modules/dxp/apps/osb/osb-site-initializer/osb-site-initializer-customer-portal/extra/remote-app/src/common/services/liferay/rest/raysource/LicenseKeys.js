@@ -128,3 +128,24 @@ export async function getExportedLicenseKeys(
 
 	return response;
 }
+
+export async function associateContactRoleNameByEmailByProject(
+	accountKey,
+	licenseKeyDownloadURL,
+	sessionId,
+	emailURI,
+	roleName
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}`,
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'PUT',
+		}
+	);
+
+	return response;
+}

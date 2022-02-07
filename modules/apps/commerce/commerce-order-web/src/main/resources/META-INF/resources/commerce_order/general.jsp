@@ -114,51 +114,25 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				<div class="col-xl-3">
 
 					<%
-					CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+					CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (billingAddress == null) ? "add" : "edit") %>'
-						actionTargetId="billing-address-modal"
 						elementClasses="py-3"
-						title='<%= LanguageUtil.get(request, "billing-address") %>'
+						title='<%= LanguageUtil.get(request, "account-info") %>'
 					>
 						<c:choose>
-							<c:when test="<%= billingAddress == null %>">
+							<c:when test="<%= Validator.isNull(commerceAccount) %>">
 								<span class="text-muted">
-									<liferay-ui:message key="click-add-to-insert" />
+									<%= StringPool.BLANK %>
 								</span>
 							</c:when>
 							<c:otherwise>
-								<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getDescriptiveCommerceAddress(billingAddress)) %>
+								<p class="mb-0"><%= commerceAccount.getName() %></p>
+								<p class="mb-0"><%= StringPool.POUND + commerceAccount.getCommerceAccountId() %></p>
 							</c:otherwise>
 						</c:choose>
 					</commerce-ui:info-box>
-
-					<%
-					CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-					%>
-
-					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (shippingAddress == null) ? "add" : "edit") %>'
-						actionTargetId="shipping-address-modal"
-						elementClasses="py-3"
-						title='<%= LanguageUtil.get(request, "shipping-address") %>'
-					>
-						<c:choose>
-							<c:when test="<%= shippingAddress == null %>">
-								<span class="text-muted">
-									<liferay-ui:message key="click-add-to-insert" />
-								</span>
-							</c:when>
-							<c:otherwise>
-								<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getDescriptiveCommerceAddress(shippingAddress)) %>
-							</c:otherwise>
-						</c:choose>
-					</commerce-ui:info-box>
-				</div>
-
-				<div class="col-xl-3">
 
 					<%
 					String purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
@@ -184,16 +158,88 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 					<commerce-ui:info-box
 						elementClasses="py-3"
-						title='<%= LanguageUtil.get(request, "order-type") %>'
-					>
-						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceOrderTypeName(LanguageUtil.getLanguageId(locale))) %>
-					</commerce-ui:info-box>
-
-					<commerce-ui:info-box
-						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "channel") %>'
 					>
 						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceChannelName()) %>
+					</commerce-ui:info-box>
+				</div>
+
+				<div class="col-xl-3">
+
+					<%
+					CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+					%>
+
+					<commerce-ui:info-box
+						actionLabel='<%= LanguageUtil.get(request, (billingAddress == null) ? "add" : "edit") %>'
+						actionTargetId="billing-address-modal"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "billing-address") %>'
+					>
+						<c:choose>
+							<c:when test="<%= billingAddress == null %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<p class="mb-0">
+									<%= billingAddress.getStreet1() %>
+								</p>
+
+								<c:if test="<%= !Validator.isBlank(billingAddress.getStreet2()) %>">
+									<p class="mb-0">
+										<%= billingAddress.getStreet2() %>
+									</p>
+
+									<p class="mb-0">
+										<%= billingAddress.getStreet3() %>
+									</p>
+								</c:if>
+
+								<p class="mb-0">
+									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(billingAddress) %>
+								</p>
+							</c:otherwise>
+						</c:choose>
+					</commerce-ui:info-box>
+
+					<%
+					CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+					%>
+
+					<commerce-ui:info-box
+						actionLabel='<%= LanguageUtil.get(request, (shippingAddress == null) ? "add" : "edit") %>'
+						actionTargetId="shipping-address-modal"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "shipping-address") %>'
+					>
+						<c:choose>
+							<c:when test="<%= shippingAddress == null %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<p class="mb-0">
+									<%= shippingAddress.getStreet1() %>
+								</p>
+
+								<c:if test="<%= !Validator.isBlank(shippingAddress.getStreet2()) %>">
+									<p class="mb-0">
+										<%= shippingAddress.getStreet2() %>
+									</p>
+
+									<p class="mb-0">
+										<%= shippingAddress.getStreet3() %>
+									</p>
+								</c:if>
+
+								<p class="mb-0">
+									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(shippingAddress) %>
+								</p>
+							</c:otherwise>
+						</c:choose>
 					</commerce-ui:info-box>
 				</div>
 

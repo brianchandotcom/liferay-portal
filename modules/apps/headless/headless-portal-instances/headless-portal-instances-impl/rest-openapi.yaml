@@ -35,6 +35,7 @@ components:
                     description:
                         The portal instance's administrator. This field is optional and is only used in the portal
                         instance creation.
+                    writeOnly: true
                 companyId:
                     description:
                         internal unique key.

@@ -14,7 +14,7 @@
 
 import {useContext} from 'react';
 import {STORAGE_KEYS} from '../../../common/services/liferay/storage';
-import {DEVICES, RAYLIFE_PAGES} from '../../../common/utils/constants';
+import {RAYLIFE_PAGES} from '../../../common/utils/constants';
 import {clearExitAlert} from '../../../common/utils/exitAlert';
 import {redirectTo} from '../../../common/utils/liferay';
 import {AppContext} from '../context/AppContextProvider';
@@ -32,7 +32,9 @@ const redirectToHomePage = () => {
 const useFormActions = (params) => {
 	const {
 		state: {
-			dimensions: {deviceSize},
+			dimensions: {
+				device: {isMobile},
+			},
 			selectedStep: {index: currentStepIndex = 0},
 		},
 	} = useContext(AppContext);
@@ -43,13 +45,9 @@ const useFormActions = (params) => {
 		redirectToHomePage
 	);
 
-	const isMobileDevice = deviceSize === DEVICES.PHONE;
-
-	if (isMobileDevice) {
+	if (isMobile) {
 		return formActionsMobile;
 	}
-
-	// Tablet | Desktop Screen Actions
 
 	return {
 		...formActionsDefault,

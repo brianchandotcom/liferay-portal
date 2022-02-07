@@ -363,6 +363,18 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 			companyId, type, start, end);
 	}
 
+	@Override
+	public List<COREntry> getUnqualifiedCOREntries(long companyId) {
+		return dslQuery(
+			_getGroupByStep(
+				null, null, companyId, null, null,
+				DSLQueryFactoryUtil.selectDistinct(COREntryTable.INSTANCE)
+			).orderBy(
+				COREntryTable.INSTANCE.type.descending(),
+				COREntryTable.INSTANCE.priority.descending()
+			));
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public COREntry updateCOREntry(

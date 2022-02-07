@@ -19,6 +19,7 @@ import SlaCardLayout from './Layout';
 const SlaCard = ({project}) => {
 	const [slaData, setSlaData] = useState();
 	const [slaSelected, setSlaSelected] = useState('');
+	const [slaPosition, setSlaPosition] = useState(1);
 	const {
 		slaCurrentEndDate,
 		slaCurrentStartDate,
@@ -27,11 +28,6 @@ const SlaCard = ({project}) => {
 		slaFutureEndDate,
 		slaFutureStartDate,
 	} = project;
-	const slaCardPositions = {
-		firstData: undefined,
-		secondData: undefined,
-		thirdData: undefined,
-	};
 
 	useEffect(() => {
 		if (project) {
@@ -90,12 +86,14 @@ const SlaCard = ({project}) => {
 				slaFiltedData.push(slaRawData.expired);
 				slaFiltedData.push(slaRawData.future);
 			}
+			const slaSelectedCards = slaFiltedData.filter(
+				(sla) => sla.slaTitle
+			);
 
-			setSlaData(slaFiltedData.filter((sla) => sla.slaTitle));
+			setSlaData(slaSelectedCards);
 
 			if (!slaSelected) {
-				const slaSelectedCard = slaFiltedData[0]?.slaLabel;
-				setSlaSelected(slaSelectedCard);
+				setSlaSelected(slaSelectedCards[0]?.slaLabel);
 			}
 		}
 	}, [
@@ -109,19 +107,13 @@ const SlaCard = ({project}) => {
 		slaSelected,
 	]);
 
-	if (slaData) {
-		slaCardPositions.firstData = slaData[0];
-		slaCardPositions.secondData = slaData[1];
-		slaCardPositions.thirdData = slaData[2];
-	}
-
 	const handleSlaCardClick = () => {
-		if (slaSelected === slaData[slaData.length - 1]?.slaLabel) {
-			setSlaSelected(slaCardPositions.firstData.slaLabel);
-		} else if (slaSelected === slaCardPositions.firstData.slaLabel) {
-			setSlaSelected(slaCardPositions.secondData.slaLabel);
+		setSlaPosition(slaPosition + 1);
+		if (!slaData[slaPosition]) {
+			setSlaSelected(slaData[0].slaLabel);
+			setSlaPosition(1);
 		} else {
-			setSlaSelected(slaCardPositions.thirdData.slaLabel);
+			setSlaSelected(slaData[slaPosition].slaLabel);
 		}
 	};
 
@@ -129,7 +121,7 @@ const SlaCard = ({project}) => {
 		<div className="cp-sla-container position-absolute">
 			<h5 className="mb-4">Support Level</h5>
 
-			{slaData ? (
+			{slaData?.length ? (
 				<div>
 					<div
 						className={classNames({

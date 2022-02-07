@@ -9,24 +9,14 @@
  * distribution rights of the Software.
  */
 
-import ProjectContacts from '../../components/ProjectContacts';
+import ProjectSupport from '../../components/ProjectSupport';
 import QuickLinksPanel from '../../containers/QuickLinksPanel';
 
 const Layout = ({children, hasProjectContact, hasQuickLinks, project}) => {
 	return (
 		<div className="d-flex position-relative w-100">
 			<div className="w-100">
-				{hasProjectContact && (
-					<ProjectContacts
-						contact={{
-							accountKey: project.accountKey,
-							email: project.liferayContactEmailAddress,
-							name: project.liferayContactName,
-							role: project.liferayContactRole,
-						}}
-						project={project}
-					/>
-				)}
+				{hasProjectContact && <ProjectSupport project={project} />}
 
 				{children}
 			</div>

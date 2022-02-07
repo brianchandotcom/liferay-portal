@@ -10,9 +10,9 @@
  */
 
 import SlaCard from '../SlaCard';
-import ProjectContactsSkeleton from './Skeleton';
+import ProjectSupportSkeleton from './Skeleton';
 
-const ProjectContacts = ({contact, project}) => {
+const ProjectSupport = ({project}) => {
 	return (
 		<div className="container cp-project-contacs-container mb-5 mx-0">
 			<div className="row">
@@ -25,21 +25,21 @@ const ProjectContacts = ({contact, project}) => {
 						Liferay Contact
 					</h5>
 
-					{contact.name && (
+					{project.liferayContactName && (
 						<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-							{contact.name}
+							{project.liferayContactName}
 						</div>
 					)}
 
-					{contact.role && (
+					{project.liferayContactRole && (
 						<div className="rounded-sm text-neutral-10 text-paragraph">
-							{contact.role}
+							{project.liferayContactRole}
 						</div>
 					)}
 
-					{contact.email && (
+					{project.liferayContactEmailAddress && (
 						<div className="rounded-sm text-neutral-10 text-paragraph-sm">
-							{contact.email}
+							{project.liferayContactEmailAddress}
 						</div>
 					)}
 				</div>
@@ -48,6 +48,6 @@ const ProjectContacts = ({contact, project}) => {
 	);
 };
 
-ProjectContacts.Skeleton = ProjectContactsSkeleton;
+ProjectSupport.Skeleton = ProjectSupportSkeleton;
 
-export default ProjectContacts;
+export default ProjectSupport;

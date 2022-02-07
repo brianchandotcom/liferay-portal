@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import ProjectContacts from '../../components/ProjectContacts';
+import ProjectSupport from '../../components/ProjectSupport';
 import QuickLinksPanel from '../../containers/QuickLinksPanel';
 
 const OverviewSkeleton = () => {
 	return (
 		<div className="d-flex position-relative w-100">
 			<div className="w-100">
-				<ProjectContacts.Skeleton />
+				<ProjectSupport.Skeleton />
 			</div>
 
 			<QuickLinksPanel.Skeleton />

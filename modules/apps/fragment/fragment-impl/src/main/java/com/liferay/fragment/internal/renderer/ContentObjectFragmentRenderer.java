@@ -125,11 +125,14 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		Object displayObject = null;
+		String className = StringPool.BLANK;
 
 		if (jsonObject != null) {
+			className = jsonObject.getString("className");
+
 			displayObject = _getDisplayObject(
-				jsonObject.getString("className"),
-				jsonObject.getLong("classPK"), displayObjectOptional);
+				className, jsonObject.getLong("classPK"),
+				displayObjectOptional);
 		}
 		else {
 			displayObject = displayObjectOptional.orElse(null);
@@ -147,7 +150,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		Tuple tuple = _getTuple(
-			displayObject.getClass(), fragmentRendererContext);
+			className, displayObject.getClass(), fragmentRendererContext);
 
 		InfoItemRenderer<Object> infoItemRenderer =
 			(InfoItemRenderer<Object>)tuple.getObject(0);
@@ -161,12 +164,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 
 			return;
-		}
-
-		String className = StringPool.BLANK;
-
-		if (jsonObject != null) {
-			className = jsonObject.getString("className");
 		}
 
 		if (!_hasPermission(httpServletRequest, className, displayObject)) {
@@ -237,12 +234,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Tuple _getTuple(
-		Class<?> displayObjectClass,
+		String className, Class<?> displayObjectClass,
 		FragmentRendererContext fragmentRendererContext) {
 
 		List<InfoItemRenderer<?>> infoItemRenderers =
 			FragmentRendererUtil.getInfoItemRenderers(
-				displayObjectClass, _infoItemRendererTracker);
+				className, displayObjectClass, _infoItemRendererTracker);
 
 		if (infoItemRenderers == null) {
 			return null;

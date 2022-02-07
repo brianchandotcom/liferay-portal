@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -42,7 +43,17 @@ import javax.servlet.http.HttpServletResponse;
 public class FragmentRendererUtil {
 
 	public static List<InfoItemRenderer<?>> getInfoItemRenderers(
-		Class<?> clazz, InfoItemRendererTracker infoItemRendererTracker) {
+		String className, Class<?> clazz,
+		InfoItemRendererTracker infoItemRendererTracker) {
+
+		if (Validator.isNotNull(className)) {
+			List<InfoItemRenderer<?>> infoItemRenderers =
+				infoItemRendererTracker.getInfoItemRenderers(className);
+
+			if (!infoItemRenderers.isEmpty()) {
+				return infoItemRenderers;
+			}
+		}
 
 		Class<?>[] interfaces = clazz.getInterfaces();
 
@@ -61,7 +72,8 @@ public class FragmentRendererUtil {
 		Class<?> superClass = clazz.getSuperclass();
 
 		if (superClass != null) {
-			return getInfoItemRenderers(superClass, infoItemRendererTracker);
+			return getInfoItemRenderers(
+				className, superClass, infoItemRendererTracker);
 		}
 
 		return null;

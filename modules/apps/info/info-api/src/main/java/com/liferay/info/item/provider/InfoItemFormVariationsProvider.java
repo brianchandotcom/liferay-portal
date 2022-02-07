@@ -44,6 +44,10 @@ public interface InfoItemFormVariationsProvider<T> {
 		return infoItemFormVariationOptional.orElse(null);
 	}
 
+	public default String getInfoItemFormVariationKey(T t) {
+		return null;
+	}
+
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId);
 

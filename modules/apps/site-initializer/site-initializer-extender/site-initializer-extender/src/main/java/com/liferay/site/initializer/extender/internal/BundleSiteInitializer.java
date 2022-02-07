@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -243,6 +244,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_accountResourceFactory = accountResourceFactory;
@@ -296,6 +298,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_themeLocalService = themeLocalService;
 		_userAccountResourceFactory = userAccountResourceFactory;
 		_userLocalService = userLocalService;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
@@ -389,7 +393,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addTaxonomyVocabularies(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
 			_invoke(() -> _updateLayoutSets(serviceContext));
-			_invoke(() -> _addWorkflows(serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -442,6 +445,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, layouts,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build()));
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_invoke(() -> _addWorkflows(serviceContext));
+
+					return null;
+				});
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -3048,28 +3058,82 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
+		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			objectDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
 		for (String resourcePath : resourcePaths) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject workflowJSONObject = JSONFactoryUtil.createJSONObject(
 				_read(resourcePath + "workflow.json"));
 
-			jsonObject.put(
-				"content",
-				StringUtil.replace(
-					_read(resourcePath + "workflow.xml"),
-					new String[] {
-						"[$WORKFLOW-DEFINITION-DESCRIPTION$]",
-						"[$WORKFLOW-DEFINITION-NAME$]"
-					},
-					new String[] {
-						jsonObject.getString("description"),
-						jsonObject.getString("name")
-					}));
+			workflowJSONObject.put(
+				"content", _read(resourcePath + "workflow.xml"));
 
 			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
-				jsonObject.toString());
+				workflowJSONObject.toString());
 
-			workflowDefinitionResource.postWorkflowDefinitionDeploy(
-				workflowDefinition);
+			workflowDefinition =
+				workflowDefinitionResource.postWorkflowDefinitionDeploy(
+					workflowDefinition);
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				_read(resourcePath + "workflow.properties.json"));
+
+			if (jsonArray == null) {
+				continue;
+			}
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject propertiesJSONObject = jsonArray.getJSONObject(i);
+
+				String className = propertiesJSONObject.getString("className");
+
+				if (StringUtil.equals(
+						className,
+						com.liferay.object.model.ObjectDefinition.class.
+							getName())) {
+
+					Page<ObjectDefinition> objectDefinitionsPage =
+						objectDefinitionResource.getObjectDefinitionsPage(
+							null, null,
+							objectDefinitionResource.toFilter(
+								StringBundler.concat(
+									"name eq '",
+									propertiesJSONObject.getString("assetName"),
+									"'")),
+							null, null);
+
+					ObjectDefinition objectDefinition =
+						objectDefinitionsPage.fetchFirstItem();
+
+					if (objectDefinition == null) {
+						continue;
+					}
+
+					className = StringBundler.concat(
+						className, "#", objectDefinition.getId());
+				}
+
+				long groupId = 0;
+
+				if (StringUtil.equals(
+						propertiesJSONObject.getString("scope"), "site")) {
+
+					groupId = serviceContext.getScopeGroupId();
+				}
+
+				_workflowDefinitionLinkLocalService.
+					updateWorkflowDefinitionLink(
+						serviceContext.getUserId(),
+						serviceContext.getCompanyId(), groupId, className, 0, 0,
+						StringBundler.concat(
+							workflowDefinition.getName(), "@",
+							workflowDefinition.getVersion()));
+			}
 		}
 	}
 
@@ -3447,6 +3511,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserLocalService _userLocalService;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 	private final WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
 

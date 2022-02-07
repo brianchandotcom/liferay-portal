@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -122,6 +123,7 @@ public class SiteInitializerExtension {
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_dependencyManager = new DependencyManager(bundle.getBundleContext());
@@ -154,6 +156,7 @@ public class SiteInitializerExtension {
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, themeLocalService,
 				userAccountResourceFactory, userLocalService,
+				workflowDefinitionLinkLocalService,
 				workflowDefinitionResourceFactory));
 		_component.setInterface(
 			SiteInitializer.class,

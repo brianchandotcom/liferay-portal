@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -122,6 +123,7 @@ public class SiteInitializerExtender
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
 				_userAccountResourceFactory, _userLocalService,
+				_workflowDefinitionLinkLocalService,
 				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
@@ -303,6 +305,10 @@ public class SiteInitializerExtender
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@Reference
 	private WorkflowDefinitionResource.Factory

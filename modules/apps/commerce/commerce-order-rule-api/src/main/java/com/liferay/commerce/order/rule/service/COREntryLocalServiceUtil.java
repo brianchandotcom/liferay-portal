@@ -446,6 +446,10 @@ public class COREntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<COREntry> getUnqualifiedCOREntries(long companyId) {
+		return getService().getUnqualifiedCOREntries(companyId);
+	}
+
 	/**
 	 * Updates the cor entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

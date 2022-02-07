@@ -363,6 +363,9 @@ public interface COREntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<COREntry> getUnqualifiedCOREntries(long companyId);
+
 	/**
 	 * Updates the cor entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

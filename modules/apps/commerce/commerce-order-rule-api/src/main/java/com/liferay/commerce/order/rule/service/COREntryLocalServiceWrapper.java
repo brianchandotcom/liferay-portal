@@ -518,6 +518,13 @@ public class COREntryLocalServiceWrapper
 		return _corEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.order.rule.model.COREntry>
+		getUnqualifiedCOREntries(long companyId) {
+
+		return _corEntryLocalService.getUnqualifiedCOREntries(companyId);
+	}
+
 	/**
 	 * Updates the cor entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

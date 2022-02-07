@@ -16,10 +16,10 @@ body {
 
 liferay-remote-app-testray {
 	@import 'variables';
+	@import 'typography';
 
 	@import 'components/avatar';
-	@import 'components/layout/header';
-	@import 'components/layout/layout';
-	@import 'components/layout/sidebar';
+	@import 'components/table';
+	@import 'components/layout';
 	@import 'components/progress_bar';
 }

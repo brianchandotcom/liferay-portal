@@ -28,7 +28,7 @@ const QATable: React.FC<QATableProps> = ({items}) => (
 		<tbody>
 			{items.map((item, index) => (
 				<tr key={index}>
-					<th>{item.title}</th>
+					<th className="small-heading">{item.title}</th>
 
 					<td>{item.value}</td>
 				</tr>

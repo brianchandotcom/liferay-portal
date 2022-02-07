@@ -3929,6 +3929,32 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
             tags: ["UserGroup"]
+        patch:
+            operationId: patchUserGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserGroup"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+            tags: ["UserGroup"]
         put:
             operationId: putUserGroupByExternalReferenceCode
             parameters:

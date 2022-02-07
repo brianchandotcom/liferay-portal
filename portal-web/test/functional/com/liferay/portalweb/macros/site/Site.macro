@@ -65,7 +65,6 @@ definition {
 			SelectFrameTop();
 
 			Alert.viewSuccessMessage();
-
 		}
 
 		if ("${siteType}" == "Site Template") {
@@ -83,7 +82,7 @@ definition {
 				Navigator.gotoBack();
 			}
 		}
-		
+
 		WaitForPageLoad();
 
 		Click(

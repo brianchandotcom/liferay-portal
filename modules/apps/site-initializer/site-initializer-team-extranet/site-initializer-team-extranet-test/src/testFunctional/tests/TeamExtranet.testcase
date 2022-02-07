@@ -169,6 +169,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
+	@priority = "4"
+	test CanSetAHostedVideoURL {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Team Extranet",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Team Extranet");
+
+			PageEditor.addFragment(
+				collectionName = "Components",
+				fragmentName = "Video");
+
+			PageEditor.gotoConfiguration(fragmentName = "Video");
+
+			PageEditor.addVideoFragmentURL(videoLink = "http://localhost:8080/webdav/test-site-team-extranet/document_library/home_video.mp4");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "video");
+		}
+	}
+
+	@description = "This is a test for LPS-144156. Can Set a Non-Hosted Video URL on a Team Extranet Fragment Video"
+	@priority = "4"
+	test CanSetANonHostedVideoURL {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Team Extranet",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Team Extranet");
+
+			PageEditor.addFragment(
+				collectionName = "Components",
+				fragmentName = "Video");
+
+			PageEditor.gotoConfiguration(fragmentName = "Video");
+
+			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "video");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
+		}
+	}
+
 	@description = "This is a test for LPS-144166. Verify the Home page on Desktop Size"
 	@priority = "4"
 	test HomePageOnDesktopSize {
@@ -797,63 +857,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
-	@priority = "4"
-	test CanSetAHostedVideoURL {
-		task ("Create a new Page by Json") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Team Extranet",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Team Extranet");
-
-			PageEditor.addFragment(
-				collectionName = "Components",
-				fragmentName = "Video");
-
-			PageEditor.gotoConfiguration(fragmentName = "Video");
-
-			PageEditor.addVideoFragmentURL(videoLink = "http://localhost:8080/webdav/test-site-team-extranet/document_library/home_video.mp4");
-		}
-
-		task ("Preview the Page and Assert the fragment is present") {
-			Masterclass.previewPageandAssertFragment(fragmentName = "video");
-		}
-	}
-
-	@description = "This is a test for LPS-144156. Can Set a Non-Hosted Video URL on a Team Extranet Fragment Video"
-	@priority = "4"
-	test CanSetANonHostedVideoURL {
-		task ("Create a new Page by Json") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Team Extranet",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Team Extranet");
-
-			PageEditor.addFragment(
-				collectionName = "Components",
-				fragmentName = "Video");
-
-			PageEditor.gotoConfiguration(fragmentName = "Video");
-
-			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
-		}
-
-		task ("Preview the Page and Assert the fragment is present") {
-			Masterclass.previewPageandAssertFragment(fragmentName = "video");
-
-			YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
-		}
-	}
 }

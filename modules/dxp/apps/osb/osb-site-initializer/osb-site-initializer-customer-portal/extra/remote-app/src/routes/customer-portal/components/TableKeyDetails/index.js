@@ -12,53 +12,42 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
-import {useCustomerPortal} from '../../context';
-import {getPascalCase} from '../../utils/getPascalCase';
+import {
+	getFormatedProductName,
+	getProductDescription,
+	getProductName,
+	getStatusActivationTag,
+	hasVirtualCluster,
+} from '../../containers/DXPActivationKeysTable/utils/constants';
 
 const HOST_NAME = 'Host Name';
 const IP_ADDRESSES = 'IP Addresses';
 const MAC_ADDRESSES = 'Mac Addresses';
+const SUBSCRIPTION_IMAGE_FILE = 'dxp_icon.svg';
+
+const NO_EXPIRATION_DATE = 100;
 
 const TableKeyDetails = ({
-	ACTIVATION_STATUS,
 	activationKeys,
-	setIsCopyTextToClipboard,
+	assetsPath,
 	setValueToCopyToClipboard,
 }) => {
-	const [{assetsPath}] = useCustomerPortal();
-	const SUBSCRIPTION_IMAGE_FILE = 'dxp_icon.svg';
-
 	const instanceSizeFormated = activationKeys.sizing.slice(7, 8);
-	const productNameFormated = activationKeys.productName.slice(0, 4);
-	const productName = getPascalCase(activationKeys.licenseEntryType)
-		.split('-')
-		.join(' ');
-
-	const hasVirtualCluster =
-		activationKeys.licenseEntryType === 'virtual-cluster';
-
-	const productDescription = activationKeys.complimentary
-		? 'Complimentary'
-		: 'Subscription';
-
-	let activationStatus = ACTIVATION_STATUS.active;
-
-	if (new Date() < new Date(activationKeys.startDate)) {
-		activationStatus = ACTIVATION_STATUS.notActivated;
-	}
-	else if (new Date() > new Date(activationKeys.expirationDate)) {
-		activationStatus = ACTIVATION_STATUS.expired;
-	}
 
 	const unlimitedLicenseDate = new Date().setFullYear(
-		new Date().getFullYear() + 100
+		new Date().getFullYear() + NO_EXPIRATION_DATE
 	);
+
+	const handleExpiredDate =
+		new Date(activationKeys.expirationDate) >=
+		new Date(unlimitedLicenseDate)
+			? 'Does Not Expire'
+			: getCurrentEndDate(activationKeys.expirationDate);
 
 	const handleCopyToClipboard = (value, action) => {
 		navigator.clipboard.writeText(action);
 
 		setValueToCopyToClipboard(value);
-		setIsCopyTextToClipboard(true);
 	};
 
 	return (
@@ -112,7 +101,7 @@ const TableKeyDetails = ({
 								src={`${assetsPath}/assets/navigation-menu/${SUBSCRIPTION_IMAGE_FILE}`}
 							/>
 
-							{productNameFormated}
+							{getFormatedProductName(activationKeys)}
 						</p>
 					</div>
 
@@ -124,7 +113,7 @@ const TableKeyDetails = ({
 
 					<div className="col-4">
 						<p className="bg-neutral-1 key-details-paragraph px-3 py-2 rounded">
-							{hasVirtualCluster
+							{hasVirtualCluster(activationKeys)
 								? 'Virtual Cluster'
 								: 'On-Premise'}
 						</p>
@@ -132,9 +121,11 @@ const TableKeyDetails = ({
 
 					<div className="col-3">
 						<p
-							className={`key-details-paragraph label-tonal-${activationStatus.color} px-3 py-2 rounded`}
+							className={`key-details-paragraph label-tonal-${
+								getStatusActivationTag(activationKeys).color
+							} px-3 py-2 rounded`}
 						>
-							{activationStatus.title}
+							{getStatusActivationTag(activationKeys).title}
 						</p>
 					</div>
 				</div>
@@ -148,7 +139,9 @@ const TableKeyDetails = ({
 
 					<div className="col-4">
 						<p className="text-neutral-8 text-paragraph-sm">
-							{hasVirtualCluster ? 'Cluster Nodes' : HOST_NAME}
+							{hasVirtualCluster(activationKeys)
+								? 'Cluster Nodes'
+								: HOST_NAME}
 						</p>
 					</div>
 
@@ -162,19 +155,19 @@ const TableKeyDetails = ({
 				<div className="row">
 					<div className="col-2">
 						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
-							{productName}
+							{getProductName(activationKeys)}
 						</p>
 					</div>
 
 					<div className="col-3">
 						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
-							{productDescription}
+							{getProductDescription(activationKeys)}
 						</p>
 					</div>
 
 					<div className="col-4">
 						<p className="bg-neutral-1 d-flex key-details-paragraph px-3 py-2 rounded">
-							{hasVirtualCluster
+							{hasVirtualCluster(activationKeys)
 								? `${activationKeys.maxClusterNodes}`
 								: activationKeys.hostName || '-'}
 
@@ -202,7 +195,9 @@ const TableKeyDetails = ({
 
 				<div
 					className={classNames('row', {
-						'justify-content-between': hasVirtualCluster,
+						'justify-content-between': hasVirtualCluster(
+							activationKeys
+						),
 					})}
 				>
 					<div className="col-5">
@@ -211,7 +206,7 @@ const TableKeyDetails = ({
 						</p>
 					</div>
 
-					{!hasVirtualCluster && (
+					{!hasVirtualCluster(activationKeys) && (
 						<div className="col-4">
 							<p className="text-neutral-8 text-paragraph-sm">
 								{IP_ADDRESSES}
@@ -228,7 +223,9 @@ const TableKeyDetails = ({
 
 				<div
 					className={classNames('row', {
-						'justify-content-between': hasVirtualCluster,
+						'justify-content-between': hasVirtualCluster(
+							activationKeys
+						),
 					})}
 				>
 					<div className="col-5">
@@ -237,7 +234,7 @@ const TableKeyDetails = ({
 						</p>
 					</div>
 
-					{!hasVirtualCluster && (
+					{!hasVirtualCluster(activationKeys) && (
 						<div className="col-4">
 							<p className="bg-neutral-1 d-flex key-details-paragraph px-3 py-2 rounded">
 								{activationKeys.ipAddresses || '-'}
@@ -260,17 +257,12 @@ const TableKeyDetails = ({
 
 					<div className="col-3">
 						<p className="bg-neutral-1 key-details-paragraph px-3 py-2 rounded">
-							{new Date(activationKeys.expirationDate) >=
-							new Date(unlimitedLicenseDate)
-								? 'Does Not Expire'
-								: getCurrentEndDate(
-										activationKeys.expirationDate
-								  )}
+							{handleExpiredDate}
 						</p>
 					</div>
 				</div>
 
-				{!hasVirtualCluster && (
+				{!hasVirtualCluster(activationKeys) && (
 					<>
 						<div className="justify-content-center row">
 							<div className="col-2">

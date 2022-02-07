@@ -524,6 +524,10 @@ gradle.beforeProject {
 			buildWSDD {
 				enabled = false
 			}
+
+			buildWSDDJar {
+				enabled = false
+			}
 		}
 
 		pluginManager.withPlugin("eclipse") {

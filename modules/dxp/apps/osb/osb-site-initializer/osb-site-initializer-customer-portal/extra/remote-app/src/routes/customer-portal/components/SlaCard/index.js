@@ -13,107 +13,114 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {FORMAT_DATE} from '../../../../common/utils/constants/slaCardDate';
-import {SLA_NAMES} from '../../../../common/utils/constants/slaCardNames';
+import {SLA_CARD_NAMES} from '../../../../common/utils/constants/slaCardNames';
+import getDateCustomFormat from '../../utils/getDateCustomFormat';
 import SlaCardLayout from './Layout';
 
 const SlaCard = ({project}) => {
 	const [slaData, setSlaData] = useState();
-	const [slaSelected, setSlaSelected] = useState('');
-	const [slaPosition, setSlaPosition] = useState(1);
-	const {
-		slaCurrentEndDate,
-		slaCurrentStartDate,
-		slaExpiredEndDate,
-		slaExpiredStartDate,
-		slaFutureEndDate,
-		slaFutureStartDate,
-	} = project;
+	const [slaSelected, setSlaSelected] = useState();
+	const [slaPosition, setSlaPosition] = useState(0);
 
 	useEffect(() => {
-		if (project) {
-			const slaFiltedData = [];
-			const getFormatDate = (slaDate) => {
-				return new Date(slaDate)?.toLocaleDateString(
-					'en-US',
-					FORMAT_DATE
-				);
-			};
+		const {
+			slaCurrent,
+			slaCurrentEndDate,
+			slaCurrentStartDate,
+			slaExpired,
+			slaExpiredEndDate,
+			slaExpiredStartDate,
+			slaFuture,
+			slaFutureEndDate,
+			slaFutureStartDate,
+		} = project;
 
-			const slaRawData = {
-				current: {
-					slaDateEnd: getFormatDate(slaCurrentEndDate),
-					slaDateStart: getFormatDate(slaCurrentStartDate),
-					slaLabel: SLA_NAMES.current.toUpperCase(),
-					slaTitle: project.slaCurrent?.split(' ')[0],
-				},
-				expired: {
-					slaDateEnd: getFormatDate(slaExpiredEndDate),
-					slaDateStart: getFormatDate(slaExpiredStartDate),
-					slaLabel: SLA_NAMES.expired.toUpperCase(),
-					slaTitle: project.slaExpired?.split(' ')[0],
-				},
-				future: {
-					slaDateEnd: getFormatDate(slaFutureEndDate),
-					slaDateStart: getFormatDate(slaFutureStartDate),
-					slaLabel: SLA_NAMES.future.toUpperCase(),
-					slaTitle: project.slaFuture?.split(' ')[0],
-				},
-			};
+		const slaFiltedData = [];
 
-			if (
-				slaRawData.current.slaTitle === slaRawData.expired.slaTitle &&
-				slaRawData.current.slaTitle === slaRawData.future.slaTitle
-			) {
-				slaRawData.current.slaDateStart =
-					slaRawData.expired.slaDateStart;
-				slaRawData.current.slaDateEnd = slaRawData.future.slaDateEnd;
-				slaFiltedData.push(slaRawData.current);
-			} else if (
-				slaRawData.current.slaTitle === slaRawData.expired.slaTitle
-			) {
-				slaRawData.current.slaDateStart =
-					slaRawData.expired.slaDateStart;
-				slaFiltedData.push(slaRawData.current);
-				slaFiltedData.push(slaRawData.future);
-			} else if (
-				slaRawData.current.slaTitle === slaRawData.future.slaTitle
-			) {
-				slaRawData.current.slaDateEnd = slaRawData.future.slaDateEnd;
-				slaFiltedData.push(slaRawData.current);
-				slaFiltedData.push(slaRawData.expired);
-			} else {
-				slaFiltedData.push(slaRawData.current);
-				slaFiltedData.push(slaRawData.expired);
-				slaFiltedData.push(slaRawData.future);
-			}
-			const slaSelectedCards = slaFiltedData.filter(
-				(sla) => sla.slaTitle
-			);
+		const slaRawData = {
+			current: {
+				dateEnd: getDateCustomFormat(
+					slaCurrentEndDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				dateStart: getDateCustomFormat(
+					slaCurrentStartDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				label: SLA_CARD_NAMES.current,
+				title: slaCurrent?.split(' ')[0],
+			},
+			expired: {
+				dateEnd: getDateCustomFormat(
+					slaExpiredEndDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				dateStart: getDateCustomFormat(
+					slaExpiredStartDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				label: SLA_CARD_NAMES.expired,
+				title: slaExpired?.split(' ')[0],
+			},
+			future: {
+				dateEnd: getDateCustomFormat(
+					slaFutureEndDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				dateStart: getDateCustomFormat(
+					slaFutureStartDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				label: SLA_CARD_NAMES.future,
+				title: slaFuture?.split(' ')[0],
+			},
+		};
 
-			setSlaData(slaSelectedCards);
-
-			if (!slaSelected) {
-				setSlaSelected(slaSelectedCards[0]?.slaLabel);
-			}
+		if (
+			slaRawData.current.title === slaRawData.expired.title &&
+			slaRawData.current.title === slaRawData.future.title
+		) {
+			slaRawData.current.dateStart = slaRawData.expired.dateStart;
+			slaRawData.current.dateEnd = slaRawData.future.dateEnd;
+			slaFiltedData.push(slaRawData.current);
+		} else if (slaRawData.current.title === slaRawData.expired.title) {
+			slaRawData.current.dateStart = slaRawData.expired.dateStart;
+			slaFiltedData.push(slaRawData.current);
+			slaFiltedData.push(slaRawData.future);
+		} else if (slaRawData.current.title === slaRawData.future.title) {
+			slaRawData.current.dateEnd = slaRawData.future.dateEnd;
+			slaFiltedData.push(slaRawData.current);
+			slaFiltedData.push(slaRawData.expired);
+		} else {
+			slaFiltedData.push(slaRawData.current);
+			slaFiltedData.push(slaRawData.expired);
+			slaFiltedData.push(slaRawData.future);
 		}
-	}, [
-		project,
-		slaCurrentEndDate,
-		slaCurrentStartDate,
-		slaExpiredEndDate,
-		slaExpiredStartDate,
-		slaFutureEndDate,
-		slaFutureStartDate,
-		slaSelected,
-	]);
+
+		const slaSelectedCards = slaFiltedData.filter((sla) => sla.title);
+
+		setSlaData(slaSelectedCards);
+
+		if (!slaSelected) {
+			setSlaSelected(slaSelectedCards[0]?.label);
+		}
+	}, [project, slaSelected]);
 
 	const handleSlaCardClick = () => {
-		setSlaPosition(slaPosition + 1);
-		if (!slaData[slaPosition]) {
-			setSlaSelected(slaData[0].slaLabel);
-			setSlaPosition(1);
+		const nextPosition = slaPosition + 1;
+
+		if (slaData[nextPosition]) {
+			setSlaSelected(slaData[nextPosition].label);
+			setSlaPosition(nextPosition);
 		} else {
-			setSlaSelected(slaData[slaPosition].slaLabel);
+			setSlaSelected(slaData[0].label);
+			setSlaPosition(0);
 		}
 	};
 
@@ -139,12 +146,12 @@ const SlaCard = ({project}) => {
 						>
 							{slaData.map((sla) => (
 								<SlaCardLayout
-									key={sla.slaTitle}
-									slaDateEnd={sla.slaDateEnd}
-									slaDateStart={sla.slaDateStart}
-									slaLabel={sla.slaLabel}
+									key={sla.title}
+									slaDateEnd={sla.dateEnd}
+									slaDateStart={sla.dateStart}
+									slaLabel={sla.label}
 									slaSelected={slaSelected}
-									slaTitle={sla.slaTitle}
+									slaTitle={sla.title}
 								/>
 							))}
 						</div>

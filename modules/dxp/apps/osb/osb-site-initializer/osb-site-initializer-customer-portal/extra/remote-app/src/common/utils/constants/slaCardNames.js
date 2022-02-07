@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-export const SLA_NAMES = {
-	current: 'Current',
-	expired: 'Expired',
-	future: 'Future',
+export const SLA_CARD_NAMES = {
+	current: 'CURRENT',
+	expired: 'EXPIRED',
+	future: 'FUTURE',
 };

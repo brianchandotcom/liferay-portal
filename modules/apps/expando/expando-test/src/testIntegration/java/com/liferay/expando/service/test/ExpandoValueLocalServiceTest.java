@@ -25,12 +25,15 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -71,6 +74,29 @@ public class ExpandoValueLocalServiceTest {
 
 		_expandoTable = ExpandoTestUtil.addTable(
 			_classNameId, "testExpandoTable");
+	}
+
+	@Test
+	public void testAddEscapedGeolocationValue() throws Exception {
+		JSONObject geolocationJSONObject = JSONUtil.put(
+			"latitude", 33.997696
+		).put(
+			"longitude", -117.844664
+		);
+
+		ExpandoColumn column = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column", ExpandoColumnConstants.GEOLOCATION);
+
+		ExpandoValue value = ExpandoTestUtil.addValue(
+			_expandoTable, column,
+			HtmlUtil.escape(geolocationJSONObject.toString()));
+
+		value = ExpandoValueLocalServiceUtil.getExpandoValue(
+			value.getValueId());
+
+		Assert.assertEquals(
+			String.valueOf(geolocationJSONObject),
+			String.valueOf(value.getGeolocationJSONObject()));
 	}
 
 	@Test

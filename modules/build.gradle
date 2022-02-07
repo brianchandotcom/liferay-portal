@@ -520,6 +520,12 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
+			buildWSDD {
+				enabled = false
+			}
+		}
+
 		pluginManager.withPlugin("eclipse") {
 			tasks.eclipse.dependsOn {
 				Set<ProjectDependency> projectDependencies = configurations.runtime.allDependencies.withType(ProjectDependency)

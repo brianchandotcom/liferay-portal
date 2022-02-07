@@ -12,48 +12,57 @@
  * details.
  */
 
+import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {Treeview} from 'frontend-js-components-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useRef, useState} from 'react';
+
+const noop = () => {};
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
-	const [filter, setFilter] = useState('');
+	const [items, setItems] = useState(nodes);
+	const initialItemsRef = useRef(nodes);
 
-	const nodesById = useMemo(() => {
-		const result = {};
-
-		function visit(node) {
-			result[node.id] = node;
-
-			if (node.children) {
-				node.children.forEach(visit);
+	const nodeByName = (items, name) => {
+		return items.reduce(function reducer(acc, item) {
+			if (item.name.match(new RegExp(name, 'i'))) {
+				acc.push(item);
 			}
-		}
 
-		nodes.forEach(visit);
+			if (item.children) {
+				acc.concat(item.children.reduce(reducer, acc));
+			}
 
-		return result;
-	}, [nodes]);
+			return acc;
+		}, []);
+	};
 
-	const handleQueryChange = useCallback((event) => {
+	const handleQueryChange = (event) => {
 		const value = event.target.value;
 
-		setFilter(value);
-	}, []);
+		if (!value) {
+			setItems(initialItemsRef.current);
 
-	const handleSelectionChange = (selectedNodeIds) => {
-		const node = nodesById[[...selectedNodeIds][0]];
-
-		if (node) {
-			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data: {
-					folderId: node.id,
-					folderName: node.name,
-				},
-			});
+			return;
 		}
+
+		const newItems = nodeByName(items, value);
+
+		if (newItems.length) {
+			setItems(newItems);
+		}
+	};
+
+	const handleSelectionChange = (event, item) => {
+		event.preventDefault();
+
+		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+			data: {
+				folderId: item.id,
+				folderName: item.name,
+			},
+		});
 	};
 
 	return (
@@ -78,12 +87,39 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<Treeview
-				NodeComponent={Treeview.Card}
-				filter={filter}
-				nodes={nodes}
-				onSelectedNodesChange={handleSelectionChange}
-			/>
+			<ClayTreeView
+				items={items}
+				onItemsChange={noop}
+				showExpanderOnHover={false}
+			>
+				{(item) => (
+					<ClayTreeView.Item>
+						<ClayTreeView.ItemStack
+							onClick={(event) =>
+								handleSelectionChange(event, item)
+							}
+						>
+							<ClayIcon symbol="folder" />
+
+							{item.name}
+						</ClayTreeView.ItemStack>
+
+						<ClayTreeView.Group items={item.children}>
+							{(item) => (
+								<ClayTreeView.Item
+									onClick={(event) =>
+										handleSelectionChange(event, item)
+									}
+								>
+									<ClayIcon symbol="folder" />
+
+									{item.name}
+								</ClayTreeView.Item>
+							)}
+						</ClayTreeView.Group>
+					</ClayTreeView.Item>
+				)}
+			</ClayTreeView>
 		</ClayLayout.ContainerFluid>
 	);
 };

@@ -51,6 +51,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -463,42 +465,46 @@ public class CommerceOrderEditDisplayContext {
 			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
 	}
 
-	public String getDescriptiveCommerceAddress(CommerceAddress commerceAddress)
-		throws PortalException {
+	public String getDescriptiveAddress(CommerceAddress commerceAddress) {
+		StringBundler sb = new StringBundler(5);
 
-		if (commerceAddress == null) {
-			return StringPool.BLANK;
+		sb.append(commerceAddress.getCity());
+		sb.append(StringPool.COMMA_AND_SPACE);
+
+		try {
+			Region region = commerceAddress.getRegion();
+
+			if (region != null) {
+				sb.append(region.getName());
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Region not found", portalException);
+			}
 		}
 
-		Region region = commerceAddress.getRegion();
+		sb.append(commerceAddress.getZip());
 
-		StringBundler sb = new StringBundler((region == null) ? 6 : 8);
+		return sb.toString();
+	}
+
+	public String getDescriptiveStreetAddress(CommerceAddress commerceAddress) {
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(commerceAddress.getStreet1());
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
+		sb.append(StringPool.COMMA_AND_SPACE);
 
 		if (!Validator.isBlank(commerceAddress.getStreet2())) {
 			sb.append(commerceAddress.getStreet2());
-			sb.append(StringPool.COMMA);
-			sb.append(StringPool.SPACE);
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
 		if (!Validator.isBlank(commerceAddress.getStreet3())) {
 			sb.append(commerceAddress.getStreet3());
-			sb.append(StringPool.COMMA);
-			sb.append(StringPool.SPACE);
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
-
-		sb.append(commerceAddress.getCity());
-		sb.append(StringPool.NEW_LINE);
-
-		if (region != null) {
-			sb.append(region.getRegionCode());
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(commerceAddress.getZip());
 
 		return sb.toString();
 	}
@@ -722,6 +728,9 @@ public class CommerceOrderEditDisplayContext {
 
 		return steps;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderEditDisplayContext.class);
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceNotificationQueueEntryLocalService

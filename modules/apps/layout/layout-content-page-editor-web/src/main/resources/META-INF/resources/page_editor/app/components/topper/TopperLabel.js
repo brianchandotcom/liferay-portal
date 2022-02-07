@@ -42,6 +42,9 @@ export function TopperLabel({children, itemElement}) {
 			const pageEditorToolbar = globalContext.document.getElementById(
 				`${config.portletNamespace}pageEditorToolbar`
 			);
+			const pageEditorWrapper = globalContext.document.getElementById(
+				'page-editor'
+			);
 
 			let controlMenuContainerHeight = 0;
 			let itemElementLeft = 0;
@@ -122,7 +125,10 @@ export function TopperLabel({children, itemElement}) {
 			const resizeObserver = globalContext.window.ResizeObserver
 				? new globalContext.window.ResizeObserver((entries) => {
 						entries.forEach((entry) => {
-							if (entry.target === itemElement) {
+							if (
+								entry.target === itemElement ||
+								entry.target === pageEditorWrapper
+							) {
 								updateItemElementSize(itemElement);
 							}
 							else if (entry.target === controlMenuContainer) {
@@ -150,6 +156,10 @@ export function TopperLabel({children, itemElement}) {
 
 				if (pageEditorToolbar) {
 					resizeObserver.observe(pageEditorToolbar);
+				}
+
+				if (pageEditorWrapper) {
+					resizeObserver.observe(pageEditorWrapper);
 				}
 			}
 			else {

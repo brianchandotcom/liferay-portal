@@ -157,6 +157,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7953. Verify user can select, change, and remove a default category display page override"
+	@priority = "3"
+	test CanSelectChangeAndRemoveOverrideDefaultCategoryDisplayPage {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given the Minium site has a Categories Navigation page with a Commerce Categories Navigation widget") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation");
+
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation",
+				widgetName = "Commerce Categories Navigation");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Categories Navigation");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Commerce Categories Navigation",
+				portletOption = "Configuration");
+
+			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
+		}
+
+		task ("And given the Minium site has two pages with a Category Content widget") {
+			for (var pageNum : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${pageNum}");
+			}
+
+			for (var widgetNum : list "1,2") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${widgetNum}",
+					widgetName = "Category Content");
+			}
+		}
+
+		task ("When the user sets the first page as Override Default Category Display Page for a category") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
+
+			CommerceChannels.overrideCategoryDisplayPage(
+				category = "Engine",
+				pageName = "Test Public Widget Page 1",
+				pageType = "Public");
+		}
+
+		task ("Then the page should be correctly set as Override Default Category Display Page for that category") {
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Engine",
+				layout = "Test Public Widget Page 1");
+		}
+
+		task ("When the user edits the category and layout of the override") {
+			CommerceChannels.editOverrideCategoryDisplayPage(
+				category = "Engine",
+				newCategory = "Suspension",
+				newPageName = "Test Public Widget Page 2",
+				newPageType = "Public");
+		}
+
+		task ("Then the new override should be shown under Override Default Category Display Page") {
+			CommerceEntry.assertNoDisplayPageOverride(
+				entryName = "Engine",
+				layout = "Test Public Widget Page 1");
+
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Suspension",
+				layout = "Test Public Widget Page 2");
+		}
+
+		task ("When the user removes the Override Default Category Display Page") {
+			CommerceEntry.deleteCommerceEntry(key_value = "Suspension");
+		}
+
+		task ("Then the category display page override should no longer be present") {
+			CommerceEntry.assertNoDisplayPageOverride(
+				entryName = "Suspension",
+				layout = "Test Public Widget Page 2");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No Items were found.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7852. Verify user can override a private default category display page with another private page"
 	@priority = "3"
 	test OverridePrivateDefaultCategoryDisplayPageWithAPrivatePage {

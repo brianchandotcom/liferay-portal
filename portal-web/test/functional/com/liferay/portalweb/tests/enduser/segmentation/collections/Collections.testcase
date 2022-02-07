@@ -767,12 +767,78 @@ definition {
     Then the variations list always contains the 'Anyone' variation"
 	@priority = "4"
 	test DefaultVariationForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check is not possible to delete defualt variation") {
+			AssetListsAdmin.assertDeleteDisabled(variationTitle = "Anyone");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
     Then the variations list always contains the 'Anyone' variation"
 	@priority = "4"
 	test DefaultVariationForManualCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check is not possible to delete defualt variation") {
+			AssetListsAdmin.assertDeleteDisabled(variationTitle = "Anyone");
+		}
 	}
 
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
@@ -810,6 +876,45 @@ definition {
     Then the variation name is removed from the list of personalized variations"
 	@priority = "3"
 	test DeleteVariationForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Delete the variation created") {
+			AssetListsAdmin.deleteVariation(variationTitle = "First Segment");
+		}
+
+		task ("Check that variation was deleted") {
+			AssertElementNotPresent(
+				key_variation = "First Segment",
+				locator1 = "AssetLists#VARIATION_TITLE");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
@@ -817,6 +922,45 @@ definition {
     Then the variation name is removed from the list of personalized variations"
 	@priority = "3"
 	test DeleteVariationForManualCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Delete the variation created") {
+			AssetListsAdmin.deleteVariation(variationTitle = "First Segment");
+		}
+
+		task ("Check that variation was deleted") {
+			AssertElementNotPresent(
+				key_variation = "First Segment",
+				locator1 = "AssetLists#VARIATION_TITLE");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
@@ -824,6 +968,39 @@ definition {
     Then the Deprioritize option of the elipsis menu is disabled"
 	@priority = "3"
 	test DeprioritizeDisabledForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that variation is listed at the botton") {
+			AssetListsAdmin.assertDepriotirizeDisabled(variationTitle = "First Segment");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
@@ -831,6 +1008,58 @@ definition {
     Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
 	@priority = "3"
 	test DeprioritizeVariationForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that variation is listed at the botton") {
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "AssetLists#VARIATION_INDEX",
+				value1 = "Anyone");
+		}
+
+		task ("Check if Deprioritize is disabled if it's at the botton") {
+			Click(
+				key_variation = "Anyone",
+				locator1 = "AssetLists#VARIATION_TITLE");
+
+			Click(
+				key_variation = "Anyone",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+
+			AssertVisible(
+				key_text = "Deprioritize",
+				locator1 = "Button#ANY_DISABLED");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
@@ -838,6 +1067,58 @@ definition {
     Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
 	@priority = "3"
 	test DeprioritizeVariationForManualCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that variation is listed at the botton") {
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "AssetLists#VARIATION_INDEX",
+				value1 = "Anyone");
+		}
+
+		task ("Check if Deprioritize is disabled if it's at the botton") {
+			Click(
+				key_variation = "Anyone",
+				locator1 = "AssetLists#VARIATION_TITLE");
+
+			Click(
+				key_variation = "Anyone",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+
+			AssertVisible(
+				key_text = "Deprioritize",
+				locator1 = "Button#ANY_DISABLED");
+		}
 	}
 
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
@@ -939,6 +1220,42 @@ definition {
     Then the new variation is positioned at the end of the variations list"
 	@priority = "4"
 	test NewVariationPriorityForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that variation is listed at the botton") {
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "AssetLists#VARIATION_INDEX",
+				value1 = "First Segment");
+		}
 	}
 
 	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
@@ -946,6 +1263,42 @@ definition {
     Then the new variation is positioned at the end of the variations list"
 	@priority = "4"
 	test NewVariationPriorityForManualCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that variation is listed at the botton") {
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "AssetLists#VARIATION_INDEX",
+				value1 = "First Segment");
+		}
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set does not show assets for the personalized views that the user doesn't belongs to when the configuration is enabled"
@@ -1211,6 +1564,39 @@ definition {
     Then the Prioritize option of the elipsis menu is disabled"
 	@priority = "3"
 	test PrioritizeDisabledForDynamicCollection {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+		}
+
+		task ("Check that Prioritize is disabled for first") {
+			AssetListsAdmin.assertPriotirizeDisabled(variationTitle = "Anyone");
+		}
 	}
 
 	@description = "LPS-87232: Validate if, The content recommendation not will works if it is disabled, so in this way, the Liferay will show all content for the user"

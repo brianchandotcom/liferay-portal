@@ -20,6 +20,14 @@ import sectionComponents from './sections/sectionComponents';
 const contents = {
 	'assignments': {
 		backButton: (setContentName) => () => setContentName('task'),
+		deleteFunction: (setSelectedItem) => () =>
+			setSelectedItem((previousValue) => ({
+				...previousValue,
+				data: {
+					...previousValue.data,
+					assignments: null,
+				},
+			})),
 		sections: ['assignments'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('assignments'),
@@ -136,6 +144,10 @@ export default function Sidebar() {
 				backButtonFunction={
 					content?.backButton?.(setContentName, selectedItem?.type) ||
 					defaultBackButton
+				}
+				contentName={contentName}
+				deleteButtonFunction={
+					content?.deleteFunction?.(setSelectedItem) || null
 				}
 				showBackButton={!!content}
 				showDeleteButton={content?.showDeleteButton}

@@ -739,9 +739,6 @@ public interface PropsKeys {
 	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_NAME =
 		"default.guest.public.layout.name";
 
-	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_PREFIX =
-		"default.guest.public.layout.";
-
 	public static final String
 		DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID =
 			"default.guest.public.layout.regular.color.scheme.id";

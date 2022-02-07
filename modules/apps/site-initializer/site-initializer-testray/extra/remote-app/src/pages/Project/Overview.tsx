@@ -12,8 +12,20 @@
  * details.
  */
 
+import {useOutletContext} from 'react-router-dom';
+
 import Container from '../../components/Layout/Container';
 
-const Overview = () => <Container title="Overview">Hey...</Container>;
+const Overview = () => {
+	const {testrayProject} = useOutletContext<{testrayProject: any}>();
+
+	return (
+		<Container title="Overview">
+			<p>{testrayProject?.name}</p>
+
+			<p>{testrayProject?.description}</p>
+		</Container>
+	);
+};
 
 export default Overview;

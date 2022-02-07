@@ -132,7 +132,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "version",
-				value = "1.0");
+				value = "");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -230,7 +230,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "version",
-				value = "");
+				value = "1.0");
 		}
 
 		task ("View the request common properties value") {

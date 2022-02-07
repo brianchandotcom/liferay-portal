@@ -1,0 +1,26 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.asset.categories.admin.web.internal.info.collection.provider.AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider"
+						},
+						"collectionType": "CollectionProvider"
+					},
+					"numberOfColumns": 2,
+					"numberOfItems": 4
+				},
+				"pageElements": [
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

@@ -106,7 +106,7 @@ public class BlogsStatsUserLocalServiceImpl
 			).and(
 				BlogsEntryTable.INSTANCE.userId.eq(userId)
 			),
-			null, 0, 1);
+			_groupIdExpression.descending(), 0, 1);
 
 		if (blogsStatsUsers.isEmpty()) {
 			return new BlogsStatsUserImpl(0, groupId, null, 0, 0, 0, userId);
@@ -195,6 +195,12 @@ public class BlogsStatsUserLocalServiceImpl
 			BlogsEntryTable.INSTANCE.entryId
 		).as(
 			"entryCount"
+		);
+	private final Expression<Long> _groupIdExpression =
+		DSLFunctionFactoryUtil.max(
+			BlogsEntryTable.INSTANCE.groupId
+		).as(
+			"groupId"
 		);
 	private final Expression<Date> _lastPostDateExpression =
 		DSLFunctionFactoryUtil.max(

@@ -25,10 +25,12 @@ const ResourceActions = () => {
 			...previousValue,
 			data: {
 				...previousValue.data,
-				assignments: {
-					assignmentType: ['resourceActions'],
-					resourceAction: value,
-				},
+				assignments: value
+					? {
+							assignmentType: ['resourceActions'],
+							resourceAction: value,
+					  }
+					: null,
 			},
 		}));
 
@@ -65,7 +67,9 @@ const ResourceActions = () => {
 					component="textarea"
 					id="resource-actions"
 					onChange={onChange}
-					placeholder={Liferay.Language.get('type-resource-actions-here')}
+					placeholder={Liferay.Language.get(
+						'type-resource-actions-here'
+					)}
 					type="text"
 					value={resourceActions}
 				/>

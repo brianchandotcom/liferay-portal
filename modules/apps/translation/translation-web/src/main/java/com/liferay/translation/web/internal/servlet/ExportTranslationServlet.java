@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.portlet.action;
+package com.liferay.translation.web.internal.servlet;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -23,9 +23,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.web.internal.helper.InfoItemHelper;
@@ -52,47 +50,50 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.portlet.PortletException;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
-		"mvc.command.name=/translation/export_translation"
+		"osgi.http.whiteboard.servlet.name=com.liferay.translation.web.internal.servlet.ExportTranslationServlet",
+		"osgi.http.whiteboard.servlet.pattern=/translation/export_translation",
+		"servlet.init.httpMethods=GET"
 	},
-	service = MVCResourceCommand.class
+	service = Servlet.class
 )
-public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
+public class ExportTranslationServlet extends HttpServlet {
 
 	@Override
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
+	protected void doGet(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
 		try {
 			long[] segmentsExperienceIds = ParamUtil.getLongValues(
-				resourceRequest, "segmentsExperienceIds");
+				httpServletRequest, "segmentsExperienceIds");
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					_infoItemServiceTracker, resourceRequest);
+					_infoItemServiceTracker, httpServletRequest);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceIds);
 
 			String exportMimeType = ParamUtil.getString(
-				resourceRequest, "exportMimeType");
+				httpServletRequest, "exportMimeType");
 			String sourceLanguageId = ParamUtil.getString(
-				resourceRequest, "sourceLanguageId");
+				httpServletRequest, "sourceLanguageId");
 			String[] targetLanguageIds = ParamUtil.getStringValues(
-				resourceRequest, "targetLanguageIds");
+				httpServletRequest, "targetLanguageIds");
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
@@ -109,36 +110,35 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						zipWriter, translationRequestHelper.getModelClassName(),
 						translationRequestHelper.getModelClassPK(),
 						exportMimeType, sourceLanguageId, targetLanguageIds,
-						_portal.getLocale(resourceRequest));
+						_portal.getLocale(httpServletRequest));
 				}
 				else {
 					_addZipEntry(
 						zipWriter, className, classPK, exportMimeType,
 						sourceLanguageId, targetLanguageIds,
-						_portal.getLocale(resourceRequest));
+						_portal.getLocale(httpServletRequest));
 				}
 			}
 
 			try (InputStream inputStream = new FileInputStream(
 					zipWriter.getFile())) {
 
-				PortletResponseUtil.sendFile(
-					resourceRequest, resourceResponse,
+				ServletResponseUtil.sendFile(
+					httpServletRequest, httpServletResponse,
 					_getZipFileName(
 						translationRequestHelper.getModelClassName(),
 						translationRequestHelper.getModelClassPK(),
 						LanguageUtil.get(
-							_portal.getLocale(resourceRequest),
+							_portal.getLocale(httpServletRequest),
 							"model.resource." + className),
 						_isMultipleModels(classPKs, segmentsExperienceIds),
-						sourceLanguageId, _portal.getLocale(resourceRequest)),
+						sourceLanguageId,
+						_portal.getLocale(httpServletRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
-
-			return false;
 		}
-		catch (IOException | PortalException exception) {
-			throw new PortletException(exception);
+		catch (PortalException portalException) {
+			throw new IOException(portalException);
 		}
 	}
 

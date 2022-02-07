@@ -982,7 +982,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		return false;
 	}
 
-	private boolean _isShowViewContentURL() throws Exception {
+	private boolean _isShowViewContentURL() {
 		if ((_article == null) || !_article.hasApprovedVersion()) {
 			return false;
 		}

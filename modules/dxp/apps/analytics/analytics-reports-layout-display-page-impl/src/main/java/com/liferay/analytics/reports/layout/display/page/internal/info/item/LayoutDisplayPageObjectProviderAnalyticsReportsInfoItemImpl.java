@@ -332,21 +332,12 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 				currentLayoutDisplayPageObjectProvider.getDisplayObject() !=
 					null
 		).map(
-			currentLayoutDisplayPageObjectProvider -> {
-				try {
-					return AssetDisplayPageUtil.
-						getAssetDisplayPageLayoutPageTemplateEntry(
-							layoutDisplayPageObjectProvider.getGroupId(),
-							layoutDisplayPageObjectProvider.getClassNameId(),
-							layoutDisplayPageObjectProvider.getClassPK(),
-							layoutDisplayPageObjectProvider.getClassTypeId());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return null;
-				}
-			}
+			currentLayoutDisplayPageObjectProvider ->
+				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK(),
+					layoutDisplayPageObjectProvider.getClassTypeId())
 		).map(
 			layoutPageTemplateEntry -> _layoutLocalService.fetchLayout(
 				layoutPageTemplateEntry.getPlid())

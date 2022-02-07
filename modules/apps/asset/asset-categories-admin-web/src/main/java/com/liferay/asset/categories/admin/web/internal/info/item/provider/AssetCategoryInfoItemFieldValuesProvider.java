@@ -29,9 +29,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -119,25 +116,17 @@ public class AssetCategoryInfoItemFieldValuesProvider
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if (themeDisplay != null) {
-			try {
-				assetCategoryInfoFieldValues.add(
-					new InfoFieldValue<>(
-						AssetCategoryInfoItemFields.displayPageURLInfoField,
-						_getDisplayPageURL(assetCategory, themeDisplay)));
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-			}
+			assetCategoryInfoFieldValues.add(
+				new InfoFieldValue<>(
+					AssetCategoryInfoItemFields.displayPageURLInfoField,
+					_getDisplayPageURL(assetCategory, themeDisplay)));
 		}
 
 		return assetCategoryInfoFieldValues;
 	}
 
 	private String _getDisplayPageURL(
-			AssetCategory assetCategory, ThemeDisplay themeDisplay)
-		throws PortalException {
+		AssetCategory assetCategory, ThemeDisplay themeDisplay) {
 
 		LayoutDisplayPageProvider layoutDisplayPageProvider =
 			_layoutDisplayPageProviderTracker.
@@ -178,9 +167,6 @@ public class AssetCategoryInfoItemFieldValuesProvider
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryInfoItemFieldValuesProvider.class);
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

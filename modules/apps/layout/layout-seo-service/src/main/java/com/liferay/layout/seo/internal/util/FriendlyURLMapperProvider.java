@@ -19,8 +19,6 @@ import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -58,20 +56,12 @@ public class FriendlyURLMapperProvider {
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER)
 		).filter(
-			layoutDisplayPageObjectProvider -> {
-				try {
-					return AssetDisplayPageUtil.hasAssetDisplayPage(
-						layoutDisplayPageObjectProvider.getGroupId(),
-						layoutDisplayPageObjectProvider.getClassNameId(),
-						layoutDisplayPageObjectProvider.getClassPK(),
-						layoutDisplayPageObjectProvider.getClassTypeId());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return false;
-				}
-			}
+			layoutDisplayPageObjectProvider ->
+				AssetDisplayPageUtil.hasAssetDisplayPage(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK(),
+					layoutDisplayPageObjectProvider.getClassTypeId())
 		).map(
 			layoutDisplayPageObjectProvider ->
 				(FriendlyURLMapper)new AssetDisplayPageFriendlyURLMapper(
@@ -172,9 +162,6 @@ public class FriendlyURLMapperProvider {
 			throws PortalException;
 
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FriendlyURLMapperProvider.class);
 
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

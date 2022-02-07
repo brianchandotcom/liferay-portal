@@ -26,7 +26,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
@@ -58,8 +57,7 @@ public class AssetDisplayPageUtil {
 	}
 
 	public static boolean hasAssetDisplayPage(
-			long groupId, AssetEntry assetEntry)
-		throws PortalException {
+		long groupId, AssetEntry assetEntry) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			getAssetDisplayPageLayoutPageTemplateEntry(

@@ -279,14 +279,14 @@ export const getKoroneikiAccounts = gql`
 					partner
 					region
 					slaCurrent
-					slaFuture
-					slaExpired
 					slaCurrentEndDate
 					slaCurrentStartDate
-					slaFutureEndDate
-					slaFutureStartDate
+					slaExpired
 					slaExpiredEndDate
 					slaExpiredStartDate
+					slaFuture
+					slaFutureEndDate
+					slaFutureStartDate
 				}
 			}
 		}

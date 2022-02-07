@@ -14,36 +14,45 @@
 		border-color: white;
 	}
 }
+
 .cp-card {
 	box-shadow: $elevation-fluffy-1;
 }
+
 .cp-sla-card-holder {
 	position: relative;
 }
+
 .cp-sla-card-holder .cp-sla-card {
 	filter: blur(2px);
 	position: absolute;
 	transition: all 0.4s;
 }
+
 .cp-sla-multiple-card .cp-sla-card-active {
 	filter: blur(0);
 	transform: translate(-1rem, 1rem);
 	transition: all 0.4s;
 	z-index: 100;
 }
+
 .cp-sla-platinum {
 	background-color: #f9fafb;
 	border: 1px solid #e1e1e4;
 }
+
 .cp-sla-gold {
 	border: 1px solid var(--color-brand-secondary-lighten-4);
 }
+
 .cp-sla-limited {
 	border: 1px solid #0b5fff99;
 }
+
 .cp-sla-label {
 	font-size: 0.75rem;
 }
+
 .cp-n-sla-card {
 	height: 5rem;
 	width: 12rem;

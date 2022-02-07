@@ -22,7 +22,7 @@ const SlaCardLayout = ({
 	slaTitle,
 }) => {
 	const slaDate = `${slaDateStart} - ${slaDateEnd}`;
-	const SLA_TITLE = {
+	const slaCardTitle = {
 		gold: 'Gold',
 		limited: 'Limited',
 		platinum: 'Platinum',
@@ -38,20 +38,21 @@ const SlaCardLayout = ({
 			<ClayCard
 				className={classNames('m-0 p-3 rounded-lg', {
 					'bg-brand-secondary-lighten-6 cp-sla-gold':
-						slaTitle === SLA_TITLE.gold,
+						slaTitle === slaCardTitle.gold,
 					'bg-neutral-0 cp-sla-limited':
-						slaTitle === SLA_TITLE.limited,
-					'cp-sla-platinum': slaTitle === SLA_TITLE.platinum,
+						slaTitle === slaCardTitle.limited,
+					'cp-sla-platinum': slaTitle === slaCardTitle.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<div
 						className={classNames('h5 mb-0', {
 							'text-brand-primary-darken-2':
-								slaTitle === SLA_TITLE.limited,
+								slaTitle === slaCardTitle.limited,
 							'text-brand-secondary-darken-3':
-								slaTitle === SLA_TITLE.gold,
-							'text-neutral-7': slaTitle === SLA_TITLE.platinum,
+								slaTitle === slaCardTitle.gold,
+							'text-neutral-7':
+								slaTitle === slaCardTitle.platinum,
 						})}
 					>
 						{slaTitle}
@@ -64,11 +65,11 @@ const SlaCardLayout = ({
 									'mr-0 p-0 text-small-caps cp-sla-label',
 									{
 										'label-borderless-dark text-neutral-7':
-											slaTitle === SLA_TITLE.platinum,
+											slaTitle === slaCardTitle.platinum,
 										'label-borderless-primary text-brand-primary-darken-2':
-											slaTitle === SLA_TITLE.limited,
+											slaTitle === slaCardTitle.limited,
 										'label-borderless-secondary text-brand-secondary-darken-3':
-											slaTitle === SLA_TITLE.gold,
+											slaTitle === slaCardTitle.gold,
 									}
 								)}
 								displayType="secundary"
@@ -82,10 +83,10 @@ const SlaCardLayout = ({
 				<ClayCard.Description
 					className={classNames('', {
 						'text-brand-primary-darken-2':
-							slaTitle === SLA_TITLE.limited,
+							slaTitle === slaCardTitle.limited,
 						'text-brand-secondary-darken-3':
-							slaTitle === SLA_TITLE.gold,
-						'text-neutral-6': slaTitle === SLA_TITLE.platinum,
+							slaTitle === slaCardTitle.gold,
+						'text-neutral-6': slaTitle === slaCardTitle.platinum,
 					})}
 					displayType="text"
 					truncate={false}

@@ -19,12 +19,24 @@ import SlaCardLayout from './Layout';
 const SlaCard = ({project}) => {
 	const [slaData, setSlaData] = useState();
 	const [slaSelected, setSlaSelected] = useState('');
-	const SLA_DATA = {};
+	const {
+		slaCurrentEndDate,
+		slaCurrentStartDate,
+		slaExpiredEndDate,
+		slaExpiredStartDate,
+		slaFutureEndDate,
+		slaFutureStartDate,
+	} = project;
+	const slaCardPositions = {
+		firstData: undefined,
+		secondData: undefined,
+		thirdData: undefined,
+	};
 
 	useEffect(() => {
 		if (project) {
 			const slaFiltedData = [];
-			const slaNewDate = (slaDate) => {
+			const getFormatDate = (slaDate) => {
 				return new Date(slaDate)?.toLocaleDateString(
 					'en-US',
 					FORMAT_DATE
@@ -33,20 +45,20 @@ const SlaCard = ({project}) => {
 
 			const slaRawData = {
 				current: {
-					slaDateEnd: slaNewDate(project.slaCurrentEndDate),
-					slaDateStart: slaNewDate(project.slaCurrentStartDate),
+					slaDateEnd: getFormatDate(slaCurrentEndDate),
+					slaDateStart: getFormatDate(slaCurrentStartDate),
 					slaLabel: SLA_NAMES.current.toUpperCase(),
 					slaTitle: project.slaCurrent?.split(' ')[0],
 				},
 				expired: {
-					slaDateEnd: slaNewDate(project.slaExpiredEndDate),
-					slaDateStart: slaNewDate(project.slaExpiredStartDate),
+					slaDateEnd: getFormatDate(slaExpiredEndDate),
+					slaDateStart: getFormatDate(slaExpiredStartDate),
 					slaLabel: SLA_NAMES.expired.toUpperCase(),
 					slaTitle: project.slaExpired?.split(' ')[0],
 				},
 				future: {
-					slaDateEnd: slaNewDate(project.slaFutureEndDate),
-					slaDateStart: slaNewDate(project.slaFutureStartDate),
+					slaDateEnd: getFormatDate(slaFutureEndDate),
+					slaDateStart: getFormatDate(slaFutureStartDate),
 					slaLabel: SLA_NAMES.future.toUpperCase(),
 					slaTitle: project.slaFuture?.split(' ')[0],
 				},
@@ -86,21 +98,30 @@ const SlaCard = ({project}) => {
 				setSlaSelected(slaSelectedCard);
 			}
 		}
-	}, [project, slaSelected]);
+	}, [
+		project,
+		slaCurrentEndDate,
+		slaCurrentStartDate,
+		slaExpiredEndDate,
+		slaExpiredStartDate,
+		slaFutureEndDate,
+		slaFutureStartDate,
+		slaSelected,
+	]);
 
 	if (slaData) {
-		SLA_DATA.firstData = slaData[0];
-		SLA_DATA.secondData = slaData[1];
-		SLA_DATA.thirdData = slaData[2];
+		slaCardPositions.firstData = slaData[0];
+		slaCardPositions.secondData = slaData[1];
+		slaCardPositions.thirdData = slaData[2];
 	}
 
 	const handleSlaCardClick = () => {
 		if (slaSelected === slaData[slaData.length - 1]?.slaLabel) {
-			setSlaSelected(SLA_DATA.firstData.slaLabel);
-		} else if (slaSelected === SLA_DATA.firstData.slaLabel) {
-			setSlaSelected(SLA_DATA.secondData.slaLabel);
+			setSlaSelected(slaCardPositions.firstData.slaLabel);
+		} else if (slaSelected === slaCardPositions.firstData.slaLabel) {
+			setSlaSelected(slaCardPositions.secondData.slaLabel);
 		} else {
-			setSlaSelected(SLA_DATA.thirdData.slaLabel);
+			setSlaSelected(slaCardPositions.thirdData.slaLabel);
 		}
 	};
 
@@ -124,17 +145,16 @@ const SlaCard = ({project}) => {
 								}
 							)}
 						>
-							{slaData &&
-								slaData.map((sla) => (
-									<SlaCardLayout
-										key={sla.slaTitle}
-										slaDateEnd={sla.slaDateEnd}
-										slaDateStart={sla.slaDateStart}
-										slaLabel={sla.slaLabel}
-										slaSelected={slaSelected}
-										slaTitle={sla.slaTitle}
-									/>
-								))}
+							{slaData.map((sla) => (
+								<SlaCardLayout
+									key={sla.slaTitle}
+									slaDateEnd={sla.slaDateEnd}
+									slaDateStart={sla.slaDateStart}
+									slaLabel={sla.slaLabel}
+									slaSelected={slaSelected}
+									slaTitle={sla.slaTitle}
+								/>
+							))}
 						</div>
 					</div>
 

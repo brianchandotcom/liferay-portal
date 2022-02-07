@@ -133,24 +133,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-
-			return ContentTypes.APPLICATION_OCTET_STREAM;
-		}
-
-		if (contentType.contains("tika")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Retrieved invalid content type " + contentType);
-			}
-
-			contentType = getContentType(fileName);
-		}
-
-		if (contentType.contains("tika")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Retrieved invalid content type " + contentType);
-			}
-
-			contentType = ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
 		return contentType;
@@ -177,18 +159,9 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-
-			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
-		if (!contentType.contains("tika")) {
-			return contentType;
-		}
-		else if (_log.isDebugEnabled()) {
-			_log.debug("Retrieved invalid content type " + contentType);
-		}
-
-		return ContentTypes.APPLICATION_OCTET_STREAM;
+		return contentType;
 	}
 
 	@Override

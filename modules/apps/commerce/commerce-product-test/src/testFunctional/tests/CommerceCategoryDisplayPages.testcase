@@ -237,8 +237,8 @@ definition {
 
 			Refresh();
 
-			CommerceEntry.assertCategoryDisplayPageOverride(
-				category = "Engine",
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Engine",
 				layout = "Test Private Widget Page");
 		}
 
@@ -363,8 +363,8 @@ definition {
 
 			Refresh();
 
-			CommerceEntry.assertCategoryDisplayPageOverride(
-				category = "Engine",
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Engine",
 				layout = "Test Private Content Page");
 		}
 

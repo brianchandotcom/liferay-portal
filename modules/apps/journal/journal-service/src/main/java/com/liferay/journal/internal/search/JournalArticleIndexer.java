@@ -171,7 +171,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		long[] classTypeIds = searchContext.getClassTypeIds();
 
-		if (!ArrayUtil.isEmpty(classTypeIds)) {
+		if (ArrayUtil.isNotEmpty(classTypeIds)) {
 			TermsFilter classTypeIdsTermsFilter = new TermsFilter(
 				Field.CLASS_TYPE_ID);
 

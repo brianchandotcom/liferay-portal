@@ -17,7 +17,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {config} from '../../config/index';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -39,9 +38,6 @@ export function TopperLabel({children, itemElement}) {
 			const controlMenuContainer = globalContext.document.querySelector(
 				'.control-menu-container'
 			);
-			const pageEditorToolbar = globalContext.document.getElementById(
-				`${config.portletNamespace}pageEditorToolbar`
-			);
 			const pageEditorWrapper = globalContext.document.getElementById(
 				'page-editor'
 			);
@@ -52,7 +48,6 @@ export function TopperLabel({children, itemElement}) {
 			let itemElementTop = 0;
 			let itemElementMarginLeft = 0;
 			let itemElementMarginRight = 0;
-			let pageEditorToolbarHeight = 0;
 			let scrollY = globalContext.window.scrollY;
 
 			const updatePosition = () => {
@@ -72,7 +67,7 @@ export function TopperLabel({children, itemElement}) {
 
 				const isInset =
 					itemElementTop - scrollY <
-					controlMenuContainerHeight + pageEditorToolbarHeight;
+					controlMenuContainerHeight + TOPPER_BAR_HEIGHT;
 
 				const top = isInset
 					? itemElementTop + TOPPER_BAR_BORDER_WIDTH
@@ -135,10 +130,6 @@ export function TopperLabel({children, itemElement}) {
 								controlMenuContainerHeight =
 									entry.contentRect.height;
 							}
-							else if (entry.target === pageEditorToolbar) {
-								pageEditorToolbarHeight =
-									entry.contentRect.height;
-							}
 						});
 
 						updatePosition();
@@ -154,10 +145,6 @@ export function TopperLabel({children, itemElement}) {
 					resizeObserver.observe(controlMenuContainer);
 				}
 
-				if (pageEditorToolbar) {
-					resizeObserver.observe(pageEditorToolbar);
-				}
-
 				if (pageEditorWrapper) {
 					resizeObserver.observe(pageEditorWrapper);
 				}
@@ -169,9 +156,6 @@ export function TopperLabel({children, itemElement}) {
 					controlMenuContainerHeight =
 						controlMenuContainer?.getBoundingClientRect().height ||
 						0;
-
-					pageEditorToolbarHeight =
-						pageEditorToolbar?.getBoundingClientRect().height || 0;
 
 					updatePosition();
 				}, 500);

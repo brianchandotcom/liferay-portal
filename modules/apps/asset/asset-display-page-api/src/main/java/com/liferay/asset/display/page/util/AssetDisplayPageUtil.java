@@ -24,6 +24,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -34,9 +35,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 public class AssetDisplayPageUtil {
 
 	public static LayoutPageTemplateEntry
-			getAssetDisplayPageLayoutPageTemplateEntry(
-				long groupId, long classNameId, long classPK, long classTypeId)
-		throws PortalException {
+		getAssetDisplayPageLayoutPageTemplateEntry(
+			long groupId, long classNameId, long classPK, long classTypeId) {
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.
@@ -74,8 +74,7 @@ public class AssetDisplayPageUtil {
 	}
 
 	public static boolean hasAssetDisplayPage(
-			long groupId, long classNameId, long classPK, long classTypeId)
-		throws PortalException {
+		long groupId, long classNameId, long classPK, long classTypeId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			getAssetDisplayPageLayoutPageTemplateEntry(
@@ -89,10 +88,9 @@ public class AssetDisplayPageUtil {
 	}
 
 	private static LayoutPageTemplateEntry _getAssetDisplayPage(
-			long groupId, long classNameId, long classPK,
-			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry,
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider)
-		throws PortalException {
+		long groupId, long classNameId, long classPK,
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry,
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
@@ -132,7 +130,7 @@ public class AssetDisplayPageUtil {
 		if (assetDisplayPageEntry.getType() ==
 				AssetDisplayPageConstants.TYPE_SPECIFIC) {
 
-			return LayoutPageTemplateEntryServiceUtil.
+			return LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntry(
 					assetDisplayPageEntry.getLayoutPageTemplateEntryId());
 		}

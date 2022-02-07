@@ -311,7 +311,7 @@ public class DLAdminManagementToolbarDisplayContext
 							_httpServletRequest, "filter-by-navigation"));
 				});
 
-		if (!FFManagementToolbarConfigurationUtil.showDesignImprovements()) {
+		if (!FFManagementToolbarConfigurationUtil.enableDesignImprovements()) {
 			filterListBuilder.addGroup(
 				dropdownGroupItem -> {
 					dropdownGroupItem.setDropdownItems(
@@ -397,7 +397,7 @@ public class DLAdminManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
 		if (_isSearch() ||
-			!FFManagementToolbarConfigurationUtil.showDesignImprovements()) {
+			!FFManagementToolbarConfigurationUtil.enableDesignImprovements()) {
 
 			return null;
 		}

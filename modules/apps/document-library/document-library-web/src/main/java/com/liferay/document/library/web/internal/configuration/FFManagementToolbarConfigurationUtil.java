@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FFManagementToolbarConfigurationUtil {
 
-	public static boolean showDesignImprovements() {
-		return _ffManagementToolbarConfiguration.showDesignImprovements();
+	public static boolean enableDesignImprovements() {
+		return _ffManagementToolbarConfiguration.enableDesignImprovements();
 	}
 
 	@Activate

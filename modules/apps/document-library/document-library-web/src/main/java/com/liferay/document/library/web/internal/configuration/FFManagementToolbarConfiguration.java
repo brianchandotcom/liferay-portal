@@ -28,6 +28,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFManagementToolbarConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean showDesignImprovements();
+	public boolean enableDesignImprovements();
 
 }

@@ -12,12 +12,12 @@ import ClayAlert from '@clayui/alert';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 import Button from '../../../../common/components/Button';
-import {getIconSpriteMap} from '../../../../common/providers/ClayProvider';
 import TableKeyDetails from '../TableKeyDetails';
 
 const ModalKeyDetails = ({
+	ACTIVATION_STATUS,
 	activationKeys,
-	assetsPath = {assetsPath},
+	assetsPath,
 	observer,
 	onClose,
 }) => {
@@ -50,6 +50,7 @@ const ModalKeyDetails = ({
 					</div>
 
 					<TableKeyDetails
+						ACTIVATION_STATUS={ACTIVATION_STATUS}
 						activationKeys={activationKeys}
 						assetsPath={assetsPath}
 						setValueToCopyToClipboard={setValueToCopyToClipboard}
@@ -71,8 +72,7 @@ const ModalKeyDetails = ({
 						<ClayAlert
 							autoClose={2000}
 							displayType="success"
-							onClose={() => setValueToCopyToClipboard('')}
-							spritemap={getIconSpriteMap()}
+							onClose={() => setValueToCopyToClipboard(false)}
 						>
 							{valueToCopyToClipboard} copied to clipboard
 						</ClayAlert>

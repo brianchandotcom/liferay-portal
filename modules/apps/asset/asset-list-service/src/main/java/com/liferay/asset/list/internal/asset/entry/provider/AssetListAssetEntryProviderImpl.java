@@ -542,7 +542,8 @@ public class AssetListAssetEntryProviderImpl
 				new ArrayList<>();
 
 			segmentsEntryIds = _sortSegmentsByPriority(
-				assetListEntry, segmentsEntryIds);
+				assetListEntry,
+				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
 
 			for (long segmentId : segmentsEntryIds) {
 				assetListEntryAssetEntryRels.addAll(

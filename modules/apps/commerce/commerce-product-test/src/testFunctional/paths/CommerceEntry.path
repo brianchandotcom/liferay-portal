@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OVERRIDE_DEFAULT_DISPLAY_PAGE</td>
+	<td>//h4[contains(.,'Override Default')]//..//div[contains(@class,'dnd-tr')][contains(.,'${key_entryName}') and contains(.,'${key_layout}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OVERRIDE_DEFAULT_DISPLAY_PAGE_LAYOUT</td>
 	<td>//div[contains(@class,'table')]//div[contains(text(),'${key_layout}')]</td>
 	<td></td>

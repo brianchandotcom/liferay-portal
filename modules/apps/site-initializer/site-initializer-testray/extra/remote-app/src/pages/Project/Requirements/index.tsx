@@ -13,11 +13,12 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {Link} from 'react-router-dom';
 
-import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListView';
-import {getTestrayRequirements} from '../../graphql/queries';
-import {Liferay} from '../../services/liferay/liferay';
+import Container from '../../../components/Layout/Container';
+import ListView from '../../../components/ListView/ListView';
+import {getTestrayRequirements} from '../../../graphql/queries';
+import {Liferay} from '../../../services/liferay/liferay';
 
 const Requirements = () => (
 	<Container title="Requirements">
@@ -25,7 +26,13 @@ const Requirements = () => (
 			query={getTestrayRequirements}
 			tableProps={{
 				columns: [
-					{key: 'key', value: 'Key'},
+					{
+						key: 'key',
+						render: (key: string, {testrayRequirementId}: any) => (
+							<Link to={`${testrayRequirementId}`}>{key}</Link>
+						),
+						value: 'Key',
+					},
 					{
 						key: 'linkTitle',
 						render: (

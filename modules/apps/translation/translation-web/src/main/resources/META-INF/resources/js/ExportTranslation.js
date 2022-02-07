@@ -17,7 +17,7 @@ import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
-import {addParams, createPortletURL} from 'frontend-js-web';
+import {addParams} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -247,7 +247,7 @@ const ExportTranslation = ({
 					);
 				}
 
-				location.href = createPortletURL(exportTranslationURL, params);
+				location.href = addParams(params, exportTranslationURL);
 			}}
 		>
 			<ClayForm.Group className="w-50">

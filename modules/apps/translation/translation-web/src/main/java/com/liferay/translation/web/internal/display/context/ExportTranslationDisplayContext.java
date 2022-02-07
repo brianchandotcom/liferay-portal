@@ -16,7 +16,7 @@ package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.apache.http.components.URIBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,12 +27,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,11 +41,13 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
-import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -176,7 +177,7 @@ public class ExportTranslationDisplayContext {
 	}
 
 	public Map<String, Object> getExportTranslationData()
-		throws PortalException {
+		throws PortalException, URISyntaxException {
 
 		return HashMapBuilder.<String, Object>put(
 			"availableExportFileFormats",
@@ -296,22 +297,23 @@ public class ExportTranslationDisplayContext {
 		);
 	}
 
-	private String _getExportTranslationURLString() {
-		LiferayPortletURL liferayPortletURL =
-			_liferayPortletResponse.createResourceURL(
-				TranslationPortletKeys.TRANSLATION);
+	private String _getExportTranslationURLString() throws URISyntaxException {
+		URIBuilder.URIBuilderWrapper uriBuilderWrapper = URIBuilder.create(
+			PortalUtil.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE +
+				"/translation/export_translation"
+		).addParameter(
+			"classNameId", String.valueOf(_classNameId)
+		).addParameter(
+			"groupId", String.valueOf(_groupId)
+		);
 
-		liferayPortletURL.setResourceID("/translation/export_translation");
+		for (long classPK : _classPKs) {
+			uriBuilderWrapper.addParameter("classPK", String.valueOf(classPK));
+		}
 
-		return PortletURLBuilder.create(
-			liferayPortletURL
-		).setParameter(
-			"classNameId", _classNameId
-		).setParameter(
-			"classPK", ArrayUtil.toStringArray(_classPKs)
-		).setParameter(
-			"groupId", _groupId
-		).buildString();
+		URI uri = uriBuilderWrapper.build();
+
+		return uri.toString();
 	}
 
 	private JSONArray _getLocalesJSONArray(

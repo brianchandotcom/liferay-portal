@@ -126,11 +126,21 @@ definition {
 	}
 
 	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetTitleFieldForNativeObject {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-146864 CanSetTitleFieldForNativeObject pending implementation
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		CreateObject.selectTitleField(fieldLabel = "First Name");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		CreateObject.assertTitleFieldIsSelected(fieldLabel = "First Name");
 
 	}
 

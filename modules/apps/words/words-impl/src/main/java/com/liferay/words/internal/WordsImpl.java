@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.words;
+package com.liferay.words.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.jazzy.InvalidWord;

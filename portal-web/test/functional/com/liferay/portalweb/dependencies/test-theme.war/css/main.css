@@ -5590,5 +5590,8 @@ you can use the generic selector below, but it's slower:
 /* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
 body {
   background-color: orange; }
+  
+.blue-background.blue-background {
+  background-color: blue !important; }
 
 /*# sourceMappingURL=main.css.map */

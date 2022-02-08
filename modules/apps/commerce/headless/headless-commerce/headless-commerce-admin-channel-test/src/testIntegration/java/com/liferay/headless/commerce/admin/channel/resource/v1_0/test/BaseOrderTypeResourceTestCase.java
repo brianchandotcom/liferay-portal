@@ -256,6 +256,79 @@ public abstract class BaseOrderTypeResourceTestCase {
 				"Object/code"));
 	}
 
+	@Test
+	public void testGetShippingFixedOptionOrderTypeOrderType()
+		throws Exception {
+
+		OrderType postOrderType =
+			testGetShippingFixedOptionOrderTypeOrderType_addOrderType();
+
+		OrderType getOrderType =
+			orderTypeResource.getShippingFixedOptionOrderTypeOrderType(null);
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType
+			testGetShippingFixedOptionOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetShippingFixedOptionOrderTypeOrderType()
+		throws Exception {
+
+		OrderType orderType = testGraphQLOrderType_addOrderType();
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"shippingFixedOptionOrderTypeOrderType",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"shippingFixedOptionOrderTypeId",
+											null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/shippingFixedOptionOrderTypeOrderType"))));
+	}
+
+	@Test
+	public void testGraphQLGetShippingFixedOptionOrderTypeOrderTypeNotFound()
+		throws Exception {
+
+		Long irrelevantShippingFixedOptionOrderTypeId =
+			RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"shippingFixedOptionOrderTypeOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"shippingFixedOptionOrderTypeId",
+									irrelevantShippingFixedOptionOrderTypeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected OrderType testGraphQLOrderType_addOrderType() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

@@ -20,6 +20,8 @@ import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -50,6 +52,10 @@ public class ServletDataImpl implements ServletData {
 				_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects);
 		Mutation.setPaymentMethodGroupRelTermResourceComponentServiceObjects(
 			_paymentMethodGroupRelTermResourceComponentServiceObjects);
+		Mutation.setShippingFixedOptionOrderTypeResourceComponentServiceObjects(
+			_shippingFixedOptionOrderTypeResourceComponentServiceObjects);
+		Mutation.setShippingFixedOptionTermResourceComponentServiceObjects(
+			_shippingFixedOptionTermResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
@@ -59,6 +65,10 @@ public class ServletDataImpl implements ServletData {
 			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects);
 		Query.setPaymentMethodGroupRelTermResourceComponentServiceObjects(
 			_paymentMethodGroupRelTermResourceComponentServiceObjects);
+		Query.setShippingFixedOptionOrderTypeResourceComponentServiceObjects(
+			_shippingFixedOptionOrderTypeResourceComponentServiceObjects);
+		Query.setShippingFixedOptionTermResourceComponentServiceObjects(
+			_shippingFixedOptionTermResourceComponentServiceObjects);
 		Query.setTaxCategoryResourceComponentServiceObjects(
 			_taxCategoryResourceComponentServiceObjects);
 		Query.setTermResourceComponentServiceObjects(
@@ -91,6 +101,14 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PaymentMethodGroupRelTermResource>
 		_paymentMethodGroupRelTermResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ShippingFixedOptionOrderTypeResource>
+		_shippingFixedOptionOrderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ShippingFixedOptionTermResource>
+		_shippingFixedOptionTermResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OrderTypeResource>

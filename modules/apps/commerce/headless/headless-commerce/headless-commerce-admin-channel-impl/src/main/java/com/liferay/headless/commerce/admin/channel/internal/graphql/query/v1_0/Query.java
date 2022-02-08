@@ -18,12 +18,16 @@ import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -89,6 +93,24 @@ public class Query {
 
 		_paymentMethodGroupRelTermResourceComponentServiceObjects =
 			paymentMethodGroupRelTermResourceComponentServiceObjects;
+	}
+
+	public static void
+		setShippingFixedOptionOrderTypeResourceComponentServiceObjects(
+			ComponentServiceObjects<ShippingFixedOptionOrderTypeResource>
+				shippingFixedOptionOrderTypeResourceComponentServiceObjects) {
+
+		_shippingFixedOptionOrderTypeResourceComponentServiceObjects =
+			shippingFixedOptionOrderTypeResourceComponentServiceObjects;
+	}
+
+	public static void
+		setShippingFixedOptionTermResourceComponentServiceObjects(
+			ComponentServiceObjects<ShippingFixedOptionTermResource>
+				shippingFixedOptionTermResourceComponentServiceObjects) {
+
+		_shippingFixedOptionTermResourceComponentServiceObjects =
+			shippingFixedOptionTermResourceComponentServiceObjects;
 	}
 
 	public static void setTaxCategoryResourceComponentServiceObjects(
@@ -187,6 +209,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shippingFixedOptionOrderTypeOrderType(shippingFixedOptionOrderTypeId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderType shippingFixedOptionOrderTypeOrderType(
+			@GraphQLName("shippingFixedOptionOrderTypeId") Long
+				shippingFixedOptionOrderTypeId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.getShippingFixedOptionOrderTypeOrderType(
+					shippingFixedOptionOrderTypeId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentMethodGroupRelIdPaymentMethodGroupRelOrderTypes(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -253,6 +294,69 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shippingFixedOptionIdShippingFixedOptionOrderTypes(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShippingFixedOptionOrderTypePage
+			shippingFixedOptionIdShippingFixedOptionOrderTypes(
+				@GraphQLName("id") Long id,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shippingFixedOptionOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingFixedOptionOrderTypeResource ->
+				new ShippingFixedOptionOrderTypePage(
+					shippingFixedOptionOrderTypeResource.
+						getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+							id, search,
+							_filterBiFunction.apply(
+								shippingFixedOptionOrderTypeResource,
+								filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								shippingFixedOptionOrderTypeResource,
+								sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shippingFixedOptionIdShippingFixedOptionTerms(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShippingFixedOptionTermPage
+			shippingFixedOptionIdShippingFixedOptionTerms(
+				@GraphQLName("id") Long id,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shippingFixedOptionTermResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingFixedOptionTermResource -> new ShippingFixedOptionTermPage(
+				shippingFixedOptionTermResource.
+					getShippingFixedOptionIdShippingFixedOptionTermsPage(
+						id, search,
+						_filterBiFunction.apply(
+							shippingFixedOptionTermResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							shippingFixedOptionTermResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxCategories(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -301,6 +405,24 @@ public class Query {
 			this::_populateResourceContext,
 			termResource -> termResource.getPaymentMethodGroupRelTermTerm(
 				paymentMethodGroupRelTermId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shippingFixedOptionTermTerm(shippingFixedOptionTermId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Term shippingFixedOptionTermTerm(
+			@GraphQLName("shippingFixedOptionTermId") Long
+				shippingFixedOptionTermId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.getShippingFixedOptionTermTerm(
+				shippingFixedOptionTermId));
 	}
 
 	@GraphQLName("ChannelPage")
@@ -424,6 +546,74 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<PaymentMethodGroupRelTerm> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ShippingFixedOptionOrderTypePage")
+	public class ShippingFixedOptionOrderTypePage {
+
+		public ShippingFixedOptionOrderTypePage(
+			Page shippingFixedOptionOrderTypePage) {
+
+			actions = shippingFixedOptionOrderTypePage.getActions();
+
+			items = shippingFixedOptionOrderTypePage.getItems();
+			lastPage = shippingFixedOptionOrderTypePage.getLastPage();
+			page = shippingFixedOptionOrderTypePage.getPage();
+			pageSize = shippingFixedOptionOrderTypePage.getPageSize();
+			totalCount = shippingFixedOptionOrderTypePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ShippingFixedOptionOrderType> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ShippingFixedOptionTermPage")
+	public class ShippingFixedOptionTermPage {
+
+		public ShippingFixedOptionTermPage(Page shippingFixedOptionTermPage) {
+			actions = shippingFixedOptionTermPage.getActions();
+
+			items = shippingFixedOptionTermPage.getItems();
+			lastPage = shippingFixedOptionTermPage.getLastPage();
+			page = shippingFixedOptionTermPage.getPage();
+			pageSize = shippingFixedOptionTermPage.getPageSize();
+			totalCount = shippingFixedOptionTermPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ShippingFixedOptionTerm> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -590,6 +780,44 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ShippingFixedOptionOrderTypeResource
+				shippingFixedOptionOrderTypeResource)
+		throws Exception {
+
+		shippingFixedOptionOrderTypeResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		shippingFixedOptionOrderTypeResource.setContextCompany(_company);
+		shippingFixedOptionOrderTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		shippingFixedOptionOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shippingFixedOptionOrderTypeResource.setContextUriInfo(_uriInfo);
+		shippingFixedOptionOrderTypeResource.setContextUser(_user);
+		shippingFixedOptionOrderTypeResource.setGroupLocalService(
+			_groupLocalService);
+		shippingFixedOptionOrderTypeResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			ShippingFixedOptionTermResource shippingFixedOptionTermResource)
+		throws Exception {
+
+		shippingFixedOptionTermResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		shippingFixedOptionTermResource.setContextCompany(_company);
+		shippingFixedOptionTermResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		shippingFixedOptionTermResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shippingFixedOptionTermResource.setContextUriInfo(_uriInfo);
+		shippingFixedOptionTermResource.setContextUser(_user);
+		shippingFixedOptionTermResource.setGroupLocalService(
+			_groupLocalService);
+		shippingFixedOptionTermResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			TaxCategoryResource taxCategoryResource)
 		throws Exception {
 
@@ -625,6 +853,10 @@ public class Query {
 			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PaymentMethodGroupRelTermResource>
 		_paymentMethodGroupRelTermResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShippingFixedOptionOrderTypeResource>
+		_shippingFixedOptionOrderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShippingFixedOptionTermResource>
+		_shippingFixedOptionTermResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaxCategoryResource>
 		_taxCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TermResource>

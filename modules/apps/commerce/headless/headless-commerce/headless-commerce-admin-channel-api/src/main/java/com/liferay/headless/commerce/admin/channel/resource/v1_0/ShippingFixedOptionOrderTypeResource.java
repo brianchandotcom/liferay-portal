@@ -14,7 +14,8 @@
 
 package com.liferay.headless.commerce.admin.channel.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.channel.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +37,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -48,18 +52,30 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface OrderTypeResource {
+public interface ShippingFixedOptionOrderTypeResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public OrderType getPaymentMethodGroupRelOrderTypeOrderType(
-			Long paymentMethodGroupRelOrderTypeId)
+	public void deleteShippingFixedOptionOrderType(
+			Long shippingFixedOptionOrderTypeId)
 		throws Exception;
 
-	public OrderType getShippingFixedOptionOrderTypeOrderType(
-			Long shippingFixedOptionOrderTypeId)
+	public Response deleteShippingFixedOptionOrderTypeBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Page<ShippingFixedOptionOrderType>
+			getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+				Long id, String search, Filter filter, Pagination pagination,
+				Sort[] sorts)
+		throws Exception;
+
+	public ShippingFixedOptionOrderType
+			postShippingFixedOptionIdShippingFixedOptionOrderType(
+				Long id,
+				ShippingFixedOptionOrderType shippingFixedOptionOrderType)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -119,7 +135,7 @@ public interface OrderTypeResource {
 	@ProviderType
 	public interface Builder {
 
-		public OrderTypeResource build();
+		public ShippingFixedOptionOrderTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

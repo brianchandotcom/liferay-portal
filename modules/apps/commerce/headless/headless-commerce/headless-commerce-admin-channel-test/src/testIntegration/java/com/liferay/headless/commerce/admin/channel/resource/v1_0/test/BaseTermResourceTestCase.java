@@ -254,6 +254,69 @@ public abstract class BaseTermResourceTestCase {
 				"Object/code"));
 	}
 
+	@Test
+	public void testGetShippingFixedOptionTermTerm() throws Exception {
+		Term postTerm = testGetShippingFixedOptionTermTerm_addTerm();
+
+		Term getTerm = termResource.getShippingFixedOptionTermTerm(null);
+
+		assertEquals(postTerm, getTerm);
+		assertValid(getTerm);
+	}
+
+	protected Term testGetShippingFixedOptionTermTerm_addTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetShippingFixedOptionTermTerm() throws Exception {
+		Term term = testGraphQLTerm_addTerm();
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"shippingFixedOptionTermTerm",
+								new HashMap<String, Object>() {
+									{
+										put("shippingFixedOptionTermId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/shippingFixedOptionTermTerm"))));
+	}
+
+	@Test
+	public void testGraphQLGetShippingFixedOptionTermTermNotFound()
+		throws Exception {
+
+		Long irrelevantShippingFixedOptionTermId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"shippingFixedOptionTermTerm",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"shippingFixedOptionTermId",
+									irrelevantShippingFixedOptionTermId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected Term testGraphQLTerm_addTerm() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

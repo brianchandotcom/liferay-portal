@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.channel.dto.v1_0.OrderType;
-import com.liferay.headless.commerce.admin.channel.resource.v1_0.OrderTypeResource;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -42,6 +42,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,6 +54,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -61,87 +63,216 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseOrderTypeResourceImpl
-	implements EntityModelResource, OrderTypeResource,
-			   VulcanBatchEngineTaskItemDelegate<OrderType> {
+public abstract class BaseShippingFixedOptionTermResourceImpl
+	implements EntityModelResource, ShippingFixedOptionTermResource,
+			   VulcanBatchEngineTaskItemDelegate<ShippingFixedOptionTerm> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/payment-method-group-rel-order-types/{paymentMethodGroupRelOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/shipping-fixed-option-terms/{shippingFixedOptionTermId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "paymentMethodGroupRelOrderTypeId"
+				name = "shippingFixedOptionTermId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ShippingFixedOptionTerm"
+			)
+		}
 	)
-	@javax.ws.rs.GET
+	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/payment-method-group-rel-order-types/{paymentMethodGroupRelOrderTypeId}/order-type"
+		"/shipping-fixed-option-terms/{shippingFixedOptionTermId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType getPaymentMethodGroupRelOrderTypeOrderType(
+	public void deleteShippingFixedOptionTerm(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("paymentMethodGroupRelOrderTypeId")
-			Long paymentMethodGroupRelOrderTypeId)
+			@javax.ws.rs.PathParam("shippingFixedOptionTermId")
+			Long shippingFixedOptionTermId)
 		throws Exception {
-
-		return new OrderType();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/shipping-fixed-option-order-types/{shippingFixedOptionOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/shipping-fixed-option-terms/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ShippingFixedOptionTerm"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/shipping-fixed-option-terms/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteShippingFixedOptionTermBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ShippingFixedOptionTerm.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/shipping-fixed-options/{id}/shipping-fixed-option-terms'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "shippingFixedOptionOrderTypeId"
+				name = "id"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ShippingFixedOptionTerm"
+			)
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/shipping-fixed-option-order-types/{shippingFixedOptionOrderTypeId}/order-type"
+		"/shipping-fixed-options/{id}/shipping-fixed-option-terms"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OrderType getShippingFixedOptionOrderTypeOrderType(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("shippingFixedOptionOrderTypeId")
-			Long shippingFixedOptionOrderTypeId)
+	public Page<ShippingFixedOptionTerm>
+			getShippingFixedOptionIdShippingFixedOptionTermsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("id")
+				Long id,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("search")
+				String search,
+				@javax.ws.rs.core.Context Filter filter,
+				@javax.ws.rs.core.Context Pagination pagination,
+				@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
-		return new OrderType();
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/shipping-fixed-options/{id}/shipping-fixed-option-terms' -d $'{"shippingFixedOptionId": ___, "termExternalReferenceCode": ___, "termId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ShippingFixedOptionTerm"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/shipping-fixed-options/{id}/shipping-fixed-option-terms"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShippingFixedOptionTerm
+			postShippingFixedOptionIdShippingFixedOptionTerm(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("id")
+				Long id,
+				ShippingFixedOptionTerm shippingFixedOptionTerm)
+		throws Exception {
+
+		return new ShippingFixedOptionTerm();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<ShippingFixedOptionTerm>
+				shippingFixedOptionTerms,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<ShippingFixedOptionTerm>
+				shippingFixedOptionTerms,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ShippingFixedOptionTerm shippingFixedOptionTerm :
+				shippingFixedOptionTerms) {
+
+			deleteShippingFixedOptionTerm(
+				shippingFixedOptionTerm.getShippingFixedOptionTermId());
+		}
 	}
 
 	@Override
@@ -160,7 +291,7 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	@Override
-	public Page<OrderType> read(
+	public Page<ShippingFixedOptionTerm> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -192,7 +323,8 @@ public abstract class BaseOrderTypeResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<ShippingFixedOptionTerm>
+				shippingFixedOptionTerms,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -365,6 +497,6 @@ public abstract class BaseOrderTypeResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseOrderTypeResourceImpl.class);
+		LogFactoryUtil.getLog(BaseShippingFixedOptionTermResourceImpl.class);
 
 }

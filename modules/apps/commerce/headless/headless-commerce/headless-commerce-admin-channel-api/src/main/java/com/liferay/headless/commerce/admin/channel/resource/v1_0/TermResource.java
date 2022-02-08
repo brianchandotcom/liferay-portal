@@ -58,6 +58,9 @@ public interface TermResource {
 			Long paymentMethodGroupRelTermId)
 		throws Exception;
 
+	public Term getShippingFixedOptionTermTerm(Long shippingFixedOptionTermId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

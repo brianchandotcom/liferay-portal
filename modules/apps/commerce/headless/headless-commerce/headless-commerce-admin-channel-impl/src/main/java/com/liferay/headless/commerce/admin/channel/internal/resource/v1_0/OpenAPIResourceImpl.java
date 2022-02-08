@@ -89,6 +89,10 @@ public class OpenAPIResourceImpl {
 
 			add(PaymentMethodGroupRelTermResourceImpl.class);
 
+			add(ShippingFixedOptionOrderTypeResourceImpl.class);
+
+			add(ShippingFixedOptionTermResourceImpl.class);
+
 			add(TaxCategoryResourceImpl.class);
 
 			add(TermResourceImpl.class);

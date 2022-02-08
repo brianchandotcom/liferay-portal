@@ -1,7 +1,7 @@
 @component-name = "portal-solutions"
 definition {
 
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
@@ -117,6 +117,7 @@ definition {
 	}
 
 	@description = "LPS-144526 - Check if I can modify the attached files"
+	@ignore = "true"
 	@priority = "4"
 	test CanUserModifyAttachedFiles {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
@@ -161,6 +162,7 @@ definition {
 	}
 
 	@description = "LPS-144348 - Verify if users can delete attached photos"
+	@ignore = "true"
 	@priority = "5"
 	test CanUsersDeleteAttachedPhotos {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
@@ -185,6 +187,7 @@ definition {
 	}
 
 	@description = "LPS-144521 - Check that the Discard Changes button appears when adding attached files"
+	@ignore = "true"
 	@priority = "4"
 	test DeleteChangesButtonAppearsWhenAddingFiles {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
@@ -229,6 +232,7 @@ definition {
 	}
 
 	@description = "LPS-144349 - Verify if when all required fields are filled in the confirm uploads button is enabled"
+	@ignore = "true"
 	@priority = "5"
 	test IsUploadButtonEnabled {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
@@ -266,6 +270,7 @@ definition {
 	}
 
 	@description = "LPS-144350 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
+	@ignore = "true"
 	@priority = "4"
 	test UploadSectionCompleted {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");

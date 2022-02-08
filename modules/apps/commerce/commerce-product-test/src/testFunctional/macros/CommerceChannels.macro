@@ -275,6 +275,36 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro editOverrideProductDisplayPage {
+		Click(
+			key_value = "${product}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		if (isSet(newProduct)) {
+			CommerceChannels.addProduct(
+				edit = "true",
+				product = "${newProduct}");
+		}
+
+		if (isSet(newPageName) && isSet(newPageType)) {
+			CommerceChannels.chooseDisplayPageFromSidePanel(
+				pageName = "${newPageName}",
+				pageType = "${newPageType}");
+		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro openChannelsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

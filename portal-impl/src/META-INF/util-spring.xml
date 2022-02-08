@@ -324,10 +324,6 @@
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.words.WordsImpl" id="com.liferay.portal.kernel.words.Words" />
-	<bean class="com.liferay.portal.kernel.words.WordsUtil" id="com.liferay.portal.kernel.words.WordsUtil">
-		<property name="words" ref="com.liferay.portal.kernel.words.Words" />
-	</bean>
 	<bean class="com.liferay.portal.workflow.permission.WorkflowPermissionImpl" id="com.liferay.portal.kernel.workflow.permission.WorkflowPermission" />
 	<bean class="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil" id="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil">
 		<property name="workflowPermission" ref="com.liferay.portal.kernel.workflow.permission.WorkflowPermission" />

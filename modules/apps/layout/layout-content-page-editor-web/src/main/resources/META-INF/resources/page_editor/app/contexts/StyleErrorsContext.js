@@ -15,23 +15,30 @@
 import React, {useContext, useState} from 'react';
 
 const StyleErrorsDispatchContext = React.createContext(() => {});
-const StyleErrorsStateContext = React.createContext(false);
+const StyleErrorsStateContext = React.createContext({});
 
 export function StyleErrorsContextProvider({children}) {
-	const [hasStyleErrors, setHasStyleErrors] = useState(false);
+	const [styleErrors, setStyleErrors] = useState({});
 
 	return (
-		<StyleErrorsDispatchContext.Provider value={setHasStyleErrors}>
-			<StyleErrorsStateContext.Provider value={hasStyleErrors}>
+		<StyleErrorsDispatchContext.Provider value={setStyleErrors}>
+			<StyleErrorsStateContext.Provider value={styleErrors}>
 				{children}
 			</StyleErrorsStateContext.Provider>
 		</StyleErrorsDispatchContext.Provider>
 	);
 }
 
-export function useSetHasStyleErrors() {
+export function useHasStyleErrors() {
+	const state = useContext(StyleErrorsStateContext);
+
+	return Object.keys(state).length > 0;
+}
+
+export function useSetStyleErrors() {
 	return useContext(StyleErrorsDispatchContext);
 }
-export function useHasStyleErrors() {
+
+export function useStyleErrors() {
 	return useContext(StyleErrorsStateContext);
 }

@@ -1,0 +1,50 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= hasPermission %>">
+	<div id="item-finder-root-delivery-terms"></div>
+
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiUrl", "/o/headless-commerce-admin-order/v1.0/terms?filter=type eq '" + CommerceTermEntryConstants.TYPE_DELIVERY_TERMS + "'"
+			).put(
+				"datasetId", CommerceShippingFixedOptionClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_COMMERCE_TERM_ENTRIES
+			).put(
+				"rootPortletId", portletDisplay.getRootPortletId()
+			).put(
+				"shippingFixedOptionId", commerceShippingFixedOptionId
+			).build()
+		%>'
+		module="js/commerce_term_entries"
+	/>
+
+	<commerce-ui:panel
+		bodyClasses="p-0"
+		title="<%= LanguageUtil.get(request, CommerceTermEntryConstants.TYPE_DELIVERY_TERMS) %>"
+	>
+		<clay:headless-data-set-display
+			apiURL="<%= commerceShippingFixedOptionQualifiersDisplayContext.getCommerceTermEntriesCommerceShippingFixedOptionsAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= commerceShippingFixedOptionQualifiersDisplayContext.getCommerceTermEntryClayDataSetActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CommerceShippingFixedOptionClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_COMMERCE_TERM_ENTRIES %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= currentURLObj %>"
+		/>
+	</commerce-ui:panel>
+</c:if>

@@ -29,14 +29,19 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.constants.CommerceShippingFixedOptionClayDataSetDisplayNames" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.constants.CommerceShippingFixedOptionScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext" %><%@
-page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.CommerceShippingFixedOptionClayTable" %><%@
-page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.CommerceShippingFixedOptionSettingClayTable" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.clay.data.set.view.table.CommerceShippingFixedOptionClayTableDataSetDisplayView" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.clay.data.set.view.table.CommerceShippingFixedOptionSettingClayTableDataSetDisplayView" %><%@
+page import="com.liferay.commerce.term.constants.CommerceTermEntryConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Country" %><%@
 page import="com.liferay.portal.kernel.model.Region" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -44,6 +49,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.math.BigDecimal" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

@@ -17,11 +17,11 @@ const StatusColumn = ({activationKey}) => {
 	return (
 		<div
 			className="w-100"
-			title={[getStatusActivationTag(activationKey).title]}
+			title={[getStatusActivationTag(activationKey)?.title]}
 		>
 			<ClaySticker
 				className="bg-transparent"
-				displayType={getStatusActivationTag(activationKey).color}
+				displayType={getStatusActivationTag(activationKey)?.color}
 				shape="circle"
 				size="sm"
 			>

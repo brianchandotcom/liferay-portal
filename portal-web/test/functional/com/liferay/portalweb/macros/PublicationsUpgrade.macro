@@ -37,4 +37,22 @@ definition {
 			locator1 = "Publications#LIST_REVERT_DISABLED");
 	}
 
+	macro viewPublicationsUserRolePermissions {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		AssertClick(
+			key_itemName = "Publications User",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "Publications User");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View Control Panel Menu",
+			permissionNavigationValue = "Portal");
+	}
+
 }

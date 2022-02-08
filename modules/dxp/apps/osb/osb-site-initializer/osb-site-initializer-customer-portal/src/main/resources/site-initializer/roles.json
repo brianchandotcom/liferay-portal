@@ -4,8 +4,31 @@
 		],
 		"description": "",
 		"name": "Customer Portal Member",
-		"roleType": "regular",
-		"scope": 1,
+		"subtype": "",
 		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Requestor",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Partner Manager",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Partner Member",
+		"subtype": "",
+		"type": 6
 	}
 ]

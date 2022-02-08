@@ -22,10 +22,13 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -162,6 +165,70 @@ public class DisplayPagesImporterTest {
 				"Display Page Template One", "Display Page Template Two"
 			},
 			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
+	}
+
+	@Test
+	public void testImportDisplayPageTemplateCollection() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_importLayoutPageTemplateEntry("display-page-template-collection");
+
+		Assert.assertEquals(
+			"com.liferay.portal.kernel.repository.model.FileEntry",
+			layoutPageTemplateEntry.getClassName());
+
+		Assert.assertEquals(
+			"Display Page Template Collection",
+			layoutPageTemplateEntry.getName());
+
+		Assert.assertEquals(0, layoutPageTemplateEntry.getClassTypeId());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0));
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		String childItemId = childrenItemIds.get(0);
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childItemId);
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof CollectionStyledLayoutStructureItem);
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		Assert.assertNotNull(collectionStyledLayoutStructureItem);
+
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		Assert.assertNotNull(collectionJSONObject);
+
+		Assert.assertEquals(
+			"com.liferay.asset.kernel.model.AssetCategory",
+			collectionJSONObject.getString("itemType"));
+
+		Assert.assertEquals(
+			"com.liferay.asset.categories.admin.web.internal.info.collection." +
+				"provider.AssetCategoriesForAssetEntryRelatedInfoItem" +
+					"CollectionProvider",
+			collectionJSONObject.getString("key"));
 	}
 
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)

@@ -1,0 +1,6 @@
+{
+	"contentType": {
+		"className": "com.liferay.portal.kernel.repository.model.FileEntry"
+	},
+	"name": "Display Page Template Collection"
+}

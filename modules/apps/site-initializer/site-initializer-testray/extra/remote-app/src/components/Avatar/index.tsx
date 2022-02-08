@@ -13,9 +13,11 @@
  */
 
 import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 
 type AvatarProps = {
 	className?: string;
+	displayName?: boolean;
 	name?: string;
 	url?: string;
 };
@@ -23,6 +25,7 @@ type AvatarProps = {
 type AvatarGroupProps = {
 	assignedUsers: AvatarProps[];
 	className?: string;
+	groupSize: number;
 };
 
 function getInitials(name: string): string {
@@ -33,20 +36,78 @@ function getInitials(name: string): string {
 		.toLocaleUpperCase();
 }
 
-const Avatar: React.FC<AvatarProps> = ({className, name = '', url}) => (
-	<ClaySticker className={className} shape="circle" size="lg">
-		{url ? <ClaySticker.Image alt={name} src={url} /> : getInitials(name)}
-	</ClaySticker>
-);
+const Avatar: React.FC<AvatarProps> = ({
+	className,
+	displayName = false,
+	name = '',
+	url,
+}) => (
+	<div className="align-items-center d-flex">
+		<ClaySticker className={className} shape="circle" size="lg">
+			{url ? (
+				<ClaySticker.Image alt={name} src={url} title={name} />
+			) : (
+				getInitials(name)
+			)}
+		</ClaySticker>
 
-const AvatarGroup: React.FC<AvatarGroupProps> = ({assignedUsers}) => (
-	<div className="align-items-center avatar-group d-flex justify-content-end p-0">
-		{assignedUsers.map((user, index) => (
-			<div className="avatar-group-item" key={index}>
-				<Avatar className="avatar" name={user.name} url={user.url} />
-			</div>
-		))}
+		{displayName && <span className="ml-3">{name}</span>}
 	</div>
 );
+
+function getRandomColor() {
+	const colors = [
+		'bg-accent-1',
+		'bg-accent-1-lighten',
+		'bg-accent-2',
+		'bg-accent-2-lighten',
+		'bg-accent-3',
+		'bg-accent-3-lighten',
+		'bg-accent-4',
+		'bg-accent-4-lighten',
+		'bg-accent-5',
+		'bg-accent-5-lighten',
+		'bg-accent-6',
+	];
+
+	return colors[Math.floor(Math.random() * colors.length)];
+}
+
+const AvatarGroup: React.FC<AvatarGroupProps> = ({
+	assignedUsers,
+	groupSize,
+}) => {
+	const totalAssignedUsers = assignedUsers.length;
+
+	return (
+		<div className="d-flex">
+			<div className="align-items-center avatar-group d-flex justify-content-end p-0">
+				{assignedUsers
+					.filter((_, index) => index < groupSize)
+					.map((user, index) => (
+						<div className="avatar-group-item" key={index}>
+							<Avatar
+								className={classNames(
+									'avatar avatar-skeleton-loader shadow-lg',
+									getRandomColor()
+								)}
+								name={user.name}
+								url={user.url}
+							/>
+						</div>
+					))}
+			</div>
+
+			<div
+				className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 text-nowrap"
+				title={assignedUsers.map(({name}) => name).toString()}
+			>
+				{totalAssignedUsers <= groupSize
+					? `${totalAssignedUsers}`
+					: `${totalAssignedUsers - groupSize} +`}
+			</div>
+		</div>
+	);
+};
 
 export {Avatar, AvatarGroup};

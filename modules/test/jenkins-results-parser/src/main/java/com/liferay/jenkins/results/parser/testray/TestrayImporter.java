@@ -2022,7 +2022,7 @@ public class TestrayImporter {
 	}
 
 	private void _setupPortalBundle() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
+		final PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
 
 		if (portalGitWorkingDirectory == null) {
@@ -2100,6 +2100,20 @@ public class TestrayImporter {
 					AntUtil.callTarget(
 						workingDirectory, "build-test.xml",
 						"set-tomcat-version-number", parameters);
+
+					String upstreamBranchName =
+						portalGitWorkingDirectory.getUpstreamBranchName();
+
+					if (upstreamBranchName.contains("6.2") ||
+						upstreamBranchName.contains("6.1")) {
+
+						parameters.put(
+							"test.app.server.bin.dir",
+							JenkinsResultsParserUtil.getProperty(
+								portalGitWorkingDirectory.
+									getAppServerProperties(),
+								"app.server.tomcat.bin.dir"));
+					}
 
 					AntUtil.callTarget(
 						workingDirectory, "build-test.xml",

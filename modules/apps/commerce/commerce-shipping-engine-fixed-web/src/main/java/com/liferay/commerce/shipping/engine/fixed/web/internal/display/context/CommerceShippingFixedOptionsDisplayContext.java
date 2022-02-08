@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ResourceBundle;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -48,8 +50,8 @@ public class CommerceShippingFixedOptionsDisplayContext
 	public CommerceShippingFixedOptionsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
+		CommerceShippingMethodService commerceShippingMethodService,
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -100,6 +102,20 @@ public class CommerceShippingFixedOptionsDisplayContext
 			commerceShippingFixedOption);
 
 		return commerceShippingFixedOption;
+	}
+
+	public String getCommerceShippingFixedOptionName(
+			ResourceBundle resourceBundle)
+		throws PortalException {
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			getCommerceShippingFixedOption();
+
+		if (commerceShippingFixedOption == null) {
+			return LanguageUtil.get(resourceBundle, "shipping-option");
+		}
+
+		return commerceShippingFixedOption.getName(resourceBundle.getLocale());
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

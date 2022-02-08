@@ -67,9 +67,9 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 					new CommerceShippingFixedOptionsDisplayContext(
 						_commerceChannelLocalService,
 						_commerceCurrencyLocalService,
-						_commerceShippingMethodService,
-						_commerceShippingFixedOptionService, _portal,
-						renderRequest, renderResponse);
+						_commerceShippingFixedOptionService,
+						_commerceShippingMethodService, _portal, renderRequest,
+						renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

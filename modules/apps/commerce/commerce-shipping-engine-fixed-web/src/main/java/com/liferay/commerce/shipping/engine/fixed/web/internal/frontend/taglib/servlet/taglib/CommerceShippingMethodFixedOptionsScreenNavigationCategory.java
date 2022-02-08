@@ -125,8 +125,8 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationCategory
 			commerceShippingFixedOptionsDisplayContext =
 				new CommerceShippingFixedOptionsDisplayContext(
 					_commerceChannelLocalService, _commerceCurrencyLocalService,
-					_commerceShippingMethodService,
-					_commerceShippingFixedOptionService, _portal, renderRequest,
+					_commerceShippingFixedOptionService,
+					_commerceShippingMethodService, _portal, renderRequest,
 					renderResponse);
 
 		httpServletRequest.setAttribute(

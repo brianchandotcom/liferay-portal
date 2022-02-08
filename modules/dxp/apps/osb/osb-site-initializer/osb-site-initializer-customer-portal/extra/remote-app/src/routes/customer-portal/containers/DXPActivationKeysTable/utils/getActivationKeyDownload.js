@@ -9,8 +9,19 @@
  * distribution rights of the Software.
  */
 
-export * from './activationKeysLicenseFilterTypes';
-export * from './activationStatus';
-export * from './columns';
-export * from './alertActivationKeysDownloadText';
-export * from './downlodableLicenseKeys';
+import {downloadActivationLicenseKey} from './downloadActivationLicenseKey';
+
+export async function getActivationKeyDownload(
+	selectedKeys,
+	licenseKeyDownloadURL,
+	sessionId,
+	handleAlertStatus
+) {
+	const downloadedKey = await downloadActivationLicenseKey(
+		selectedKeys,
+		licenseKeyDownloadURL,
+		sessionId
+	);
+
+	return handleAlertStatus(downloadedKey);
+}

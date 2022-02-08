@@ -11,36 +11,32 @@
 
 import ClayAlert from '@clayui/alert';
 
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useMemo, useState} from 'react';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {ALERT_DOWNLOAD_TYPE} from '../../../utils/constants/alertDownloadType';
 import {AUTO_CLOSE_DOWNLOAD_ALERT_TIME} from '../../../utils/constants/autoCloseDownloadAlertTime';
-import {ACTIVATION_KEYS_ACTIONS_ITEMS} from '../utils/constants/activationKeysActionsItems';
+import {DOWNLOADABLE_LICENSE_KEYS} from '../utils/constants';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../utils/constants/alertAggregateKeysDownloadText';
-import {
-	downloadActivationLicenseKey,
-	downloadAggregatedActivationDownloadKey,
-} from '../utils/downloadActivationLicenseKey';
-
-const PRODUCTION_ENVIRONMENT = 'production';
-const PRODUCTION_VERSION = 7.1;
+import {getActivationKeyDownload} from '../utils/getActivationKeyDownload';
+import {getActivationKeysActionsItems} from '../utils/getActivationKeysActionsItems';
+import {getActivationKeysDownloadItems} from '../utils/getActivationKeysDownloadItems';
 
 const DXPActivationKeysTableHeader = ({
+	accountKey,
 	activationKeys,
 	licenseKeyDownloadURL,
 	selectedKeys,
 	sessionId,
 }) => {
-	const selectedKeysIDs = selectedKeys
-		.map((selectedKey) => `licenseKeyIds=${selectedKey}`)
-		.join('&');
-
 	const [
 		activationKeysDownloadStatus,
 		setActivationKeysDownloadStatus,
 	] = useState('');
+
+	const selectedKeysIDs = selectedKeys
+		.map((selectedKey) => `licenseKeyIds=${selectedKey}`)
+		.join('&');
 
 	const isAbleToDownloadAggregateKeys = useMemo(() => {
 		const [
@@ -52,42 +48,38 @@ const DXPActivationKeysTableHeader = ({
 
 		const keyCanBeDownloaded = restSelectedKeys.every(
 			(selectedKey) =>
-				(Number(firstSelectedKey.productVersion) >=
-					PRODUCTION_VERSION &&
-					Number(selectedKey.productVersion) >= PRODUCTION_VERSION) ||
-				(firstSelectedKey.licenseEntryType === PRODUCTION_ENVIRONMENT &&
-					firstSelectedKey.sizing === selectedKey.sizing &&
-					firstSelectedKey.startDate === selectedKey.startDate &&
-					firstSelectedKey.expirationDate ===
-						selectedKey.expirationDate &&
-					firstSelectedKey.productVersion ===
-						selectedKey.productVersion)
+				DOWNLOADABLE_LICENSE_KEYS.above71(
+					firstSelectedKey,
+					selectedKey
+				) ||
+				DOWNLOADABLE_LICENSE_KEYS.below71(firstSelectedKey, selectedKey)
 		);
 
 		return keyCanBeDownloaded;
 	}, [activationKeys, selectedKeys]);
 
-	const ACTIVATION_KEYS_DOWNLOAD_ITEMS = [
-		{
-			disabled: !isAbleToDownloadAggregateKeys,
-			icon: (
-				<ClayIcon className="mr-1 text-neutral-4" symbol="document" />
-			),
-			label: 'Aggregate Key (single file)',
-			onClick: async () => {
-				const downloadedAggregated = await downloadAggregatedActivationDownloadKey(
-					selectedKeysIDs,
-					licenseKeyDownloadURL,
-					sessionId
-				);
-				setActivationKeysDownloadStatus(
-					downloadedAggregated
-						? ALERT_DOWNLOAD_TYPE.success
-						: ALERT_DOWNLOAD_TYPE.danger
-				);
-			},
-		},
-	];
+	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
+		setActivationKeysDownloadStatus(
+			hasSuccessfullyDownloadedKeys
+				? ALERT_DOWNLOAD_TYPE.success
+				: ALERT_DOWNLOAD_TYPE.danger
+		);
+	};
+
+	const ACTIVATION_KEYS_ACTION_ITEMS = getActivationKeysActionsItems(
+		accountKey,
+		licenseKeyDownloadURL,
+		sessionId,
+		handleAlertStatus
+	);
+
+	const ACTIVATION_KEYS_DOWNLOAD_ITEMS = getActivationKeysDownloadItems(
+		isAbleToDownloadAggregateKeys,
+		selectedKeysIDs,
+		licenseKeyDownloadURL,
+		sessionId,
+		handleAlertStatus
+	);
 
 	const getCurrentButton = () => {
 		if (selectedKeys.length > 1) {
@@ -105,20 +97,15 @@ const DXPActivationKeysTableHeader = ({
 		if (selectedKeys.length) {
 			return (
 				<Button
-					className="btn btn-primary"
-					onClick={async () => {
-						const downloadedKey = await downloadActivationLicenseKey(
+					className="btn btn-secondary"
+					onClick={async () =>
+						getActivationKeyDownload(
 							selectedKeys,
 							licenseKeyDownloadURL,
-							sessionId
-						);
-
-						setActivationKeysDownloadStatus(
-							downloadedKey
-								? ALERT_DOWNLOAD_TYPE.success
-								: ALERT_DOWNLOAD_TYPE.danger
-						);
-					}}
+							sessionId,
+							handleAlertStatus
+						)
+					}
 				>
 					Download
 				</Button>
@@ -127,7 +114,7 @@ const DXPActivationKeysTableHeader = ({
 
 		return (
 			<ButtonDropDown
-				items={ACTIVATION_KEYS_ACTIONS_ITEMS}
+				items={ACTIVATION_KEYS_ACTION_ITEMS}
 				label="Actions"
 				menuElementAttrs={{
 					className: 'p-0',

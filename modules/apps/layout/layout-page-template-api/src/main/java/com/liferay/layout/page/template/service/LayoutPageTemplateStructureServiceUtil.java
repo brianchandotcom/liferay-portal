@@ -46,21 +46,6 @@ public class LayoutPageTemplateStructureServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateLayoutPageTemplateStructureData(long, long, long,
-	 String)}
-	 */
-	@Deprecated
-	public static LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
-			long groupId, long classNameId, long classPK,
-			long segmentsExperienceId, String data)
-		throws PortalException {
-
-		return getService().updateLayoutPageTemplateStructure(
-			groupId, classNameId, classPK, segmentsExperienceId, data);
-	}
-
 	public static LayoutPageTemplateStructure
 			updateLayoutPageTemplateStructureData(
 				long groupId, long plid, long segmentsExperienceId, String data)

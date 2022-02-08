@@ -82,13 +82,6 @@ public interface LayoutPageTemplateEntry
 
 		};
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getContent()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 

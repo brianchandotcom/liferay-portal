@@ -282,17 +282,6 @@ public class LayoutPageTemplateEntryWrapper
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getContent()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getContent();
-	}
-
-	/**
 	 * Returns the create date of this layout page template entry.
 	 *
 	 * @return the create date of this layout page template entry

@@ -58,17 +58,6 @@ public interface LayoutPageTemplateStructureService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateLayoutPageTemplateStructureData(long, long, long,
-	 String)}
-	 */
-	@Deprecated
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
-			long groupId, long classNameId, long classPK,
-			long segmentsExperienceId, String data)
-		throws PortalException;
-
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException;

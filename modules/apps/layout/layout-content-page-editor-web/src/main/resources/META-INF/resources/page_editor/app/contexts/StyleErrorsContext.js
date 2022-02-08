@@ -31,6 +31,27 @@ export function StyleErrorsContextProvider({children}) {
 	);
 }
 
+export function useDeleteStyleError() {
+	const activeItemId = useActiveItemId() || 'defaultId';
+	const setState = useContext(StyleErrorsDispatchContext);
+	const state = useContext(StyleErrorsStateContext);
+
+	return useCallback(
+		(fieldName) => {
+			if (state[activeItemId]?.[fieldName]) {
+				delete state[activeItemId][fieldName];
+
+				if (Object.keys(state[activeItemId]).length === 0) {
+					delete state[activeItemId];
+				}
+
+				setState(state);
+			}
+		},
+		[activeItemId, setState, state]
+	);
+}
+
 export function useHasStyleErrors() {
 	const state = useContext(StyleErrorsStateContext);
 

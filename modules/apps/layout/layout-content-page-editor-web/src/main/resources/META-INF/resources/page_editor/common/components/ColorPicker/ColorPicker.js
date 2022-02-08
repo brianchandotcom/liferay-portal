@@ -25,6 +25,7 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/contexts/ControlsContext';
 import {
+	useDeleteStyleError,
 	useSetStyleError,
 	useStyleErrors,
 } from '../../../app/contexts/StyleErrorsContext';
@@ -52,6 +53,7 @@ export function ColorPicker({
 	const activeItemId = useActiveItemId();
 	const colors = {};
 	const id = useId();
+	const deleteStyleError = useDeleteStyleError();
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
 
@@ -124,6 +126,7 @@ export function ColorPicker({
 	useEffect(() => {
 		if (config.tokenReuseEnabled) {
 			setError(null);
+			deleteStyleError(field.name);
 		}
 	}, [value, config.tokenReuseEnabled]);
 
@@ -200,6 +203,7 @@ export function ColorPicker({
 	const onChangeAutocompleteInput = ({target: {value}}) => {
 		if (error) {
 			setError(null);
+			deleteStyleError(field.name);
 		}
 
 		setActiveAutocomplete(value.length > 1 && filteredTokenValues.length);

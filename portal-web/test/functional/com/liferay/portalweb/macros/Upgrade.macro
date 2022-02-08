@@ -4302,11 +4302,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/DM Document JPG");
 
-		DownloadTempFile();
+		var key_imageSourceURL = "${portalURL}/documents/${siteId}/0/DM";
 
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
-
-		DMDocument.assertFileNameFromTempFolder(fileName = "DM Document JPG");
+		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 
 		Navigator.gotoPage(pageName = "Documents");
 

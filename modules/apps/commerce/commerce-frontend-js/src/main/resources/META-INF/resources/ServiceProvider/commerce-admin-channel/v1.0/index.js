@@ -14,3 +14,5 @@
 
 export {default as paymentMethodGroupRelOrderTypeAPI} from './PaymentMethodGroupRelOrderType';
 export {default as paymentMethodGroupRelTermAPI} from './PaymentMethodGroupRelTerm';
+export {default as shippingFixedOptionOrderTypeAPI} from './ShippingFixedOptionOrderType';
+export {default as shippingFixedOptionTermAPI} from './ShippingFixedOptionTerm';

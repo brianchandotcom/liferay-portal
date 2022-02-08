@@ -16,22 +16,22 @@ import {Link} from 'react-router-dom';
 
 import {AvatarGroup} from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
-import ProgressBar from '../../components/ProgressBar';
+import ProgressBar from '../../components/ProgressBar/';
 import Table from '../../components/Table';
 import {routines} from '../../util/mock';
 
 const TestFlow = () => {
 	return (
-		<Container title="Task">
+		<Container title="Tasks">
 			<Table
 				columns={[
 					{
 						key: 'status',
 						render: (value: string) => (
 							<Link
-								to={`/project/${value
+								to={`/testflow/${value
 									.toLowerCase()
-									.replace(' ', '_')}/routines`}
+									.replace(' ', '_')}`}
 							>
 								<span className="label label-inverse-secondary">
 									{value}
@@ -47,7 +47,10 @@ const TestFlow = () => {
 					{key: 'buildName', value: 'Build Name'},
 					{
 						key: 'score',
-						render: ({passed, total}: any) => {
+						render: ({incomplete, other, self}: any) => {
+							const total = self + other + incomplete;
+							const passed = self + other;
+
 							return `${passed} / ${total}, ${Math.ceil(
 								(passed * 100) / total
 							)}%`;
@@ -56,20 +59,16 @@ const TestFlow = () => {
 					},
 					{
 						key: 'score',
-						render: ({passed, total}: any) => {
-							return (
-								<ProgressBar
-									incomplete={total - passed}
-									passed={passed}
-								/>
-							);
-						},
+						render: (score: any) => <ProgressBar items={score} />,
 						value: 'Progress',
 					},
 					{
 						key: 'assigned',
 						render: (assigned: any) => (
-							<AvatarGroup assignedUsers={assigned} />
+							<AvatarGroup
+								assignedUsers={assigned}
+								groupSize={3}
+							/>
 						),
 						value: 'Assigned',
 					},

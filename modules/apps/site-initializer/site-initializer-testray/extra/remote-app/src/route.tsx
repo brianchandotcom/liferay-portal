@@ -33,6 +33,7 @@ import Teams from './pages/Project/Routines/Build/Inner/Teams';
 import Routines from './pages/Project/Routines/Routines';
 import Suites from './pages/Project/Suites';
 import Testflow from './pages/Testflow';
+import {TestFlowTasks} from './pages/Testflow/TestflowTasks';
 
 const TestrayRoute = () => (
 	<HashRouter>
@@ -91,7 +92,11 @@ const TestrayRoute = () => (
 
 				<Route element={<Manage />} path="manage" />
 
-				<Route element={<Testflow />} path="testflow" />
+				<Route path="testflow">
+					<Route element={<Testflow />} index />
+
+					<Route element={<TestFlowTasks />} path=":testflowId" />
+				</Route>
 
 				<Route element={<div>Page not found</div>} path="*" />
 			</Route>

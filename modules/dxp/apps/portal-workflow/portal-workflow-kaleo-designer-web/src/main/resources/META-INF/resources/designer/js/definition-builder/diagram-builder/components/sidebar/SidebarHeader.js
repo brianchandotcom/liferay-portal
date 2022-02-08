@@ -13,7 +13,6 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
-import {isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
@@ -21,6 +20,8 @@ import {getModalInfo} from './utils';
 
 export default function SidebarHeader({
 	backButtonFunction = () => {},
+	contentName,
+	deleteButtonFunction = () => {},
 	showBackButton,
 	showDeleteButton,
 	title,
@@ -52,6 +53,12 @@ export default function SidebarHeader({
 		backButtonFunction();
 	};
 
+	const deleteContent = () => {
+		deleteButtonFunction();
+		setShowDeleteConfirmationModal(false);
+		backButtonFunction();
+	};
+
 	const handleKeyDown = (event) => {
 		if (
 			(event.key === 'Backspace' || event.key === 'Delete') &&
@@ -63,12 +70,8 @@ export default function SidebarHeader({
 	};
 
 	useEffect(() => {
-		if (selectedItem) {
-			setModalInfo(
-				getModalInfo(
-					isNode(selectedItem) ? selectedItem.type : 'transition'
-				)
-			);
+		if (contentName) {
+			setModalInfo(getModalInfo(contentName));
 
 			window.addEventListener('keydown', handleKeyDown);
 
@@ -76,7 +79,8 @@ export default function SidebarHeader({
 				window.removeEventListener('keydown', handleKeyDown);
 			};
 		}
-	}, [selectedItem]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [contentName]);
 
 	return (
 		<div className="sidebar-header">
@@ -127,7 +131,11 @@ export default function SidebarHeader({
 
 								<ClayButton
 									displayType="danger"
-									onClick={deleteItem}
+									onClick={
+										deleteButtonFunction
+											? deleteContent
+											: deleteItem
+									}
 								>
 									{Liferay.Language.get('delete')}
 								</ClayButton>
@@ -142,6 +150,7 @@ export default function SidebarHeader({
 
 SidebarHeader.propTypes = {
 	backButtonFunction: PropTypes.func,
+	deleteButtonFunction: PropTypes.func,
 	showBackButton: PropTypes.bool,
 	showDeleteButton: PropTypes.bool,
 	title: PropTypes.string.isRequired,

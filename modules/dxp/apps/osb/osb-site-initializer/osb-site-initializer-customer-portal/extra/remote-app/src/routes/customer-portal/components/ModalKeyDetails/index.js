@@ -24,62 +24,60 @@ const ModalKeyDetails = ({
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
 	return (
-		<>
-			<ClayModal center observer={observer} size="lg">
-				<div className="pt-4 px-4">
-					<div className="d-flex justify-content-between mb-4">
-						<div className="flex-row mb-1">
-							<h6 className="text-brand-primary">
-								ACTIVATION KEY DETAILS
-							</h6>
+		<ClayModal center observer={observer} size="lg">
+			<div className="pt-4 px-4">
+				<div className="d-flex justify-content-between mb-4">
+					<div className="flex-row mb-1">
+						<h6 className="text-brand-primary">
+							ACTIVATION KEY DETAILS
+						</h6>
 
-							<h2 className="text-neutral-10">
-								{activationKeys.name}
-							</h2>
+						<h2 className="text-neutral-10">
+							{activationKeys.name}
+						</h2>
 
-							<p>{activationKeys.description}</p>
-						</div>
-
-						<Button
-							appendIcon="times"
-							aria-label="close"
-							className="align-self-start"
-							displayType="unstyled"
-							onClick={onClose}
-						/>
+						<p>{activationKeys.description}</p>
 					</div>
 
-					<TableKeyDetails
-						ACTIVATION_STATUS={ACTIVATION_STATUS}
-						activationKeys={activationKeys}
-						assetsPath={assetsPath}
-						setValueToCopyToClipboard={setValueToCopyToClipboard}
+					<Button
+						appendIcon="times"
+						aria-label="close"
+						className="align-self-start"
+						displayType="unstyled"
+						onClick={onClose}
 					/>
-
-					<div className="d-flex justify-content-end my-4">
-						<Button displayType="secondary" onClick={onClose}>
-							Close
-						</Button>
-
-						<Button appendIcon="download" className="ml-2">
-							Download Key
-						</Button>
-					</div>
 				</div>
 
-				{valueToCopyToClipboard && (
-					<ClayAlert.ToastContainer>
-						<ClayAlert
-							autoClose={2000}
-							displayType="success"
-							onClose={() => setValueToCopyToClipboard(false)}
-						>
-							{valueToCopyToClipboard} copied to clipboard
-						</ClayAlert>
-					</ClayAlert.ToastContainer>
-				)}
-			</ClayModal>
-		</>
+				<TableKeyDetails
+					ACTIVATION_STATUS={ACTIVATION_STATUS}
+					activationKeys={activationKeys}
+					assetsPath={assetsPath}
+					setValueToCopyToClipboard={setValueToCopyToClipboard}
+				/>
+
+				<div className="d-flex justify-content-end my-4">
+					<Button displayType="secondary" onClick={onClose}>
+						Close
+					</Button>
+
+					<Button appendIcon="download" className="ml-2">
+						Download Key
+					</Button>
+				</div>
+			</div>
+
+			{valueToCopyToClipboard && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={2000}
+						displayType="success"
+						onClose={() => setValueToCopyToClipboard(false)}
+					>
+						{valueToCopyToClipboard} copied to clipboard
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
+		</ClayModal>
 	);
 };
 export default ModalKeyDetails;

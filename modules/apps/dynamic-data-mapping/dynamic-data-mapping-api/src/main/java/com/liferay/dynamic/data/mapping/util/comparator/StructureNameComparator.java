@@ -15,8 +15,14 @@
 package com.liferay.dynamic.data.mapping.util.comparator;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.text.Collator;
+
+import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
@@ -34,15 +40,22 @@ public class StructureNameComparator extends OrderByComparator<DDMStructure> {
 	}
 
 	public StructureNameComparator(boolean ascending) {
+		this(ascending, LocaleUtil.getDefault());
+	}
+
+	public StructureNameComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
+		_locale = locale;
+
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override
 	public int compare(DDMStructure ddmStructure1, DDMStructure ddmStructure2) {
-		String name1 = StringUtil.toLowerCase(ddmStructure1.getName());
-		String name2 = StringUtil.toLowerCase(ddmStructure2.getName());
+		String name1 = StringUtil.toLowerCase(ddmStructure1.getName(_locale));
+		String name2 = StringUtil.toLowerCase(ddmStructure2.getName(_locale));
 
-		int value = name1.compareTo(name2);
+		int value = _collator.compare(name1, name2);
 
 		if (_ascending) {
 			return value;
@@ -71,5 +84,7 @@ public class StructureNameComparator extends OrderByComparator<DDMStructure> {
 	}
 
 	private final boolean _ascending;
+	private final Collator _collator;
+	private final Locale _locale;
 
 }

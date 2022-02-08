@@ -103,6 +103,26 @@ public class StructureNameComparatorTest {
 		Assert.assertEquals(_ddmStructure4, structureList.get(3));
 	}
 
+	@Test
+	public void testComparatorWithLocale() {
+		List<DDMStructure> structureList = new ArrayList<>();
+
+		structureList.add(_ddmStructure2);
+		structureList.add(_ddmStructure1);
+		structureList.add(_ddmStructure3);
+		structureList.add(_ddmStructure4);
+
+		_structureNameComparator = new StructureNameComparator(
+			true, _otherLocale);
+
+		Collections.sort(structureList, _structureNameComparator);
+
+		Assert.assertEquals(_ddmStructure4, structureList.get(0));
+		Assert.assertEquals(_ddmStructure1, structureList.get(1));
+		Assert.assertEquals(_ddmStructure2, structureList.get(2));
+		Assert.assertEquals(_ddmStructure3, structureList.get(3));
+	}
+
 	private DDMStructure _ddmStructure1;
 	private DDMStructure _ddmStructure2;
 	private DDMStructure _ddmStructure3;

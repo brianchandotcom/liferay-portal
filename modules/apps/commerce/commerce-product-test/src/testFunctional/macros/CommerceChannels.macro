@@ -66,6 +66,30 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addProduct {
+		if ("${edit}" != "true") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame(
+			key_title = "Select Product",
+			locator1 = "IFrame#MODAL_ANY");
+
+		CommerceNavigator.searchEntry(entryName = "${product}");
+
+		Click(
+			key_entryName = "${product}",
+			locator1 = "CommerceEntry#CHOOSE_ENTRY_BUTTON");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro assertMercanetConfigurationEnvironment {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "${paymentMethod}",

@@ -174,17 +174,6 @@ public abstract class BaseLayoutTypeControllerImpl
 		HttpServletResponse httpServletResponse,
 		UnsyncStringWriter unsyncStringWriter);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #createServletResponse(HttpServletResponse,
-	 *             UnsyncStringWriter)}
-	 */
-	@Deprecated
-	protected abstract ServletResponse createServletResponse(
-		HttpServletResponse httpServletResponse,
-		com.liferay.portal.kernel.io.unsync.UnsyncStringWriter
-			unsyncStringWriter);
-
 	protected abstract String getEditPage();
 
 	protected abstract String getViewPage();

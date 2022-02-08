@@ -117,14 +117,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 	}
 
 	@Override
-	public Layout generatePreviewLayout(long plid) throws Exception {
-		LayoutConversionResult layoutConversionResult = generatePreviewLayout(
-			plid, LocaleUtil.getSiteDefault());
-
-		return layoutConversionResult.getDraftLayout();
-	}
-
-	@Override
 	public LayoutConversionResult generatePreviewLayout(
 			long plid, Locale locale)
 		throws Exception {

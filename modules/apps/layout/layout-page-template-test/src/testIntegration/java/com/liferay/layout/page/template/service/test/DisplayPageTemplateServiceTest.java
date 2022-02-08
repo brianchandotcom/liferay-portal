@@ -70,7 +70,7 @@ public class DisplayPageTemplateServiceTest {
 		LayoutPageTemplateEntry displayPageTemplate =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				_group.getGroupId(), 0, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		LayoutPageTemplateEntry persistedDisplayPageTemplate =
@@ -110,8 +110,8 @@ public class DisplayPageTemplateServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
-			WorkflowConstants.STATUS_DRAFT, classNameId, classTypeId,
+			_group.getGroupId(), 0, classNameId, classTypeId,
+			RandomTestUtil.randomString(), 0, WorkflowConstants.STATUS_DRAFT,
 			serviceContext);
 	}
 

@@ -154,15 +154,6 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _viewportConfigurations;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getViewportConfigurations()}
-	 */
-	@Deprecated
-	public Map<String, JSONObject> getViewportSizeConfigurations() {
-		return getViewportConfigurations();
-	}
-
 	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getItemId());
@@ -233,17 +224,6 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 					return null;
 				}
 			));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setViewportConfiguration(String, JSONObject)}
-	 */
-	@Deprecated
-	public void setViewportSizeConfiguration(
-		String viewportSizeId, JSONObject configurationJSONObject) {
-
-		setViewportConfiguration(viewportSizeId, configurationJSONObject);
 	}
 
 	@Override

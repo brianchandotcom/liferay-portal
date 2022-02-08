@@ -17,7 +17,6 @@ package com.liferay.layout.responsive;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -88,18 +87,6 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnCssClass(ColumnLayoutStructureItem, RowStyledLayoutStructureItem)}
-	 */
-	@Deprecated
-	public static String getColumnCssClass(
-		RowLayoutStructureItem rowLayoutStructureItem,
-		ColumnLayoutStructureItem columnLayoutStructureItem) {
-
-		return getColumnCssClass(columnLayoutStructureItem, null);
 	}
 
 	public static String getResponsiveCssClassValues(
@@ -215,18 +202,6 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return defaultValue;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getRowCssClass(RowStyledLayoutStructureItem)}
-	 */
-	@Deprecated
-	public static String getRowCssClass(
-		RowLayoutStructureItem rowLayoutStructureItem) {
-
-		return getRowCssClass(
-			(RowStyledLayoutStructureItem)rowLayoutStructureItem);
 	}
 
 	public static String getRowCssClass(

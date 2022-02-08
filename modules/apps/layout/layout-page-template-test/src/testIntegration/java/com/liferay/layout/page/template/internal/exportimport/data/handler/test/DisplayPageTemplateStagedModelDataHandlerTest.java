@@ -87,8 +87,8 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), 0, _classNameId,
 			_classTypeId, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, false, 0, 0,
-			0, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, false, 0,
+			0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override

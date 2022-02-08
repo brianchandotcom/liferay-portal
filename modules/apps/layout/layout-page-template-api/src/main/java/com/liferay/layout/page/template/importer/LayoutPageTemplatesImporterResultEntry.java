@@ -45,27 +45,6 @@ public class LayoutPageTemplatesImporterResultEntry {
 		_warningMessages = warningMessages;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status)}
-	 */
-	@Deprecated
-	public LayoutPageTemplatesImporterResultEntry(String name, Status status) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status,
-	 *             String)}
-	 */
-	@Deprecated
-	public LayoutPageTemplatesImporterResultEntry(
-		String name, Status status, String errorMessage) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
@@ -105,7 +84,7 @@ public class LayoutPageTemplatesImporterResultEntry {
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
-	private int _type;
+	private final int _type;
 	private String[] _warningMessages;
 
 }

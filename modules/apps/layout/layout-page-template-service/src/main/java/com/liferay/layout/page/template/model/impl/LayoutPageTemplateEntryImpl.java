@@ -15,50 +15,18 @@
 package com.liferay.layout.page.template.model.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import java.util.List;
-
 /**
  * @author Jürgen Kappler
  */
 public class LayoutPageTemplateEntryImpl
 	extends LayoutPageTemplateEntryBaseImpl {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getContent() throws PortalException {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
-				getGroupId(), getPlid());
-
-		StringBundler cssSB = new StringBundler(fragmentEntryLinks.size());
-		StringBundler htmlSB = new StringBundler(fragmentEntryLinks.size());
-		StringBundler jsSB = new StringBundler(fragmentEntryLinks.size());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			cssSB.append(fragmentEntryLink.getCss());
-			htmlSB.append(fragmentEntryLink.getHtml());
-			jsSB.append(fragmentEntryLink.getJs());
-		}
-
-		return StringBundler.concat(
-			"<html><head><style>", cssSB.toString(), "</style><script>",
-			jsSB.toString(), "</script></head><body>", htmlSB.toString(),
-			"</body></html>");
-	}
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {

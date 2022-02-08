@@ -266,7 +266,7 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertNotNull(layoutStructure);
 
 		Assert.assertEquals(
-			"fluid", containerStyledLayoutStructureItem.getContainerType());
+			"fluid", containerStyledLayoutStructureItem.getWidthType());
 		Assert.assertEquals(
 			StringPool.BLANK,
 			containerStyledLayoutStructureItem.getMarginRight());
@@ -572,7 +572,7 @@ public class LayoutPageTemplatesImporterTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				"Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

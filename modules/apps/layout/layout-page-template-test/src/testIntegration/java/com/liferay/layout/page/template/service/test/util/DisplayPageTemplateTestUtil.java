@@ -46,7 +46,7 @@ public class DisplayPageTemplateTestUtil {
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), groupId, 0, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 

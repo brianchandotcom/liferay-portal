@@ -16,7 +16,6 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Objects;
@@ -106,14 +105,6 @@ public class CollectionStyledLayoutStructureItem
 		return LayoutDataItemTypeConstants.TYPE_COLLECTION;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getListFormat() {
-		return StringPool.BLANK;
-	}
-
 	public String getListItemStyle() {
 		return _listItemStyle;
 	}
@@ -153,13 +144,6 @@ public class CollectionStyledLayoutStructureItem
 
 	public void setCollectionJSONObject(JSONObject collectionJSONObject) {
 		_collectionJSONObject = collectionJSONObject;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setListFormat(String listFormat) {
 	}
 
 	public void setListItemStyle(String listItemStyle) {

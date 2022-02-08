@@ -192,6 +192,8 @@ definition {
 		}
 
 		task ("Block all custom events") {
+			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+
 			ACCustomEvents.blockAllCustomEvents();
 		}
 

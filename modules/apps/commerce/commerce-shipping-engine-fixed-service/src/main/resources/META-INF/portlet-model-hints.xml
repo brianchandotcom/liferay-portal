@@ -19,6 +19,18 @@
 		<field name="amount" type="BigDecimal" />
 		<field name="priority" type="double" />
 	</model>
+	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifier">
+		<field name="mvccVersion" type="long" />
+		<field name="commerceShippingFixedOptionQualifierId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceShippingFixedOptionId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel">
 		<field name="mvccVersion" type="long" />
 		<field name="commerceShippingFixedOptionRelId" type="long" />

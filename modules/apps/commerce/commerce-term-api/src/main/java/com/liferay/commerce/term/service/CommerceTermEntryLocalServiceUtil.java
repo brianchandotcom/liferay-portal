@@ -405,13 +405,13 @@ public class CommerceTermEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CommerceTermEntry> searchCommerceTermEntries(
-				long companyId, long accountEntryId, String keywords,
-				java.util.LinkedHashMap<String, String> params, int start,
-				int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, long accountEntryId, String type,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCommerceTermEntries(
-			companyId, accountEntryId, keywords, params, start, end, sort);
+			companyId, accountEntryId, type, keywords, start, end, sort);
 	}
 
 	/**

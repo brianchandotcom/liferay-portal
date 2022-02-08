@@ -1,3 +1,16 @@
+create table CSFixedOptionQualifier (
+	mvccVersion LONG default 0 not null,
+	CSFixedOptionQualifierId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	commerceShippingFixedOptionId LONG
+);
+
 create table CShippingFixedOptionRel (
 	mvccVersion LONG default 0 not null,
 	CShippingFixedOptionRelId LONG not null primary key,

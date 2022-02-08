@@ -140,6 +140,7 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 		return true;
 	}
 
+	@Override
 	public boolean isShowSearch() {
 		return true;
 	}

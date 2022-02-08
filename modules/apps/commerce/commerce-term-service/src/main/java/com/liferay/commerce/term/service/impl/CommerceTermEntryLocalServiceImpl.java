@@ -275,6 +275,7 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public BaseModelSearchResult<CommerceTermEntry> searchCommerceTermEntries(
 			long companyId, long accountEntryId, String keywords,
 			LinkedHashMap<String, String> params, int start, int end, Sort sort)

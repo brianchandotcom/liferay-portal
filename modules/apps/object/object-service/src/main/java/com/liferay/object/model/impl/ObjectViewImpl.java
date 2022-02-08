@@ -23,10 +23,12 @@ import java.util.List;
  */
 public class ObjectViewImpl extends ObjectViewBaseImpl {
 
+	@Override
 	public List<ObjectViewColumn> getObjectViewColumns() {
 		return _objectViewColumns;
 	}
 
+	@Override
 	public void setObjectViewColumns(List<ObjectViewColumn> objectViewColumns) {
 		_objectViewColumns = objectViewColumns;
 	}

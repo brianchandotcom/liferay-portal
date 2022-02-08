@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>NODE_COLLAPSED</td>
-	<td>//div[contains(@class,'treeview-node-list')]/button[contains(@class,'treeview-node-list') and @aria-expanded='false'] | //div[contains(@class,'tree-collapsed')]//span[not(contains(@class,'hidden'))]//*[name()='svg'][contains(@class,'icon-plus')] | //div[contains(@class,'navigation-menu-items-tree-node')]//button[@aria-expanded='false']</td>
+	<td>//div[contains(@class,'treeview') and contains(@aria-expanded,'false')] | //div[contains(@class,'treeview')]//*[contains(@aria-expanded,'false')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>NODE_LIST</td>
-	<td>//div[contains(@class,'treeview-node-list')] | //ul[contains(@class,'tree-pages')] | //div[contains(@class,'navigation-menu-items-tree')]</td>
+	<td>//*[@role='tree'] | //ul[contains(@class,'tree-pages')] | //div[contains(@class,'navigation-menu-items-tree')]</td>
 	<td></td>
 </tr>
 <tr>

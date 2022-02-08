@@ -142,13 +142,6 @@ function PublishButton() {
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
 	const {
-		observer: observerStyleErrorsModal,
-		onClose: onCloseStyleErrorsModal,
-	} = useModal({
-		onClose: () => setOpenStyleErrorsModal(false),
-	});
-
-	const {
 		observer: observerPublishModal,
 		onClose: onClosePublishModal,
 	} = useModal({
@@ -211,10 +204,9 @@ function PublishButton() {
 				<>
 					{openStyleErrorsModal && hasStyleErrors && (
 						<StyleErrorsModal
-							observer={observerStyleErrorsModal}
-							onClose={onCloseStyleErrorsModal}
+							onCloseModal={() => setOpenStyleErrorsModal(false)}
 							onSubmit={() => {
-								onCloseStyleErrorsModal();
+								setOpenStyleErrorsModal(false);
 								setOpenPublishModal(true);
 							}}
 						/>

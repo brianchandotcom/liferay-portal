@@ -13,11 +13,15 @@
  */
 
 import {default as ClayButton} from '@clayui/button';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function StyleErrorsModal({observer, onClose, onSubmit}) {
+export function StyleErrorsModal({onCloseModal, onSubmit}) {
+	const {observer, onClose} = useModal({
+		onClose: onCloseModal,
+	});
+
 	return (
 		<ClayModal observer={observer} size="lg" status="warning">
 			<ClayModal.Header>
@@ -54,7 +58,6 @@ export function StyleErrorsModal({observer, onClose, onSubmit}) {
 }
 
 StyleErrorsModal.propTypes = {
-	observer: PropTypes.object.isRequired,
-	onClose: PropTypes.func.isRequired,
+	onCloseModal: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 };

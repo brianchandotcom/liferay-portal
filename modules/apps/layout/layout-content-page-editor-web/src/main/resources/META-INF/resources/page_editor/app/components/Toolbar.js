@@ -73,13 +73,6 @@ function ToolbarBody({className}) {
 	const [openPreviewModal, setOpenPreviewModal] = useState(false);
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
-	const {
-		observer: observerStyleErrorsModal,
-		onClose: onCloseStyleErrorsModal,
-	} = useModal({
-		onClose: () => setOpenStyleErrorsModal(false),
-	});
-
 	const {observer: observerPreviewModal} = useModal({
 		onClose: () => {
 			if (isMounted()) {
@@ -365,8 +358,7 @@ function ToolbarBody({className}) {
 					openStyleErrorsModal &&
 					hasStyleErrors && (
 						<StyleErrorsModal
-							observer={observerStyleErrorsModal}
-							onClose={onCloseStyleErrorsModal}
+							onCloseModal={() => setOpenStyleErrorsModal(false)}
 							onSubmit={handleSubmit}
 						/>
 					)}

@@ -17,9 +17,13 @@ $productMenuWidth: 320px;
 	}
 
 	&-import {
-		.list-group-icon .lexicon-icon {
-			font-size: 1rem;
-			margin-top: 0;
+		.list-group-no-bordered .list-group-item {
+			border-width: 0 0 1px;
+			margin-bottom: 0;
+
+			&:last-child {
+				border-width: 0;
+			}
 		}
 	}
 

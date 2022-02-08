@@ -41,7 +41,7 @@ public class CommerceTermEntryModelDocumentContributor
 	public void contribute(
 		Document document, CommerceTermEntry commerceTermEntry) {
 
-		document.addText(Field.NAME, commerceTermEntry.getName());
+		document.addKeyword(Field.NAME, commerceTermEntry.getName());
 		document.addNumberSortable(
 			Field.PRIORITY, commerceTermEntry.getPriority());
 		document.addText(Field.TYPE, commerceTermEntry.getType());
@@ -51,7 +51,7 @@ public class CommerceTermEntryModelDocumentContributor
 				commerceTermEntry.getCommerceTermEntryId());
 
 		for (String languageId : languageIds) {
-			document.addTextSortable(
+			document.addKeywordSortable(
 				LocalizationUtil.getLocalizedName("label", languageId),
 				commerceTermEntry.getLabel(languageId));
 		}

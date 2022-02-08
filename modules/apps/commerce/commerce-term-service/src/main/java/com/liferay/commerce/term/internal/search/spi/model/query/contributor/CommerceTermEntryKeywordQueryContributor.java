@@ -43,19 +43,15 @@ public class CommerceTermEntryKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.NAME, false);
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.PRIORITY, false);
+			booleanQuery, searchContext, Field.NAME, true);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.USER_NAME, false);
-		_queryHelper.addSearchTerm(booleanQuery, searchContext, "label", false);
+		_queryHelper.addSearchTerm(booleanQuery, searchContext, "label", true);
 		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, "label", false);
+			booleanQuery, searchContext, "label", true);
 	}
 
 	@Reference

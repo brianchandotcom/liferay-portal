@@ -47,6 +47,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Tom Wang
  * @author Shuyang Zhou
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class SplitPackagesTest {
 

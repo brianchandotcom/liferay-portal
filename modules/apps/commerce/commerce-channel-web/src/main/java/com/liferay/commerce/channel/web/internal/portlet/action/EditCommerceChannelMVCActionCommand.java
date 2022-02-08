@@ -357,9 +357,11 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
-		if ((fileEntryId == 0) && (currentTemplateFileEntry != null)) {
-			_dlAppLocalService.deleteFileEntry(
-				currentTemplateFileEntry.getFileEntryId());
+		if (fileEntryId == 0) {
+			if (currentTemplateFileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(
+					currentTemplateFileEntry.getFileEntryId());
+			}
 
 			return;
 		}

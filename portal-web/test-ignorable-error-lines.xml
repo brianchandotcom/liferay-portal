@@ -272,6 +272,10 @@
 			<contains>/o/frontend-editor-ckeditor-web/ckeditor/skins/moono-lexicon/skin.js</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-143849">
+			<contains>DB2 SQL Error: SQLCODE=-204, SQLSTATE=42704, SQLERRMC=ROOT.LAYOUT</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

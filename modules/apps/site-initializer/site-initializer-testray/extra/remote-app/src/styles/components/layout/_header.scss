@@ -1,14 +1,16 @@
 .header-container {
-	-o-transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
-	-webkit-transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
-	background-color: #fff;
-	border-bottom: 1px solid #e3e9ee;
+	-o-transition: $transition;
+	-webkit-transition: $transition;
+	background-color: $color-white;
+	border-bottom: 1px solid $color-gray-light;
 	box-shadow: 0 2px 4px 0 rgb(38 47 87 / 5%);
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
 	padding: 20px 20px 0;
-	transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+	position: sticky;
+	top: 0;
+	transition: $transition;
 	z-index: 1;
 
 	.header-container-tabs {

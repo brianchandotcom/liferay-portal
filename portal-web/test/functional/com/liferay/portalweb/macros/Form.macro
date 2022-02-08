@@ -542,10 +542,8 @@ definition {
 		if (isSet(localeBasic)) {
 			Form.gotoBasicTab(key_localeBasic = "${localeBasic}");
 		}
-		else {
-			if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-				Navigator.gotoNavTab(navTab = "Basic");
-			}
+		else if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
 		}
 	}
 

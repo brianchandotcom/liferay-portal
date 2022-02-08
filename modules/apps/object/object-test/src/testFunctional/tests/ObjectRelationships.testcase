@@ -38,15 +38,10 @@ definition {
 			objectName = "CustomObject");
 
 		JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -105,15 +100,10 @@ definition {
 			objectName = "CustomObject");
 
 		JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -133,7 +123,7 @@ definition {
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-		
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		LexiconEntry.gotoAdd();
@@ -143,7 +133,6 @@ definition {
 		Button.clickSave();
 
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
-
 	}
 
 	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
@@ -173,12 +162,49 @@ definition {
 	}
 
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
 
-		// TODO LPS-146868 CanRelateOneToManyNativeObjectWithCustomSiteScoped pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		CreateObject.selectTitleField(fieldLabel = "First Name");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "User",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.searchEntryRelationshipField(entryValue = "userfn");
+
+		Button.clickSave();
+
+		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 	}
 
 	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
@@ -197,7 +223,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "User");
 
 		CreateObject.assertTitleFieldIsSelected(fieldLabel = "First Name");
-
 	}
 
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"

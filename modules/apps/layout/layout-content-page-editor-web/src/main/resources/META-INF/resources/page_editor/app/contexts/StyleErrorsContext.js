@@ -12,7 +12,9 @@
  * details.
  */
 
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
+
+import {useActiveItemId} from './ControlsContext';
 
 const StyleErrorsDispatchContext = React.createContext(() => {});
 const StyleErrorsStateContext = React.createContext({});
@@ -35,8 +37,35 @@ export function useHasStyleErrors() {
 	return Object.keys(state).length > 0;
 }
 
-export function useSetStyleErrors() {
-	return useContext(StyleErrorsDispatchContext);
+export function useSetStyleError() {
+	const activeItemId = useActiveItemId() || 'defaultId';
+	const setState = useContext(StyleErrorsDispatchContext);
+	const state = useContext(StyleErrorsStateContext);
+
+	return useCallback(
+		(fieldName, value) => {
+			let nextState;
+
+			if (state[activeItemId]) {
+				nextState = {
+					...state,
+					[activeItemId]: {
+						...state[activeItemId],
+						[fieldName]: value,
+					},
+				};
+			}
+			else {
+				nextState = {
+					...state,
+					[activeItemId]: {[fieldName]: value},
+				};
+			}
+
+			setState(nextState);
+		},
+		[activeItemId, setState, state]
+	);
 }
 
 export function useStyleErrors() {

@@ -95,7 +95,10 @@ export function normalizeOptions({
 	populateNewOptions(options);
 
 	if (fixedOptions.length) {
-		newOptions[options.length - 1].separator = true;
+		if (options.length) {
+			newOptions[options.length - 1].separator = true;
+		}
+
 		populateNewOptions(fixedOptions);
 	}
 

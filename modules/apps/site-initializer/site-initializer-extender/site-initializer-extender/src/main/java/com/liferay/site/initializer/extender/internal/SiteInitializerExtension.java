@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -26,6 +27,7 @@ import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -74,6 +76,8 @@ public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
 		AccountResource.Factory accountResourceFactory,
+		AccountRoleLocalService accountRoleLocalService,
+		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
@@ -124,14 +128,14 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new BundleSiteInitializer(
-				accountResourceFactory, assetCategoryLocalService,
+				accountResourceFactory, accountRoleLocalService,
+				accountRoleResourceFactory, assetCategoryLocalService,
 				assetListEntryLocalService, bundle, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
-				fragmentsImporter, groupLocalService,
-				journalArticleLocalService, jsonFactory, layoutCopyHelper,
-				layoutLocalService, layoutPageTemplateEntryLocalService,
-				layoutPageTemplatesImporter,
+				fragmentsImporter, groupLocalService, journalArticleLocalService,
+				jsonFactory, layoutCopyHelper, layoutLocalService,
+				layoutPageTemplateEntryLocalService, layoutPageTemplatesImporter,
 				layoutPageTemplateStructureLocalService, layoutSetLocalService,
 				listTypeDefinitionResource, listTypeDefinitionResourceFactory,
 				listTypeEntryResource, listTypeEntryResourceFactory,

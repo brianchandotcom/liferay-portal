@@ -16,6 +16,9 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -47,6 +50,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
@@ -102,6 +106,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -192,6 +197,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		AccountResource.Factory accountResourceFactory,
+		AccountRoleLocalService accountRoleLocalService,
+		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -236,6 +243,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService) {
 
 		_accountResourceFactory = accountResourceFactory;
+		_accountRoleLocalService = accountRoleLocalService;
+		_accountRoleResourceFactory = accountRoleResourceFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
@@ -2174,6 +2183,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addResourcePermissions(
 			objectDefinitionIdsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
+
+		_addUserAccounts(serviceContext);
+
 		_addUserRoles(serviceContext);
 	}
 
@@ -2307,9 +2319,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
-			role = _roleLocalService.addRole(
-				serviceContext.getUserId(), null, 0, name,
-				Collections.singletonMap(serviceContext.getLocale(), name),
+				role = _roleLocalService.addRole(
+					serviceContext.getUserId(), null, 0, name,
+					Collections.singletonMap(serviceContext.getLocale(), name),
 				null, jsonObject.getInt("type"), null, serviceContext);
 		}
 
@@ -2874,29 +2886,64 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			JSONArray accountBriefsJSONArray = jsonObject.getJSONArray(
+				"accountBriefs");
+
+			if (accountBriefsJSONArray.length() == 0) {
+				continue;
+			}
+
 			UserAccount userAccount = UserAccount.toDTO(
 				String.valueOf(jsonObject));
-
-			String externalReferenceCode = jsonObject.getString(
-				"externalReferenceCode");
 
 			User existingUserAccount =
 				_userLocalService.fetchUserByEmailAddress(
 					serviceContext.getCompanyId(),
 					userAccount.getEmailAddress());
 
+			int j = 0;
+
+			JSONObject accountBriefsJSONObject = null;
+
 			if (existingUserAccount == null) {
+				accountBriefsJSONObject = accountBriefsJSONArray.getJSONObject(
+					j);
+
 				userAccountResource.
 					postAccountUserAccountByExternalReferenceCode(
-						externalReferenceCode, userAccount);
+						accountBriefsJSONObject.getString(
+							"externalReferenceCode"),
+						userAccount);
 
-				continue;
+				j++;
+
+				if (accountBriefsJSONObject.has("roleBriefs")) {
+					_relateAccountRoles(
+						accountBriefsJSONObject.getJSONArray("roleBriefs"),
+						accountBriefsJSONObject.getString(
+							"externalReferenceCode"),
+						jsonObject.getString("emailAddress"), serviceContext);
+				}
 			}
 
-			userAccountResource.
-				postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-					externalReferenceCode,
-					existingUserAccount.getEmailAddress());
+			for (; j < accountBriefsJSONArray.length(); j++) {
+				accountBriefsJSONObject = accountBriefsJSONArray.getJSONObject(
+					j);
+
+				userAccountResource.
+					postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+						accountBriefsJSONObject.getString(
+							"externalReferenceCode"),
+						userAccount.getEmailAddress());
+
+				if (accountBriefsJSONObject.has("roleBriefs")) {
+					_relateAccountRoles(
+						accountBriefsJSONObject.getJSONArray("roleBriefs"),
+						accountBriefsJSONObject.getString(
+							"externalReferenceCode"),
+						jsonObject.getString("emailAddress"), serviceContext);
+				}
+			}
 		}
 	}
 
@@ -3026,6 +3073,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
+	}
+
+	private void _relateAccountRoles(
+			JSONArray jsonArray, String externalReferenceCode,
+			String emailAddress, ServiceContext serviceContext)
+		throws Exception {
+
+		AccountRoleResource.Builder accountRoleResourceBuilder =
+			_accountRoleResourceFactory.create();
+
+		AccountRoleResource accountRoleResource =
+			accountRoleResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), jsonArray.getString(i));
+
+			if (role != null) {
+				AccountRole accountRole =
+					_accountRoleLocalService.fetchAccountRoleByRoleId(
+						role.getRoleId());
+
+				if (accountRole != null) {
+					accountRoleResource.
+						postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+							externalReferenceCode,
+							accountRole.getAccountRoleId(), emailAddress);
+				}
+			}
+		}
 	}
 
 	private Map<Locale, String> _toMap(String values) {
@@ -3247,6 +3326,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final AccountResource.Factory _accountResourceFactory;
+	private final AccountRoleLocalService _accountRoleLocalService;
+	private final AccountRoleResource.Factory _accountRoleResourceFactory;
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;

@@ -94,14 +94,10 @@ export function TopperLabel({children, itemElement}) {
 				);
 
 				itemElementMarginRight =
-					(computedStyle.marginRight.endsWith('px') &&
-						parseInt(computedStyle.marginRight, 10)) ||
-					0;
+					parseInt(computedStyle.marginRight, 10) || 0;
 
 				itemElementMarginLeft =
-					(computedStyle.marginLeft.endsWith('px') &&
-						parseInt(computedStyle.marginLeft, 10)) ||
-					0;
+					parseInt(computedStyle.marginLeft, 10) || 0;
 
 				itemElementLeft =
 					globalContext.window.scrollX + boundingClientRect.left;

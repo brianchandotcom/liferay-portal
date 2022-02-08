@@ -73,12 +73,19 @@ definition {
 	}
 
 	@description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FromNameFieldDisplaysUsername {
+		NotificationTemplates.gotoCalendarMenuOption(
+			calendarName = "Test Test",
+			menuListOption = "Calendar Settings");
 
-		// TODO LRQA-71969 FromNameFieldDisplaysUsername pending implementation
+		NotificationTemplates.gotoNotificationTemplatesTab();
 
+		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
+
+		NotificationTemplates.gotoReminderEmailTab();
+
+		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
 	}
 
 }

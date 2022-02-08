@@ -30,4 +30,9 @@ definition {
 			value1 = "${userEmail}");
 	}
 
+	macro viewUserNameDisplayedFromNameField {
+		AssertTextEquals(
+			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
+			value1 = "${userName}");
+	}
 }

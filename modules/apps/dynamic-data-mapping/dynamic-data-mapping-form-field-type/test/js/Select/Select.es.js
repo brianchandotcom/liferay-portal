@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -210,6 +210,24 @@ describe('Select', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('renders fixed options', () => {
+		render(
+			<SelectWithProvider
+				fixedOptions={[
+					{
+						dataType: 'user',
+						label: 'User',
+						name: 'user',
+						value: 'user',
+					},
+				]}
+				showEmptyOption={false}
+			/>
+		);
+
+		expect(screen.getByText('User')).toBeInTheDocument();
 	});
 
 	it('renders no options when options come empty', () => {

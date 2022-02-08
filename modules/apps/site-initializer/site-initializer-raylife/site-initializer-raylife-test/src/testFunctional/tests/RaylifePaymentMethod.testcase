@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		//Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(siteName = "Raylife");
 
 		RaylifePaymentMethod.enablePayPalPayment();
 	}
@@ -23,7 +23,7 @@ definition {
 		}
 		else {
 
-			//Raylife.tearDownCP();
+			Raylife.tearDownCP();
 
 			User.logoutPG();
 		}

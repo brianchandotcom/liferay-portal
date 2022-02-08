@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_ENTRY_BUTTON</td>
+	<td>//tr/td[contains(.,'${key_entryName}')]//..//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TAG_BUTTON</td>
 	<td>//div/button[@title='Add Tags']</td>
 	<td></td>

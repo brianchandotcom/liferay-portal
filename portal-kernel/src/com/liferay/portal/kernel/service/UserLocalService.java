@@ -2286,6 +2286,7 @@ public interface UserLocalService
 	 use
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateAgreedToTermsOfUse(
 			long userId, boolean agreedToTermsOfUse)
 		throws PortalException;
@@ -2354,6 +2355,7 @@ public interface UserLocalService
 	 * @param emailAddressVerified whether the user has verified email address
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateEmailAddressVerified(
 			long userId, boolean emailAddressVerified)
 		throws PortalException;
@@ -2604,6 +2606,7 @@ public interface UserLocalService
 	 password the next time they log in
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updatePassword(
 			long userId, String password1, String password2,
 			boolean passwordReset)
@@ -2622,6 +2625,7 @@ public interface UserLocalService
 	 tracked, or validated. Primarily used for password imports.
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updatePassword(
 			long userId, String password1, String password2,
 			boolean passwordReset, boolean silentUpdate)
@@ -2653,6 +2657,7 @@ public interface UserLocalService
 	 password the next time they login
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updatePasswordReset(long userId, boolean passwordReset)
 		throws PortalException;
 
@@ -2674,6 +2679,7 @@ public interface UserLocalService
 	 * @param answer the user's new password reset answer
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateReminderQuery(long userId, String question, String answer)
 		throws PortalException;
 

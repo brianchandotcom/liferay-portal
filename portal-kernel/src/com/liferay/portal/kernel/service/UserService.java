@@ -1097,6 +1097,7 @@ public interface UserService extends BaseService {
 	 * @param agreedToTermsOfUse whether the user has agree to the terms of use
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateAgreedToTermsOfUse(
 			long userId, boolean agreedToTermsOfUse)
 		throws PortalException;
@@ -1259,6 +1260,7 @@ public interface UserService extends BaseService {
 	 password the next time they log in
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updatePassword(
 			long userId, String password1, String password2,
 			boolean passwordReset)
@@ -1282,6 +1284,7 @@ public interface UserService extends BaseService {
 	 * @param answer the user's new password reset answer
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateReminderQuery(long userId, String question, String answer)
 		throws PortalException;
 

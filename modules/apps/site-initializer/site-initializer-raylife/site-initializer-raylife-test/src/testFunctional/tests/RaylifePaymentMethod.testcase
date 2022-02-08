@@ -22,7 +22,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
 			Raylife.tearDownCP();
 
 			User.logoutPG();

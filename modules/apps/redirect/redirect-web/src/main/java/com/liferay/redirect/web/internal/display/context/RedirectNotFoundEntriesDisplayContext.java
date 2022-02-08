@@ -140,6 +140,15 @@ public class RedirectNotFoundEntriesDisplayContext {
 		).build();
 	}
 
+	public RedirectNotFoundEntriesManagementToolbarDisplayContext
+			getRedirectNotFoundEntriesManagementToolbarDisplayContext()
+		throws Exception {
+
+		return new RedirectNotFoundEntriesManagementToolbarDisplayContext(
+			_httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, searchContainer());
+	}
+
 	public String getSearchContainerId() {
 		return "redirectNotFoundEntries";
 	}

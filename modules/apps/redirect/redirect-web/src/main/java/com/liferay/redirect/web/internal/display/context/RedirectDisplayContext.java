@@ -49,6 +49,8 @@ import com.liferay.redirect.web.internal.security.permission.resource.RedirectEn
 import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -90,6 +92,8 @@ public class RedirectDisplayContext {
 		_redirectEntryService =
 			(RedirectEntryService)_httpServletRequest.getAttribute(
 				RedirectEntryService.class.getName());
+
+		_stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 	}
 
 	public String formatExpirationDate(Date expirationDate) {
@@ -155,8 +159,37 @@ public class RedirectDisplayContext {
 		return simpleDateFormat.format(expirationDate);
 	}
 
+	public RedirectManagementToolbarDisplayContext
+			getRedirectManagementToolbarDisplayContext()
+		throws Exception {
+
+		return new RedirectManagementToolbarDisplayContext(
+			_httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, searchContainer());
+	}
+
 	public String getSearchContainerId() {
 		return "redirectEntries";
+	}
+
+	public boolean isStagingGroup() {
+		if (_stagingGroup != null) {
+			return _stagingGroup;
+		}
+
+		boolean stagingGroup = false;
+
+		if (_stagingGroupHelper.isLocalStagingGroup(
+				_themeDisplay.getScopeGroup()) ||
+			_stagingGroupHelper.isRemoteStagingGroup(
+				_themeDisplay.getScopeGroup())) {
+
+			stagingGroup = true;
+		}
+
+		_stagingGroup = stagingGroup;
+
+		return _stagingGroup;
 	}
 
 	public SearchContainer<RedirectEntry> searchContainer() throws Exception {
@@ -322,6 +355,8 @@ public class RedirectDisplayContext {
 	private final RedirectEntryLocalService _redirectEntryLocalService;
 	private RedirectEntrySearch _redirectEntrySearch;
 	private final RedirectEntryService _redirectEntryService;
+	private Boolean _stagingGroup;
+	private final StagingGroupHelper _stagingGroupHelper;
 	private final ThemeDisplay _themeDisplay;
 
 }

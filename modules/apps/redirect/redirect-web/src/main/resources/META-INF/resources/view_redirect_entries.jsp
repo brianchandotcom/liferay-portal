@@ -17,18 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
-
-boolean stagingGroup = stagingGroupHelper.isLocalStagingGroup(themeDisplay.getScopeGroup()) || stagingGroupHelper.isRemoteStagingGroup(themeDisplay.getScopeGroup());
-
 RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.getAttribute(RedirectDisplayContext.class.getName());
 
 SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
 
-RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer);
+RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = redirectDisplayContext.getRedirectManagementToolbarDisplayContext();
 %>
 
-<c:if test="<%= !stagingGroup %>">
+<c:if test="<%= !redirectDisplayContext.isStagingGroup() %>">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= redirectManagementToolbarDisplayContext %>"
 		propsTransformer="js/RedirectManagementToolbarPropsTransformer"
@@ -47,7 +43,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 
 	<div class="sidenav-content">
 		<clay:container-fluid>
-			<c:if test="<%= stagingGroup %>">
+			<c:if test="<%= redirectDisplayContext.isStagingGroup() %>">
 				<div class="lfr-search-container">
 					<clay:alert
 						displayType="info"

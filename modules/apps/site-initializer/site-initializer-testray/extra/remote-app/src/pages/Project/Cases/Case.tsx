@@ -25,9 +25,6 @@ import {
 	getTestrayCase,
 	getTestrayCases,
 } from '../../../graphql/queries/testrayCase';
-
-// import useHeader from '../../../hooks/useHeader';
-
 import {Liferay} from '../../../services/liferay/liferay';
 
 const Requirement = () => {
@@ -43,31 +40,6 @@ const Requirement = () => {
 
 	const testrayCase = data?.c?.testrayCase || {};
 
-	// useHeader({
-	// 	pageHeading: testrayCase?.name
-	// 		? [
-	// 				{
-	// 					category: 'PROJECT',
-	// 					title: testrayCase.name,
-	// 				},
-	// 		  ]
-	// 		: undefined,
-	// });
-
-	// useEffect(() => {
-	// 	if (testrayCase?.name) {
-	// 		dispatch({
-	// 			payload: [
-	// 				{
-	// 					category: 'PROJECT',
-	// 					title: `${heading[0].title} / ${testrayCase.name} `,
-	// 				},
-	// 			],
-	// 			type: HeaderTypes.SET_HEADING,
-	// 		});
-	// 	}
-	// }, [testrayCase, dispatch]);
-
 	useEffect(() => {
 		setTimeout(() => {
 			dispatch({
@@ -75,7 +47,7 @@ const Requirement = () => {
 				type: HeaderTypes.SET_TABS,
 			});
 		}, 0);
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<LoadingWrapper isLoading={loading}>

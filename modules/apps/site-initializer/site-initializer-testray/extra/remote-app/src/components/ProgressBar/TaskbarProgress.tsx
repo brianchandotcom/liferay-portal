@@ -25,7 +25,7 @@ const taskbarClassNames: any = {
 };
 
 type TaskbarProgress = {
-	items: [[string, number]];
+	items: [string, number][];
 	legend?: boolean;
 	total: number;
 	totalCompleted: number;

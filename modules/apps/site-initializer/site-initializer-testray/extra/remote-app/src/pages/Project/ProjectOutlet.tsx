@@ -63,7 +63,7 @@ const ProjectOutlet = () => {
 		if (testrayProject) {
 			setHeading([{category: 'PROJECT', title: testrayProject.name}]);
 		}
-	}, []);
+	}, [setHeading, testrayProject]);
 
 	useEffect(() => {
 		setTabs([

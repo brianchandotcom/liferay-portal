@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -68,7 +67,6 @@ const LegendContent: React.FC<any> = (props) => {
 const LegendContentMemo = memo(LegendContent);
 
 const TooltipContent = (props: any) => {
-	console.log({props});
 	const [payload] = props.payload;
 
 	if (props.active && payload) {

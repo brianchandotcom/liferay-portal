@@ -20,7 +20,7 @@ type ProgressBarProps = {
 	legend?: boolean;
 };
 
-const ProgressBarComponent: React.FC<ProgressBarProps> = ({items, legend}) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({items, legend}) => {
 	const sortedItems = Object.entries(items).sort(
 		([, valueA], [, valueB]) => valueB - valueA
 	);
@@ -40,7 +40,7 @@ const ProgressBarComponent: React.FC<ProgressBarProps> = ({items, legend}) => {
 
 	return (
 		<TaskbarProgress
-			items={sortedItems as any}
+			items={sortedItems}
 			legend={legend}
 			total={total}
 			totalCompleted={totalCompleted}
@@ -48,4 +48,4 @@ const ProgressBarComponent: React.FC<ProgressBarProps> = ({items, legend}) => {
 	);
 };
 
-export default ProgressBarComponent;
+export default ProgressBar;

@@ -2319,10 +2319,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
+			if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
+				_accountRoleLocalService.addAccountRole(
+					serviceContext.getUserId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
+					Collections.singletonMap(serviceContext.getLocale(), name),
+					_toMap(jsonObject.getString("description")));
+			}
+			else {
 				role = _roleLocalService.addRole(
 					serviceContext.getUserId(), null, 0, name,
 					Collections.singletonMap(serviceContext.getLocale(), name),
-				null, jsonObject.getInt("type"), null, serviceContext);
+					_toMap(jsonObject.getString("description")),
+					jsonObject.getInt("type"), jsonObject.getString("subtype"),
+					serviceContext);
+			}
 		}
 
 		JSONArray jsonArray = jsonObject.getJSONArray("actions");

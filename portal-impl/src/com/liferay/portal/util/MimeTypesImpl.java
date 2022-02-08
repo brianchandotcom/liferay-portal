@@ -59,11 +59,6 @@ import org.xml.sax.InputSource;
  */
 public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
-	public MimeTypesImpl() {
-		_detector = new DefaultDetector(
-			org.apache.tika.mime.MimeTypes.getDefaultMimeTypes());
-	}
-
 	public void afterPropertiesSet() throws Exception {
 		read(
 			org.apache.tika.mime.MimeTypes.class.getResourceAsStream(
@@ -257,7 +252,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	private static final Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);
 
 	private final Map<String, String> _customMimeTypes = new HashMap<>();
-	private final Detector _detector;
+	private final Detector _detector = new DefaultDetector();
 	private final Map<String, Set<String>> _extensionsMap = new HashMap<>();
 
 }

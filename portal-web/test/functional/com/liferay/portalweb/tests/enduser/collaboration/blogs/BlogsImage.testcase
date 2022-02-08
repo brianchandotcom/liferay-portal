@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	@description = "This test checks that an inline image can be added to a blog."
+	@description = "This is a usecase for LPS-110117. This test checks that an inline image can be added to a blog."
 	@priority = "4"
 	@refactordone
 	@uitest
@@ -44,6 +44,7 @@ definition {
 
 		BlogsEntry.addContentWithInlineImage(
 			entryContent = "Blogs Entry Content",
+			entryInlineImageURL = "www.liferay.com",
 			navTab = "Upload Image",
 			uploadFileName = "Document_1.jpg");
 

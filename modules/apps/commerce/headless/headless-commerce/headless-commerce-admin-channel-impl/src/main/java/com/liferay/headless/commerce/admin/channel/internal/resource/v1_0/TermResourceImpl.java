@@ -16,7 +16,10 @@ package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifier;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionQualifierService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.TermDTOConverter;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
@@ -30,6 +33,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/term.properties",
@@ -53,9 +57,27 @@ public class TermResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
+	@NestedField(parentClass = ShippingFixedOptionTerm.class, value = "term")
+	@Override
+	public Term getShippingFixedOptionTermTerm(Long id) throws Exception {
+		CommerceShippingFixedOptionQualifier
+			commerceShippingFixedOptionQualifier =
+				_commerceShippingFixedOptionQualifierService.
+					getCommerceShippingFixedOptionQualifier(id);
+
+		return _termDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceShippingFixedOptionQualifier.getClassPK(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	@Reference
 	private CommercePaymentMethodGroupRelQualifierService
 		_commercePaymentMethodGroupRelQualifierService;
+
+	@Reference
+	private CommerceShippingFixedOptionQualifierService
+		_commerceShippingFixedOptionQualifierService;
 
 	@Reference
 	private TermDTOConverter _termDTOConverter;

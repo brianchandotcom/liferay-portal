@@ -11,7 +11,7 @@
 import {ACTIVATION_STATUS} from './activationStatus';
 
 export function getStatusActivationTag(activationKeys) {
-	let activationStatus = ACTIVATION_STATUS.active;
+	let activationStatus = ACTIVATION_STATUS.activated;
 
 	if (new Date() < new Date(activationKeys.startDate)) {
 		activationStatus = ACTIVATION_STATUS.notActivated;

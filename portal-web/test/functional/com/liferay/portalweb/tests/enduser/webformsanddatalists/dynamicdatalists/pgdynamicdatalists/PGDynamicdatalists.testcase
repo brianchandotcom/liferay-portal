@@ -250,10 +250,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-59565."
+	@ignore = "true"
 	@priority = "3"
 	test AddRecordNested {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -312,10 +311,10 @@ definition {
 			nestedFieldFieldLabel = "Integer");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddVelocityDisplayTemplate {
 		property custom.properties = "freemarker.engine.restricted.variables=${line.separator}restricted.variables=";
-		property portal.upstream = "quarantine";
 
 		var ddlDisplayTemplateScript = '''
 				#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))${line.separator}${line.separator}
@@ -1162,10 +1161,9 @@ definition {
 			fieldFieldLabel = "Date");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewDecimalFieldPredefinedValue {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1302,10 +1300,9 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewIntegerFieldPredefinedValue {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

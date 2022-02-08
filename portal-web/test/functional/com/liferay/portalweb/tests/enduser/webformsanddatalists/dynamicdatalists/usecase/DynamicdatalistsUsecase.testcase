@@ -306,10 +306,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66229."
+	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankDocumentsAndMediaField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -353,10 +352,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66229."
+	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankLinkToPageField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -400,10 +398,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66229."
+	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankWebContentField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -447,10 +444,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66439."
+	@ignore = "true"
 	@priority = "5"
 	test AddRecordWithPopulatedWebContentField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -928,10 +924,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-50549."
+	@ignore = "true"
 	@priority = "4"
 	test AddXSSToHTMLField {
-		property portal.upstream = "quarantine";
-
 		var ddlRecordFieldData1 = '''<img src=x onerror=alert(/xss/) />''';
 
 		var ddlRecordFieldData2 = ''''+alert('xss')+'"+alert("xss")+"''';
@@ -2082,11 +2077,9 @@ definition {
 			nestedFieldFieldLabel = "Select");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test FormTemplateUniqueField {
-		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#FormTemplateUniqueField";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2817,10 +2810,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67478 ."
+	@ignore = "true"
 	@priority = "3"
 	test ViewLinkToPageBreadcrumb {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -2985,10 +2977,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-51538."
+	@ignore = "true"
 	@priority = "3"
 	test ViewNestedFieldDoesNotDisplayInRecordTable {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3059,10 +3050,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48969."
+	@ignore = "true"
 	@priority = "3"
 	test ViewNestedFieldEntryWithBlankParentField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

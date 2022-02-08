@@ -45,11 +45,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80085."
+	@ignore = "true"
 	@priority = "3"
 	test AddWebContentTemplateWithSmallImage {
-		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "DDMStructuresStaging#AddWebContentTemplateWithSmallImage";
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Page",
 			siteName = "Staging Site Name");

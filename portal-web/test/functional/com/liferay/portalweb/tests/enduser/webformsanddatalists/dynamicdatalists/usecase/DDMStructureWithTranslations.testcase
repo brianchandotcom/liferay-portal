@@ -63,11 +63,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69325."
+	@ignore = "true"
 	@priority = "4"
 	test ViewFieldInputWhenSwitchingTranslations {
-		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "DDMStructureWithTranslations#ViewFieldInputWhenSwitchingTranslations";
-
 		DDLRecord.addCP();
 
 		for (var language : list "es-ES,en-US,pt-BR") {

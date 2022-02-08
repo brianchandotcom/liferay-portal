@@ -94,10 +94,9 @@ definition {
 			ddlDisplayTemplateTextFieldScript = "Text");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddFormTemplate {
-		property portal.acceptance = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1032,10 +1031,9 @@ definition {
 		DDLRecord.viewGeolocationRecord(fieldFieldLabel = "Geolocation");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddListRecordWithHTMLField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1188,11 +1186,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65726"
+	@ignore = "true"
 	@priority = "5"
 	test AddListRecordWithLinkToPageField {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -1735,10 +1731,9 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CopyDataDefinition {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1813,10 +1808,9 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no templates.");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CopyDataDefinitionWithCopyDisplayTemplates {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1902,10 +1896,9 @@ definition {
 			ddlTemplateName = "Data Definition Form Template Name");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CopyDataDefinitionWithCopyFormTemplates {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2000,10 +1993,9 @@ definition {
 			ddlTemplateName = "Data Definition Display Template Name");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2532,10 +2524,9 @@ definition {
 			fieldName = "BooleanEdit");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditBooleanFieldShowLabel {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3659,10 +3650,9 @@ definition {
 			fieldReadOnly = "No");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewFormTemplateFields {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3825,10 +3815,9 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewNoDuplicatesInOriginalAfterCopy {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

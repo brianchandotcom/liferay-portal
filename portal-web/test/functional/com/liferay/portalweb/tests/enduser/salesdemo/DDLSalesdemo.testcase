@@ -28,10 +28,9 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test Demo1 {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

@@ -87,7 +87,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -485,12 +484,6 @@ public class ObjectEntryLocalServiceImpl
 				)
 			),
 			selectExpressions);
-
-		if (ListUtil.isEmpty(rows)) {
-			throw new ObjectEntryValuesException(
-				"No values exist for object entry " +
-					objectEntry.getObjectEntryId());
-		}
 
 		return _getValues(rows.get(0), selectExpressions);
 	}
@@ -1126,9 +1119,8 @@ public class ObjectEntryLocalServiceImpl
 
 			if (value == null) {
 				if (objectField.isRequired()) {
-					throw new ObjectEntryValuesException(
-						"No value was provided for required object field \"" +
-							objectField.getName() + "\"");
+					throw new ObjectEntryValuesException.RequiredValue(
+						objectField.getName());
 				}
 
 				if (_log.isDebugEnabled()) {
@@ -1639,9 +1631,50 @@ public class ObjectEntryLocalServiceImpl
 				listTypeEntry -> Objects.equals(
 					listTypeEntry.getKey(), value))) {
 
-			throw new ObjectEntryValuesException(
-				"Object field name \"" + entry.getKey() +
-					"\" is not mapped to a valid list type entry");
+			throw new ObjectEntryValuesException.ObjectFieldNotMapped(
+				entry.getKey());
+		}
+	}
+
+	private void _validateObjectFieldIntegerTypeSize(
+			Map.Entry<String, Serializable> entry)
+		throws ObjectEntryValuesException {
+
+		Serializable entryValue = entry.getValue();
+
+		String entryValueString = entryValue.toString();
+
+		if (!entryValueString.isEmpty()) {
+			int value = GetterUtil.getInteger(entryValue);
+
+			if (!StringUtil.equals(String.valueOf(value), entryValueString)) {
+				throw new ObjectEntryValuesException.IntegerSizeExceeded();
+			}
+		}
+	}
+
+	private void _validateObjectFieldLongType(
+			Map.Entry<String, Serializable> entry)
+		throws ObjectEntryValuesException {
+
+		Serializable entryValue = entry.getValue();
+
+		String entryValueString = entryValue.toString();
+
+		if (!entryValueString.isEmpty()) {
+			long value = GetterUtil.getLong(entryValue);
+
+			if (!StringUtil.equals(
+					String.valueOf(value), entryValue.toString())) {
+
+				throw new ObjectEntryValuesException.LongSizeExceeded();
+			}
+			else if (value > _MAX_SAFE_LONG) {
+				throw new ObjectEntryValuesException.LongMaxSizeExceeded();
+			}
+			else if (value < _MIN_SAFE_LONG) {
+				throw new ObjectEntryValuesException.LongMinSizeExceeded();
+			}
 		}
 	}
 
@@ -1652,9 +1685,7 @@ public class ObjectEntryLocalServiceImpl
 		String value = (String)entry.getValue();
 
 		if ((value != null) && (value.length() > 280)) {
-			throw new ObjectEntryValuesException(
-				"Object field \"" + entry.getKey() +
-					"\" value exceeds 280 characters.");
+			throw new ObjectEntryValuesException.Exceeds280Characters();
 		}
 	}
 
@@ -1688,11 +1719,9 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (count > 0) {
-			throw new ObjectEntryValuesException(
-				StringBundler.concat(
-					"One to one constraint violation for ",
-					dynamicObjectDefinitionTable.getTableName(), ".",
-					dbColumnName, " with value ", dbColumnValue));
+			throw new ObjectEntryValuesException.OneToOneConstraintViolation(
+				dynamicObjectDefinitionTable.getTableName(), dbColumnName,
+				dbColumnValue);
 		}
 	}
 
@@ -1729,11 +1758,9 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (count > 0) {
-			throw new ObjectEntryValuesException(
-				StringBundler.concat(
-					"One to one constraint violation for ",
-					dynamicObjectDefinitionTable.getTableName(), ".",
-					dbColumnName, " with value ", dbColumnValue));
+			throw new ObjectEntryValuesException.OneToOneConstraintViolation(
+				dynamicObjectDefinitionTable.getTableName(), dbColumnName,
+				dbColumnValue);
 		}
 	}
 
@@ -1756,7 +1783,17 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			if (StringUtil.equals(objectField.getDBType(), "String")) {
+			String objectFieldDBType = objectField.getDBType();
+
+			if (StringUtil.equals(objectFieldDBType, "Integer")) {
+				_validateObjectFieldIntegerTypeSize(entry);
+			}
+
+			if (StringUtil.equals(objectFieldDBType, "Long")) {
+				_validateObjectFieldLongType(entry);
+			}
+
+			if (StringUtil.equals(objectFieldDBType, "String")) {
 				_validateObjectFieldStringTypeLength(entry);
 			}
 
@@ -1765,6 +1802,10 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 	}
+
+	private static final long _MAX_SAFE_LONG = 9007199254740991L;
+
+	private static final long _MIN_SAFE_LONG = -9007199254740991L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);

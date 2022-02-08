@@ -49,8 +49,8 @@ export function MoreInfoButton({
 			)}
 			onClick={updateState}
 		>
-			<div className="align-items-center d-flex justify-content-center m-0 px-1 px-lg-2 px-sm-2 py-1 py-lg-1 py-sm-1">
-				<span className="p-0 text-center text-paragraph-sm">
+			<div className="align-items-center d-flex justify-content-center m-0 more-info-container px-1 px-lg-2 px-sm-2 py-1 py-lg-1 py-sm-1">
+				<span className="flex-shrink-0 p-0 text-center text-paragraph-sm">
 					{label}
 				</span>
 

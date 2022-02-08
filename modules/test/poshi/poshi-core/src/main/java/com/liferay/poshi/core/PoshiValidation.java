@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
+
 /**
  * @author Karen Dang
  * @author Michael Hashimoto
@@ -1793,24 +1794,17 @@ public class PoshiValidation {
 		"^selenium#(?<methodName>get[A-z]+)" +
 			"(?:\\((?<methodParameters>.*|)\\))?$");
 
-	private static class ValidationException extends PoshiElementException {
+	private static class ValidationException extends Exception {
 
 		public ValidationException(Element element, Object... messageParts) {
-			super(_join(messageParts), (PoshiElement)element);
+			super(
+					PoshiElementException.join(
+							PoshiElementException.join(messageParts), ":",
+							PoshiGetterUtil.getLineNumber(element)));
 		}
 
 		public ValidationException(String... messageParts) {
-			super(_join((Object[])messageParts));
-		}
-
-		private static String _join(Object... objects) {
-			StringBuilder sb = new StringBuilder();
-
-			for (Object object : objects) {
-				sb.append(object.toString());
-			}
-
-			return sb.toString();
+			super(PoshiElementException.join((Object[])messageParts));
 		}
 
 	}

@@ -75,7 +75,7 @@ const assigned = generateItems<Assigned>(
 
 export const assignee = generateItems<Assignee>(
 	{
-		name: 'Matheus Guimarães',
+		name: 'John Doe',
 		url: 'https://picsum.photos/200',
 	},
 	20

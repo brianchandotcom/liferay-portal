@@ -215,6 +215,8 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
+		AssertVisible(locator1 = "Icon#FRIENDLY_URL_HISTORY_DISABLED");
+
 		BlogsEntry.addCustomURL(
 			customURL = "hola-adiós",
 			viewHistory = "true");

@@ -221,6 +221,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL_HISTORY_DISABLED</td>
+	<td>//button[contains(@class,'history') and @disabled][*[name()='svg'][contains(@class,'lexicon-icon-restore')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FLAG</td>
 	<td>//div[contains(@class,'taglib-flags')]</td>
 	<td></td>

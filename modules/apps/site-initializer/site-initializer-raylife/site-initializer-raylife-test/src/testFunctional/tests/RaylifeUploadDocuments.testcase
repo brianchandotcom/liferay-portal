@@ -1,0 +1,294 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-144519 - Check if the Building Interior Photos field is required"
+	@priority = "4"
+	test BuildingInteriorPhotosFieldIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		AssertElementPresent(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Please upload a photo of your building interior.");
+	}
+
+	@description = "LPS-144525 - Check if I can cancel discard changes in the modal"
+	@priority = "4"
+	test CanCancelChangesInModal {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		Click(locator1 = "RaylifeUploadDocuments#DISCARD_CHANGES");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CANCEL_MODAL");
+
+		AssertElementPresent(
+			file = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+	}
+
+	@description = "LPS-144345 - Verify if users can delete attached files"
+	@priority = "5"
+	test CanUserDeleteAttachedFiles {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		Click(
+			archive = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#DELETE_ARCHIVE");
+
+		AssertElementNotPresent(
+			file = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+	}
+
+	@description = "LPS-144524 - heck that I can discard Files by clicking the Discard Changes button"
+	@priority = "4"
+	test CanUserDiscardFiles {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		Click(locator1 = "RaylifeUploadDocuments#DISCARD_CHANGES");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONTINUE_MODAL");
+
+		AssertElementNotPresent(
+			file = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+	}
+
+	@description = "LPS-144526 - Check if I can modify the attached files"
+	@priority = "4"
+	test CanUserModifyAttachedFiles {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CHANGE");
+
+		Click(
+			archive = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#DELETE_ARCHIVE");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_2.pdf",
+			title = "Business");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CHANGE");
+
+		AssertElementNotPresent(
+			file = "Document_1.pdf",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+
+		AssertElementPresent(
+			file = "Document_2.pdf",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+	}
+
+	@description = "LPS-144348 - Verify if users can delete attached photos"
+	@priority = "5"
+	test CanUsersDeleteAttachedPhotos {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(
+			archive = "Document_1.jpg",
+			locator1 = "RaylifeUploadDocuments#DELETE_ARCHIVE");
+
+		AssertElementNotPresent(
+			file = "Document_1.jpg",
+			locator1 = "RaylifeUploadDocuments#ARCHIVE_FIELD");
+	}
+
+	@description = "LPS-144521 - Check that the Discard Changes button appears when adding attached files"
+	@priority = "4"
+	test DeleteChangesButtonAppearsWhenAddingFiles {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		AssertElementPresent(locator1 = "RaylifeUploadDocuments#DISCARD_CHANGES");
+	}
+
+	@description = "LPS-144346 - Verify if that when the upload limit is reached it displays the following notification: Upload limit of 4 files reached for Business License."
+	@ignore = "true"
+	@priority = "5"
+	test IsLimitOf4FilesReached {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+	}
+
+	@description = "LPS-144347 - Verify if that when the upload limit is reached it displays the following notification: 4 file upload limit reached for Building Interior Photos."
+	@ignore = "true"
+	@priority = "5"
+	test IsLimitOf4PhotosReached {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+	}
+
+	@description = "LPS-144349 - Verify if when all required fields are filled in the confirm uploads button is enabled"
+	@priority = "5"
+	test IsUploadButtonEnabled {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		AssertElementPresent(locator1 = "RaylifeUploadDocuments#PAYMENT_FIELD");
+	}
+
+	@description = "LPS-144344 - Verify if a maximum of 4 files can be uploaded to Business License"
+	@ignore = "true"
+	@priority = "5"
+	test MaxIs4FilesToCommercialLicense {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+	}
+
+	@description = "LPS-144350 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
+	@priority = "4"
+	test UploadSectionCompleted {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		AssertElementPresent(
+			locator1 = "RaylifeUploadDocuments#CHECKMARK",
+			title = "2. Upload Documents");
+	}
+
+}

@@ -89,4 +89,25 @@ definition {
 		}
 	}
 
+	macro formsFlow {
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeAllBusinessInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeEmployees.typeAllEmployeesInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeProperty.typeAllPropertyInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+            locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+            policy = "standard");
+    }
 }

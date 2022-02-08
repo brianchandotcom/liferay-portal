@@ -1,0 +1,14 @@
+definition {
+    macro uploadDocuments {
+
+        if (isSet(dmDocumentFileList)) {            
+            for (var fileName : list "${dmDocumentFileList}") {
+                AssertElementPresent(locator1 = "RaylifeUploadDocuments#BROWSE_FILES");
+
+                UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+                    locator1 = "RaylifeUploadDocuments#BROWSE_FILES",
+                    value1 = "${fileName}");
+            }
+        }
+    }
+}

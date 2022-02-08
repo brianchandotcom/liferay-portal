@@ -12,43 +12,40 @@
  * details.
  */
 
-import classNames from 'classnames';
+import {Progress, Tasks} from '../../util/mock';
+import TaskbarProgress from './TaskbarProgress';
 
 type ProgressBarProps = {
-	blocked?: number;
-	failed?: number;
-	incomplete?: number;
-	passed?: number;
-	test_fix?: number;
+	items: Tasks | Progress;
+	legend?: boolean;
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = (props) => {
-	const {failed = 0, incomplete = 0, passed = 0, test_fix = 0} = props;
+const ProgressBarComponent: React.FC<ProgressBarProps> = ({items, legend}) => {
+	const sortedItems = Object.entries(items).sort(
+		([, valueA], [, valueB]) => valueB - valueA
+	);
 
-	const total = failed + incomplete + passed + test_fix;
+	const total = sortedItems
+		.map(([, value]) => value)
+		.reduce((prevValue, currentValue) => prevValue + currentValue);
+
+	const totalCompleted = sortedItems
+		.filter(([label, value]) => {
+			if (label !== 'incomplete') {
+				return value;
+			}
+		})
+		.map(([, value]) => value)
+		.reduce((previus, current) => previus + current);
 
 	return (
-		<div className="testray-progress-bar">
-			{['failed', 'passed', 'incomplete', 'test_fix'].map((type) => {
-				const keyValue = (props as any)[type];
-				const percent = Math.ceil((keyValue * 100) / total);
-
-				return (
-					<div
-						className={classNames('progress-bar-item', {
-							'failed': type === 'failed',
-							'passed': type === 'passed',
-							'test-fix': type === 'test_fix',
-							'test-incomplete': type === 'incomplete',
-						})}
-						key={type}
-						style={{width: `${percent}%`}}
-						title={`${percent}% ${type}`}
-					></div>
-				);
-			})}
-		</div>
+		<TaskbarProgress
+			items={sortedItems as any}
+			legend={legend}
+			total={total}
+			totalCompleted={totalCompleted}
+		/>
 	);
 };
 
-export default ProgressBar;
+export default ProgressBarComponent;

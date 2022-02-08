@@ -36,6 +36,7 @@ jest.mock(
 					w3cLanguageId: 'en-US',
 				},
 			},
+			commonStyles: [],
 		},
 	})
 );
@@ -56,6 +57,7 @@ function renderComponent(
 			getState={() => ({
 				languageId: 'en_US',
 				segmentsExperienceId: '0',
+				selectedViewportSize: 'desktop',
 			})}
 		>
 			<ContainerGeneralPanel

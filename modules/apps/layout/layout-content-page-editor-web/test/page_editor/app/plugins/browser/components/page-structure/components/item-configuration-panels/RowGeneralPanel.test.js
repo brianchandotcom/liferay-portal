@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {ResizeContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ResizeContext';
@@ -91,6 +91,7 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				landscapeMobile: {label: 'landscapeMobile'},
 			},
+			commonStyles: [],
 		},
 	})
 );
@@ -107,7 +108,6 @@ jest.mock(
 
 describe('RowGeneralPanel', () => {
 	afterEach(() => {
-		cleanup();
 		updateItemConfig.mockClear();
 		updateRowColumns.mockClear();
 	});

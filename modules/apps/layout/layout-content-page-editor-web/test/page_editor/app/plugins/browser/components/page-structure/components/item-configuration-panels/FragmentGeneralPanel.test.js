@@ -18,7 +18,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 
 import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -57,6 +57,7 @@ jest.mock(
 				mobile: {label: 'Mobile', sizeId: 'mobile'},
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
+			commonStyles: [],
 			defaultLanguageId: 'es_ES',
 			defaultSegmentsExperienceId: '0',
 		},
@@ -185,8 +186,6 @@ const renderGeneralPanel = ({
 
 describe('FragmentGeneralPanel', () => {
 	afterEach(() => {
-		cleanup();
-
 		FragmentService.updateConfigurationValues.mockClear();
 		FragmentService.renderFragmentEntryLinkContent.mockClear();
 	});

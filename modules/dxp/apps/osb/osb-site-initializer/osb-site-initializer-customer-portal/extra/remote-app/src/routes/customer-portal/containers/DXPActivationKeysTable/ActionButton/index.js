@@ -19,7 +19,7 @@ import ButtonDropDown from '../../../components/ButtonDropDown';
 
 import {
 	ALERT_DOWNLOAD_TYPE,
-	AUTO_CLOSE_DOWNLOAD_ALERT_TIME,
+	AUTO_CLOSE_ALERT_TIME,
 	EXTENSION_FILE_TYPES,
 	STATUS_CODE,
 } from '../../../utils/constants';
@@ -72,9 +72,7 @@ const ActivationKeysActionsButton = ({accountKey, sessionId}) => {
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={
-							AUTO_CLOSE_DOWNLOAD_ALERT_TIME[
-								activationKeysdownloadStatus
-							]
+							AUTO_CLOSE_ALERT_TIME[activationKeysdownloadStatus]
 						}
 						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
 						displayType={

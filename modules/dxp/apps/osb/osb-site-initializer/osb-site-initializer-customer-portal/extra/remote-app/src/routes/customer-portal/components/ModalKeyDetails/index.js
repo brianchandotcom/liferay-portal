@@ -12,6 +12,7 @@ import ClayAlert from '@clayui/alert';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 import Button from '../../../../common/components/Button';
+import {AUTO_CLOSE_ALERT_TIME} from '../../utils/constants/autoCloseAlertTime';
 import TableKeyDetails from '../TableKeyDetails';
 
 const ModalKeyDetails = ({
@@ -69,7 +70,7 @@ const ModalKeyDetails = ({
 			{valueToCopyToClipboard && (
 				<ClayAlert.ToastContainer>
 					<ClayAlert
-						autoClose={2000}
+						autoClose={AUTO_CLOSE_ALERT_TIME.success}
 						displayType="success"
 						onClose={() => setValueToCopyToClipboard(false)}
 					>

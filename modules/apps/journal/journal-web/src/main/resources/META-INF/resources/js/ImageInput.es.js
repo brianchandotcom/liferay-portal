@@ -12,8 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React, {useRef, useState} from 'react';
 
 export default function ImageInput({name, portletNamespace, previewURL}) {
@@ -66,18 +67,23 @@ export default function ImageInput({name, portletNamespace, previewURL}) {
 						</ClayInput.GroupItem>
 
 						<ClayInput.GroupItem shrink>
-							<ClayButtonWithIcon
+							<ClayButton
 								displayType="secondary"
+								monospaced
 								onClick={() => inputRef.current?.click()}
 								small
-								symbol={fileName ? 'change' : 'plus'}
 								title={Liferay.Util.sub(
 									fileName
 										? Liferay.Language.get('change-x')
 										: Liferay.Language.get('select-x'),
 									Liferay.Language.get('image')
 								)}
-							/>
+							>
+								<ClayIcon
+									className="mt-0"
+									symbol={fileName ? 'change' : 'plus'}
+								/>
+							</ClayButton>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>

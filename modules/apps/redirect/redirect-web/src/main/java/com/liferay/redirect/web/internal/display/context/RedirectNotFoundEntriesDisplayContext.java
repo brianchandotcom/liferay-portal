@@ -68,15 +68,14 @@ public class RedirectNotFoundEntriesDisplayContext {
 	public RedirectNotFoundEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		RedirectNotFoundEntryLocalService redirectNotFoundEntryLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_redirectNotFoundEntryLocalService = redirectNotFoundEntryLocalService;
 
-		_redirectNotFoundEntryLocalService =
-			(RedirectNotFoundEntryLocalService)_httpServletRequest.getAttribute(
-				RedirectNotFoundEntryLocalService.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -146,7 +145,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		return new RedirectNotFoundEntriesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, searchContainer());
+			_liferayPortletResponse, _redirectNotFoundEntryLocalService,
+			searchContainer());
 	}
 
 	public String getSearchContainerId() {

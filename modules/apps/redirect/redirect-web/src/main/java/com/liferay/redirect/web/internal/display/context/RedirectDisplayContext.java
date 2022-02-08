@@ -50,7 +50,6 @@ import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -74,26 +73,23 @@ public class RedirectDisplayContext {
 	public RedirectDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		RedirectEntryLocalService redirectEntryLocalService,
+		RedirectEntryService redirectEntryService,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_redirectEntryLocalService = redirectEntryLocalService;
+		_redirectEntryService = redirectEntryService;
+		_stagingGroupHelper = stagingGroupHelper;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_expirationDateFormat = DateFormat.getDateInstance(
 			SimpleDateFormat.SHORT, _themeDisplay.getLocale());
-
-		_redirectEntryLocalService =
-			(RedirectEntryLocalService)_httpServletRequest.getAttribute(
-				RedirectEntryLocalService.class.getName());
-		_redirectEntryService =
-			(RedirectEntryService)_httpServletRequest.getAttribute(
-				RedirectEntryService.class.getName());
-
-		_stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 	}
 
 	public String formatExpirationDate(Date expirationDate) {

@@ -23,6 +23,7 @@ import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import com.liferay.redirect.web.internal.display.context.RedirectDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
 
@@ -62,15 +63,6 @@ public class RedirectPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			RedirectEntryLocalService.class.getName(),
-			_redirectEntryLocalService);
-		renderRequest.setAttribute(
-			RedirectEntryService.class.getName(), _redirectEntryService);
-		renderRequest.setAttribute(
-			RedirectNotFoundEntryLocalService.class.getName(),
-			_redirectNotFoundEntryLocalService);
-
 		String navigation = ParamUtil.getString(
 			renderRequest, "navigation", "redirects");
 
@@ -80,7 +72,8 @@ public class RedirectPortlet extends MVCPortlet {
 				new RedirectNotFoundEntriesDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse),
+					_redirectNotFoundEntryLocalService));
 		}
 		else {
 			renderRequest.setAttribute(
@@ -88,7 +81,9 @@ public class RedirectPortlet extends MVCPortlet {
 				new RedirectDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse),
+					_redirectEntryLocalService, _redirectEntryService,
+					_stagingGroupHelper));
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -106,5 +101,8 @@ public class RedirectPortlet extends MVCPortlet {
 	@Reference
 	private RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

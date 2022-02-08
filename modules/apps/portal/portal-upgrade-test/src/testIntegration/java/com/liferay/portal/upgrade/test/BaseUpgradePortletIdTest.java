@@ -69,6 +69,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Raymond Augé
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class BaseUpgradePortletIdTest extends BasePortletIdUpgradeProcess {
 

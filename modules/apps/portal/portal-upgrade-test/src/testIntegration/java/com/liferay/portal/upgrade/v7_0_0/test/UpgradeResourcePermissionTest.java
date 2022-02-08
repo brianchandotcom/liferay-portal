@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Sampsa Sohlman
  */
+@Ignore
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {

@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  * @author Alberto Chaparro
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class UpgradeMVCCVersionTest extends PortalMVCCVersionUpgradeProcess {
 

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-RedirectNotFoundEntriesDisplayContext redirectNotFoundEntriesDisplayContext = new RedirectNotFoundEntriesDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+RedirectNotFoundEntriesDisplayContext redirectNotFoundEntriesDisplayContext = (RedirectNotFoundEntriesDisplayContext)request.getAttribute(RedirectNotFoundEntriesDisplayContext.class.getName());
 
 SearchContainer<RedirectNotFoundEntry> redirectNotFoundEntriesSearchContainer = redirectNotFoundEntriesDisplayContext.searchContainer();
 

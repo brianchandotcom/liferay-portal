@@ -21,7 +21,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 boolean stagingGroup = stagingGroupHelper.isLocalStagingGroup(themeDisplay.getScopeGroup()) || stagingGroupHelper.isRemoteStagingGroup(themeDisplay.getScopeGroup());
 
-RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.getAttribute(RedirectDisplayContext.class.getName());
 
 SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
 

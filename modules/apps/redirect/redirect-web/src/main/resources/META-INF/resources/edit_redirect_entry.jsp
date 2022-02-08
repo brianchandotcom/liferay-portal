@@ -25,7 +25,7 @@ RedirectEntry redirectEntry = (RedirectEntry)request.getAttribute(RedirectEntry.
 String destinationURL = (redirectEntry != null) ? redirectEntry.getDestinationURL() : ParamUtil.getString(request, "destinationURL");
 String sourceURL = (redirectEntry != null) ? redirectEntry.getSourceURL() : ParamUtil.getString(request, "sourceURL");
 
-RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.getAttribute(RedirectDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

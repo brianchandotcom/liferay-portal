@@ -89,7 +89,7 @@
 	},
 	"colorActionPrimaryActive": {
 		"cssVariableMapping": "color-action-primary-active",
-		"value": "var(--color-action-primary-active)"
+		"value": "#004AD7"
 	},
 	"colorActionPrimaryActiveLighten": {
 		"cssVariableMapping": "color-action-primary-active-lighten",
@@ -97,15 +97,15 @@
 	},
 	"colorActionPrimaryDefault": {
 		"cssVariableMapping": "color-action-primary-default",
-		"value": "var(--color-action-primary-default)"
+		"value": "#0B5FFF"
 	},
 	"colorActionPrimaryDisabled": {
 		"cssVariableMapping": "color-action-primary-disabled",
-		"value": "var(--color-action-primary-disabled)"
+		"value": "#0B5FFF99"
 	},
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
-		"value": "var(--color-action-primary-hover)"
+		"value": "#0053F0"
 	},
 	"colorActionPrimaryHoverLighten": {
 		"cssVariableMapping": "color-action-primary-hover-lighten",

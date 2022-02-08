@@ -108,45 +108,37 @@ export default function ValidationDate({
 
 	const errorMessageName = name + '_errorMessage';
 
-	const {dateFieldTypeValidationEnabled, formBuilder} = useFormState();
+	const {formBuilder} = useFormState();
 
 	const fields = useMemo(() => {
 		const fields = [];
 
-		if (dateFieldTypeValidationEnabled) {
-			const visitor = new PagesVisitor(formBuilder.pages);
+		const visitor = new PagesVisitor(formBuilder.pages);
 
-			visitor.mapFields(
-				(
-					field,
-					_pageIndex,
-					_rowIndex,
-					_columnIndex,
-					...parentFields
-				) => {
-					if (
-						field.repeatable ||
-						field.type !== 'date' ||
-						field.fieldName === parentFieldName ||
-						parentFields.some(({repeatable}) => repeatable)
-					) {
-						return;
-					}
+		visitor.mapFields(
+			(field, _pageIndex, _rowIndex, _columnIndex, ...parentFields) => {
+				if (
+					field.repeatable ||
+					field.type !== 'date' ||
+					field.fieldName === parentFieldName ||
+					parentFields.some(({repeatable}) => repeatable)
+				) {
+					return;
+				}
 
-					fields.push({
-						checked: false,
-						label: field.label,
-						name: field.fieldName,
-						value: field.fieldName,
-					});
-				},
-				true,
-				true
-			);
-		}
+				fields.push({
+					checked: false,
+					label: field.label,
+					name: field.fieldName,
+					value: field.fieldName,
+				});
+			},
+			true,
+			true
+		);
 
 		return fields;
-	}, [formBuilder.pages, dateFieldTypeValidationEnabled, parentFieldName]);
+	}, [formBuilder.pages, parentFieldName]);
 
 	return (
 		<>
@@ -178,20 +170,16 @@ export default function ValidationDate({
 							? {
 									parameters: startDate,
 									title: Liferay.Language.get('start-date'),
-									tooltip: dateFieldTypeValidationEnabled
-										? Liferay.Language.get(
-												'starts-from-tooltip'
-										  )
-										: null,
+									tooltip: Liferay.Language.get(
+										'starts-from-tooltip'
+									),
 							  }
 							: {
 									parameters: endDate,
 									title: Liferay.Language.get('end-date'),
-									tooltip: dateFieldTypeValidationEnabled
-										? Liferay.Language.get(
-												'ends-on-tooltip'
-										  )
-										: null,
+									tooltip: Liferay.Language.get(
+										'ends-on-tooltip'
+									),
 							  };
 
 					return (

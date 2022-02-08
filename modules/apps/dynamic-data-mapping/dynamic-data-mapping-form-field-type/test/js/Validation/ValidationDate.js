@@ -72,15 +72,11 @@ const parameters = generateParameter();
 const localizedValue = jest.fn(() => parameters['en_US']);
 
 const ValidationDateProvider = ({
-	formBuilder = {},
-	dateFieldTypeValidationEnabled = false,
+	formBuilder = {pages: []},
 	state,
 	...props
 }) => (
-	<FormProvider
-		initialState={{dateFieldTypeValidationEnabled, formBuilder}}
-		value={state}
-	>
+	<FormProvider initialState={{formBuilder}} value={state}>
 		<ValidationDate {...props} />
 	</FormProvider>
 );
@@ -295,7 +291,6 @@ describe('ValidationDate', () => {
 
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				formBuilder={formBuilder}
@@ -425,7 +420,6 @@ describe('ValidationDate', () => {
 
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				formBuilder={formBuilder}
@@ -493,7 +487,6 @@ describe('ValidationDate', () => {
 
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				formBuilder={formBuilder}
@@ -555,7 +548,6 @@ describe('ValidationDate', () => {
 		const localizedValue = jest.fn(() => parameter['en_US']);
 		const {getAllByRole, getByText} = render(
 			<ValidationDateProvider
-				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				formBuilder={formBuilder}

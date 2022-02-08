@@ -61,6 +61,19 @@ exports[`ValidationDate shows date range validation 1`] = `
       <label>
         starts-from
       </label>
+      <div
+        data-tooltip-align="top"
+        title="starts-from-tooltip"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
+        >
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="dropdown"
@@ -244,6 +257,19 @@ exports[`ValidationDate shows date range validation 1`] = `
       <label>
         ends-on
       </label>
+      <div
+        data-tooltip-align="top"
+        title="ends-on-tooltip"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
+        >
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="dropdown"
@@ -484,6 +510,19 @@ exports[`ValidationDate shows future dates validation 1`] = `
       <label>
         starts-from
       </label>
+      <div
+        data-tooltip-align="top"
+        title="starts-from-tooltip"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
+        >
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="dropdown"
@@ -724,6 +763,19 @@ exports[`ValidationDate shows past dates validation 1`] = `
       <label>
         ends-on
       </label>
+      <div
+        data-tooltip-align="top"
+        title="ends-on-tooltip"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
+        >
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="dropdown"

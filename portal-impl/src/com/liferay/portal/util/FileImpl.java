@@ -71,10 +71,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
@@ -463,28 +460,9 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				}
 			}
 		}
-		catch (Throwable throwable) {
-			Throwable rootCauseThrowable = ExceptionUtils.getRootCause(
-				throwable);
-
-			if (rootCauseThrowable instanceof EncryptedDocumentException ||
-				rootCauseThrowable instanceof UnsupportedZipFeatureException) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to extract text from an encrypted file " +
-							fileName,
-						throwable);
-				}
-			}
-			else if (throwable instanceof TikaException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to extract text from " + fileName, throwable);
-				}
-			}
-			else {
-				_log.error(throwable, throwable);
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
 			}
 		}
 

@@ -589,7 +589,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			assetListJSONObject.getString("title"),
-			String.valueOf(UnicodePropertiesBuilder.create(map, true)),
+			UnicodePropertiesBuilder.create(
+				map, true
+			).buildString(),
 			serviceContext);
 	}
 

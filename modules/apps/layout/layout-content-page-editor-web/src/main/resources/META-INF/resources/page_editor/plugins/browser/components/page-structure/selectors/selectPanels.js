@@ -197,7 +197,6 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.fragmentStyles]: canUpdateItemConfiguration,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration &&
 				fieldSets.some(
 					(fieldSet) =>

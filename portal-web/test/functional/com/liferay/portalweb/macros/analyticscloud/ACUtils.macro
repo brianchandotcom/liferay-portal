@@ -878,6 +878,12 @@ definition {
 
 			WaitForPageLoad();
 
+			while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+				ACSegments.searchSegment(findSegment = "${name}");
+
+				ACUtils.clearSearchBar();
+			}
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "ACUtils#PARTIAL_NAME_LIST",
 				value1 = "${name}");

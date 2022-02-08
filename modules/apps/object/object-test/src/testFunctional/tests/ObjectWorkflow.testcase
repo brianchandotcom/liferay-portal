@@ -33,6 +33,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -69,17 +70,56 @@ definition {
 		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Custom Field");
 
 		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
-
-
 	}
 
 	@description = "LPS-145228 - Verify that the user is able to view the entire entry's information by clicking on View button"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewEntryInformationThroughViewButtonMyWorkflowTasks {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-146874 CanViewEntryInformationThroughViewButtonMyWorkflowTasks pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.viewTaskAssignedToMyRolesDetails(
+			workflowAssetTitle = "",
+			workflowTask = "Review");
+
+		Workflow.gotoPreviewView();
+
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_SHEET_ON_DEFINE_PERMISSIONS");
+
+		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Custom Field");
+
+		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
 	}
 
 }

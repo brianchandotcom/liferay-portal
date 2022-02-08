@@ -976,6 +976,12 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
 	}
 
+	macro viewFieldValueDisabled {
+		AssertElementPresent(
+			key_fieldValue = "${fieldValue}",
+			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
+	}
+
 	macro viewObjectPresentOnSite {
 		ProductMenuHelper.openProductMenu();
 
@@ -997,12 +1003,6 @@ definition {
 			key_name = "${name}",
 			key_system = "Yes",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
-	macro viewFieldValueDisabled {
-		AssertElementPresent(
-			key_fieldValue = "${fieldValue}",
-			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 	}
 
 }

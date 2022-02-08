@@ -130,6 +130,32 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	@Test
+	public void testAddObjectEntryWithReadOnlyFieldsReturnsError()
+		throws Exception {
+
+		Assert.assertEquals(
+			"Bad Request",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"create" + _objectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_objectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"",
+										RandomTestUtil.randomString(), "\"",
+										", status: draft }")
+								).build(),
+								new GraphQLField(_objectFieldName))))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testDeleteObjectEntry() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
 			"mutation",

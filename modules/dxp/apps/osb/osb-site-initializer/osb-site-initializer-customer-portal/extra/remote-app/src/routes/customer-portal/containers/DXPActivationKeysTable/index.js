@@ -176,6 +176,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 
 			<div className="mt-4 py-2">
 				<DXPActivationKeysTableHeader
+					accountKey={project.accountKey}
 					activationKeys={activationKeysFiltered}
 					licenseKeyDownloadURL={licenseKeyDownloadURL}
 					selectedKeys={activationKeysChecked}

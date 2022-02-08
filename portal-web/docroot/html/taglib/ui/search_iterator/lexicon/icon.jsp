@@ -43,11 +43,18 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 %>
 
 	<dl class="<%= searchResultCssClass %>" data-qa-id="rows<%= i %>">
-		<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-			<dt class="card-section-header container-fluid">
-				<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-			</dt>
-		</c:if>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
+				<dt class="card-section-header container-fluid">
+					<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+				</dt>
+			</c:when>
+			<c:otherwise>
+				<dt class="sr-only">
+					<%= PortalUtil.getPortletTitle(portletRequest) %>
+				</dt>
+			</c:otherwise>
+		</c:choose>
 
 		<%
 		for (int j = 0; j < curResultRows.size(); j++) {

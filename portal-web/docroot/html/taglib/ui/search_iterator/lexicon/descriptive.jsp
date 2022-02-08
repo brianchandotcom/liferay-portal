@@ -39,21 +39,30 @@
 	%>
 
 		<dl class="<%= searchResultCssClass %>">
-			<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-				<dt class="list-group-header">
-					<div class="list-group-header-title">
-						<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-					</div>
-				</dt>
-			</c:if>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) || ((headerNames != null) && Validator.isNotNull(headerNames.get(0))) %>">
+					<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
+						<dt class="list-group-header">
+							<div class="list-group-header-title">
+								<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+							</div>
+						</dt>
+					</c:if>
 
-			<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
-				<dt class="list-group-header">
-					<div class="list-group-header-title">
-						<liferay-ui:message key="<%= HtmlUtil.escape(headerNames.get(0)) %>" />
-					</div>
-				</dt>
-			</c:if>
+					<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
+						<dt class="list-group-header">
+							<div class="list-group-header-title">
+								<liferay-ui:message key="<%= HtmlUtil.escape(headerNames.get(0)) %>" />
+							</div>
+						</dt>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<dt class="sr-only">
+						<%= PortalUtil.getPortletTitle(portletRequest) %>
+					</dt>
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			boolean allRowsIsChecked = true;

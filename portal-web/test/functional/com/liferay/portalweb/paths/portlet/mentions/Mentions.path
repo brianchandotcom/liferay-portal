@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENTION_POPUP_DISAPPEAR</td>
+	<td>//div[@style='display: none;']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENTIONS_TAG_LINK</td>
 	<td>//a[contains(.,'${key_mentionsUserScreenName}')]</td>
 	<td></td>

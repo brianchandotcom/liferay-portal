@@ -205,4 +205,33 @@ definition {
 			notificationCount = "1");
 	}
 
+	@description = "This case ensures that the mention popup disappears."
+	@priority = "4"
+	test CanViewMentionPopUpDisappear {
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "user2@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addComment(
+			fragmentComment = "Comment by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2");
+
+		PageEditor.viewMentionPopupDisapper();
+	}
+
 }

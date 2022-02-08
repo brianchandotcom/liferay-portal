@@ -4302,6 +4302,10 @@ definition {
 			value1 = "${text}");
 	}
 
+	macro viewMentionPopupDisapper {
+		AssertElementPresent(locator1 = "Mentions#MENTION_POPUP_DISAPPEAR");
+	}
+
 	macro viewMentionsDisplayOption {
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 

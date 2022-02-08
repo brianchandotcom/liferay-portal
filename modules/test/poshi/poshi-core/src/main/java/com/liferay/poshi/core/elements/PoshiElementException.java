@@ -19,6 +19,8 @@ import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
 
+import org.dom4j.Element;
+
 /**
  * @author Calum Ragan
  */
@@ -33,6 +35,20 @@ public class PoshiElementException extends Exception {
 		}
 
 		return (PoshiElement)poshiNode;
+	}
+
+	public static String join(Object... objects) {
+		StringBuilder sb = new StringBuilder();
+
+		for (Object object : objects) {
+			sb.append(object.toString());
+		}
+
+		return sb.toString();
+	}
+
+	public PoshiElementException(Element element, Object... messageParts) {
+		this(join(messageParts), (PoshiElement)element);
 	}
 
 	public PoshiElementException(String msg) {

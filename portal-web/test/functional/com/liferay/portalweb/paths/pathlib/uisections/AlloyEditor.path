@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_TOOLBAR</td>
+	<td>//div[contains(@class,'ae-toolbar') and contains(@class,'alloy-editor')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

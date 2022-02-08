@@ -499,8 +499,9 @@ definition {
 	@description = "This is a use case for LPS-37209."
 	@priority = "4"
 	test ConfigureTaskTimersViaViewTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaViewTab";
+
+
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -543,7 +544,7 @@ definition {
 		}
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<name>Timer Name</name>''',
+			kdSourceXml = '''<name>Timer Name</name>''',
 			line = "17");
 
 		KaleoDesigner.viewSourceXMLLine(
@@ -838,7 +839,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -846,22 +846,14 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
-
-		KaleoDesigner.viewSourceXMLTab();
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "condition_workflow_invalid.xml");
-
-		KaleoDesigner.viewViewTab();
-
-		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
+		Workflow.uploadDefinition(
+			errorMessage = "The Condition node must have at least two outgoing transitions.",
+			workflowDefinitionFile = "invalid-condition-workflow-definition.xml",
+			workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage";
 
 		var nodeScript = '''
@@ -905,13 +897,10 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
-
-		KaleoDesigner.viewSourceXMLTab();
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "condition_workflow_invalid.xml");
+		Workflow.uploadDefinition(
+			errorMessage = "The Condition node must have at least two outgoing transitions.",
+			workflowDefinitionFile = "invalid-condition-workflow-definition.xml",
+			workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.viewViewTab();
 

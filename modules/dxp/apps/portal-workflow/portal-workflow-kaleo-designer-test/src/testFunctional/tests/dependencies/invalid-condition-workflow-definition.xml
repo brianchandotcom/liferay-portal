@@ -1,19 +1,18 @@
+<?xml version="1.0"?>
+
 <workflow-definition
 	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>New Workflow Definition Title</name>
-	<version>1</version>
 	<condition>
 		<name>Condition</name>
-		<description>Condition Node Description</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						248.03125,
-						198.85227966308594
+						257,
+						251.80001068115234
 					]
 				}
 			]]>
@@ -24,21 +23,20 @@
 		<script-language>groovy</script-language>
 		<transitions>
 			<transition>
-				<name>Approve</name>
-				<target>End</target>
+				<name>connector17352</name>
+				<target>EndNode</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</condition>
 	<state>
-		<name>Start</name>
-		<description>Start Node Description</description>
+		<name>StartNode</name>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						98.0113525390625,
-						165.36932373046875
+						100,
+						40
 					]
 				}
 			]]>
@@ -46,25 +44,35 @@
 		<initial>true</initial>
 		<transitions>
 			<transition>
-				<name>Submit</name>
+				<name>connector9050</name>
 				<target>Condition</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>End</name>
-		<description>End Node Description</description>
+		<name>EndNode</name>
 		<metadata>
 			<![CDATA[
 				{
 					"terminal": true,
 					"xy": [
-						420.57672119140625,
-						240.85227966308594
+						100,
+						500
 					]
 				}
 			]]>
 		</metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script>
+					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
 	</state>
 </workflow-definition>

@@ -1082,13 +1082,22 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 
-		PortletEntry.publish();
+		if (isSet(errorMessage)) {
+			AssertClickNoError(
+				locator1 = "Button#PUBLISH",
+				value1 = "Publish");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#HEADER",
-			value1 = "${workflowDefinitionTitle}");
+			Alert.viewErrorMessage(errorMessage = "${errorMessage}");
+		}
+		else {
+			PortletEntry.publish();
 
-		Navigator.gotoBack();
+			AssertTextEquals.assertPartialText(
+				locator1 = "Portlet#HEADER",
+				value1 = "${workflowDefinitionTitle}");
+
+			Navigator.gotoBack();
+		}
 	}
 
 	macro viewAssignedToMyRolesTasksCP {

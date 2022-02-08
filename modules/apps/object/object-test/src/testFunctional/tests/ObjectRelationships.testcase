@@ -32,12 +32,61 @@ definition {
 	}
 
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object entry with a Native Object entry"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddOneToManyRelationWithNativeObject {
 		property portal.acceptance = "true";
 
-		// TODO LPS-146866 CanAddOneToManyRelationWithNativeObject pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		CreateObject.selectTitleField(fieldLabel = "First Name");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "User",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.searchEntryRelationshipField(entryValue = "userfn");
+
+		Button.clickSave();
+
+		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 
 	}
 

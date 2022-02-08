@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.term.model.CommerceTermEntry;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
@@ -44,10 +45,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCommercePaymentMethodGroupRelQualifiersMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);

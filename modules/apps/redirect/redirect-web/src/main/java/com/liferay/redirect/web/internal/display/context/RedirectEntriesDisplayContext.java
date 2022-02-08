@@ -68,9 +68,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class RedirectDisplayContext {
+public class RedirectEntriesDisplayContext {
 
-	public RedirectDisplayContext(
+	public RedirectEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -155,11 +155,11 @@ public class RedirectDisplayContext {
 		return simpleDateFormat.format(expirationDate);
 	}
 
-	public RedirectManagementToolbarDisplayContext
+	public RedirectEntriesManagementToolbarDisplayContext
 			getRedirectManagementToolbarDisplayContext()
 		throws Exception {
 
-		return new RedirectManagementToolbarDisplayContext(
+		return new RedirectEntriesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
 			_liferayPortletResponse, searchContainer());
 	}

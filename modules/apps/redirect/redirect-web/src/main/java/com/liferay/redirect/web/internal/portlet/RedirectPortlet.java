@@ -21,7 +21,7 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
-import com.liferay.redirect.web.internal.display.context.RedirectDisplayContext;
+import com.liferay.redirect.web.internal.display.context.RedirectEntriesDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -77,8 +77,8 @@ public class RedirectPortlet extends MVCPortlet {
 		}
 		else {
 			renderRequest.setAttribute(
-				RedirectDisplayContext.class.getName(),
-				new RedirectDisplayContext(
+				RedirectEntriesDisplayContext.class.getName(),
+				new RedirectEntriesDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),

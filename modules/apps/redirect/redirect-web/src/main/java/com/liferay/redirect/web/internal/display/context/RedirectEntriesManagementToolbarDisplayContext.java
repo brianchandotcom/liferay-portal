@@ -44,10 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class RedirectManagementToolbarDisplayContext
+public class RedirectEntriesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public RedirectManagementToolbarDisplayContext(
+	public RedirectEntriesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -177,7 +177,7 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RedirectManagementToolbarDisplayContext.class);
+		RedirectEntriesManagementToolbarDisplayContext.class);
 
 	private final ThemeDisplay _themeDisplay;
 

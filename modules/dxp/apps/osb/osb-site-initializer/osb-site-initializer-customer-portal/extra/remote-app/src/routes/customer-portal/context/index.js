@@ -14,6 +14,7 @@ import client from '../../../apolloClient';
 import {useApplicationProvider} from '../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../common/services/liferay';
 import {
+	getAccountByExternalReferenceCode,
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
@@ -199,18 +200,37 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				);
 
 				if (isValid) {
-					const accountBrief = user.accountBriefs?.find(
-						(accountBrief) =>
-							accountBrief.externalReferenceCode ===
-							projectExternalReferenceCode
+					const hasRoleBriefAdministrator = user?.roleBriefs?.some(
+						(role) => role.name === 'Administrator'
 					);
 
-					if (accountBrief) {
-						getProject(projectExternalReferenceCode, accountBrief);
-						getSubscriptionGroups(projectExternalReferenceCode);
-						getStructuredContents();
-						getSessionId();
+					let accountBrief;
+
+					if (hasRoleBriefAdministrator) {
+						const {data: dataAccount} = await client.query({
+							query: getAccountByExternalReferenceCode,
+							variables: {
+								externalReferenceCode: projectExternalReferenceCode,
+							},
+						});
+
+						if (dataAccount) {
+							accountBrief =
+								dataAccount?.accountByExternalReferenceCode;
+						}
 					}
+					else {
+						accountBrief = user.accountBriefs?.find(
+							(accountBrief) =>
+								accountBrief.externalReferenceCode ===
+								projectExternalReferenceCode
+						);
+					}
+
+					getProject(projectExternalReferenceCode, accountBrief);
+					getSubscriptionGroups(projectExternalReferenceCode);
+					getStructuredContents();
+					getSessionId();
 				}
 			}
 		};

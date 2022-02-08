@@ -52,7 +52,6 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		);
 		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
 		const isAccountAdministrator = userAccount.isAdmin;
-
 		const hasRoleBriefAdministrator = userAccount?.roleBriefs?.some(
 			(role) => role.name === 'Administrator'
 		);
@@ -83,6 +82,8 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTE_TYPES.overview) {
 			if (!isValidExternalReferenceCode && !hasRoleBriefAdministrator) {
 				window.location.href = getHomeLocation();
+
+				return false;
 			}
 			else if (!hasAccountFlags && isAccountAdministrator) {
 				window.location.href = getOnboardingLocation(

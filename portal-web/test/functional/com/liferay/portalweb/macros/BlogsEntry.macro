@@ -30,6 +30,28 @@ definition {
 				navTab = "${navTab}",
 				uploadFileName = "${uploadFileName}");
 		}
+
+		if (isSet(entryInlineImageURL)) {
+			var key_uploadFileName = StringUtil.replace("${uploadFileName}", ".jpg", "");
+
+			Click(
+				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE",
+				value1 = "${uploadFileName}");
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK");
+
+			Type(
+				locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
+				value1 = "${entryInlineImageURL}");
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
+
+			Click(
+				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE",
+				value1 = "${uploadFileName}");
+
+			AssertVisible(locator1 = "AlloyEditor#IMAGE_TOOLBAR");
+		}
 	}
 
 	macro addCustomAbstract {

@@ -26,7 +26,7 @@ request.setAttribute("view.jsp-portletURL", cpDefinitionsDisplayContext.getPortl
 
 <div id="<portlet:namespace />productDefinitionsContainer">
 	<aui:form action="<%= cpDefinitionsDisplayContext.getPortletURL() %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" "<%= Constants.DELETE %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 

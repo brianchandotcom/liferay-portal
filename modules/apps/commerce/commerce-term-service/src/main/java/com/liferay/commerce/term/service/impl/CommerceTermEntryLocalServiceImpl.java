@@ -74,7 +74,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -276,12 +275,12 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	public BaseModelSearchResult<CommerceTermEntry> searchCommerceTermEntries(
-			long companyId, long accountEntryId, String keywords,
-			LinkedHashMap<String, String> params, int start, int end, Sort sort)
+			long companyId, long accountEntryId, String type, String keywords,
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, accountEntryId, keywords, params, start, end, sort);
+			companyId, accountEntryId, type, keywords, start, end, sort);
 
 		return searchCommerceTermEntries(searchContext);
 	}
@@ -425,22 +424,16 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long accountEntryId, String keywords,
-		LinkedHashMap<String, String> params, int start, int end, Sort sort) {
+		long companyId, long accountEntryId, String type, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
-				_FIELD_KEY, keywords
-			).put(
-				Field.CONTENT, keywords
-			).put(
-				Field.ENTRY_CLASS_PK, keywords
-			).put(
 				Field.NAME, keywords
 			).put(
-				Field.TYPE, params.get("type")
+				Field.TYPE, type
 			).put(
 				"accountEntryId", accountEntryId
 			).build());
@@ -776,10 +769,8 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 	}
 
-	private static final String _FIELD_KEY = "key";
-
 	private static final String[] _SELECTED_FIELD_NAMES = {
-		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
+		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

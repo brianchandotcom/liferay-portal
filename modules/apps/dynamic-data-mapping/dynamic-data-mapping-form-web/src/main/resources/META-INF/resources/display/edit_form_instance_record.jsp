@@ -72,9 +72,9 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 				module="admin/js/FormView"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"description", HtmlUtil.escape(formInstance.getDescription(displayLocale))
+						"description", formInstance.getDescription(displayLocale)
 					).put(
-						"title", HtmlUtil.escape(formInstance.getName(displayLocale))
+						"title", formInstance.getName(displayLocale)
 					).put(
 						"validateCSRFTokenURL", validateCSRFTokenURL.toString()
 					).putAll(

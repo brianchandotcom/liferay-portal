@@ -254,13 +254,13 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 								module="admin/js/FormView"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
-										"description", HtmlUtil.replaceNewLine(StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale))))
+										"description", StringUtil.trim(formInstance.getDescription(displayLocale))
 									).put(
 										"formReportDataURL", formReportDataURL.toString()
 									).put(
 										"hasDescription", StringUtils.isNotEmpty(formInstance.getDescription(displayLocale))
 									).put(
-										"title", HtmlUtil.escape(formInstance.getName(displayLocale))
+										"title", formInstance.getName(displayLocale)
 									).put(
 										"validateCSRFTokenURL", validateCSRFTokenURL.toString()
 									).putAll(
@@ -299,7 +299,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 					function <portlet:namespace />fireFormView() {
 						Liferay.fire('ddmFormView', {
 							formId: '<%= formInstanceId %>',
-							title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>',
+							title: '<%= HtmlUtil.escapeJS(formInstance.getName(displayLocale)) %>',
 						});
 					}
 

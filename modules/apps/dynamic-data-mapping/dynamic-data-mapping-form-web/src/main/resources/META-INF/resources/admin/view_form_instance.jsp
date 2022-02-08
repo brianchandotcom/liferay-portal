@@ -94,7 +94,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 											cssClass="table-cell-expand table-title"
 											href="<%= rowURL %>"
 											name="name"
-											value="<%= HtmlUtil.escape(formInstance.getName(locale)) %>"
+											value="<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(formInstance.getName(locale))) %>"
 										/>
 									</c:when>
 									<c:otherwise>
@@ -126,7 +126,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 												/>
 											</span>
 											<span class="invalid-form-instance">
-												<%= HtmlUtil.escape(formInstance.getName(locale)) %>
+												<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(formInstance.getName(locale))) %>
 											</span>
 										</liferay-ui:search-container-column-text>
 									</c:otherwise>
@@ -135,7 +135,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand"
 									name="description"
-									value="<%= HtmlUtil.escape(formInstance.getDescription(locale)) %>"
+									value="<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(formInstance.getDescription(locale))) %>"
 								/>
 
 								<c:if test="<%= ddmFormAdminDisplayContext.isExpirationDateEnabled() %>">

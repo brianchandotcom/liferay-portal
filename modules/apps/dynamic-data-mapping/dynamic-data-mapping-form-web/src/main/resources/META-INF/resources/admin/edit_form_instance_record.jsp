@@ -54,14 +54,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 		<aui:input name="defaultLanguageId" type="hidden" value="<%= LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()) %>" />
 
 		<div class="ddm-form-basic-info">
-			<h1 class="ddm-form-name"><%= ddmFormAdminDisplayContext.getFormName() %></h1>
+			<h1 class="ddm-form-name"><%= HtmlUtil.replaceNewLine(HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName())) %></h1>
 
 			<%
 			String description = ddmFormAdminDisplayContext.getFormDescription();
 			%>
 
 			<c:if test="<%= Validator.isNotNull(description) %>">
-				<h5 class="ddm-form-description"><%= description %></h5>
+				<h5 class="ddm-form-description"><%= HtmlUtil.replaceNewLine(HtmlUtil.escape(description)) %></h5>
 			</c:if>
 		</div>
 

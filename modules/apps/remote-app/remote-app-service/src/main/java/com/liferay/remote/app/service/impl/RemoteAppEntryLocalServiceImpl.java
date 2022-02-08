@@ -119,12 +119,12 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry;
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			String cssURLs = _joinJSONArray(
-				manifestJSONObject.getJSONArray("cssURLs"));
+			String cssURLs = _joinResolvedURLsJSONArray(
+				bundledAppURL, manifestJSONObject.getJSONArray("cssURLs"));
 			String htmlElementName = manifestJSONObject.getString(
 				"htmlElementName", StringPool.BLANK);
-			String urls = _joinJSONArray(
-				manifestJSONObject.getJSONArray("urls"));
+			String urls = _joinResolvedURLsJSONArray(
+				bundledAppURL, manifestJSONObject.getJSONArray("urls"));
 			boolean useESM = manifestJSONObject.getBoolean("useESM", false);
 
 			remoteAppEntry = _createCustomElementRemoteAppEntry(
@@ -640,7 +640,9 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntries;
 	}
 
-	private String _joinJSONArray(JSONArray jsonArray) {
+	private String _joinResolvedURLsJSONArray(
+		String baseURL, JSONArray jsonArray) {
+
 		if (jsonArray == null) {
 			return StringPool.BLANK;
 		}
@@ -652,10 +654,22 @@ public class RemoteAppEntryLocalServiceImpl
 				sb.append(StringPool.COMMA);
 			}
 
-			sb.append(jsonArray.getString(i));
+			sb.append(_resolveURL(baseURL, jsonArray.getString(i)));
 		}
 
 		return sb.toString();
+	}
+
+	private String _resolveURL(String baseURL, String url) {
+		if (!baseURL.endsWith(StringPool.SLASH)) {
+			baseURL += StringPool.SLASH;
+		}
+
+		if (url.startsWith(StringPool.PERIOD)) {
+			return baseURL + url.substring(2);
+		}
+
+		return url;
 	}
 
 	private RemoteAppEntry _startWorkflowInstance(

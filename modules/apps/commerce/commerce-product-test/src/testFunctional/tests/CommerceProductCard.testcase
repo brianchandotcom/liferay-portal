@@ -11,7 +11,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	/*
 	tearDown {
 		Navigator.openURL();
 
@@ -25,7 +24,6 @@ definition {
 
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
-*/
 
 	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
 	@priority = "3"
@@ -569,7 +567,7 @@ definition {
 
 		var productName = "Simple T-Shirt";
 
-		//CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -19,6 +19,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
@@ -41,6 +42,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -568,6 +570,10 @@ public class UserAccountResourceImpl
 		User user;
 
 		if (contextUser.isDefaultUser()) {
+			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
+				CaptchaUtil.check(contextHttpServletRequest);
+			}
+
 			user = _userService.addUser(
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
@@ -1115,6 +1121,9 @@ public class UserAccountResourceImpl
 	@Reference
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
+
+	@Reference
+	private CaptchaSettings _captchaSettings;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

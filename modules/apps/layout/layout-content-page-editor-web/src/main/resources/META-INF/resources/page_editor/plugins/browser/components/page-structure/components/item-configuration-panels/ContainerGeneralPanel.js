@@ -17,8 +17,10 @@ import React, {useEffect, useState} from 'react';
 
 import LinkField from '../../../../../../app/components/fragment-configuration-fields/LinkField';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
+import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../app/config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
+import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {
 	useDispatch,
 	useSelector,
@@ -27,7 +29,9 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
 import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
+import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
+import {CommonStyles} from './CommonStyles';
 
 const ALIGN_ITEMS_STRETCH = 'align-items-stretch';
 const JUSTIFY_CONTENT_START = 'justify-content-start';
@@ -121,6 +125,15 @@ export default function ContainerGeneralPanel({item}) {
 		setLinkValue(getEditableLinkValue(item.config.link, languageId));
 	}, [item.config.link, languageId]);
 
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const containerConfig = getResponsiveConfig(
+		item.config,
+		selectedViewportSize
+	);
+
 	const handleValueSelect = (_, nextLinkConfig) => {
 		let nextConfig;
 
@@ -156,116 +169,132 @@ export default function ContainerGeneralPanel({item}) {
 
 	return (
 		<>
-			<LinkField
-				field={{name: 'link'}}
-				onValueSelect={handleValueSelect}
-				value={linkValue || {}}
+			<CommonStyles
+				commonStylesValues={containerConfig.styles}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
 			/>
 
-			<SelectField
-				field={{
-					label: Liferay.Language.get('content-display'),
-					name: 'contentDisplay',
-					typeOptions: {
-						validValues: CONTENT_DISPLAY_OPTIONS,
-					},
-				}}
-				onValueSelect={(name, value) => {
-					const itemConfig =
-						value === CONTAINER_DISPLAY_OPTIONS.block
-							? {
-									align: '',
-									justify: '',
-									[name]: '',
-							  }
-							: {[name]: value};
-
-					dispatch(
-						updateItemConfig({
-							itemConfig,
-							itemId: item.itemId,
-							segmentsExperienceId,
-						})
-					);
-				}}
-				value={item.config.contentDisplay}
-			/>
-
-			{flexOptionsVisible && (
-				<div className="d-flex justify-content-between">
-					<SelectField
-						className="page-editor__sidebar__fieldset__field-small"
-						field={{
-							label: Liferay.Language.get('align-items'),
-							name: 'align',
-							typeOptions: {
-								validValues: ALIGN_OPTIONS,
-							},
-						}}
-						onValueSelect={(name, value) => {
-							dispatch(
-								updateItemConfig({
-									itemConfig: {
-										[name]:
-											value === ALIGN_ITEMS_STRETCH
-												? ''
-												: value,
-									},
-									itemId: item.itemId,
-									segmentsExperienceId,
-								})
-							);
-						}}
-						value={item.config.align || ALIGN_ITEMS_STRETCH}
+			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
+				<div className="page-editor__item-general-configuration">
+					<LinkField
+						field={{name: 'link'}}
+						onValueSelect={handleValueSelect}
+						value={linkValue || {}}
 					/>
 
 					<SelectField
-						className="page-editor__sidebar__fieldset__field-small"
 						field={{
-							label: Liferay.Language.get('justify-content'),
-							name: 'justify',
+							label: Liferay.Language.get('content-display'),
+							name: 'contentDisplay',
 							typeOptions: {
-								validValues: JUSTIFY_OPTIONS,
+								validValues: CONTENT_DISPLAY_OPTIONS,
 							},
 						}}
 						onValueSelect={(name, value) => {
+							const itemConfig =
+								value === CONTAINER_DISPLAY_OPTIONS.block
+									? {
+											align: '',
+											justify: '',
+											[name]: '',
+									  }
+									: {[name]: value};
+
 							dispatch(
 								updateItemConfig({
-									itemConfig: {
-										[name]:
-											value === JUSTIFY_CONTENT_START
-												? ''
-												: value,
-									},
+									itemConfig,
 									itemId: item.itemId,
 									segmentsExperienceId,
 								})
 							);
 						}}
-						value={item.config.justify || JUSTIFY_CONTENT_START}
+						value={item.config.contentDisplay}
+					/>
+
+					{flexOptionsVisible && (
+						<div className="d-flex justify-content-between">
+							<SelectField
+								className="page-editor__sidebar__fieldset__field-small"
+								field={{
+									label: Liferay.Language.get('align-items'),
+									name: 'align',
+									typeOptions: {
+										validValues: ALIGN_OPTIONS,
+									},
+								}}
+								onValueSelect={(name, value) => {
+									dispatch(
+										updateItemConfig({
+											itemConfig: {
+												[name]:
+													value ===
+													ALIGN_ITEMS_STRETCH
+														? ''
+														: value,
+											},
+											itemId: item.itemId,
+											segmentsExperienceId,
+										})
+									);
+								}}
+								value={item.config.align || ALIGN_ITEMS_STRETCH}
+							/>
+
+							<SelectField
+								className="page-editor__sidebar__fieldset__field-small"
+								field={{
+									label: Liferay.Language.get(
+										'justify-content'
+									),
+									name: 'justify',
+									typeOptions: {
+										validValues: JUSTIFY_OPTIONS,
+									},
+								}}
+								onValueSelect={(name, value) => {
+									dispatch(
+										updateItemConfig({
+											itemConfig: {
+												[name]:
+													value ===
+													JUSTIFY_CONTENT_START
+														? ''
+														: value,
+											},
+											itemId: item.itemId,
+											segmentsExperienceId,
+										})
+									);
+								}}
+								value={
+									item.config.justify || JUSTIFY_CONTENT_START
+								}
+							/>
+						</div>
+					)}
+
+					<SelectField
+						field={{
+							label: Liferay.Language.get('container-width'),
+							name: 'widthType',
+							typeOptions: {
+								validValues: WIDTH_TYPE_OPTIONS,
+							},
+						}}
+						onValueSelect={(name, value) => {
+							dispatch(
+								updateItemConfig({
+									itemConfig: {[name]: value},
+									itemId: item.itemId,
+									segmentsExperienceId,
+								})
+							);
+						}}
+						value={item.config.widthType}
 					/>
 				</div>
 			)}
-
-			<SelectField
-				field={{
-					label: Liferay.Language.get('container-width'),
-					name: 'widthType',
-					typeOptions: {
-						validValues: WIDTH_TYPE_OPTIONS,
-					},
-				}}
-				onValueSelect={(name, value) => {
-					dispatch(
-						updateItemConfig({
-							itemConfig: {[name]: value},
-							itemId: item.itemId,
-							segmentsExperienceId,
-						})
-					);
-				}}
-				value={item.config.widthType}
-			/>
 		</>
 	);
 }

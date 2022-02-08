@@ -11,6 +11,12 @@ html#{$cadmin-selector} {
 				height: 100%;
 				overflow: hidden;
 
+				.page-editor__item-general-configuration {
+					border-top: 1px solid $cadmin-gray-300;
+					margin-top: $pageEditorSpacing * 1.5;
+					padding-top: $pageEditorSpacing;
+				}
+
 				.tab-content {
 					overflow: auto;
 				}

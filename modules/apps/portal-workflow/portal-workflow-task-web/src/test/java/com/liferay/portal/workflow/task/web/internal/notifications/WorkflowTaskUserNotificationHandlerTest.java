@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -33,11 +34,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
@@ -140,6 +143,67 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, null, _INVALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+	}
+
+	@Test
+	public void testIsApplicable() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			WorkflowTaskManagerUtil.class, "_workflowTaskManager",
+			Mockito.mock(WorkflowTaskManager.class));
+
+		UserNotificationEvent userNotificationEvent = Mockito.mock(
+			UserNotificationEvent.class);
+
+		Mockito.when(
+			userNotificationEvent.getPayload()
+		).thenReturn(
+			JSONUtil.put(
+				"entryClassName", _VALID_ENTRY_CLASS_NAME
+			).put(
+				"workflowTaskId", _VALID_WORKFLOW_TASK_ID
+			).toJSONString()
+		);
+
+		User user1 = Mockito.mock(User.class);
+
+		Mockito.when(
+			user1.getUserId()
+		).thenReturn(
+			1L
+		);
+
+		Mockito.when(
+			WorkflowTaskManagerUtil.getAssignableUsers(
+				Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			ListUtil.toList(user1)
+		);
+
+		_serviceContext.setUserId(user1.getUserId());
+
+		Assert.assertTrue(
+			_workflowTaskUserNotificationHandler.isApplicable(
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, "Sample Object",
+					_VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+
+		User user2 = Mockito.mock(User.class);
+
+		Mockito.when(
+			user2.getUserId()
+		).thenReturn(
+			2L
+		);
+
+		_serviceContext.setUserId(user2.getUserId());
+
+		Assert.assertFalse(
+			_workflowTaskUserNotificationHandler.isApplicable(
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, "Sample Object",
+					_VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 

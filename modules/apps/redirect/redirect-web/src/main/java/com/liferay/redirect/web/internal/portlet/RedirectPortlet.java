@@ -15,12 +15,13 @@
 package com.liferay.redirect.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
+import com.liferay.redirect.web.internal.display.context.RedirectDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectEntriesDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext;
 import com.liferay.staging.StagingGroupHelper;
@@ -63,10 +64,15 @@ public class RedirectPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String navigation = ParamUtil.getString(
-			renderRequest, "navigation", "redirects");
+		RedirectDisplayContext redirectDisplayContext =
+			new RedirectDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_redirectConfiguration, renderResponse);
 
-		if (navigation.equals("404-urls")) {
+		renderRequest.setAttribute(
+			RedirectDisplayContext.class.getName(), redirectDisplayContext);
+
+		if (redirectDisplayContext.isShowRedirectNotFoundEntries()) {
 			renderRequest.setAttribute(
 				RedirectNotFoundEntriesDisplayContext.class.getName(),
 				new RedirectNotFoundEntriesDisplayContext(
@@ -91,6 +97,9 @@ public class RedirectPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RedirectConfiguration _redirectConfiguration;
 
 	@Reference
 	private RedirectEntryLocalService _redirectEntryLocalService;

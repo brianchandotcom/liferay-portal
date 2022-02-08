@@ -60,6 +60,16 @@ public class LogParametersCheck extends BaseFileCheck {
 
 			String firstParameter = StringUtil.trim(parameterList.get(0));
 
+			if ((parameterList.size() == 1) &&
+				firstParameter.matches("\\w*[eE]xception\\.getMessage\\(\\)")) {
+
+				String replacement = firstParameter.substring(
+					0, firstParameter.indexOf("."));
+
+				return StringUtil.replaceFirst(
+					content, firstParameter, replacement, matcher.start(2));
+			}
+
 			if (!Validator.isVariableName(firstParameter)) {
 				continue;
 			}

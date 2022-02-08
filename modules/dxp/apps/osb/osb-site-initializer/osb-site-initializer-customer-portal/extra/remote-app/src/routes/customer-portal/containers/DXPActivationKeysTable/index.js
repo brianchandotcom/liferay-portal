@@ -72,7 +72,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		setIsLoadingActivationKeys(true);
 		const fetchActivationKeysData = async () => {
 			const {items} = await getActivationLicenseKey(
-				'KOR-3809080',
+				project.accountKey,
 				licenseKeyDownloadURL,
 				encodeURI('active eq true'),
 				PAGE,

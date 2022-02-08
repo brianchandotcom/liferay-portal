@@ -817,6 +817,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKU_DISCONTINUED_TOGGLE</td>
+	<td>//label[contains(.,'Mark the SKU as Discontinued')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_GROUPS_COLUMN_VALUE</td>
 	<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]//..//../following-sibling::div[1]</td>
 	<td></td>

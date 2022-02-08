@@ -35,12 +35,12 @@ public class TermEntityModel implements EntityModel {
 	public TermEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
-				new IntegerEntityField("name", locale -> "name")),
+				new IntegerEntityField(Field.NAME, locale -> Field.NAME)),
 			new DoubleEntityField(
-				"priority",
+				Field.PRIORITY,
 				locale -> Field.getSortableFieldName(
 					Field.PRIORITY + "_Number")),
-			new StringEntityField("type", locale -> "type")
+			new StringEntityField(Field.TYPE, locale -> Field.TYPE)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

@@ -9,13 +9,20 @@
  * distribution rights of the Software.
  */
 
+import {isNode} from 'react-flow-renderer';
+
 import {retrieveRolesBy, retrieveUsersBy} from '../../util/fetchUtil';
 import {getAssignmentType} from '../components/sidebar/sections/assignments/utils';
 
 const populateAssignmentsData = (initialElements, setElements) => {
 	for (let index = 0; index < initialElements.length; index++) {
 		const element = initialElements[index];
-		if (element.data.assignments) {
+
+		if (
+			isNode(element) &&
+			element.type === 'task' &&
+			element.data.assignments
+		) {
 			const assignmentType = getAssignmentType(element.data.assignments);
 
 			if (assignmentType === 'user') {

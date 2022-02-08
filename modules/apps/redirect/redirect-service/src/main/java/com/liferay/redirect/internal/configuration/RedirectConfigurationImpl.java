@@ -33,7 +33,7 @@ public class RedirectConfigurationImpl
 	implements com.liferay.redirect.configuration.RedirectConfiguration {
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isRedirectNotFoundEnabled() {
 		return _redirectConfiguration.enabled();
 	}
 

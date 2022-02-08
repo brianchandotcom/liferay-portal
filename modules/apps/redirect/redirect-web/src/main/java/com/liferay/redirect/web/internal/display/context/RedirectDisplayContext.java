@@ -51,7 +51,7 @@ public class RedirectDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "redirects"));
 			}
 		).add(
-			_redirectConfiguration::isEnabled,
+			_redirectConfiguration::isRedirectNotFoundEnabled,
 			navigationItem -> {
 				navigationItem.setActive(isShowRedirectNotFoundEntries());
 				navigationItem.setHref(

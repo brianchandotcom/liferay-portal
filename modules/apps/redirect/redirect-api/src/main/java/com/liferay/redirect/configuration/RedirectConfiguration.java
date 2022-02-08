@@ -19,6 +19,6 @@ package com.liferay.redirect.configuration;
  */
 public interface RedirectConfiguration {
 
-	public boolean isEnabled();
+	public boolean isRedirectNotFoundEnabled();
 
 }

@@ -583,7 +583,7 @@ definition {
 			line = "31");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXml = '''<![CDATA[Test Script]]>''',
+			kdSourceXml = '''Test Script''',
 			line = "33");
 
 		KaleoDesigner.viewSourceXMLLine(

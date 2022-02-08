@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../../../../app/config/index';
 import {
@@ -26,7 +27,12 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet} from './FieldSet';
 
-export function CommonStyles({className, commonStylesValues, item}) {
+export function CommonStyles({
+	className,
+	commonStylesValues,
+	role = COMMON_STYLES_ROLES.styles,
+	item,
+}) {
 	const {commonStyles} = config;
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -35,6 +41,12 @@ export function CommonStyles({className, commonStylesValues, item}) {
 	);
 
 	let styles = commonStyles;
+
+	styles = styles.filter((fieldSet) =>
+		role === COMMON_STYLES_ROLES.general
+			? fieldSet.configurationRole === COMMON_STYLES_ROLES.general
+			: fieldSet.configurationRole !== COMMON_STYLES_ROLES.general
+	);
 
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 		styles = styles.filter((fieldSet) =>

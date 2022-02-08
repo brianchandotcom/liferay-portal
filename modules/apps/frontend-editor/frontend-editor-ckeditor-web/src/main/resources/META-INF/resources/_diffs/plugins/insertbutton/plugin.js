@@ -289,17 +289,6 @@
 
 				editor.on('change', hide),
 
-				CKEDITOR.document.getWindow().on('click', (event) => {
-					const target = event.data.getTarget();
-
-					if (
-						!target.$.closest('.lfr-balloon-editor') &&
-						!target.equals(button)
-					) {
-						hide();
-					}
-				}),
-
 				editor.on('contentDom', () => {
 					const body = editor.document.getBody();
 

@@ -299,6 +299,24 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro overrideProductDisplayPage {
+		CommerceChannels.addProduct(product = "${product}");
+
+		CommerceChannels.chooseDisplayPageFromSidePanel(
+			pageName = "${pageName}",
+			pageType = "${pageType}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro removeDefaultDisplayPage {
 		Click(locator1 = "CommerceEntry#DISPLAY_PAGE_ITEM_REMOVE");
 

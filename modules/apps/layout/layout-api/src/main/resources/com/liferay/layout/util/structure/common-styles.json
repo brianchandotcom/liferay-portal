@@ -1,5 +1,6 @@
 [
 	{
+		"configurationRole": "general",
 		"styles": [
 			{
 				"dataType": "string",
@@ -477,6 +478,7 @@
 		]
 	},
 	{
+		"configurationRole": "general",
 		"label": "size",
 		"styles": [
 			{

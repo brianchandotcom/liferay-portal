@@ -11,14 +11,14 @@
 
 <tbody>
 <tr>
-    <td>BROWSE_FILES</td>
-    <td>//h5[contains(., '${title}')]//..//..//input[@type='file']</td>
-    <td></td>
+	<td>BROWSE_FILES</td>
+	<td>//h5[contains(., '${title}')]//..//..//input[@type='file']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ARCHIVE_FIELD</td>
-    <td>//div[contains(@class, 'content d-flex justify-content-center')]/parent::div//span[contains(text(), '${file}')]</td>
-    <td></td>
+	<td>ARCHIVE_FIELD</td>
+	<td>//div[contains(@class, 'content d-flex justify-content-center')]/parent::div//span[contains(text(), '${file}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DELETE_ARCHIVE</td>
@@ -26,39 +26,39 @@
 	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_CHANGE</td>
-    <td>//div[contains(text(), '2. Upload Documents')]/parent::div//span[contains(text(), 'Change')]</td>
-    <td></td>
+	<td>BUTTON_CHANGE</td>
+	<td>//div[contains(text(), '2. Upload Documents')]/parent::div//span[contains(text(), 'Change')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DISCARD_CHANGES</td>
-    <td>//span[contains(text(),'Discard Changes')]</td>
-    <td></td>
+	<td>DISCARD_CHANGES</td>
+	<td>//span[contains(text(),'Discard Changes')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_CONTINUE_MODAL</td>
-    <td>//button[contains(text(),'Continue')]</td>
-    <td></td>
+	<td>BUTTON_CONTINUE_MODAL</td>
+	<td>//button[contains(text(),'Continue')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_CANCEL_MODAL</td>
-    <td>//button[contains(text(),'Cancel')]</td>
-    <td></td>
+	<td>BUTTON_CANCEL_MODAL</td>
+	<td>//button[contains(text(),'Cancel')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_CONFIRM_UPLOADS</td>
-    <td>//button[contains(text(), 'CONFIRM UPLOADS')]</td>
-    <td></td>
+	<td>BUTTON_CONFIRM_UPLOADS</td>
+	<td>//button[contains(text(), 'CONFIRM UPLOADS')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CHECKMARK</td>
-    <td>//div[contains(text(), '${title}')]/parent::div//div[contains(@class, 'bg-success')]</td>
-    <td></td>
+	<td>CHECKMARK</td>
+	<td>//div[contains(text(), '${title}')]/parent::div//div[contains(@class, 'bg-success')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PAYMENT_FIELD</td>
-    <td>//div[contains(text(),'3. Select Payment Method')]</td>
-    <td></td>
+	<td>PAYMENT_FIELD</td>
+	<td>//div[contains(text(),'3. Select Payment Method')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

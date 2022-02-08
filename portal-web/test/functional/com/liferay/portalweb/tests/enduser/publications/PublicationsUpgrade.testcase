@@ -20,7 +20,8 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		Upgrade.viewOutOfDatePublications();
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
 	}
 
 }

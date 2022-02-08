@@ -137,11 +137,15 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
+			document.addKeyword(
+				Field.getSortableFieldName(
+					LocalizationUtil.getLocalizedName(Field.TITLE, languageId)),
+				sxpElement.getTitle(locale), true);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				sxpElement.getDescription(locale));
-			document.addTextSortable(
+			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				sxpElement.getTitle(locale));
 		}

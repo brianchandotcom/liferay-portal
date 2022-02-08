@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend;
+package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -64,15 +65,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceShippingFixedOptionClayTable.NAME,
-		"clay.data.set.display.name=" + CommerceShippingFixedOptionClayTable.NAME
+		"clay.data.provider.key=" + CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME
 	},
 	service = {
 		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
 		ClayDataSetDisplayView.class
 	}
 )
-public class CommerceShippingFixedOptionClayTable
+public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView
 	implements ClayDataSetActionProvider,
 			   ClayDataSetDataProvider<ShippingFixedOption> {
@@ -80,7 +81,7 @@ public class CommerceShippingFixedOptionClayTable
 	public static final String NAME = "shipping-fixed-options";
 
 	@Override
-	public ClayTableSchema getClayTableSchema() {
+	public ClayTableSchema getClayTableSchema(Locale locale) {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 

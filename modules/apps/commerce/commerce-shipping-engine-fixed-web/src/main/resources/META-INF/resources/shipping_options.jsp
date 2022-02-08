@@ -30,8 +30,8 @@ CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayCo
 			).build()
 		%>'
 		creationMenu="<%= commerceShippingFixedOptionsDisplayContext.getCreationMenu() %>"
-		dataProviderKey="<%= CommerceShippingFixedOptionClayTable.NAME %>"
-		id="<%= CommerceShippingFixedOptionClayTable.NAME %>"
+		dataProviderKey="<%= CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME %>"
+		id="<%= CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME %>"
 		itemsPerPage="<%= 10 %>"
 		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"

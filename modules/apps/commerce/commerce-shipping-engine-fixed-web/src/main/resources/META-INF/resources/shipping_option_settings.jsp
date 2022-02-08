@@ -29,8 +29,8 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 				).build()
 			%>'
 			creationMenu="<%= commerceShippingFixedOptionRelsDisplayContext.getCreationMenu() %>"
-			dataProviderKey="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
-			id="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
+			dataProviderKey="<%= CommerceShippingFixedOptionSettingClayTableDataSetDisplayView.NAME %>"
+			id="<%= CommerceShippingFixedOptionSettingClayTableDataSetDisplayView.NAME %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

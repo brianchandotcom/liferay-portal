@@ -30,11 +30,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.LinkedHashMap;
 import java.util.Objects;
 
 /**
@@ -64,17 +62,6 @@ public class AccountEntryCommerceTermEntryDisplaySearchContainerFactory {
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"commerce-term-order-by-type", "asc"));
 
-		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords");
-
-		String type = ParamUtil.getString(liferayPortletRequest, "type");
-
-		LinkedHashMap<String, String> params = new LinkedHashMap<>();
-
-		if (Validator.isNotNull(type)) {
-			params.put("type", type);
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -83,8 +70,9 @@ public class AccountEntryCommerceTermEntryDisplaySearchContainerFactory {
 			CommerceTermEntryLocalServiceUtil.searchCommerceTermEntries(
 				themeDisplay.getCompanyId(),
 				ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
-				keywords, params, searchContainer.getStart(),
-				searchContainer.getEnd(),
+				ParamUtil.getString(liferayPortletRequest, "type"),
+				ParamUtil.getString(liferayPortletRequest, "keywords"),
+				searchContainer.getStart(), searchContainer.getEnd(),
 				_getSort(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType()));

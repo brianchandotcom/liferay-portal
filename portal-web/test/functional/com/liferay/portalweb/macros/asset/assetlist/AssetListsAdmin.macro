@@ -116,6 +116,9 @@ definition {
 		if (IsElementPresent(locator1 = "AssetLists#ADD_VARIATION_ICON")) {
 			Click(locator1 = "AssetLists#ADD_VARIATION_ICON");
 		}
+		else if (IsElementPresent(key_text = "New Personalized Variation", locator1 = "Button#ANY")) {
+			Button.click(button = "New Personalized Variation");
+		}
 		else {
 			Button.click(button = "Add Personalized Variation");
 		}
@@ -417,7 +420,12 @@ definition {
 	}
 
 	macro openPersonalizedVariation {
-		Button.click(button = "Add Personalized Variation");
+		if (IsElementPresent(key_text = "New Personalized Variation", locator1 = "Button#ANY")) {
+			Button.click(button = "New Personalized Variation");
+		}
+		else {
+			Button.click(button = "Add Personalized Variation");
+		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}

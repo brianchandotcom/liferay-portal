@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -39,7 +38,10 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -106,6 +108,8 @@ public class ObjectEntryDisplayContext {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryService objectEntryService,
+		ObjectFieldBusinessTypeServicesTracker
+			objectFieldBusinessTypeServicesTracker,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -116,6 +120,8 @@ public class ObjectEntryDisplayContext {
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryService = objectEntryService;
+		_objectFieldBusinessTypeServicesTracker =
+			objectFieldBusinessTypeServicesTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -486,13 +492,28 @@ public class ObjectEntryDisplayContext {
 
 		// TODO Store the type and the object field type in the database
 
-		DDMFormField ddmFormField = new DDMFormField(
-			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeServicesTracker.getObjectFieldBusinessType(
+				objectField.getBusinessType());
 
-		_setDDMFormFieldProperties(
-			ddmFormField,
-			GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-			objectField.getDBType(), objectField.getRelationshipType());
+		DDMFormField ddmFormField = new DDMFormField(
+			objectField.getName(),
+			objectFieldBusinessType.getDDMFormFieldTypeName());
+
+		Map<String, Object> objectFieldBusinessTypeProperties =
+			objectFieldBusinessType.getProperties();
+
+		objectFieldBusinessTypeProperties.forEach(
+			(key, value) -> ddmFormField.setProperty(key, value));
+
+		if (StringUtil.equals(
+				objectFieldBusinessType.getName(),
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			ddmFormField.setDDMFormFieldOptions(
+				_getDDMFieldOptions(
+					GetterUtil.getLong(objectField.getListTypeDefinitionId())));
+		}
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());
@@ -760,45 +781,6 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
-	private void _setDDMFormFieldProperties(
-		DDMFormField ddmFormField, long listTypeDefinitionId, String dbType,
-		String relationshipType) {
-
-		if (Validator.isNotNull(relationshipType)) {
-			ddmFormField.setType("object-relationship");
-		}
-		else if (StringUtil.equals(dbType, "BigDecimal") ||
-				 StringUtil.equals(dbType, "Double")) {
-
-			ddmFormField.setProperty(
-				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
-			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
-		}
-		else if (StringUtil.equals(dbType, "Boolean")) {
-			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
-		}
-		else if (StringUtil.equals(dbType, "Clob")) {
-			ddmFormField.setProperty("displayStyle", "multiline");
-		}
-		else if (StringUtil.equals(dbType, "Integer") ||
-				 StringUtil.equals(dbType, "Long")) {
-
-			ddmFormField.setProperty(
-				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
-			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
-		}
-		else if (StringUtil.equals(dbType, "Date")) {
-			ddmFormField.setType(DDMFormFieldTypeConstants.DATE);
-		}
-		else if (StringUtil.equals(dbType, "String") &&
-				 (listTypeDefinitionId > 0)) {
-
-			ddmFormField.setDDMFormFieldOptions(
-				_getDDMFieldOptions(listTypeDefinitionId));
-			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
-		}
-	}
-
 	private void _setDDMFormFieldValueValue(
 		String ddmFormFieldName, DDMFormFieldValue ddmFormFieldValue,
 		Map<String, Serializable> values) {
@@ -824,6 +806,8 @@ public class ObjectEntryDisplayContext {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
+	private final ObjectFieldBusinessTypeServicesTracker
+		_objectFieldBusinessTypeServicesTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final Map<Long, String> _objectFieldNames = new HashMap<>();
 	private final ObjectLayoutLocalService _objectLayoutLocalService;

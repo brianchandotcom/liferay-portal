@@ -15,6 +15,11 @@
 	<td>//body[contains(@class,"${key_class}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OVERRIDE_BODY_WITH_BLUE</td>
+	<td>//body[contains(@class,'${key_class}') and contains(@class,'blue-background')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

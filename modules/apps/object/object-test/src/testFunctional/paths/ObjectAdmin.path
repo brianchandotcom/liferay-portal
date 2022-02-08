@@ -575,6 +575,11 @@
 		<td>//div[(@class='sheet sheet-lg')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_FIELD_VALUE_DISABLED</td>
+		<td>//input[@disabled][contains(@class,'form-control ddm-field-text') and contains(@value,'${key_fieldValue}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

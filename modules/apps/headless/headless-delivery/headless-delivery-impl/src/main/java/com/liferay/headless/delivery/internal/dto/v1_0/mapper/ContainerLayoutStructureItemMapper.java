@@ -367,15 +367,6 @@ public class ContainerLayoutStructureItemMapper
 								StringUtil.upperCaseFirstLetter(widthType));
 						}
 
-						String containerType =
-							containerStyledLayoutStructureItem.
-								getContainerType();
-
-						if (Validator.isNotNull(containerType)) {
-							return WidthType.create(
-								StringUtil.upperCaseFirstLetter(containerType));
-						}
-
 						return null;
 					});
 			}

@@ -354,9 +354,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			userId, groupId, layoutPageTemplateCollectionId,
 			sourceLayoutPageTemplateEntry.getClassNameId(),
 			sourceLayoutPageTemplateEntry.getClassTypeId(), name,
-			sourceLayoutPageTemplateEntry.getType(), false, 0,
-			previewFileEntryId, 0, sourceLayoutPageTemplateEntry.getStatus(),
-			serviceContext);
+			sourceLayoutPageTemplateEntry.getType(), previewFileEntryId, false,
+			0, 0, 0, sourceLayoutPageTemplateEntry.getStatus(), serviceContext);
 	}
 
 	@Override
@@ -816,8 +815,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			layoutPrototype.getUserId(), groupId, 0, 0, 0,
 			nameMap.get(defaultLocale),
-			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, false,
-			layoutPrototype.getLayoutPrototypeId(), 0, layout.getPlid(), status,
+			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, 0, false,
+			layoutPrototype.getLayoutPrototypeId(), layout.getPlid(), 0, status,
 			new ServiceContext());
 	}
 

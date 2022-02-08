@@ -378,9 +378,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			actualBackgroundImageJSONObject.toJSONString());
 
 		Assert.assertEquals(
-			expectedContainerStyledLayoutStructureItem.getContainerType(),
-			actualContainerStyledLayoutStructureItem.getContainerType());
-		Assert.assertEquals(
 			expectedContainerStyledLayoutStructureItem.getPaddingBottom(),
 			actualContainerStyledLayoutStructureItem.getPaddingBottom());
 		Assert.assertEquals(

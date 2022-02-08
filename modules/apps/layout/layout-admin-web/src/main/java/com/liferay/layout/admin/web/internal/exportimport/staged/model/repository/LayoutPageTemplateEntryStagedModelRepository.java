@@ -70,9 +70,9 @@ public class LayoutPageTemplateEntryStagedModelRepository
 			layoutPageTemplateEntry.getClassTypeId(),
 			layoutPageTemplateEntry.getName(),
 			layoutPageTemplateEntry.getType(),
+			layoutPageTemplateEntry.getPreviewFileEntryId(),
 			layoutPageTemplateEntry.isDefaultTemplate(),
-			layoutPageTemplateEntry.getLayoutPrototypeId(),
-			layoutPageTemplateEntry.getPreviewFileEntryId(), plid,
+			layoutPageTemplateEntry.getLayoutPrototypeId(), plid, 0,
 			layoutPageTemplateEntry.getStatus(), serviceContext);
 	}
 

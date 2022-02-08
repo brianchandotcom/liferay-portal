@@ -21,6 +21,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -910,7 +912,10 @@ public class LayoutConverterTest {
 			_layoutConverterRegistry.getLayoutConverter(
 				_getLayoutTemplateId(layout));
 
-		LayoutData layoutData = layoutConverter.convert(layout);
+		LayoutConversionResult layoutConversionResult = layoutConverter.convert(
+			layout, LocaleUtil.getSiteDefault());
+
+		LayoutData layoutData = layoutConversionResult.getLayoutData();
 
 		LayoutStructure actualLayoutStructure = LayoutStructure.of(
 			String.valueOf(layoutData.getLayoutDataJSONObject()));
@@ -1004,7 +1009,10 @@ public class LayoutConverterTest {
 			_layoutConverterRegistry.getLayoutConverter(
 				_getLayoutTemplateId(layout));
 
-		LayoutData layoutData = layoutConverter.convert(layout);
+		LayoutConversionResult layoutConversionResult = layoutConverter.convert(
+			layout, LocaleUtil.getSiteDefault());
+
+		LayoutData layoutData = layoutConversionResult.getLayoutData();
 
 		LayoutStructure actualLayoutStructure = LayoutStructure.of(
 			String.valueOf(layoutData.getLayoutDataJSONObject()));

@@ -66,7 +66,7 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProvider
 	public boolean isShow(
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
-		if (!blogsEntry.isVisible()) {
+		if (blogsEntry.isDraft() || blogsEntry.isInTrash()) {
 			return false;
 		}
 

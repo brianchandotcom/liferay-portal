@@ -10,6 +10,19 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Add cadmin portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Cadmin Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Cadmin Test Page",
+				widgetName = "CSS Cadmin Sample");
+
+			Navigator.gotoPage(pageName = "Cadmin Test Page");
+		}
 	}
 
 	tearDown {
@@ -30,19 +43,6 @@ definition {
 	@description = "LPS-146034. Verifies admin component displays it's default theme after applying a theme"
 	@priority = "5"
 	test CanDisplayDefaultTheme {
-		task ("Add cadmin portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Cadmin Test Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Cadmin Test Page",
-				widgetName = "CSS Cadmin Sample");
-
-			Navigator.gotoPage(pageName = "Cadmin Test Page");
-		}
-
 		task ("Assert classic theme background color") {
 			AssertCssValue(
 				key_class = "test",
@@ -93,6 +93,46 @@ definition {
 				locator1 = "Cadmin#BODY",
 				locator2 = "background-color",
 				value1 = "rgba(0, 0, 0, 0)");
+
+			takeScreenshot();
+		}
+	}
+
+	@description = "LPS-146450. Verifies admin component CSS can be overridden"
+	@priority = "4"
+	test CssCanBeOverridden {
+		task ("Assert cadmin default theme is applied to a component") {
+			AssertCssValue(
+				key_class = "cadmin",
+				locator1 = "Cadmin#OVERRIDE_BODY_WITH_BLUE",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 0, 0)");
+		}
+
+		task ("Apply theme with CSS changes higher than cadmin") {
+			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.changeWidgetPageCurrentTheme(
+				pageName = "Cadmin Test Page",
+				themeName = "test-theme-7-4");
+
+			Navigator.openSitePage(
+				pageName = "Cadmin Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Assert admin component has its CSS overriden") {
+			AssertCssValue(
+				key_class = "cadmin",
+				locator1 = "Cadmin#OVERRIDE_BODY_WITH_BLUE",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 255, 1)");
 
 			takeScreenshot();
 		}

@@ -10,9 +10,6 @@
 		border-radius: 0 8px 8px 0;
 	}
 	td {
-		background-color: var(
-			--color-action-primary-active-lighten-1,
-			rgb(0, 74, 215, 0.1)
-		) !important;
+		background-color: var(--color-action-primary-active-lighten) !important;
 	}
 }

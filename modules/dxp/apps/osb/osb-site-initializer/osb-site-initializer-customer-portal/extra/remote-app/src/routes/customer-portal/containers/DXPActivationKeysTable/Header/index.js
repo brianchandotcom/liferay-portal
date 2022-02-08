@@ -97,7 +97,7 @@ const DXPActivationKeysTableHeader = ({
 		if (selectedKeys.length) {
 			return (
 				<Button
-					className="btn btn-secondary"
+					className="btn btn-primary"
 					onClick={async () =>
 						getActivationKeyDownload(
 							selectedKeys,

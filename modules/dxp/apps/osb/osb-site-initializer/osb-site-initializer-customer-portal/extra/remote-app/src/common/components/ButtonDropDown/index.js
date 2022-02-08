@@ -8,8 +8,8 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {Button} from '..';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useState} from 'react';
 
@@ -27,11 +27,9 @@ const ButtonDropDown = ({
 			alignmentPosition={align}
 			onActiveChange={setActive}
 			trigger={
-				<button className="btn btn-primary">
+				<Button appendIcon="caret-bottom" className="btn btn-primary">
 					{label}
-
-					<ClayIcon className="ml-2" symbol="caret-bottom" />
-				</button>
+				</Button>
 			}
 			{...props}
 		>

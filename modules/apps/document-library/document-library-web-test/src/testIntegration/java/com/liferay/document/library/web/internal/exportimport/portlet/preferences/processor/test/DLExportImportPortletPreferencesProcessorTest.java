@@ -116,7 +116,10 @@ public class DLExportImportPortletPreferencesProcessorTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_portletPreferences.setValue(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
+		_portletPreferences.setValue(
+			"selectedRepositoryId",
+			String.valueOf(fileEntry.getRepositoryId()));
 
 		_portletPreferences.store();
 
@@ -168,7 +171,10 @@ public class DLExportImportPortletPreferencesProcessorTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_portletPreferences.setValue(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
+		_portletPreferences.setValue(
+			"selectedRepositoryId",
+			String.valueOf(fileEntry.getRepositoryId()));
 
 		_portletPreferences.store();
 

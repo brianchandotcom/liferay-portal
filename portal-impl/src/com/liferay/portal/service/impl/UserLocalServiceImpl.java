@@ -324,7 +324,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PasswordPolicy passwordPolicy =
 				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 
-			if ((passwordPolicy != null) && passwordPolicy.isChangeable()) {
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+				passwordPolicy.isChangeRequired()) {
+
 				passwordReset = true;
 			}
 		}

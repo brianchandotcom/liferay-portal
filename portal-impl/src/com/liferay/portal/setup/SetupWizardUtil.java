@@ -359,7 +359,9 @@ public class SetupWizardUtil {
 				PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(
 					company.getCompanyId());
 
-			if ((passwordPolicy != null) && passwordPolicy.isChangeable()) {
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+				passwordPolicy.isChangeRequired()) {
+
 				passwordReset = true;
 			}
 		}

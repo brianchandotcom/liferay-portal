@@ -21,6 +21,8 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
 
+import {SelectTree as NewSelectTree} from './SelectTree.es';
+
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
 		callback(node);
@@ -43,24 +45,12 @@ function getFilter(filterQuery) {
 		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
 }
 
-function SelectCategory({
-	addCategoryURL,
+function SelectTree({
+	filterQuery,
 	itemSelectorSaveEvent,
-	moveCategory,
+	items,
 	multiSelection,
-	namespace,
-	nodes,
 }) {
-	const flattenedNodes = useMemo(() => {
-		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
-			return nodes[0].children;
-		}
-
-		return nodes;
-	}, [nodes]);
-
-	const [filterQuery, setFilterQuery] = useState('');
-
 	const selectedNodesRef = useRef(null);
 
 	const handleSelectionChange = (selectedNodes) => {
@@ -68,7 +58,7 @@ function SelectCategory({
 
 		// Mark newly selected nodes as selected.
 
-		visit(flattenedNodes, (node) => {
+		visit(items, (node) => {
 			if (selectedNodes.has(node.id)) {
 				data[node.id] = {
 					categoryId: node.vocabulary ? 0 : node.id,
@@ -102,14 +92,47 @@ function SelectCategory({
 	const initialSelectedNodeIds = useMemo(() => {
 		const selectedNodes = [];
 
-		visit(flattenedNodes, (node) => {
+		visit(items, (node) => {
 			if (node.selected) {
 				selectedNodes.push(node.id);
 			}
 		});
 
 		return selectedNodes;
-	}, [flattenedNodes]);
+	}, [items]);
+
+	return (
+		<Treeview
+			NodeComponent={Treeview.Card}
+			filter={getFilter(filterQuery)}
+			initialSelectedNodeIds={initialSelectedNodeIds}
+			multiSelection={multiSelection}
+			nodes={items}
+			onSelectedNodesChange={handleSelectionChange}
+		/>
+	);
+}
+
+const Tree = Liferay.__FF__.enableClayTreeView ? NewSelectTree : SelectTree;
+
+function SelectCategory({
+	addCategoryURL,
+	itemSelectorSaveEvent,
+	moveCategory,
+	multiSelection,
+	namespace,
+	nodes,
+	selectedCategory,
+}) {
+	const [items, setItems] = useState(() => {
+		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
+			return nodes[0].children;
+		}
+
+		return nodes;
+	});
+
+	const [filterQuery, setFilterQuery] = useState('');
 
 	return (
 		<div className="select-category">
@@ -164,14 +187,14 @@ function SelectCategory({
 						className="category-tree"
 						id={`${namespace}categoryContainer`}
 					>
-						{flattenedNodes.length > 0 ? (
-							<Treeview
-								NodeComponent={Treeview.Card}
-								filter={getFilter(filterQuery)}
-								initialSelectedNodeIds={initialSelectedNodeIds}
+						{items.length > 0 ? (
+							<Tree
+								filterQuery={filterQuery}
+								itemSelectorSaveEvent={itemSelectorSaveEvent}
+								items={items}
 								multiSelection={multiSelection}
-								nodes={flattenedNodes}
-								onSelectedNodesChange={handleSelectionChange}
+								onItems={setItems}
+								selectedCategory={selectedCategory}
 							/>
 						) : (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">

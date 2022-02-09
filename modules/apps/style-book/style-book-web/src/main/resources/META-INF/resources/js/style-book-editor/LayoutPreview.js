@@ -133,6 +133,9 @@ function loadOverlay(iframeRef, previewLayoutType) {
 			'click',
 			(event) => {
 				event.preventDefault();
+			},
+			{
+				capture: true,
 			}
 		);
 	}

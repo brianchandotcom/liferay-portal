@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
@@ -19,10 +20,17 @@ import {getListTypeDefinitions} from '../../../../../common/services/liferay/gra
 import {getDevelopmentLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import {
+	ALERT_DOWNLOAD_TYPE,
+	AUTO_CLOSE_DOWNLOAD_ALERT_TIME,
 	EXTENSION_FILE_TYPES,
 	LIST_TYPES,
 	STATUS_CODE,
 } from '../../../utils/constants';
+
+const ALERT_DEVELOPER_KEYS_DOWNLOAD_TEXT = {
+	[ALERT_DOWNLOAD_TYPE.danger]: 'Unable to download key, please try again.',
+	[ALERT_DOWNLOAD_TYPE.success]: 'Developer Key was downloaded successfully.',
+};
 
 const DeveloperKeysInputs = ({
 	accountKey,
@@ -37,6 +45,10 @@ const DeveloperKeysInputs = ({
 	} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion);
+	const [
+		developerKeysDownloadStatus,
+		setDeveloperKeysDownloadStatus,
+	] = useState('');
 
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
@@ -63,7 +75,7 @@ const DeveloperKeysInputs = ({
 		fetchListTypeDefinitions();
 	}, [dxpVersion]);
 
-	const handleClick = async () => {
+	const developerKeyDownload = async () => {
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			licenseKeyDownloadURL,
@@ -76,17 +88,19 @@ const DeveloperKeysInputs = ({
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
+			setDeveloperKeysDownloadStatus(ALERT_DOWNLOAD_TYPE.success);
+
 			const projectFileName = projectName
 				.replaceAll(' ', '')
 				.toLowerCase();
 
-			downloadFromBlob(
+			return downloadFromBlob(
 				licenseBlob,
 				`activation-key-dxpdevelopment-${selectedVersion}-${projectFileName}${extensionFile}`
 			);
-
-			return;
 		}
+
+		setDeveloperKeysDownloadStatus(ALERT_DOWNLOAD_TYPE.danger);
 	};
 
 	return (
@@ -126,7 +140,7 @@ const DeveloperKeysInputs = ({
 
 				<Button
 					className="btn btn-outline-primary cp-developer-keys-button py-1"
-					onClick={handleClick}
+					onClick={developerKeyDownload}
 					prependIcon="download"
 					type="button"
 				>
@@ -148,6 +162,29 @@ const DeveloperKeysInputs = ({
 					</u>
 				</a>
 			</p>
+
+			{developerKeysDownloadStatus && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={
+							AUTO_CLOSE_DOWNLOAD_ALERT_TIME[
+								developerKeysDownloadStatus
+							]
+						}
+						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
+						displayType={
+							ALERT_DOWNLOAD_TYPE[developerKeysDownloadStatus]
+						}
+						onClose={() => setDeveloperKeysDownloadStatus('')}
+					>
+						{
+							ALERT_DEVELOPER_KEYS_DOWNLOAD_TEXT[
+								developerKeysDownloadStatus
+							]
+						}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
 		</div>
 	);
 };

@@ -1641,8 +1641,8 @@ definition {
 
 		task ("Go to Courses Tab") {
 			MouseOver(
-				locator1 = "NavTab#TAB_LINK",
-				key_tab = "Courses");
+				key_tab = "Courses",
+				locator1 = "NavTab#TAB_LINK");
 		}
 
 		task ("Assert the title of the first course redirects to the course display page") {
@@ -1657,8 +1657,8 @@ definition {
 
 		task ("Assert the title of the second course redirects to the course display page") {
 			MouseOver(
-				locator1 = "NavTab#TAB_LINK",
-				key_tab = "Courses");
+				key_tab = "Courses",
+				locator1 = "NavTab#TAB_LINK");
 
 			Click(
 				filterOption = "Project Manager Certification",
@@ -1671,8 +1671,8 @@ definition {
 
 		task ("Assert the title of the third course redirects to the course display page") {
 			MouseOver(
-				locator1 = "NavTab#TAB_LINK",
-				key_tab = "Courses");
+				key_tab = "Courses",
+				locator1 = "NavTab#TAB_LINK");
 
 			Click(
 				filterOption = "Digital Marketing Bootcamp",

@@ -113,8 +113,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	@Test
 	public void testExportDLFileEntryIdWithComments() throws Exception {
 		FileEntry fileEntry = _addDLFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_portletPreferences.setValue(
 			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
@@ -169,8 +168,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	@Test
 	public void testExportDLFileEntryIdWithRatings() throws Exception {
 		FileEntry fileEntry = _addDLFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_portletPreferences.setValue(
 			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
@@ -221,8 +219,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	public void testExportDLFileEntryInDifferentGroup() throws Exception {
 		FileEntry fileEntry = _addDLFileEntry(
 			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_portletPreferences.setValue(
 			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
@@ -254,8 +251,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	@Test
 	public void testExportDLFileEntryInSameGroup() throws Exception {
 		FileEntry fileEntry = _addDLFileEntry(
-			_layout.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_layout.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_portletPreferences.setValue(
 			"rootFolderId", String.valueOf(fileEntry.getFolderId()));
@@ -289,8 +285,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addDLFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_portletPreferences.setValue(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
@@ -315,18 +310,17 @@ public class DLExportImportPortletPreferencesProcessorTest {
 			GetterUtil.getLong(importedfileEntryId));
 	}
 
-	private FileEntry _addDLFileEntry(
-			long groupId, long folderId, String fileName, String content)
+	private FileEntry _addDLFileEntry(long groupId, long folderId)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), groupId, folderId, fileName,
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, content.getBytes(), null, null,
-			serviceContext);
+			null, TestPropsValues.getUserId(), groupId, folderId,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomBytes(), null, null, serviceContext);
 	}
 
 	@Inject

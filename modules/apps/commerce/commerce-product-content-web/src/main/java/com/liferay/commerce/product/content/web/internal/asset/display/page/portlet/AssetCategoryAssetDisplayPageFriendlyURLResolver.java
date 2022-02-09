@@ -266,8 +266,15 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 			return _layoutLocalService.getLayout(plid);
 		}
 
-		return _layoutLocalService.getLayoutByUuidAndGroupId(
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			cpDisplayLayout.getLayoutUuid(), groupId, privateLayout);
+
+		if (layout == null) {
+			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				cpDisplayLayout.getLayoutUuid(), groupId, !privateLayout);
+		}
+
+		return layout;
 	}
 
 	private String _getBasicLayoutURL(

@@ -19,6 +19,7 @@ import com.github.erdi.gradle.webdriver.WebDriverBinariesPluginExtension;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
+import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -46,12 +47,22 @@ public class PoshiRunnerDefaultsPlugin implements Plugin<Project> {
 
 		webDriverBinariesPluginExtension.setChromedriver("86.0.4240.22");
 
-		ResourceHandler resourceHandler = project.getResources();
+		if (_isRunningInCIEnvironment()) {
+			ResourceHandler resourceHandler = project.getResources();
 
-		TextResourceFactory textResourceFactory = resourceHandler.getText();
+			TextResourceFactory textResourceFactory = resourceHandler.getText();
 
-		webDriverBinariesPluginExtension.setDriverUrlsConfiguration(
-			textResourceFactory.fromUri(_WEB_DRIVER_URI));
+			webDriverBinariesPluginExtension.setDriverUrlsConfiguration(
+				textResourceFactory.fromUri(_WEB_DRIVER_URI));
+		}
+	}
+
+	private boolean _isRunningInCIEnvironment() {
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _WEB_DRIVER_URI =

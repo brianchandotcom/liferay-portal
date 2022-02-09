@@ -1,6 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property osgi.modules.includes = "frontend-css-cadmin-sample-web,frontend-css-cadmin-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Cadmin";

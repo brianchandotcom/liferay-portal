@@ -8744,6 +8744,8 @@ browser.launcher.url=
 
 setup.wizard.enabled=false
 
+passwords.default.policy.changeable=false
+
 mail.send.blacklist=
 
 mail.session.jndi.name=

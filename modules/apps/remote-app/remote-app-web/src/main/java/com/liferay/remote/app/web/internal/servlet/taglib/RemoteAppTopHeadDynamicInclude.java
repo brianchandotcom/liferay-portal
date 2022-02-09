@@ -134,6 +134,10 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 					synchronized (this) {
 						String[] urls = _portletURLsMap.remove(portletName);
 
+						if (urls == null) {
+							return;
+						}
+
 						for (String url : urls) {
 							Integer referenceCount = _urls.get(url);
 

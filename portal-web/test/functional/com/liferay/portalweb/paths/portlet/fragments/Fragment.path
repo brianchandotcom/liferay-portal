@@ -71,12 +71,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']/div[contains(@class,'page-editor__topper__content')]//div[@aria-label='${key_inFragmentName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONTENT</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${index}]</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,12 +86,12 @@
 </tr>
 <tr>
 	<td>MESSAGE_INFO</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NO_COLLECTION_SELECTED_MESSAGE</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='page-editor__collection' and contains(.,'${key_messageInfo}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[@class='page-editor__collection' and contains(.,'${key_messageInfo}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 <!--FRAGMENT_COMMENT-->
 <tr>
 	<td>FRAGMENT_COMMENT_ICON</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_CUSTOM_STYLE-->
@@ -277,7 +277,7 @@
 <!--FRAGMENT_EDITABLE_FIELD-->
 <tr>
 	<td>AVAILABLE_ADAPTIVE_MEDIA</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
 	</td>
 	<td></td>
 </tr>
@@ -371,11 +371,6 @@
 <tr>
 	<td>FRAGMENT_HEADER_INSET_STYLE</td>
 	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'topper__bar--inset') and contains(.,'${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_HEADER_POSITION</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar tbar')])[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <!--TABS_FRAGMENT-->

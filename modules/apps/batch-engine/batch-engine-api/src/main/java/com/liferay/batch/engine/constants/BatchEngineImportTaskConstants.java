@@ -12,35 +12,15 @@
  * details.
  */
 
-package com.liferay.batch.engine;
+package com.liferay.batch.engine.constants;
 
 /**
  * @author Matija Petanjek
  */
-public enum BatchEngineImportTaskStrategy {
+public class BatchEngineImportTaskConstants {
 
-	ON_ERROR_CONTINUE(1), ON_ERROR_FAIL(2);
+	public static final int ON_ERROR_CONTINUE = 2;
 
-	public static BatchEngineImportTaskStrategy valueOf(int strategy) {
-		for (BatchEngineImportTaskStrategy batchEngineImportTaskStrategy :
-				values()) {
-
-			if (batchEngineImportTaskStrategy._strategy == strategy) {
-				return batchEngineImportTaskStrategy;
-			}
-		}
-
-		throw new IllegalArgumentException("Invalid strategy " + strategy);
-	}
-
-	public int getStrategy() {
-		return _strategy;
-	}
-
-	private BatchEngineImportTaskStrategy(int strategy) {
-		_strategy = strategy;
-	}
-
-	private final int _strategy;
+	public static final int ON_ERROR_FAIL = 1;
 
 }

@@ -1106,6 +1106,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141768. View the READ MORE links of the three courses redirect to the course display page"
+	@ignore = "true"
 	@priority = "4"
 	test ReadMoreLinksRedirectToCourseDisplayPage {
 		task ("Go to Masterclass Site") {
@@ -1638,16 +1639,16 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
 
-		task ("Go to Courses Page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Courses",
-				siteName = "Test Masterclass Name");
+		task ("Go to Courses Tab") {
+			MouseOver(
+				locator1 = "NavTab#TAB_LINK",
+				key_tab = "Courses");
 		}
 
 		task ("Assert the title of the first course redirects to the course display page") {
 			Click(
-				key_title = "Product Design Bootcamp",
-				locator1 = "Masterclass#FRAGMENT_HEADING");
+				filterOption = "Product Design Bootcamp",
+				locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 			AssertElementPresent(
 				key_title = "Product Design Bootcamp",
@@ -1655,13 +1656,13 @@ definition {
 		}
 
 		task ("Assert the title of the second course redirects to the course display page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Courses",
-				siteName = "Test Masterclass Name");
+			MouseOver(
+				locator1 = "NavTab#TAB_LINK",
+				key_tab = "Courses");
 
 			Click(
-				key_title = "Project Manager Certification",
-				locator1 = "Masterclass#FRAGMENT_HEADING");
+				filterOption = "Project Manager Certification",
+				locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 			AssertElementPresent(
 				key_title = "Project Manager Certification",
@@ -1669,13 +1670,13 @@ definition {
 		}
 
 		task ("Assert the title of the third course redirects to the course display page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Courses",
-				siteName = "Test Masterclass Name");
+			MouseOver(
+				locator1 = "NavTab#TAB_LINK",
+				key_tab = "Courses");
 
 			Click(
-				key_title = "Digital Marketing Bootcamp",
-				locator1 = "Masterclass#FRAGMENT_HEADING");
+				filterOption = "Digital Marketing Bootcamp",
+				locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 			AssertElementPresent(
 				key_title = "Digital Marketing Bootcamp",

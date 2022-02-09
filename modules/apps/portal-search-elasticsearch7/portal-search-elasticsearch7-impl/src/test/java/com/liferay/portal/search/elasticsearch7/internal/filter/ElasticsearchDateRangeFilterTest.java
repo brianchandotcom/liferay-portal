@@ -25,7 +25,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * @author Eric Yan
@@ -90,9 +89,6 @@ public class ElasticsearchDateRangeFilterTest
 
 		assertHits("20001122000000");
 	}
-
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
 
 	protected void assertElasticsearchException() {
 		assertSearch(

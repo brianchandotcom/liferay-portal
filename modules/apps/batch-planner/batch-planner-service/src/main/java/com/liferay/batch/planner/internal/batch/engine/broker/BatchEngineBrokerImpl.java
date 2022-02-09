@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -130,13 +131,13 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
-	private String _getImportStrategy(BatchPlannerPlan batchPlannerPlan)
+	private int _getImportStrategy(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
 		BatchPlannerPolicy batchPlannerPolicy =
 			batchPlannerPlan.getBatchPlannerPolicy("importStrategy");
 
-		return batchPlannerPolicy.getValue();
+		return GetterUtil.getInteger(batchPlannerPolicy.getValue());
 	}
 
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)

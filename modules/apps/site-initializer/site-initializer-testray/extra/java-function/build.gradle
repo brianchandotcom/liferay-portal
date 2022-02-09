@@ -1,0 +1,16 @@
+apply plugin: "application"
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "eclipse"
+apply plugin: "java"
+
+dependencies {
+	compileOnly "com.google.cloud.functions:functions-framework-api:1.0.4"
+	implementation group: "com.google.cloud", name: "google-cloud-storage", version: "2.4.0"
+
+}
+
+mainClassName = "com.liferay.site.initializer.testray.extra.java.function.ImportResults"
+
+repositories {
+	mavenCentral()
+}

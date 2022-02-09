@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Matija Petanjek
+ * @author Joe Duffy
+ * @author Igor Beslic
  */
 @Component(service = DispatchTaskExecutorRegistry.class)
 public class DispatchTaskExecutorRegistryImpl
@@ -72,10 +75,9 @@ public class DispatchTaskExecutorRegistryImpl
 		_validateDispatchTaskExecutorProperties(
 			dispatchTaskExecutor, dispatchTaskExecutorType);
 
-		String dispatchTaskExecutorRestricted = (String)properties.getOrDefault(
-			_KEY_DISPATCH_TASK_EXECUTOR_RESTRICTED, "false");
+		if (GetterUtil.getBoolean(
+				properties.get(_KEY_DISPATCH_TASK_EXECUTOR_HIDDEN_IN_UI))) {
 
-		if (!dispatchTaskExecutorRestricted.equals("true")) {
 			_dispatchTaskExecutorNames.put(
 				dispatchTaskExecutorType,
 				(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
@@ -118,11 +120,11 @@ public class DispatchTaskExecutorRegistryImpl
 				clazz2.getName(), StringPool.PERIOD));
 	}
 
+	private static final String _KEY_DISPATCH_TASK_EXECUTOR_HIDDEN_IN_UI =
+		"dispatch.task.executor.hidden-in-ui";
+
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_NAME =
 		"dispatch.task.executor.name";
-
-	private static final String _KEY_DISPATCH_TASK_EXECUTOR_RESTRICTED =
-		"dispatch.task.executor.restricted";
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_TYPE =
 		"dispatch.task.executor.type";

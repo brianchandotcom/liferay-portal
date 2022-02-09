@@ -303,8 +303,6 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-			
-
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(

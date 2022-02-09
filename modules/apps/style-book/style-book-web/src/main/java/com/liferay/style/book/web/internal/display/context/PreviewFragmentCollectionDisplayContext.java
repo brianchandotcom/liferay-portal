@@ -96,7 +96,9 @@ public class PreviewFragmentCollectionDisplayContext {
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntry.getConfiguration())
 				).put(
-					"name",
+					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
+				).put(
+					"label",
 					LanguageUtil.get(
 						_httpServletRequest.getLocale(),
 						fragmentEntry.getName())

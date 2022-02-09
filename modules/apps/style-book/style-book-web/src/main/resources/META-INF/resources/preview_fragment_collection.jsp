@@ -25,6 +25,8 @@ PreviewFragmentCollectionDisplayContext previewFragmentCollectionDisplayContext 
 		module="js/fragment-collection-preview/FragmentCollectionPreview"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"fragmentCollectionKey", previewFragmentCollectionDisplayContext.getFragmentCollectionKey()
+			).put(
 				"fragments", previewFragmentCollectionDisplayContext.getFragmentsJSONArray()
 			).put(
 				"namespace", previewFragmentCollectionDisplayContext.getStyleBookPortletNamespace()

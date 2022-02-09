@@ -25,7 +25,7 @@ export function FragmentPreview({fragment, namespace}) {
 	return (
 		<section className="fragment-preview p-5">
 			<div className="cadmin">
-				<h3 className="mb-3">{fragment.name}</h3>
+				<h3 className="mb-3">{fragment.label}</h3>
 			</div>
 
 			<div
@@ -33,7 +33,7 @@ export function FragmentPreview({fragment, namespace}) {
 				style={{'--variation-count': variations.length}}
 			>
 				{variations.map((variation) => {
-					const label = `${fragment.name} ${variation
+					const label = `${fragment.label} ${variation
 						.map((part) => part.label)
 						.join(' ')}`;
 

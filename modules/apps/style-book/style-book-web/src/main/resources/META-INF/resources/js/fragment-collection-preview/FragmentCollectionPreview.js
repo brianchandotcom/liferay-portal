@@ -26,7 +26,7 @@ export default function FragmentCollectionPreview({fragments, namespace}) {
 				fragments.map((fragment) => (
 					<FragmentPreview
 						fragment={fragment}
-						key={fragment.name}
+						key={fragment.fragmentEntryKey}
 						namespace={namespace}
 					/>
 				))

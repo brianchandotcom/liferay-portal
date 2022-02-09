@@ -49,22 +49,18 @@ const LAYOUT_TYPES_OPTIONS = [
 ];
 
 export default function PreviewSelector() {
-	const {previewLayout} = useContext(StyleBookContext);
-
-	const previewLayoutType = config.previewOptions.find((type) =>
-		type.data.recentLayouts.find((layout) => layout === previewLayout)
-	)?.type;
-
-	const [layoutType, setLayoutType] = useState(previewLayoutType);
+	const {previewLayoutType, setPreviewLayoutType} = useContext(
+		StyleBookContext
+	);
 
 	return (
 		<>
 			<LayoutTypeSelector
-				layoutType={layoutType}
-				setLayoutType={setLayoutType}
+				layoutType={previewLayoutType}
+				setLayoutType={setPreviewLayoutType}
 			/>
 
-			<LayoutSelector layoutType={layoutType} />
+			<LayoutSelector layoutType={previewLayoutType} />
 		</>
 	);
 }

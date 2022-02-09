@@ -20,7 +20,7 @@ import SidePanelContent from '../SidePanelContent';
 import BasicInfoScreen from './BasicInfoScreen';
 import ViewBuilderScreen from './ViewBuilderScreen';
 import ViewContext, {TYPES, ViewContextProvider} from './context';
-import {TObjectField} from './types';
+import {TObjectField, TObjectView} from './types';
 
 const TABS = [
 	{
@@ -98,7 +98,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			dispatch({
 				payload: {
 					objectFields,
-					objectViewColumns,
+					objectView,
 				},
 				type: TYPES.ADD_OBJECT_FIELDS,
 			});
@@ -109,11 +109,31 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		makeFetch();
 	}, [objectViewId, dispatch]);
 
+	const removeLabelFromObjectView = (objectView: TObjectView) => {
+		const {objectViewColumns} = objectView;
+
+		const newObjectViewColumns = objectViewColumns.map((viewColumn) => {
+			return {
+				objectFieldName: viewColumn.objectFieldName,
+				priority: viewColumn.priority,
+			};
+		});
+
+		const newObjectView = {
+			...objectView,
+			objectViewColumns: newObjectViewColumns,
+		};
+
+		return newObjectView;
+	};
+
 	const handleSaveObjectView = async () => {
+		const newObjectView = removeLabelFromObjectView(objectView);
+
 		const response = await Liferay.Util.fetch(
 			`/o/object-admin/v1.0/object-views/${objectViewId}`,
 			{
-				body: JSON.stringify(objectView),
+				body: JSON.stringify(newObjectView),
 				headers: HEADERS,
 				method: 'PUT',
 			}

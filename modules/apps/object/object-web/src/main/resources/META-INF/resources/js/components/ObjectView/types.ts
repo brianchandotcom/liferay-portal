@@ -33,6 +33,7 @@ export type TObjectField = {
 };
 
 export type TObjectViewColumn = {
+	label: string;
 	objectFieldName: string;
 	priority?: number;
 };

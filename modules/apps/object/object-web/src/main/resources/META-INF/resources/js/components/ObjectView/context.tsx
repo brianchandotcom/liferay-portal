@@ -137,7 +137,8 @@ const viewReducer = (state: TState, action: TAction) => {
 			filteredItems.map((field: TObjectField, index: number) => {
 				if (field.checked === true) {
 					viewColumn.push({
-						objectFieldName: field.label[defaultLanguageId],
+						label: field.label[defaultLanguageId],
+						objectFieldName: field.name,
 						priority: index,
 					});
 				}
@@ -162,7 +163,9 @@ const viewReducer = (state: TState, action: TAction) => {
 			};
 		}
 		case TYPES.ADD_OBJECT_FIELDS: {
-			const {objectFields, objectViewColumns} = action.payload;
+			const {objectFields, objectView} = action.payload;
+
+			const {objectViewColumns} = objectView;
 
 			const objectFieldsWithCheck = objectFields.map(
 				(field: TObjectField) => {
@@ -197,9 +200,28 @@ const viewReducer = (state: TState, action: TAction) => {
 				);
 			});
 
+			const newObjectViewColumns: TObjectViewColumn[] = [];
+
+			objectViewColumns.forEach((viewColumn: TObjectViewColumn) => {
+				newObjectFields.forEach((objectField: TObjectField) => {
+					if (objectField.name === viewColumn.objectFieldName) {
+						newObjectViewColumns.push({
+							...viewColumn,
+							label: objectField.label[defaultLanguageId],
+						});
+					}
+				});
+			});
+
+			const newObjectView = {
+				...objectView,
+				objectViewColumns: newObjectViewColumns,
+			};
+
 			return {
 				...state,
 				objectFields: newObjectFields,
+				objectView: newObjectView,
 			};
 		}
 		case TYPES.CHANGE_OBJECT_VIEW_NAME: {

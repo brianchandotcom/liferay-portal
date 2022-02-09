@@ -31,7 +31,7 @@ interface Iprops {
 const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 	const [, dispatch] = useContext(ViewContext);
 
-	const {objectFieldName} = objectViewColumn;
+	const {label, objectFieldName} = objectViewColumn;
 
 	const ref = useRef() as React.MutableRefObject<HTMLLIElement>;
 
@@ -107,7 +107,7 @@ const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 				</ClayList.ItemField>
 
 				<ClayList.ItemField expand>
-					<ClayList.ItemTitle>{objectFieldName}</ClayList.ItemTitle>
+					<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
 				</ClayList.ItemField>
 
 				<ClayList.ItemField>

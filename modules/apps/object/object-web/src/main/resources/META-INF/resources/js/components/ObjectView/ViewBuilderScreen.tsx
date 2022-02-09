@@ -48,9 +48,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 	}, [objectView]);
 
 	const newFiltredItems = filteredItems.filter((objectViewColumn) =>
-		objectViewColumn.objectFieldName
-			.toLowerCase()
-			.includes(query.toLowerCase())
+		objectViewColumn.label.toLowerCase().includes(query.toLowerCase())
 	);
 
 	return (
@@ -134,9 +132,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 
 												<ClayList.ItemField expand>
 													<ClayList.ItemTitle>
-														{
-															viewColumn.objectFieldName
-														}
+														{viewColumn.label}
 													</ClayList.ItemTitle>
 												</ClayList.ItemField>
 											</ClayList.Item>

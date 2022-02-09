@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.order.internal.jaxrs.exception.mappe
 
 import com.liferay.commerce.term.exception.CommerceTermEntryPriorityException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -41,20 +43,14 @@ public class TermPriorityExceptionMapper
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid term priority";
+		return LanguageUtil.get(
+			LocaleUtil.getMostRelevantLocale(),
+			"please-enter-a-valid-priority");
 	}
 
 	@Override
 	public Response.Status getStatus() {
 		return Response.Status.BAD_REQUEST;
-	}
-
-	@Override
-	protected String toJSON(
-		CommerceTermEntryPriorityException commerceTermEntryPriorityException,
-		int status) {
-
-		return super.toJSON("please-enter-a-valid-priority", status);
 	}
 
 }

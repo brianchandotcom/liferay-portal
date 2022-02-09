@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.order.internal.jaxrs.exception.mappe
 
 import com.liferay.commerce.term.exception.CommerceTermEntryTypeException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -41,20 +43,13 @@ public class TermTypeExceptionMapper
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid term type";
+		return LanguageUtil.get(
+			LocaleUtil.getMostRelevantLocale(), "please-select-a-valid-type");
 	}
 
 	@Override
 	public Response.Status getStatus() {
 		return Response.Status.BAD_REQUEST;
-	}
-
-	@Override
-	protected String toJSON(
-		CommerceTermEntryTypeException commerceTermEntryTypeException,
-		int status) {
-
-		return super.toJSON("please-select-a-valid-type", status);
 	}
 
 }

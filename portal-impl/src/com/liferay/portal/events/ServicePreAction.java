@@ -121,6 +121,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1541,8 +1542,11 @@ public class ServicePreAction extends Action {
 		themeDisplay.setShowPortalIcon(true);
 		themeDisplay.setShowSignInIcon(
 			!signedIn &&
-			!Objects.equals(
-				PropsValues.AUTH_LOGIN_PORTLET_NAME, themeDisplay.getPpid()));
+			!(Objects.equals(
+				PropsValues.AUTH_LOGIN_PORTLET_NAME, themeDisplay.getPpid()) &&
+			  Objects.equals(
+				  ParamUtil.getString(httpServletRequest, "p_p_state"),
+				  WindowState.MAXIMIZED.toString())));
 
 		boolean showSignOutIcon = signedIn;
 

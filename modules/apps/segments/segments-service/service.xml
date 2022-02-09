@@ -194,10 +194,6 @@
 		<finder name="SegmentsEntryId" return-type="Collection">
 			<finder-column name="segmentsEntryId" />
 		</finder>
-		<finder name="G_S" return-type="SegmentsExperience" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="segmentsExperienceKey" />
-		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
@@ -206,6 +202,12 @@
 		<finder name="G_S_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_SEK_C_C" return-type="SegmentsExperience" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="segmentsExperienceKey" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

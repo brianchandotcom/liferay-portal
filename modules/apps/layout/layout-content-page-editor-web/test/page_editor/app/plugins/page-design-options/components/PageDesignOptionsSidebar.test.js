@@ -34,44 +34,47 @@ jest.mock(
 	() => jest.fn()
 );
 
+const DEFAULT_CONFIG = {
+	layoutType: '0',
+	masterLayouts: [
+		{masterLayoutPlid: '0', name: 'Blank'},
+		{
+			masterLayoutPlid: '15',
+			name: 'Pablo Master Layout',
+		},
+	],
+	portletNamespace: 'ContentPageEditorPortlet',
+	styleBookEnabled: true,
+	styleBooks: [
+		{
+			name: 'Pablo Style',
+			styleBookEntryId: '3',
+		},
+	],
+};
+
+const mockConfigGetter = jest.fn(() => DEFAULT_CONFIG);
+
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
-		config: {
-			layoutType: '0',
-			masterLayouts: [
-				{masterLayoutPlid: '0', name: 'Blank'},
-				{
-					masterLayoutPlid: '15',
-					name: 'Pablo Master Layout',
-				},
-			],
-			portletNamespace: 'ContentPageEditorPortlet',
-			styleBookEnabled: true,
-			styleBooks: [
-				{
-					name: 'Pablo Style',
-					styleBookEntryId: '3',
-				},
-			],
+		get config() {
+			return mockConfigGetter();
 		},
 	})
 );
 
-const renderComponent = ({
-	hasUpdatePermissions = true,
-	lockedExperience = false,
-} = {}) => {
+const renderComponent = ({masterLayoutPlid = '0'} = {}) => {
 	return render(
 		<StoreAPIContextProvider
 			dispatch={() => Promise.resolve({styleBook: {}})}
 			getState={() => ({
 				masterLayout: {
-					masterLayoutPlid: '0',
+					masterLayoutPlid,
 				},
 				permissions: {
-					LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
-					UPDATE: hasUpdatePermissions,
+					LOCKED_SEGMENTS_EXPERIMENT: true,
+					UPDATE: false,
 				},
 			})}
 		>
@@ -112,5 +115,40 @@ describe('PageDesignOptionsSidebar', () => {
 				styleBookEntryId: '3',
 			})
 		);
+	});
+
+	it('renders Styles from Theme card when page does not have a master layout and there is not a default style book', () => {
+		mockConfigGetter.mockReturnValue({
+			...DEFAULT_CONFIG,
+			defaultStyleBookEntryName: null,
+		});
+
+		renderComponent();
+
+		expect(screen.getByLabelText('styles-from-theme')).toBeInTheDocument();
+	});
+
+	it('renders Styles from Master card when page have a master layout with a stylebook associated', () => {
+		mockConfigGetter.mockReturnValue({
+			...DEFAULT_CONFIG,
+			defaultStyleBookEntryName: 'Master Page Style Book',
+		});
+
+		renderComponent({masterLayoutPlid: '15'});
+
+		expect(screen.getByLabelText('styles-from-master')).toBeInTheDocument();
+		expect(screen.getByText('Master Page Style Book')).toBeInTheDocument();
+	});
+
+	it('renders Styles by Default card when there is a default style book', () => {
+		mockConfigGetter.mockReturnValue({
+			...DEFAULT_CONFIG,
+			defaultStyleBookEntryName: 'Master Page Style Book',
+		});
+
+		renderComponent();
+
+		expect(screen.getByLabelText('styles-by-default')).toBeInTheDocument();
+		expect(screen.getByText('Master Page Style Book')).toBeInTheDocument();
 	});
 });

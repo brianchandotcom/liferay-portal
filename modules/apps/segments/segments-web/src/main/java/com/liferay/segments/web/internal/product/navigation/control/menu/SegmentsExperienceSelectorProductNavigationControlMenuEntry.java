@@ -28,18 +28,15 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.SitesUtil;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.ServletContext;
@@ -83,13 +80,13 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<SegmentsExperience> segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
+		long segmentsExperiencesCount =
+			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
 				themeDisplay.getScopeGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				themeDisplay.getPlid(), true);
 
-		if (ListUtil.isEmpty(segmentsExperiences)) {
+		if (segmentsExperiencesCount <= 0) {
 			return false;
 		}
 

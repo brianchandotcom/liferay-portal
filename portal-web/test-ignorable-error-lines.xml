@@ -272,15 +272,15 @@
 			<contains>/o/frontend-editor-ckeditor-web/ckeditor/skins/moono-lexicon/skin.js</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-143849">
+		<ignore-error description="LPS-143849 - temporarily ignore until fixed">
 			<contains>DB2 SQL Error: SQLCODE=-204, SQLSTATE=42704, SQLERRMC=ROOT.LAYOUT</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-145695">
+		<ignore-error description="LPS-145695 - temporarily ignore until fixed">
 			<contains>java.lang.NoClassDefFoundError: com.liferay.portal.kernel.upgrade.UpgradeProcess</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-145925">
+		<ignore-error description="LPS-145925 - temporarily ignore until fixed">
 			<contains>com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException: Unable to load external repository class com.liferay.portal.repository.liferayrepository.LiferayRepository because its plugin is not deployed</contains>
 			<matches></matches>
 		</ignore-error>

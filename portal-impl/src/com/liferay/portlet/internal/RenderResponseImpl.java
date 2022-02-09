@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
@@ -82,6 +83,14 @@ public class RenderResponseImpl
 
 		String localizedCustomTitle = PortletConfigurationUtil.getPortletTitle(
 			portletDisplay.getPortletSetup(), themeDisplay.getLanguageId());
+
+		if (Validator.isNull(localizedCustomTitle)) {
+			String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+				themeDisplay.getSiteDefaultLocale());
+
+			localizedCustomTitle = PortletConfigurationUtil.getPortletTitle(
+				portletDisplay.getPortletSetup(), siteDefaultLanguageId);
+		}
 
 		if (portletDisplay.isActive() &&
 			Validator.isNull(localizedCustomTitle)) {

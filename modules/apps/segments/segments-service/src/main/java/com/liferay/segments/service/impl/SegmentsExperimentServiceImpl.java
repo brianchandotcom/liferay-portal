@@ -231,6 +231,8 @@ public class SegmentsExperimentServiceImpl
 			segmentsExperienceKeySplitsStream.collect(
 				Collectors.toMap(
 					entry -> _getSegmentsExperienceId(
+						segmentsExperiment.getClassNameId(),
+						segmentsExperiment.getClassPK(),
 						segmentsExperiment.getGroupId(), entry.getKey()),
 					Map.Entry::getValue));
 
@@ -317,6 +319,8 @@ public class SegmentsExperimentServiceImpl
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
 			_getSegmentsExperienceId(
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK(),
 				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey),
 			status);
 	}
@@ -337,7 +341,8 @@ public class SegmentsExperimentServiceImpl
 	}
 
 	private long _getSegmentsExperienceId(
-		long groupId, String segmentsExperienceKey) {
+		long classNameId, long classPK, long groupId,
+		String segmentsExperienceKey) {
 
 		if (Objects.equals(
 				segmentsExperienceKey,
@@ -349,7 +354,7 @@ public class SegmentsExperimentServiceImpl
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					groupId, segmentsExperienceKey);
+					groupId, segmentsExperienceKey, classNameId, classPK);
 
 			if (segmentsExperience != null) {
 				return segmentsExperience.getSegmentsExperienceId();

@@ -26,6 +26,7 @@ import React, {
 import PreviewInfoBar from './PreviewInfoBar';
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
+import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {
 	const iframeRef = useRef();
@@ -34,6 +35,7 @@ export default function LayoutPreview() {
 	const {
 		frontendTokensValues = {},
 		previewLayout,
+		previewLayoutType,
 		loading,
 		setLoading,
 	} = useContext(StyleBookContext);
@@ -62,10 +64,13 @@ export default function LayoutPreview() {
 	}, [loadFrontendTokenValues, frontendTokensValues]);
 
 	useEffect(() => {
-		if (iframeRef.current) {
+		if (
+			iframeRef.current &&
+			previewLayoutType !== LAYOUT_TYPES.fragmentCollection
+		) {
 			iframeRef.current.style['pointer-events'] = 'none';
 		}
-	}, [previewLayout]);
+	}, [previewLayout, previewLayoutType]);
 
 	return (
 		<>
@@ -85,7 +90,7 @@ export default function LayoutPreview() {
 								{'d-none': loading}
 							)}
 							onLoad={() => {
-								loadOverlay(iframeRef);
+								loadOverlay(iframeRef, previewLayoutType);
 								setIframeLoaded(true);
 								loadFrontendTokenValues();
 							}}
@@ -122,25 +127,35 @@ function urlWithPreviewParameter(url) {
 	return nextURL.href;
 }
 
-function loadOverlay(iframeRef) {
-	const style = {
-		cursor: 'not-allowed',
-		height: '100%',
-		left: 0,
-		position: 'fixed',
-		top: 0,
-		width: '100%',
-		zIndex: 100000,
-	};
+function loadOverlay(iframeRef, previewLayoutType) {
+	if (previewLayoutType === LAYOUT_TYPES.fragmentCollection) {
+		iframeRef.current.contentDocument.body.addEventListener(
+			'click',
+			(event) => {
+				event.preventDefault();
+			}
+		);
+	}
+	else {
+		const style = {
+			cursor: 'not-allowed',
+			height: '100%',
+			left: 0,
+			position: 'fixed',
+			top: 0,
+			width: '100%',
+			zIndex: 100000,
+		};
 
-	if (iframeRef.current) {
-		const overlay = document.createElement('div');
+		if (iframeRef.current) {
+			const overlay = document.createElement('div');
 
-		Object.keys(style).forEach((key) => {
-			overlay.style[key] = style[key];
-		});
+			Object.keys(style).forEach((key) => {
+				overlay.style[key] = style[key];
+			});
 
-		iframeRef.current.removeAttribute('style');
-		iframeRef.current.contentDocument.body.append(overlay);
+			iframeRef.current.removeAttribute('style');
+			iframeRef.current.contentDocument.body.append(overlay);
+		}
 	}
 }

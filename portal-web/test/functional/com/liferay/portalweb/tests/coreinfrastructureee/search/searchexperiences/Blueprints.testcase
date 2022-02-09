@@ -1736,6 +1736,50 @@ definition {
 			value1 = "Test Blueprint");
 	}
 
+	test ViewBlueprintsAdminTableValues {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(
+			description = "Test Description",
+			title = "Test Blueprint");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			cellPosition = "1",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Blueprint");
+
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Description");
+
+		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
+
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${blueprintId}");
+
+		AssertTextEquals(
+			cellPosition = "4",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Test");
+
+		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+		AssertTextEquals.assertPartialText(
+			cellPosition = "5",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${currentDate}");
+	}
+
 	test ViewBlueprintsPreviewLocalizedResults {
 		Blueprints.openBlueprintsAdmin();
 

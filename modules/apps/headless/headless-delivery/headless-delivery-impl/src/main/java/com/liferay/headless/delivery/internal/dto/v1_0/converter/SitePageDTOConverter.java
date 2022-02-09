@@ -48,7 +48,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 
@@ -164,7 +164,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 						}
 
 						long segmentsExperienceId =
-							SegmentsEntryConstants.ID_DEFAULT;
+							SegmentsExperienceConstants.ID_DEFAULT;
 
 						SegmentsExperience segmentsExperience =
 							(SegmentsExperience)

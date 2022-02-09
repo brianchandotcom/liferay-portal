@@ -59,6 +59,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
@@ -236,11 +237,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private SegmentsExperience _getDefaultSegmentsExperience(long groupId) {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.createSegmentsExperience(
-				SegmentsEntryConstants.ID_DEFAULT);
+				SegmentsExperienceConstants.ID_DEFAULT);
 
 		segmentsExperience.setGroupId(groupId);
 		segmentsExperience.setSegmentsExperienceKey(
-			String.valueOf(SegmentsEntryConstants.ID_DEFAULT));
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT));
 		segmentsExperience.setName(
 			SegmentsEntryConstants.getDefaultSegmentsEntryName(
 				contextUser.getLocale()));
@@ -289,7 +290,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		if (Objects.equals(
-				String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
+				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT),
 				segmentsExperienceKey)) {
 
 			return _getDefaultSegmentsExperience(layout.getGroupId());

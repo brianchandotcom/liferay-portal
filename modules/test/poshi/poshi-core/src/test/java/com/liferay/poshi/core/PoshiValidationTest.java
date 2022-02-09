@@ -28,14 +28,8 @@ import junit.framework.TestCase;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Karen Dang
@@ -64,22 +58,6 @@ public class PoshiValidationTest extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		PoshiContext.clear();
-	}
-
-	@Test
-	public void testValidatePropertyElement() {
-		Document document = DocumentHelper.createDocument();
-
-		Element element = document.addElement("property");
-
-		element.addAttribute("line-number", "1");
-		element.addAttribute("name", "testray.main.component.name");
-		element.addAttribute("value", "Tools");
-
-		PoshiValidation.validatePropertyElement(element);
-
-		Assert.assertEquals(
-			"validatePropertyElement is failing", "", getExceptionMessage());
 	}
 
 	protected String getExceptionMessage() {

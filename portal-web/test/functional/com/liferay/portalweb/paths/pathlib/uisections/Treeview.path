@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>NODE_ITEM</td>
-	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')]</td>
+	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')] | //li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>NODE_UNSELECTED</td>
-	<td>//div[contains(@class,'card-type-directory') and not(contains(@class,'selected'))]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')] | //*[contains(@role,'treeitem')]//*[contains(@class,'component-text') and contains(.,'${key_nodeName}')]</td>
+	<td>//div[contains(@class,'card-type-directory') and not(contains(@class,'selected'))]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')]</td>
 	<td></td>
 </tr>
 <tr>

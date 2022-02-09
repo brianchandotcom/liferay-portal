@@ -25,12 +25,20 @@ import java.util.ResourceBundle;
  */
 public class SegmentsExperienceConstants {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long ID_DEFAULT = 0;
 
 	public static final String KEY_DEFAULT = "DEFAULT";
 
 	public static final int PRIORITY_DEFAULT = -1;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getDefaultSegmentsExperienceName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, SegmentsExperienceConstants.class);

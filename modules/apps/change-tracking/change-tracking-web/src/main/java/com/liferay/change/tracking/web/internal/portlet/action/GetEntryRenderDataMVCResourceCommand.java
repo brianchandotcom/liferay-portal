@@ -187,7 +187,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			if (rightModel != null) {
 				String editURL = _ctDisplayRendererRegistry.getEditURL(
-					httpServletRequest, rightModel,
+					ctCollectionId, ctSQLMode, httpServletRequest, rightModel,
 					ctEntry.getModelClassNameId());
 
 				if (Validator.isNotNull(editURL)) {
@@ -290,8 +290,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				if (leftModel != null) {
 					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						httpServletRequest, leftModel,
-						ctEntry.getModelClassNameId());
+						leftCtCollectionId, leftCTSQLMode, httpServletRequest,
+						leftModel, ctEntry.getModelClassNameId());
 
 					if (Validator.isNotNull(editURL)) {
 						editInProductionJSONObject = _getEditJSONObject(
@@ -369,8 +369,8 @@ public class GetEntryRenderDataMVCResourceCommand
 						CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
 
 					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						httpServletRequest, leftModel,
-						ctEntry.getModelClassNameId());
+						leftCtCollectionId, leftCTSQLMode, httpServletRequest,
+						leftModel, ctEntry.getModelClassNameId());
 
 					if (Validator.isNotNull(editURL)) {
 						editInProductionJSONObject = _getEditJSONObject(

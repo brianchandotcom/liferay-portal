@@ -234,10 +234,12 @@ public class CTDisplayRendererRegistry {
 		}
 
 		return getEditURL(
+			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 			httpServletRequest, model, ctEntry.getModelClassNameId());
 	}
 
 	public <T extends BaseModel<T>> String getEditURL(
+		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctsqlMode,
 		HttpServletRequest httpServletRequest, T model, long modelClassNameId) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -248,7 +250,12 @@ public class CTDisplayRendererRegistry {
 			return null;
 		}
 
-		try {
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctsqlMode)) {
+
 			return ctDisplayRenderer.getEditURL(httpServletRequest, model);
 		}
 		catch (Exception exception) {

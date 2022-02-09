@@ -303,6 +303,8 @@ public class ViewConflictsDisplayContext {
 									false),
 								CTConstants.CT_COLLECTION_ID_PRODUCTION,
 								_ctDisplayRendererRegistry.getEditURL(
+									CTConstants.CT_COLLECTION_ID_PRODUCTION,
+									CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 									_httpServletRequest, productionModel,
 									modelClassNameId),
 								_language.get(

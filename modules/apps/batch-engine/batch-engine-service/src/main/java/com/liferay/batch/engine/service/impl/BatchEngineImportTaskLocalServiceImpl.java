@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.BatchEngineImportTaskStrategy;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
@@ -103,7 +103,7 @@ public class BatchEngineImportTaskLocalServiceImpl
 		return addBatchEngineImportTask(
 			companyId, userId, batchSize, callbackURL, className, content,
 			contentType, executeStatus, fieldNameMappingMap,
-			BatchEngineImportTaskStrategy.ON_ERROR_FAIL.getStrategy(),
+			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 			operation, parameters, taskItemDelegateName);
 	}
 

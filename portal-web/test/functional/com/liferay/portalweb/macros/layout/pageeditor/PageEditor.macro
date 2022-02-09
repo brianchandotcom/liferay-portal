@@ -3191,7 +3191,7 @@ definition {
 	}
 
 	macro hideFragmentViaPageStyles {
-		PageEditor.gotoStyle(fragmentName = "${fragmentName}");
+		PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
 
 		PageEditor.configureFragment(hideFragment = "true");
 	}
@@ -3521,7 +3521,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		Navigator.gotoNavTab(navTab = "Styles");
+		Navigator.gotoNavTab(navTab = "General");
 
 		PageEditor.configureFragment(hideFragment = "false");
 	}

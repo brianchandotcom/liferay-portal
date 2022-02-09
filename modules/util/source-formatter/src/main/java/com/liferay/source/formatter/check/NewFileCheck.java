@@ -14,11 +14,10 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.List;
@@ -54,18 +53,29 @@ public class NewFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			try {
-				URL url = SourceFormatterUtil.getPortalGitURL(
-					absolutePath.substring(pos), portalBranchName);
+			URL url = SourceFormatterUtil.getPortalGitURL(
+				absolutePath.substring(pos), portalBranchName);
 
-				url.openStream();
+			try {
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)url.openConnection();
+
+				httpURLConnection.setConnectTimeout(5000);
+				httpURLConnection.setReadTimeout(5000);
+				httpURLConnection.setRequestMethod(HttpMethods.HEAD);
+
+				if (httpURLConnection.getResponseCode() !=
+						HttpURLConnection.HTTP_OK) {
+
+					addMessage(
+						fileName,
+						"Do not add new files to '" + forbiddenDirName + "'");
+				}
+
+				httpURLConnection.disconnect();
 			}
-			catch (FileNotFoundException fileNotFoundException) {
-				addMessage(
-					fileName,
-					"Do not add new files to '" + forbiddenDirName + "'");
-			}
-			catch (IOException ioException) {
+			catch (Exception exception) {
+				addMessage(fileName, exception.getMessage());
 			}
 		}
 

@@ -15,13 +15,7 @@ import Button from '../../../../common/components/Button';
 import {AUTO_CLOSE_ALERT_TIME} from '../../utils/constants/autoCloseAlertTime';
 import TableKeyDetails from '../TableKeyDetails';
 
-const ModalKeyDetails = ({
-	ACTIVATION_STATUS,
-	activationKeys,
-	assetsPath,
-	observer,
-	onClose,
-}) => {
+const ModalKeyDetails = ({activationKeys, assetsPath, observer, onClose}) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
 	return (
@@ -50,7 +44,6 @@ const ModalKeyDetails = ({
 				</div>
 
 				<TableKeyDetails
-					ACTIVATION_STATUS={ACTIVATION_STATUS}
 					activationKeys={activationKeys}
 					assetsPath={assetsPath}
 					setValueToCopyToClipboard={setValueToCopyToClipboard}

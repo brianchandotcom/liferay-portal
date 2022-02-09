@@ -444,6 +444,39 @@ definition {
 			locator1 = "SiteNavigationMenu#ITEM_SELECTOR_CONTENT_INPUT",
 			value1 = "${text}");
 	}
+
+	macro viewItemWarning {
+		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+
+		AssertElementPresent(
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_WARNING");
+
+		AssertElementPresent(
+			key_warningMessage = "No Display Page",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_DEPOT",
+			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+	}
+
+	macro viewItemWarningNotPresent {
+		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+
+		AssertElementNotPresent(
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_WARNING");
+
+		AssertElementNotPresent(
+			key_warningMessage = "No Display Page",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertElementNotPresent(
+			locator1 = "Message#EMPTY_INFO_DEPOT",
+			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+	}
+
 	macro viewMenuTitle {
 		LexiconTable.viewTableEntryTitle(tableEntry = "${navigationMenu}");
 	}

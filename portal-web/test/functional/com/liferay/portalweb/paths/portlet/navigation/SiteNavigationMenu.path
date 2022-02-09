@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_WARNING</td>
+	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title') and contains(.,'${key_itemName}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-warning')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USE_CUSTOM_NAME_CHECKBOX</td>
 	<td>//label[contains(.,'Use Custom Name')]/input[@type='checkbox']</td>
 	<td></td>

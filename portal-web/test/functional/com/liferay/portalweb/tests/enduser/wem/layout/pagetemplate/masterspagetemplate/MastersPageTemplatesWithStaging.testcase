@@ -256,9 +256,9 @@ definition {
 			locator1 = "Icon#ANY");
 
 		AssertElementNotPresent(
+			index = "2",
 			key_fragmentName = "Container",
-			key_index = "2",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_CONTENT");
 
 		PageEditor.viewFragment(fragmentName = "Container");
 

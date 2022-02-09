@@ -976,11 +976,11 @@ definition {
 			var index = "1";
 		}
 
-		var key_fragmentName = "${fragmentName}";
-		var key_index = "${index}";
-
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", key_index = "${index}", locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+			Click(
+				index = "${index}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_CONTENT");
 		}
 	}
 
@@ -1499,12 +1499,14 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 		else {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			PageEditor.clickConfigurableField(
+				fragmentName = "${fragmentName}",
+				index = "${index}");
 		}
 
 		AssertVisible(
@@ -1591,7 +1593,9 @@ definition {
 
 				Refresh();
 
-				Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+				PageEditor.clickConfigurableField(
+					fragmentName = "${fragmentName}",
+					index = "${index}");
 
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Collection",
@@ -2257,18 +2261,16 @@ definition {
 	}
 
 	macro editLayoutContainer {
-		var key_fragmentName = "Container";
-
 		if (isSet(position)) {
-			var key_index = "${position}";
+			var index = "${position}";
 		}
 		else {
-			var key_index = "1";
+			var index = "1";
 		}
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
-		}
+		PageEditor.clickConfigurableField(
+			fragmentName = "Container",
+			index = "${index}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -2561,18 +2563,16 @@ definition {
 	}
 
 	macro editLayoutGrid {
-		var key_fragmentName = "Grid";
-
 		if (isSet(position)) {
-			var key_index = "${position}";
+			var index = "${position}";
 		}
 		else {
-			var key_index = "1";
+			var index = "1";
 		}
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
-		}
+		PageEditor.clickConfigurableField(
+			fragmentName = "Grid",
+			index = "${index}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -3814,9 +3814,9 @@ definition {
 
 	macro viewDuplicateFragment {
 		AssertElementPresent(
+			index = "2",
 			key_fragmentName = "${fragmentName}",
-			key_index = "2",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_CONTENT");
 	}
 
 	macro viewEditorEmpty {
@@ -3880,9 +3880,9 @@ definition {
 		}
 
 		AssertElementPresent(
+			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			key_index = "${position}",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_CONTENT");
 	}
 
 	macro viewFragmentEditableImage {
@@ -3957,7 +3957,7 @@ definition {
 			var position = "1";
 		}
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",
 			key_index = "${position}",
 			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
@@ -4019,16 +4019,16 @@ definition {
 		}
 
 		AssertElementNotPresent(
+			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			key_index = "${position}",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_CONTENT");
 	}
 
 	macro viewFragmentOrder {
 		AssertElementPresent(
+			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			key_position = "${position}",
-			locator1 = "Fragment#FRAGMENT_HEADER_POSITION");
+			locator1 = "Fragment#FRAGMENT_CONTENT");
 	}
 
 	macro viewFragmentStyle {

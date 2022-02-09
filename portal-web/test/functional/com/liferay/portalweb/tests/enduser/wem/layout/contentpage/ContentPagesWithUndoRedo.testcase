@@ -99,9 +99,9 @@ definition {
 			MenuItem.click(menuItem = "Delete Button");
 
 			AssertElementNotPresent(
+				index = "2",
 				key_fragmentName = "Button",
-				key_index = "2",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+				locator1 = "Fragment#FRAGMENT_CONTENT");
 
 			PageEditor.viewFragment(fragmentName = "Button");
 

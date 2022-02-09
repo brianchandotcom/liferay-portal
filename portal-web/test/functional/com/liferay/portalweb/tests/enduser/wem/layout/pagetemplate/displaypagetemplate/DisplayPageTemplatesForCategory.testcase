@@ -385,10 +385,7 @@ definition {
 				key_value = "Friendly URL",
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Container",
-				key_index = "1",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			PageEditor.clickConfigurableField(fragmentName = "Container");
 
 			Click(
 				key_navItem = "Styles",
@@ -439,10 +436,9 @@ definition {
 				fragmentName = "Container",
 				targetFragmentName = "Image");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Container",
-				key_index = "3",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Container",
+				index = "3");
 
 			Click(
 				key_navItem = "Styles",

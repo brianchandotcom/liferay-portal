@@ -807,10 +807,10 @@ definition {
 
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
 
-			MouseOver.mouseOverInvisible(
+			MouseOver(
+				index = "1",
 				key_fragmentName = "Asset Publisher",
-				key_index = "1",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+				locator1 = "Fragment#FRAGMENT_CONTENT");
 
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
 		}
@@ -822,10 +822,10 @@ definition {
 
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 
-			MouseOver.mouseOverInvisible(
+			MouseOver(
+				index = "1",
 				key_fragmentName = "Heading",
-				key_index = "1",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+				locator1 = "Fragment#FRAGMENT_CONTENT");
 
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 		}

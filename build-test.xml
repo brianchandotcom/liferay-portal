@@ -6729,6 +6729,14 @@ org.apache.catalina.tribes.level = FINE]]>
 
 		<replace
 			failOnNoReplacements="true"
+			file="${app.server.tomcat.dir}/conf/logging.properties"
+		>
+			<replacetoken><![CDATA[3manager.org.apache.juli.AsyncFileHandler,]]></replacetoken>
+			<replacevalue><![CDATA[3manager.org.apache.juli.AsyncFileHandler, 5cluster.org.apache.juli.AsyncFileHandler,]]></replacevalue>
+		</replace>
+
+		<replace
+			failOnNoReplacements="true"
 			file="${app.server.tomcat.dir}/conf/server.xml"
 		>
 			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>

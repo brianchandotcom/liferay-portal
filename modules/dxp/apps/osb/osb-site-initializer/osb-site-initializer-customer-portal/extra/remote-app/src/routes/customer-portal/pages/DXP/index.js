@@ -21,6 +21,7 @@ const DXP = ({project, sessionId}) => {
 					accountKey={project.accountKey}
 					downloadTextHelper="Select the Liferay DXP version for which you want to download a developer key."
 					dxpVersion={project.dxpVersion}
+					projectName={project.name}
 					sessionId={sessionId}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>

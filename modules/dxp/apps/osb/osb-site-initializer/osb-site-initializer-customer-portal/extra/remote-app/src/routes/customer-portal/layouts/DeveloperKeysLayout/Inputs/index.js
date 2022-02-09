@@ -24,10 +24,11 @@ import {
 	STATUS_CODE,
 } from '../../../utils/constants';
 
-const DevelopersKeysInputs = ({
+const DeveloperKeysInputs = ({
 	accountKey,
 	downloadTextHelper,
 	dxpVersion,
+	projectName,
 	sessionId,
 }) => {
 	const {
@@ -75,7 +76,14 @@ const DevelopersKeysInputs = ({
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			downloadFromBlob(licenseBlob, `license${extensionFile}`);
+			const projectFileName = projectName
+				.replaceAll(' ', '')
+				.toLowerCase();
+
+			downloadFromBlob(
+				licenseBlob,
+				`activation-key-dxpdevelopment-${selectedVersion}-${projectFileName}${extensionFile}`
+			);
 
 			return;
 		}
@@ -144,4 +152,4 @@ const DevelopersKeysInputs = ({
 	);
 };
 
-export default DevelopersKeysInputs;
+export default DeveloperKeysInputs;

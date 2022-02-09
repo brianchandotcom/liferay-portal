@@ -325,8 +325,6 @@ definition {
 	test SearchOrderInPlacedOrdersPage {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -335,11 +333,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-		Click(
-			key_text = "Add Order",
-			locator1 = "Button#ANY");
+		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
 		SelectFrameTop();
 
@@ -370,11 +364,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-		Click(
-			key_text = "Add Order",
-			locator1 = "Button#ANY");
+		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
 		SelectFrameTop();
 
@@ -410,12 +400,12 @@ definition {
 		CommerceNavigator.searchEntry(entryName = "${firstOrderId}");
 
 		AssertElementPresent(
-			key_errorMessage = "${firstOrderId}",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+			key_entryName = "${firstOrderId}",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		AssertElementNotPresent(
-			key_errorMessage = "${secondOrderId}",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+			key_entryName = "${secondOrderId}",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "COMMERCE-6665. I want to be able to select a Display Template in Pending Orders widget and see it applied to the widget"

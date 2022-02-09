@@ -2421,20 +2421,6 @@ definition {
 					PageEditor.waitForAutoSave();
 				}
 
-				if (isSet(height)) {
-					Type(
-						key_borderBottom = "Size",
-						key_fieldLabel = "Height",
-						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
-						value1 = "${height}");
-
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-					PageEditor.waitForAutoSave();
-				}
-
 				PageEditor.configureFragment(
 					marginBottom = "${marginBottom}",
 					marginLeft = "${marginLeft}",
@@ -2503,6 +2489,20 @@ definition {
 							PageEditor.waitForAutoSave();
 						}
 					}
+				}
+
+				if (isSet(height)) {
+					Type(
+						key_borderBottom = "Size",
+						key_fieldLabel = "Height",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+						value1 = "${height}");
+
+					Click(
+						key_sidebarButton = "Browser",
+						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+					PageEditor.waitForAutoSave();
 				}
 
 				if ("${link}" == "Mapped URL") {
@@ -2725,20 +2725,6 @@ definition {
 					PageEditor.waitForAutoSave();
 				}
 
-				if (isSet(height)) {
-					Type(
-						key_borderBottom = "Size",
-						key_fieldLabel = "Height",
-						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
-						value1 = "${height}");
-
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-					PageEditor.waitForAutoSave();
-				}
-
 				PageEditor.configureFragment(
 					marginBottom = "${marginBottom}",
 					marginLeft = "${marginLeft}",
@@ -2792,6 +2778,20 @@ definition {
 					Uncheck.uncheckToggleSwitch(
 						checkboxName = "Show Gutter",
 						locator1 = "Checkbox#ANY_CHECKBOX");
+
+					PageEditor.waitForAutoSave();
+				}
+
+				if (isSet(height)) {
+					Type(
+						key_borderBottom = "Size",
+						key_fieldLabel = "Height",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+						value1 = "${height}");
+
+					Click(
+						key_sidebarButton = "Browser",
+						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 					PageEditor.waitForAutoSave();
 				}

@@ -274,5 +274,5 @@ if (shippingTaxCategory != null) {
 			"itemSelectorURL", commerceChannelDisplayContext.getImageItemSelectorURL()
 		).build()
 	%>'
-	module="js/jrxml"
+	module="js/CommerceChannelGeneral"
 />

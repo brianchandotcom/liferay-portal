@@ -89,7 +89,7 @@ public class SiteVerticalCard implements VerticalCard {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			childSites = Collections.emptyList();
@@ -107,7 +107,7 @@ public class SiteVerticalCard implements VerticalCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

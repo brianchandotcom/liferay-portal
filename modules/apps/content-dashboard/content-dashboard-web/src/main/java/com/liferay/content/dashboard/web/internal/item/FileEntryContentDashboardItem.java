@@ -135,7 +135,7 @@ public class FileEntryContentDashboardItem
 				_portal.getSiteDefaultLocale(_fileEntry.getGroupId()));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}
@@ -166,9 +166,7 @@ public class FileEntryContentDashboardItem
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
 
-					_log.error(
-						contentDashboardItemActionException,
-						contentDashboardItemActionException);
+					_log.error(contentDashboardItemActionException);
 				}
 
 				return Optional.<ContentDashboardItemAction>empty();
@@ -268,7 +266,7 @@ public class FileEntryContentDashboardItem
 			return _portal.getSiteDefaultLocale(_fileEntry.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return LocaleUtil.getDefault();
 		}
@@ -393,7 +391,7 @@ public class FileEntryContentDashboardItem
 			);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}
@@ -518,7 +516,7 @@ public class FileEntryContentDashboardItem
 						portletNamespace + "redirect", backURL);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return null;
 				}
@@ -539,9 +537,7 @@ public class FileEntryContentDashboardItem
 		catch (ContentDashboardItemActionException
 					contentDashboardItemActionException) {
 
-			_log.error(
-				contentDashboardItemActionException,
-				contentDashboardItemActionException);
+			_log.error(contentDashboardItemActionException);
 
 			return null;
 		}

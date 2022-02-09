@@ -274,7 +274,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return valueString;
@@ -321,7 +321,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -395,7 +395,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			}
 			catch (DateTimeParseException dateTimeParseException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(dateTimeParseException, dateTimeParseException);
+					_log.debug(dateTimeParseException);
 				}
 
 				DDMForm ddmForm = ddmFormValues.getDDMForm();
@@ -483,8 +483,7 @@ public class SaveFormInstanceMVCCommandHelper {
 					}
 					catch (UnknownHostException unknownHostException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								unknownHostException, unknownHostException);
+							_log.debug(unknownHostException);
 						}
 					}
 				}

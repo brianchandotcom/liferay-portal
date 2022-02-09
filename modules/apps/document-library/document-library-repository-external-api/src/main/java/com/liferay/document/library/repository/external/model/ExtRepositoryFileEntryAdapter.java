@@ -181,7 +181,7 @@ public class ExtRepositoryFileEntryAdapter
 			parentFolder = getParentFolder();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return parentFolder;
@@ -337,7 +337,7 @@ public class ExtRepositoryFileEntryAdapter
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

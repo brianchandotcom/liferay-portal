@@ -49,7 +49,7 @@ public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 				_user.getUserId(), _group.getGroupId(), role.getRoleId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -82,7 +82,7 @@ public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

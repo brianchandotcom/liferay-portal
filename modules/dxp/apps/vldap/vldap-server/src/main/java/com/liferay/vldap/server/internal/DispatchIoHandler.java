@@ -88,7 +88,7 @@ public class DispatchIoHandler implements IoHandler {
 			_writeResponses(responses, ioSession);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 		finally {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
@@ -138,7 +138,7 @@ public class DispatchIoHandler implements IoHandler {
 				new LiferayLdapMessageContainer());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

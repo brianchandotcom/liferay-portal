@@ -63,7 +63,7 @@ public class FileEntrySharingEntryMenuItemContributor
 				_createDownloadMenuItem(sharingEntry, themeDisplay));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}

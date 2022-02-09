@@ -197,7 +197,7 @@ public class DataLayoutTaglibUtil {
 					));
 			}
 			catch (JSONException jsonException) {
-				_log.error(jsonException, jsonException);
+				_log.error(jsonException);
 			}
 		}
 
@@ -385,7 +385,7 @@ public class DataLayoutTaglibUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -466,7 +466,7 @@ public class DataLayoutTaglibUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return _jsonFactory.createJSONObject();
@@ -573,7 +573,7 @@ public class DataLayoutTaglibUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return fieldTypesJSONArray;

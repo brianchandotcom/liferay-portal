@@ -109,7 +109,7 @@ public class DLFileEntryAssetRendererFactory
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+				_log.debug(noSuchFileEntryException);
 			}
 
 			fileVersion = _dlAppLocalService.getFileVersion(classPK);
@@ -164,7 +164,7 @@ public class DLFileEntryAssetRendererFactory
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return super.getTypeName(locale, subtypeId);
@@ -223,7 +223,7 @@ public class DLFileEntryAssetRendererFactory
 		}
 		catch (WindowStateException windowStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(windowStateException, windowStateException);
+				_log.debug(windowStateException);
 			}
 		}
 

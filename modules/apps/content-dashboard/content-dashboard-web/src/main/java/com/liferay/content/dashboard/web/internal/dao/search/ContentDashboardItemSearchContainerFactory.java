@@ -243,7 +243,7 @@ public class ContentDashboardItemSearchContainerFactory {
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Optional.empty();
 		}

@@ -223,7 +223,7 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 			catch (NoSuchPageException noSuchPageException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchPageException, noSuchPageException);
+					_log.debug(noSuchPageException);
 				}
 
 				page = _wikiPageLocalService.addPage(
@@ -271,7 +271,7 @@ public class MediaWikiImporter implements WikiImporter {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -356,7 +356,7 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 			catch (NoSuchPageException noSuchPageException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchPageException, noSuchPageException);
+					_log.debug(noSuchPageException);
 				}
 
 				ServiceContext serviceContext = new ServiceContext();
@@ -433,7 +433,7 @@ public class MediaWikiImporter implements WikiImporter {
 				}
 				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioException, ioException);
+						_log.warn(ioException);
 					}
 				}
 			}
@@ -765,7 +765,7 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			return content;

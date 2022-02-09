@@ -84,7 +84,7 @@ public class URLRewriteFilter extends BasePortalFilter {
 		catch (ServletException servletException) {
 			_urlRewriteFilter = null;
 
-			_log.error(servletException, servletException);
+			_log.error(servletException);
 		}
 	}
 

@@ -782,7 +782,7 @@ public class BookmarksEntryLocalServiceImpl
 			statusByUserName = user.getFullName();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		String entryTitle = entry.getName();

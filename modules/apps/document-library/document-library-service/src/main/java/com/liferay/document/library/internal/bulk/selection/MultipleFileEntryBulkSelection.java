@@ -69,7 +69,7 @@ public class MultipleFileEntryBulkSelection
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchFileEntryException, noSuchFileEntryException);
+				_log.warn(noSuchFileEntryException);
 			}
 
 			return null;

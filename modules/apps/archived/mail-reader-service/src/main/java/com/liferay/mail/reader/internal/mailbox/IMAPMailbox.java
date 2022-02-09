@@ -438,7 +438,7 @@ public class IMAPMailbox extends BaseMailbox {
 			}
 			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchMessageException, noSuchMessageException);
+					_log.debug(noSuchMessageException);
 				}
 
 				missingRemoteMessageIdsList.add(remoteMessageUID);
@@ -490,7 +490,7 @@ public class IMAPMailbox extends BaseMailbox {
 			}
 			catch (NoSuchFolderException noSuchFolderException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFolderException, noSuchFolderException);
+					_log.debug(noSuchFolderException);
 				}
 
 				FolderLocalServiceUtil.addFolder(

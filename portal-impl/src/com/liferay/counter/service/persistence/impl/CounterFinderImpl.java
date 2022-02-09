@@ -128,8 +128,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			}
 			catch (ObjectNotFoundException objectNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						objectNotFoundException, objectNotFoundException);
+					_log.debug(objectNotFoundException);
 				}
 			}
 			catch (Exception exception) {
@@ -161,8 +160,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			}
 			catch (ObjectNotFoundException objectNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						objectNotFoundException, objectNotFoundException);
+					_log.debug(objectNotFoundException);
 				}
 			}
 			catch (Exception exception) {
@@ -296,7 +294,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			_log.error("Caught unexpected exception", exception);
 		}
 		else if (_log.isDebugEnabled()) {
-			_log.debug(exception, exception);
+			_log.debug(exception);
 		}
 
 		return new SystemException(exception);

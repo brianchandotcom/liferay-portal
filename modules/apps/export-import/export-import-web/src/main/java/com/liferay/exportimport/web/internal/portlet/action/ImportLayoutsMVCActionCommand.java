@@ -153,7 +153,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			String errorMessage = themeDisplay.translate(
@@ -242,7 +242,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, exception.getClass(), exception);
 				}
 				else {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					SessionErrors.add(
 						actionRequest, LayoutImportException.class.getName());

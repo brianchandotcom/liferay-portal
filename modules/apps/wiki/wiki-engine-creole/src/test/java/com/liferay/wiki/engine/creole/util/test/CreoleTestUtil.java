@@ -73,14 +73,14 @@ public class CreoleTestUtil {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			throw new RuntimeException("File " + fileName + " does not exist");
 		}
 		catch (RecognitionException recognitionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(recognitionException, recognitionException);
+				_log.debug(recognitionException);
 			}
 
 			throw new RuntimeException("Unable to parse " + fileName);

@@ -153,7 +153,7 @@ public class DDMFormInstanceRecordUADDisplay
 			return sb.toString();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;

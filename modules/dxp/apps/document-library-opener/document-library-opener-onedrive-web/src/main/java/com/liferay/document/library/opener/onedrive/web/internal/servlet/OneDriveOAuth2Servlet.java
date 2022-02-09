@@ -112,7 +112,7 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 				httpServletResponse.sendRedirect(oAuth2State.getSuccessURL());
 			}
 			catch (OAuth2AccessTokenErrorResponse | SocketException exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				OAuth2StateUtil.cleanUp(httpServletRequest);
 
@@ -121,7 +121,7 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				OAuth2StateUtil.cleanUp(httpServletRequest);
 

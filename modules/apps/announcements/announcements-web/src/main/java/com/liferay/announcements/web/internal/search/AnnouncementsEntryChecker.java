@@ -81,7 +81,7 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return StringPool.BLANK;
@@ -105,7 +105,7 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return StringPool.BLANK;

@@ -111,7 +111,7 @@ public class CPDefinitionCPTypeGroupedScreenNavigationCategory
 				cpDefinitionGroupedEntriesDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_jspRenderer.renderJSP(

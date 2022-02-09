@@ -196,7 +196,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 					_portal.getLocale(httpServletRequest));
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

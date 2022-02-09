@@ -123,7 +123,7 @@ public class SetOptionsFunction
 			}
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException, jsonException);
+			_log.error(jsonException);
 		}
 
 		return keyValuePairs;

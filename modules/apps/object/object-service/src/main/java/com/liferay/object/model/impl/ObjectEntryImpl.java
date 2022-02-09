@@ -105,7 +105,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 				_values = ObjectEntryLocalServiceUtil.getValues(this);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return new HashMap<>();
 			}

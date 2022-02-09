@@ -97,7 +97,7 @@ public class CPSearchResultsPortlet extends MVCPortlet {
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		super.render(renderRequest, renderResponse);

@@ -149,7 +149,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			processRenderException(
@@ -180,7 +180,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			processRenderException(
@@ -402,7 +402,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		PrincipalException principalException) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(principalException, principalException);
+			_log.debug(principalException);
 		}
 
 		if (_log.isWarnEnabled() &&
@@ -459,7 +459,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		PrincipalException principalException) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(principalException, principalException);
+			_log.debug(principalException);
 		}
 
 		httpServletResponse.setHeader(

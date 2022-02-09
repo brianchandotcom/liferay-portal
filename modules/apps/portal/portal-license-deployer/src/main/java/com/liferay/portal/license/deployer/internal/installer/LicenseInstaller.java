@@ -63,7 +63,7 @@ public class LicenseInstaller implements FileInstaller {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

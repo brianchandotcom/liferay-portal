@@ -458,7 +458,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// LPS-65972
@@ -576,7 +576,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchUserException, noSuchUserException);
+				_log.debug(noSuchUserException);
 			}
 
 			user = _userLocalService.getDefaultUser(companyId);
@@ -597,8 +597,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchVocabularyException, noSuchVocabularyException);
+				_log.debug(noSuchVocabularyException);
 			}
 
 			assetVocabulary = _assetVocabularyLocalService.addVocabulary(

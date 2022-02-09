@@ -127,7 +127,7 @@ public class DDLPortlet extends MVCPortlet {
 			// key for a new record set that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 		catch (PortalException portalException) {

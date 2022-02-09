@@ -206,7 +206,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			userId = getUserId();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isInfoEnabled()) {

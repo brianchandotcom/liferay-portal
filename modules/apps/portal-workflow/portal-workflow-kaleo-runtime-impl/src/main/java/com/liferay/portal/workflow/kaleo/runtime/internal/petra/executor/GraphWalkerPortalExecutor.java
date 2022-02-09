@@ -69,10 +69,10 @@ public class GraphWalkerPortalExecutor {
 				noticeableFuture.get();
 			}
 			catch (ExecutionException executionException) {
-				_log.error(executionException, executionException);
+				_log.error(executionException);
 			}
 			catch (InterruptedException interruptedException) {
-				_log.error(interruptedException, interruptedException);
+				_log.error(interruptedException);
 			}
 		}
 		else {

@@ -54,7 +54,7 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(invalidRequestException, invalidRequestException);
+				_log.debug(invalidRequestException);
 			}
 
 			return HttpServletResponse.SC_BAD_REQUEST;

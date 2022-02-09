@@ -181,7 +181,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 						UserEmailAddressException.MustNotBeDuplicate) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				SessionErrors.add(actionRequest, exception.getClass());

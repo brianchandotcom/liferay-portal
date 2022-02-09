@@ -138,7 +138,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				_setKaleoDefinitionVersionRenderRequestAttribute(renderRequest);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

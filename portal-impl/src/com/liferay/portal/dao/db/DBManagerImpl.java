@@ -82,7 +82,7 @@ public class DBManagerImpl implements DBManager {
 						InfrastructureUtil.getDataSource()));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

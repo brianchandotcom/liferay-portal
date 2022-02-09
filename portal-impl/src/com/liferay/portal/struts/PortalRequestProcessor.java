@@ -469,7 +469,7 @@ public class PortalRequestProcessor {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			String fullPathWithoutQueryString = fullPath;
@@ -514,7 +514,7 @@ public class PortalRequestProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -661,7 +661,7 @@ public class PortalRequestProcessor {
 						}
 					}
 					catch (Exception exception) {
-						_log.error(exception, exception);
+						_log.error(exception);
 
 						return _PATH_PORTAL_UPDATE_PASSWORD;
 					}
@@ -724,7 +724,7 @@ public class PortalRequestProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -790,7 +790,7 @@ public class PortalRequestProcessor {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				SessionErrors.add(

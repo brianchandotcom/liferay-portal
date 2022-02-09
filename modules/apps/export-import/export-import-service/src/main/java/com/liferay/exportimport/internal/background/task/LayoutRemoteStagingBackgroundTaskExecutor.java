@@ -238,8 +238,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					// See LPS-36174
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchLayoutException, noSuchLayoutException);
+						_log.debug(noSuchLayoutException);
 					}
 
 					entrySet.remove(plid);

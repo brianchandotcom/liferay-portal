@@ -109,7 +109,7 @@ public class CPInstanceWarehouseItemsScreenNavigationCategory
 				commerceInventoryWarehouseItemsDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_jspRenderer.renderJSP(

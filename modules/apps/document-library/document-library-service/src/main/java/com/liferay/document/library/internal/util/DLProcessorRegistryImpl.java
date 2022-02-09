@@ -270,13 +270,13 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isInfoEnabled()) {
-				_log.info(noSuchFileEntryException, noSuchFileEntryException);
+				_log.info(noSuchFileEntryException);
 			}
 
 			return null;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return null;
 		}

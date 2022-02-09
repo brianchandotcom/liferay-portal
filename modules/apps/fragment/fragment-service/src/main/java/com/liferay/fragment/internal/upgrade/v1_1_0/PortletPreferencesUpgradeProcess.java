@@ -215,7 +215,7 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 

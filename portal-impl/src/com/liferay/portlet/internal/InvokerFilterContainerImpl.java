@@ -326,7 +326,7 @@ public class InvokerFilterContainerImpl
 					portletFilter.init(filterConfig);
 				}
 				catch (PortletException portletException) {
-					_log.error(portletException, portletException);
+					_log.error(portletException);
 
 					_bundleContext.ungetService(serviceReference);
 

@@ -148,7 +148,7 @@ public class VideoProcessorImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return hasVideo;
@@ -386,7 +386,7 @@ public class VideoProcessorImpl
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			throw exception;
@@ -428,7 +428,7 @@ public class VideoProcessorImpl
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
@@ -485,7 +485,7 @@ public class VideoProcessorImpl
 					_fileVersionPreviewEventListener.onFailure(
 						destinationFileVersion);
 
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 
@@ -494,13 +494,13 @@ public class VideoProcessorImpl
 					_generateThumbnail(destinationFileVersion, videoTempFile);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+				_log.debug(noSuchFileEntryException);
 			}
 
 			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);

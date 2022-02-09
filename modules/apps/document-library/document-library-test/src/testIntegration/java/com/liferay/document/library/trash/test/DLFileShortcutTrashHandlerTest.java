@@ -139,7 +139,7 @@ public class DLFileShortcutTrashHandlerTest
 					trashEntryException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(trashEntryException, trashEntryException);
+				_log.debug(trashEntryException);
 			}
 
 			throw new TrashEntryException();
@@ -156,7 +156,7 @@ public class DLFileShortcutTrashHandlerTest
 					restoreEntryException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 
 			throw new RestoreEntryException();

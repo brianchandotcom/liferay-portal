@@ -129,7 +129,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException, configurationException);
+				_log.debug(configurationException);
 			}
 		}
 

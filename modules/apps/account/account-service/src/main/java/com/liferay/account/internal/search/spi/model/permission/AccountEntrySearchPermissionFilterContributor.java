@@ -103,7 +103,7 @@ public class AccountEntrySearchPermissionFilterContributor
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (!organizationIdsTermsFilter.isEmpty()) {
@@ -122,7 +122,7 @@ public class AccountEntrySearchPermissionFilterContributor
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return false;

@@ -506,7 +506,7 @@ private String _getDataContent(TemplateVariableDefinition templateVariableDefini
 			dataContent = generateCode[0];
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(e);
 		}
 	}
 

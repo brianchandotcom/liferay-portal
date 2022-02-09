@@ -88,7 +88,7 @@ public class TypedSettings {
 					JSONFactoryUtil.createJSONObject(value));
 			}
 			catch (JSONException jsonException) {
-				_log.error(jsonException, jsonException);
+				_log.error(jsonException);
 			}
 		}
 

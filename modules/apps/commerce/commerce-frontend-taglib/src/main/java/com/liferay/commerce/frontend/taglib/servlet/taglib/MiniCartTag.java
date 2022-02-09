@@ -126,7 +126,7 @@ public class MiniCartTag extends IncludeTag {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			_checkoutURL = StringPool.BLANK;
 			_itemsQuantity = 0;
@@ -279,7 +279,7 @@ public class MiniCartTag extends IncludeTag {
 			return commercePriceConfiguration.displayDiscountLevels();
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 
 			return false;
 		}

@@ -196,7 +196,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 			return false;
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 
 			return false;
 		}

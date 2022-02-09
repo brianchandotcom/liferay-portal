@@ -59,7 +59,7 @@ public class PortletPanelAppAdapterRegistry {
 				serviceRegistration.unregister();
 			}
 			catch (IllegalStateException illegalStateException) {
-				_log.error(illegalStateException, illegalStateException);
+				_log.error(illegalStateException);
 			}
 		}
 

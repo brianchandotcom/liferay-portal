@@ -60,7 +60,7 @@ public class ThemeDisplayContextProvider
 			return _getThemeDisplay(httpServletRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

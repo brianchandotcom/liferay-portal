@@ -922,8 +922,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutSetException, noSuchLayoutSetException);
+					_log.debug(noSuchLayoutSetException);
 				}
 			}
 
@@ -936,8 +935,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutSetException, noSuchLayoutSetException);
+					_log.debug(noSuchLayoutSetException);
 				}
 			}
 
@@ -4967,7 +4965,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException, noSuchGroupException);
+				_log.debug(noSuchGroupException);
 			}
 		}
 
@@ -4981,7 +4979,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 			catch (NoSuchCompanyException noSuchCompanyException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchCompanyException, noSuchCompanyException);
+					_log.debug(noSuchCompanyException);
 				}
 			}
 		}
@@ -5149,11 +5147,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 							systemException.getMessage());
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(systemException, systemException);
+						_log.debug(systemException);
 					}
 				}
 				else {
-					_log.error(systemException, systemException);
+					_log.error(systemException);
 				}
 
 				throw systemException;
@@ -5204,7 +5202,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException, noSuchGroupException);
+				_log.debug(noSuchGroupException);
 			}
 
 			RemoteExportException remoteExportException =
@@ -5219,7 +5217,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			RemoteExportException remoteExportException =
@@ -5234,7 +5232,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(remoteAuthException, remoteAuthException);
+				_log.debug(remoteAuthException);
 			}
 
 			remoteAuthException.setURL(remoteURL);
@@ -5246,7 +5244,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(systemException, systemException);
+				_log.debug(systemException);
 			}
 
 			RemoteExportException remoteExportException =

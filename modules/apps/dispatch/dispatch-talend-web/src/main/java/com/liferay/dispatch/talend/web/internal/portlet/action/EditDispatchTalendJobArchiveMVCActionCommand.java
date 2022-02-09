@@ -108,7 +108,7 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			if (!_isArchiveException(exception)) {
 				return;

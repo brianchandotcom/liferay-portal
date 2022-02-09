@@ -653,9 +653,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchWorkflowDefinitionLinkException,
-					noSuchWorkflowDefinitionLinkException);
+				_log.debug(noSuchWorkflowDefinitionLinkException);
 			}
 
 			return null;

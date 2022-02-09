@@ -99,7 +99,7 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 			}
 			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchMessageException, noSuchMessageException);
+					_log.warn(noSuchMessageException);
 				}
 			}
 

@@ -232,7 +232,7 @@ public class AxisExtender {
 				axisServletServiceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
@@ -243,7 +243,7 @@ public class AxisExtender {
 				authVerifierFilterServiceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			ServiceRegistration<ServletContextHelper>
@@ -255,7 +255,7 @@ public class AxisExtender {
 				bundleServletContextHelperServiceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

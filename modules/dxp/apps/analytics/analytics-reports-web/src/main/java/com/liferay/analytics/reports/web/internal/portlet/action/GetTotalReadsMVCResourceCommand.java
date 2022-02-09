@@ -71,7 +71,7 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info(exception, exception);
+				_log.info(exception);
 			}
 
 			JSONPortletResponseUtil.writeJSON(

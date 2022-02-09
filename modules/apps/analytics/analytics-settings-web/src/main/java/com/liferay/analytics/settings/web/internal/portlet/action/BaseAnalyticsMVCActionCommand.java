@@ -147,7 +147,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 			}
 		}
 		catch (PrincipalException principalException) {
-			_log.error(principalException, principalException);
+			_log.error(principalException);
 
 			SessionErrors.add(actionRequest, principalException.getClass());
 
@@ -157,7 +157,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 			mutableRenderParameters.setValue("mvcPath", "/error.jsp");
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw exception;
 		}

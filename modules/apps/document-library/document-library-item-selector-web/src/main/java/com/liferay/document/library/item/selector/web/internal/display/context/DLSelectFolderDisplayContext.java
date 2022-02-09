@@ -105,7 +105,7 @@ public class DLSelectFolderDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return 0;
 		}
@@ -117,7 +117,7 @@ public class DLSelectFolderDisplayContext {
 				folder.getRepositoryId(), folder.getFolderId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return 0;
 		}

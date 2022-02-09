@@ -269,8 +269,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 					}
 				}
 				catch (MessageListenerException messageListenerException) {
-					_log.error(
-						messageListenerException, messageListenerException);
+					_log.error(messageListenerException);
 				}
 			}
 		}

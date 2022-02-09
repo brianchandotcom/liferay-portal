@@ -94,9 +94,7 @@ public class CSDiagramSettingDisplayContext
 					noSuchCPAttachmentFileEntryException) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					noSuchCPAttachmentFileEntryException,
-					noSuchCPAttachmentFileEntryException);
+				_log.info(noSuchCPAttachmentFileEntryException);
 			}
 
 			return null;
@@ -157,7 +155,7 @@ public class CSDiagramSettingDisplayContext
 			cpType = getCPType();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (cpType != null) {

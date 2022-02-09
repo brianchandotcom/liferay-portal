@@ -111,8 +111,7 @@ public class PortletItemLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchPortletItemException, noSuchPortletItemException);
+				_log.debug(noSuchPortletItemException);
 			}
 
 			portletItem = addPortletItem(

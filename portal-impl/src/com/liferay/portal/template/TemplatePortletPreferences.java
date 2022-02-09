@@ -99,7 +99,7 @@ public class TemplatePortletPreferences {
 			return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return PortletConstants.DEFAULT_PREFERENCES;
 		}

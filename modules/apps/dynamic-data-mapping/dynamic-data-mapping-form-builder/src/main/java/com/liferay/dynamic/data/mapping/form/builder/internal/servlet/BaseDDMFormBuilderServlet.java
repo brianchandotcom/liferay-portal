@@ -57,7 +57,7 @@ public class BaseDDMFormBuilderServlet extends HttpServlet {
 		}
 		catch (ActionException actionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(actionException, actionException);
+				_log.debug(actionException);
 			}
 		}
 	}

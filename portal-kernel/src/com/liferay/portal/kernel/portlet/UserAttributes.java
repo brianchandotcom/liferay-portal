@@ -319,7 +319,7 @@ public class UserAttributes {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_businessAddress = businessAddress;

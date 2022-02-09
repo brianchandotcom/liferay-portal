@@ -51,7 +51,7 @@ public class PortletTypeUtil {
 			}
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			_log.error(noSuchMethodException, noSuchMethodException);
+			_log.error(noSuchMethodException);
 		}
 
 		return false;

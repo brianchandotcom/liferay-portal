@@ -37,7 +37,7 @@ public class KaleoNotificationRecipientUpgradeProcess extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
+				_log.debug(sqlException);
 			}
 		}
 	}

@@ -106,7 +106,7 @@ public class GroupDisplayContext {
 						new GroupNameComparator(_isOrderByAscending()));
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 
 				_fetchChannelNames(groups);
@@ -208,7 +208,7 @@ public class GroupDisplayContext {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

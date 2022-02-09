@@ -1274,7 +1274,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		}
 		catch (NumberFormatException numberFormatException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(numberFormatException, numberFormatException);
+				_log.debug(numberFormatException);
 			}
 
 			attemptsMaxCount = "0";

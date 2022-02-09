@@ -59,9 +59,7 @@ public class CSDiagramSettingUtil {
 					noSuchCPAttachmentFileEntryException) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					noSuchCPAttachmentFileEntryException,
-					noSuchCPAttachmentFileEntryException);
+				_log.info(noSuchCPAttachmentFileEntryException);
 			}
 
 			return null;

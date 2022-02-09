@@ -64,7 +64,7 @@ public class SamlKeepAliveExpandoPortalInstanceLifecycleListener
 		}
 		catch (NoSuchTableException noSuchTableException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchTableException, noSuchTableException);
+				_log.debug(noSuchTableException);
 			}
 
 			expandoTable = _expandoTableLocalService.addDefaultTable(

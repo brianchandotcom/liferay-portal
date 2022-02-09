@@ -93,7 +93,7 @@ public class AutoTranslateServlet extends HttpServlet {
 			}
 		}
 		catch (TranslatorException translatorException) {
-			_log.error(translatorException, translatorException);
+			_log.error(translatorException);
 
 			_writeErrorJSON(
 				httpServletResponse,
@@ -101,7 +101,7 @@ public class AutoTranslateServlet extends HttpServlet {
 					translatorException.getMessage(), CharPool.QUOTE, "\\\""));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_writeErrorJSON(
 				httpServletResponse,

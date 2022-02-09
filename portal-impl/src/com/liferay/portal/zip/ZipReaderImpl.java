@@ -97,7 +97,7 @@ public class ZipReaderImpl implements ZipReader {
 			return StreamUtil.toByteArray(getEntryAsInputStream(name));
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		return null;

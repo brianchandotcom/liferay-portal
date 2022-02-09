@@ -121,7 +121,7 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 				commerceOrderContentDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

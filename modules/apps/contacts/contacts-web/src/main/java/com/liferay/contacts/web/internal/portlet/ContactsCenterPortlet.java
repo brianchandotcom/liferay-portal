@@ -221,8 +221,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchRelationException, noSuchRelationException);
+					_log.debug(noSuchRelationException);
 				}
 			}
 		}
@@ -321,7 +320,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchUserException, noSuchUserException);
+					_log.debug(noSuchUserException);
 				}
 			}
 		}
@@ -709,7 +708,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			jsonObject.put("success", Boolean.FALSE);

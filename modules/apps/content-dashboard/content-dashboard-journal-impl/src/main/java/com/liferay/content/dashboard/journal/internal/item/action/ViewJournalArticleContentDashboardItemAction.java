@@ -119,7 +119,7 @@ public class ViewJournalArticleContentDashboardItemAction
 			);
 		}
 		catch (CloneNotSupportedException | PortalException exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return StringPool.BLANK;
 		}

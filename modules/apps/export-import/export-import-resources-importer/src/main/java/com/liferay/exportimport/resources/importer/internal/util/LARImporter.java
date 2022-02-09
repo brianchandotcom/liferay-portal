@@ -96,7 +96,7 @@ public class LARImporter extends BaseImporter {
 				new BufferedInputStream(new FileInputStream(file)));
 		}
 		catch (FileNotFoundException fileNotFoundException) {
-			_log.error(fileNotFoundException, fileNotFoundException);
+			_log.error(fileNotFoundException);
 		}
 	}
 

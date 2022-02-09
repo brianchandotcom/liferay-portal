@@ -104,7 +104,7 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFolderException, noSuchFolderException);
+				_log.debug(noSuchFolderException);
 			}
 		}
 

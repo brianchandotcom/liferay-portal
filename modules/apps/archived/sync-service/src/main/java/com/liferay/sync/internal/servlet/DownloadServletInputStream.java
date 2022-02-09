@@ -70,7 +70,7 @@ public class DownloadServletInputStream extends InputStream {
 			return _inputStream.read(b, off, len);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new IOException(exception);
 		}

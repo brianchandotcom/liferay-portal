@@ -204,7 +204,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -218,7 +218,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getNodeId(), true, getTitle());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return Collections.emptyList();
 		}
@@ -267,7 +267,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			return WikiNodeLocalServiceUtil.getNode(getNodeId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return new WikiNodeImpl();
 		}
@@ -331,7 +331,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getGroupId(), getNodeId(), true, getTitle());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return Collections.emptyList();
 		}
@@ -348,7 +348,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getGroupId(), getNodeId(), getParentTitle());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return null;
 		}

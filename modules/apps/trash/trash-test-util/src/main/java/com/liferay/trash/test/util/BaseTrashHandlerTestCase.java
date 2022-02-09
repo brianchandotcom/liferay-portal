@@ -1049,7 +1049,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchModelException, noSuchModelException);
+				_log.debug(noSuchModelException);
 			}
 		}
 	}
@@ -1144,7 +1144,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchModelException, noSuchModelException);
+				_log.debug(noSuchModelException);
 			}
 		}
 
@@ -1908,7 +1908,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchModelException, noSuchModelException);
+				_log.debug(noSuchModelException);
 			}
 		}
 	}
@@ -1952,7 +1952,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchModelException, noSuchModelException);
+				_log.debug(noSuchModelException);
 			}
 		}
 

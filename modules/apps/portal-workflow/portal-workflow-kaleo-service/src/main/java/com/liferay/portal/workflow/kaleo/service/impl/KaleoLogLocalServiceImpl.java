@@ -163,7 +163,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 		catch (NoSuchLogException noSuchLogException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLogException, noSuchLogException);
+				_log.debug(noSuchLogException);
 			}
 		}
 
@@ -392,7 +392,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 		catch (NoSuchLogException noSuchLogException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLogException, noSuchLogException);
+				_log.debug(noSuchLogException);
 			}
 		}
 
@@ -634,7 +634,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -655,7 +655,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

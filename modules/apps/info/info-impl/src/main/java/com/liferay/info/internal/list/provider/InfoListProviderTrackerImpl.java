@@ -108,7 +108,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 				serviceRegistration.unregister();
 			}
 			catch (IllegalStateException illegalStateException) {
-				_log.error(illegalStateException, illegalStateException);
+				_log.error(illegalStateException);
 			}
 		}
 

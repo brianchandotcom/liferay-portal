@@ -121,7 +121,7 @@ public class SharepointConnectionTestUtil {
 			}
 			catch (Exception exception) {
 				if (tries == 0) {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					throw new RuntimeException(exception);
 				}

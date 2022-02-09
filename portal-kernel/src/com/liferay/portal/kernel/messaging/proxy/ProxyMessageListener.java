@@ -74,7 +74,7 @@ public class ProxyMessageListener implements MessageListener {
 				responseMessage.setPayload(proxyResponse);
 
 				if (_log.isDebugEnabled() && (exception != null)) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				_messageBus.sendMessage(
@@ -83,7 +83,7 @@ public class ProxyMessageListener implements MessageListener {
 			else {
 				if (exception != null) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 				}
 

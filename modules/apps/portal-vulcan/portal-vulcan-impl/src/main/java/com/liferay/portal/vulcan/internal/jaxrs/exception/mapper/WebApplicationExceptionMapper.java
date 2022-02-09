@@ -35,7 +35,7 @@ public class WebApplicationExceptionMapper
 	protected Problem getProblem(
 		WebApplicationException webApplicationException) {
 
-		_log.error(webApplicationException, webApplicationException);
+		_log.error(webApplicationException);
 
 		Response response = webApplicationException.getResponse();
 

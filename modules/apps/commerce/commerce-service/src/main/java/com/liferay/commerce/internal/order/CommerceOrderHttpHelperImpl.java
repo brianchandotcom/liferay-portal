@@ -283,7 +283,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new PortalException(exception);
 		}
@@ -295,7 +295,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			portletURL.setWindowState(LiferayWindowState.NORMAL);
 		}
 		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
+			_log.error(windowStateException);
 
 			throw new PortalException(windowStateException);
 		}

@@ -36,7 +36,7 @@ public class UtilLocator {
 			bean = PortalBeanLocatorUtil.locate(_getUtilName(utilName));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return bean;
@@ -50,7 +50,7 @@ public class UtilLocator {
 				servletContextName, _getUtilName(utilName));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return bean;

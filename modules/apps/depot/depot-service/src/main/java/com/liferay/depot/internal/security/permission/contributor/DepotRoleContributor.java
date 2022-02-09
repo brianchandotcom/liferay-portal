@@ -81,7 +81,7 @@ public class DepotRoleContributor implements RoleContributor {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

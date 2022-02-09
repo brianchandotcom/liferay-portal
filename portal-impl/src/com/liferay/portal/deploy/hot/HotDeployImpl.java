@@ -103,7 +103,7 @@ public class HotDeployImpl implements HotDeploy {
 				hotDeployListener.invokeUndeploy(hotDeployEvent);
 			}
 			catch (HotDeployException hotDeployException) {
-				_log.error(hotDeployException, hotDeployException);
+				_log.error(hotDeployException);
 			}
 			finally {
 				PortletClassLoaderUtil.setServletContextName(null);
@@ -206,7 +206,7 @@ public class HotDeployImpl implements HotDeploy {
 					hotDeployListener.invokeDeploy(hotDeployEvent);
 				}
 				catch (HotDeployException hotDeployException) {
-					_log.error(hotDeployException, hotDeployException);
+					_log.error(hotDeployException);
 				}
 				finally {
 					PortletClassLoaderUtil.setServletContextName(null);

@@ -144,7 +144,7 @@ public abstract class ExtRepositoryModelAdapter<T>
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -265,7 +265,7 @@ public abstract class ExtRepositoryModelAdapter<T>
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -276,7 +276,7 @@ public abstract class ExtRepositoryModelAdapter<T>
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}

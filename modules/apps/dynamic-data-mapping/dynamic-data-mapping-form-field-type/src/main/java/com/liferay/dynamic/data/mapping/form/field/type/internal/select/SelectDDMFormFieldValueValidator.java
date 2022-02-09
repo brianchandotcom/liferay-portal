@@ -60,7 +60,7 @@ public class SelectDDMFormFieldValueValidator
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				throw new DDMFormFieldValueValidationException(exception);

@@ -151,7 +151,7 @@ public class CommerceWishListResource {
 		catch (Exception exception) {
 			wishListItemUpdated.setSuccess(false);
 
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return _getResponse(wishListItemUpdated);
@@ -172,7 +172,7 @@ public class CommerceWishListResource {
 			).build();
 		}
 		catch (JsonProcessingException jsonProcessingException) {
-			_log.error(jsonProcessingException, jsonProcessingException);
+			_log.error(jsonProcessingException);
 		}
 
 		return Response.status(

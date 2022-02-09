@@ -894,7 +894,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				return null;
@@ -968,7 +968,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 					return map.keySet();
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 

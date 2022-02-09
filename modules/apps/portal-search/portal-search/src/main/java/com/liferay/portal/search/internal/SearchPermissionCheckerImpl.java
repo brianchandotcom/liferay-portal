@@ -137,11 +137,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 		catch (NoSuchResourceException noSuchResourceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchResourceException, noSuchResourceException);
+				_log.debug(noSuchResourceException);
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				searchContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return booleanFilter;
 		}
@@ -173,7 +173,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

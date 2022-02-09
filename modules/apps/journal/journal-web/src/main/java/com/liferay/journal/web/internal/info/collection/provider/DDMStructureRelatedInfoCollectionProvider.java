@@ -110,7 +110,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 		}
 		catch (SearchException searchException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(searchException, searchException);
+				_log.warn(searchException);
 			}
 
 			return null;
@@ -170,7 +170,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

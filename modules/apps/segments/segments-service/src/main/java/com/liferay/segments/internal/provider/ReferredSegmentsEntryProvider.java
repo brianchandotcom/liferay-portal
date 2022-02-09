@@ -108,7 +108,7 @@ public class ReferredSegmentsEntryProvider
 				referredFilterString, segmentsEntryMap);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return member;

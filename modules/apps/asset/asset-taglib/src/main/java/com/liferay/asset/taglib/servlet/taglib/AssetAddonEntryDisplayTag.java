@@ -45,7 +45,7 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 				assetAddonEntry.include(httpServletRequest, getResponse());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

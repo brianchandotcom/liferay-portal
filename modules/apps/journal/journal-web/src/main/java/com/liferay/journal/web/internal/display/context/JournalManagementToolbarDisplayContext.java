@@ -707,7 +707,7 @@ public class JournalManagementToolbarDisplayContext
 
 			// LPS-52675
 
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;

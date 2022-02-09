@@ -81,7 +81,7 @@ public class RatingsStatsLocalServiceImpl
 		}
 		catch (NoSuchStatsException noSuchStatsException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchStatsException, noSuchStatsException);
+				_log.warn(noSuchStatsException);
 			}
 		}
 

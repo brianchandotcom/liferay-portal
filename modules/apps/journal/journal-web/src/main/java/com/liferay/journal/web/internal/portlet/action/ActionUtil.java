@@ -286,7 +286,7 @@ public class ActionUtil {
 			}
 			catch (NoSuchArticleException noSuchArticleException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchArticleException, noSuchArticleException);
+					_log.debug(noSuchArticleException);
 				}
 
 				return null;
@@ -312,7 +312,7 @@ public class ActionUtil {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -341,7 +341,7 @@ public class ActionUtil {
 			}
 			catch (NoSuchArticleException noSuchArticleException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchArticleException, noSuchArticleException);
+					_log.debug(noSuchArticleException);
 				}
 
 				return null;

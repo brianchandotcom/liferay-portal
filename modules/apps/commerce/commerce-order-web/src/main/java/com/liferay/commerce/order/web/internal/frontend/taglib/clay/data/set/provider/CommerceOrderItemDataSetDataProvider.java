@@ -95,7 +95,7 @@ public class CommerceOrderItemDataSetDataProvider
 				baseModelSearchResult.getBaseModels(), httpServletRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return orderItems;

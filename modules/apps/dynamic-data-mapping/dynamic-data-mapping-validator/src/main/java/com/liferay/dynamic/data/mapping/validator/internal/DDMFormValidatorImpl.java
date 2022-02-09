@@ -157,7 +157,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 
 			throw new MustSetValidValidationExpression(
@@ -430,7 +430,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 
 			throw new MustSetValidVisibilityExpression(

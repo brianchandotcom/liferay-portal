@@ -66,7 +66,7 @@ public class WebFormUtil {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchTableException, noSuchTableException);
+				_log.debug(noSuchTableException);
 			}
 		}
 
@@ -89,7 +89,7 @@ public class WebFormUtil {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchTableException, noSuchTableException);
+				_log.debug(noSuchTableException);
 			}
 
 			expandoTable = addTable(companyId, tableName);
@@ -183,7 +183,7 @@ public class WebFormUtil {
 				br.close();
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 		else {

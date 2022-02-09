@@ -291,7 +291,7 @@ public class OpenIdConnectProviderRegistryImpl
 						openIdConnectProvider.getName(), openIdConnectProvider);
 				}
 				catch (ConfigurationException configurationException) {
-					_log.error(configurationException, configurationException);
+					_log.error(configurationException);
 				}
 			});
 

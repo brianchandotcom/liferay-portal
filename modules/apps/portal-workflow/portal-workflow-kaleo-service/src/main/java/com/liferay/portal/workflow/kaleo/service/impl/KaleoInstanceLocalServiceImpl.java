@@ -212,7 +212,7 @@ public class KaleoInstanceLocalServiceImpl
 		}
 		catch (NoSuchInstanceException noSuchInstanceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInstanceException, noSuchInstanceException);
+				_log.debug(noSuchInstanceException);
 			}
 
 			return null;
@@ -359,7 +359,7 @@ public class KaleoInstanceLocalServiceImpl
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -551,7 +551,7 @@ public class KaleoInstanceLocalServiceImpl
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

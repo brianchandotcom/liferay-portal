@@ -47,7 +47,7 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 				_userGroup.getUserGroupId(), user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -66,7 +66,7 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

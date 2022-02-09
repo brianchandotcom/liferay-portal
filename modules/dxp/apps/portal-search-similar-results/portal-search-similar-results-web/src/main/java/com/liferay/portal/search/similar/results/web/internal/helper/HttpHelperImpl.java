@@ -47,7 +47,7 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException, runtimeException);
+				_log.debug(runtimeException);
 			}
 
 			return StringPool.EMPTY_ARRAY;
@@ -77,7 +77,7 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException, runtimeException);
+				_log.debug(runtimeException);
 			}
 
 			return null;
@@ -99,7 +99,7 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException, runtimeException);
+				_log.debug(runtimeException);
 			}
 
 			return null;

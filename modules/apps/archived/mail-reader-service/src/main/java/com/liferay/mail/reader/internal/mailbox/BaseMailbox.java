@@ -50,7 +50,7 @@ public abstract class BaseMailbox implements Mailbox {
 		}
 		catch (NoSuchAccountException noSuchAccountException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchAccountException, noSuchAccountException);
+				_log.debug(noSuchAccountException);
 			}
 
 			long inboxFolderId = 0;

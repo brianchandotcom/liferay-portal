@@ -293,7 +293,7 @@ public class IBMS3Store implements Store {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileException, noSuchFileException);
+				_log.debug(noSuchFileException);
 			}
 
 			return false;
@@ -671,7 +671,7 @@ public class IBMS3Store implements Store {
 		}
 		catch (InterruptedException interruptedException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(interruptedException, interruptedException);
+				_log.debug(interruptedException);
 			}
 
 			upload.abort();

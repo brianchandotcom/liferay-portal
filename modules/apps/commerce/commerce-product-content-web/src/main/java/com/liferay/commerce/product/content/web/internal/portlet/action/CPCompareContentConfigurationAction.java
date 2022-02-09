@@ -58,7 +58,7 @@ public class CPCompareContentConfigurationAction
 				cpCompareContentDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return "/compare_products/configuration.jsp";

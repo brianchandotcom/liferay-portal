@@ -102,7 +102,7 @@ public class UpdateTaskMVCResourceCommand extends BaseMVCResourceCommand {
 				workflowTaskId, comment, dueDate);
 		}
 		catch (WorkflowException workflowException) {
-			_log.error(workflowException, workflowException);
+			_log.error(workflowException);
 
 			SessionErrors.add(
 				resourceRequest, workflowException.getClass(),

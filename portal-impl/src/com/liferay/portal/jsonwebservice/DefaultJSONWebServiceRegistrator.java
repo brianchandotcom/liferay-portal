@@ -103,7 +103,7 @@ public class DefaultJSONWebServiceRegistrator
 		}
 		catch (BeanLocatorException beanLocatorException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(beanLocatorException, beanLocatorException);
+				_log.debug(beanLocatorException);
 			}
 
 			return;
@@ -122,7 +122,7 @@ public class DefaultJSONWebServiceRegistrator
 					contextName, contextPath, bean, jsonWebService);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ public class DefaultJSONWebServiceRegistrator
 				contextName, contextPath, bean, jsonWebService);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -276,8 +276,7 @@ public class DefaultJSONWebServiceRegistrator
 				}
 				catch (NoSuchMethodException noSuchMethodException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchMethodException, noSuchMethodException);
+						_log.debug(noSuchMethodException);
 					}
 
 					continue;

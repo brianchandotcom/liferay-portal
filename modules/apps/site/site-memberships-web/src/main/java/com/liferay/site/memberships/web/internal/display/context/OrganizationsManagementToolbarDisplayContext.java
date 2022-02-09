@@ -75,7 +75,7 @@ public class OrganizationsManagementToolbarDisplayContext
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -139,7 +139,7 @@ public class OrganizationsManagementToolbarDisplayContext
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -180,7 +180,7 @@ public class OrganizationsManagementToolbarDisplayContext
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

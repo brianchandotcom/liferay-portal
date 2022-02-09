@@ -98,7 +98,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, exception.getClass());
 
 			if (!(exception instanceof LARFileNameException)) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

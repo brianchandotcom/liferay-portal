@@ -112,7 +112,7 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 			return _ddmStructureService.getStructure(ddmStructureId);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;

@@ -414,7 +414,7 @@ public class KBArticleStagedModelDataHandler
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFileException, noSuchFileException);
+					_log.debug(noSuchFileException);
 				}
 
 				return null;
@@ -473,9 +473,7 @@ public class KBArticleStagedModelDataHandler
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateFileEntryException,
-						duplicateFileEntryException);
+					_log.debug(duplicateFileEntryException);
 				}
 			}
 		}

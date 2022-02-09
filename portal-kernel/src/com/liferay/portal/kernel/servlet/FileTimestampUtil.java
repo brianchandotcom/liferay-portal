@@ -86,7 +86,7 @@ public class FileTimestampUtil {
 			}
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		timestamps.put(path, timestamp);

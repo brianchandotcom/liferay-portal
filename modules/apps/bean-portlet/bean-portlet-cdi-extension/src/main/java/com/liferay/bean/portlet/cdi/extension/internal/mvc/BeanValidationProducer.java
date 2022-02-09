@@ -77,7 +77,7 @@ public class BeanValidationProducer {
 				validatorFactory = Validation.buildDefaultValidatorFactory();
 			}
 			catch (NoProviderFoundException noProviderFoundException) {
-				_log.error(noProviderFoundException, noProviderFoundException);
+				_log.error(noProviderFoundException);
 			}
 		}
 

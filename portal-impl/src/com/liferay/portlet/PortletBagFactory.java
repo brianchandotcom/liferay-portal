@@ -210,7 +210,7 @@ public class PortletBagFactory {
 				portlet, _servletContext, destroyPrevious);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return portletBag;

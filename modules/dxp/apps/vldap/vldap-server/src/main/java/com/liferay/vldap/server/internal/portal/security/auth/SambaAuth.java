@@ -119,8 +119,7 @@ public class SambaAuth implements Authenticator {
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					unsupportedEncodingException, unsupportedEncodingException);
+				_log.warn(unsupportedEncodingException);
 			}
 		}
 	}

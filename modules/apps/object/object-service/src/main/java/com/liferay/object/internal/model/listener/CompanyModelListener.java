@@ -39,7 +39,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 				company.getCompanyId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

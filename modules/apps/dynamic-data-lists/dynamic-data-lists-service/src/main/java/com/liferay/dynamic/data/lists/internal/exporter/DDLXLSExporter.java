@@ -126,7 +126,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return new byte[0];

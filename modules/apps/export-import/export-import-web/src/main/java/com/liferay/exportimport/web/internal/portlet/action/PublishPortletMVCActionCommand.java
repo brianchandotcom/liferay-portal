@@ -113,7 +113,7 @@ public class PublishPortletMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				SessionErrors.add(
 					actionRequest,

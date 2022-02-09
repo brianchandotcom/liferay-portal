@@ -177,7 +177,7 @@ public class RSSFeedEntry {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sanitizerException, sanitizerException);
+				_log.debug(sanitizerException);
 			}
 		}
 

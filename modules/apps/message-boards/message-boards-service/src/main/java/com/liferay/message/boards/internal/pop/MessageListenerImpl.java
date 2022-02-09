@@ -259,7 +259,7 @@ public class MessageListenerImpl implements MessageListener {
 			throw new MessageListenerException(principalException);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new MessageListenerException(exception);
 		}
@@ -272,7 +272,7 @@ public class MessageListenerImpl implements MessageListener {
 					}
 					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(ioException, ioException);
+							_log.warn(ioException);
 						}
 					}
 				}

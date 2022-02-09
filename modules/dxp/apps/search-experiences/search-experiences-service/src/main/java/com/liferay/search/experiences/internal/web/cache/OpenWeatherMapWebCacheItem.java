@@ -59,7 +59,7 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 			exceptionListener.exceptionThrown(exception);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return JSONFactoryUtil.createJSONObject();

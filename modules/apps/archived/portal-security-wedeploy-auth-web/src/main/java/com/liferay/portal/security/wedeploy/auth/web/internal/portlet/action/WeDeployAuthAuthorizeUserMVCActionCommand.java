@@ -80,7 +80,7 @@ public class WeDeployAuthAuthorizeUserMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"error_message",

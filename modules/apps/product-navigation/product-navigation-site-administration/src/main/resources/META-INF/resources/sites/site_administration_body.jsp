@@ -60,7 +60,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 					}
 					catch (RemoteExportException | SystemException e) {
 						if (e instanceof SystemException) {
-							_log.error(e, e);
+							_log.error(e);
 						}
 					%>
 

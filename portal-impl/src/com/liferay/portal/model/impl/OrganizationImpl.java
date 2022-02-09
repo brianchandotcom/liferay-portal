@@ -269,7 +269,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 			return group.getPrivateLayoutsPageCount();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return 0;
@@ -287,7 +287,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 			return group.getPublicLayoutsPageCount();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return 0;

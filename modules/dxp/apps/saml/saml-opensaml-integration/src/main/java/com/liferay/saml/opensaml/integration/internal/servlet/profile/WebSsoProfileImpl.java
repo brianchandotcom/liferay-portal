@@ -210,7 +210,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 			else {
 				if (!(exception instanceof AuthnAgeException ||
@@ -281,7 +281,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -2074,8 +2074,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 		catch (NoSuchIdpSpSessionException noSuchIdpSpSessionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchIdpSpSessionException, noSuchIdpSpSessionException);
+				_log.debug(noSuchIdpSpSessionException);
 			}
 
 			_samlIdpSpSessionLocalService.addSamlIdpSpSession(

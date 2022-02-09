@@ -209,7 +209,7 @@ public class RESTBuilder {
 				_checkOpenAPIYAMLFile(freeMarkerTool, file);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw new RuntimeException(
 					StringBundler.concat(
@@ -1655,7 +1655,7 @@ public class RESTBuilder {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return Optional.empty();

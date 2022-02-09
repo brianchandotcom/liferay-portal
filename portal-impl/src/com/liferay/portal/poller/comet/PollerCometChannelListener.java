@@ -57,7 +57,7 @@ public class PollerCometChannelListener implements ChannelListener {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(unknownChannelException, unknownChannelException);
+				_log.debug(unknownChannelException);
 			}
 		}
 		catch (ChannelException channelException) {

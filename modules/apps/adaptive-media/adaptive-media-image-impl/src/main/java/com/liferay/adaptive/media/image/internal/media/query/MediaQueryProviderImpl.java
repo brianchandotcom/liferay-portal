@@ -96,7 +96,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			return Optional.empty();
@@ -275,7 +275,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 		catch (NumberFormatException numberFormatException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(numberFormatException, numberFormatException);
+				_log.debug(numberFormatException);
 			}
 
 			return Optional.empty();

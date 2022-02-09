@@ -111,7 +111,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+				_log.debug(jsonException);
 			}
 		}
 
@@ -171,7 +171,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return 0L;
@@ -241,7 +241,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 		}
@@ -283,7 +283,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return value;

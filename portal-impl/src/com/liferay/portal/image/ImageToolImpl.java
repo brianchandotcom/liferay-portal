@@ -549,7 +549,7 @@ public class ImageToolImpl implements ImageTool {
 				}
 				catch (ArrayIndexOutOfBoundsException | IOException exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 
 					continue;

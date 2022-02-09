@@ -161,7 +161,7 @@ public class ThemeDisplay
 				portalURL = PortalUtil.getPortalURL(getLayout(), this);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			host = portalURL;
@@ -1424,7 +1424,7 @@ public class ThemeDisplay
 				portalURL = PortalUtil.getPortalURL(getLayout(), this);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			dynamicResourcesHost = portalURL;
@@ -1572,7 +1572,7 @@ public class ThemeDisplay
 				_refererGroup = GroupLocalServiceUtil.getGroup(_refererGroupId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -1597,7 +1597,7 @@ public class ThemeDisplay
 				_scopeGroup = GroupLocalServiceUtil.getGroup(_scopeGroupId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -1684,7 +1684,7 @@ public class ThemeDisplay
 				_siteGroup = GroupLocalServiceUtil.getGroup(_siteGroupId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

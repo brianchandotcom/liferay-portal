@@ -56,7 +56,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 			doAddAttributes(document, expandoBridge);
 		}
 		catch (SystemException systemException) {
-			_log.error(systemException, systemException);
+			_log.error(systemException);
 		}
 	}
 

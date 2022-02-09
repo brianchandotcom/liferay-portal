@@ -168,7 +168,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			return journalServiceConfiguration.publishToLiveByDefaultEnabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return true;
@@ -724,7 +724,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			return journalServiceConfiguration.versionHistoryByDefaultEnabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return true;

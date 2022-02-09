@@ -172,7 +172,7 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 					}
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 
 					_sendStatusMessage(
@@ -185,7 +185,7 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 			actionableDynamicQuery.performActions();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

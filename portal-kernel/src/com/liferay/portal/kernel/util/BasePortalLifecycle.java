@@ -31,7 +31,7 @@ public abstract class BasePortalLifecycle implements PortalLifecycle {
 				doPortalDestroy();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			_calledPortalDestroy = true;
@@ -44,7 +44,7 @@ public abstract class BasePortalLifecycle implements PortalLifecycle {
 			doPortalInit();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new IllegalStateException(
 				"Unable to initialize portal", exception);

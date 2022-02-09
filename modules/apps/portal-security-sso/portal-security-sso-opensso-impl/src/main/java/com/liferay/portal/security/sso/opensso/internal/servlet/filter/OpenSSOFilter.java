@@ -99,7 +99,7 @@ public class OpenSSOFilter extends BaseFilter {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;
@@ -142,7 +142,7 @@ public class OpenSSOFilter extends BaseFilter {
 				httpServletRequest, openSSOConfiguration.serviceURL());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			processFilter(
 				OpenSSOFilter.class.getName(), httpServletRequest,

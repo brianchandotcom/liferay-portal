@@ -52,7 +52,7 @@ public class HttpPrincipal implements Serializable {
 				_password = PasswordEncryptorUtil.encrypt(password);
 			}
 			catch (PwdEncryptorException pwdEncryptorException) {
-				_log.error(pwdEncryptorException, pwdEncryptorException);
+				_log.error(pwdEncryptorException);
 			}
 		}
 	}

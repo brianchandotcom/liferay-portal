@@ -201,7 +201,7 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 		}
 		catch (PortalException | UnsupportedCapabilityException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

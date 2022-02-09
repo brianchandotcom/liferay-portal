@@ -49,7 +49,7 @@ public class KaleoDefinitionVersionScopePredicate
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			if (_scope != WorkflowDefinitionConstants.SCOPE_ALL) {

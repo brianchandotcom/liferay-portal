@@ -78,7 +78,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_elasticsearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -136,7 +136,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_elasticsearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -245,7 +245,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_elasticsearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -274,7 +274,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_elasticsearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;

@@ -110,7 +110,7 @@ public class JournalArticleActivityInterpreter
 		}
 		catch (NoSuchArticleException noSuchArticleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchArticleException, noSuchArticleException);
+				_log.debug(noSuchArticleException);
 			}
 
 			return null;

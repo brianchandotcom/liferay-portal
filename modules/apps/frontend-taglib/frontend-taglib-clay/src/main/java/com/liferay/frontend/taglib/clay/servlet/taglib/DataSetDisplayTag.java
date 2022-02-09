@@ -104,7 +104,7 @@ public class DataSetDisplayTag extends IncludeTag {
 			_setClayPaginationEntries();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.doStartTag();

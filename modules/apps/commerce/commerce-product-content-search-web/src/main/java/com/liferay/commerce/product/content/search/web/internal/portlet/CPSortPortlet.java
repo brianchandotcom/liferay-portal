@@ -91,7 +91,7 @@ public class CPSortPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		super.render(renderRequest, renderResponse);

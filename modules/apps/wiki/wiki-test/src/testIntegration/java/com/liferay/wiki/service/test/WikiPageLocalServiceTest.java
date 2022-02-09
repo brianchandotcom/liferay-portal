@@ -228,7 +228,7 @@ public class WikiPageLocalServiceTest {
 		}
 		catch (AssetCategoryException assetCategoryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(assetCategoryException, assetCategoryException);
+				_log.debug(assetCategoryException);
 			}
 
 			throw new AssetCategoryTestException();

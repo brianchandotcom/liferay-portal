@@ -141,7 +141,7 @@ public class OrganizationExpandoColumnModelListener
 				_bundleContext, _organizationEntityFields);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

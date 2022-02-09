@@ -544,9 +544,7 @@ public class DDMStructureLocalServiceImpl
 						noSuchStructureLayoutException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchStructureLayoutException,
-						noSuchStructureLayoutException);
+					_log.debug(noSuchStructureLayoutException);
 				}
 			}
 
@@ -1840,7 +1838,7 @@ public class DDMStructureLocalServiceImpl
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -2164,7 +2162,7 @@ public class DDMStructureLocalServiceImpl
 				getAncestorSiteAndDepotGroupIds(groupId, true);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return new long[0];
 		}

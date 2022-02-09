@@ -158,7 +158,7 @@ public class JournalArticleDDMStructureIndexer implements DDMStructureIndexer {
 			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

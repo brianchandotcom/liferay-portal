@@ -84,7 +84,7 @@ public class ImportCommerceRegionsMVCActionCommand
 		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			jsonObject.put(
 				"error", exception.getMessage()

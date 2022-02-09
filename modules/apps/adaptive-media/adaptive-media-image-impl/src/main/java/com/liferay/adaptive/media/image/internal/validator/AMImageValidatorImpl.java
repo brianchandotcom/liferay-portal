@@ -152,9 +152,7 @@ public class AMImageValidatorImpl implements AMImageValidator {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						ddmFormFieldValueValidationException,
-						ddmFormFieldValueValidationException);
+					_log.debug(ddmFormFieldValueValidationException);
 				}
 			}
 			catch (PortalException portalException) {
@@ -167,7 +165,7 @@ public class AMImageValidatorImpl implements AMImageValidator {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 		}

@@ -89,7 +89,7 @@ public class JSONServlet extends HttpServlet {
 			throw new ServletException(securityException);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			AccessControlThreadLocal.setRemoteAccess(remoteAccess);

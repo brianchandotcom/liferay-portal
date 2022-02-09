@@ -247,7 +247,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 				}
 			}
@@ -273,7 +273,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return configuration;

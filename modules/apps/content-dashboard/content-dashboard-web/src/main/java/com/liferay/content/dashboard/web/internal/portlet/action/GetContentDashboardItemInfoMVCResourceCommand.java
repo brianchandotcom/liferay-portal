@@ -120,7 +120,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 							contentDashboardItemFactory.create(classPK));
 					}
 					catch (PortalException portalException) {
-						_log.error(portalException, portalException);
+						_log.error(portalException);
 
 						return Optional.empty();
 					}
@@ -176,7 +176,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info(exception, exception);
+				_log.info(exception);
 			}
 
 			JSONPortletResponseUtil.writeJSON(

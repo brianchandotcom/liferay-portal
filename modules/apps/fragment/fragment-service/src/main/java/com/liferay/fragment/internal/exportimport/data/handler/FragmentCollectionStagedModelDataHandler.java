@@ -205,7 +205,7 @@ public class FragmentCollectionStagedModelDataHandler
 			}
 			catch (NoSuchFileException noSuchFileException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFileException, noSuchFileException);
+					_log.debug(noSuchFileException);
 				}
 
 				return null;

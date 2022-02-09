@@ -97,7 +97,7 @@ public class AssetEntryActionDropdownItemsProvider {
 						}
 						catch (Exception exception) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(exception, exception);
+								_log.debug(exception);
 							}
 
 							continue;
@@ -163,7 +163,7 @@ public class AssetEntryActionDropdownItemsProvider {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

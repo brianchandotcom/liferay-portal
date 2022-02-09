@@ -229,7 +229,7 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

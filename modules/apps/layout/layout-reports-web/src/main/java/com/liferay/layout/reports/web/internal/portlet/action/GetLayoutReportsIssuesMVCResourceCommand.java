@@ -132,9 +132,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		catch (LayoutReportsDataProvider.LayoutReportsDataProviderException
 					layoutReportsDataProviderException) {
 
-			_log.error(
-				layoutReportsDataProviderException,
-				layoutReportsDataProviderException);
+			_log.error(layoutReportsDataProviderException);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -147,7 +145,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -195,7 +193,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			return _portal.getLayoutURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return _portal.getCurrentCompleteURL(themeDisplay.getRequest());
 		}
@@ -241,7 +239,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;

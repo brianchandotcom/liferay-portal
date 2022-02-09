@@ -75,7 +75,7 @@ public class PanelAppRegistry {
 				}
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 
@@ -122,7 +122,7 @@ public class PanelAppRegistry {
 					return panelApp.isShow(permissionChecker, group);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 
 				return false;
@@ -146,7 +146,7 @@ public class PanelAppRegistry {
 				}
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

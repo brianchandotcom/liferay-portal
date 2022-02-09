@@ -127,7 +127,7 @@ public class AMServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			Throwable throwable = exception.getCause();

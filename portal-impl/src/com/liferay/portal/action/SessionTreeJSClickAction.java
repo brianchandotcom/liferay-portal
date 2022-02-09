@@ -198,9 +198,7 @@ public class SessionTreeJSClickAction implements Action {
 						concurrentModificationException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						concurrentModificationException,
-						concurrentModificationException);
+					_log.debug(concurrentModificationException);
 				}
 			}
 		}

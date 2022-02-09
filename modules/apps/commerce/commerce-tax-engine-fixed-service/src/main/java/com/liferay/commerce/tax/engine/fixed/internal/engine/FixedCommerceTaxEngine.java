@@ -88,7 +88,7 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 			commerceTaxValue = new CommerceTaxValue(KEY, KEY, taxValue);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			throw new CommerceTaxEngineException(portalException);
 		}

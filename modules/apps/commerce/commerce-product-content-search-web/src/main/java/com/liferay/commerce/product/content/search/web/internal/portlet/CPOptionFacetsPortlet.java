@@ -119,7 +119,7 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetsDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		super.render(renderRequest, renderResponse);

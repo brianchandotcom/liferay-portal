@@ -89,7 +89,7 @@ public class DDMFormAssetRenderer
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -239,7 +239,7 @@ public class DDMFormAssetRenderer
 			return false;
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;
@@ -252,7 +252,7 @@ public class DDMFormAssetRenderer
 				permissionChecker, _ddmFormInstanceRecord, ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;

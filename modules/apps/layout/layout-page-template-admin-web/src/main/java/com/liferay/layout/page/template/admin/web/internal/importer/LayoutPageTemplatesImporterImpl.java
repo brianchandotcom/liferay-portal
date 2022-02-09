@@ -150,7 +150,7 @@ public class LayoutPageTemplatesImporterImpl
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 
 				throw portalException;
 			}
@@ -172,7 +172,7 @@ public class LayoutPageTemplatesImporterImpl
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		};
@@ -198,7 +198,7 @@ public class LayoutPageTemplatesImporterImpl
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		};
@@ -1036,16 +1036,14 @@ public class LayoutPageTemplatesImporterImpl
 					dropzoneLayoutStructureItemException) {
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					dropzoneLayoutStructureItemException,
-					dropzoneLayoutStructureItemException);
+				_log.warn(dropzoneLayoutStructureItemException);
 			}
 
 			throw new PortalException();
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			_layoutPageTemplatesImporterResultEntries.add(

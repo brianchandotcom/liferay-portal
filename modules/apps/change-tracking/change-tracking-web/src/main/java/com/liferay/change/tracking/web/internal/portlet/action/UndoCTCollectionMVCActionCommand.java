@@ -103,7 +103,7 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}
 		catch (CTLocalizedException ctLocalizedException) {
-			_log.error(ctLocalizedException, ctLocalizedException);
+			_log.error(ctLocalizedException);
 
 			SessionErrors.add(
 				actionRequest, CTLocalizedException.class.getName(),

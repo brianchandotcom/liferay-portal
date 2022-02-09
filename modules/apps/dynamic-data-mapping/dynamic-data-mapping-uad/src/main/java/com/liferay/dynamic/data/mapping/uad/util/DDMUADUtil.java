@@ -74,7 +74,7 @@ public class DDMUADUtil {
 		catch (IOException | ParserConfigurationException | SAXException
 					exception) {
 
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

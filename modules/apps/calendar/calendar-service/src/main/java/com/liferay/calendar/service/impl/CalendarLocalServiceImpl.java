@@ -235,7 +235,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException, noSuchGroupException);
+				_log.debug(noSuchGroupException);
 			}
 
 			return false;

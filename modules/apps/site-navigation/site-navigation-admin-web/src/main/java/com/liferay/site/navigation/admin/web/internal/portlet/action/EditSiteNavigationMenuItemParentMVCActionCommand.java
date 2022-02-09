@@ -94,7 +94,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 					themeDisplay.getRequest(), exceptionClass.getName()));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			jsonObject.put(
 				"error",

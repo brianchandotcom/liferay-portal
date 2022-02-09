@@ -237,7 +237,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -303,7 +303,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -445,7 +445,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;

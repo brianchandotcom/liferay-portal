@@ -59,7 +59,7 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 					_updateDefaultValues(company);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 	}

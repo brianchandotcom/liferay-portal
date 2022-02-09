@@ -92,7 +92,7 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				SessionErrors.add(renderRequest, exception.getClass());

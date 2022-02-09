@@ -121,7 +121,7 @@ public class OAuth2Manager {
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException, configurationException);
+				_log.debug(configurationException);
 			}
 
 			return false;

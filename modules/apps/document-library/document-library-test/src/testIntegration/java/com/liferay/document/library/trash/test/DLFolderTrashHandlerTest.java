@@ -158,7 +158,7 @@ public class DLFolderTrashHandlerTest
 					trashEntryException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(trashEntryException, trashEntryException);
+				_log.debug(trashEntryException);
 			}
 
 			throw new TrashEntryException();
@@ -175,7 +175,7 @@ public class DLFolderTrashHandlerTest
 					restoreEntryException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 
 			throw new RestoreEntryException();

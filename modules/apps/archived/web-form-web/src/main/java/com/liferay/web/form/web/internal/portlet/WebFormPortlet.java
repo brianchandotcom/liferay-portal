@@ -152,7 +152,7 @@ public class WebFormPortlet extends MVCPortlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(captchaException, captchaException);
+					_log.debug(captchaException);
 				}
 
 				Class<?> clazz = captchaException.getClass();
@@ -297,7 +297,7 @@ public class WebFormPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

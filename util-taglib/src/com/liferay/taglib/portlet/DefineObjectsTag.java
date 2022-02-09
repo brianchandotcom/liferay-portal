@@ -110,7 +110,7 @@ public class DefineObjectsTag extends TagSupport {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 			}
 		}

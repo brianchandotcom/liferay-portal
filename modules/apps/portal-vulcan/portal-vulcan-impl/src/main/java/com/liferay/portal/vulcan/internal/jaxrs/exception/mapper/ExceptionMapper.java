@@ -65,7 +65,7 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 
 	@Override
 	protected Problem getProblem(Exception exception) {
-		_log.error(exception, exception);
+		_log.error(exception);
 
 		return new Problem(
 			Response.Status.INTERNAL_SERVER_ERROR, exception.getMessage());

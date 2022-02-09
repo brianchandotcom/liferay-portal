@@ -109,7 +109,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		catch (Exception exception2) {
 			exception1 = exception2;
 
-			_log.error(exception2, exception2);
+			_log.error(exception2);
 		}
 
 		return new JSONRPCResponse(jsonRPCRequest, result, exception1);
@@ -236,9 +236,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						}
 						catch (ClassNotFoundException classNotFoundException) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(
-									classNotFoundException,
-									classNotFoundException);
+								_log.debug(classNotFoundException);
 							}
 
 							Class<?> actionClass =
@@ -283,7 +281,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					return FileUtil.getBytes((File)value);
 				}
 				catch (IOException ioException) {
-					_log.error(ioException, ioException);
+					_log.error(ioException);
 
 					return null;
 				}

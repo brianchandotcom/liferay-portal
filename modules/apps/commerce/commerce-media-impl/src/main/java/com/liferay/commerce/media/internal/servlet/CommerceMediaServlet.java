@@ -102,7 +102,7 @@ public class CommerceMediaServlet extends HttpServlet {
 			PrincipalThreadLocal.setName(user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
@@ -154,7 +154,7 @@ public class CommerceMediaServlet extends HttpServlet {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return null;
@@ -188,7 +188,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				}
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 		else if (className.equals(CPDefinition.class.getName())) {
@@ -232,7 +232,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				fileEntry.getMimeType(), contentDisposition);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
@@ -301,7 +301,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				fileEntry.getMimeType(), contentDisposition);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}

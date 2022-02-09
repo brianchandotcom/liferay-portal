@@ -1075,7 +1075,7 @@ public class CTStoreTest {
 		}
 		catch (NoSuchFileException noSuchFileException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileException, noSuchFileException);
+				_log.debug(noSuchFileException);
 			}
 		}
 
@@ -1107,7 +1107,7 @@ public class CTStoreTest {
 				}
 				catch (NoSuchFileException noSuchFileException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchFileException, noSuchFileException);
+						_log.debug(noSuchFileException);
 					}
 				}
 
@@ -1206,7 +1206,7 @@ public class CTStoreTest {
 		}
 		catch (NoSuchFileException noSuchFileException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileException, noSuchFileException);
+				_log.debug(noSuchFileException);
 			}
 		}
 
@@ -1219,7 +1219,7 @@ public class CTStoreTest {
 		}
 		catch (NoSuchFileException noSuchFileException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileException, noSuchFileException);
+				_log.debug(noSuchFileException);
 			}
 		}
 	}

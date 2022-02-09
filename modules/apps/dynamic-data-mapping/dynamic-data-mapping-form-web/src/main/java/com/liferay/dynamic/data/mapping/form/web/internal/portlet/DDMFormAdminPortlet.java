@@ -105,13 +105,13 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			if (isSessionErrorException(exception)) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 
 				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw new PortletException(exception);
 			}

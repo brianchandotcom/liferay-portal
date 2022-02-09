@@ -48,7 +48,7 @@ public class LayoutSetStagingHandler
 			_layoutSetBranch = _getLayoutSetBranch(layoutSet);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new IllegalStateException(exception);
 		}
@@ -101,7 +101,7 @@ public class LayoutSetStagingHandler
 					bean = _layoutSetBranch;
 				}
 				catch (NoSuchMethodException noSuchMethodException) {
-					_log.error(noSuchMethodException, noSuchMethodException);
+					_log.error(noSuchMethodException);
 				}
 			}
 

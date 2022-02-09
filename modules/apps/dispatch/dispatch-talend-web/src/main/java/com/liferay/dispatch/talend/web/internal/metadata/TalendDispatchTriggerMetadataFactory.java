@@ -88,8 +88,7 @@ public class TalendDispatchTriggerMetadataFactory
 		}
 		catch (DuplicateTableNameException duplicateTableNameException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateTableNameException, duplicateTableNameException);
+				_log.debug(duplicateTableNameException);
 			}
 
 			expandoTable = _expandoTableLocalService.getTable(
@@ -107,8 +106,7 @@ public class TalendDispatchTriggerMetadataFactory
 		}
 		catch (DuplicateColumnNameException duplicateColumnNameException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateColumnNameException, duplicateColumnNameException);
+				_log.debug(duplicateColumnNameException);
 			}
 		}
 	}

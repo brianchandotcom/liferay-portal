@@ -120,7 +120,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 					user.getCompanyId());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			signedIn = true;
@@ -131,7 +131,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 				user.getCompanyId(), RoleConstants.OWNER);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

@@ -87,7 +87,7 @@ public class WrongPreferenceWithDataLevelExportImportTest
 		}
 		catch (PortletDataException portletDataException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portletDataException, portletDataException);
+				_log.debug(portletDataException);
 			}
 		}
 		finally {

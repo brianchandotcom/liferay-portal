@@ -153,7 +153,7 @@ public class FieldConstants {
 			}
 			catch (ParseException parseException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(parseException, parseException);
+					_log.debug(parseException);
 				}
 
 				serializable = getSerializable(type, value);

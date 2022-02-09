@@ -85,7 +85,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 			}
 			catch (ActionException actionException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(actionException, actionException);
+					_log.debug(actionException);
 				}
 			}
 
@@ -110,7 +110,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		}
 		catch (WindowStateException windowStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(windowStateException, windowStateException);
+				_log.debug(windowStateException);
 			}
 		}
 
@@ -162,9 +162,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 				}
 				catch (NoSuchFileVersionException noSuchFileVersionException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchFileVersionException,
-							noSuchFileVersionException);
+						_log.debug(noSuchFileVersionException);
 					}
 
 					fileVersion = fileEntry.getFileVersion();
@@ -177,7 +175,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 			return String.valueOf(fileVersion.getFileVersionId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;

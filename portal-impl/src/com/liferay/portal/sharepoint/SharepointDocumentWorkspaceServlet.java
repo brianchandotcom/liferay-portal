@@ -67,7 +67,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 			getDwsMetaDataResponse(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

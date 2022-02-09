@@ -84,7 +84,7 @@ public class DDMStructureContentDashboardItemSubtype
 						StringPool.CLOSE_PARENTHESIS;
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return getLabel(locale) + StringPool.SPACE + groupName;

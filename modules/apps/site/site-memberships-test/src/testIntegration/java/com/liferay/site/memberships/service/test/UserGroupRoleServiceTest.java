@@ -73,7 +73,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -102,7 +102,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -131,7 +131,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -160,7 +160,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -194,7 +194,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -228,7 +228,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -261,7 +261,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -294,7 +294,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -404,7 +404,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -438,7 +438,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -471,7 +471,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -504,7 +504,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -536,7 +536,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -568,7 +568,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -599,7 +599,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -630,7 +630,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -661,7 +661,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -692,7 +692,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -723,7 +723,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(
@@ -754,7 +754,7 @@ public class UserGroupRoleServiceTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertTrue(

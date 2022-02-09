@@ -115,7 +115,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 			_addDefaultGuestPublicLayout(groupId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new InitializationException(exception);
 		}

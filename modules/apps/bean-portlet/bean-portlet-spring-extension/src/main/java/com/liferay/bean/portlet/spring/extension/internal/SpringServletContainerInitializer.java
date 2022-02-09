@@ -106,7 +106,7 @@ public class SpringServletContainerInitializer
 			}
 		}
 		catch (ClassNotFoundException classNotFoundException) {
-			_log.error(classNotFoundException, classNotFoundException);
+			_log.error(classNotFoundException);
 		}
 
 		servletContext.addListener(SpringHttpSessionListener.class);

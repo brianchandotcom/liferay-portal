@@ -932,9 +932,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 		}
 		catch (OperationNotSupportedException operationNotSupportedException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					operationNotSupportedException,
-					operationNotSupportedException);
+				_log.debug(operationNotSupportedException);
 			}
 
 			if (enumeration != null) {

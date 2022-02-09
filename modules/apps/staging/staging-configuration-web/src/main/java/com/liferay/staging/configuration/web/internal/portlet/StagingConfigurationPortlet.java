@@ -101,7 +101,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 			else {
@@ -199,7 +199,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					actionRequest, exception.getClass(), exception);
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				return;

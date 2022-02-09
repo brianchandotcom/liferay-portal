@@ -62,7 +62,7 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

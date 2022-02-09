@@ -52,7 +52,7 @@ public class UserOrganizationChecker extends RowChecker {
 				_organization.getOrganizationId(), user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -92,7 +92,7 @@ public class UserOrganizationChecker extends RowChecker {
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

@@ -1852,9 +1852,7 @@ public class CMISRepository extends BaseCmisRepository {
 							noSuchRepositoryEntryException) {
 
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							noSuchRepositoryEntryException,
-							noSuchRepositoryEntryException);
+						_log.warn(noSuchRepositoryEntryException);
 					}
 				}
 			}

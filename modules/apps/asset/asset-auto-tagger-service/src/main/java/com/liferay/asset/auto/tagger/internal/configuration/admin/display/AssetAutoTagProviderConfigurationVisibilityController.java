@@ -63,7 +63,7 @@ public class AssetAutoTagProviderConfigurationVisibilityController
 			return assetAutoTaggerConfiguration.isAvailable();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

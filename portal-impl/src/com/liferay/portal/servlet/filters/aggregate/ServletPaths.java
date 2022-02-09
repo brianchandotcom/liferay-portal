@@ -90,7 +90,7 @@ public class ServletPaths {
 			return StringUtil.read(urlConnection.getInputStream());
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		return null;

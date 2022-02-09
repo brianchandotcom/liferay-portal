@@ -61,7 +61,7 @@ public class ReindexPortalBackgroundTaskExecutor
 				searchEngineInitializer.reindex();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			finally {
 				ReindexStatusMessageSenderUtil.sendStatusMessage(

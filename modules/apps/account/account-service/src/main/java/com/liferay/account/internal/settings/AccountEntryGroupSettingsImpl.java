@@ -45,7 +45,7 @@ public class AccountEntryGroupSettingsImpl
 			return accountEntryGroupConfiguration.allowedTypes();
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		return AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES;

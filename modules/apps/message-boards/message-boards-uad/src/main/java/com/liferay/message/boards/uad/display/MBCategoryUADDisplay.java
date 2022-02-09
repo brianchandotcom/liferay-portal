@@ -172,7 +172,7 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;

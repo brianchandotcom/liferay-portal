@@ -282,7 +282,7 @@ public class CommerceOrderGenerator {
 					commerceContext, serviceContext);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -364,7 +364,7 @@ public class CommerceOrderGenerator {
 			}
 			catch (PortalException portalException) {
 				if (_log.isInfoEnabled()) {
-					_log.info(portalException, portalException);
+					_log.info(portalException);
 				}
 
 				// Order not generated, retry

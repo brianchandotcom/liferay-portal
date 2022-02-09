@@ -77,7 +77,7 @@ public class CPContentPortlet extends MVCPortlet {
 				cpContentConfigurationDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		renderRequest.setAttribute(

@@ -149,7 +149,7 @@ public class EditMessageAttachmentsMVCActionCommand
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			jsonObject.put("deleted", Boolean.FALSE);

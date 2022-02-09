@@ -261,7 +261,7 @@ public class PortalInstancesLocalServiceImpl
 				ArrayUtil.toLongArray(removeableCompanyIds));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -369,7 +369,7 @@ public class PortalInstancesLocalServiceImpl
 					new DummyHttpServletResponse(), liferayRenderRequest));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return serviceContext;

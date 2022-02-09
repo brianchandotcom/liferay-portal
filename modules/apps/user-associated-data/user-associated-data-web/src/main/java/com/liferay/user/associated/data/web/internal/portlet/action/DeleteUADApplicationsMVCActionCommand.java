@@ -77,8 +77,7 @@ public class DeleteUADApplicationsMVCActionCommand
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								noSuchModelException, noSuchModelException);
+							_log.debug(noSuchModelException);
 						}
 					}
 				}

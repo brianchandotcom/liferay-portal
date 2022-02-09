@@ -283,7 +283,7 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		}
 		catch (PortalException | PortletException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

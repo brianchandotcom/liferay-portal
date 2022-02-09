@@ -177,7 +177,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 		catch (InterruptedException interruptedException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(interruptedException, interruptedException);
+				_log.debug(interruptedException);
 			}
 		}
 
@@ -196,7 +196,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException, interruptedException);
+					_log.debug(interruptedException);
 				}
 
 				return;
@@ -228,7 +228,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException, interruptedException);
+					_log.debug(interruptedException);
 				}
 
 				interrupt();
@@ -241,8 +241,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				}
 				catch (IllegalStateException illegalStateException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							illegalStateException, illegalStateException);
+						_log.debug(illegalStateException);
 					}
 
 					return;
@@ -556,7 +555,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 			catch (URISyntaxException uriSyntaxException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(uriSyntaxException, uriSyntaxException);
+					_log.debug(uriSyntaxException);
 				}
 
 				File file = new File(location);

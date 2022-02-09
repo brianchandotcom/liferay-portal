@@ -111,7 +111,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException, workflowException);
+				_log.debug(workflowException);
 			}
 
 			return null;

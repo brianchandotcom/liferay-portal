@@ -71,7 +71,7 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 						Store.VERSION_DEFAULT);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 

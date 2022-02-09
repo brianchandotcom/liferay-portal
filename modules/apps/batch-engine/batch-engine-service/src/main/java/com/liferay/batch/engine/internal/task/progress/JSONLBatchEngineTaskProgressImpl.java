@@ -56,7 +56,7 @@ public class JSONLBatchEngineTaskProgressImpl
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

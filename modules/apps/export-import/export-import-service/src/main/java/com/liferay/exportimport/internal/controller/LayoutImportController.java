@@ -304,7 +304,7 @@ public class LayoutImportController implements ImportController {
 								errorMessagesJSONArray);
 					}
 					catch (Exception exception) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 				}
 			}
@@ -409,7 +409,7 @@ public class LayoutImportController implements ImportController {
 			return configuration.validateMissingReferences();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return true;
@@ -822,9 +822,7 @@ public class LayoutImportController implements ImportController {
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchLayoutPrototypeException,
-							noSuchLayoutPrototypeException);
+						_log.debug(noSuchLayoutPrototypeException);
 					}
 				}
 			}
@@ -875,9 +873,7 @@ public class LayoutImportController implements ImportController {
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchLayoutSetPrototypeException,
-							noSuchLayoutSetPrototypeException);
+						_log.debug(noSuchLayoutSetPrototypeException);
 					}
 				}
 			}
@@ -1269,9 +1265,7 @@ public class LayoutImportController implements ImportController {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutSetPrototypeException,
-						noSuchLayoutSetPrototypeException);
+					_log.debug(noSuchLayoutSetPrototypeException);
 				}
 
 				String layoutSetPrototypeName = headerElement.attributeValue(

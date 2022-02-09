@@ -102,7 +102,7 @@ public class FragmentEntryLinkModelListener
 				serviceContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

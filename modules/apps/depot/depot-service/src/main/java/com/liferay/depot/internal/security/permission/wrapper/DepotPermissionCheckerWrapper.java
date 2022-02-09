@@ -128,7 +128,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				this::_isContentReviewer);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;
@@ -151,7 +151,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				this::_isGroupAdmin);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -171,7 +171,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return _isGroupMember(_groupLocalService.fetchGroup(groupId));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -193,7 +193,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				DepotRolesConstants.ASSET_LIBRARY_OWNER, this::_isGroupOwner);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -226,7 +226,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				this, group.getClassPK(), actionId);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

@@ -41,7 +41,7 @@ public class LayoutCloneFactory {
 					_layoutClone = (LayoutClone)clazz.newInstance();
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}

@@ -90,7 +90,7 @@ public class FragmentCollectionSiteItemSelectorView
 			return scopeGroup.getDescriptiveName(locale);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return title;
 		}

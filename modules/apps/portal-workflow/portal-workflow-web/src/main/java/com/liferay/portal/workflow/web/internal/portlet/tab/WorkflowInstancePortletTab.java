@@ -110,7 +110,7 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 		catch (Exception exception) {
 			if (workflowPreprocessorHelper.isSessionErrorException(exception)) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 
 				workflowPreprocessorHelper.hideDefaultErrorMessage(

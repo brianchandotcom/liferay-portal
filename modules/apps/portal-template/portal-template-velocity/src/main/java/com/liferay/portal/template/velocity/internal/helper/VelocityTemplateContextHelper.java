@@ -188,7 +188,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 				"rolePermission", RolePermissionUtil.getRolePermission());
 		}
 		catch (SecurityException securityException) {
-			_log.error(securityException, securityException);
+			_log.error(securityException);
 		}
 	}
 

@@ -526,7 +526,7 @@ public class LayoutSetPrototypePropagationTest
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 	}
@@ -927,9 +927,7 @@ public class LayoutSetPrototypePropagationTest
 		}
 		catch (LayoutParentLayoutIdException layoutParentLayoutIdException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					layoutParentLayoutIdException,
-					layoutParentLayoutIdException);
+				_log.debug(layoutParentLayoutIdException);
 			}
 
 			Assert.assertTrue(

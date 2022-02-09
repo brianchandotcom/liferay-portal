@@ -56,7 +56,7 @@ public abstract class DoulosServlet extends HttpServlet {
 				doulosRequestProcessor.destroy();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -298,7 +298,7 @@ public abstract class DoulosServlet extends HttpServlet {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 
@@ -309,7 +309,7 @@ public abstract class DoulosServlet extends HttpServlet {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 
@@ -320,7 +320,7 @@ public abstract class DoulosServlet extends HttpServlet {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}

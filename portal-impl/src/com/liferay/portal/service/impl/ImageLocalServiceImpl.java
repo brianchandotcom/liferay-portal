@@ -71,7 +71,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			// exists. See LPS-30430. This exception can be ignored.
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchImageException, noSuchImageException);
+				_log.warn(noSuchImageException);
 			}
 
 			return null;

@@ -91,7 +91,7 @@ public class AllFunction
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 		}
 

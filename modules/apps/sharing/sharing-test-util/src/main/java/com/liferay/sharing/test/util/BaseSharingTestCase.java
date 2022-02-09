@@ -884,7 +884,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 						role.getRoleId(), actionKey);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 			}
 		}

@@ -158,7 +158,7 @@ public class JournalArticleAssetRenderer
 						_article.getCompanyId());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return null;
 			}
@@ -316,7 +316,7 @@ public class JournalArticleAssetRenderer
 			return _article.getUrlTitle(locale);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return getUrlTitle();

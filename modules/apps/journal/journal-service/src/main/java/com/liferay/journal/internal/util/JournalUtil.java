@@ -225,7 +225,7 @@ public class JournalUtil {
 				articleURL, namespace + "folderId", folderId);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;
@@ -294,7 +294,7 @@ public class JournalUtil {
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 				}
 			}
@@ -507,7 +507,7 @@ public class JournalUtil {
 					JournalServiceConfiguration.class, companyId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (journalServiceConfiguration == null) {

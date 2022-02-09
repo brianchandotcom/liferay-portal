@@ -229,7 +229,7 @@ public class JournalContentDisplayContext {
 						_themeDisplay);
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 
@@ -1065,7 +1065,7 @@ public class JournalContentDisplayContext {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

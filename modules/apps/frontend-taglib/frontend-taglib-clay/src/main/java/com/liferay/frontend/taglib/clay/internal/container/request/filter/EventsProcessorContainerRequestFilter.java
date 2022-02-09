@@ -62,7 +62,7 @@ public class EventsProcessorContainerRequestFilter
 				_httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

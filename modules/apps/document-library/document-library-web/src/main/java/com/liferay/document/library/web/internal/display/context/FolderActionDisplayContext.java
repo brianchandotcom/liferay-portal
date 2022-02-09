@@ -464,7 +464,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -622,7 +622,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

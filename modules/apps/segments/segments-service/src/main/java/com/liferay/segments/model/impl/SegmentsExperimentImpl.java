@@ -130,7 +130,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 				_typeSettingsUnicodeProperties.load(super.getTypeSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

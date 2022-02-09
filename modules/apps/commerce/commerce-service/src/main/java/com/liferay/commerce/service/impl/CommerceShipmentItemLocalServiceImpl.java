@@ -179,7 +179,7 @@ public class CommerceShipmentItemLocalServiceImpl
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return commerceShipmentItem;

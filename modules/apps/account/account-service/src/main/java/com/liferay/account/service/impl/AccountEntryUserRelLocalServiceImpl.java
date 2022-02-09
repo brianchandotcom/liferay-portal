@@ -101,7 +101,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			creatorUserId = _userLocalService.getDefaultUserId(

@@ -68,7 +68,7 @@ public class CommerceOrganizationConfigurationAction
 				commerceOrganizationDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);

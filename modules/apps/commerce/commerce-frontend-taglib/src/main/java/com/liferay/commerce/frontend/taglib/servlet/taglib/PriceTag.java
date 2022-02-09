@@ -82,7 +82,7 @@ public class PriceTag extends IncludeTag {
 			_priceModel = _getPriceModel(commerceContext, cpInstanceId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return SKIP_BODY;
 		}

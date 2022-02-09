@@ -127,7 +127,7 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			return "/publications/view_publications.jsp";

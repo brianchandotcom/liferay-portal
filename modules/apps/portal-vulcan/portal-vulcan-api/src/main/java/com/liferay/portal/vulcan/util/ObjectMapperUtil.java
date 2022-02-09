@@ -38,7 +38,7 @@ public class ObjectMapperUtil {
 		}
 		catch (JsonProcessingException jsonProcessingException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsonProcessingException, jsonProcessingException);
+				_log.warn(jsonProcessingException);
 			}
 
 			return null;

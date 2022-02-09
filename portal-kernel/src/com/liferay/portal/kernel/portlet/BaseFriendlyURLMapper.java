@@ -212,7 +212,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 			parameterMap.put(name, values);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

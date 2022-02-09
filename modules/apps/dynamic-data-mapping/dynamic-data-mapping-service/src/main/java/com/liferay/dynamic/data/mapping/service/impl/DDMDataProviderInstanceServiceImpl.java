@@ -186,7 +186,7 @@ public class DDMDataProviderInstanceServiceImpl
 							ActionKeys.VIEW);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return false;
 				}

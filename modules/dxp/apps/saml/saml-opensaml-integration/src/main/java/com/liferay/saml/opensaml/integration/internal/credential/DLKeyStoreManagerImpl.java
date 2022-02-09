@@ -65,7 +65,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileException, noSuchFileException);
+				_log.debug(noSuchFileException);
 			}
 
 			try {

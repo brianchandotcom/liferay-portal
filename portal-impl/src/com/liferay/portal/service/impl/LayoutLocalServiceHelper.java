@@ -212,7 +212,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException, noSuchLayoutException);
+				_log.debug(noSuchLayoutException);
 			}
 
 			return 0;

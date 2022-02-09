@@ -71,7 +71,7 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 				byteArrayOutputStream);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			if (inputStream != null) {

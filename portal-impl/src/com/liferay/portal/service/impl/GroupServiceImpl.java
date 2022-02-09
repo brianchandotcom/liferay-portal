@@ -806,7 +806,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			GroupPermissionUtil.check(

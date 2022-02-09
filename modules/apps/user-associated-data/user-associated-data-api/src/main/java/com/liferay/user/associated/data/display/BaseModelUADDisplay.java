@@ -111,7 +111,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException, noSuchMethodException);
+				_log.debug(noSuchMethodException);
 			}
 
 			return false;
@@ -270,7 +270,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 				}
 				catch (NoSuchMethodException | SecurityException exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}

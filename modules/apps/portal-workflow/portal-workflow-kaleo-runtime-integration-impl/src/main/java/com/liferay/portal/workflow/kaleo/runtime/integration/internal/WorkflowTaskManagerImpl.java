@@ -1031,7 +1031,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 						}
 						catch (PortalException portalException) {
 							if (_log.isWarnEnabled()) {
-								_log.warn(portalException, portalException);
+								_log.warn(portalException);
 							}
 						}
 

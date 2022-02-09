@@ -147,7 +147,7 @@ public class FileEntryStagedModelDataHandler
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return null;
@@ -311,7 +311,7 @@ public class FileEntryStagedModelDataHandler
 					inputStream.close();
 				}
 				catch (IOException ioException) {
-					_log.error(ioException, ioException);
+					_log.error(ioException);
 				}
 			}
 		}
@@ -532,7 +532,7 @@ public class FileEntryStagedModelDataHandler
 						}
 						catch (Exception exception) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(exception, exception);
+								_log.debug(exception);
 							}
 						}
 					}
@@ -681,7 +681,7 @@ public class FileEntryStagedModelDataHandler
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 	}
@@ -775,7 +775,7 @@ public class FileEntryStagedModelDataHandler
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(

@@ -103,7 +103,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
+				_log.warn(ioException);
 			}
 
 			if (Validator.isNull(emailAddress)) {
@@ -144,7 +144,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 		catch (NoSuchUserException noSuchUserException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchUserException, noSuchUserException);
+				_log.warn(noSuchUserException);
 			}
 		}
 	}
@@ -224,7 +224,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(parseException, parseException);
+				_log.warn(parseException);
 			}
 		}
 

@@ -205,7 +205,7 @@ public class OAuth2ControllerFactory {
 					oAuth2Result.getPortalException();
 
 				if (Objects.nonNull(portalException)) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					JSONPortletResponseUtil.writeJSON(
 						portletRequest, portletResponse,
@@ -250,7 +250,7 @@ public class OAuth2ControllerFactory {
 			PortalException portalException = oAuth2Result.getPortalException();
 
 			if (Objects.nonNull(portalException)) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 
 				throw portalException;
 			}

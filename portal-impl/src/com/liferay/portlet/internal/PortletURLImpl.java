@@ -973,7 +973,7 @@ public class PortletURLImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		StringBundler sb = new StringBundler(64);
@@ -1261,7 +1261,7 @@ public class PortletURLImpl
 		}
 		catch (EncryptorException encryptorException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(encryptorException, encryptorException);
+				_log.debug(encryptorException);
 			}
 
 			return value;
@@ -1383,7 +1383,7 @@ public class PortletURLImpl
 				}
 			}
 			catch (PortletException portletException) {
-				_log.error(portletException, portletException);
+				_log.error(portletException);
 			}
 		}
 	}

@@ -170,7 +170,7 @@ public class GetCollectionItemCountMVCResourceCommand
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInfoItemException, noSuchInfoItemException);
+				_log.debug(noSuchInfoItemException);
 			}
 		}
 

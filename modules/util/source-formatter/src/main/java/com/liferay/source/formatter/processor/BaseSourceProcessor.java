@@ -551,7 +551,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			processMessage(fileName, "UTF-8");
@@ -678,7 +678,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

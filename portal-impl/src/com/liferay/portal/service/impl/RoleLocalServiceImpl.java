@@ -1941,7 +1941,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchRoleException, noSuchRoleException);
+				_log.debug(noSuchRoleException);
 			}
 
 			User user = _userLocalService.getDefaultUser(companyId);

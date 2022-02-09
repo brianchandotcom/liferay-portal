@@ -103,7 +103,7 @@ public class MailPortlet extends MVCPortlet {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			finally {
 				attachmentHandler.cleanUp();

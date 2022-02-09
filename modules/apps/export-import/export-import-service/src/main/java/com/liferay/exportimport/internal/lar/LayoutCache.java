@@ -47,7 +47,7 @@ public class LayoutCache {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchRoleException, noSuchRoleException);
+					_log.debug(noSuchRoleException);
 				}
 			}
 		}
@@ -72,7 +72,7 @@ public class LayoutCache {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchRoleException, noSuchRoleException);
+					_log.debug(noSuchRoleException);
 				}
 			}
 		}

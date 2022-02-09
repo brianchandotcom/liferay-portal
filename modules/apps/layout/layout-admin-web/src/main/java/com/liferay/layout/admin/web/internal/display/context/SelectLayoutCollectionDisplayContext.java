@@ -146,7 +146,7 @@ public class SelectLayoutCollectionDisplayContext {
 		}
 		catch (PortletException portletException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portletException, portletException);
+				_log.debug(portletException);
 			}
 
 			return PortletURLBuilder.createRenderURL(

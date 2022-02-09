@@ -380,7 +380,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 					if (className.contains(ServerDetector.class.getName())) {
 						if (_log.isInfoEnabled()) {
-							_log.info(runtimeException, runtimeException);
+							_log.info(runtimeException);
 						}
 
 						return;

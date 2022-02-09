@@ -147,7 +147,7 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 			}
 		}
@@ -214,7 +214,7 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 			}
 		}

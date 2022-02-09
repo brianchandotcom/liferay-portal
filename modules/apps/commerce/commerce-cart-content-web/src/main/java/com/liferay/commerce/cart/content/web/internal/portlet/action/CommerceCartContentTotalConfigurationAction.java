@@ -83,7 +83,7 @@ public class CommerceCartContentTotalConfigurationAction
 				commerceCartContentTotalDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);

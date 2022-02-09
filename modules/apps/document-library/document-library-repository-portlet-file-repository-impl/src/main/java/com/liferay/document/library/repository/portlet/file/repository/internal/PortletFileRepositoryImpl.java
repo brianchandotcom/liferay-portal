@@ -228,8 +228,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchFolderException, noSuchFolderException);
+						_log.debug(noSuchFolderException);
 					}
 
 					return localRepository.addFolder(
@@ -342,7 +341,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchFileEntryException, noSuchFileEntryException);
+				_log.warn(noSuchFileEntryException);
 			}
 		}
 	}
@@ -373,7 +372,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				}
 				catch (NoSuchFolderException noSuchFolderException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(noSuchFolderException, noSuchFolderException);
+						_log.warn(noSuchFolderException);
 					}
 				}
 
@@ -403,7 +402,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -656,7 +655,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				break;

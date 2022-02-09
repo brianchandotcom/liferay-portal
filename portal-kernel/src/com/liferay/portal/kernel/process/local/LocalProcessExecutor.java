@@ -220,9 +220,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					}
 					catch (StreamCorruptedException streamCorruptedException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								streamCorruptedException,
-								streamCorruptedException);
+							_log.debug(streamCorruptedException);
 						}
 
 						// Collecting bad header as log information

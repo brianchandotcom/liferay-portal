@@ -76,9 +76,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchUserNotificationDeliveryException,
-					noSuchUserNotificationDeliveryException);
+				_log.debug(noSuchUserNotificationDeliveryException);
 			}
 		}
 	}

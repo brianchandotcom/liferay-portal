@@ -59,7 +59,7 @@ public class CSVBatchEngineTaskProgressImpl implements BatchEngineTaskProgress {
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

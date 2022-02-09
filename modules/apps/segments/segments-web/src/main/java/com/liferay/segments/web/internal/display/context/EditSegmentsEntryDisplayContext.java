@@ -299,7 +299,7 @@ public class EditSegmentsEntryDisplayContext {
 			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(_getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			siteDefaultLocale = LocaleUtil.getSiteDefault();
 		}

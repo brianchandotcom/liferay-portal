@@ -86,7 +86,7 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 							StringPool.CLOSE_PARENTHESIS;
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

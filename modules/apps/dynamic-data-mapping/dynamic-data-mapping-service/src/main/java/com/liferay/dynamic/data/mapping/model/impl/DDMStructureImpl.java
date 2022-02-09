@@ -281,7 +281,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			return createFullHierarchyDDMForm();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return new DDMForm();
@@ -599,7 +599,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		throw new StructureFieldException("Unable to find field " + identifier);
@@ -642,7 +642,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;
@@ -670,7 +670,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 		}

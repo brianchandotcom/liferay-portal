@@ -590,7 +590,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 				});
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 	}
 
@@ -1240,7 +1240,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 				}
 				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
+						_log.debug(ioException);
 					}
 				}
 			}
@@ -1251,7 +1251,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 				}
 				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
+						_log.debug(ioException);
 					}
 				}
 			}

@@ -214,7 +214,7 @@ public class PollerRequestHandlerImpl
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -233,7 +233,7 @@ public class PollerRequestHandlerImpl
 					pollerRequests.add(pollerRequest);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}

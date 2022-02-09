@@ -78,7 +78,7 @@ public class ModuleApplicationContextExtender
 			return moduleApplicationContextExtension;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

@@ -70,7 +70,7 @@ public class ExpandoUpgradeProcess extends UpgradeProcess {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchTableException, noSuchTableException);
+					_log.debug(noSuchTableException);
 				}
 
 				return;

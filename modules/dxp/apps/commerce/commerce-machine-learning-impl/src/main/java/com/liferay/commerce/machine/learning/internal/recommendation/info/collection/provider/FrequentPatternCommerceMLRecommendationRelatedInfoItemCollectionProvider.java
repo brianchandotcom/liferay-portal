@@ -94,7 +94,7 @@ public class
 									getRecommendedEntryClassPK());
 						}
 						catch (PortalException portalException) {
-							_log.error(portalException, portalException);
+							_log.error(portalException);
 						}
 
 						return null;
@@ -103,7 +103,7 @@ public class
 				frequentPatternCommerceMLRecommendations.size());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return InfoPage.of(Collections.emptyList(), pagination, 0);

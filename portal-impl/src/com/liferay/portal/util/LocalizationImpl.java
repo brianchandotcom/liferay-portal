@@ -345,7 +345,7 @@ public class LocalizationImpl implements Localization {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 		finally {
@@ -359,7 +359,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -886,7 +886,7 @@ public class LocalizationImpl implements Localization {
 			return unsyncStringWriter.toString();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
@@ -898,7 +898,7 @@ public class LocalizationImpl implements Localization {
 					xmlStreamWriter.close();
 				}
 				catch (XMLStreamException xmlStreamException) {
-					_log.error(xmlStreamException, xmlStreamException);
+					_log.error(xmlStreamException);
 				}
 			}
 		}
@@ -1038,7 +1038,7 @@ public class LocalizationImpl implements Localization {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 		finally {
@@ -1052,7 +1052,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -1063,7 +1063,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -1287,7 +1287,7 @@ public class LocalizationImpl implements Localization {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 		finally {
@@ -1301,7 +1301,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -1312,7 +1312,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -1328,7 +1328,7 @@ public class LocalizationImpl implements Localization {
 			}
 			catch (XMLStreamException xmlStreamException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(xmlStreamException, xmlStreamException);
+					_log.debug(xmlStreamException);
 				}
 			}
 		}
@@ -1414,7 +1414,7 @@ public class LocalizationImpl implements Localization {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -1470,7 +1470,7 @@ public class LocalizationImpl implements Localization {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 		finally {
@@ -1484,7 +1484,7 @@ public class LocalizationImpl implements Localization {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}

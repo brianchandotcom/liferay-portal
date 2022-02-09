@@ -80,7 +80,7 @@ public class FDSSamplePortlet extends MVCPortlet {
 			_generate(_portal.getCompanyId(renderRequest));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		renderRequest.setAttribute(

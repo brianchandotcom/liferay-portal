@@ -152,7 +152,7 @@ public class ServletContextHelperRegistrationImpl
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Ignore since the service has been unregistered
@@ -164,7 +164,7 @@ public class ServletContextHelperRegistrationImpl
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Ignore since the service has been unregistered
@@ -176,7 +176,7 @@ public class ServletContextHelperRegistrationImpl
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Ignore since the service has been unregistered
@@ -188,7 +188,7 @@ public class ServletContextHelperRegistrationImpl
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Ignore since the service has been unregistered
@@ -200,7 +200,7 @@ public class ServletContextHelperRegistrationImpl
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Ignore since the service has been unregistered
@@ -213,7 +213,7 @@ public class ServletContextHelperRegistrationImpl
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 
 				// Ignore since the service has been unregistered
@@ -304,12 +304,11 @@ public class ServletContextHelperRegistrationImpl
 			}
 			catch (InstanceNotFoundException instanceNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						instanceNotFoundException, instanceNotFoundException);
+					_log.debug(instanceNotFoundException);
 				}
 			}
 			catch (JMException jmException) {
-				_log.error(jmException, jmException);
+				_log.error(jmException);
 			}
 		}
 	}
@@ -497,7 +496,7 @@ public class ServletContextHelperRegistrationImpl
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 
@@ -515,8 +514,7 @@ public class ServletContextHelperRegistrationImpl
 					}
 					catch (ClassNotFoundException classNotFoundException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								classNotFoundException, classNotFoundException);
+							_log.debug(classNotFoundException);
 						}
 
 						failed = true;
@@ -574,7 +572,7 @@ public class ServletContextHelperRegistrationImpl
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}

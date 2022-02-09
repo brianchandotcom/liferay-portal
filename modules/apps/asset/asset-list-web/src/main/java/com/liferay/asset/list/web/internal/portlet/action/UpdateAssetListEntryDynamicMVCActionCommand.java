@@ -100,8 +100,7 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 		}
 		catch (DuplicateQueryRuleException duplicateQueryRuleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateQueryRuleException, duplicateQueryRuleException);
+				_log.debug(duplicateQueryRuleException);
 			}
 
 			SessionErrors.add(

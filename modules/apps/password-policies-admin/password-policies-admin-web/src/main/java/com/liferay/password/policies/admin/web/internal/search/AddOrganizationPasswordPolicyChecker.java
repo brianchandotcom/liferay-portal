@@ -49,7 +49,7 @@ public class AddOrganizationPasswordPolicyChecker
 				organization.getOrganizationId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -77,7 +77,7 @@ public class AddOrganizationPasswordPolicyChecker
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

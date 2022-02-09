@@ -51,7 +51,7 @@ public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
 				_organization.getOrganizationId(), user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -95,7 +95,7 @@ public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

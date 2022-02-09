@@ -402,7 +402,7 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -1106,7 +1106,7 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+				_log.debug(jsonException);
 			}
 		}
 	}

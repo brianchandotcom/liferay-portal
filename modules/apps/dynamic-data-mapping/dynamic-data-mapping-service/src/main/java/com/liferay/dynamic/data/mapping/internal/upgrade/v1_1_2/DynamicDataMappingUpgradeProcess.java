@@ -143,7 +143,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -168,7 +168,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		}
 		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsonException, jsonException);
+				_log.warn(jsonException);
 			}
 
 			return value;

@@ -695,7 +695,7 @@ public class CommerceOrderContentDisplayContext {
 			return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return true;

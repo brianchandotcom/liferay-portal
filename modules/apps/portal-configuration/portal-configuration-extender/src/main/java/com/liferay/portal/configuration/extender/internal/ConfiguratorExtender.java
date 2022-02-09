@@ -125,7 +125,7 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 					namedConfigurationContent);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

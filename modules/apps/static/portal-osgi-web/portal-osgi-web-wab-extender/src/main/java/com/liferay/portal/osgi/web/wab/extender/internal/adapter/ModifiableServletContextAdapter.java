@@ -350,7 +350,7 @@ public class ModifiableServletContextAdapter
 				}
 				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
+						_log.debug(ioException);
 					}
 				}
 
@@ -646,7 +646,7 @@ public class ModifiableServletContextAdapter
 				}
 				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
+						_log.debug(ioException);
 					}
 				}
 			}
@@ -722,7 +722,7 @@ public class ModifiableServletContextAdapter
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException, noSuchMethodException);
+				_log.debug(noSuchMethodException);
 			}
 		}
 

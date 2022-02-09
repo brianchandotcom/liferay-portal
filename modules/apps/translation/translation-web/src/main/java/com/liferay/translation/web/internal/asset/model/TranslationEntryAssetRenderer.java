@@ -185,7 +185,7 @@ public class TranslationEntryAssetRenderer
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return null;
@@ -213,7 +213,7 @@ public class TranslationEntryAssetRenderer
 			return assetRenderer.getTitle(locale);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return LanguageUtil.get(locale, "translation");
 		}

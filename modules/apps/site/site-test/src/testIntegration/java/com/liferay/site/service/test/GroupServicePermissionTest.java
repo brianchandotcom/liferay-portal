@@ -223,7 +223,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -241,7 +241,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(
@@ -264,7 +264,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(
@@ -289,7 +289,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(
@@ -318,7 +318,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(
@@ -334,7 +334,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(
@@ -352,7 +352,7 @@ public class GroupServicePermissionTest {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			Assert.assertFalse(

@@ -89,7 +89,7 @@ public class PlacedCommerceOrderItemDataSetDataProvider
 				baseModelSearchResult.getBaseModels(), httpServletRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Collections.emptyList();

@@ -175,7 +175,7 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 							}
 							catch (ParseException parseException) {
 								if (_log.isWarnEnabled()) {
-									_log.warn(parseException, parseException);
+									_log.warn(parseException);
 								}
 							}
 						});

@@ -140,7 +140,7 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 				ThemeLocalServiceUtil.uninstallThemes(themes);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 		else {

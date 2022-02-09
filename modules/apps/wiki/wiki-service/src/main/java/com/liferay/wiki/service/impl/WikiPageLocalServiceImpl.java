@@ -2034,7 +2034,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(systemException, systemException);
+				_log.warn(systemException);
 			}
 		}
 	}
@@ -2061,7 +2061,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (NoSuchPageException noSuchPageException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchPageException, noSuchPageException);
+				_log.debug(noSuchPageException);
 			}
 
 			return addPage(
@@ -2484,7 +2484,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -3016,7 +3016,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

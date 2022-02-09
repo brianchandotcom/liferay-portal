@@ -83,7 +83,7 @@ public class UnicodeFormatter {
 			}
 			catch (NumberFormatException numberFormatException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(numberFormatException, numberFormatException);
+					_log.debug(numberFormatException);
 				}
 
 				return new byte[0];
@@ -113,7 +113,7 @@ public class UnicodeFormatter {
 				sb.append(c);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return hexString;
 			}

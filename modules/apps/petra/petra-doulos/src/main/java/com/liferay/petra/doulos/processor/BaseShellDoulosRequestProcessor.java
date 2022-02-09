@@ -67,7 +67,7 @@ public abstract class BaseShellDoulosRequestProcessor
 				Thread.sleep(getThreadDestroyInterval());
 			}
 			catch (InterruptedException interruptedException) {
-				_log.error(interruptedException, interruptedException);
+				_log.error(interruptedException);
 			}
 		}
 
@@ -329,7 +329,7 @@ public abstract class BaseShellDoulosRequestProcessor
 					execute(shellStatus);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 

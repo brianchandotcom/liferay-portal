@@ -77,7 +77,7 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 					_portal.getHttpServletRequest(renderRequest)));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

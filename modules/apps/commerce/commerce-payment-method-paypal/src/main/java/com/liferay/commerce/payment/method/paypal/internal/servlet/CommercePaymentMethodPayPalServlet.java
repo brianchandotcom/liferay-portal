@@ -95,7 +95,7 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 			httpServletResponse.sendRedirect(redirect);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

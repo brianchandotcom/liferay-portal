@@ -90,9 +90,7 @@ public class DefineObjectsTag extends TagSupport {
 						unsupportedOperationException2) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						unsupportedOperationException2,
-						unsupportedOperationException2);
+					_log.debug(unsupportedOperationException2);
 				}
 			}
 		}

@@ -811,7 +811,7 @@ public class UserImpl extends UserBaseImpl {
 			emailAddressVerificationRequired = company.isStrangersVerify();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (emailAddressVerificationRequired) {

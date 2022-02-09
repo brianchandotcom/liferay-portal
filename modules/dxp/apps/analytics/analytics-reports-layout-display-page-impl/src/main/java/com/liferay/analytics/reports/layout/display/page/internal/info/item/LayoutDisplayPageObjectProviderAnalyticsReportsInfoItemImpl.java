@@ -171,7 +171,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 							return layoutSEOLink.getHref();
 						}
 						catch (PortalException portalException) {
-							_log.error(portalException, portalException);
+							_log.error(portalException);
 
 							return StringPool.BLANK;
 						}
@@ -200,7 +200,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 				layoutDisplayPageObjectProvider.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return LocaleUtil.getDefault();
@@ -251,7 +251,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return new Date();
@@ -289,7 +289,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;
@@ -314,7 +314,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 						PermissionThreadLocal.getPermissionChecker());
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return false;
 				}

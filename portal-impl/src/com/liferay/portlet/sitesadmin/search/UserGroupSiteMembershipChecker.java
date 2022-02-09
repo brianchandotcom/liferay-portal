@@ -45,7 +45,7 @@ public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
 				_group.getGroupId(), userGroup.getUserGroupId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

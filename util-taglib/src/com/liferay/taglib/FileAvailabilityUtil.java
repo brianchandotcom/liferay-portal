@@ -78,7 +78,7 @@ public class FileAvailabilityUtil {
 		}
 		catch (MalformedURLException malformedURLException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(malformedURLException, malformedURLException);
+				_log.debug(malformedURLException);
 			}
 		}
 

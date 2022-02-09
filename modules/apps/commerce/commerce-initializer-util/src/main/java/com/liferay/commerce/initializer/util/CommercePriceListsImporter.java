@@ -214,9 +214,7 @@ public class CommercePriceListsImporter {
 				catch (NoSuchAccountGroupException
 							noSuchAccountGroupException) {
 
-					_log.error(
-						noSuchAccountGroupException,
-						noSuchAccountGroupException);
+					_log.error(noSuchAccountGroupException);
 				}
 			}
 		}

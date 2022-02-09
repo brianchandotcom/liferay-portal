@@ -68,7 +68,7 @@ public class CheckCommerceNotificationQueueEntryMessageListener
 						CommerceNotificationQueueEntryConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		Trigger trigger = _triggerFactory.createTrigger(

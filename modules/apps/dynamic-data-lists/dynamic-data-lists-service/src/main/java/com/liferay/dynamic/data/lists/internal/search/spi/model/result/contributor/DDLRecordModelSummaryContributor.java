@@ -96,7 +96,7 @@ public class DDLRecordModelSummaryContributor
 				recordSetName, false);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;

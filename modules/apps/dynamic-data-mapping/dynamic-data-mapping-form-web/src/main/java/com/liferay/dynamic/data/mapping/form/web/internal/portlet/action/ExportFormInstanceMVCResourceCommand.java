@@ -106,7 +106,7 @@ public class ExportFormInstanceMVCResourceCommand
 		catch (Exception exception) {
 			content = new byte[0];
 
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		DDMFormInstance formInstance = _ddmFormInstanceService.getFormInstance(

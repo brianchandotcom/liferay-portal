@@ -117,7 +117,7 @@ public class UpgradeStepRegistratorTracker {
 					upgradeStep.upgrade(dbProcessContext);
 				}
 				catch (UpgradeException upgradeException) {
-					_log.error(upgradeException, upgradeException);
+					_log.error(upgradeException);
 				}
 			}
 

@@ -62,7 +62,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException, sqlException);
+				_log.warn(sqlException);
 			}
 		}
 	}

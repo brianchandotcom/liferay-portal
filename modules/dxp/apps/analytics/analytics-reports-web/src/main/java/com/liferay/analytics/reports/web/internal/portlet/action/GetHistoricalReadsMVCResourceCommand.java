@@ -86,7 +86,7 @@ public class GetHistoricalReadsMVCResourceCommand
 				historicalMetric.toJSONObject());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(

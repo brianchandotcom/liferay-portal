@@ -288,7 +288,7 @@ public class BaseManagementToolbarDisplayContext
 		}
 		catch (PortletException portletException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portletException, portletException);
+				_log.warn(portletException);
 			}
 
 			return PortletURLBuilder.createRenderURL(

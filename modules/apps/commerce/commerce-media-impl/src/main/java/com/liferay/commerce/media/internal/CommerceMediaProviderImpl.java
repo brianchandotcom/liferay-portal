@@ -56,7 +56,7 @@ public class CommerceMediaProviderImpl implements CommerceMediaProvider {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			Company company = _companyLocalService.getCompany(companyId);

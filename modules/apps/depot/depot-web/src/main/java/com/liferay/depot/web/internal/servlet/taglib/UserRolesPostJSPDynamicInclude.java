@@ -65,7 +65,7 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 			super.include(httpServletRequest, httpServletResponse, key);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

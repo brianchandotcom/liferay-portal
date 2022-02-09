@@ -114,7 +114,7 @@ public class LdapUtil {
 		}
 		catch (LdapInvalidDnException ldapInvalidDnException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ldapInvalidDnException, ldapInvalidDnException);
+				_log.debug(ldapInvalidDnException);
 			}
 		}
 

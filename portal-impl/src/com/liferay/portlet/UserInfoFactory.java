@@ -51,7 +51,7 @@ public class UserInfoFactory {
 				PortalUtil.getUser(httpServletRequest), userInfo, portlet);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return userInfo;
@@ -72,7 +72,7 @@ public class UserInfoFactory {
 			userInfo = getUserInfo(user, userInfo, portlet);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return userInfo;
@@ -114,7 +114,7 @@ public class UserInfoFactory {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		Map<String, String> unmodifiableUserInfo = Collections.unmodifiableMap(
@@ -186,7 +186,7 @@ public class UserInfoFactory {
 			return (CustomUserAttributes)InstanceFactory.newInstance(className);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

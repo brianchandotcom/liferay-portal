@@ -259,7 +259,7 @@ public class AMImageRequestHandler
 			return Optional.of(Tuple.of(fileVersion, amImageAttributeMapping));
 		}
 		catch (AMRuntimeException | NumberFormatException exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return Optional.empty();
 		}

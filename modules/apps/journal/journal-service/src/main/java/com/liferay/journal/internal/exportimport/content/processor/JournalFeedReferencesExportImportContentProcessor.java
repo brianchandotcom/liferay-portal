@@ -118,7 +118,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(exception.getMessage());
@@ -175,7 +175,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 			return configuration.validateJournalFeedReferences();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return true;
@@ -373,7 +373,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(portalException.getMessage());

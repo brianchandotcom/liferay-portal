@@ -66,8 +66,7 @@ public class PortalStartupMonitor {
 					}
 					catch (InterruptedException interruptedException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								interruptedException, interruptedException);
+							_log.debug(interruptedException);
 						}
 
 						break;

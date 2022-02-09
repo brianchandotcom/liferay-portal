@@ -305,7 +305,7 @@ public class SyncHelperImpl implements SyncHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;
@@ -326,7 +326,7 @@ public class SyncHelperImpl implements SyncHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;
@@ -586,8 +586,7 @@ public class SyncHelperImpl implements SyncHelper {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchFileVersionException, noSuchFileVersionException);
+					_log.debug(noSuchFileVersionException);
 				}
 
 				// Publishing a checked out file entry on a staged site will

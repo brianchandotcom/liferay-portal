@@ -57,7 +57,7 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 				_syncHelper.enableLanSync(company.getCompanyId());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

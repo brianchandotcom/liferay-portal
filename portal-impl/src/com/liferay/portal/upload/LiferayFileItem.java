@@ -72,7 +72,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -204,7 +204,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			return deferredFileOutputStream.getFile();
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 
 			return null;
 		}
@@ -232,8 +232,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			_encodedString = getString(encode);
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_log.error(
-				unsupportedEncodingException, unsupportedEncodingException);
+			_log.error(unsupportedEncodingException);
 		}
 	}
 

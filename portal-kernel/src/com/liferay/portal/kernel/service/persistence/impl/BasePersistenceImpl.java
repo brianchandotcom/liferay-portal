@@ -628,7 +628,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			_log.error("Caught unexpected exception", exception);
 		}
 		else if (_log.isDebugEnabled()) {
-			_log.debug(exception, exception);
+			_log.debug(exception);
 		}
 
 		return new SystemException(exception);

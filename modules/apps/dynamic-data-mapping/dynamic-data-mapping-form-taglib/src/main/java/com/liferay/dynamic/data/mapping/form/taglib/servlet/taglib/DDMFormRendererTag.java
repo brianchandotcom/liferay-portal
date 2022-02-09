@@ -151,7 +151,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -174,7 +174,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -235,7 +235,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -276,7 +276,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -342,7 +342,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 		}
@@ -366,7 +366,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 		}
@@ -434,7 +434,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

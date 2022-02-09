@@ -331,7 +331,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 						layout, PermissionThreadLocal.getPermissionChecker());
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return false;
 				}

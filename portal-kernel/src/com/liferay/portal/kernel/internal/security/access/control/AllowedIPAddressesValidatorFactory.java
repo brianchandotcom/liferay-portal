@@ -88,7 +88,7 @@ public final class AllowedIPAddressesValidatorFactory {
 			}
 			catch (UnknownHostException unknownHostException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(unknownHostException, unknownHostException);
+					_log.debug(unknownHostException);
 				}
 
 				return false;

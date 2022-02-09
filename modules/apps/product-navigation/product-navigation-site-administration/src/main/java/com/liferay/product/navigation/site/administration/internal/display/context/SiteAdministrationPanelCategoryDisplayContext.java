@@ -214,7 +214,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 						systemException.getMessage());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(systemException, systemException);
+					_log.debug(systemException);
 				}
 
 				throw new RemoteExportException(

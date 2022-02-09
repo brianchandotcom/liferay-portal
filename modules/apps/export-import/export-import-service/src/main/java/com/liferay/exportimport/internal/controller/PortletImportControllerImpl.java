@@ -704,7 +704,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchTableException, noSuchTableException);
+					_log.debug(noSuchTableException);
 				}
 
 				expandoTable = _expandoTableLocalService.addDefaultTable(
@@ -846,7 +846,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 								errorMessagesJSONArray);
 					}
 					catch (Exception exception) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 				}
 			}
@@ -988,9 +988,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchPortletPreferencesException,
-					noSuchPortletPreferencesException);
+				_log.debug(noSuchPortletPreferencesException);
 			}
 
 			portletPreferences =
@@ -1022,7 +1020,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			return configuration.validateMissingReferences();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return true;

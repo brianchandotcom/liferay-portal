@@ -218,7 +218,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -232,7 +232,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -246,7 +246,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -260,7 +260,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -276,7 +276,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -292,7 +292,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -306,7 +306,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -328,7 +328,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -342,7 +342,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -377,7 +377,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 		catch (Exception exception2) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception2, exception2);
+				_log.warn(exception2);
 			}
 		}
 

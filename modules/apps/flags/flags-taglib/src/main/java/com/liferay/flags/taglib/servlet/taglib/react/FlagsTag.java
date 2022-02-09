@@ -165,7 +165,7 @@ public class FlagsTag extends IncludeTag {
 				"liferay-flags:flags:onlyIcon", !_label);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

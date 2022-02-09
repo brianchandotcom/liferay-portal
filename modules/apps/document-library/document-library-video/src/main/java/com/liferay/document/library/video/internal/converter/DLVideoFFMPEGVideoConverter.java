@@ -225,7 +225,7 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException, interruptedException);
+					_log.debug(interruptedException);
 				}
 			}
 		}

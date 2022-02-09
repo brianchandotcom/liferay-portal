@@ -226,7 +226,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(parseException, parseException);
+				_log.debug(parseException);
 			}
 
 			Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(

@@ -115,7 +115,7 @@ public class MentionsPortlet extends MVCPortlet {
 				httpServletResponse, jsonArray.toString());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -233,7 +233,7 @@ public class MentionsPortlet extends MVCPortlet {
 				return filteredUsers;
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 
 				return Collections.emptyList();
 			}

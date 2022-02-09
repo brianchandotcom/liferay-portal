@@ -39,7 +39,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 		}
 	}

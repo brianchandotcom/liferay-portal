@@ -85,7 +85,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalArgumentException, illegalArgumentException);
+				_log.debug(illegalArgumentException);
 			}
 
 			System.out.println(
@@ -168,7 +168,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalArgumentException, illegalArgumentException);
+				_log.debug(illegalArgumentException);
 			}
 
 			System.out.println(
@@ -322,7 +322,7 @@ public class VerifyProcessTrackerOSGiCommands {
 					verifyProcess.verify();
 				}
 				catch (VerifyException verifyException2) {
-					_log.error(verifyException2, verifyException2);
+					_log.error(verifyException2);
 
 					verifyException1 = verifyException2;
 				}

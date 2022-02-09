@@ -84,7 +84,7 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			return 0;
@@ -99,7 +99,7 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			return StringPool.BLANK;

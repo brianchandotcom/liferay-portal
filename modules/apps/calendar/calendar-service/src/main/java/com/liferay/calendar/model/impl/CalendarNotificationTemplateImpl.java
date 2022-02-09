@@ -46,7 +46,7 @@ public class CalendarNotificationTemplateImpl
 					super.getNotificationTypeSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

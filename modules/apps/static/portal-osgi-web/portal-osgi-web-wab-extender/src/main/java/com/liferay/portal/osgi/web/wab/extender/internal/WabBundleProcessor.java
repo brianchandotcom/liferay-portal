@@ -380,7 +380,7 @@ public class WabBundleProcessor {
 				serviceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -395,7 +395,7 @@ public class WabBundleProcessor {
 				serviceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -410,7 +410,7 @@ public class WabBundleProcessor {
 				serviceRegistration.unregister();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -680,7 +680,7 @@ public class WabBundleProcessor {
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 	}
@@ -774,7 +774,7 @@ public class WabBundleProcessor {
 				ServletContainerInitializer.class);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return;
 		}
@@ -859,7 +859,7 @@ public class WabBundleProcessor {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 	}

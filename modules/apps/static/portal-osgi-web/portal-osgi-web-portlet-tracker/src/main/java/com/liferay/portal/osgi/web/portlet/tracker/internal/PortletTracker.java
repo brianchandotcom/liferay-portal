@@ -226,7 +226,7 @@ public class PortletTracker
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// We still need to remove the service so we can ignore this and
@@ -1050,7 +1050,7 @@ public class PortletTracker
 					defaultPreferences = StringUtil.read(url.openStream());
 				}
 				catch (IOException ioException) {
-					_log.error(ioException, ioException);
+					_log.error(ioException);
 				}
 			}
 		}

@@ -117,7 +117,7 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			return null;
@@ -168,7 +168,7 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

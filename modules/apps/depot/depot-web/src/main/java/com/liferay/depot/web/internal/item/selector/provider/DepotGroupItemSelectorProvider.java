@@ -77,7 +77,7 @@ public class DepotGroupItemSelectorProvider
 			return groups;
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}
@@ -90,7 +90,7 @@ public class DepotGroupItemSelectorProvider
 				_getGroupId(groupId));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return 0;
 		}

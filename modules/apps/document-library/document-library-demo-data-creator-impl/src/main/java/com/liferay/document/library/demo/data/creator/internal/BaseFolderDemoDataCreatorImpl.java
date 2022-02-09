@@ -43,7 +43,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 			}
 			catch (NoSuchFolderException noSuchFolderException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchFolderException, noSuchFolderException);
+					_log.warn(noSuchFolderException);
 				}
 			}
 
@@ -62,7 +62,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchFolderException, noSuchFolderException);
+				_log.warn(noSuchFolderException);
 			}
 
 			folder = dlAppLocalService.addFolder(

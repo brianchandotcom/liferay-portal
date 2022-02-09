@@ -141,7 +141,7 @@ public class MailManager {
 					"an-account-with-the-same-address-already-exists");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-add-account");
 		}
@@ -177,7 +177,7 @@ public class MailManager {
 					"failure", "a-folder-with-the-same-name-already-exists");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-create-folder");
 		}
@@ -201,7 +201,7 @@ public class MailManager {
 		}
 		catch (MailException mailException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(mailException, mailException);
+				_log.debug(mailException);
 			}
 
 			return _createJSONResult("failure", StringPool.BLANK);
@@ -221,7 +221,7 @@ public class MailManager {
 			return _createJSONResult("success", "account-has-been-deleted");
 		}
 		catch (MailException mailException) {
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-delete-account");
 		}
@@ -244,7 +244,7 @@ public class MailManager {
 			return _createJSONResult("success", "attachment-has-been-deleted");
 		}
 		catch (MailException mailException) {
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-delete-attachment");
 		}
@@ -277,7 +277,7 @@ public class MailManager {
 					"the-mail-server-will-not-allow-this-folder-to-be-deleted");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-delete-folder");
 		}
@@ -313,7 +313,7 @@ public class MailManager {
 			return _createJSONResult("success", "messages-have-been-deleted");
 		}
 		catch (MailException mailException) {
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-delete-messages");
 		}
@@ -344,7 +344,7 @@ public class MailManager {
 					"failure", "this-flag-is-not-supported");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-flag-messages");
 		}
@@ -613,7 +613,7 @@ public class MailManager {
 					"failure", "cannot-move-messages-to-this-folder");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-move-messages");
 		}
@@ -646,7 +646,7 @@ public class MailManager {
 					"failure", "a-folder-with-the-same-name-already-exists");
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-rename-folder");
 		}
@@ -686,7 +686,7 @@ public class MailManager {
 					mailException.getValue());
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-save-draft");
 		}
@@ -714,7 +714,7 @@ public class MailManager {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(fileSizeException, fileSizeException);
+				_log.debug(fileSizeException);
 			}
 
 			return _createJSONResult("failure", "attachment-is-too-large");
@@ -736,7 +736,7 @@ public class MailManager {
 					HtmlUtil.escape(mailException.getValue()));
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-send-message");
 		}
@@ -765,7 +765,7 @@ public class MailManager {
 			}
 			catch (MailException mailException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(mailException, mailException);
+					_log.debug(mailException);
 				}
 
 				return _createJSONResult("failure", "incorrect-password");
@@ -870,7 +870,7 @@ public class MailManager {
 					mailException.getValue());
 			}
 
-			_log.error(mailException, mailException);
+			_log.error(mailException);
 
 			return _createJSONResult("failure", "unable-to-update-account");
 		}

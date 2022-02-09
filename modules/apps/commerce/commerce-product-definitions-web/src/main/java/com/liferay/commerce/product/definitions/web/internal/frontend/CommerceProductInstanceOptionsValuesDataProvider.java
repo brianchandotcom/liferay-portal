@@ -99,7 +99,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return ddmDataProviderResponseBuilder.build();
 		}
@@ -255,7 +255,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			return Output.toDDMDataProviderResponse(outputs);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return ddmDataProviderResponseBuilder.build();

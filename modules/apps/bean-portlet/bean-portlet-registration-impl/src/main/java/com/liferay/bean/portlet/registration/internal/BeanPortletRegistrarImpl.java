@@ -131,7 +131,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					displayDescriptorURL);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -147,7 +147,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					liferayDescriptorURL);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -190,7 +190,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					portletDescriptorURL, preferencesValidatorFunction);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -326,7 +326,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 
 				// Ignore since the service has been unregistered

@@ -50,7 +50,7 @@ public class OmniadminImpl implements Omniadmin {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(systemException, systemException);
+				_log.debug(systemException);
 			}
 
 			return false;

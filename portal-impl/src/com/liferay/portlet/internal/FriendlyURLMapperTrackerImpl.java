@@ -205,7 +205,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 				friendlyURLMapper.setRouter(newFriendlyURLRouter(xml));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return null;
 			}

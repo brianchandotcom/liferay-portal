@@ -36,7 +36,7 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 				_typeSettingsUnicodeProperties.load(super.getTypeSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

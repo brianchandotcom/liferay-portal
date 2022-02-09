@@ -75,7 +75,7 @@ public class WidgetPortletConfigurationIcon
 			return portletURL.toString();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return StringPool.BLANK;
 		}

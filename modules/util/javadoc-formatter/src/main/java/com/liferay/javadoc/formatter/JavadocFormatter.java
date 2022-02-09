@@ -1094,7 +1094,7 @@ public class JavadocFormatter {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			if (!fileName.contains("__")) {
@@ -1345,7 +1345,7 @@ public class JavadocFormatter {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			_deprecationsDocument = DocumentHelper.createDocument();

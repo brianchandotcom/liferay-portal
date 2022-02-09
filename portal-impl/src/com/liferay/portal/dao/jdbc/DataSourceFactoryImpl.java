@@ -159,7 +159,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(classNotFoundException);
 				}
 			}
 		}
@@ -781,7 +781,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				mBeanServer.registerMBean(jmxConnectionPool, _objectName);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			return mBeanServer;
@@ -804,7 +804,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				mBeanServer.unregisterMBean(_objectName);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

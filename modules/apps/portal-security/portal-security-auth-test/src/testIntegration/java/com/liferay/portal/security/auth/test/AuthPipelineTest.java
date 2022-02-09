@@ -137,7 +137,7 @@ public class AuthPipelineTest {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 
@@ -152,7 +152,7 @@ public class AuthPipelineTest {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 
@@ -168,7 +168,7 @@ public class AuthPipelineTest {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 
@@ -184,7 +184,7 @@ public class AuthPipelineTest {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 
@@ -200,7 +200,7 @@ public class AuthPipelineTest {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 

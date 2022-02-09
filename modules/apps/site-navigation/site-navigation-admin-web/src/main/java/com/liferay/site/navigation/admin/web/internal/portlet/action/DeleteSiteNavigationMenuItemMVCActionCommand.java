@@ -80,7 +80,7 @@ public class DeleteSiteNavigationMenuItemMVCActionCommand
 						_siteNavigationMenuItemTypeRegistry, themeDisplay));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			jsonObject.put(
 				"error",

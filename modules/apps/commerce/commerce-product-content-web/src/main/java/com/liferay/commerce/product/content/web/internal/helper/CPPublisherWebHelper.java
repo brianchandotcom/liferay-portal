@@ -84,9 +84,7 @@ public class CPPublisherWebHelper {
 			}
 			catch (NoSuchCPDefinitionException noSuchCPDefinitionException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchCPDefinitionException,
-						noSuchCPDefinitionException);
+					_log.debug(noSuchCPDefinitionException);
 				}
 
 				missingAssetCPDefinitionIds.add(cpDefinitionId);

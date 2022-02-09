@@ -154,7 +154,7 @@ public class BasicLoginModule implements LoginModule {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

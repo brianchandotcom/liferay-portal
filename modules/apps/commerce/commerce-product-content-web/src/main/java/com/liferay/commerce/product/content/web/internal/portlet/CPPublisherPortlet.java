@@ -85,7 +85,7 @@ public class CPPublisherPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

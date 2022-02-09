@@ -288,7 +288,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -314,7 +314,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -364,7 +364,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 	}
@@ -429,7 +429,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -604,7 +604,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
+				_log.warn(ioException);
 			}
 		}
 	}
@@ -944,7 +944,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				getThumbnailFilePath(fileVersion, imageType, index));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

@@ -54,7 +54,7 @@ public class ContentUtil {
 				_put(location, content);
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

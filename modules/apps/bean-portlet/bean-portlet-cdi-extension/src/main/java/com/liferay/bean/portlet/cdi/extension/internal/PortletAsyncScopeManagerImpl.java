@@ -69,7 +69,7 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 			_closeable.close();
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 	}
 

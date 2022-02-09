@@ -77,7 +77,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -122,7 +122,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 				_settingsUnicodeProperties.load(super.getSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 
@@ -163,7 +163,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

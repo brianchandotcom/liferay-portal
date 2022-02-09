@@ -70,7 +70,7 @@ public class ReleaseFeatureFlagManagerImpl
 				).build());
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class ReleaseFeatureFlagManagerImpl
 					ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
-				_log.error(illegalArgumentException, illegalArgumentException);
+				_log.error(illegalArgumentException);
 			}
 		}
 	}

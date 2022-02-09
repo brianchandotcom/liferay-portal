@@ -110,7 +110,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 				incrementCounter);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return inputStream;

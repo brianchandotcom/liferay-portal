@@ -93,7 +93,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

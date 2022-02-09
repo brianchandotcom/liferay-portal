@@ -56,7 +56,7 @@ public class SearchResultsTag extends ComponentRendererTag {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		putValue(

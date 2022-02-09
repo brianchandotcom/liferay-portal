@@ -72,8 +72,7 @@ public class ApplicationContextServicePublisherUtil {
 				}
 				catch (BeanIsAbstractException beanIsAbstractException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							beanIsAbstractException, beanIsAbstractException);
+						_log.debug(beanIsAbstractException);
 					}
 				}
 				catch (Exception exception) {
@@ -131,9 +130,7 @@ public class ApplicationContextServicePublisherUtil {
 			}
 			catch (ReflectiveOperationException reflectiveOperationException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						reflectiveOperationException,
-						reflectiveOperationException);
+					_log.debug(reflectiveOperationException);
 				}
 			}
 		}

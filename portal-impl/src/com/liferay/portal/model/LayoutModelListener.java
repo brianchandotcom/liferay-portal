@@ -60,7 +60,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// This is only needed because of LayoutPersistenceTest but should

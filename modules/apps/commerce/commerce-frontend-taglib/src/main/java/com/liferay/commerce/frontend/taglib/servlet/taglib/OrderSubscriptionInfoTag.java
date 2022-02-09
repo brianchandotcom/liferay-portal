@@ -57,7 +57,7 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 
@@ -156,7 +156,7 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return SKIP_BODY;

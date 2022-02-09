@@ -423,7 +423,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
+			_log.error(windowStateException);
 		}
 
 		return getClayDataSetActionTemplates(portletURL.toString(), true);

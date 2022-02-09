@@ -67,7 +67,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 			return _getDiscountRuleCPDefinitions(httpServletRequest, filter);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Collections.emptyList();
@@ -85,7 +85,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 			return discountRuleCPDefinitions.size();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return 0;

@@ -90,7 +90,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -152,7 +152,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				servletContext.getServletContextName(), beanLocatorImpl);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (previousApplicationContext == null) {
@@ -233,12 +233,11 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				}
 				catch (BeanIsAbstractException beanIsAbstractException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							beanIsAbstractException, beanIsAbstractException);
+						_log.debug(beanIsAbstractException);
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 	}

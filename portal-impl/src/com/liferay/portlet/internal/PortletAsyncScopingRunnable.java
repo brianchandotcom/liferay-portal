@@ -49,7 +49,7 @@ public class PortletAsyncScopingRunnable implements Runnable {
 				_asyncListener.onError(new AsyncEvent(null, throwable));
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 		finally {

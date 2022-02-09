@@ -43,7 +43,7 @@ public class InvalidFormatExceptionMapper
 		InvalidFormatException invalidFormatException) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(invalidFormatException, invalidFormatException);
+			_log.debug(invalidFormatException);
 		}
 
 		List<JsonMappingException.Reference> references =

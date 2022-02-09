@@ -220,7 +220,7 @@ public class DDMFormValuesToPropertiesConverter {
 				}
 			}
 			catch (JSONException jsonException) {
-				_log.error(jsonException, jsonException);
+				_log.error(jsonException);
 			}
 		}
 

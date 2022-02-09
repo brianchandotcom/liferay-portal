@@ -71,7 +71,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return fileEntry.getMimeType();
@@ -101,7 +101,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return fileEntry.getSize();
@@ -122,7 +122,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

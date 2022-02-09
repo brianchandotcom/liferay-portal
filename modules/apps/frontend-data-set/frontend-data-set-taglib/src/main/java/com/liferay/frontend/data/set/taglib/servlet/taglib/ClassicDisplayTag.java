@@ -106,7 +106,7 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 			_setFDSPaginationEntries();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		String randomKey = PortalUtil.generateRandomKey(

@@ -74,7 +74,7 @@ public class ViewInPanelFileEntryContentDashboardItemActionProvider
 						FileEntry.class.getName(), fileEntry.getPrimaryKey()));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

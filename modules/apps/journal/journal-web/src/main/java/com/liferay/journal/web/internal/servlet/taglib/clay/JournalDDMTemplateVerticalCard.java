@@ -69,7 +69,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -104,7 +104,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

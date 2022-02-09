@@ -87,12 +87,12 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 			return false;
 		}
 		catch (PortletException portletException) {
-			_log.error(portletException, portletException);
+			_log.error(portletException);
 
 			throw portletException;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new PortletException(exception);
 		}

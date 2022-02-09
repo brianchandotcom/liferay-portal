@@ -75,8 +75,7 @@ public class ActionUtil {
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchFileEntryException, noSuchFileEntryException);
+					_log.debug(noSuchFileEntryException);
 				}
 			}
 		}
@@ -154,9 +153,7 @@ public class ActionUtil {
 			}
 			catch (NoSuchFileShortcutException noSuchFileShortcutException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchFileShortcutException,
-						noSuchFileShortcutException);
+					_log.debug(noSuchFileShortcutException);
 				}
 			}
 		}
@@ -289,7 +286,7 @@ public class ActionUtil {
 			}
 			catch (NoSuchFolderException noSuchFolderException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFolderException, noSuchFolderException);
+					_log.debug(noSuchFolderException);
 				}
 			}
 		}

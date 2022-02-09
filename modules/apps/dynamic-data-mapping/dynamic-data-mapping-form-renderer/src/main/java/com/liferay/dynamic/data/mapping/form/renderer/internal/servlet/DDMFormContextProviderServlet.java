@@ -89,7 +89,7 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		}
 		catch (ActionException actionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(actionException, actionException);
+				_log.debug(actionException);
 			}
 		}
 	}
@@ -168,7 +168,7 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

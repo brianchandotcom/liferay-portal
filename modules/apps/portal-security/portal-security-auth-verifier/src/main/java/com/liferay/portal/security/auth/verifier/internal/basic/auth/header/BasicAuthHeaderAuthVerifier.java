@@ -72,7 +72,7 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 		catch (AutoLoginException autoLoginException) {
 			if (_isBasicAuth(accessControlContext, properties)) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(autoLoginException, autoLoginException);
+					_log.debug(autoLoginException);
 				}
 
 				return _generateChallenge(accessControlContext);

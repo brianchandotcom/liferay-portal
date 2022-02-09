@@ -270,7 +270,7 @@ public class ContentPageLayoutEditorDisplayContext
 				}
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(portalException, portalException);
+						_log.debug(portalException);
 					}
 				}
 			}
@@ -703,7 +703,7 @@ public class ContentPageLayoutEditorDisplayContext
 				return !segmentsExperimentRel.isControl();
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

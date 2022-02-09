@@ -80,7 +80,7 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 				commerceOrganizationDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

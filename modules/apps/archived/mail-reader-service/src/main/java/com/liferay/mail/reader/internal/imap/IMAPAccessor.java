@@ -648,8 +648,7 @@ public class IMAPAccessor {
 				}
 				catch (NoSuchMessageException noSuchMessageException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchMessageException, noSuchMessageException);
+						_log.debug(noSuchMessageException);
 					}
 
 					MessageLocalServiceUtil.addMessage(
@@ -794,7 +793,7 @@ public class IMAPAccessor {
 		}
 		catch (NoSuchMessageException noSuchMessageException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMessageException, noSuchMessageException);
+				_log.debug(noSuchMessageException);
 			}
 
 			return null;

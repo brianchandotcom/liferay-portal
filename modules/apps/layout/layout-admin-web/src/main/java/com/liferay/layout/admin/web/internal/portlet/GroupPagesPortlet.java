@@ -185,7 +185,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 

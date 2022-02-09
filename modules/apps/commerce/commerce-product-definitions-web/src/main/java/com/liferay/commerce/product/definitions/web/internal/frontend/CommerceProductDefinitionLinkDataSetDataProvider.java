@@ -106,7 +106,7 @@ public class CommerceProductDefinitionLinkDataSetDataProvider
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return productLinks;

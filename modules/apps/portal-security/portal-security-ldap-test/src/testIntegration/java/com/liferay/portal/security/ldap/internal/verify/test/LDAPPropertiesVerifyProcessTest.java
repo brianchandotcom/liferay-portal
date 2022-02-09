@@ -179,7 +179,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(invalidSyntaxException, invalidSyntaxException);
+				_log.debug(invalidSyntaxException);
 			}
 
 			throw new IllegalStateException("Unable to get verify process");

@@ -122,7 +122,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 					backgroundTask);
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

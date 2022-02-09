@@ -404,7 +404,7 @@ public class JournalEditArticleDisplayContext {
 			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			siteDefaultLocale = LocaleUtil.getSiteDefault();
 		}

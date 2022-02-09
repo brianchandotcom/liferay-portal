@@ -58,7 +58,7 @@ public class RSSExporterImpl implements RSSExporter {
 		}
 		catch (IllegalDataException illegalDataException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalDataException, illegalDataException);
+				_log.debug(illegalDataException);
 			}
 
 			// LEP-4450

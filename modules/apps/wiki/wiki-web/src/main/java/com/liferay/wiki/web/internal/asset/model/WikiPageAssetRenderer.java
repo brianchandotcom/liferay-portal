@@ -114,7 +114,7 @@ public class WikiPageAssetRenderer
 							_page.getGroupId(), WikiConstants.SERVICE_NAME));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return null;
 			}
@@ -164,7 +164,7 @@ public class WikiPageAssetRenderer
 				_wikiEngineRenderer.convert(_page, null, null, null));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return _page.getContent();
 		}
@@ -404,7 +404,7 @@ public class WikiPageAssetRenderer
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return false;

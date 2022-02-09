@@ -53,7 +53,7 @@ public class KBServicePreAction extends Action {
 			_run(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

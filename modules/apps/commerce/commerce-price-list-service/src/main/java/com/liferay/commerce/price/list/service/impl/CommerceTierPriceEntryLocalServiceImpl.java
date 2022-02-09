@@ -531,9 +531,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 		catch (NoSuchTierPriceEntryException noSuchTierPriceEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchTierPriceEntryException,
-					noSuchTierPriceEntryException);
+				_log.debug(noSuchTierPriceEntryException);
 			}
 		}
 

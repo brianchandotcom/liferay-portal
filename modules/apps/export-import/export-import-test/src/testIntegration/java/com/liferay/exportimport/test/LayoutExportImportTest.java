@@ -142,7 +142,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 		finally {
@@ -161,7 +161,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 		finally {
@@ -192,7 +192,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 
@@ -210,7 +210,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 		finally {
@@ -256,7 +256,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 
@@ -274,7 +274,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException larTypeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(larTypeException, larTypeException);
+				_log.debug(larTypeException);
 			}
 		}
 		finally {
@@ -307,7 +307,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			}
 			catch (LARTypeException larTypeException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(larTypeException, larTypeException);
+					_log.debug(larTypeException);
 				}
 			}
 
@@ -325,7 +325,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			}
 			catch (LARTypeException larTypeException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(larTypeException, larTypeException);
+					_log.debug(larTypeException);
 				}
 			}
 		}
@@ -537,7 +537,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LocaleException localeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(localeException, localeException);
+				_log.debug(localeException);
 			}
 
 			Assert.assertTrue(expectFailure);

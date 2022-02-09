@@ -109,7 +109,7 @@ public class LayoutAnalyticsReportsInfoItem
 					return layoutSEOLink.getHref();
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return StringPool.BLANK;
 				}
@@ -125,7 +125,7 @@ public class LayoutAnalyticsReportsInfoItem
 			return _portal.getSiteDefaultLocale(layout.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return LocaleUtil.getDefault();
@@ -163,7 +163,7 @@ public class LayoutAnalyticsReportsInfoItem
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}
@@ -176,7 +176,7 @@ public class LayoutAnalyticsReportsInfoItem
 			return _portal.getLayoutURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return _portal.getCurrentCompleteURL(themeDisplay.getRequest());
 		}

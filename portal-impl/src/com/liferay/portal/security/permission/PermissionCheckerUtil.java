@@ -64,7 +64,7 @@ public class PermissionCheckerUtil {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

@@ -181,7 +181,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -193,7 +193,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

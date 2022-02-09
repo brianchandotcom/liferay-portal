@@ -107,7 +107,7 @@ public class BundleManagerImpl implements BundleManager {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -149,7 +149,7 @@ public class BundleManagerImpl implements BundleManager {
 			bundle.uninstall();
 		}
 		catch (BundleException bundleException) {
-			_log.error(bundleException, bundleException);
+			_log.error(bundleException);
 		}
 	}
 

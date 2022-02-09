@@ -103,7 +103,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		// Process session destroyed events
@@ -114,7 +114,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 				PropsValues.SERVLET_SESSION_DESTROY_EVENTS, _httpSession);
 		}
 		catch (ActionException actionException) {
-			_log.error(actionException, actionException);
+			_log.error(actionException);
 		}
 	}
 

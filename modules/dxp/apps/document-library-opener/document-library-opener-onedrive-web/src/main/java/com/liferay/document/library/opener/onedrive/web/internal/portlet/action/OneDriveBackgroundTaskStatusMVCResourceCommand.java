@@ -122,9 +122,7 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 							graphServicePortalException) {
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							graphServicePortalException,
-							graphServicePortalException);
+						_log.debug(graphServicePortalException);
 					}
 
 					jsonObject.put("error", true);

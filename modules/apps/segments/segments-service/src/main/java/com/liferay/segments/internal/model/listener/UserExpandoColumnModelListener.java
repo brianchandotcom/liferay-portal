@@ -135,7 +135,7 @@ public class UserExpandoColumnModelListener
 			_serviceRegistration = _register(_bundleContext, _userEntityFields);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

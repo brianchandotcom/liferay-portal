@@ -170,7 +170,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException, sqlException);
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -380,7 +380,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException, sqlException);
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -406,7 +406,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 	}
@@ -428,7 +428,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException, sqlException);
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -532,7 +532,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 	}

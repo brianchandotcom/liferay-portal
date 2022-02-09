@@ -67,7 +67,7 @@ public class IdReplacer {
 				}
 				catch (StagnantRowException stagnantRowException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(stagnantRowException, stagnantRowException);
+						_log.warn(stagnantRowException);
 					}
 				}
 
@@ -121,7 +121,7 @@ public class IdReplacer {
 			}
 			catch (StagnantRowException stagnantRowException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(stagnantRowException, stagnantRowException);
+					_log.warn(stagnantRowException);
 				}
 			}
 

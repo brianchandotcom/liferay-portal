@@ -416,7 +416,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			return EVAL_PAGE;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new JspException(exception);
 		}

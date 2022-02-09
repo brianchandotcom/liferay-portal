@@ -2626,8 +2626,7 @@ public class ParamUtil {
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						illegalArgumentException, illegalArgumentException);
+					_log.debug(illegalArgumentException);
 				}
 
 				form = null;

@@ -43,7 +43,7 @@ public class UserGroupGroupChecker extends RowChecker {
 				_group.getGroupId(), userGroup.getUserGroupId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

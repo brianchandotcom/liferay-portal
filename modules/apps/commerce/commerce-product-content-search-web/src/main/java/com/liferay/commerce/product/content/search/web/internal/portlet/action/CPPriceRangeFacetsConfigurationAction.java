@@ -68,7 +68,7 @@ public class CPPriceRangeFacetsConfigurationAction
 				cpPriceRangeFacetsDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return "/price_range_facets/configuration.jsp";

@@ -94,7 +94,7 @@ public class ContentDashboardItemSubtypeUtil {
 					contentDashboardItemSubtypePayload));
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException, jsonException);
+			_log.error(jsonException);
 
 			return Optional.empty();
 		}
@@ -113,7 +113,7 @@ public class ContentDashboardItemSubtypeUtil {
 						contentDashboardItemSubtypeFactory.create(classPK));
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 
 					return Optional.empty();
 				}

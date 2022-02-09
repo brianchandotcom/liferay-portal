@@ -59,7 +59,7 @@ public class EditConfigurationJSPDynamicInclude extends BaseJSPDynamicInclude {
 				tensorFlowImageAssetAutoTagProviderCompanyConfiguration);
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		super.include(httpServletRequest, httpServletResponse, key);

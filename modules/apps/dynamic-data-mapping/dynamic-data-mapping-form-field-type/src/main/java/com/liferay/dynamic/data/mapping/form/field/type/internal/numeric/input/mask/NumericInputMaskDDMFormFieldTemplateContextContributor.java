@@ -150,7 +150,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 		}
 		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsonException, jsonException);
+				_log.warn(jsonException);
 			}
 
 			return new HashMap<>();

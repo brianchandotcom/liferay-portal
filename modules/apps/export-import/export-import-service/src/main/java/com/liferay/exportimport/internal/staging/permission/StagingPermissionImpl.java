@@ -42,7 +42,7 @@ public class StagingPermissionImpl implements StagingPermission {
 			return _hasPermission(group, portletId, actionId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;
@@ -58,7 +58,7 @@ public class StagingPermissionImpl implements StagingPermission {
 				_groupLocalService.getGroup(groupId), portletId, actionId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

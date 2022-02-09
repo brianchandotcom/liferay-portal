@@ -59,7 +59,7 @@ public class JSONFactoryImpl implements JSONFactory {
 			_jsonSerializer.registerSerializer(new LocaleSerializer());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -89,7 +89,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -106,7 +106,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -123,7 +123,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -196,7 +196,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -229,7 +229,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			throw new IllegalStateException(
@@ -298,7 +298,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 		catch (MarshallException marshallException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(marshallException, marshallException);
+				_log.warn(marshallException);
 			}
 
 			throw new IllegalStateException(

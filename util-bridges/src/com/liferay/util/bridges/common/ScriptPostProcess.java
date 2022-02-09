@@ -69,7 +69,7 @@ public class ScriptPostProcess {
 				startTag, endTag, ref, actionURL, actionParameterName);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

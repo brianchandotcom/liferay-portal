@@ -198,7 +198,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 				layout.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		String currentCanonicalURL = layoutSEOEntry.getCanonicalURL(

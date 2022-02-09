@@ -603,9 +603,7 @@ public class LayoutSetBranchLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchLayoutSetBranchException,
-					noSuchLayoutSetBranchException);
+				_log.debug(noSuchLayoutSetBranchException);
 			}
 		}
 
@@ -630,9 +628,7 @@ public class LayoutSetBranchLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchLayoutSetBranchException,
-					noSuchLayoutSetBranchException);
+				_log.debug(noSuchLayoutSetBranchException);
 			}
 		}
 	}

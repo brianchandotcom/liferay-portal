@@ -240,7 +240,7 @@ public class AccountRoleLocalServiceImpl
 						return role.getType() == RoleConstants.TYPE_ACCOUNT;
 					}
 					catch (PortalException portalException) {
-						_log.error(portalException, portalException);
+						_log.error(portalException);
 
 						return false;
 					}

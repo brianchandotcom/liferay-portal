@@ -63,11 +63,11 @@ public class DLPortletToolbarContributorHelper {
 		}
 		catch (NoSuchFolderException | PrincipalException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -82,7 +82,7 @@ public class DLPortletToolbarContributorHelper {
 			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -94,13 +94,13 @@ public class DLPortletToolbarContributorHelper {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				folder = null;
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 
@@ -125,7 +125,7 @@ public class DLPortletToolbarContributorHelper {
 				}
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

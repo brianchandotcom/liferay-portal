@@ -1743,8 +1743,7 @@ public class CalendarBookingLocalServiceImpl
 			}
 			catch (NoSuchCalendarException noSuchCalendarException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchCalendarException, noSuchCalendarException);
+					_log.debug(noSuchCalendarException);
 				}
 
 				continue;
@@ -2149,7 +2148,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 	}
@@ -2396,8 +2395,7 @@ public class CalendarBookingLocalServiceImpl
 			}
 			catch (NoSuchCalendarException noSuchCalendarException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchCalendarException, noSuchCalendarException);
+					_log.debug(noSuchCalendarException);
 				}
 
 				continue;

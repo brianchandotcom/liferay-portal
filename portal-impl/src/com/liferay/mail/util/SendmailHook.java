@@ -69,7 +69,7 @@ public class SendmailHook implements Hook {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -104,7 +104,7 @@ public class SendmailHook implements Hook {
 			future.get();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		updatePassword(companyId, userId, password);
@@ -152,7 +152,7 @@ public class SendmailHook implements Hook {
 			future.get();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -193,7 +193,7 @@ public class SendmailHook implements Hook {
 			FileUtil.write(file, sb.toString());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -248,7 +248,7 @@ public class SendmailHook implements Hook {
 			future.get();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -290,7 +290,7 @@ public class SendmailHook implements Hook {
 			future.get();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

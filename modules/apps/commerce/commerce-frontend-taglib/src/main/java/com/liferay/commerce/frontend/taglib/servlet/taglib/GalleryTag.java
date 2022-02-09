@@ -55,7 +55,7 @@ public class GalleryTag extends IncludeTag {
 			_viewCPAttachmentURL = _getViewCPAttachmentURL();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return super.doStartTag();

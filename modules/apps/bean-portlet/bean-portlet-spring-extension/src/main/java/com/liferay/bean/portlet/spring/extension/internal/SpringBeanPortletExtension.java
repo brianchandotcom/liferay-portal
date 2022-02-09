@@ -128,7 +128,7 @@ public class SpringBeanPortletExtension {
 			}
 		}
 		catch (ClassNotFoundException classNotFoundException) {
-			_log.error(classNotFoundException, classNotFoundException);
+			_log.error(classNotFoundException);
 		}
 	}
 

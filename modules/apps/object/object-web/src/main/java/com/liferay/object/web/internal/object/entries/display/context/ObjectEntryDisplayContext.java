@@ -219,8 +219,7 @@ public class ObjectEntryDisplayContext {
 		}
 		catch (NoSuchObjectLayoutException noSuchObjectLayoutException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchObjectLayoutException, noSuchObjectLayoutException);
+				_log.debug(noSuchObjectLayoutException);
 			}
 
 			return null;

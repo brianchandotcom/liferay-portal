@@ -68,7 +68,7 @@ public class RoleMembershipPolicyFactoryImpl
 					roleMembershipPolicy.verifyPolicy();
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 			}
 

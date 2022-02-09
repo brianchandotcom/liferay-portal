@@ -137,7 +137,7 @@ public class PortletPreferencesFactoryImpl
 				}
 				catch (XMLStreamException xmlStreamException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(xmlStreamException, xmlStreamException);
+						_log.debug(xmlStreamException);
 					}
 				}
 			}

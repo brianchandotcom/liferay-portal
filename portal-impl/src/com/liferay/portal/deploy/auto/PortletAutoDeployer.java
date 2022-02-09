@@ -78,7 +78,7 @@ public class PortletAutoDeployer
 				tempDirPaths, "liferay-util.tld");
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

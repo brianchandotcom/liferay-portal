@@ -100,7 +100,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 				}
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 
@@ -172,7 +172,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			delete();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 
@@ -230,9 +230,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 						duplicateOrganizationException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateOrganizationException,
-						duplicateOrganizationException);
+					_log.debug(duplicateOrganizationException);
 				}
 
 				organization = _organizationLocalService.getOrganization(
@@ -262,7 +260,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			}
 			catch (DuplicateRoleException duplicateRoleException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(duplicateRoleException, duplicateRoleException);
+					_log.debug(duplicateRoleException);
 				}
 
 				role = _roleLocalService.getRole(_companyId, name);
@@ -300,8 +298,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			}
 			catch (DuplicateGroupException duplicateGroupException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateGroupException, duplicateGroupException);
+					_log.debug(duplicateGroupException);
 				}
 
 				group = _groupLocalService.getGroup(_companyId, name);
@@ -330,7 +327,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			}
 			catch (DuplicateTeamException duplicateTeamException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(duplicateTeamException, duplicateTeamException);
+					_log.debug(duplicateTeamException);
 				}
 
 				team = _teamLocalService.getTeam(_defaultGroupId, name);
@@ -392,9 +389,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			}
 			catch (DuplicateUserGroupException duplicateUserGroupException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateUserGroupException,
-						duplicateUserGroupException);
+					_log.debug(duplicateUserGroupException);
 				}
 
 				userGroup = _userGroupLocalService.getUserGroup(
@@ -421,7 +416,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 				csvFile, Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 
 			throw ioException;
 		}

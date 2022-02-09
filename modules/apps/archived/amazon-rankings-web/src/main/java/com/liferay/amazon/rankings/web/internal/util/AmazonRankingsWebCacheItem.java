@@ -59,7 +59,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			amazonRankings = _convert();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return amazonRankings;

@@ -276,7 +276,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 		}
 

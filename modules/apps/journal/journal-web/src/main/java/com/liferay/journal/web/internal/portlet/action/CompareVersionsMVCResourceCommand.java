@@ -94,7 +94,7 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 			catch (ServletException servletException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(servletException, servletException);
+					_log.debug(servletException);
 				}
 			}
 		}

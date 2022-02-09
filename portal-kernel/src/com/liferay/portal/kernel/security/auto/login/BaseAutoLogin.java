@@ -62,7 +62,7 @@ public abstract class BaseAutoLogin implements AutoLogin {
 			throw new AutoLoginException(exception);
 		}
 
-		_log.error(exception, exception);
+		_log.error(exception);
 
 		return null;
 	}

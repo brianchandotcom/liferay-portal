@@ -49,7 +49,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		throws AutoLoginException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(exception, exception);
+			_log.debug(exception);
 		}
 
 		removeCookies(httpServletRequest, httpServletResponse);

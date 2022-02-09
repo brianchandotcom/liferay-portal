@@ -181,7 +181,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 						"loopback");
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException1, ioException1);
+					_log.debug(ioException1);
 				}
 			}
 

@@ -1428,7 +1428,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return Collections.emptyMap();
@@ -1454,7 +1454,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;
@@ -1557,7 +1557,7 @@ public class CPDefinitionLocalServiceImpl
 			threshold = cProductVersionConfiguration.versionThreshold();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return;
 		}
@@ -1785,7 +1785,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			Group companyGroup = _groupLocalService.getCompanyGroup(
@@ -2626,7 +2626,7 @@ public class CPDefinitionLocalServiceImpl
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;

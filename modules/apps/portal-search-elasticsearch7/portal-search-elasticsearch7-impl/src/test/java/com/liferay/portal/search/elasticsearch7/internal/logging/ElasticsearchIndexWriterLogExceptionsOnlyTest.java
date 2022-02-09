@@ -89,7 +89,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -156,7 +156,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -178,7 +178,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -205,7 +205,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -231,7 +231,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -253,7 +253,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -277,7 +277,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -305,7 +305,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -333,7 +333,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -356,7 +356,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -380,7 +380,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -408,7 +408,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -436,7 +436,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}

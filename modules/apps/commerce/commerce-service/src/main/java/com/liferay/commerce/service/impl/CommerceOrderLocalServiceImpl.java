@@ -713,7 +713,7 @@ public class CommerceOrderLocalServiceImpl
 				false, start, end);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return Collections.emptyList();
@@ -737,7 +737,7 @@ public class CommerceOrderLocalServiceImpl
 				false);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return 0;

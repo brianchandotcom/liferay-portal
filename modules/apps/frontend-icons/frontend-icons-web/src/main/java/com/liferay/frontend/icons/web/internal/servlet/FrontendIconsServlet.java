@@ -76,7 +76,7 @@ public class FrontendIconsServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

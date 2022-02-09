@@ -155,7 +155,7 @@ public class CommerceAccountResource {
 				pageSize, themeDisplay.getPathImage());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 			accountList = new AccountList(
 				StringUtil.split(exception.getLocalizedMessage()));
 		}
@@ -261,7 +261,7 @@ public class CommerceAccountResource {
 				accountId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			Response.ResponseBuilder responseBuilder = Response.serverError();
 
@@ -397,7 +397,7 @@ public class CommerceAccountResource {
 			).build();
 		}
 		catch (JsonProcessingException jsonProcessingException) {
-			_log.error(jsonProcessingException, jsonProcessingException);
+			_log.error(jsonProcessingException);
 		}
 
 		return Response.status(

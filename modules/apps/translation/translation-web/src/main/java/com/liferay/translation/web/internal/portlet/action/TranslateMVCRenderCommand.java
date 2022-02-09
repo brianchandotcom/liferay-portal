@@ -274,7 +274,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInfoItemException, noSuchInfoItemException);
+				_log.debug(noSuchInfoItemException);
 			}
 
 			return null;

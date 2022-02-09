@@ -51,7 +51,7 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 			}
 			catch (SecurityException securityException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(securityException, securityException);
+					_log.debug(securityException);
 				}
 
 				if (PropsValues.ACCESS_CONTROL_SANITIZE_SECURITY_EXCEPTION) {

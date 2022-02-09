@@ -307,7 +307,7 @@ public class DDMFormEvaluatorHelper {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 		}
 	}
@@ -318,7 +318,7 @@ public class DDMFormEvaluatorHelper {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 
 			return false;
@@ -371,7 +371,7 @@ public class DDMFormEvaluatorHelper {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 		}
 	}
@@ -973,7 +973,7 @@ public class DDMFormEvaluatorHelper {
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException, ddmExpressionException);
+				_log.debug(ddmExpressionException);
 			}
 		}
 

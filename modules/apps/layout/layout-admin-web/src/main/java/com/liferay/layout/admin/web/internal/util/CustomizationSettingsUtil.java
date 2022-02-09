@@ -115,7 +115,7 @@ public class CustomizationSettingsUtil {
 			template.processTemplate(httpServletResponse.getWriter());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw exception;
 		}

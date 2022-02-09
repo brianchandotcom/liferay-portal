@@ -237,7 +237,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		}
 		catch (PortletException portletException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portletException, portletException);
+				_log.debug(portletException);
 			}
 
 			include("/error.jsp", renderRequest, renderResponse);
@@ -376,7 +376,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 					}
 					catch (Exception exception) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(exception, exception);
+							_log.debug(exception);
 						}
 
 						jsonObject.put("message", "failed");

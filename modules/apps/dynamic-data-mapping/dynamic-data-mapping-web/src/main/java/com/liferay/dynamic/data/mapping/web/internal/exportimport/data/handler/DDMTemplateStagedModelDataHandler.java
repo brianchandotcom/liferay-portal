@@ -136,7 +136,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return referenceAttributes;
@@ -281,7 +281,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 	}
@@ -475,7 +475,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 
@@ -610,7 +610,7 @@ public class DDMTemplateStagedModelDataHandler
 					DDMTemplateConstants.VERSION_DEFAULT);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if ((ddmTemplateVersion != null) &&

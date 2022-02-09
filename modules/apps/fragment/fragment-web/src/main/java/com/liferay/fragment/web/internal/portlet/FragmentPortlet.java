@@ -131,7 +131,7 @@ public class FragmentPortlet extends MVCPortlet {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 		}
 

@@ -133,7 +133,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (activity.getMirrorActivityId() > 0) {
@@ -145,7 +145,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 
@@ -207,7 +207,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		List<SocialActivityInterpreter> activityInterpreters =

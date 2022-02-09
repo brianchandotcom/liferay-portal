@@ -152,7 +152,7 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 			actionableDynamicQuery.performActions();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

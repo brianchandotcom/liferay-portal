@@ -41,7 +41,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			return;
@@ -78,7 +78,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

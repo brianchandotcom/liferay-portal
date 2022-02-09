@@ -61,7 +61,7 @@ public class EditLayoutSetMVCRenderCommand implements MVCRenderCommand {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 
 				SessionErrors.add(renderRequest, portalException.getClass());

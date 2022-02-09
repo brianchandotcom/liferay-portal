@@ -331,7 +331,7 @@ public class JournalFolderServiceTest {
 		}
 		catch (RestoreEntryException restoreEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 		}
 
@@ -346,7 +346,7 @@ public class JournalFolderServiceTest {
 		}
 		catch (RestoreEntryException restoreEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 		}
 	}
@@ -471,7 +471,7 @@ public class JournalFolderServiceTest {
 		}
 		catch (RestoreEntryException restoreEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 		}
 
@@ -486,7 +486,7 @@ public class JournalFolderServiceTest {
 		}
 		catch (RestoreEntryException restoreEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException, restoreEntryException);
+				_log.debug(restoreEntryException);
 			}
 		}
 	}

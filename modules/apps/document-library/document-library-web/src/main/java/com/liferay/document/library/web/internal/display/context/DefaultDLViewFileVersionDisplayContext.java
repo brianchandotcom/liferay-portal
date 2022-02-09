@@ -463,7 +463,7 @@ public class DefaultDLViewFileVersionDisplayContext
 				exception instanceof DLPreviewSizeException) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 			else {

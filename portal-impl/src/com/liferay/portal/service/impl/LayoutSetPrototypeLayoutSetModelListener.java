@@ -71,7 +71,7 @@ public class LayoutSetPrototypeLayoutSetModelListener
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return;
@@ -92,7 +92,7 @@ public class LayoutSetPrototypeLayoutSetModelListener
 			LayoutSetPrototypeUtil.update(layoutSetPrototype);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

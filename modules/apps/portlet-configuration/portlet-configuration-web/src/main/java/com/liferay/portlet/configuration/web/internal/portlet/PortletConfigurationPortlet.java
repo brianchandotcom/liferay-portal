@@ -1119,7 +1119,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					portletConfig.getResourceBundle(locale));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			return super.getResourceBundle(locale);

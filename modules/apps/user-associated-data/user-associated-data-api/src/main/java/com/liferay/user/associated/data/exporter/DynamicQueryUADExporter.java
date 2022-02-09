@@ -79,7 +79,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 					writeToZip(baseModel, zipWriter);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 

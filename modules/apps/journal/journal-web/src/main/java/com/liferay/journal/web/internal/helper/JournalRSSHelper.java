@@ -225,7 +225,7 @@ public class JournalRSSHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -240,7 +240,7 @@ public class JournalRSSHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -256,7 +256,7 @@ public class JournalRSSHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -338,7 +338,7 @@ public class JournalRSSHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -363,7 +363,7 @@ public class JournalRSSHelper {
 			}
 			catch (NoSuchFeedException noSuchFeedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFeedException, noSuchFeedException);
+					_log.debug(noSuchFeedException);
 				}
 
 				// Backward compatibility with old URLs
@@ -439,7 +439,7 @@ public class JournalRSSHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 

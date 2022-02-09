@@ -766,7 +766,7 @@ public abstract class BaseCheck extends AbstractCheck {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -1477,7 +1477,7 @@ public abstract class BaseCheck extends AbstractCheck {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 		}

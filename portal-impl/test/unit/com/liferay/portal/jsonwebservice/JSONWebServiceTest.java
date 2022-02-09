@@ -111,9 +111,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (NoSuchJSONWebServiceException noSuchJSONWebServiceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchJSONWebServiceException,
-					noSuchJSONWebServiceException);
+				_log.debug(noSuchJSONWebServiceException);
 			}
 		}
 
@@ -461,9 +459,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (NoSuchJSONWebServiceException noSuchJSONWebServiceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchJSONWebServiceException,
-					noSuchJSONWebServiceException);
+				_log.debug(noSuchJSONWebServiceException);
 			}
 		}
 
@@ -491,9 +487,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (NoSuchJSONWebServiceException noSuchJSONWebServiceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchJSONWebServiceException,
-					noSuchJSONWebServiceException);
+				_log.debug(noSuchJSONWebServiceException);
 			}
 		}
 

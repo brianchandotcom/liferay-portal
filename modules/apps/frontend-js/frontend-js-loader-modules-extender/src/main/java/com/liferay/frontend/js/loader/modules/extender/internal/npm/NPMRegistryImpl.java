@@ -354,7 +354,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				return null;
@@ -368,7 +368,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

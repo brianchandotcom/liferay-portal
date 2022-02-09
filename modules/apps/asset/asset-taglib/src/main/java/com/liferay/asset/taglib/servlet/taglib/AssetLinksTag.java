@@ -151,7 +151,7 @@ public class AssetLinksTag extends IncludeTag {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(systemException, systemException);
+					_log.debug(systemException);
 				}
 			}
 		}
@@ -169,7 +169,7 @@ public class AssetLinksTag extends IncludeTag {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

@@ -885,9 +885,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 							unsupportedOperationException) {
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							unsupportedOperationException,
-							unsupportedOperationException);
+						_log.debug(unsupportedOperationException);
 					}
 				}
 			}
@@ -909,9 +907,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 							unsupportedOperationException) {
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							unsupportedOperationException,
-							unsupportedOperationException);
+						_log.debug(unsupportedOperationException);
 					}
 				}
 			}

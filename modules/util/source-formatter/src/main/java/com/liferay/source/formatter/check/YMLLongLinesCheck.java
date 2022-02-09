@@ -41,7 +41,7 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 		}
 		catch (NumberFormatException numberFormatException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(numberFormatException, numberFormatException);
+				_log.debug(numberFormatException);
 			}
 
 			return content;

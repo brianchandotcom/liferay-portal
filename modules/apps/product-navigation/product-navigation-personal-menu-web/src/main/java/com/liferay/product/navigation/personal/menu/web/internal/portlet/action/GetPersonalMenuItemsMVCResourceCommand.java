@@ -84,7 +84,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				httpServletResponse, jsonArray.toString());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 						_portal.getHttpServletRequest(portletRequest)));
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 
 			jsonObject.put(

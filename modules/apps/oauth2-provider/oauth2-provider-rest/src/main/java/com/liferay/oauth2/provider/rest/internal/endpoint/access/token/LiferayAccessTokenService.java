@@ -116,7 +116,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 		}
 		catch (UnknownHostException unknownHostException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(unknownHostException, unknownHostException);
+				_log.debug(unknownHostException);
 			}
 		}
 

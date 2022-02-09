@@ -98,7 +98,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -154,7 +154,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 				PrincipalThreadLocal.getUserId(), this, true);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (contentStream == null) {
@@ -179,7 +179,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 						PrincipalThreadLocal.getUserId(), this, true);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 
 				if (contentStream == null) {
@@ -297,7 +297,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -316,7 +316,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 			setParentFolder(parentFolder);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return parentFolder;
@@ -431,7 +431,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -548,7 +548,7 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

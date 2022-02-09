@@ -235,7 +235,7 @@ public class AggregateClassLoader extends ClassLoader {
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(classNotFoundException);
 				}
 			}
 		}
@@ -257,7 +257,7 @@ public class AggregateClassLoader extends ClassLoader {
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(classNotFoundException);
 				}
 			}
 		}

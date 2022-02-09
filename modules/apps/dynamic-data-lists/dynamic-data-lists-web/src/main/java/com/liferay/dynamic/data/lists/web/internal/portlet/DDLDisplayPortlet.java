@@ -111,7 +111,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			if (isSessionErrorException(exception)) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 
 				hideDefaultErrorMessage(renderRequest);

@@ -131,7 +131,7 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 				commerceVirtualOrderItemEditDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		_jspRenderer.renderJSP(

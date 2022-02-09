@@ -116,7 +116,7 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 					fileEntryIds.length - 1));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		super.render(renderRequest, renderResponse);

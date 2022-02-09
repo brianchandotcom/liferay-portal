@@ -74,7 +74,7 @@ public abstract class BaseValidateRootFolderConfigurationAction
 						exception) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");

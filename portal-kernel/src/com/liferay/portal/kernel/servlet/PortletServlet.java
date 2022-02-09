@@ -116,7 +116,7 @@ public class PortletServlet extends HttpServlet {
 				portletRequest, portletResponse, lifecycle, filterChain);
 		}
 		catch (PortletException portletException) {
-			_log.error(portletException, portletException);
+			_log.error(portletException);
 
 			throw new ServletException(portletException);
 		}

@@ -320,7 +320,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -345,7 +345,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -451,7 +451,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -505,7 +505,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -566,7 +566,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -603,7 +603,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -642,7 +642,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 
@@ -686,7 +686,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 		}
 

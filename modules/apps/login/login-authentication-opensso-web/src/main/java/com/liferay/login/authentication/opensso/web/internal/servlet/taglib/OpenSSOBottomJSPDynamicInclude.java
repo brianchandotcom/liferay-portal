@@ -67,7 +67,7 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return;
 		}

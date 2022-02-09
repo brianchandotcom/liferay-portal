@@ -287,7 +287,7 @@ public class AkismetClientImpl implements AkismetClient {
 			return _http.URLtoString(options);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		return StringPool.BLANK;

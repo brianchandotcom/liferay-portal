@@ -144,7 +144,7 @@ public class SetupWizardAction implements Action {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
+				_log.debug(sqlException);
 			}
 
 			putMessage(

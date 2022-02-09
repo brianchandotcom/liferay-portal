@@ -46,7 +46,7 @@ public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
 				_role.getRoleId(), userGroupGroup.getGroupId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

@@ -565,7 +565,7 @@ public abstract class BasePortletExportImportTestCase
 		}
 		catch (LocaleException localeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(localeException, localeException);
+				_log.debug(localeException);
 			}
 
 			Assert.assertTrue(expectFailure);

@@ -322,7 +322,7 @@ public class HttpImpl implements Http {
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException, interruptedException);
+					_log.debug(interruptedException);
 				}
 			}
 
@@ -502,7 +502,7 @@ public class HttpImpl implements Http {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return url;
@@ -659,7 +659,7 @@ public class HttpImpl implements Http {
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(uriSyntaxException, uriSyntaxException);
+				_log.debug(uriSyntaxException);
 			}
 
 			return null;
@@ -960,7 +960,7 @@ public class HttpImpl implements Http {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return url;
@@ -1919,7 +1919,7 @@ public class HttpImpl implements Http {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

@@ -81,7 +81,7 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -161,7 +161,7 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;

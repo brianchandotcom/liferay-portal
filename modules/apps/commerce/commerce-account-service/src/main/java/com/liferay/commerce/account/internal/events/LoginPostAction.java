@@ -57,7 +57,7 @@ public class LoginPostAction extends Action {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

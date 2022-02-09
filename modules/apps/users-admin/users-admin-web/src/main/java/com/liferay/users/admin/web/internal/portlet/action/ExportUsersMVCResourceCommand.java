@@ -97,7 +97,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		catch (Exception exception) {
 			SessionErrors.add(resourceRequest, exception.getClass());
 
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

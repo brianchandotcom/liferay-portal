@@ -223,7 +223,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalArgumentException, illegalArgumentException);
+				_log.debug(illegalArgumentException);
 			}
 
 			return null;

@@ -103,7 +103,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 		catch (PortalException | PortletException exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 	}
@@ -269,7 +269,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			liveGroupURL = _getLiveGroupURL(scopeGroup, httpServletRequest);
 		}
 		catch (SystemException systemException) {
-			_log.error(systemException, systemException);
+			_log.error(systemException);
 		}
 
 		if (Validator.isNotNull(liveGroupURL) ||

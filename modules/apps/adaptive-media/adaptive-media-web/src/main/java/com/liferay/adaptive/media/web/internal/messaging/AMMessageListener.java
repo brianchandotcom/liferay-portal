@@ -81,13 +81,12 @@ public class AMMessageListener extends BaseMessageListener {
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						noSuchFileEntryException, noSuchFileEntryException);
+					_log.info(noSuchFileEntryException);
 				}
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}

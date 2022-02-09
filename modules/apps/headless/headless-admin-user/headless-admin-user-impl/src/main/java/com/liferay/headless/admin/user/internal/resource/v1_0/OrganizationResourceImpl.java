@@ -359,7 +359,7 @@ public class OrganizationResourceImpl
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -706,7 +706,7 @@ public class OrganizationResourceImpl
 		}
 		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(parseException, parseException);
+				_log.warn(parseException);
 			}
 
 			return -1;

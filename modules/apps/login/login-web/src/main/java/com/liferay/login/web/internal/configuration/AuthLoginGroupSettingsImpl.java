@@ -47,7 +47,7 @@ public class AuthLoginGroupSettingsImpl implements AuthLoginGroupSettings {
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(configurationException, configurationException);
+				_log.warn(configurationException);
 			}
 
 			return ConfigurableUtil.createConfigurable(

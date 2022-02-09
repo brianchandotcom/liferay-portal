@@ -104,7 +104,7 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 				_extraSettingsUnicodeProperties.load(super.getExtraSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

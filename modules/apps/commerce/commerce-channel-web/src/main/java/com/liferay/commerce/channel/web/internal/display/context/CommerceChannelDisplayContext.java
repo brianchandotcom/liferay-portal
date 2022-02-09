@@ -381,9 +381,7 @@ public class CommerceChannelDisplayContext
 					noSuchWorkflowDefinitionLinkException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchWorkflowDefinitionLinkException,
-					noSuchWorkflowDefinitionLinkException);
+				_log.debug(noSuchWorkflowDefinitionLinkException);
 			}
 		}
 

@@ -825,7 +825,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -870,7 +870,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletIdsByStrutsPath, _getConfiguration(portletApp));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return Collections.emptyList();
 		}
@@ -931,7 +931,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return ListUtil.fromMapValues(portletsMap);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			// Clean up portlets added prior to error
 

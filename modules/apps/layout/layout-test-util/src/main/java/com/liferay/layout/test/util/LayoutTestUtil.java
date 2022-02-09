@@ -199,7 +199,7 @@ public class LayoutTestUtil {
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException, noSuchLayoutException);
+				_log.debug(noSuchLayoutException);
 			}
 		}
 

@@ -67,7 +67,7 @@ public class IGPortletDisplayTemplateHandler
 			contextObjects.put("dlUtil", DLUtil.getDL());
 		}
 		catch (SecurityException securityException) {
-			_log.error(securityException, securityException);
+			_log.error(securityException);
 		}
 
 		return contextObjects;

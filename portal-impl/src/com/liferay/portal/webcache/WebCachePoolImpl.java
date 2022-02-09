@@ -68,7 +68,7 @@ public class WebCachePoolImpl implements WebCachePool {
 					_log.warn(throwable, throwable);
 				}
 				else {
-					_log.warn(webCacheException, webCacheException);
+					_log.warn(webCacheException);
 				}
 			}
 		}

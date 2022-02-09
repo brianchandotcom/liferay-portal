@@ -147,7 +147,7 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 					layoutTemplate.isStandard());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

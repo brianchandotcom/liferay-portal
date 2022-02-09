@@ -240,7 +240,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -388,7 +388,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 				}
 				catch (DocumentException documentException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(documentException, documentException);
+						_log.warn(documentException);
 					}
 				}
 			}

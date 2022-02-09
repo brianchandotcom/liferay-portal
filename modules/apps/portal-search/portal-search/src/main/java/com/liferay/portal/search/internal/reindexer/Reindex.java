@@ -131,7 +131,7 @@ public class Reindex {
 			indexer.reindex(className, classPK);
 		}
 		catch (SearchException searchException) {
-			_log.error(searchException, searchException);
+			_log.error(searchException);
 		}
 	}
 

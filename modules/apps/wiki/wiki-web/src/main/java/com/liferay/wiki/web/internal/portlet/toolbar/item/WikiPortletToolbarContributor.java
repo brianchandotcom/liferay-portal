@@ -180,13 +180,13 @@ public class WikiPortletToolbarContributor
 			}
 			catch (NoSuchNodeException noSuchNodeException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchNodeException, noSuchNodeException);
+					_log.debug(noSuchNodeException);
 				}
 
 				node = null;
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

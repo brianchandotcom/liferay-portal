@@ -97,7 +97,7 @@ public class PunchOutLoginPostAction extends Action {
 			httpServletRequest.removeAttribute("punchOutUserId");
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

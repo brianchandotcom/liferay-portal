@@ -333,7 +333,7 @@ public class AnalyticsConfigurationTrackerImpl
 						entityModelListener.getModelClassName(), membershipIds);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 
@@ -384,7 +384,7 @@ public class AnalyticsConfigurationTrackerImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -396,7 +396,7 @@ public class AnalyticsConfigurationTrackerImpl
 			_addSAPEntry(companyId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -445,7 +445,7 @@ public class AnalyticsConfigurationTrackerImpl
 						(Long)dictionary.get("companyId"));
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}

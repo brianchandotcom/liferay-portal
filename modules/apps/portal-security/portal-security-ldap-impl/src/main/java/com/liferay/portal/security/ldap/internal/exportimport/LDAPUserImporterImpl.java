@@ -289,7 +289,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			throw new SystemException(
@@ -994,7 +994,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchRoleException, noSuchRoleException);
+				_log.debug(noSuchRoleException);
 			}
 
 			User defaultUser = _userLocalService.getDefaultUser(companyId);
@@ -1576,7 +1576,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			throw new SystemException(
@@ -1623,7 +1623,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchUserGroupException, noSuchUserGroupException);
+				_log.debug(noSuchUserGroupException);
 			}
 
 			StopWatch stopWatch = new StopWatch();
@@ -1659,7 +1659,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 			finally {
@@ -1717,7 +1717,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 	}

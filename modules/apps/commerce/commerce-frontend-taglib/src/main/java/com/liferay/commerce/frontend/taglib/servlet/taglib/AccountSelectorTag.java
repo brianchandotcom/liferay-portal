@@ -180,7 +180,7 @@ public class AccountSelectorTag extends IncludeTag {
 				"liferay-commerce:account-selector:spritemap", _spritemap);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

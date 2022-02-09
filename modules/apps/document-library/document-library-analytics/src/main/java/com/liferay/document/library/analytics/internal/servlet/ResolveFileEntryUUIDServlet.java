@@ -92,7 +92,7 @@ public class ResolveFileEntryUUIDServlet extends HttpServlet {
 			httpServletResponse.setStatus(status);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 
 			httpServletResponse.setStatus(500);
 		}

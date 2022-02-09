@@ -75,7 +75,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
+				_log.debug(sqlException);
 			}
 		}
 	}
@@ -86,7 +86,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
+				_log.debug(sqlException);
 			}
 		}
 	}

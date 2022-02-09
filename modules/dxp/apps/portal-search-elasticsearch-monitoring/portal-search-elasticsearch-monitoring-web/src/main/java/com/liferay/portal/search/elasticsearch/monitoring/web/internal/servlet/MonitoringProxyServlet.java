@@ -166,11 +166,11 @@ public class MonitoringProxyServlet extends ProxyServlet {
 		}
 
 		if (error) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

@@ -218,7 +218,7 @@ public class DDMExpressionEvaluatorVisitor
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException, noSuchMethodException);
+				_log.debug(noSuchMethodException);
 			}
 
 			return null;
@@ -249,7 +249,7 @@ public class DDMExpressionEvaluatorVisitor
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

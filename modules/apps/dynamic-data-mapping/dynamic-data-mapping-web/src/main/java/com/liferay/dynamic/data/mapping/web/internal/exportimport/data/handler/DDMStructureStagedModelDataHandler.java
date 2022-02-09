@@ -155,7 +155,7 @@ public class DDMStructureStagedModelDataHandler
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return referenceAttributes;
@@ -658,7 +658,7 @@ public class DDMStructureStagedModelDataHandler
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return GetterUtil.getLong(value);
@@ -791,7 +791,7 @@ public class DDMStructureStagedModelDataHandler
 					DDMStructureConstants.VERSION_DEFAULT);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if ((ddmStructureVersion != null) &&

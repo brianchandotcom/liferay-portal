@@ -95,7 +95,7 @@ public class StagingBarTemplateContextContributor
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		contextObjects.put("show_staging", themeDisplay.isShowStagingIcon());

@@ -92,7 +92,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					_getCaptchaExceptionErrorMessageKey(captchaException)));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);

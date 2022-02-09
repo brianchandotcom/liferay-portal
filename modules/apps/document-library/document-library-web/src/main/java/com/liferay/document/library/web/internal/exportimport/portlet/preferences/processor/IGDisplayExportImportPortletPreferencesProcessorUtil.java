@@ -41,7 +41,7 @@ public class IGDisplayExportImportPortletPreferencesProcessorUtil {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;
@@ -61,7 +61,7 @@ public class IGDisplayExportImportPortletPreferencesProcessorUtil {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return 0;

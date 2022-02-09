@@ -173,7 +173,7 @@ public class ViewChangesDisplayContext {
 					_language.get(
 						_httpServletRequest, "context-view-is-unavailable"));
 
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

@@ -210,7 +210,7 @@ public class AnalyticsUsersManager {
 			return hits.getLength();
 		}
 		catch (SearchException searchException) {
-			_log.error(searchException, searchException);
+			_log.error(searchException);
 
 			return 0;
 		}

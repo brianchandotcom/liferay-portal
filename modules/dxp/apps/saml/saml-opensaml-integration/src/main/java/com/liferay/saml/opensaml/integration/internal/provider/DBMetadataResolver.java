@@ -159,9 +159,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 						noSuchIdpSpConnectionException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchIdpSpConnectionException,
-						noSuchIdpSpConnectionException);
+					_log.debug(noSuchIdpSpConnectionException);
 				}
 
 				return null;
@@ -183,9 +181,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 						noSuchSpIdpConnectionException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchSpIdpConnectionException,
-						noSuchSpIdpConnectionException);
+					_log.debug(noSuchSpIdpConnectionException);
 				}
 
 				return null;

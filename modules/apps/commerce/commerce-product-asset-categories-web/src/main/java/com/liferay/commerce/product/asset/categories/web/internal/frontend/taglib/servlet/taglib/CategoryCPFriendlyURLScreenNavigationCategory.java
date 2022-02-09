@@ -114,7 +114,7 @@ public class CategoryCPFriendlyURLScreenNavigationCategory
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		httpServletRequest.setAttribute("assetCategory", assetCategory);

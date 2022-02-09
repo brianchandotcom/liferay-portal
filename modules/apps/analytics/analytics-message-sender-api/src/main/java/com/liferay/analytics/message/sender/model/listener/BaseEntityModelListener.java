@@ -361,7 +361,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return true;
@@ -418,7 +418,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 
 				try {
@@ -430,7 +430,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 
 				long[] membershipIds = user.getRoleIds();
@@ -670,7 +670,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			return null;

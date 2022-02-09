@@ -71,7 +71,7 @@ public class InfoItemHelper {
 			);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return Optional.empty();
 		}

@@ -82,7 +82,7 @@ public class CommerceAddressContentPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAddressDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

@@ -53,7 +53,7 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(stagnantRowException, stagnantRowException);
+				_log.debug(stagnantRowException);
 			}
 
 			return Long.valueOf(0);

@@ -208,17 +208,17 @@ public class SanitizerLogWrapperTest {
 			"java.lang.Exception: java.lang.RuntimeException: " +
 				"java.lang.NullPointerException: ";
 
-		_log.debug(exception, exception);
+		_log.debug(exception);
 		_log.debug(null, exception);
-		_log.error(exception, exception);
+		_log.error(exception);
 		_log.error(null, exception);
-		_log.fatal(exception, exception);
+		_log.fatal(exception);
 		_log.fatal(null, exception);
-		_log.info(exception, exception);
+		_log.info(exception);
 		_log.info(null, exception);
-		_log.trace(exception, exception);
+		_log.trace(exception);
 		_log.trace(null, exception);
-		_log.warn(exception, exception);
+		_log.warn(exception);
 		_log.warn(null, exception);
 
 		List<LogEntry> logEntries = _logCapture.getLogEntries();

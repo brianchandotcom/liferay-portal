@@ -166,7 +166,7 @@ public class ControllerInterceptor implements Serializable {
 						_actionResponse.sendRedirect(redirectURL.toString());
 					}
 					catch (IOException ioException) {
-						_log.error(ioException, ioException);
+						_log.error(ioException);
 					}
 				}
 			}
@@ -212,7 +212,7 @@ public class ControllerInterceptor implements Serializable {
 						new UriInfoImpl()));
 			}
 			catch (URISyntaxException uriSyntaxException) {
-				_log.error(uriSyntaxException, uriSyntaxException);
+				_log.error(uriSyntaxException);
 			}
 		}
 

@@ -98,7 +98,7 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 					_translate(portletRequest, "create-excel-document")));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

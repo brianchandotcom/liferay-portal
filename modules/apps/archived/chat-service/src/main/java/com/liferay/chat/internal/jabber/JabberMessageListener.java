@@ -65,7 +65,7 @@ public class JabberMessageListener implements MessageListener {
 			EntryLocalServiceUtil.addEntry(fromUserId, _userId, body);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

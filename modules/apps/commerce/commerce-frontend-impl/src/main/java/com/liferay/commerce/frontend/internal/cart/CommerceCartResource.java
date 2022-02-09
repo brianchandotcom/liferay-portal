@@ -100,7 +100,7 @@ public class CommerceCartResource {
 			coupon = new Coupon(couponCode);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			coupon = new Coupon(
 				StringUtil.split(exception.getLocalizedMessage()));
@@ -138,7 +138,7 @@ public class CommerceCartResource {
 			coupon = new Coupon(StringPool.BLANK);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			coupon = new Coupon(
 				StringUtil.split(exception.getLocalizedMessage()));
@@ -276,7 +276,7 @@ public class CommerceCartResource {
 			).build();
 		}
 		catch (JsonProcessingException jsonProcessingException) {
-			_log.error(jsonProcessingException, jsonProcessingException);
+			_log.error(jsonProcessingException);
 		}
 
 		return Response.status(

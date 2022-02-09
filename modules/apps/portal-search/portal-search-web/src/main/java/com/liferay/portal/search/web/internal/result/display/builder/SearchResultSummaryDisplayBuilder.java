@@ -109,7 +109,7 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return _buildTemporarilyUnavailable();
@@ -730,7 +730,7 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -947,7 +947,7 @@ public class SearchResultSummaryDisplayBuilder {
 			return user.getPortraitURL(_themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}

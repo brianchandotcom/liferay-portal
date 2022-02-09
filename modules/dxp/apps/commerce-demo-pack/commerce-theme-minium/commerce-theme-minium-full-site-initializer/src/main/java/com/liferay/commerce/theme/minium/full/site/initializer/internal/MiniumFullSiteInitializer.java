@@ -99,7 +99,7 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 			throw initializationException;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new InitializationException(exception);
 		}

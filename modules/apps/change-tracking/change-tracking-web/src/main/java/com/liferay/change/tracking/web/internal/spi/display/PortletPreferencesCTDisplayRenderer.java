@@ -66,7 +66,7 @@ public class PortletPreferencesCTDisplayRenderer
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			arguments.add(portlet.getPortletName());
@@ -134,7 +134,7 @@ public class PortletPreferencesCTDisplayRenderer
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(exception, exception);
+						_log.warn(exception);
 					}
 
 					return portlet.getPortletName();

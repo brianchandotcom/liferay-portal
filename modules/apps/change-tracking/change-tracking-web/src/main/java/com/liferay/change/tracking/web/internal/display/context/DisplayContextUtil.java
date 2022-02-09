@@ -81,7 +81,7 @@ public class DisplayContextUtil {
 					portraitURL = user.getPortraitURL(themeDisplay);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 			}
 

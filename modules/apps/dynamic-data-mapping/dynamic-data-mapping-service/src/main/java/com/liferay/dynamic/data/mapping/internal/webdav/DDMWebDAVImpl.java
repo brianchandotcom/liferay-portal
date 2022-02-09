@@ -143,7 +143,7 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return HttpServletResponse.SC_FORBIDDEN;
@@ -280,7 +280,7 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return HttpServletResponse.SC_FORBIDDEN;

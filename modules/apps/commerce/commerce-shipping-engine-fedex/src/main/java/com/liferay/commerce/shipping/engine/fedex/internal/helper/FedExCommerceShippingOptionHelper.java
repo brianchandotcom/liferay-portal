@@ -183,9 +183,7 @@ public class FedExCommerceShippingOptionHelper {
 			catch (CommerceShippingEngineException
 						commerceShippingEngineException) {
 
-				_log.error(
-					commerceShippingEngineException,
-					commerceShippingEngineException);
+				_log.error(commerceShippingEngineException);
 			}
 		}
 

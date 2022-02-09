@@ -84,7 +84,7 @@ public class PunchOutTokenLogoutAction extends Action {
 			httpServletResponse.sendRedirect(redirectURL);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

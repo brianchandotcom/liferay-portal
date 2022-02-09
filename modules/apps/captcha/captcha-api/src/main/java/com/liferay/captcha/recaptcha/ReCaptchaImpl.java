@@ -134,7 +134,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 				"secret", _captchaConfiguration.reCaptchaPrivateKey());
 		}
 		catch (SystemException systemException) {
-			_log.error(systemException, systemException);
+			_log.error(systemException);
 		}
 
 		options.addPart("remoteip", httpServletRequest.getRemoteAddr());
@@ -147,7 +147,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 			content = HttpUtil.URLtoString(options);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 
 			throw new CaptchaConfigurationException();
 		}

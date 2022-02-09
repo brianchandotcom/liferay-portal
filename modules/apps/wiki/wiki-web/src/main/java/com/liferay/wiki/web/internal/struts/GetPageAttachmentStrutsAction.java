@@ -84,7 +84,7 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 				exception instanceof NoSuchPageException) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 			else {

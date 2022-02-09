@@ -324,7 +324,7 @@ public class CustomServletContextHelper
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);

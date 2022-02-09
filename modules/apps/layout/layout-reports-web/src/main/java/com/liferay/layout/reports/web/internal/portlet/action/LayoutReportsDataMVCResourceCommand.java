@@ -133,7 +133,7 @@ public class LayoutReportsDataMVCResourceCommand
 				layout, themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return Collections.emptyMap();
@@ -151,7 +151,7 @@ public class LayoutReportsDataMVCResourceCommand
 			return layoutSEOLink.getHref();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return canonicalURL;
 		}
@@ -165,7 +165,7 @@ public class LayoutReportsDataMVCResourceCommand
 				currentCompleteURL, themeDisplay, layout, false, false);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;
@@ -180,7 +180,7 @@ public class LayoutReportsDataMVCResourceCommand
 			return _portal.getLayoutURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return _portal.getCurrentCompleteURL(
 				_portal.getHttpServletRequest(portletRequest));
@@ -219,7 +219,7 @@ public class LayoutReportsDataMVCResourceCommand
 			return _portal.getSiteDefaultLocale(layout.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return LocaleUtil.getSiteDefault();
 		}

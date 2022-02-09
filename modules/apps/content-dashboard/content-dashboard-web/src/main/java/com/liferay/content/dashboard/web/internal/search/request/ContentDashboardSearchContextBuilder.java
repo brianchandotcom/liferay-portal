@@ -113,7 +113,7 @@ public class ContentDashboardSearchContextBuilder {
 									contentDashboardItemSubtypePayload));
 						}
 						catch (JSONException jsonException) {
-							_log.error(jsonException, jsonException);
+							_log.error(jsonException);
 
 							return Optional.<JSONObject>empty();
 						}
@@ -308,7 +308,7 @@ public class ContentDashboardSearchContextBuilder {
 			return Optional.of(booleanFilter);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return Optional.empty();

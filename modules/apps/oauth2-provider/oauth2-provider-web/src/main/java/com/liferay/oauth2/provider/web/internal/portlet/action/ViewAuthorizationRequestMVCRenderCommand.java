@@ -156,9 +156,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 					noSuchOAuth2ApplicationException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchOAuth2ApplicationException,
-					noSuchOAuth2ApplicationException);
+				_log.debug(noSuchOAuth2ApplicationException);
 			}
 
 			SessionErrors.add(renderRequest, "clientIdInvalid");
@@ -167,7 +165,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			SessionErrors.add(renderRequest, principalException.getClass());

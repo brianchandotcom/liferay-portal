@@ -52,7 +52,7 @@ public class MulticastDatagramHandler implements DatagramHandler {
 				bytes = getUnzippedBytes(bytes);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

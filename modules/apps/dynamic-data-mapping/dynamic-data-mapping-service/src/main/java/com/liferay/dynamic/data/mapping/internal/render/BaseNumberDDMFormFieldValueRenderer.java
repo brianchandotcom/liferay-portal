@@ -54,7 +54,7 @@ public abstract class BaseNumberDDMFormFieldValueRenderer
 					}
 					catch (ParseException parseException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(parseException, parseException);
+							_log.warn(parseException);
 						}
 					}
 				}

@@ -1049,7 +1049,7 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof ExportImportRuntimeException) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			ExportImportRuntimeException exportImportRuntimeException =
 				(ExportImportRuntimeException)exception;
@@ -1755,7 +1755,7 @@ public class StagingImpl implements Staging {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -3389,7 +3389,7 @@ public class StagingImpl implements Staging {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException, noSuchGroupException);
+				_log.debug(noSuchGroupException);
 			}
 
 			RemoteExportException remoteExportException =
@@ -3404,7 +3404,7 @@ public class StagingImpl implements Staging {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
+				_log.debug(principalException);
 			}
 
 			RemoteExportException remoteExportException =
@@ -3419,7 +3419,7 @@ public class StagingImpl implements Staging {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(remoteAuthException, remoteAuthException);
+				_log.debug(remoteAuthException);
 			}
 
 			remoteAuthException.setURL(remoteURL);
@@ -3431,7 +3431,7 @@ public class StagingImpl implements Staging {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(systemException, systemException);
+				_log.debug(systemException);
 			}
 
 			RemoteExportException remoteExportException =
@@ -3526,9 +3526,7 @@ public class StagingImpl implements Staging {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutBranchException,
-						noSuchLayoutBranchException);
+					_log.debug(noSuchLayoutBranchException);
 				}
 			}
 		}
@@ -3549,9 +3547,7 @@ public class StagingImpl implements Staging {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutRevisionException,
-						noSuchLayoutRevisionException);
+					_log.debug(noSuchLayoutRevisionException);
 				}
 			}
 		}
@@ -3877,8 +3873,7 @@ public class StagingImpl implements Staging {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchLayoutBranchException, noSuchLayoutBranchException);
+				_log.debug(noSuchLayoutBranchException);
 			}
 		}
 
@@ -3998,7 +3993,7 @@ public class StagingImpl implements Staging {
 			return stagingConfiguration.stagingUseVirtualHostForRemoteSite();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

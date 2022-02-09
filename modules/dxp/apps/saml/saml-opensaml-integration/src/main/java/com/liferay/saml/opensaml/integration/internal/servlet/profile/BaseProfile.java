@@ -458,7 +458,7 @@ public abstract class BaseProfile {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 	}
@@ -498,7 +498,7 @@ public abstract class BaseProfile {
 			}
 			catch (MarshallingException marshallingException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(marshallingException, marshallingException);
+					_log.debug(marshallingException);
 				}
 			}
 		}

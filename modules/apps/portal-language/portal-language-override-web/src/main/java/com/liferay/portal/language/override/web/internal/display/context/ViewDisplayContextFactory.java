@@ -97,7 +97,7 @@ public class ViewDisplayContextFactory {
 					PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		viewDisplayContext.setSearchContainer(

@@ -51,7 +51,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(e);
 			}
 		}
 

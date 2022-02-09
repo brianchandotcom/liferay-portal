@@ -128,9 +128,7 @@ public class SpringJSONWebServiceScannerStrategy
 							reflectiveOperationException) {
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							reflectiveOperationException,
-							reflectiveOperationException);
+						_log.debug(reflectiveOperationException);
 					}
 				}
 			}

@@ -160,7 +160,7 @@ public class AMImageEntryLocalServiceImpl
 					fileVersion, amImageEntry.getConfigurationUuid());
 			}
 			catch (AMRuntimeException.IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 	}

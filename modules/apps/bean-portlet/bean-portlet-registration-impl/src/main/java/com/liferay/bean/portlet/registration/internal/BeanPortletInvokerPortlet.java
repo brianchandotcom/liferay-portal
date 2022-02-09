@@ -89,7 +89,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			_invokeBeanMethods(_beanMethods.get(BeanPortletMethodType.DESTROY));
 		}
 		catch (PortletException portletException) {
-			_log.error(portletException, portletException);
+			_log.error(portletException);
 		}
 	}
 

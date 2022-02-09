@@ -804,7 +804,7 @@ public class CustomSQLImpl implements CustomSQL {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_bundleContext.addBundleListener(_synchronousBundleListener);
@@ -932,7 +932,7 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return sql;
@@ -1011,7 +1011,7 @@ public class CustomSQLImpl implements CustomSQL {
 				catch (Exception exception2) {
 					exception1 = exception2;
 
-					_log.error(exception2, exception2);
+					_log.error(exception2);
 				}
 
 				objectValuePair = new ObjectValuePair<>(sqlPool, exception1);
@@ -1022,7 +1022,7 @@ public class CustomSQLImpl implements CustomSQL {
 			Exception exception = objectValuePair.getValue();
 
 			if (exception != null) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			Map<String, String> sqlPool = objectValuePair.getKey();

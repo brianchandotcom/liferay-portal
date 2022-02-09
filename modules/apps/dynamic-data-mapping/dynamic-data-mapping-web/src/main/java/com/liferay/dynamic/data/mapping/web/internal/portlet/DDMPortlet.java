@@ -194,7 +194,7 @@ public class DDMPortlet extends MVCPortlet {
 			// or template key for a new model that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 		catch (Exception exception) {

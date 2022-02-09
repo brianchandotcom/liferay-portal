@@ -70,7 +70,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 		}
 		catch (SearchSizeLimitException searchSizeLimitException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchSizeLimitException, searchSizeLimitException);
+				_log.debug(searchSizeLimitException);
 			}
 
 			responses.add(
@@ -79,7 +79,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 		}
 		catch (SearchTimeLimitException searchTimeLimitException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchTimeLimitException, searchTimeLimitException);
+				_log.debug(searchTimeLimitException);
 			}
 
 			responses.add(
@@ -87,7 +87,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 					searchRequest, ResultCodeEnum.TIME_LIMIT_EXCEEDED));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return responses;

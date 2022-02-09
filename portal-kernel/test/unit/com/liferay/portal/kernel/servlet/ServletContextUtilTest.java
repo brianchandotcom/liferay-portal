@@ -98,7 +98,7 @@ public class ServletContextUtilTest {
 			return new URI("file", path, null);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

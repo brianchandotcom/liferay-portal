@@ -241,7 +241,7 @@ public abstract class BaseSocialActivityInterpreter
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;
@@ -322,7 +322,7 @@ public abstract class BaseSocialActivityInterpreter
 			return sb.toString();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}
@@ -429,7 +429,7 @@ public abstract class BaseSocialActivityInterpreter
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;

@@ -227,7 +227,7 @@ public class DDMTemplateLocalServiceImpl
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 
@@ -1457,7 +1457,7 @@ public class DDMTemplateLocalServiceImpl
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 
@@ -1677,7 +1677,7 @@ public class DDMTemplateLocalServiceImpl
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 
@@ -1767,7 +1767,7 @@ public class DDMTemplateLocalServiceImpl
 					FileUtil.write(smallImageFile, smallImage.getTextObj());
 				}
 				catch (IOException ioException) {
-					_log.error(ioException, ioException);
+					_log.error(ioException);
 				}
 			}
 		}
@@ -1910,7 +1910,7 @@ public class DDMTemplateLocalServiceImpl
 				getAncestorSiteAndDepotGroupIds(groupId, true);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return new long[0];
 		}

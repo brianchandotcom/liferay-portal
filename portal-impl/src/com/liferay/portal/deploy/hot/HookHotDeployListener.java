@@ -583,7 +583,7 @@ public class HookHotDeployListener
 		}
 		catch (BeanLocatorException beanLocatorException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(beanLocatorException, beanLocatorException);
+				_log.debug(beanLocatorException);
 			}
 
 			return (BasePersistence<?>)PortletBeanLocatorUtil.locate(
@@ -1700,7 +1700,7 @@ public class HookHotDeployListener
 			}
 			catch (BeanLocatorException beanLocatorException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(beanLocatorException, beanLocatorException);
+					_log.debug(beanLocatorException);
 				}
 
 				SystemBundleUtil.callService(

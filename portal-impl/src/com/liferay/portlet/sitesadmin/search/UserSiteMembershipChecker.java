@@ -56,7 +56,7 @@ public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
 				_group.getGroupId(), user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -75,7 +75,7 @@ public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

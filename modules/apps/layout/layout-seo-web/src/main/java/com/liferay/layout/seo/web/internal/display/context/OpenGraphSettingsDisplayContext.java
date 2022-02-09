@@ -119,7 +119,7 @@ public class OpenGraphSettingsDisplayContext {
 			return fileEntry.getTitle();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return StringPool.BLANK;
 		}
@@ -143,7 +143,7 @@ public class OpenGraphSettingsDisplayContext {
 			return _dlurlHelper.getImagePreviewURL(fileEntry, _themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return StringPool.BLANK;
 		}

@@ -132,7 +132,7 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		HttpServletResponse httpServletResponse =

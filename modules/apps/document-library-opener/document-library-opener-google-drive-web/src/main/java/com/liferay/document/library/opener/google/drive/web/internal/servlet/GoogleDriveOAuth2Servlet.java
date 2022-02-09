@@ -112,7 +112,7 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			}
 			catch (TokenResponseException tokenResponseException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(tokenResponseException, tokenResponseException);
+					_log.debug(tokenResponseException);
 				}
 
 				OAuth2StateUtil.cleanUp(httpServletRequest);

@@ -274,7 +274,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 						_toDate(completionLocalDateTime));
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		);
@@ -387,7 +387,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		);

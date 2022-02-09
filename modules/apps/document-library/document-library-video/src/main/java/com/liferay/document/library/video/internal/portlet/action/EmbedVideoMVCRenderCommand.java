@@ -93,7 +93,7 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return "/embed/error.jsp";

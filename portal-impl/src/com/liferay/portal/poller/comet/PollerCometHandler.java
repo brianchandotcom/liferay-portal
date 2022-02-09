@@ -53,8 +53,7 @@ public class PollerCometHandler extends BaseCometHandler {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						unknownChannelException, unknownChannelException);
+					_log.debug(unknownChannelException);
 				}
 			}
 		}

@@ -233,7 +233,7 @@ public class SourceFormatterUtil {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return null;
@@ -279,7 +279,7 @@ public class SourceFormatterUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -604,7 +604,7 @@ public class SourceFormatterUtil {
 								}
 								catch (Exception exception) {
 									if (_log.isDebugEnabled()) {
-										_log.debug(exception, exception);
+										_log.debug(exception);
 									}
 								}
 							}

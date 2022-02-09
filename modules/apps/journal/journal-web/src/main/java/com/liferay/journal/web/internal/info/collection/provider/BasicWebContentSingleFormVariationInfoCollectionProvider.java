@@ -117,7 +117,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		}
 		catch (SearchException searchException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(searchException, searchException);
+				_log.warn(searchException);
 			}
 		}
 

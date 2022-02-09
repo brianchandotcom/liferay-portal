@@ -65,7 +65,7 @@ public class StagingGroupServiceTunnelUtil {
 		}
 		catch (Exception exception) {
 			if (!(exception instanceof ConnectException)) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			throw new SystemException(exception);

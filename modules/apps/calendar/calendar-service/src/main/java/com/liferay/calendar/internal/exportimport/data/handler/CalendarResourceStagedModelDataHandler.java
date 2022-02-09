@@ -246,9 +246,7 @@ public class CalendarResourceStagedModelDataHandler
 						duplicateCalendarResourceException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateCalendarResourceException,
-						duplicateCalendarResourceException);
+					_log.debug(duplicateCalendarResourceException);
 				}
 
 				// The calendar resource for the site's default calendar is

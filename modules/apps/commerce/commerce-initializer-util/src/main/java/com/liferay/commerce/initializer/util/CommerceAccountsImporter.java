@@ -159,7 +159,7 @@ public class CommerceAccountsImporter {
 				regionId = region.getRegionId();
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 
@@ -262,8 +262,7 @@ public class CommerceAccountsImporter {
 					}
 				}
 				catch (NoSuchPriceListException noSuchPriceListException) {
-					_log.error(
-						noSuchPriceListException, noSuchPriceListException);
+					_log.error(noSuchPriceListException);
 				}
 			}
 		}
@@ -320,9 +319,7 @@ public class CommerceAccountsImporter {
 				catch (NoSuchAccountGroupException
 							noSuchAccountGroupException) {
 
-					_log.error(
-						noSuchAccountGroupException,
-						noSuchAccountGroupException);
+					_log.error(noSuchAccountGroupException);
 				}
 			}
 		}

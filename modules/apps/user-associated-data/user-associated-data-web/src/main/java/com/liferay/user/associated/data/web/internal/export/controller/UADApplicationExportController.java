@@ -158,9 +158,7 @@ public class UADApplicationExportController {
 			}
 			catch (UnsupportedEncodingException unsupportedEncodingException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						unsupportedEncodingException,
-						unsupportedEncodingException);
+					_log.debug(unsupportedEncodingException);
 				}
 
 				userName = String.valueOf(userId);

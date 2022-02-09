@@ -89,7 +89,7 @@ public class GridDDMFormFieldValueValidator
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+				_log.debug(jsonException);
 			}
 
 			throw new IllegalStateException(

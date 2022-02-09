@@ -74,7 +74,7 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			Throwable rootThrowable = _getRootThrowable(workflowException);
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(workflowException, workflowException);
+				_log.warn(workflowException);
 			}
 
 			hideDefaultErrorMessage(actionRequest);
@@ -85,12 +85,12 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			return false;
 		}
 		catch (PortletException portletException) {
-			_log.error(portletException, portletException);
+			_log.error(portletException);
 
 			throw portletException;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new PortletException(exception);
 		}

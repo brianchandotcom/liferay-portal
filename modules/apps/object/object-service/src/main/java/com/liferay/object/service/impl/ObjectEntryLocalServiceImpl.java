@@ -676,7 +676,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 		}
 
@@ -1024,7 +1024,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+				_log.debug(jsonException);
 			}
 		}
 
@@ -1701,8 +1701,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 			catch (NoSuchObjectFieldException noSuchObjectFieldException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchObjectFieldException, noSuchObjectFieldException);
+					_log.debug(noSuchObjectFieldException);
 				}
 
 				continue;

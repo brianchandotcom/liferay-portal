@@ -48,7 +48,7 @@ public class UserGroupGroupRoleUserGroupChecker extends RowChecker {
 				_role.getRoleId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

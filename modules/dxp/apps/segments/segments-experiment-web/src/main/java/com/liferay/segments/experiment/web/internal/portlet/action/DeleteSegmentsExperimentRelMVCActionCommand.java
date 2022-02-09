@@ -67,7 +67,7 @@ public class DeleteSegmentsExperimentRelMVCActionCommand
 				ParamUtil.getLong(actionRequest, "segmentsExperimentRelId"));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);

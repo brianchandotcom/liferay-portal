@@ -68,7 +68,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

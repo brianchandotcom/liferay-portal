@@ -72,7 +72,7 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+				_log.debug(noSuchFileEntryException);
 			}
 		}
 		catch (Exception exception) {

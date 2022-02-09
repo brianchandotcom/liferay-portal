@@ -167,7 +167,7 @@ public class SearchPermissionDocumentContributorImpl
 		}
 		catch (NoSuchResourceException noSuchResourceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchResourceException, noSuchResourceException);
+				_log.debug(noSuchResourceException);
 			}
 		}
 		catch (Exception exception) {

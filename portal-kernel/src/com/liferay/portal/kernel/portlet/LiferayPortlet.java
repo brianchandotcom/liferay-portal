@@ -127,7 +127,7 @@ public class LiferayPortlet extends GenericPortlet {
 			}
 			else {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portletException, portletException);
+					_log.debug(portletException);
 				}
 
 				throw portletException;
@@ -186,7 +186,7 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException, noSuchMethodException);
+				_log.debug(noSuchMethodException);
 			}
 
 			try {
@@ -235,7 +235,7 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException, noSuchMethodException);
+				_log.debug(noSuchMethodException);
 			}
 
 			try {
@@ -464,7 +464,7 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return super.getTitle(renderRequest);

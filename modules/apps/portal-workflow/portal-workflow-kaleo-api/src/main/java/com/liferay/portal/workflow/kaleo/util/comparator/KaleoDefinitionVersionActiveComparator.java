@@ -65,7 +65,7 @@ public class KaleoDefinitionVersionActiveComparator
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return false;

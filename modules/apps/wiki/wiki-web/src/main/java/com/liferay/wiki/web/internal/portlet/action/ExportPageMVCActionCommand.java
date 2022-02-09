@@ -133,7 +133,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_portal.sendError(exception, actionRequest, actionResponse);
 		}

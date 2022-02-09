@@ -99,7 +99,7 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 			}
 			catch (RuntimeException runtimeException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(runtimeException, runtimeException);
+					_log.warn(runtimeException);
 				}
 			}
 		}

@@ -210,7 +210,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			String errorMessage = themeDisplay.translate(
@@ -342,7 +342,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 					}
 					catch (ServletException servletException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(servletException, servletException);
+							_log.debug(servletException);
 						}
 					}
 				}

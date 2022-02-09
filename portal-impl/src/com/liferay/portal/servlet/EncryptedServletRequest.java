@@ -57,7 +57,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 					}
 					catch (EncryptorException encryptorException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(encryptorException, encryptorException);
+							_log.debug(encryptorException);
 						}
 
 						values[i] = StringPool.BLANK;

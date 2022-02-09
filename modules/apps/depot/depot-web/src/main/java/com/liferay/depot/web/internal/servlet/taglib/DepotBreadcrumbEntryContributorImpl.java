@@ -119,7 +119,7 @@ public class DepotBreadcrumbEntryContributorImpl
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		breadcrumbEntries.addAll(originalBreadcrumbEntries);

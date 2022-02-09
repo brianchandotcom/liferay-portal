@@ -135,7 +135,7 @@ public class NtlmFilter extends BaseFilter {
 			return ntlmConfiguration.enabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

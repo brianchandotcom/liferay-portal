@@ -135,17 +135,17 @@ public class WebDAVServlet extends HttpServlet {
 				}
 
 				if (logError) {
-					_log.error(webDAVException, webDAVException);
+					_log.error(webDAVException);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(webDAVException, webDAVException);
+					_log.warn(webDAVException);
 				}
 
 				status = HttpServletResponse.SC_PRECONDITION_FAILED;
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			httpServletResponse.setStatus(status);

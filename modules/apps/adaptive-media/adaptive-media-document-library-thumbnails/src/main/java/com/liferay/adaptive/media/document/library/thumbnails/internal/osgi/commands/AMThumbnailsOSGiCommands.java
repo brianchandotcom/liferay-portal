@@ -183,7 +183,7 @@ public class AMThumbnailsOSGiCommands {
 			return fileVersion;
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}
@@ -321,7 +321,7 @@ public class AMThumbnailsOSGiCommands {
 				new UnsyncByteArrayInputStream(bytes), bytes.length);
 		}
 		catch (IOException | PortalException exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

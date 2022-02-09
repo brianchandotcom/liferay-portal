@@ -1214,7 +1214,7 @@ public class DLImpl implements DL {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -1232,7 +1232,7 @@ public class DLImpl implements DL {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -1293,7 +1293,7 @@ public class DLImpl implements DL {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				fileIcons = new String[] {StringPool.BLANK};

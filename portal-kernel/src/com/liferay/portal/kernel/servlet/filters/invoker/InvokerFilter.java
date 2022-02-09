@@ -128,7 +128,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 				doPortalInit();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw new ServletException(exception);
 			}

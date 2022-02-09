@@ -57,7 +57,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -105,7 +105,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return true;
@@ -134,7 +134,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -190,7 +190,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return true;

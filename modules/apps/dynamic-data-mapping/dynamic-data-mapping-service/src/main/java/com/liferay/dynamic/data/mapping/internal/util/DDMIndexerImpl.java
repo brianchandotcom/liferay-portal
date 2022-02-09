@@ -165,7 +165,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}
@@ -442,7 +442,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		}

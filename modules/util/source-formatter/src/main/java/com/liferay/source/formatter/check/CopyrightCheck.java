@@ -120,7 +120,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			_commercialCopyright = StringPool.BLANK;
@@ -155,7 +155,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			_copyright = StringPool.BLANK;

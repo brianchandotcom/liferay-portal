@@ -41,7 +41,7 @@ public class DocumentLibraryExtraSettingsConvertProcess
 			return DLFileEntryLocalServiceUtil.hasExtraSettings();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

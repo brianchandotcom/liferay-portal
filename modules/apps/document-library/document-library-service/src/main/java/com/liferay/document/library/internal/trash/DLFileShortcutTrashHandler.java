@@ -137,7 +137,7 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 		}
 		catch (PortalException | UnsupportedCapabilityException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -176,7 +176,7 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFolderException, noSuchFolderException);
+				_log.debug(noSuchFolderException);
 			}
 
 			return true;
@@ -192,7 +192,7 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFolderException, noSuchFolderException);
+				_log.debug(noSuchFolderException);
 			}
 
 			return false;
@@ -208,7 +208,7 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+				_log.debug(noSuchFileEntryException);
 			}
 
 			return false;

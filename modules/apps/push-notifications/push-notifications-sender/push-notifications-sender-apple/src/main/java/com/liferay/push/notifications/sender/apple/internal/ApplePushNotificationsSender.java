@@ -131,7 +131,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
+				_log.warn(ioException);
 			}
 		}
 
@@ -287,7 +287,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		}
 		catch (FileNotFoundException fileNotFoundException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(fileNotFoundException, fileNotFoundException);
+				_log.debug(fileNotFoundException);
 			}
 
 			ClassLoader classLoader =

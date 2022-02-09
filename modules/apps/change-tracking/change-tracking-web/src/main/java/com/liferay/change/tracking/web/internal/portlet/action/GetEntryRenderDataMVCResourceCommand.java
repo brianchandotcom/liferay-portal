@@ -104,7 +104,7 @@ public class GetEntryRenderDataMVCResourceCommand
 					resourceRequest, resourceResponse));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -658,7 +658,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			return jsonObject;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return null;
 		}
@@ -706,7 +706,7 @@ public class GetEntryRenderDataMVCResourceCommand
 					ctEntryId, locale, model, type));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return null;
 		}
@@ -785,7 +785,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 

@@ -103,7 +103,7 @@ public class PingbackMethodImpl implements Method {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return XmlRpcUtil.createFault(
@@ -131,7 +131,7 @@ public class PingbackMethodImpl implements Method {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -413,7 +413,7 @@ public class PingbackMethodImpl implements Method {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -434,7 +434,7 @@ public class PingbackMethodImpl implements Method {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return XmlRpcUtil.createFault(

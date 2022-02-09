@@ -134,7 +134,7 @@ public class PortalWebResourcesUtil {
 		}
 		catch (MalformedURLException malformedURLException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(malformedURLException, malformedURLException);
+				_log.debug(malformedURLException);
 			}
 		}
 

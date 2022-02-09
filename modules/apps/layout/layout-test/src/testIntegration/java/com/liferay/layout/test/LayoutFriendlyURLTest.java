@@ -371,8 +371,7 @@ public class LayoutFriendlyURLTest {
 		}
 		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					layoutFriendlyURLsException, layoutFriendlyURLsException);
+				_log.debug(layoutFriendlyURLsException);
 			}
 		}
 	}
@@ -428,8 +427,7 @@ public class LayoutFriendlyURLTest {
 		}
 		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					layoutFriendlyURLsException, layoutFriendlyURLsException);
+				_log.debug(layoutFriendlyURLsException);
 			}
 		}
 	}

@@ -207,7 +207,7 @@ public class AssetEntriesCheckerHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return Collections.emptyList();
@@ -225,7 +225,7 @@ public class AssetEntriesCheckerHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -271,7 +271,7 @@ public class AssetEntriesCheckerHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return Collections.emptyList();

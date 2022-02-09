@@ -142,7 +142,7 @@ public class LicenseUtil {
 			return (Map<String, String>)clusterNodeResponse.getResult();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw exception;
 		}
@@ -226,7 +226,7 @@ public class LicenseUtil {
 						productEntryName, maxServers);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					InetAddress inetAddress = clusterNode.getBindInetAddress();
 
@@ -288,7 +288,7 @@ public class LicenseUtil {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			attributes.put(
 				"ERROR_MESSAGE",

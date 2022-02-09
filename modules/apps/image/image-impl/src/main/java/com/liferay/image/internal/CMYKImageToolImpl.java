@@ -108,7 +108,7 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			_fileImpl.delete(inputFile);

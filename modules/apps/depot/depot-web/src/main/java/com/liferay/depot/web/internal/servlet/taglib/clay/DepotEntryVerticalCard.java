@@ -140,7 +140,7 @@ public class DepotEntryVerticalCard
 			return _group.getDescriptiveName(_themeDisplay.getLocale());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return _group.getName(_themeDisplay.getLocale());

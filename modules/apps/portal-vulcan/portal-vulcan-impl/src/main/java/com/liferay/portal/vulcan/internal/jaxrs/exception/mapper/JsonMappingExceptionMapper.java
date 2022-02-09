@@ -39,7 +39,7 @@ public class JsonMappingExceptionMapper
 	@Override
 	protected Problem getProblem(JsonMappingException jsonMappingException) {
 		if (_log.isDebugEnabled()) {
-			_log.debug(jsonMappingException, jsonMappingException);
+			_log.debug(jsonMappingException);
 		}
 
 		List<JsonMappingException.Reference> references =

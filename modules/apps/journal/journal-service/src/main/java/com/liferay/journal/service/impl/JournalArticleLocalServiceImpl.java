@@ -517,7 +517,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -775,7 +775,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -4008,7 +4008,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -5676,7 +5676,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -6292,7 +6292,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -7446,7 +7446,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -7627,7 +7627,7 @@ public class JournalArticleLocalServiceImpl
 			content = XMLUtil.formatXML(document);
 		}
 		catch (DocumentException documentException) {
-			_log.error(documentException, documentException);
+			_log.error(documentException);
 		}
 
 		return content;
@@ -7966,7 +7966,7 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), portletId, null);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -7989,7 +7989,7 @@ public class JournalArticleLocalServiceImpl
 				liferayPortletRequest, null, defaultArticleURL);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;
@@ -8038,7 +8038,7 @@ public class JournalArticleLocalServiceImpl
 			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;
@@ -8266,7 +8266,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -8560,7 +8560,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (DocumentException documentException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(documentException, documentException);
+				_log.warn(documentException);
 			}
 		}
 	}
@@ -8715,7 +8715,6 @@ public class JournalArticleLocalServiceImpl
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								noSuchFriendlyURLEntryLocalizationException,
 								noSuchFriendlyURLEntryLocalizationException);
 						}
 					}

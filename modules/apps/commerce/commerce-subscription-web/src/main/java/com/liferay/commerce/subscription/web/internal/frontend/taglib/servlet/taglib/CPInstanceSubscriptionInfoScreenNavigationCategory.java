@@ -104,7 +104,7 @@ public class CPInstanceSubscriptionInfoScreenNavigationCategory
 				ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;
@@ -129,7 +129,7 @@ public class CPInstanceSubscriptionInfoScreenNavigationCategory
 				cpInstanceSubscriptionInfoDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_jspRenderer.renderJSP(

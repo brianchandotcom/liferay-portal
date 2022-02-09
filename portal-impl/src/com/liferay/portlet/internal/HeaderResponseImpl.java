@@ -551,7 +551,7 @@ public class HeaderResponseImpl
 			}
 		}
 		catch (XMLStreamException xmlStreamException) {
-			_log.error(xmlStreamException, xmlStreamException);
+			_log.error(xmlStreamException);
 
 			parsedElements.add(
 				new ParsedElement(null, null, false, null, false));
@@ -562,7 +562,7 @@ public class HeaderResponseImpl
 					xmlStreamReader.close();
 				}
 				catch (XMLStreamException xmlStreamException) {
-					_log.error(xmlStreamException, xmlStreamException);
+					_log.error(xmlStreamException);
 				}
 			}
 		}
@@ -741,8 +741,7 @@ public class HeaderResponseImpl
 				return toString(getCharacterEncoding());
 			}
 			catch (UnsupportedEncodingException unsupportedEncodingException) {
-				_log.error(
-					unsupportedEncodingException, unsupportedEncodingException);
+				_log.error(unsupportedEncodingException);
 			}
 
 			return StringPool.BLANK;

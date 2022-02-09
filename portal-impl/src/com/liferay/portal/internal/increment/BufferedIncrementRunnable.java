@@ -83,7 +83,7 @@ public class BufferedIncrementRunnable implements Runnable {
 				}
 				catch (InterruptedException interruptedException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(interruptedException, interruptedException);
+						_log.debug(interruptedException);
 					}
 
 					break;

@@ -164,7 +164,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 			bindResponse.setServerSaslCreds(challenge);
 		}
 		catch (SaslException saslException) {
-			_log.error(saslException, saslException);
+			_log.error(saslException);
 
 			ldapHandlerContext.setSaslCallbackHandler(null);
 			ldapHandlerContext.setSaslServer(null);

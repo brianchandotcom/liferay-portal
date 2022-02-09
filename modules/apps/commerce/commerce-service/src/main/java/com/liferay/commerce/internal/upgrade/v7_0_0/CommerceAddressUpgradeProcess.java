@@ -124,7 +124,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 					address.getClassPK(), address.getAddressId());
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 	}
@@ -141,7 +141,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 					address.getClassPK(), address.getAddressId());
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 	}
@@ -165,7 +165,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				listType.getListTypeId(), false, serviceContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

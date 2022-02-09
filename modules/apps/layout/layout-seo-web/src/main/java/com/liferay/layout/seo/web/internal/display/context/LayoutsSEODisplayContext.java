@@ -190,7 +190,7 @@ public class LayoutsSEODisplayContext {
 			return _dlurlHelper.getImagePreviewURL(fileEntry, _themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return StringPool.BLANK;
 		}
@@ -296,7 +296,7 @@ public class LayoutsSEODisplayContext {
 			return fileEntry.getTitle();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return StringPool.BLANK;
 		}
@@ -322,7 +322,7 @@ public class LayoutsSEODisplayContext {
 			return _dlurlHelper.getImagePreviewURL(fileEntry, _themeDisplay);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return StringPool.BLANK;
 		}

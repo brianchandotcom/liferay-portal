@@ -169,7 +169,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				).build());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

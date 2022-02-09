@@ -149,7 +149,7 @@ public class CommerceSearchResource {
 			).build();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Response.status(

@@ -117,11 +117,11 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (NoSuchEntryException noSuchEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchEntryException, noSuchEntryException);
+				_log.warn(noSuchEntryException);
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

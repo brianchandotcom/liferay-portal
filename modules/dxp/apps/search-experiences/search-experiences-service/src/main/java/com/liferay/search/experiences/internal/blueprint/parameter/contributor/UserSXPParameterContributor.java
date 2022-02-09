@@ -89,7 +89,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		catch (PortalException portalException) {
 			exceptionListener.exceptionThrown(portalException);
 
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

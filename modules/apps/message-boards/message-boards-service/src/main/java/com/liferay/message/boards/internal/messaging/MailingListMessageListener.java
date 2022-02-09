@@ -100,7 +100,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 
@@ -109,7 +109,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -120,7 +120,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 				}
 				catch (MessagingException messagingException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(messagingException, messagingException);
+						_log.debug(messagingException);
 					}
 				}
 			}
@@ -277,7 +277,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 				}
 				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioException, ioException);
+						_log.warn(ioException);
 					}
 				}
 			}

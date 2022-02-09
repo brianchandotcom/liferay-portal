@@ -109,7 +109,7 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 				"name", group.getDescriptiveName(themeDisplay.getLocale()));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", themeDisplay.getLocale(), getClass());

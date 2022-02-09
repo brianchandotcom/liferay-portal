@@ -80,7 +80,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

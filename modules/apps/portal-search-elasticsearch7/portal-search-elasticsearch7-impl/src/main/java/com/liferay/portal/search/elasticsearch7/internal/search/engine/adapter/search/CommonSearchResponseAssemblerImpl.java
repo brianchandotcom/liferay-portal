@@ -98,7 +98,7 @@ public class CommonSearchResponseAssemblerImpl
 		}
 		catch (ElasticsearchException elasticsearchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(elasticsearchException, elasticsearchException);
+				_log.debug(elasticsearchException);
 			}
 
 			return elasticsearchException.getMessage();
@@ -156,7 +156,7 @@ public class CommonSearchResponseAssemblerImpl
 				}
 				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
+						_log.debug(ioException);
 					}
 				}
 			});
@@ -185,7 +185,7 @@ public class CommonSearchResponseAssemblerImpl
 				}
 				catch (IOException ioException) {
 					if (_log.isInfoEnabled()) {
-						_log.info(ioException, ioException);
+						_log.info(ioException);
 					}
 				}
 			});

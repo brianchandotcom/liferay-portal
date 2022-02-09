@@ -91,7 +91,7 @@ public class RoleTestUtil {
 		}
 		catch (NoSuchRoleException noSuchRoleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchRoleException, noSuchRoleException);
+				_log.debug(noSuchRoleException);
 			}
 
 			role = RoleLocalServiceUtil.addRole(

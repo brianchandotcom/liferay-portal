@@ -77,7 +77,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return portletPreferences;
@@ -96,7 +96,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return portletPreferences;

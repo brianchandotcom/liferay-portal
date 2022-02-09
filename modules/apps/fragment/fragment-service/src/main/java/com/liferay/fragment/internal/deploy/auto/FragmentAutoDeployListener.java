@@ -80,12 +80,12 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 			_deploy(autoDeploymentContext.getFile());
 		}
 		catch (AutoDeployException autoDeployException) {
-			_log.error(autoDeployException, autoDeployException);
+			_log.error(autoDeployException);
 
 			throw autoDeployException;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -118,7 +118,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

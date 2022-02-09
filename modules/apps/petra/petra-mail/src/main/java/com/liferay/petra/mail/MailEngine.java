@@ -105,7 +105,7 @@ public class MailEngine {
 		}
 		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(systemException, systemException);
+				_log.warn(systemException);
 			}
 
 			session = InfrastructureUtil.getMailSession();
@@ -392,7 +392,7 @@ public class MailEngine {
 			throw mailEngineException;
 		}
 		catch (SendFailedException sendFailedException) {
-			_log.error(sendFailedException, sendFailedException);
+			_log.error(sendFailedException);
 
 			if (_isThrowsExceptionOnFailure()) {
 				throw new MailEngineException(sendFailedException);

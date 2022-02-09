@@ -145,7 +145,7 @@ public class WorkflowTaskPermissionChecker {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return roleIds;
@@ -181,7 +181,7 @@ public class WorkflowTaskPermissionChecker {
 			return assetRenderer.hasViewPermission(permissionChecker);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;

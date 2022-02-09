@@ -174,7 +174,7 @@ public class DigesterImpl implements Digester {
 			messageDigest.update(byteBuffer);
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException, noSuchAlgorithmException);
+			_log.error(noSuchAlgorithmException);
 		}
 
 		return messageDigest.digest();
@@ -198,10 +198,10 @@ public class DigesterImpl implements Digester {
 			}
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException, noSuchAlgorithmException);
+			_log.error(noSuchAlgorithmException);
 		}
 
 		return messageDigest.digest();
@@ -229,11 +229,10 @@ public class DigesterImpl implements Digester {
 			messageDigest.update(s.getBytes(Digester.ENCODING));
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException, noSuchAlgorithmException);
+			_log.error(noSuchAlgorithmException);
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_log.error(
-				unsupportedEncodingException, unsupportedEncodingException);
+			_log.error(unsupportedEncodingException);
 		}
 
 		return messageDigest.digest();

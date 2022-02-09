@@ -142,7 +142,7 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 					_dlAppLocalService.getFileEntry(fileEntryId));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return StringPool.BLANK;

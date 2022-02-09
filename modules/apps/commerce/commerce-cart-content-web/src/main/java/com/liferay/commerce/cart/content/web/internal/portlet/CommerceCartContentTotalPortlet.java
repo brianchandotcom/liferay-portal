@@ -93,7 +93,7 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 				commerceCartContentTotalDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

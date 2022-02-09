@@ -121,8 +121,7 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					reflectiveOperationException, reflectiveOperationException);
+				_log.debug(reflectiveOperationException);
 			}
 		}
 

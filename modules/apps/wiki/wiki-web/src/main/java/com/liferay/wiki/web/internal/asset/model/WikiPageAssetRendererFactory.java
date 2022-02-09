@@ -79,7 +79,7 @@ public class WikiPageAssetRendererFactory
 				}
 				catch (NoSuchPageException noSuchPageException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchPageException, noSuchPageException);
+						_log.debug(noSuchPageException);
 					}
 
 					page = _wikiPageLocalService.getPage(
@@ -135,7 +135,7 @@ public class WikiPageAssetRendererFactory
 		}
 		catch (WindowStateException windowStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(windowStateException, windowStateException);
+				_log.debug(windowStateException);
 			}
 		}
 

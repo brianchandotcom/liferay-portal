@@ -249,8 +249,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchPortletItemException, noSuchPortletItemException);
+				_log.debug(noSuchPortletItemException);
 			}
 
 			portletItem = _portletItemLocalService.updatePortletItem(

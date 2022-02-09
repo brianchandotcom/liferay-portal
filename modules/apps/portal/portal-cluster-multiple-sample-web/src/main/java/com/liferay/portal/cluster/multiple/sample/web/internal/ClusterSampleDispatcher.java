@@ -90,7 +90,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -138,7 +138,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -163,7 +163,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -199,7 +199,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

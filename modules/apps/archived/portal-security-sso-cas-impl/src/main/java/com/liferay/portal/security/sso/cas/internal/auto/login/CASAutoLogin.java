@@ -86,7 +86,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 				CASWebKeys.CAS_NO_SUCH_USER_EXCEPTION, Boolean.TRUE);
 		}
 
-		_log.error(exception, exception);
+		_log.error(exception);
 
 		return null;
 	}
@@ -155,7 +155,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(systemException, systemException);
+					_log.debug(systemException);
 				}
 			}
 		}

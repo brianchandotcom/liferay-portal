@@ -140,7 +140,7 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 				themeDisplay.getScopeGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

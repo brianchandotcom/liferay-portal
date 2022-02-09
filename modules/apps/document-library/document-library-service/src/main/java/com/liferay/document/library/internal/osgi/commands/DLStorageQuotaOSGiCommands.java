@@ -46,7 +46,7 @@ public class DLStorageQuotaOSGiCommands {
 					companyId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				System.out.printf(
 					"Unable to update document library storage quota for " +

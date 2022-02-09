@@ -230,7 +230,7 @@ public class UserPortraitTag extends IncludeTag {
 			return user.getPortraitURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}

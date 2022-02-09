@@ -129,7 +129,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		};
@@ -172,7 +172,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 		};

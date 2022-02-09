@@ -80,7 +80,7 @@ public abstract class BaseMBMessageDemoDataCreator
 			}
 			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchMessageException, noSuchMessageException);
+					_log.warn(noSuchMessageException);
 				}
 			}
 

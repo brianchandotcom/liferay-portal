@@ -119,8 +119,7 @@ public class ResourceLocalServiceTest {
 			}
 			catch (NoSuchResourceException noSuchResourceException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchResourceException, noSuchResourceException);
+					_log.debug(noSuchResourceException);
 				}
 
 				_resourceLocalService.addResources(

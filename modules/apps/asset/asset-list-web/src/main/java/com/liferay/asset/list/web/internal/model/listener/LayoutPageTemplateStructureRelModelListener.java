@@ -95,7 +95,7 @@ public class LayoutPageTemplateStructureRelModelListener
 				plid, serviceContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

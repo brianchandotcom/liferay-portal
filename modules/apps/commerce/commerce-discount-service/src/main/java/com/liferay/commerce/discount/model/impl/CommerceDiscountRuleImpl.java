@@ -35,7 +35,7 @@ public class CommerceDiscountRuleImpl extends CommerceDiscountRuleBaseImpl {
 				_unicodeProperties.load(super.getTypeSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

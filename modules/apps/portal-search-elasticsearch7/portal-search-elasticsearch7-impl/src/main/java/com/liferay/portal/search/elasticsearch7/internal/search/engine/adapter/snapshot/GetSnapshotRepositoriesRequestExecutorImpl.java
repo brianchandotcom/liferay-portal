@@ -83,8 +83,7 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 		}
 		catch (RepositoryMissingException repositoryMissingException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					repositoryMissingException, repositoryMissingException);
+				_log.debug(repositoryMissingException);
 			}
 		}
 

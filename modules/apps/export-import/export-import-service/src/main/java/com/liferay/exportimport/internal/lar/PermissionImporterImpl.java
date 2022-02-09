@@ -184,7 +184,7 @@ public class PermissionImporterImpl implements PermissionImporter {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchTeamException, noSuchTeamException);
+					_log.debug(noSuchTeamException);
 				}
 
 				team = _teamLocalService.addTeam(

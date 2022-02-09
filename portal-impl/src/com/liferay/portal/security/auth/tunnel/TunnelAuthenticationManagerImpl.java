@@ -188,7 +188,7 @@ public class TunnelAuthenticationManagerImpl
 			}
 			catch (DecoderException decoderException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(decoderException, decoderException);
+					_log.warn(decoderException);
 				}
 
 				AuthException authException = new AuthException();

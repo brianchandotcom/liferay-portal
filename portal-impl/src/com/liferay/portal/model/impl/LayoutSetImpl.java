@@ -156,7 +156,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return logoId;
@@ -209,7 +209,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				_settingsUnicodeProperties.load(super.getSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 
@@ -299,7 +299,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				getCompanyId(), getLayoutSetId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (ListUtil.isEmpty(virtualHosts)) {
@@ -401,7 +401,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

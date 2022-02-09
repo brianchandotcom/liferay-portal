@@ -41,7 +41,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 				permissionChecker, groupId, className, classPK, actionId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

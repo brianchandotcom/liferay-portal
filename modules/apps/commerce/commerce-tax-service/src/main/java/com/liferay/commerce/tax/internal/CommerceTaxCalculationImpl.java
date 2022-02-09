@@ -256,8 +256,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 				}
 			}
 			catch (CommerceTaxEngineException commerceTaxEngineException) {
-				_log.error(
-					commerceTaxEngineException, commerceTaxEngineException);
+				_log.error(commerceTaxEngineException);
 			}
 		}
 

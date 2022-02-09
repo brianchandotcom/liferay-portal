@@ -90,7 +90,7 @@ public class AccountRoleContributor implements RoleContributor {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

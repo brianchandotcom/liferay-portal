@@ -88,7 +88,7 @@ public class ServiceAccessPolicyManagerImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			return null;

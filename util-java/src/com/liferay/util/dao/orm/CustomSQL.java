@@ -462,7 +462,7 @@ public class CustomSQL {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		try {
@@ -481,7 +481,7 @@ public class CustomSQL {
 			_sqlPool = sqlPool;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -819,7 +819,7 @@ public class CustomSQL {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return sql;

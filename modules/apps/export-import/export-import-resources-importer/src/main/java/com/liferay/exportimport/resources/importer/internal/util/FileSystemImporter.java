@@ -769,9 +769,7 @@ public class FileSystemImporter extends BaseImporter {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateFileEntryException,
-						duplicateFileEntryException);
+					_log.debug(duplicateFileEntryException);
 				}
 
 				fileEntry = dlAppLocalService.getFileEntry(

@@ -197,7 +197,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return GetterUtil.getString(content);

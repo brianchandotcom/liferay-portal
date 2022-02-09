@@ -101,7 +101,7 @@ public class LDAPAuth implements Authenticator {
 				companyId, emailAddress, StringPool.BLANK, 0, password);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new AuthException(exception);
 		}
@@ -118,7 +118,7 @@ public class LDAPAuth implements Authenticator {
 				companyId, StringPool.BLANK, screenName, 0, password);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new AuthException(exception);
 		}
@@ -136,7 +136,7 @@ public class LDAPAuth implements Authenticator {
 				password);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw new AuthException(exception);
 		}

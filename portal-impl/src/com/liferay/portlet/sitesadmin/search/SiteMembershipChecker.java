@@ -55,7 +55,7 @@ public class SiteMembershipChecker extends RowChecker {
 				_group.getGroupId(), user.getUserId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -85,7 +85,7 @@ public class SiteMembershipChecker extends RowChecker {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

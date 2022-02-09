@@ -70,7 +70,7 @@ public class CompareCheckboxTag extends IncludeTag {
 				_cpCatalogEntry.getCPDefinitionId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return SKIP_BODY;
 		}

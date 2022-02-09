@@ -57,7 +57,7 @@ public class BatchEngineTaskCallbackUtil {
 			closeableHttpClient.execute(httpPost);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

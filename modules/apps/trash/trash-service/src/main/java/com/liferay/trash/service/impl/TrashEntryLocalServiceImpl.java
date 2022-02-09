@@ -192,7 +192,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 								trashEntry.getClassPK());
 						}
 						catch (Exception exception) {
-							_log.error(exception, exception);
+							_log.error(exception);
 						}
 					}
 				}
@@ -225,7 +225,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 						trashHandler.deleteTrashEntry(entry.getClassPK());
 					}
 					catch (Exception exception) {
-						_log.error(exception, exception);
+						_log.error(exception);
 					}
 				}
 			}

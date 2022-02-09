@@ -1121,7 +1121,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 					String message = exception.getMessage();
 
 					if (message == null) {
-						_log.error(exception, exception);
+						_log.error(exception);
 
 						message = exception.toString();
 					}

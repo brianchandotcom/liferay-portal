@@ -110,7 +110,7 @@ public class NavigationTag extends IncludeTag {
 				_rootLayoutLevel, _rootLayoutUuid, branchNavItems);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		HttpServletResponse httpServletResponse =

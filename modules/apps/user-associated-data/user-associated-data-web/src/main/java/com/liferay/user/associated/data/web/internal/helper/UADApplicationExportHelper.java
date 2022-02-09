@@ -82,7 +82,7 @@ public class UADApplicationExportHelper {
 				applicationDataCount += (int)uadExporter.count(userId);
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

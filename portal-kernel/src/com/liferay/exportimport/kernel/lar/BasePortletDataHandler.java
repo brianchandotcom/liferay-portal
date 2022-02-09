@@ -502,7 +502,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -676,7 +676,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return StringPool.BLANK;

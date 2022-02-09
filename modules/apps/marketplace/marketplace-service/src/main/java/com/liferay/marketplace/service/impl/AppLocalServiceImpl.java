@@ -111,7 +111,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -288,7 +288,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			throw new PortalException(ioException);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			clearInstalledAppsCache();
@@ -398,7 +398,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}
@@ -455,7 +455,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return null;

@@ -69,7 +69,7 @@ public class InetAddressUtil {
 					exception) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			throw new UnknownHostException(

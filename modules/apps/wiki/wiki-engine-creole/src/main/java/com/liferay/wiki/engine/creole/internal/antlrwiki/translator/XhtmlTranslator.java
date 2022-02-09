@@ -363,7 +363,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

@@ -70,7 +70,7 @@ public class OfflineOpenIdConnectSessionManager {
 		}
 		catch (SchedulerException schedulerException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(schedulerException, schedulerException);
+				_log.warn(schedulerException);
 			}
 		}
 	}
@@ -152,7 +152,7 @@ public class OfflineOpenIdConnectSessionManager {
 			}
 			catch (SchedulerException schedulerException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(schedulerException, schedulerException);
+					_log.warn(schedulerException);
 				}
 			}
 		}
@@ -237,7 +237,7 @@ public class OfflineOpenIdConnectSessionManager {
 			}
 			catch (SchedulerException schedulerException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(schedulerException, schedulerException);
+					_log.warn(schedulerException);
 				}
 			}
 		}
@@ -252,7 +252,7 @@ public class OfflineOpenIdConnectSessionManager {
 		}
 		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(parseException, parseException);
+				_log.warn(parseException);
 			}
 
 			return null;

@@ -80,7 +80,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
+				_log.debug(illegalStateException);
 			}
 
 			// Concurrent unregister, no need to do anything

@@ -62,13 +62,11 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 						concurrentModificationException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						concurrentModificationException,
-						concurrentModificationException);
+					_log.debug(concurrentModificationException);
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				break;
 			}
@@ -129,13 +127,11 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 						concurrentModificationException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						concurrentModificationException,
-						concurrentModificationException);
+					_log.debug(concurrentModificationException);
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				break;
 			}

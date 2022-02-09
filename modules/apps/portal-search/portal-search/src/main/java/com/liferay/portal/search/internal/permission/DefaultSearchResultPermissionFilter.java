@@ -236,7 +236,7 @@ public class DefaultSearchResultPermissionFilter
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return false;
@@ -313,7 +313,7 @@ public class DefaultSearchResultPermissionFilter
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

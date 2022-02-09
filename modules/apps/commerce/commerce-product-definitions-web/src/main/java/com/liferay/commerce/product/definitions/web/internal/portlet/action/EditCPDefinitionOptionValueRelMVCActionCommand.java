@@ -96,7 +96,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 					"/cp_definitions/edit_cp_definition_option_value_rel");
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

@@ -225,8 +225,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 		catch (InvalidFileVersionException invalidFileVersionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					invalidFileVersionException, invalidFileVersionException);
+				_log.debug(invalidFileVersionException);
 			}
 		}
 	}
@@ -241,8 +240,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 		catch (InvalidFileVersionException invalidFileVersionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					invalidFileVersionException, invalidFileVersionException);
+				_log.debug(invalidFileVersionException);
 			}
 		}
 	}

@@ -123,7 +123,7 @@ public class PDFProcessorImpl
 			return doGetPreviewFileCount(fileVersion);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return 0;
@@ -167,7 +167,7 @@ public class PDFProcessorImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return hasImages;
@@ -250,7 +250,7 @@ public class PDFProcessorImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -447,7 +447,7 @@ public class PDFProcessorImpl
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+				_log.debug(noSuchFileEntryException);
 			}
 		}
 		finally {
@@ -592,7 +592,7 @@ public class PDFProcessorImpl
 		catch (Exception exception) {
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw exception;
 		}
@@ -822,7 +822,7 @@ public class PDFProcessorImpl
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				throw exception;
@@ -922,7 +922,7 @@ public class PDFProcessorImpl
 			}
 			catch (IOException ioException) {
 				if (!(ioException instanceof InvalidPasswordException)) {
-					_log.error(ioException, ioException);
+					_log.error(ioException);
 				}
 			}
 		}

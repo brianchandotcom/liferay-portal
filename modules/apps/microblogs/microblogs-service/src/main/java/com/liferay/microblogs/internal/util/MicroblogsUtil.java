@@ -359,7 +359,7 @@ public class MicroblogsUtil {
 				}
 				catch (WindowStateException windowStateException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(windowStateException, windowStateException);
+						_log.debug(windowStateException);
 					}
 				}
 			}
@@ -375,7 +375,7 @@ public class MicroblogsUtil {
 				}
 				catch (WindowStateException windowStateException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(windowStateException, windowStateException);
+						_log.debug(windowStateException);
 					}
 				}
 			}
@@ -444,7 +444,7 @@ public class MicroblogsUtil {
 			}
 			catch (NoSuchUserException noSuchUserException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchUserException, noSuchUserException);
+					_log.debug(noSuchUserException);
 				}
 			}
 		}

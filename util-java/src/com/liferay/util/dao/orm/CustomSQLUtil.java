@@ -160,7 +160,7 @@ public class CustomSQLUtil {
 			customSQL = new CustomSQL();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_customSQL = customSQL;

@@ -77,7 +77,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 						dlSyncEvent.getType(), dlSyncEvent.getTypePK(), false);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 
@@ -85,7 +85,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 			actionableDynamicQuery.performActions();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 			_processDLSyncEvent(modifiedTime, event, type, typePK, true);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

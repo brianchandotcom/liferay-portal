@@ -123,7 +123,7 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 				cpSpecificationOptionFacetsDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		super.render(renderRequest, renderResponse);

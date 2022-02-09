@@ -129,21 +129,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			DirectServletRegistryUtil.clearServlets();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		try {
 			HotDeployUtil.reset();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		try {
 			PortalLifecycleUtil.reset();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		closeDataSource("counterDataSource");
@@ -159,7 +159,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		ModuleFrameworkUtil.unregisterContext(_arrayApplicationContext);
@@ -173,14 +173,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ClearThreadLocalUtil.clearThreadLocal();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		try {
 			ClearTimerThreadUtil.clearTimerThread();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		Log4JUtil.shutdownLog4J();
@@ -363,7 +363,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			filteredPropertyDescriptorsCache.clear();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -384,7 +384,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				closeable.close();
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 	}

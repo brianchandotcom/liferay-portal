@@ -1010,7 +1010,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				return schedulerEventMessageListener;
 			}
 			catch (SchedulerException schedulerException) {
-				_log.error(schedulerException, schedulerException);
+				_log.error(schedulerException);
 			}
 			finally {
 				ClusterableContextThreadLocal.putThreadLocalContext(
@@ -1050,7 +1050,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				update(schedulerEntry.getTrigger(), storageType);
 			}
 			catch (SchedulerException schedulerException) {
-				_log.error(schedulerException, schedulerException);
+				_log.error(schedulerException);
 			}
 			finally {
 				ClusterableContextThreadLocal.putThreadLocalContext(
@@ -1092,7 +1092,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				delete(schedulerEntry, storageType);
 			}
 			catch (SchedulerException schedulerException) {
-				_log.error(schedulerException, schedulerException);
+				_log.error(schedulerException);
 			}
 			finally {
 				ClusterableContextThreadLocal.putThreadLocalContext(

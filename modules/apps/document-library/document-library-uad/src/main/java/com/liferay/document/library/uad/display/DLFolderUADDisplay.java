@@ -156,7 +156,7 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;

@@ -195,8 +195,7 @@ public class OAuthManager {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateTableNameException, duplicateTableNameException);
+				_log.debug(duplicateTableNameException);
 			}
 
 			table = _expandoTableLocalService.getTable(
@@ -222,8 +221,7 @@ public class OAuthManager {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateColumnNameException, duplicateColumnNameException);
+				_log.debug(duplicateColumnNameException);
 			}
 		}
 	}

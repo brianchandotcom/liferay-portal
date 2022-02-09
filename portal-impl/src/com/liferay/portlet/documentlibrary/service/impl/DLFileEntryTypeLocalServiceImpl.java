@@ -1059,8 +1059,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 		catch (StructureDefinitionException structureDefinitionException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					structureDefinitionException, structureDefinitionException);
+				_log.warn(structureDefinitionException);
 			}
 
 			if (ddmStructure != null) {

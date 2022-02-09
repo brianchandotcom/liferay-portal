@@ -147,7 +147,7 @@ public class StorageEngineImpl implements StorageEngine {
 		}
 		catch (NoSuchStructureException noSuchStructureException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchStructureException, noSuchStructureException);
+				_log.debug(noSuchStructureException);
 			}
 
 			return _storageAdapterRegistry.getDefaultStorageAdapter();
@@ -171,7 +171,7 @@ public class StorageEngineImpl implements StorageEngine {
 		}
 		catch (NoSuchStructureException noSuchStructureException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchStructureException, noSuchStructureException);
+				_log.debug(noSuchStructureException);
 			}
 
 			return _storageAdapterRegistry.getDefaultStorageAdapter();

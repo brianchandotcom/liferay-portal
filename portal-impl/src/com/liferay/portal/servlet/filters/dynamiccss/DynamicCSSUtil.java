@@ -164,7 +164,7 @@ public class DynamicCSSUtil {
 				return ThemeLocalServiceUtil.getTheme(companyId, themeId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -207,7 +207,7 @@ public class DynamicCSSUtil {
 			return ThemeLocalServiceUtil.getTheme(companyId, themeId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

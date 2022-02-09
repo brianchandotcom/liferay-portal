@@ -80,11 +80,11 @@ public class XmlRpcServlet extends HttpServlet {
 				XmlRpcConstants.NOT_WELL_FORMED, "XML is not well formed");
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 		catch (XmlRpcException xmlRpcException) {
-			_log.error(xmlRpcException, xmlRpcException);
+			_log.error(xmlRpcException);
 		}
 
 		if (xmlRpcResponse == null) {
@@ -102,7 +102,7 @@ public class XmlRpcServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			httpServletResponse.setStatus(

@@ -130,8 +130,7 @@ public class AlloyControllerInvokerManager {
 		}
 		catch (NoClassNecessaryException noClassNecessaryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noClassNecessaryException, noClassNecessaryException);
+				_log.debug(noClassNecessaryException);
 			}
 
 			return;

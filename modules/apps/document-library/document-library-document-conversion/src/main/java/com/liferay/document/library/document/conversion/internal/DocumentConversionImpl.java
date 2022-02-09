@@ -218,7 +218,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;

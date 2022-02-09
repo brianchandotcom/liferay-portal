@@ -110,7 +110,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 					addSXPElements(company, _sxpElementLocalService);
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 
 				return null;
@@ -127,7 +127,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 				company.getCompanyId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

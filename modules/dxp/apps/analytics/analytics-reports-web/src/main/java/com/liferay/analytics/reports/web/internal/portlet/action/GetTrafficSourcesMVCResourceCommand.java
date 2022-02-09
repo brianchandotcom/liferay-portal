@@ -107,7 +107,7 @@ public class GetTrafficSourcesMVCResourceCommand
 				resourceRequest, resourceResponse, jsonObject);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -153,7 +153,7 @@ public class GetTrafficSourcesMVCResourceCommand
 			return new ArrayList<>(trafficChannels.values());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Arrays.asList(
 				new DirectTrafficChannelImpl(true),

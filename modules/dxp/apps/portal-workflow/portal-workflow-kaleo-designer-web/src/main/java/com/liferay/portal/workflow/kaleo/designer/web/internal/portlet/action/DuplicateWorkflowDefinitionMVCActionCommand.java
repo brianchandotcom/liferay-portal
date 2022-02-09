@@ -112,7 +112,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(workflowException, workflowException);
+				_log.warn(workflowException);
 			}
 
 			return null;

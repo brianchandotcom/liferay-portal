@@ -96,7 +96,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				cpPublisherConfigurationDisplayContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return "/product_publisher/configuration.jsp";
@@ -270,7 +270,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
+				_log.warn(ioException);
 			}
 		}
 

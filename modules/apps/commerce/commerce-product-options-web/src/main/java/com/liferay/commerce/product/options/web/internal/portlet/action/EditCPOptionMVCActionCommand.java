@@ -73,7 +73,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw new Exception(exception);
 			}

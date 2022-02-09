@@ -162,7 +162,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 
 				// Concurrent unregistration from register(long)
@@ -209,7 +209,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
+					_log.debug(illegalStateException);
 				}
 
 				// Concurrent unregistration from register(long)

@@ -43,7 +43,7 @@ public abstract class BaseProcessorMessageListener extends BaseMessageListener {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 	}

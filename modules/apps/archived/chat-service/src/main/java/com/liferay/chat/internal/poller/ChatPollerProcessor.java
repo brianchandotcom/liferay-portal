@@ -149,8 +149,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchLayoutSetException, noSuchLayoutSetException);
+					_log.debug(noSuchLayoutSetException);
 				}
 			}
 
@@ -250,7 +249,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchUserException, noSuchUserException);
+						_log.debug(noSuchUserException);
 					}
 
 					continue;

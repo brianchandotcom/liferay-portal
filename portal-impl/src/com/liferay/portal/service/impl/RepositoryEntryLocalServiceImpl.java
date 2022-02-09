@@ -74,9 +74,7 @@ public class RepositoryEntryLocalServiceImpl
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchRepositoryEntryException,
-						noSuchRepositoryEntryException);
+					_log.debug(noSuchRepositoryEntryException);
 				}
 			}
 		}

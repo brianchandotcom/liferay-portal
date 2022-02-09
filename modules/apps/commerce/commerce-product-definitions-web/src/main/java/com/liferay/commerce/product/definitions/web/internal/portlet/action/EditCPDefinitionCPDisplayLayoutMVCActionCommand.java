@@ -99,7 +99,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 					"/commerce_channels/edit_cp_definition_cp_display_layout");
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw exception;
 			}

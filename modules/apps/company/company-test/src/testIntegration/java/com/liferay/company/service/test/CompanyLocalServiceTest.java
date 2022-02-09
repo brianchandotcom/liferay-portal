@@ -1011,7 +1011,7 @@ public class CompanyLocalServiceTest {
 			}
 			catch (CompanyNameException companyNameException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(companyNameException, companyNameException);
+					_log.debug(companyNameException);
 				}
 
 				Assert.assertTrue(expectFailure);
@@ -1057,7 +1057,7 @@ public class CompanyLocalServiceTest {
 		}
 		catch (CompanyMxException companyMxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(companyMxException, companyMxException);
+				_log.debug(companyMxException);
 			}
 
 			Assert.assertFalse(valid);
@@ -1086,9 +1086,7 @@ public class CompanyLocalServiceTest {
 			}
 			catch (CompanyVirtualHostException companyVirtualHostException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						companyVirtualHostException,
-						companyVirtualHostException);
+					_log.debug(companyVirtualHostException);
 				}
 
 				Assert.assertTrue(expectFailure);

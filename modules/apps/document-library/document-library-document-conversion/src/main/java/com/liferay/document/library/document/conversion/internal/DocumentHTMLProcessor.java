@@ -76,7 +76,7 @@ public class DocumentHTMLProcessor {
 			processedInputStream = new AutoDeleteFileInputStream(tempFile);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return processedInputStream;

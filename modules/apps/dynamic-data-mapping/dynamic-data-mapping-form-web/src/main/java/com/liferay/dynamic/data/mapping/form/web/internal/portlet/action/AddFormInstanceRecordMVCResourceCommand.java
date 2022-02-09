@@ -125,8 +125,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 		}
 		catch (FormInstanceExpiredException formInstanceExpiredException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					formInstanceExpiredException, formInstanceExpiredException);
+				_log.debug(formInstanceExpiredException);
 			}
 
 			return;
@@ -135,9 +134,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 					formInstanceSubmissionLimitException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					formInstanceSubmissionLimitException,
-					formInstanceSubmissionLimitException);
+				_log.debug(formInstanceSubmissionLimitException);
 			}
 
 			return;

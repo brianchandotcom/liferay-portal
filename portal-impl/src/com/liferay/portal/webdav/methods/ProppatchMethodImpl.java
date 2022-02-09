@@ -70,7 +70,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(lockException, lockException);
+				_log.debug(lockException);
 			}
 
 			return WebDAVUtil.SC_LOCKED;

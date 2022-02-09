@@ -79,7 +79,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				query = queryParser.parse(KeywordsUtil.escape(value));
@@ -89,7 +89,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 				booleanQuery, searchContext, query, BooleanClause.Occur.SHOULD);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

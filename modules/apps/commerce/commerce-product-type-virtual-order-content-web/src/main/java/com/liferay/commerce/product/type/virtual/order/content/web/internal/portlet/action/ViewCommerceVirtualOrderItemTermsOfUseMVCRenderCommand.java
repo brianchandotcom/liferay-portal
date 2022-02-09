@@ -69,7 +69,7 @@ public class ViewCommerceVirtualOrderItemTermsOfUseMVCRenderCommand
 				commerceVirtualOrderItemContentDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return "/view_commerce_virtual_order_item_terms_of_use.jsp";

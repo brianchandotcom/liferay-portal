@@ -93,9 +93,7 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 					siteNavigationMenuItemNameException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					siteNavigationMenuItemNameException,
-					siteNavigationMenuItemNameException);
+				_log.debug(siteNavigationMenuItemNameException);
 			}
 
 			jsonObject.put(

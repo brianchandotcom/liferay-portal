@@ -89,7 +89,7 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 					deleteExpiredSyncDLFileVersionDiffs();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -151,7 +151,7 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 			actionableDynamicQuery.performActions();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

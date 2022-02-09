@@ -802,9 +802,7 @@ public class DefaultWorkflowEngineImpl
 					workflowDefinitionFileException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					workflowDefinitionFileException,
-					workflowDefinitionFileException);
+				_log.debug(workflowDefinitionFileException);
 			}
 
 			try {

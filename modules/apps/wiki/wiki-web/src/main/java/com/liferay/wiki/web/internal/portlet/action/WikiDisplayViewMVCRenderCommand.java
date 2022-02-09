@@ -108,14 +108,14 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 		}
 		catch (NoSuchNodeException noSuchNodeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchNodeException, noSuchNodeException);
+				_log.debug(noSuchNodeException);
 			}
 
 			return "/wiki_display/portlet_not_setup.jsp";
 		}
 		catch (NoSuchPageException noSuchPageException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchPageException, noSuchPageException);
+				_log.debug(noSuchPageException);
 			}
 
 			return "/wiki_display/portlet_not_setup.jsp";

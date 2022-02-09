@@ -80,7 +80,7 @@ public class PersistenceCallCheck extends BaseCheck {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return;
@@ -228,7 +228,7 @@ public class PersistenceCallCheck extends BaseCheck {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

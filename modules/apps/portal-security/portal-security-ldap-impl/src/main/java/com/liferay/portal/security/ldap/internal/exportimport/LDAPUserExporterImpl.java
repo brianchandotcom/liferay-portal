@@ -386,7 +386,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 				throw nameNotFoundException;
 			}
 
-			_log.error(nameNotFoundException, nameNotFoundException);
+			_log.error(nameNotFoundException);
 		}
 		finally {
 			if (safeLdapContext != null) {
@@ -502,7 +502,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;

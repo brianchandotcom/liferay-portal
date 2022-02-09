@@ -120,8 +120,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchLayoutException, noSuchLayoutException);
+						_log.debug(noSuchLayoutException);
 					}
 
 					return true;
@@ -361,7 +360,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			processFilter(
 				VirtualHostFilter.class.getName(), httpServletRequest,

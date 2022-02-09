@@ -79,7 +79,7 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 				_portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

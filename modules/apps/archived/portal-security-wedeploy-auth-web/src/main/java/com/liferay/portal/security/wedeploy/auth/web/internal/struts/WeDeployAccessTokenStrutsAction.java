@@ -83,7 +83,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 		}
 		catch (NoSuchAppException noSuchAppException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchAppException, noSuchAppException);
+				_log.debug(noSuchAppException);
 			}
 
 			jsonObject.put(
@@ -94,7 +94,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 		}
 		catch (NoSuchTokenException noSuchTokenException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchTokenException, noSuchTokenException);
+				_log.debug(noSuchTokenException);
 			}
 
 			jsonObject.put(
@@ -103,7 +103,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 					LocaleUtil.getDefault(), "request-token-does-not-match"));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			jsonObject.put(
 				"error_message",

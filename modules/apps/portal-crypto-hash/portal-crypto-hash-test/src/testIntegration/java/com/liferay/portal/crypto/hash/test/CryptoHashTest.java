@@ -119,7 +119,7 @@ public class CryptoHashTest {
 				autoCloseable.close();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -368,7 +368,7 @@ public class CryptoHashTest {
 					countDownLatch.await(10, TimeUnit.SECONDS);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 				finally {
 					serviceRegistration.unregister();

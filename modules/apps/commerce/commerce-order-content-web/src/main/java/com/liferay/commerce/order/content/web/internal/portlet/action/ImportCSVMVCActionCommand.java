@@ -122,7 +122,7 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				hideDefaultErrorMessage(actionRequest);
@@ -151,7 +151,7 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			throw new CommerceOrderImporterTypeException();

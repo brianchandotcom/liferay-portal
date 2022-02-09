@@ -161,7 +161,7 @@ public class MainServlet extends HttpServlet {
 			_destroyPortlets(portlets);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -172,7 +172,7 @@ public class MainServlet extends HttpServlet {
 			_destroyCompanies();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -185,7 +185,7 @@ public class MainServlet extends HttpServlet {
 				PropsValues.GLOBAL_SHUTDOWN_EVENTS);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -261,7 +261,7 @@ public class MainServlet extends HttpServlet {
 			startupAction.run(null);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			System.out.println(
 				"Stopping the server due to unexpected startup errors");
@@ -280,7 +280,7 @@ public class MainServlet extends HttpServlet {
 				servletContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -293,7 +293,7 @@ public class MainServlet extends HttpServlet {
 			portlets.addAll(_initPortlets(pluginPackage));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		for (Portlet portlet : portlets) {
@@ -303,7 +303,7 @@ public class MainServlet extends HttpServlet {
 					PropsValues.RESOURCE_ACTIONS_CONFIGS);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -311,7 +311,7 @@ public class MainServlet extends HttpServlet {
 			_initLayoutTemplates(pluginPackage);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -331,7 +331,7 @@ public class MainServlet extends HttpServlet {
 				});
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -346,7 +346,7 @@ public class MainServlet extends HttpServlet {
 			_checkWebSettings(xml);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -359,7 +359,7 @@ public class MainServlet extends HttpServlet {
 				PropsValues.GLOBAL_STARTUP_EVENTS);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -370,7 +370,7 @@ public class MainServlet extends HttpServlet {
 			_initCompanies();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -383,7 +383,7 @@ public class MainServlet extends HttpServlet {
 			PortalLifecycleUtil.flushInits();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);
@@ -415,7 +415,7 @@ public class MainServlet extends HttpServlet {
 					PortalInstances.getDefaultCompanyId());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -480,11 +480,11 @@ public class MainServlet extends HttpServlet {
 		catch (Exception exception) {
 			if (exception instanceof NoSuchLayoutException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -527,7 +527,7 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -598,7 +598,7 @@ public class MainServlet extends HttpServlet {
 					httpServletResponse);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
@@ -645,7 +645,7 @@ public class MainServlet extends HttpServlet {
 				new String[] {String.valueOf(companyId)});
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -680,7 +680,7 @@ public class MainServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -792,7 +792,7 @@ public class MainServlet extends HttpServlet {
 						WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			});
 	}
@@ -1076,7 +1076,7 @@ public class MainServlet extends HttpServlet {
 				return true;
 			}
 
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			httpServletRequest.setAttribute(StrutsUtil.EXCEPTION, exception);
 
@@ -1167,7 +1167,7 @@ public class MainServlet extends HttpServlet {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 		}

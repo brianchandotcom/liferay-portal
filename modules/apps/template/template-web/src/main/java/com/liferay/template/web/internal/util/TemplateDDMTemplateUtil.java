@@ -79,7 +79,7 @@ public class TemplateDDMTemplateUtil {
 				dataContent = generateCode[0];
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

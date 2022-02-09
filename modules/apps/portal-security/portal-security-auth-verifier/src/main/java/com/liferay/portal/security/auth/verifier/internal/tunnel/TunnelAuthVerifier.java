@@ -79,7 +79,7 @@ public class TunnelAuthVerifier implements AuthVerifier {
 		}
 		catch (AuthException authException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(authException, authException);
+				_log.debug(authException);
 			}
 
 			HttpServletResponse httpServletResponse =
@@ -94,7 +94,7 @@ public class TunnelAuthVerifier implements AuthVerifier {
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 
 				throw authException;
 			}

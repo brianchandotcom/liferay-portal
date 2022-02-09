@@ -80,7 +80,7 @@ public class PortletPermissionsPortletConfigurationIcon
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -143,7 +143,7 @@ public class PortletPermissionsPortletConfigurationIcon
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 
 				showPermissionsIcon = false;

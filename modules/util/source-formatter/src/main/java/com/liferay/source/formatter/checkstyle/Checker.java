@@ -205,7 +205,7 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 		}
 		catch (CheckstyleException checkstyleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(checkstyleException, checkstyleException);
+				_log.debug(checkstyleException);
 			}
 
 			return new TreeSet<>();

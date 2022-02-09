@@ -175,7 +175,7 @@ public class ResourceBundleUtil {
 		}
 		catch (MissingResourceException missingResourceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(missingResourceException, missingResourceException);
+				_log.debug(missingResourceException);
 			}
 
 			return null;
@@ -234,8 +234,7 @@ public class ResourceBundleUtil {
 				}
 				catch (MissingResourceException missingResourceException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							missingResourceException, missingResourceException);
+						_log.debug(missingResourceException);
 					}
 
 					_portalResourceBundleClassLoaders.add(classLoader);

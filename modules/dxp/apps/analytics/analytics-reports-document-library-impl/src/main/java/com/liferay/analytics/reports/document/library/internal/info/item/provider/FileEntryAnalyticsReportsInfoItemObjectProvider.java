@@ -51,7 +51,7 @@ public class FileEntryAnalyticsReportsInfoItemObjectProvider
 				classPKInfoItemIdentifier);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			_log.error(noSuchInfoItemException, noSuchInfoItemException);
+			_log.error(noSuchInfoItemException);
 		}
 
 		return null;

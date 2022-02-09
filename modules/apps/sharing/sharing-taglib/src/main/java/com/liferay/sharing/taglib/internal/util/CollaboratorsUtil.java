@@ -68,7 +68,7 @@ public class CollaboratorsUtil {
 			return assetRendererFactory.getAssetRenderer(classPK);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;
@@ -83,7 +83,7 @@ public class CollaboratorsUtil {
 			return user.getDisplayURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}
@@ -100,7 +100,7 @@ public class CollaboratorsUtil {
 			return user.getPortraitURL(themeDisplay);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}

@@ -97,7 +97,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 
@@ -112,14 +112,13 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			}
 			catch (NoSuchTemplateException noSuchTemplateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchTemplateException, noSuchTemplateException);
+					_log.debug(noSuchTemplateException);
 				}
 			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -153,7 +152,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 

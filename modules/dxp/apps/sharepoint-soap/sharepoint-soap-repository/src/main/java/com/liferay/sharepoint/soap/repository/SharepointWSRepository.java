@@ -910,7 +910,7 @@ public class SharepointWSRepository
 		}
 		catch (SharepointException sharepointException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sharepointException, sharepointException);
+				_log.debug(sharepointException);
 			}
 
 			// The Sharepoint object does not exist

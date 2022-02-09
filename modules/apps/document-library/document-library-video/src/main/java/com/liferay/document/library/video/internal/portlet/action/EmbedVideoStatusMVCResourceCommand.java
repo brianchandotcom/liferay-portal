@@ -77,7 +77,7 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return HttpServletResponse.SC_SERVICE_UNAVAILABLE;

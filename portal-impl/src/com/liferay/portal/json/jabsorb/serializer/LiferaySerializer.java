@@ -56,7 +56,7 @@ public class LiferaySerializer extends AbstractSerializer {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -412,7 +412,7 @@ public class LiferaySerializer extends AbstractSerializer {
 					}
 					catch (Exception exception) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(exception, exception);
+							_log.debug(exception);
 						}
 					}
 
@@ -421,7 +421,7 @@ public class LiferaySerializer extends AbstractSerializer {
 							field.set(javaClassInstance, value);
 						}
 						catch (Exception exception) {
-							_log.error(exception, exception);
+							_log.error(exception);
 						}
 					}
 				}

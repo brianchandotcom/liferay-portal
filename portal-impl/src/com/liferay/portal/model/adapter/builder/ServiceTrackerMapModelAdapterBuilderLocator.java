@@ -152,7 +152,7 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 					}
 					catch (ClassCastException classCastException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(classCastException, classCastException);
+							_log.debug(classCastException);
 						}
 					}
 				}

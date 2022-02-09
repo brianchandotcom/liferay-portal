@@ -148,7 +148,7 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 				taxAppliedToShippingAddress();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

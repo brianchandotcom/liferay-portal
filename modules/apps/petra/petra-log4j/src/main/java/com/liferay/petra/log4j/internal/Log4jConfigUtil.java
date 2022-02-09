@@ -139,7 +139,7 @@ public class Log4jConfigUtil {
 			return priorities;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Collections.emptyMap();

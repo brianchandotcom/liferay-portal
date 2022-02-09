@@ -67,7 +67,7 @@ public class StreamUtil {
 
 		if (quiet) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException1, ioException1);
+				_log.warn(ioException1);
 			}
 		}
 		else {

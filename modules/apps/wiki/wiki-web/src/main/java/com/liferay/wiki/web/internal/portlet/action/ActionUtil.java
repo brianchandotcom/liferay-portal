@@ -302,7 +302,7 @@ public class ActionUtil {
 		}
 		catch (NoSuchNodeException noSuchNodeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchNodeException, noSuchNodeException);
+				_log.debug(noSuchNodeException);
 			}
 
 			node = getFirstVisibleNode(portletRequest);
@@ -351,7 +351,7 @@ public class ActionUtil {
 		}
 		catch (NoSuchNodeException noSuchNodeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchNodeException, noSuchNodeException);
+				_log.debug(noSuchNodeException);
 			}
 		}
 

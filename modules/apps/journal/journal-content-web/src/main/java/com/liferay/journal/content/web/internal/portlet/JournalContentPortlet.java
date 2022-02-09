@@ -160,7 +160,7 @@ public class JournalContentPortlet extends MVCPortlet {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE);
@@ -197,7 +197,7 @@ public class JournalContentPortlet extends MVCPortlet {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 
@@ -254,7 +254,7 @@ public class JournalContentPortlet extends MVCPortlet {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
+					_log.debug(portalException);
 				}
 			}
 

@@ -344,7 +344,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 			catch (EncryptorException encryptorException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(encryptorException, encryptorException);
+					_log.debug(encryptorException);
 				}
 
 				return new Redirect(actualURL);
@@ -424,7 +424,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 
 			if (portalException instanceof NoSuchGroupException ||

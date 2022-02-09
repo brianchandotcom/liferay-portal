@@ -44,7 +44,7 @@ public class PortalLoginModule implements LoginModule {
 					PropsValues.PORTAL_JAAS_IMPL);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

@@ -141,7 +141,7 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 			return finalPriceCommerceMoney.format(locale);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;
@@ -163,7 +163,7 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 			return unitPriceCommerceMoney.format(locale);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;
@@ -207,7 +207,7 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 				commerceOrderImporterItem);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;

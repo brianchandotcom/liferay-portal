@@ -176,8 +176,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 			}
 			catch (NoSuchTemplateException noSuchTemplateException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchTemplateException, noSuchTemplateException);
+					_log.debug(noSuchTemplateException);
 				}
 
 				continue;

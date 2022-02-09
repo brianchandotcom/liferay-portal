@@ -102,9 +102,7 @@ public class PasswordPolicyRelLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchPasswordPolicyRelException,
-					noSuchPasswordPolicyRelException);
+				_log.debug(noSuchPasswordPolicyRelException);
 			}
 		}
 	}

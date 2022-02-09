@@ -44,7 +44,7 @@ public class IMAPAttachmentHandler extends DefaultAttachmentHandler {
 			folder.close(false);
 		}
 		catch (MessagingException messagingException) {
-			_log.error(messagingException, messagingException);
+			_log.error(messagingException);
 		}
 	}
 

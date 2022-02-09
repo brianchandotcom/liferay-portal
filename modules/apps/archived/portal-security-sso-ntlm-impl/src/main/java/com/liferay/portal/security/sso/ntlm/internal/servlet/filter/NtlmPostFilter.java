@@ -86,7 +86,7 @@ public class NtlmPostFilter extends BaseFilter {
 			return ntlmConfiguration.enabled();
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
+			_log.error(configurationException);
 		}
 
 		return false;

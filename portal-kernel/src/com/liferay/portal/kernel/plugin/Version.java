@@ -395,7 +395,7 @@ public class Version implements Comparable<Version>, Serializable {
 			}
 			catch (NumberFormatException numberFormatException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(numberFormatException, numberFormatException);
+					_log.debug(numberFormatException);
 				}
 
 				return false;

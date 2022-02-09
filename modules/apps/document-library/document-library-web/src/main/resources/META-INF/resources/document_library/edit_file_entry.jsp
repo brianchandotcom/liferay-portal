@@ -467,7 +467,7 @@ renderResponse.setTitle(headerTitle);
 									}
 								}
 								catch (Exception e) {
-									_log.error(e, e);
+									_log.error(e);
 								}
 								%>
 

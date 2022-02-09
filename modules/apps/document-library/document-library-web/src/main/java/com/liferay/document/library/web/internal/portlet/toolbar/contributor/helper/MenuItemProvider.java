@@ -468,7 +468,7 @@ public class MenuItemProvider {
 			portletURL.setWindowState(portletRequest.getWindowState());
 		}
 		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
+			_log.error(windowStateException);
 		}
 
 		return portletURL;
@@ -491,7 +491,7 @@ public class MenuItemProvider {
 				permissionChecker, groupId, folderId, actionId);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

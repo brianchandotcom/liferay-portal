@@ -55,9 +55,7 @@ public class ObjectDefinitionResourceTest
 						noSuchObjectDefinitionException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchObjectDefinitionException,
-						noSuchObjectDefinitionException);
+					_log.debug(noSuchObjectDefinitionException);
 				}
 			}
 		}

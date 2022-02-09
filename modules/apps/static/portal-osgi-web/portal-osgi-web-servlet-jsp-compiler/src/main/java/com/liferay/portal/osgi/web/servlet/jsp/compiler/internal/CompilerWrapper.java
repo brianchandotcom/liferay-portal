@@ -145,7 +145,7 @@ public class CompilerWrapper extends Compiler {
 				}
 				catch (MalformedURLException malformedURLException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(malformedURLException, malformedURLException);
+						_log.warn(malformedURLException);
 					}
 				}
 			}
@@ -185,7 +185,7 @@ public class CompilerWrapper extends Compiler {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(exception);
 				}
 			}
 

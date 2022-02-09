@@ -186,7 +186,7 @@ public class CommercePaymentServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			// Payment Failed
 
@@ -199,7 +199,7 @@ public class CommercePaymentServlet extends HttpServlet {
 				httpServletResponse.sendRedirect(_nextUrl);
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 	}

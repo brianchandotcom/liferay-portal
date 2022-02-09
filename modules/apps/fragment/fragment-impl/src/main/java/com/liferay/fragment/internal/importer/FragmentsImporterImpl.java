@@ -250,7 +250,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			if (type == FragmentConstants.TYPE_REACT) {

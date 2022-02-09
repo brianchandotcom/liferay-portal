@@ -574,7 +574,7 @@ public class ChannelImpl extends BaseChannelImpl {
 				}
 			}
 			catch (JSONException jsonException) {
-				_log.error(jsonException, jsonException);
+				_log.error(jsonException);
 
 				invalidNotificationEventUuids.add(
 					persistedNotificationEvent.getUuid());

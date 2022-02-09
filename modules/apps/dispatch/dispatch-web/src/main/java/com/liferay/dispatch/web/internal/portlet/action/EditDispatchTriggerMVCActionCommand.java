@@ -99,7 +99,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
 		}
@@ -156,7 +156,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			jsonObject.put(
 				"error", exception.getMessage()

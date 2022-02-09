@@ -235,7 +235,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 		catch (DocumentException | IOException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

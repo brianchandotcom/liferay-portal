@@ -55,7 +55,7 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 				cpContentConfigurationDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		httpServletRequest.setAttribute(

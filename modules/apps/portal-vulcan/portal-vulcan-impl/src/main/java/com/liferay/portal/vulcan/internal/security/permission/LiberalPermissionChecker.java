@@ -131,7 +131,7 @@ public class LiberalPermissionChecker implements PermissionChecker {
 				user.getCompanyId(), RoleConstants.OWNER);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

@@ -80,7 +80,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String mvcPath = "/error.jsp";
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			if (exception instanceof NoSuchCompanyException ||
@@ -114,7 +114,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				throw exception;
 			}

@@ -86,7 +86,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -108,7 +108,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -130,7 +130,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -155,7 +155,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -177,7 +177,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -200,7 +200,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -226,7 +226,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -248,7 +248,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}
@@ -274,7 +274,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(searchException, searchException);
+				_log.debug(searchException);
 			}
 		}
 	}

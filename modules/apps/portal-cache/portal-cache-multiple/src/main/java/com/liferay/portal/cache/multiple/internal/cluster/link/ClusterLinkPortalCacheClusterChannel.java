@@ -104,7 +104,7 @@ public class ClusterLinkPortalCacheClusterChannel
 				}
 				catch (InterruptedException interruptedException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(interruptedException, interruptedException);
+						_log.debug(interruptedException);
 					}
 				}
 			}
@@ -137,7 +137,7 @@ public class ClusterLinkPortalCacheClusterChannel
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException, interruptedException);
+					_log.debug(interruptedException);
 				}
 			}
 		}

@@ -87,7 +87,7 @@ public class DDMFormInstanceRecordModelSummaryContributor
 				ddmFormInstanceName, false);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;

@@ -59,7 +59,7 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 				_settingsUnicodeProperties.load(super.getSettings());
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 		}
 

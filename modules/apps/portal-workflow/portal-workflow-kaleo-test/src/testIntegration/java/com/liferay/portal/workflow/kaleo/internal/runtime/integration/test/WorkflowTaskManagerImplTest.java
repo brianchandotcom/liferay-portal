@@ -1536,7 +1536,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException, workflowException);
+				_log.debug(workflowException);
 			}
 
 			String content = _read("join-xor-workflow-definition.xml");
@@ -1570,7 +1570,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException, workflowException);
+				_log.debug(workflowException);
 			}
 
 			String content = _read(
@@ -1592,7 +1592,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException, workflowException);
+				_log.debug(workflowException);
 			}
 
 			String content = _read(

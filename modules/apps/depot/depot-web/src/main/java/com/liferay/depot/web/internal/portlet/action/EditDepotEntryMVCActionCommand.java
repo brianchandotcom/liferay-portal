@@ -84,7 +84,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 					DepotEntry.class.getName(), actionRequest));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			SessionErrors.add(
 				actionRequest, portalException.getClass(), portalException);

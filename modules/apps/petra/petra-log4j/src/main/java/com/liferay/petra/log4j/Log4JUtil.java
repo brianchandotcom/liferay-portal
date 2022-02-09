@@ -73,7 +73,7 @@ public class Log4JUtil {
 			urlContent = StreamUtil.toString(inputStream, StringPool.UTF8);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return;
 		}
@@ -138,7 +138,7 @@ public class Log4JUtil {
 			LogFactoryUtil.setLogFactory(logFactory);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {

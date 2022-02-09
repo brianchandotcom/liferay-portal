@@ -60,7 +60,7 @@ public class Base64 {
 			objectOutputStream.writeObject(object);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return _encode(
@@ -281,7 +281,7 @@ public class Base64 {
 		}
 		catch (Exception exception) {
 			if (!silent) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

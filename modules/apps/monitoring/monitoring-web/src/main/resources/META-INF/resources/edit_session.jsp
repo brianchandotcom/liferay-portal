@@ -199,7 +199,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 								catch (Exception e) {
 									userSessionAlive = false;
 
-									_log.error(e, e);
+									_log.error(e);
 								}
 								%>
 

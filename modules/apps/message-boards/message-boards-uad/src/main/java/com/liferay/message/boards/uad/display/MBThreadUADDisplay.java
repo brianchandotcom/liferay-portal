@@ -100,7 +100,7 @@ public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return null;

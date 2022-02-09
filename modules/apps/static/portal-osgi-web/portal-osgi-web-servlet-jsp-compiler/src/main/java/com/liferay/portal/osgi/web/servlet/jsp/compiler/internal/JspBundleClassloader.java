@@ -69,7 +69,7 @@ public class JspBundleClassloader extends URLClassLoader {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 			}
 		}
@@ -105,7 +105,7 @@ public class JspBundleClassloader extends URLClassLoader {
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(classNotFoundException);
 				}
 			}
 		}

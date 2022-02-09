@@ -63,7 +63,7 @@ public class ProductDefinitionMessageListener extends BaseMessageListener {
 				productDefinitionConfiguration.generatorTimeIntervalUnit());
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			_log.error(illegalArgumentException, illegalArgumentException);
+			_log.error(illegalArgumentException);
 		}
 
 		String className = clazz.getName();
@@ -78,7 +78,7 @@ public class ProductDefinitionMessageListener extends BaseMessageListener {
 					className, className, null, null, cronExpression);
 			}
 			catch (RuntimeException runtimeException) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 		}
 

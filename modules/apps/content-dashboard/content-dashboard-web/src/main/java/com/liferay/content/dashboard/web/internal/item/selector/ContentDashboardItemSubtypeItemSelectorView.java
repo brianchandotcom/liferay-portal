@@ -284,7 +284,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					));
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

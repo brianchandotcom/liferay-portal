@@ -49,8 +49,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					reflectiveOperationException, reflectiveOperationException);
+				_log.debug(reflectiveOperationException);
 			}
 		}
 
@@ -66,8 +65,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					reflectiveOperationException, reflectiveOperationException);
+				_log.debug(reflectiveOperationException);
 			}
 		}
 

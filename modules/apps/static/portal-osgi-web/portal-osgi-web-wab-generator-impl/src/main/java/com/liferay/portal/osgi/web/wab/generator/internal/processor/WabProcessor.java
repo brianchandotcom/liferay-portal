@@ -361,7 +361,7 @@ public class WabProcessor {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return new Properties();
@@ -917,7 +917,7 @@ public class WabProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			// Ignore this case
@@ -1096,7 +1096,7 @@ public class WabProcessor {
 				"com.liferay.portal.osgi.web.wab.generator", _optionalAttrs);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
@@ -1267,7 +1267,7 @@ public class WabProcessor {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return SAXReaderUtil.createDocument();

@@ -243,7 +243,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			return null;
@@ -277,7 +277,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(portalException, portalException);
+						_log.warn(portalException);
 					}
 
 					return null;

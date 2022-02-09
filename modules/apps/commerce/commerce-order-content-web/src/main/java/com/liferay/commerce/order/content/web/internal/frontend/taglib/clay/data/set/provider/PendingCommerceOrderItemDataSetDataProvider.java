@@ -95,7 +95,7 @@ public class PendingCommerceOrderItemDataSetDataProvider
 			return _getOrderItems(commerceOrderItems, httpServletRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Collections.emptyList();

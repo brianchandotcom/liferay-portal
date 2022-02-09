@@ -152,7 +152,7 @@ public class OpenGraphImageProvider {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return Optional.empty();

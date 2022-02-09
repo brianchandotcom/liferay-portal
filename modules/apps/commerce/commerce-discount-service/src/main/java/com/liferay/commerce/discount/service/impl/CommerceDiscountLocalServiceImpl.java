@@ -1685,7 +1685,7 @@ public class CommerceDiscountLocalServiceImpl
 			return longStream.toArray();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return new long[0];

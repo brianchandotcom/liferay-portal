@@ -808,7 +808,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -1485,7 +1485,7 @@ public class DLFileEntryLocalServiceImpl
 						exception) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 
@@ -2411,9 +2411,7 @@ public class DLFileEntryLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					invalidFileEntryTypeException,
-					invalidFileEntryTypeException);
+				_log.debug(invalidFileEntryTypeException);
 			}
 
 			return _dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
@@ -2643,7 +2641,7 @@ public class DLFileEntryLocalServiceImpl
 					cancelCheckOut(userId, fileEntryId);
 				}
 				catch (Exception exception2) {
-					_log.error(exception2, exception2);
+					_log.error(exception2);
 				}
 			}
 

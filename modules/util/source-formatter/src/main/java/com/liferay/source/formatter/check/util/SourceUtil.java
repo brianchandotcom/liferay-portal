@@ -304,7 +304,7 @@ public class SourceUtil {
 		}
 		catch (DocumentException documentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(documentException, documentException);
+				_log.debug(documentException);
 			}
 
 			return false;

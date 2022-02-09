@@ -69,7 +69,7 @@ public class LiferayResourceOwnerLoginHandler
 			return userSubject;
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}
@@ -103,7 +103,7 @@ public class LiferayResourceOwnerLoginHandler
 			}
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return null;
 		}

@@ -99,13 +99,12 @@ public class LiferayResourceLoader extends ResourceLoader {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 		catch (ResourceNotFoundException resourceNotFoundException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					resourceNotFoundException, resourceNotFoundException);
+				_log.debug(resourceNotFoundException);
 			}
 		}
 
@@ -131,7 +130,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;

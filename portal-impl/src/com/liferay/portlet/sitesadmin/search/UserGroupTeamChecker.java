@@ -52,7 +52,7 @@ public class UserGroupTeamChecker extends EmptyOnClickRowChecker {
 				_team.getTeamId(), userGroup.getUserGroupId());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

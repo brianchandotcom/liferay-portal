@@ -93,7 +93,7 @@ public class AssetCategoriesNavigationDisplayContext {
 		catch (PortalException portalException) {
 			groupIds = new long[] {themeDisplay.getScopeGroupId()};
 
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(

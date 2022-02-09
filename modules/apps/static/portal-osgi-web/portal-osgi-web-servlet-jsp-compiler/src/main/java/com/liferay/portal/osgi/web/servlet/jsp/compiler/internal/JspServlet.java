@@ -691,7 +691,7 @@ public class JspServlet extends HttpServlet {
 			}
 			catch (MalformedURLException malformedURLException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(malformedURLException, malformedURLException);
+					_log.debug(malformedURLException);
 				}
 			}
 
@@ -711,7 +711,7 @@ public class JspServlet extends HttpServlet {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				return null;

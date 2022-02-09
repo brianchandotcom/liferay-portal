@@ -107,7 +107,7 @@ public class GetFormReportDataMVCResourceCommand
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			JSONPortletResponseUtil.writeJSON(

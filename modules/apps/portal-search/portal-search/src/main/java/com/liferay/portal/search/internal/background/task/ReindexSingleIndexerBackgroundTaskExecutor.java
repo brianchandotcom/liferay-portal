@@ -131,7 +131,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				indexer.reindex(new String[] {String.valueOf(companyId)});
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			finally {
 				reindexStatusMessageSender.sendStatusMessage(

@@ -126,7 +126,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			_hasError = true;
@@ -144,7 +144,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;
@@ -252,7 +252,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedIOException, interruptedIOException);
+					_log.debug(interruptedIOException);
 				}
 
 				Thread currentThread = Thread.currentThread();
@@ -261,7 +261,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;
@@ -349,7 +349,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedIOException, interruptedIOException);
+					_log.debug(interruptedIOException);
 				}
 
 				Thread currentThread = Thread.currentThread();
@@ -358,7 +358,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;
@@ -377,7 +377,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedIOException, interruptedIOException);
+					_log.debug(interruptedIOException);
 				}
 
 				Thread currentThread = Thread.currentThread();
@@ -386,7 +386,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;
@@ -405,7 +405,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedIOException, interruptedIOException);
+					_log.debug(interruptedIOException);
 				}
 
 				Thread currentThread = Thread.currentThread();
@@ -414,7 +414,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;
@@ -433,7 +433,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedIOException, interruptedIOException);
+					_log.debug(interruptedIOException);
 				}
 
 				Thread currentThread = Thread.currentThread();
@@ -442,7 +442,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
+					_log.debug(ioException);
 				}
 
 				_hasError = true;

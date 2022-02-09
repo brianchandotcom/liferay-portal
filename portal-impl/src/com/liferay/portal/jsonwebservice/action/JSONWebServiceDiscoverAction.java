@@ -203,7 +203,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return null;
@@ -403,7 +403,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(classNotFoundException);
 				}
 			}
 		}

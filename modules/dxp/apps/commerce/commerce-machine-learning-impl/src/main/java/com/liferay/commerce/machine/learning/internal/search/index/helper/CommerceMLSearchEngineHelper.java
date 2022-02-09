@@ -64,7 +64,7 @@ public class CommerceMLSearchEngineHelper {
 				).toString());
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException, jsonException);
+			_log.error(jsonException);
 		}
 
 		searchEngineAdapter.execute(createIndexRequest);

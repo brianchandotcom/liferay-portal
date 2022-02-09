@@ -177,7 +177,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					SessionErrors.add(actionRequest, exception.getClass());
 				}
 				else {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					SessionErrors.add(
 						actionRequest,
@@ -390,7 +390,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

@@ -172,7 +172,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 						document.getLong("processId"));
 				}
 				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
+					_log.error(portalException);
 				}
 			}
 		);

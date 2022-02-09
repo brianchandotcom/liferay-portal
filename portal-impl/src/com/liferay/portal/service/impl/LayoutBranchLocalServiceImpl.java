@@ -242,8 +242,7 @@ public class LayoutBranchLocalServiceImpl
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchLayoutBranchException, noSuchLayoutBranchException);
+				_log.debug(noSuchLayoutBranchException);
 			}
 		}
 	}

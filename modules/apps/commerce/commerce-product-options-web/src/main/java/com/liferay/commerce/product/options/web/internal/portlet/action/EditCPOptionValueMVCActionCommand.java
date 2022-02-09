@@ -80,7 +80,7 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 					"mvcRenderCommandName", "/cp_options/edit_cp_option_value");
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

@@ -286,7 +286,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				jsonObjects.put(entry.getKey(), entry.getValue());
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -363,7 +363,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 					moduleDependenciesMap.put(entry.getKey(), entry.getValue());
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}

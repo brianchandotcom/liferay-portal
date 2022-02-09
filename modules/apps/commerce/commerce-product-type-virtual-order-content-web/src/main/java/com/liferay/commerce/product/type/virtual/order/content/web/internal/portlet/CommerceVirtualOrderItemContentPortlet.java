@@ -85,7 +85,7 @@ public class CommerceVirtualOrderItemContentPortlet extends MVCPortlet {
 				commerceVirtualOrderItemContentDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

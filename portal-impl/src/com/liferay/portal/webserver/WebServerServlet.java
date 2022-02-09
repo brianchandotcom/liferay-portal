@@ -207,8 +207,7 @@ public class WebServerServlet extends HttpServlet {
 						// LPS-52675
 
 						if (_log.isDebugEnabled()) {
-							_log.debug(
-								noSuchFolderException, noSuchFolderException);
+							_log.debug(noSuchFolderException);
 						}
 
 						if (i != (pathArray.length - 1)) {
@@ -227,7 +226,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -508,7 +507,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 			}
@@ -682,7 +681,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
+						_log.debug(exception);
 					}
 				}
 
@@ -713,11 +712,11 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(principalException, principalException);
+				_log.warn(principalException);
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return -1;
@@ -817,7 +816,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -904,7 +903,7 @@ public class WebServerServlet extends HttpServlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception2, exception2);
+					_log.debug(exception2);
 				}
 			}
 		}
@@ -1315,7 +1314,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 	}
@@ -1360,8 +1359,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 				catch (NoSuchFileEntryException noSuchFileEntryException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchFileEntryException, noSuchFileEntryException);
+						_log.debug(noSuchFileEntryException);
 					}
 
 					DLAppLocalServiceUtil.getFileEntry(
@@ -1373,7 +1371,7 @@ public class WebServerServlet extends HttpServlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(repositoryException, repositoryException);
+					_log.debug(repositoryException);
 				}
 			}
 		}
@@ -1391,7 +1389,7 @@ public class WebServerServlet extends HttpServlet {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(repositoryException, repositoryException);
+					_log.debug(repositoryException);
 				}
 			}
 		}
@@ -1651,8 +1649,7 @@ public class WebServerServlet extends HttpServlet {
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchFileEntryException, noSuchFileEntryException);
+					_log.debug(noSuchFileEntryException);
 				}
 
 				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(

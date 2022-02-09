@@ -54,7 +54,7 @@ public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
 					isEnabled(group.getCompanyId());
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
+				_log.error(portalException);
 			}
 		}
 

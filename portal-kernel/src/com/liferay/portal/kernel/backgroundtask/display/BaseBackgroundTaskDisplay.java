@@ -132,7 +132,7 @@ public abstract class BaseBackgroundTaskDisplay
 		}
 		catch (TemplateException templateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(templateException, templateException);
+				_log.debug(templateException);
 			}
 
 			return StringPool.BLANK;
@@ -170,7 +170,7 @@ public abstract class BaseBackgroundTaskDisplay
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+				_log.debug(jsonException);
 			}
 		}
 

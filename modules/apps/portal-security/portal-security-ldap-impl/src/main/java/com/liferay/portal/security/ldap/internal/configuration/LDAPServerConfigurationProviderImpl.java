@@ -267,9 +267,7 @@ public class LDAPServerConfigurationProviderImpl
 						}
 						catch (IllegalStateException illegalStateException) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(
-									illegalStateException,
-									illegalStateException);
+								_log.debug(illegalStateException);
 							}
 
 							return 0L;

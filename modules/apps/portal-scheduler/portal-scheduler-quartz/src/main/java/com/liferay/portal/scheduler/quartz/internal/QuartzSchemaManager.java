@@ -54,7 +54,7 @@ public class QuartzSchemaManager {
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info(exception, exception);
+				_log.info(exception);
 			}
 		}
 

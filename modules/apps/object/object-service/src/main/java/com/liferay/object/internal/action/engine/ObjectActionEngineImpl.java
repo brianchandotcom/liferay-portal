@@ -50,7 +50,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				userId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 

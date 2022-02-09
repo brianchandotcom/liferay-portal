@@ -119,8 +119,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			}
 			catch (JSONWebServiceException jsonWebServiceException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						jsonWebServiceException, jsonWebServiceException);
+					_log.debug(jsonWebServiceException);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(
@@ -136,7 +135,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			throw new DDMDataProviderException(exception);

@@ -81,7 +81,7 @@ public class SimilarResultsContributorsRegistryImpl
 		}
 		catch (RuntimeException runtimeException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException, runtimeException);
+				_log.debug(runtimeException);
 			}
 
 			return Optional.empty();

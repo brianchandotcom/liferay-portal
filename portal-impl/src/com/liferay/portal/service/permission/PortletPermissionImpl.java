@@ -570,7 +570,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			return layoutManagerActions.contains(actionId);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}

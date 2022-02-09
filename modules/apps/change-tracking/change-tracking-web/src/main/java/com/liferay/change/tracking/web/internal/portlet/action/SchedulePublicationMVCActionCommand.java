@@ -93,7 +93,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 
 			JSONPortletResponseUtil.writeJSON(

@@ -182,7 +182,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		String servletContextName = servletContext.getServletContextName();
@@ -478,7 +478,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 			catch (NamingException namingException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(namingException, namingException);
+					_log.debug(namingException);
 				}
 			}
 
@@ -489,7 +489,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 			catch (NamingException namingException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(namingException, namingException);
+					_log.debug(namingException);
 				}
 			}
 		}

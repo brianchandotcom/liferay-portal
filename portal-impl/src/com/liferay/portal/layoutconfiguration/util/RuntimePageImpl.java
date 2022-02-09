@@ -381,7 +381,7 @@ public class RuntimePageImpl implements RuntimePage {
 			template.processTemplate(unsyncStringWriter);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			throw exception;
 		}

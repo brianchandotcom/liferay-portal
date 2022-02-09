@@ -133,7 +133,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 

@@ -143,7 +143,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						_getTimeRange(resourceRequest))));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

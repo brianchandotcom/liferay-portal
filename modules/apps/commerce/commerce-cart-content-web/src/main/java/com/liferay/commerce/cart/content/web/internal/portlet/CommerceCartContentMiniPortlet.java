@@ -96,7 +96,7 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 				commerceCartContentDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

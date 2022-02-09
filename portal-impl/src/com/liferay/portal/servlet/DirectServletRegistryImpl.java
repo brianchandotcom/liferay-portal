@@ -193,7 +193,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 			_reloadDependants = false;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return servlet;

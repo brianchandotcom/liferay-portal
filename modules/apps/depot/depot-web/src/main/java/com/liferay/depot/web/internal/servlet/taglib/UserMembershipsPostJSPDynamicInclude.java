@@ -67,7 +67,7 @@ public class UserMembershipsPostJSPDynamicInclude
 			super.include(httpServletRequest, httpServletResponse, key);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 	}
 

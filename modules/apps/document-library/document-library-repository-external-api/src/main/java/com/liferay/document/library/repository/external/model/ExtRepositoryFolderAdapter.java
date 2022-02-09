@@ -86,7 +86,7 @@ public class ExtRepositoryFolderAdapter
 				return folder.getName();
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -103,7 +103,7 @@ public class ExtRepositoryFolderAdapter
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

@@ -173,7 +173,7 @@ public class KBArticleAssetRendererFactory
 		}
 		catch (NoSuchArticleException noSuchArticleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchArticleException, noSuchArticleException);
+				_log.debug(noSuchArticleException);
 			}
 
 			kbArticle = _kbArticleLocalService.getLatestKBArticle(

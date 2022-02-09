@@ -80,7 +80,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 			toTitle = fileEntry.getTitle();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		return toTitle;
@@ -105,7 +105,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(portalException);
 			}
 		}
 

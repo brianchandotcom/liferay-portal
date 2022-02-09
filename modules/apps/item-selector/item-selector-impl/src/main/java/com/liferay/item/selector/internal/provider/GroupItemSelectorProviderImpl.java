@@ -79,7 +79,7 @@ public class GroupItemSelectorProviderImpl
 					null));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}

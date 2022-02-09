@@ -76,7 +76,7 @@ public class RevokeOAuth2AuthorizationsMVCActionCommand
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 
 			SessionErrors.add(actionRequest, portalException.getClass());

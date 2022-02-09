@@ -43,7 +43,7 @@ public class CommerceOrderChecker extends EmptyOnClickRowChecker {
 				ActionKeys.DELETE);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return super.isDisabled(object);

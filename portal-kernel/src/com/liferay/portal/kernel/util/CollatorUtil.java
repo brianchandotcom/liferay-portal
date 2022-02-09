@@ -55,7 +55,7 @@ public class CollatorUtil {
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					rules = StringPool.BLANK;
 				}
@@ -69,7 +69,7 @@ public class CollatorUtil {
 				return new RuleBasedCollator(rules);
 			}
 			catch (ParseException parseException) {
-				_log.error(parseException, parseException);
+				_log.error(parseException);
 
 				_rules.put(locale, StringPool.BLANK);
 			}

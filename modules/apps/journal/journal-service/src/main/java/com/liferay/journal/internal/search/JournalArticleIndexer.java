@@ -598,7 +598,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return false;
@@ -674,7 +674,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return;
@@ -771,7 +771,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return StringPool.BLANK;
@@ -831,7 +831,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 

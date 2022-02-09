@@ -145,7 +145,7 @@ public class CPDefinitionGroupedEntriesDisplayContext
 			cpType = getCPType();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 		}
 
 		if (cpType != null) {

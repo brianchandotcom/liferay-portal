@@ -135,7 +135,7 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 		}
 		catch (PortletException portletException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portletException, portletException);
+				_log.warn(portletException);
 			}
 
 			portletURL = PortletURLBuilder.createRenderURL(

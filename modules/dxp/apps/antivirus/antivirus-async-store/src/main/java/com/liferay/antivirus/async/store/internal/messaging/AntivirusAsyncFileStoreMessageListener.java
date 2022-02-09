@@ -309,7 +309,7 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 			message.put("size", size);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		message.put("userId", 0L);

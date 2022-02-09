@@ -144,7 +144,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				_portal.sendError(exception, actionRequest, actionResponse);
 

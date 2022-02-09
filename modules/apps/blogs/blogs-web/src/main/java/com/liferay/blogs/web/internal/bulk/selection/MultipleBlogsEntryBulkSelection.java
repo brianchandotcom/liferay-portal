@@ -66,7 +66,7 @@ public class MultipleBlogsEntryBulkSelection
 		}
 		catch (NoSuchEntryException noSuchEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchEntryException, noSuchEntryException);
+				_log.warn(noSuchEntryException);
 			}
 
 			return null;

@@ -106,7 +106,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_writeJSON(httpServletResponse, JSONUtil.put("success", false));
 		}
@@ -133,7 +133,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_writeJSON(httpServletResponse, JSONUtil.put("success", false));
 		}
@@ -175,7 +175,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_writeJSON(httpServletResponse, JSONUtil.put("success", false));
 		}

@@ -109,7 +109,7 @@ public class WordsImpl implements Words {
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException, ioException);
+				_log.error(ioException);
 			}
 
 			_dictionaryList = dictionaryList;
@@ -147,7 +147,7 @@ public class WordsImpl implements Words {
 							unsyncBufferedReader);
 					}
 					catch (IOException ioException) {
-						_log.error(ioException, ioException);
+						_log.error(ioException);
 					}
 				}
 			}

@@ -100,7 +100,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetActionProvider
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
+			_log.error(windowStateException);
 		}
 
 		portletURL.setParameter(

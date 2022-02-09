@@ -8,20 +8,17 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {getProductDescription, getProductName} from '../../index';
+import {ACTIVATION_STATUS} from './constants/activationStatus';
 
-const EnvironmentTypeColumn = ({activationKey}) => {
-	return (
-		<div>
-			<p className="font-weight-bold m-0 text-neutral-10">
-				{getProductName(activationKey)?.replace('Production', 'Prod')}
-			</p>
+export function getStatusActivationTag(activationKeys) {
+	let activationStatus = ACTIVATION_STATUS.activated;
+	const now = new Date();
 
-			<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">
-				{getProductDescription(activationKey?.complimentary)}
-			</p>
-		</div>
-	);
-};
+	if (now < new Date(activationKeys.startDate)) {
+		activationStatus = ACTIVATION_STATUS.notActivated;
+	} else if (now > new Date(activationKeys.expirationDate)) {
+		activationStatus = ACTIVATION_STATUS.expired;
+	}
 
-export {EnvironmentTypeColumn};
+	return activationStatus;
+}

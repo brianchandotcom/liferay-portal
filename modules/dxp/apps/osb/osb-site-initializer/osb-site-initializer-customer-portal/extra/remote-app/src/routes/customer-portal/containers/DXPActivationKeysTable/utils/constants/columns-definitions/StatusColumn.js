@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {getStatusActivationTag} from '..';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {getStatusActivationTag} from '../../index';
 
 const StatusColumn = ({activationKey}) => {
 	return (

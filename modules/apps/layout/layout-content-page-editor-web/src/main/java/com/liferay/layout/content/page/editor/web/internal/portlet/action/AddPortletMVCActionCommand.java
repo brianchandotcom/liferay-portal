@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -116,8 +115,7 @@ public class AddPortletMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
@@ -181,8 +179,7 @@ public class AddPortletMVCActionCommand
 			themeDisplay.getLayout(), portletId, ActionKeys.ADD_TO_PAGE);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 
 		String namespace = StringUtil.randomId();
 

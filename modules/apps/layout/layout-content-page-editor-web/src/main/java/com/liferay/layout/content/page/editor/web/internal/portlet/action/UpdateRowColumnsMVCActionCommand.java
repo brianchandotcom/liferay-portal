@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +61,7 @@ public class UpdateRowColumnsMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		int numberOfColumns = ParamUtil.getInteger(
 			actionRequest, "numberOfColumns");

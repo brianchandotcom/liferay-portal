@@ -69,8 +69,7 @@ public class DeleteSegmentsExperienceMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			_segmentsExperienceService.deleteSegmentsExperience(

@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.net.URL;
 
@@ -111,8 +110,7 @@ public class AddFragmentCompositionMVCActionCommand
 		boolean saveMappingConfiguration = ParamUtil.getBoolean(
 			actionRequest, "saveMappingConfiguration");
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 
 		String layoutStructureItemJSON =
 			_layoutStructureItemJSONSerializer.toJSONString(

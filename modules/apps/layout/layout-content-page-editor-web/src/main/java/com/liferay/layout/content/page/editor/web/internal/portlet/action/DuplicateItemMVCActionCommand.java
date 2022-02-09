@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -157,8 +156,7 @@ public class DuplicateItemMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
 		Set<Long> duplicatedFragmentEntryLinkIds = new HashSet<>();

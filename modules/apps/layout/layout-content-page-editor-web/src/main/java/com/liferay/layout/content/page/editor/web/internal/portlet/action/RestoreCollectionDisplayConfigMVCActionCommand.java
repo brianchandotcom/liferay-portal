@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,8 +57,7 @@ public class RestoreCollectionDisplayConfigMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 

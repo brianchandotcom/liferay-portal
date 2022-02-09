@@ -958,74 +958,6 @@ public class SegmentsExperienceUtil {
 	}
 
 	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public static SegmentsExperience findByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws com.liferay.segments.exception.NoSuchExperienceException {
-
-		return getPersistence().findByG_S(groupId, segmentsExperienceKey);
-	}
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public static SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey) {
-
-		return getPersistence().fetchByG_S(groupId, segmentsExperienceKey);
-	}
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public static SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_S(
-			groupId, segmentsExperienceKey, useFinderCache);
-	}
-
-	/**
-	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the segments experience that was removed
-	 */
-	public static SegmentsExperience removeByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws com.liferay.segments.exception.NoSuchExperienceException {
-
-		return getPersistence().removeByG_S(groupId, segmentsExperienceKey);
-	}
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the number of matching segments experiences
-	 */
-	public static int countByG_S(long groupId, String segmentsExperienceKey) {
-		return getPersistence().countByG_S(groupId, segmentsExperienceKey);
-	}
-
-	/**
 	 * Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1651,6 +1583,96 @@ public class SegmentsExperienceUtil {
 
 		return getPersistence().filterCountByG_S_C_C(
 			groupId, segmentsEntryId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments experience
+	 * @throws NoSuchExperienceException if a matching segments experience could not be found
+	 */
+	public static SegmentsExperience findByG_SEK_C_C(
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+
+		return getPersistence().findByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	public static SegmentsExperience fetchByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK) {
+
+		return getPersistence().fetchByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	public static SegmentsExperience fetchByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the segments experience that was removed
+	 */
+	public static SegmentsExperience removeByG_SEK_C_C(
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+
+		return getPersistence().removeByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching segments experiences
+	 */
+	public static int countByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK) {
+
+		return getPersistence().countByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
 	}
 
 	/**

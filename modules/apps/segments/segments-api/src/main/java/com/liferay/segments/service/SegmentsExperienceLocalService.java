@@ -101,6 +101,14 @@ public interface SegmentsExperienceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public SegmentsExperience addSegmentsExperience(
+			long segmentsEntryId, String segmentsExperienceKey,
+			long classNameId, long classPK, Map<Locale, String> nameMap,
+			int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the segments experience to the database. Also notifies the appropriate model listeners.
 	 *
@@ -273,7 +281,8 @@ public interface SegmentsExperienceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience fetchSegmentsExperience(
-		long groupId, String segmentsExperienceKey);
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK);
 
 	/**
 	 * Returns the segments experience matching the UUID and group.
@@ -324,7 +333,8 @@ public interface SegmentsExperienceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience getSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException;
 
 	/**

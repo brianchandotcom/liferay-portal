@@ -90,7 +90,8 @@ public interface SegmentsExperienceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException;
 
 	/**

@@ -96,11 +96,12 @@ public class SegmentsExperienceServiceUtil {
 	}
 
 	public static SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException {
 
 		return getService().fetchSegmentsExperience(
-			groupId, segmentsExperienceKey);
+			groupId, segmentsExperienceKey, classNameId, classPK);
 	}
 
 	/**

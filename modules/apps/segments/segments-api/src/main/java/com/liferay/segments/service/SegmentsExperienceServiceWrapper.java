@@ -101,11 +101,12 @@ public class SegmentsExperienceServiceWrapper
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
-			groupId, segmentsExperienceKey);
+			groupId, segmentsExperienceKey, classNameId, classPK);
 	}
 
 	/**

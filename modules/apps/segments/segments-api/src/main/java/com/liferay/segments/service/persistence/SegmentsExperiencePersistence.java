@@ -743,59 +743,6 @@ public interface SegmentsExperiencePersistence
 	public int countBySegmentsEntryId(long segmentsEntryId);
 
 	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey);
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey, boolean useFinderCache);
-
-	/**
-	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the segments experience that was removed
-	 */
-	public SegmentsExperience removeByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the number of matching segments experiences
-	 */
-	public int countByG_S(long groupId, String segmentsExperienceKey);
-
-	/**
 	 * Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1304,6 +1251,75 @@ public interface SegmentsExperiencePersistence
 	 */
 	public int filterCountByG_S_C_C(
 		long groupId, long segmentsEntryId, long classNameId, long classPK);
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments experience
+	 * @throws NoSuchExperienceException if a matching segments experience could not be found
+	 */
+	public SegmentsExperience findByG_SEK_C_C(
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
+		throws NoSuchExperienceException;
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	public SegmentsExperience fetchByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK);
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	public SegmentsExperience fetchByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK, boolean useFinderCache);
+
+	/**
+	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the segments experience that was removed
+	 */
+	public SegmentsExperience removeByG_SEK_C_C(
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
+		throws NoSuchExperienceException;
+
+	/**
+	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching segments experiences
+	 */
+	public int countByG_SEK_C_C(
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK);
 
 	/**
 	 * Returns the segments experience where groupId = &#63; and classNameId = &#63; and classPK = &#63; and priority = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.

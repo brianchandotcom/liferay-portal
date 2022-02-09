@@ -459,32 +459,13 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				text = future.get();
 			}
 			else {
-				if (!_isEmptyInputStream(inputStream)) {
-					text = _parseToString(tika, inputStream);
-				}
+				text = _parseToString(tika, inputStream);
 			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			if (text == null) {
-				_log.info("Text extraction failed for " + fileName);
-			}
-			else {
-				_log.info("Text was extracted for " + fileName);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Extractor returned text:\n\n" + text);
-		}
-
-		if (text == null) {
-			text = StringPool.BLANK;
 		}
 
 		return text;
@@ -1094,6 +1075,17 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	private static String _parseToString(Tika tika, InputStream inputStream)
 		throws IOException, TikaException {
 
+		inputStream.mark(1);
+
+		try {
+			if (inputStream.read() == -1) {
+				return StringPool.BLANK;
+			}
+		}
+		finally {
+			inputStream.reset();
+		}
+
 		UniversalEncodingDetector universalEncodingDetector =
 			new UniversalEncodingDetector();
 
@@ -1161,23 +1153,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 
 		return writeOutContentHandler.toString();
-	}
-
-	private boolean _isEmptyInputStream(InputStream inputStream)
-		throws IOException {
-
-		inputStream.mark(1);
-
-		try {
-			if (inputStream.read() == -1) {
-				return true;
-			}
-
-			return false;
-		}
-		finally {
-			inputStream.reset();
-		}
 	}
 
 	private static final String[] _SAFE_FILE_NAME_1 = {

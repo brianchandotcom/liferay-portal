@@ -26,6 +26,8 @@ import HomeSkeleton from './Skeleton';
 const PROJECT_THRESHOLD_COUNT = 4;
 const liferaySiteName = getLiferaySiteName();
 
+const MAX_PAGE_SIZE = 10000;
+
 const getStatus = (slaCurrent, slaFuture) => {
 	if (slaCurrent) {
 		return STATUS_TAG_TYPES.active;
@@ -70,6 +72,9 @@ const Home = ({userAccount}) => {
 			if (hasRoleBriefAdministrator) {
 				const {data: dataAccounts} = await client.query({
 					query: getAccounts,
+					variables: {
+						pageSize: MAX_PAGE_SIZE,
+					},
 				});
 
 				if (dataAccounts) {

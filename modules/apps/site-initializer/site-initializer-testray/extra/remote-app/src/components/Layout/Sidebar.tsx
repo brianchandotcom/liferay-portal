@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useLocation} from 'react-router-dom';
+
 import TestrayLogo from '../../images/testray-logo';
 import {Liferay} from '../../services/liferay/liferay';
 import {Avatar} from '../Avatar';
@@ -34,9 +36,18 @@ const sidebarItems = [
 		label: 'Compare Runs',
 		path: '/compare-runs',
 	},
+	{
+		className: 'mt-3',
+		footer: true,
+		icon: 'cog',
+		label: 'Manage',
+		path: '/manage',
+	},
 ];
 
 const Sidebar = () => {
+	const {pathname} = useLocation();
+
 	return (
 		<div className="testray-sidebar">
 			<div className="testray-sidebar-content">
@@ -47,19 +58,45 @@ const Sidebar = () => {
 					<TestrayLogo />
 				</a>
 
-				{sidebarItems.map((item, index) => (
-					<SidebarItem
-						className={item.className}
-						icon={item.icon}
-						key={index}
-						label={item.label}
-						path={item.path}
-					/>
-				))}
+				{sidebarItems
+					.filter(({footer}) => !footer)
+					.map(({className, icon, label, path}, index) => {
+						const [, ...items] = sidebarItems;
+
+						const someItemIsActive = items.some((item) =>
+							pathname.includes(item.path)
+						);
+
+						return (
+							<SidebarItem
+								active={
+									index === 0
+										? !someItemIsActive
+										: pathname.includes(path)
+								}
+								className={className}
+								icon={icon}
+								key={index}
+								label={label}
+								path={path}
+							/>
+						);
+					})}
 			</div>
 
 			<div className="testray-sidebar-footer">
-				<SidebarItem icon="cog" label="Manage" path="/manage" />
+				{sidebarItems
+					.filter(({footer}) => footer)
+					.map(({className, icon, label, path}, index) => (
+						<SidebarItem
+							active={pathname.includes(path)}
+							className={className}
+							icon={icon}
+							key={index}
+							label={label}
+							path={path}
+						/>
+					))}
 
 				<div className="divider divider-full" />
 

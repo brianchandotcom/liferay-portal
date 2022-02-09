@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
 type SidebarItemProps = {
+	active: boolean;
 	className?: string;
 	icon: string;
 	label: string;
@@ -24,12 +25,16 @@ type SidebarItemProps = {
 };
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
+	active,
 	className,
 	icon,
 	label,
 	path,
 }) => (
-	<Link className={classNames('testray-sidebar-item', className)} to={path}>
+	<Link
+		className={classNames('testray-sidebar-item', {active}, className)}
+		to={path}
+	>
 		<ClayIcon fontSize={20} symbol={icon} />
 
 		<span className="ml-1 testray-sidebar-text">{label}</span>

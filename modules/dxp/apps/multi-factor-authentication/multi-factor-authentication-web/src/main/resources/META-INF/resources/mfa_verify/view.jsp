@@ -39,7 +39,7 @@ int mfaCheckerIndex = ParamUtil.getInteger(request, "mfaCheckerIndex");
 	<liferay-ui:error key="mfaVerificationFailed" message="multi-factor-authentication-has-failed" />
 
 	<%
-	browserMFAChecker.includeBrowserVerification(request, response, mfaUserId);
+	browserMFAChecker.includeBrowserVerification(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), mfaUserId);
 	%>
 
 	<c:if test="<%= browserMFACheckers.size() > 1 %>">

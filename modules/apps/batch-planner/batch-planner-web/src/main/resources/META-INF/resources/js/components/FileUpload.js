@@ -17,7 +17,21 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useState} from 'react';
 
 import parseFile from '../FileParsers';
-import {FILE_SCHEMA_EVENT, IMPORT_FILE_FORMATS} from '../constants';
+import {
+	FILE_EXTENSION_INPUT_PARTIAL_NAME,
+	FILE_SCHEMA_EVENT,
+	IMPORT_FILE_FORMATS,
+} from '../constants';
+
+function updateExtensionInputValue(namespace, value) {
+	const externalTypeInput = document.getElementById(
+		`${namespace}${FILE_EXTENSION_INPUT_PARTIAL_NAME}`
+	);
+
+	if (externalTypeInput) {
+		externalTypeInput.value = value;
+	}
+}
 
 function FileUpload({portletNamespace}) {
 	const isMounted = useIsMounted();
@@ -27,12 +41,16 @@ function FileUpload({portletNamespace}) {
 		(event) => {
 			const {files} = event.target;
 			if (files?.length === 0) {
+				updateExtensionInputValue(portletNamespace, '');
+
 				return Liferay.fire(FILE_SCHEMA_EVENT, {
 					schema: null,
 				});
 			}
 
-			const onComplete = (schema) => {
+			const onComplete = ({extension, schema}) => {
+				updateExtensionInputValue(portletNamespace, extension);
+
 				Liferay.fire(FILE_SCHEMA_EVENT, {
 					schema,
 				});
@@ -44,13 +62,13 @@ function FileUpload({portletNamespace}) {
 				}
 			};
 
-			return parseFile({
+			parseFile({
 				file: files[0],
 				onComplete,
 				onError,
 			});
 		},
-		[isMounted]
+		[isMounted, portletNamespace]
 	);
 
 	const inputNameId = `${portletNamespace}importFile`;

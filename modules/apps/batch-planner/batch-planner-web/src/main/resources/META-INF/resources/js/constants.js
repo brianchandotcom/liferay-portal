@@ -14,7 +14,7 @@
 
 export const CSV_FORMAT = 'csv';
 export const EXPORT_FILE_NAME = 'Export.zip';
-export const FILE_MAPPED_FIELDS = 'file-mapped-fields';
+export const FILE_EXTENSION_INPUT_PARTIAL_NAME = 'externalType';
 export const FILE_SCHEMA_EVENT = 'file-schema';
 
 export const HEADERS = new Headers({

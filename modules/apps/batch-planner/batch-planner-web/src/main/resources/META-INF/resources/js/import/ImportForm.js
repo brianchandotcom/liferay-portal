@@ -35,9 +35,9 @@ function ImportForm({
 	mappedFields,
 	portletNamespace,
 }) {
-	const [fileFields, setFileFields] = useState();
 	const [dbFields, setDbFields] = useState();
 	const [fieldsSelections, setFieldsSelections] = useState({});
+	const [fileFields, setFileFields] = useState();
 	const useTemplateMappingRef = useRef();
 
 	const onFieldChange = useCallback((selectedItem, field) => {
@@ -60,6 +60,7 @@ function ImportForm({
 					newFieldsSelection[field.value] = field.value;
 				}
 			});
+
 			setFieldsSelections(newFieldsSelection);
 		}
 	}, [dbFields, fileFields]);
@@ -67,15 +68,16 @@ function ImportForm({
 	useEffect(() => {
 		function handleSchemaUpdated(event) {
 			const newSchema = event.schema;
+
 			if (newSchema) {
 				const newDBFields = getFieldsFromSchema(newSchema);
+
 				setDbFields(newDBFields);
 			}
 		}
 
-		function handleFileSchemaUpdate(event) {
-			const fileSchema = event.schema;
-			setFileFields(fileSchema);
+		function handleFileSchemaUpdate({schema}) {
+			setFileFields(schema);
 		}
 
 		function handleTemplateSelect(event) {
@@ -94,14 +96,14 @@ function ImportForm({
 			useTemplateMappingRef.current = false;
 		};
 
-		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 		Liferay.on(TEMPLATE_SOILED, handleTemplateDirty);
 
 		return () => {
-			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
+			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 			Liferay.detach(TEMPLATE_SOILED, handleTemplateDirty);
 		};
@@ -130,7 +132,7 @@ function ImportForm({
 
 	return (
 		<>
-			{fileFields && (dbFields || fileFields) && (
+			{fileFields?.length > 0 && dbFields?.length > 0 && (
 				<div className="card import-mapping-table">
 					<h4 className="card-header">
 						{Liferay.Language.get('import-mappings')}
@@ -154,6 +156,7 @@ function ImportForm({
 					</div>
 				</div>
 			)}
+
 			<div className="mt-4" id="formButtons">
 				<div className="sheet-footer">
 					<ClayLink className="btn btn-secondary" href={backUrl}>

@@ -34,6 +34,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm">
 		<input id="<portlet:namespace />batchPlannerPlanId" name="<portlet:namespace />batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<input id="<portlet:namespace />taskItemDelegateName" name="<portlet:namespace />taskItemDelegateName" type="hidden" value="DEFAULT" />
+		<input id="<portlet:namespace />externalType" name="<portlet:namespace />externalType" type="hidden" value="" />
 
 		<div class="row">
 			<div class="col-lg-6">
@@ -77,8 +78,9 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 											label='<%= LanguageUtil.get(request, "override-existing-records") %>'
 											name="headerCheckbox"
 										/>
-										</div><div class="mt-2">
+									</div>
 
+									<div class="mt-2">
 										<clay:checkbox
 											checked="<%= true %>"
 											label='<%= LanguageUtil.get(request, "ignore-blank-field-values-during-import") %>'
@@ -100,45 +102,41 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 						<liferay-frontend:edit-form-body>
 							<div id="<portlet:namespace />fileSettings"></div>
 
+							<div class="form-group">
+								<clay:radio
+									checked="<%= true %>"
+									label='<%= LanguageUtil.get(request, "upload-a-csv-file-from-my-computer") %>'
+									name="selectFile"
+									value="computer"
+								/>
+
+								<clay:radio
+									label='<%= LanguageUtil.get(request, "use-a-file-already-on-the-server") %>'
+									name="selectFile"
+									value="server"
+								/>
+							</div>
+
+							<div id="<portlet:namespace />fileUpload">
+								<react:component
+									module="js/components/FileUpload"
+								/>
+							</div>
+
+							<clay:checkbox
+								checked="<%= true %>"
+								id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+								label='<%= LanguageUtil.get(request, "this-file-contains-headers") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+							/>
+
 							<div class="row">
-								<div class="col">
-									<div class="form-group">
-										<clay:radio
-											checked="<%= true %>"
-											label='<%= LanguageUtil.get(request, "upload-a-csv-file-from-my-computer") %>'
-											name="selectFile"
-											value="computer"
-										/>
+								<div class="col-lg-6">
+									<aui:input name="field-separator" placeholder="," type="input" />
+								</div>
 
-										<clay:radio
-											label='<%= LanguageUtil.get(request, "use-a-file-already-on-the-server") %>'
-											name="selectFile"
-											value="server"
-										/>
-									</div>
-
-									<div id="<portlet:namespace />fileUpload">
-										<react:component
-											module="js/components/FileUpload"
-										/>
-									</div>
-
-									<clay:checkbox
-										checked="<%= true %>"
-										id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-										label='<%= LanguageUtil.get(request, "this-file-contains-headers") %>'
-										name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-									/>
-
-									<div class="row">
-										<div class="col-lg-6">
-											<aui:input name="field-separator" placeholder="," type="input" />
-										</div>
-
-										<div class="col-lg-6">
-											<aui:input name="field-enclosure" placeholder="'" type="input" />
-										</div>
-									</div>
+								<div class="col-lg-6">
+									<aui:input name="field-enclosure" placeholder="'" type="input" />
 								</div>
 							</div>
 						</liferay-frontend:edit-form-body>

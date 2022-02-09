@@ -75,7 +75,14 @@ export function extractFieldsFromJSON(content) {
 	}
 }
 
-function parseInChunk({chunkParser, file, onComplete, onError, options}) {
+function parseInChunk({
+	chunkParser,
+	extension,
+	file,
+	onComplete,
+	onError,
+	options,
+}) {
 	let abort = false;
 	const fileSize = file.size;
 	let offset = 0;
@@ -96,10 +103,10 @@ function parseInChunk({chunkParser, file, onComplete, onError, options}) {
 
 		offset += event.target.result.length;
 
-		const fields = chunkParser(event.target.result, options);
+		const schema = chunkParser(event.target.result, options);
 
-		if (fields) {
-			return onComplete(fields);
+		if (schema) {
+			return onComplete({extension, schema});
 		}
 		else if (offset >= fileSize) {
 			return onError();
@@ -122,10 +129,13 @@ const parseOperators = {
 };
 
 export default function parseFile({file, onComplete, onError, options}) {
-	const extension = file.name.substring(file.name.lastIndexOf('.') + 1);
+	const extension = file.name
+		.substring(file.name.lastIndexOf('.') + 1)
+		.toLowerCase();
 
-	return parseInChunk({
+	parseInChunk({
 		chunkParser: parseOperators[extension],
+		extension,
 		file,
 		onComplete,
 		onError,

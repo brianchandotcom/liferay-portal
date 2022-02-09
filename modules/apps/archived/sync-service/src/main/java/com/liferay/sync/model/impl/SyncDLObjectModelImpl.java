@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectModel;
-import com.liferay.sync.model.SyncDLObjectSoap;
 
 import java.io.Serializable;
 
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -203,77 +200,6 @@ public class SyncDLObjectModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static SyncDLObject toModel(SyncDLObjectSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		SyncDLObject model = new SyncDLObjectImpl();
-
-		model.setSyncDLObjectId(soapModel.getSyncDLObjectId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateTime(soapModel.getCreateTime());
-		model.setModifiedTime(soapModel.getModifiedTime());
-		model.setRepositoryId(soapModel.getRepositoryId());
-		model.setParentFolderId(soapModel.getParentFolderId());
-		model.setTreePath(soapModel.getTreePath());
-		model.setName(soapModel.getName());
-		model.setExtension(soapModel.getExtension());
-		model.setMimeType(soapModel.getMimeType());
-		model.setDescription(soapModel.getDescription());
-		model.setChangeLog(soapModel.getChangeLog());
-		model.setExtraSettings(soapModel.getExtraSettings());
-		model.setVersion(soapModel.getVersion());
-		model.setVersionId(soapModel.getVersionId());
-		model.setSize(soapModel.getSize());
-		model.setChecksum(soapModel.getChecksum());
-		model.setEvent(soapModel.getEvent());
-		model.setLanTokenKey(soapModel.getLanTokenKey());
-		model.setLastPermissionChangeDate(
-			soapModel.getLastPermissionChangeDate());
-		model.setLockExpirationDate(soapModel.getLockExpirationDate());
-		model.setLockUserId(soapModel.getLockUserId());
-		model.setLockUserName(soapModel.getLockUserName());
-		model.setType(soapModel.getType());
-		model.setTypePK(soapModel.getTypePK());
-		model.setTypeUuid(soapModel.getTypeUuid());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<SyncDLObject> toModels(SyncDLObjectSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<SyncDLObject> models = new ArrayList<SyncDLObject>(
-			soapModels.length);
-
-		for (SyncDLObjectSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public SyncDLObjectModelImpl() {

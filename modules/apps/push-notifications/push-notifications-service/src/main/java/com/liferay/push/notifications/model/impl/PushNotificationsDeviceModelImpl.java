@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.model.PushNotificationsDeviceModel;
-import com.liferay.push.notifications.model.PushNotificationsDeviceSoap;
 
 import java.io.Serializable;
 
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -149,59 +146,6 @@ public class PushNotificationsDeviceModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static PushNotificationsDevice toModel(
-		PushNotificationsDeviceSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		PushNotificationsDevice model = new PushNotificationsDeviceImpl();
-
-		model.setPushNotificationsDeviceId(
-			soapModel.getPushNotificationsDeviceId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setPlatform(soapModel.getPlatform());
-		model.setToken(soapModel.getToken());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<PushNotificationsDevice> toModels(
-		PushNotificationsDeviceSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<PushNotificationsDevice> models =
-			new ArrayList<PushNotificationsDevice>(soapModels.length);
-
-		for (PushNotificationsDeviceSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public PushNotificationsDeviceModelImpl() {

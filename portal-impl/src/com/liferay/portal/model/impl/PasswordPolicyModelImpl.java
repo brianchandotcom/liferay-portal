@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.PasswordPolicyModel;
-import com.liferay.portal.kernel.model.PasswordPolicySoap;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -203,85 +200,6 @@ public class PasswordPolicyModelImpl
 	 */
 	@Deprecated
 	public static final long PASSWORDPOLICYID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static PasswordPolicy toModel(PasswordPolicySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		PasswordPolicy model = new PasswordPolicyImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setPasswordPolicyId(soapModel.getPasswordPolicyId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDefaultPolicy(soapModel.isDefaultPolicy());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setChangeable(soapModel.isChangeable());
-		model.setChangeRequired(soapModel.isChangeRequired());
-		model.setMinAge(soapModel.getMinAge());
-		model.setCheckSyntax(soapModel.isCheckSyntax());
-		model.setAllowDictionaryWords(soapModel.isAllowDictionaryWords());
-		model.setMinAlphanumeric(soapModel.getMinAlphanumeric());
-		model.setMinLength(soapModel.getMinLength());
-		model.setMinLowerCase(soapModel.getMinLowerCase());
-		model.setMinNumbers(soapModel.getMinNumbers());
-		model.setMinSymbols(soapModel.getMinSymbols());
-		model.setMinUpperCase(soapModel.getMinUpperCase());
-		model.setRegex(soapModel.getRegex());
-		model.setHistory(soapModel.isHistory());
-		model.setHistoryCount(soapModel.getHistoryCount());
-		model.setExpireable(soapModel.isExpireable());
-		model.setMaxAge(soapModel.getMaxAge());
-		model.setWarningTime(soapModel.getWarningTime());
-		model.setGraceLimit(soapModel.getGraceLimit());
-		model.setLockout(soapModel.isLockout());
-		model.setMaxFailure(soapModel.getMaxFailure());
-		model.setLockoutDuration(soapModel.getLockoutDuration());
-		model.setRequireUnlock(soapModel.isRequireUnlock());
-		model.setResetFailureCount(soapModel.getResetFailureCount());
-		model.setResetTicketMaxAge(soapModel.getResetTicketMaxAge());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<PasswordPolicy> toModels(
-		PasswordPolicySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<PasswordPolicy> models = new ArrayList<PasswordPolicy>(
-			soapModels.length);
-
-		for (PasswordPolicySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

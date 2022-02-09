@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.model.SourceModel;
-import com.liferay.portal.reports.engine.console.model.SourceSoap;
 
 import java.io.Serializable;
 
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -166,61 +163,6 @@ public class SourceModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Source toModel(SourceSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Source model = new SourceImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setSourceId(soapModel.getSourceId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setName(soapModel.getName());
-		model.setDriverClassName(soapModel.getDriverClassName());
-		model.setDriverUrl(soapModel.getDriverUrl());
-		model.setDriverUserName(soapModel.getDriverUserName());
-		model.setDriverPassword(soapModel.getDriverPassword());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Source> toModels(SourceSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Source> models = new ArrayList<Source>(soapModels.length);
-
-		for (SourceSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public SourceModelImpl() {

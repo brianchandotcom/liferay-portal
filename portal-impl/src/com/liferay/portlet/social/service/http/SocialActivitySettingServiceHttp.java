@@ -46,7 +46,6 @@ import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SocialActivitySettingServiceSoap
  * @generated
  */
 public class SocialActivitySettingServiceHttp {

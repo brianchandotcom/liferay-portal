@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionModel;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -169,69 +166,6 @@ public class LayoutPageTemplateCollectionModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static LayoutPageTemplateCollection toModel(
-		LayoutPageTemplateCollectionSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		LayoutPageTemplateCollection model =
-			new LayoutPageTemplateCollectionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setLayoutPageTemplateCollectionId(
-			soapModel.getLayoutPageTemplateCollectionId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setLayoutPageTemplateCollectionKey(
-			soapModel.getLayoutPageTemplateCollectionKey());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<LayoutPageTemplateCollection> toModels(
-		LayoutPageTemplateCollectionSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> models =
-			new ArrayList<LayoutPageTemplateCollection>(soapModels.length);
-
-		for (LayoutPageTemplateCollectionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public LayoutPageTemplateCollectionModelImpl() {

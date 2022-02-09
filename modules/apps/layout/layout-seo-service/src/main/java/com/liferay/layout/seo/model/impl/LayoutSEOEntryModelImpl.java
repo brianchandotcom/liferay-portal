@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryModel;
-import com.liferay.layout.seo.model.LayoutSEOEntrySoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -194,74 +191,6 @@ public class LayoutSEOEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static LayoutSEOEntry toModel(LayoutSEOEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		LayoutSEOEntry model = new LayoutSEOEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setLayoutSEOEntryId(soapModel.getLayoutSEOEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.isPrivateLayout());
-		model.setLayoutId(soapModel.getLayoutId());
-		model.setCanonicalURL(soapModel.getCanonicalURL());
-		model.setCanonicalURLEnabled(soapModel.isCanonicalURLEnabled());
-		model.setDDMStorageId(soapModel.getDDMStorageId());
-		model.setOpenGraphDescription(soapModel.getOpenGraphDescription());
-		model.setOpenGraphDescriptionEnabled(
-			soapModel.isOpenGraphDescriptionEnabled());
-		model.setOpenGraphImageAlt(soapModel.getOpenGraphImageAlt());
-		model.setOpenGraphImageFileEntryId(
-			soapModel.getOpenGraphImageFileEntryId());
-		model.setOpenGraphTitle(soapModel.getOpenGraphTitle());
-		model.setOpenGraphTitleEnabled(soapModel.isOpenGraphTitleEnabled());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<LayoutSEOEntry> toModels(
-		LayoutSEOEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<LayoutSEOEntry> models = new ArrayList<LayoutSEOEntry>(
-			soapModels.length);
-
-		for (LayoutSEOEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public LayoutSEOEntryModelImpl() {

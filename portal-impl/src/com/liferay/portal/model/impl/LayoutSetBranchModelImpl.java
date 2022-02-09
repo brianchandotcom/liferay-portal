@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetBranchModel;
-import com.liferay.portal.kernel.model.LayoutSetBranchSoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -170,70 +167,6 @@ public class LayoutSetBranchModelImpl
 	 */
 	@Deprecated
 	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static LayoutSetBranch toModel(LayoutSetBranchSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		LayoutSetBranch model = new LayoutSetBranchImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setLayoutSetBranchId(soapModel.getLayoutSetBranchId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.isPrivateLayout());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setMaster(soapModel.isMaster());
-		model.setLogoId(soapModel.getLogoId());
-		model.setThemeId(soapModel.getThemeId());
-		model.setColorSchemeId(soapModel.getColorSchemeId());
-		model.setCss(soapModel.getCss());
-		model.setSettings(soapModel.getSettings());
-		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
-		model.setLayoutSetPrototypeLinkEnabled(
-			soapModel.isLayoutSetPrototypeLinkEnabled());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<LayoutSetBranch> toModels(
-		LayoutSetBranchSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<LayoutSetBranch> models = new ArrayList<LayoutSetBranch>(
-			soapModels.length);
-
-		for (LayoutSetBranchSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

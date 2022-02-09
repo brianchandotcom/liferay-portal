@@ -17,7 +17,6 @@ package com.liferay.commerce.term.model.impl;
 import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryModel;
-import com.liferay.commerce.term.model.CommerceTermEntrySoap;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -45,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -202,71 +200,6 @@ public class CommerceTermEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceTermEntry toModel(CommerceTermEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceTermEntry model = new CommerceTermEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
-		model.setCommerceTermEntryId(soapModel.getCommerceTermEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setActive(soapModel.isActive());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setName(soapModel.getName());
-		model.setPriority(soapModel.getPriority());
-		model.setType(soapModel.getType());
-		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceTermEntry> toModels(
-		CommerceTermEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceTermEntry> models = new ArrayList<CommerceTermEntry>(
-			soapModels.length);
-
-		for (CommerceTermEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public CommerceTermEntryModelImpl() {

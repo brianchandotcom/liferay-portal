@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFeedModel;
-import com.liferay.journal.model.JournalFeedSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -177,74 +174,6 @@ public class JournalFeedModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static JournalFeed toModel(JournalFeedSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		JournalFeed model = new JournalFeedImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setId(soapModel.getId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setFeedId(soapModel.getFeedId());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setDDMStructureKey(soapModel.getDDMStructureKey());
-		model.setDDMTemplateKey(soapModel.getDDMTemplateKey());
-		model.setDDMRendererTemplateKey(soapModel.getDDMRendererTemplateKey());
-		model.setDelta(soapModel.getDelta());
-		model.setOrderByCol(soapModel.getOrderByCol());
-		model.setOrderByType(soapModel.getOrderByType());
-		model.setTargetLayoutFriendlyUrl(
-			soapModel.getTargetLayoutFriendlyUrl());
-		model.setTargetPortletId(soapModel.getTargetPortletId());
-		model.setContentField(soapModel.getContentField());
-		model.setFeedFormat(soapModel.getFeedFormat());
-		model.setFeedVersion(soapModel.getFeedVersion());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<JournalFeed> toModels(JournalFeedSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<JournalFeed> models = new ArrayList<JournalFeed>(
-			soapModels.length);
-
-		for (JournalFeedSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public JournalFeedModelImpl() {

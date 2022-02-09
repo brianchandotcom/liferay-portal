@@ -16,7 +16,6 @@ package com.liferay.commerce.price.list.model.impl;
 
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListModel;
-import com.liferay.commerce.price.list.model.CommercePriceListSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -45,12 +44,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -233,75 +230,6 @@ public class CommercePriceListModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 2048L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommercePriceList toModel(CommercePriceListSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommercePriceList model = new CommercePriceListImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommercePriceListId(soapModel.getCommercePriceListId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
-		model.setParentCommercePriceListId(
-			soapModel.getParentCommercePriceListId());
-		model.setCatalogBasePriceList(soapModel.isCatalogBasePriceList());
-		model.setNetPrice(soapModel.isNetPrice());
-		model.setType(soapModel.getType());
-		model.setName(soapModel.getName());
-		model.setPriority(soapModel.getPriority());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommercePriceList> toModels(
-		CommercePriceListSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommercePriceList> models = new ArrayList<CommercePriceList>(
-			soapModels.length);
-
-		for (CommercePriceListSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.price.list.service.util.ServiceProps.get(

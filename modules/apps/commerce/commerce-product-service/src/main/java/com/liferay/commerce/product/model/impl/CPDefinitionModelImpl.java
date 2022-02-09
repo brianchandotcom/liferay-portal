@@ -17,7 +17,6 @@ package com.liferay.commerce.product.model.impl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionModel;
-import com.liferay.commerce.product.model.CPDefinitionSoap;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -48,7 +47,6 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -263,102 +261,6 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CPDefinition toModel(CPDefinitionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPDefinition model = new CPDefinitionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
-		model.setCPDefinitionId(soapModel.getCPDefinitionId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCProductId(soapModel.getCProductId());
-		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
-		model.setProductTypeName(soapModel.getProductTypeName());
-		model.setAvailableIndividually(soapModel.isAvailableIndividually());
-		model.setIgnoreSKUCombinations(soapModel.isIgnoreSKUCombinations());
-		model.setShippable(soapModel.isShippable());
-		model.setFreeShipping(soapModel.isFreeShipping());
-		model.setShipSeparately(soapModel.isShipSeparately());
-		model.setShippingExtraPrice(soapModel.getShippingExtraPrice());
-		model.setWidth(soapModel.getWidth());
-		model.setHeight(soapModel.getHeight());
-		model.setDepth(soapModel.getDepth());
-		model.setWeight(soapModel.getWeight());
-		model.setTaxExempt(soapModel.isTaxExempt());
-		model.setTelcoOrElectronics(soapModel.isTelcoOrElectronics());
-		model.setDDMStructureKey(soapModel.getDDMStructureKey());
-		model.setPublished(soapModel.isPublished());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setSubscriptionEnabled(soapModel.isSubscriptionEnabled());
-		model.setSubscriptionLength(soapModel.getSubscriptionLength());
-		model.setSubscriptionType(soapModel.getSubscriptionType());
-		model.setSubscriptionTypeSettings(
-			soapModel.getSubscriptionTypeSettings());
-		model.setMaxSubscriptionCycles(soapModel.getMaxSubscriptionCycles());
-		model.setDeliverySubscriptionEnabled(
-			soapModel.isDeliverySubscriptionEnabled());
-		model.setDeliverySubscriptionLength(
-			soapModel.getDeliverySubscriptionLength());
-		model.setDeliverySubscriptionType(
-			soapModel.getDeliverySubscriptionType());
-		model.setDeliverySubscriptionTypeSettings(
-			soapModel.getDeliverySubscriptionTypeSettings());
-		model.setDeliveryMaxSubscriptionCycles(
-			soapModel.getDeliveryMaxSubscriptionCycles());
-		model.setAccountGroupFilterEnabled(
-			soapModel.isAccountGroupFilterEnabled());
-		model.setChannelFilterEnabled(soapModel.isChannelFilterEnabled());
-		model.setVersion(soapModel.getVersion());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CPDefinition> toModels(CPDefinitionSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPDefinition> models = new ArrayList<CPDefinition>(
-			soapModels.length);
-
-		for (CPDefinitionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.service.util.ServiceProps.get(

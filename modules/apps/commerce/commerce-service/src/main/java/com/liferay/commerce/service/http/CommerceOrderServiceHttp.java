@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Alessio Antonio Rendina
- * @see CommerceOrderServiceSoap
  * @generated
  */
 public class CommerceOrderServiceHttp {

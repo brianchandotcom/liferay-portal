@@ -16,7 +16,6 @@ package com.liferay.account.model.impl;
 
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.model.AccountGroupRelModel;
-import com.liferay.account.model.AccountGroupRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -154,60 +151,6 @@ public class AccountGroupRelModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static AccountGroupRel toModel(AccountGroupRelSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		AccountGroupRel model = new AccountGroupRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setAccountGroupRelId(soapModel.getAccountGroupRelId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setAccountGroupId(soapModel.getAccountGroupId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<AccountGroupRel> toModels(
-		AccountGroupRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<AccountGroupRel> models = new ArrayList<AccountGroupRel>(
-			soapModels.length);
-
-		for (AccountGroupRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public AccountGroupRelModelImpl() {

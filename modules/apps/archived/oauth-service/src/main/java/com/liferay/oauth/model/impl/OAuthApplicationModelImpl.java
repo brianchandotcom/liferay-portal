@@ -18,7 +18,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthApplicationModel;
-import com.liferay.oauth.model.OAuthApplicationSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -167,65 +164,6 @@ public class OAuthApplicationModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static OAuthApplication toModel(OAuthApplicationSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		OAuthApplication model = new OAuthApplicationImpl();
-
-		model.setOAuthApplicationId(soapModel.getOAuthApplicationId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setConsumerKey(soapModel.getConsumerKey());
-		model.setConsumerSecret(soapModel.getConsumerSecret());
-		model.setAccessLevel(soapModel.getAccessLevel());
-		model.setLogoId(soapModel.getLogoId());
-		model.setShareableAccessToken(soapModel.isShareableAccessToken());
-		model.setCallbackURI(soapModel.getCallbackURI());
-		model.setWebsiteURL(soapModel.getWebsiteURL());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<OAuthApplication> toModels(
-		OAuthApplicationSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<OAuthApplication> models = new ArrayList<OAuthApplication>(
-			soapModels.length);
-
-		for (OAuthApplicationSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public OAuthApplicationModelImpl() {

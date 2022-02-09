@@ -16,7 +16,6 @@ package com.liferay.blogs.model.impl;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.blogs.model.BlogsEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -49,12 +48,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -224,79 +221,6 @@ public class BlogsEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static BlogsEntry toModel(BlogsEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		BlogsEntry model = new BlogsEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setEntryId(soapModel.getEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
-		model.setSubtitle(soapModel.getSubtitle());
-		model.setUrlTitle(soapModel.getUrlTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setContent(soapModel.getContent());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setAllowPingbacks(soapModel.isAllowPingbacks());
-		model.setAllowTrackbacks(soapModel.isAllowTrackbacks());
-		model.setTrackbacks(soapModel.getTrackbacks());
-		model.setCoverImageCaption(soapModel.getCoverImageCaption());
-		model.setCoverImageFileEntryId(soapModel.getCoverImageFileEntryId());
-		model.setCoverImageURL(soapModel.getCoverImageURL());
-		model.setSmallImage(soapModel.isSmallImage());
-		model.setSmallImageFileEntryId(soapModel.getSmallImageFileEntryId());
-		model.setSmallImageId(soapModel.getSmallImageId());
-		model.setSmallImageURL(soapModel.getSmallImageURL());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<BlogsEntry> toModels(BlogsEntrySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<BlogsEntry> models = new ArrayList<BlogsEntry>(soapModels.length);
-
-		for (BlogsEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public BlogsEntryModelImpl() {

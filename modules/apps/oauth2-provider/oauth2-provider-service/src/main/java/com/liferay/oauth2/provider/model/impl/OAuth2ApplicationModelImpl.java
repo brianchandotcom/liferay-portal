@@ -18,7 +18,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationModel;
-import com.liferay.oauth2.provider.model.OAuth2ApplicationSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -166,74 +163,6 @@ public class OAuth2ApplicationModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static OAuth2Application toModel(OAuth2ApplicationSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		OAuth2Application model = new OAuth2ApplicationImpl();
-
-		model.setOAuth2ApplicationId(soapModel.getOAuth2ApplicationId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setOAuth2ApplicationScopeAliasesId(
-			soapModel.getOAuth2ApplicationScopeAliasesId());
-		model.setAllowedGrantTypes(soapModel.getAllowedGrantTypes());
-		model.setClientCredentialUserId(soapModel.getClientCredentialUserId());
-		model.setClientCredentialUserName(
-			soapModel.getClientCredentialUserName());
-		model.setClientId(soapModel.getClientId());
-		model.setClientProfile(soapModel.getClientProfile());
-		model.setClientSecret(soapModel.getClientSecret());
-		model.setDescription(soapModel.getDescription());
-		model.setFeatures(soapModel.getFeatures());
-		model.setHomePageURL(soapModel.getHomePageURL());
-		model.setIconFileEntryId(soapModel.getIconFileEntryId());
-		model.setName(soapModel.getName());
-		model.setPrivacyPolicyURL(soapModel.getPrivacyPolicyURL());
-		model.setRedirectURIs(soapModel.getRedirectURIs());
-		model.setRememberDevice(soapModel.isRememberDevice());
-		model.setTrustedApplication(soapModel.isTrustedApplication());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<OAuth2Application> toModels(
-		OAuth2ApplicationSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<OAuth2Application> models = new ArrayList<OAuth2Application>(
-			soapModels.length);
-
-		for (OAuth2ApplicationSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public OAuth2ApplicationModelImpl() {

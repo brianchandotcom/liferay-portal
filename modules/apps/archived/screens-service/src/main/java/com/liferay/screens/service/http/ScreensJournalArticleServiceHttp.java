@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensJournalArticleServiceSoap
  * @generated
  */
 public class ScreensJournalArticleServiceHttp {

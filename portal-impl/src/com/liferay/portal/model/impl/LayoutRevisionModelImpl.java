@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionModel;
-import com.liferay.portal.kernel.model.LayoutRevisionSoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -213,79 +210,6 @@ public class LayoutRevisionModelImpl
 	 */
 	@Deprecated
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 64L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static LayoutRevision toModel(LayoutRevisionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		LayoutRevision model = new LayoutRevisionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setLayoutRevisionId(soapModel.getLayoutRevisionId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setLayoutSetBranchId(soapModel.getLayoutSetBranchId());
-		model.setLayoutBranchId(soapModel.getLayoutBranchId());
-		model.setParentLayoutRevisionId(soapModel.getParentLayoutRevisionId());
-		model.setHead(soapModel.isHead());
-		model.setMajor(soapModel.isMajor());
-		model.setPlid(soapModel.getPlid());
-		model.setPrivateLayout(soapModel.isPrivateLayout());
-		model.setName(soapModel.getName());
-		model.setTitle(soapModel.getTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setKeywords(soapModel.getKeywords());
-		model.setRobots(soapModel.getRobots());
-		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setIconImageId(soapModel.getIconImageId());
-		model.setThemeId(soapModel.getThemeId());
-		model.setColorSchemeId(soapModel.getColorSchemeId());
-		model.setCss(soapModel.getCss());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<LayoutRevision> toModels(
-		LayoutRevisionSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<LayoutRevision> models = new ArrayList<LayoutRevision>(
-			soapModels.length);
-
-		for (LayoutRevisionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

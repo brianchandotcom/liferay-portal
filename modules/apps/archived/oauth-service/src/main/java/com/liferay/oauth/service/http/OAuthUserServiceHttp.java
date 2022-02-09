@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Ivica Cardic
- * @see OAuthUserServiceSoap
  * @generated
  */
 public class OAuthUserServiceHttp {

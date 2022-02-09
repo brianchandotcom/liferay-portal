@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.model.ReadingTimeEntryModel;
-import com.liferay.reading.time.model.ReadingTimeEntrySoap;
 
 import java.io.Serializable;
 
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -172,61 +169,6 @@ public class ReadingTimeEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ReadingTimeEntry toModel(ReadingTimeEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		ReadingTimeEntry model = new ReadingTimeEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setReadingTimeEntryId(soapModel.getReadingTimeEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setReadingTime(soapModel.getReadingTime());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<ReadingTimeEntry> toModels(
-		ReadingTimeEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<ReadingTimeEntry> models = new ArrayList<ReadingTimeEntry>(
-			soapModels.length);
-
-		for (ReadingTimeEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public ReadingTimeEntryModelImpl() {

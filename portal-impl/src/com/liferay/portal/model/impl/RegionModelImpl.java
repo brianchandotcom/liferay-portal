@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.RegionModel;
-import com.liferay.portal.kernel.model.RegionSoap;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
@@ -46,7 +45,6 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -189,62 +187,6 @@ public class RegionModelImpl
 	 */
 	@Deprecated
 	public static final long POSITION_COLUMN_BITMASK = 64L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Region toModel(RegionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Region model = new RegionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
-		model.setRegionId(soapModel.getRegionId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCountryId(soapModel.getCountryId());
-		model.setActive(soapModel.isActive());
-		model.setName(soapModel.getName());
-		model.setPosition(soapModel.getPosition());
-		model.setRegionCode(soapModel.getRegionCode());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Region> toModels(RegionSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Region> models = new ArrayList<Region>(soapModels.length);
-
-		for (RegionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

@@ -16,7 +16,6 @@ package com.liferay.commerce.notification.model.impl;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRelModel;
-import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -156,71 +153,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceNotificationTemplateCommerceAccountGroupRel toModel(
-		CommerceNotificationTemplateCommerceAccountGroupRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceNotificationTemplateCommerceAccountGroupRel model =
-			new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceNotificationTemplateCommerceAccountGroupRelId(
-			soapModel.
-				getCommerceNotificationTemplateCommerceAccountGroupRelId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceNotificationTemplateId(
-			soapModel.getCommerceNotificationTemplateId());
-		model.setCommerceAccountGroupId(soapModel.getCommerceAccountGroupId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		toModels(
-			CommerceNotificationTemplateCommerceAccountGroupRelSoap[]
-				soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplateCommerceAccountGroupRel> models =
-			new ArrayList<CommerceNotificationTemplateCommerceAccountGroupRel>(
-				soapModels.length);
-
-		for (CommerceNotificationTemplateCommerceAccountGroupRelSoap soapModel :
-				soapModels) {
-
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.notification.service.util.ServiceProps.get(

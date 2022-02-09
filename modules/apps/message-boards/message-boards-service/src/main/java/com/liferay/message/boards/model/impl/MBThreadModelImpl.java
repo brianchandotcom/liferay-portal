@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadModel;
-import com.liferay.message.boards.model.MBThreadSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -49,12 +48,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -203,70 +200,6 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static MBThread toModel(MBThreadSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		MBThread model = new MBThreadImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setThreadId(soapModel.getThreadId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCategoryId(soapModel.getCategoryId());
-		model.setRootMessageId(soapModel.getRootMessageId());
-		model.setRootMessageUserId(soapModel.getRootMessageUserId());
-		model.setTitle(soapModel.getTitle());
-		model.setLastPostByUserId(soapModel.getLastPostByUserId());
-		model.setLastPostDate(soapModel.getLastPostDate());
-		model.setPriority(soapModel.getPriority());
-		model.setQuestion(soapModel.isQuestion());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<MBThread> toModels(MBThreadSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<MBThread> models = new ArrayList<MBThread>(soapModels.length);
-
-		for (MBThreadSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public MBThreadModelImpl() {

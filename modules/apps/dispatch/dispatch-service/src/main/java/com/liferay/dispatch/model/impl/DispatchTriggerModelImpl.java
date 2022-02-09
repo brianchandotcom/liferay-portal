@@ -16,7 +16,6 @@ package com.liferay.dispatch.model.impl;
 
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.model.DispatchTriggerModel;
-import com.liferay.dispatch.model.DispatchTriggerSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -183,69 +180,6 @@ public class DispatchTriggerModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DispatchTrigger toModel(DispatchTriggerSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DispatchTrigger model = new DispatchTriggerImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setDispatchTriggerId(soapModel.getDispatchTriggerId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setActive(soapModel.isActive());
-		model.setCronExpression(soapModel.getCronExpression());
-		model.setDispatchTaskClusterMode(
-			soapModel.getDispatchTaskClusterMode());
-		model.setDispatchTaskExecutorType(
-			soapModel.getDispatchTaskExecutorType());
-		model.setDispatchTaskSettings(soapModel.getDispatchTaskSettings());
-		model.setEndDate(soapModel.getEndDate());
-		model.setName(soapModel.getName());
-		model.setOverlapAllowed(soapModel.isOverlapAllowed());
-		model.setStartDate(soapModel.getStartDate());
-		model.setSystem(soapModel.isSystem());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DispatchTrigger> toModels(
-		DispatchTriggerSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DispatchTrigger> models = new ArrayList<DispatchTrigger>(
-			soapModels.length);
-
-		for (DispatchTriggerSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DispatchTriggerModelImpl() {

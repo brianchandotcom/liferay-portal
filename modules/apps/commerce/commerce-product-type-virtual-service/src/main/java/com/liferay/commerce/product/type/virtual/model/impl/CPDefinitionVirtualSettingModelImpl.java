@@ -16,7 +16,6 @@ package com.liferay.commerce.product.type.virtual.model.impl;
 
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingModel;
-import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -203,78 +200,6 @@ public class CPDefinitionVirtualSettingModelImpl
 	 */
 	@Deprecated
 	public static final long CPDEFINITIONVIRTUALSETTINGID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CPDefinitionVirtualSetting toModel(
-		CPDefinitionVirtualSettingSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPDefinitionVirtualSetting model = new CPDefinitionVirtualSettingImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCPDefinitionVirtualSettingId(
-			soapModel.getCPDefinitionVirtualSettingId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setFileEntryId(soapModel.getFileEntryId());
-		model.setUrl(soapModel.getUrl());
-		model.setActivationStatus(soapModel.getActivationStatus());
-		model.setDuration(soapModel.getDuration());
-		model.setMaxUsages(soapModel.getMaxUsages());
-		model.setUseSample(soapModel.isUseSample());
-		model.setSampleFileEntryId(soapModel.getSampleFileEntryId());
-		model.setSampleUrl(soapModel.getSampleUrl());
-		model.setTermsOfUseRequired(soapModel.isTermsOfUseRequired());
-		model.setTermsOfUseContent(soapModel.getTermsOfUseContent());
-		model.setTermsOfUseJournalArticleResourcePrimKey(
-			soapModel.getTermsOfUseJournalArticleResourcePrimKey());
-		model.setOverride(soapModel.isOverride());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CPDefinitionVirtualSetting> toModels(
-		CPDefinitionVirtualSettingSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPDefinitionVirtualSetting> models =
-			new ArrayList<CPDefinitionVirtualSetting>(soapModels.length);
-
-		for (CPDefinitionVirtualSettingSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.type.virtual.service.util.ServiceProps.get(

@@ -16,7 +16,6 @@ package com.liferay.dispatch.model.impl;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchLogModel;
-import com.liferay.dispatch.model.DispatchLogSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -152,61 +149,6 @@ public class DispatchLogModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DispatchLog toModel(DispatchLogSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DispatchLog model = new DispatchLogImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setDispatchLogId(soapModel.getDispatchLogId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDispatchTriggerId(soapModel.getDispatchTriggerId());
-		model.setEndDate(soapModel.getEndDate());
-		model.setError(soapModel.getError());
-		model.setOutput(soapModel.getOutput());
-		model.setStartDate(soapModel.getStartDate());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DispatchLog> toModels(DispatchLogSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DispatchLog> models = new ArrayList<DispatchLog>(
-			soapModels.length);
-
-		for (DispatchLogSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DispatchLogModelImpl() {

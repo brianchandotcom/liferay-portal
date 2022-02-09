@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.model.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountModel;
-import com.liferay.commerce.discount.model.CommerceDiscountSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -47,12 +46,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -230,84 +227,6 @@ public class CommerceDiscountModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceDiscount toModel(CommerceDiscountSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceDiscount model = new CommerceDiscountImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceDiscountId(soapModel.getCommerceDiscountId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
-		model.setTarget(soapModel.getTarget());
-		model.setUseCouponCode(soapModel.isUseCouponCode());
-		model.setCouponCode(soapModel.getCouponCode());
-		model.setUsePercentage(soapModel.isUsePercentage());
-		model.setMaximumDiscountAmount(soapModel.getMaximumDiscountAmount());
-		model.setLevel(soapModel.getLevel());
-		model.setLevel1(soapModel.getLevel1());
-		model.setLevel2(soapModel.getLevel2());
-		model.setLevel3(soapModel.getLevel3());
-		model.setLevel4(soapModel.getLevel4());
-		model.setLimitationType(soapModel.getLimitationType());
-		model.setLimitationTimes(soapModel.getLimitationTimes());
-		model.setLimitationTimesPerAccount(
-			soapModel.getLimitationTimesPerAccount());
-		model.setNumberOfUse(soapModel.getNumberOfUse());
-		model.setRulesConjunction(soapModel.isRulesConjunction());
-		model.setActive(soapModel.isActive());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceDiscount> toModels(
-		CommerceDiscountSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceDiscount> models = new ArrayList<CommerceDiscount>(
-			soapModels.length);
-
-		for (CommerceDiscountSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.discount.service.util.ServiceProps.get(

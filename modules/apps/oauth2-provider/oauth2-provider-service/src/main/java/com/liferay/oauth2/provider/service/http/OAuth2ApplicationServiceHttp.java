@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see OAuth2ApplicationServiceSoap
  * @generated
  */
 public class OAuth2ApplicationServiceHttp {

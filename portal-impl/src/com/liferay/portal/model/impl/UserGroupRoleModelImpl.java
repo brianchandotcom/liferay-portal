@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRoleModel;
-import com.liferay.portal.kernel.model.UserGroupRoleSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -153,55 +150,6 @@ public class UserGroupRoleModelImpl
 	 */
 	@Deprecated
 	public static final long USERGROUPROLEID_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static UserGroupRole toModel(UserGroupRoleSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		UserGroupRole model = new UserGroupRoleImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUserGroupRoleId(soapModel.getUserGroupRoleId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setRoleId(soapModel.getRoleId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<UserGroupRole> toModels(UserGroupRoleSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<UserGroupRole> models = new ArrayList<UserGroupRole>(
-			soapModels.length);
-
-		for (UserGroupRoleSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

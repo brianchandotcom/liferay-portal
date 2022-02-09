@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensRatingsEntryServiceSoap
  * @generated
  */
 public class ScreensRatingsEntryServiceHttp {

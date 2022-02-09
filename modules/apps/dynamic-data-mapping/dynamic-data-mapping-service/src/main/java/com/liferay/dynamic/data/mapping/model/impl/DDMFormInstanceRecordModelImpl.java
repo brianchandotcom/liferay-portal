@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordModel;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -187,70 +184,6 @@ public class DDMFormInstanceRecordModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DDMFormInstanceRecord toModel(
-		DDMFormInstanceRecordSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		DDMFormInstanceRecord model = new DDMFormInstanceRecordImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setFormInstanceRecordId(soapModel.getFormInstanceRecordId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setVersionUserId(soapModel.getVersionUserId());
-		model.setVersionUserName(soapModel.getVersionUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setFormInstanceId(soapModel.getFormInstanceId());
-		model.setFormInstanceVersion(soapModel.getFormInstanceVersion());
-		model.setStorageId(soapModel.getStorageId());
-		model.setVersion(soapModel.getVersion());
-		model.setIpAddress(soapModel.getIpAddress());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DDMFormInstanceRecord> toModels(
-		DDMFormInstanceRecordSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> models =
-			new ArrayList<DDMFormInstanceRecord>(soapModels.length);
-
-		for (DDMFormInstanceRecordSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DDMFormInstanceRecordModelImpl() {

@@ -38,7 +38,6 @@ package com.liferay.reading.time.service.http;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ReadingTimeEntryServiceSoap
  * @generated
  */
 public class ReadingTimeEntryServiceHttp {

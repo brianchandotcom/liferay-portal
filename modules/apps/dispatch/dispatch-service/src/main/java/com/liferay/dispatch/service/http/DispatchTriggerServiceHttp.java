@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Matija Petanjek
- * @see DispatchTriggerServiceSoap
  * @generated
  */
 public class DispatchTriggerServiceHttp {

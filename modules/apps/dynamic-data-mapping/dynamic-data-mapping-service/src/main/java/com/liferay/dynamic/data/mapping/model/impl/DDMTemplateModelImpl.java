@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -230,76 +227,6 @@ public class DDMTemplateModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DDMTemplate toModel(DDMTemplateSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DDMTemplate model = new DDMTemplateImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setTemplateId(soapModel.getTemplateId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setVersionUserId(soapModel.getVersionUserId());
-		model.setVersionUserName(soapModel.getVersionUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setResourceClassNameId(soapModel.getResourceClassNameId());
-		model.setTemplateKey(soapModel.getTemplateKey());
-		model.setVersion(soapModel.getVersion());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setType(soapModel.getType());
-		model.setMode(soapModel.getMode());
-		model.setLanguage(soapModel.getLanguage());
-		model.setScript(soapModel.getScript());
-		model.setCacheable(soapModel.isCacheable());
-		model.setSmallImage(soapModel.isSmallImage());
-		model.setSmallImageId(soapModel.getSmallImageId());
-		model.setSmallImageURL(soapModel.getSmallImageURL());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DDMTemplate> toModels(DDMTemplateSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DDMTemplate> models = new ArrayList<DDMTemplate>(
-			soapModels.length);
-
-		for (DDMTemplateSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DDMTemplateModelImpl() {

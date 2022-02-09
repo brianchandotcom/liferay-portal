@@ -46,7 +46,6 @@ import com.liferay.sync.service.SyncDLObjectServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SyncDLObjectServiceSoap
  * @generated
  */
 public class SyncDLObjectServiceHttp {

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.model.SXPElementModel;
-import com.liferay.search.experiences.model.SXPElementSoap;
 
 import java.io.Serializable;
 
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -182,63 +179,6 @@ public class SXPElementModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static SXPElement toModel(SXPElementSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		SXPElement model = new SXPElementImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setSXPElementId(soapModel.getSXPElementId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDescription(soapModel.getDescription());
-		model.setElementDefinitionJSON(soapModel.getElementDefinitionJSON());
-		model.setHidden(soapModel.isHidden());
-		model.setReadOnly(soapModel.isReadOnly());
-		model.setSchemaVersion(soapModel.getSchemaVersion());
-		model.setTitle(soapModel.getTitle());
-		model.setType(soapModel.getType());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<SXPElement> toModels(SXPElementSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<SXPElement> models = new ArrayList<SXPElement>(soapModels.length);
-
-		for (SXPElementSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public SXPElementModelImpl() {

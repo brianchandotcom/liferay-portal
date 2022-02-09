@@ -46,7 +46,6 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceU
  * </p>
  *
  * @author Supritha Sundaram
- * @see WeDeployAuthAppServiceSoap
  * @generated
  */
 public class WeDeployAuthAppServiceHttp {

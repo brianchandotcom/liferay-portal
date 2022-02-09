@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
-import com.liferay.fragment.model.FragmentEntryLinkSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,12 +43,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -222,77 +219,6 @@ public class FragmentEntryLinkModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static FragmentEntryLink toModel(FragmentEntryLinkSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		FragmentEntryLink model = new FragmentEntryLinkImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setFragmentEntryLinkId(soapModel.getFragmentEntryLinkId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setOriginalFragmentEntryLinkId(
-			soapModel.getOriginalFragmentEntryLinkId());
-		model.setFragmentEntryId(soapModel.getFragmentEntryId());
-		model.setSegmentsExperienceId(soapModel.getSegmentsExperienceId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setPlid(soapModel.getPlid());
-		model.setCss(soapModel.getCss());
-		model.setHtml(soapModel.getHtml());
-		model.setJs(soapModel.getJs());
-		model.setConfiguration(soapModel.getConfiguration());
-		model.setEditableValues(soapModel.getEditableValues());
-		model.setNamespace(soapModel.getNamespace());
-		model.setPosition(soapModel.getPosition());
-		model.setRendererKey(soapModel.getRendererKey());
-		model.setLastPropagationDate(soapModel.getLastPropagationDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<FragmentEntryLink> toModels(
-		FragmentEntryLinkSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<FragmentEntryLink> models = new ArrayList<FragmentEntryLink>(
-			soapModels.length);
-
-		for (FragmentEntryLinkSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public FragmentEntryLinkModelImpl() {

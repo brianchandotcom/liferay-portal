@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.model.EntryModel;
-import com.liferay.portal.reports.engine.console.model.EntrySoap;
 
 import java.io.Serializable;
 
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -150,68 +147,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Entry toModel(EntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Entry model = new EntryImpl();
-
-		model.setEntryId(soapModel.getEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDefinitionId(soapModel.getDefinitionId());
-		model.setFormat(soapModel.getFormat());
-		model.setScheduleRequest(soapModel.isScheduleRequest());
-		model.setStartDate(soapModel.getStartDate());
-		model.setEndDate(soapModel.getEndDate());
-		model.setRepeating(soapModel.isRepeating());
-		model.setRecurrence(soapModel.getRecurrence());
-		model.setEmailNotifications(soapModel.getEmailNotifications());
-		model.setEmailDelivery(soapModel.getEmailDelivery());
-		model.setPortletId(soapModel.getPortletId());
-		model.setPageURL(soapModel.getPageURL());
-		model.setReportParameters(soapModel.getReportParameters());
-		model.setErrorMessage(soapModel.getErrorMessage());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Entry> toModels(EntrySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Entry> models = new ArrayList<Entry>(soapModels.length);
-
-		for (EntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public EntryModelImpl() {

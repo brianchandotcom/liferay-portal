@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see LayoutSetServiceSoap
  * @generated
  */
 public class LayoutSetServiceHttp {

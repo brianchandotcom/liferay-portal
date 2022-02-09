@@ -16,7 +16,6 @@ package com.liferay.commerce.tax.engine.fixed.model.impl;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelModel;
-import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -168,68 +165,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceTaxFixedRateAddressRel toModel(
-		CommerceTaxFixedRateAddressRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceTaxFixedRateAddressRel model =
-			new CommerceTaxFixedRateAddressRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceTaxFixedRateAddressRelId(
-			soapModel.getCommerceTaxFixedRateAddressRelId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceTaxMethodId(soapModel.getCommerceTaxMethodId());
-		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
-		model.setCountryId(soapModel.getCountryId());
-		model.setRegionId(soapModel.getRegionId());
-		model.setZip(soapModel.getZip());
-		model.setRate(soapModel.getRate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceTaxFixedRateAddressRel> toModels(
-		CommerceTaxFixedRateAddressRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRateAddressRel> models =
-			new ArrayList<CommerceTaxFixedRateAddressRel>(soapModels.length);
-
-		for (CommerceTaxFixedRateAddressRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.tax.engine.fixed.service.util.ServiceProps.get(

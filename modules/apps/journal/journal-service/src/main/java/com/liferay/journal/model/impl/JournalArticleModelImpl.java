@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleModel;
-import com.liferay.journal.model.JournalArticleSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -48,12 +47,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -286,85 +283,6 @@ public class JournalArticleModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static JournalArticle toModel(JournalArticleSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		JournalArticle model = new JournalArticleImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setId(soapModel.getId());
-		model.setResourcePrimKey(soapModel.getResourcePrimKey());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setFolderId(soapModel.getFolderId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setTreePath(soapModel.getTreePath());
-		model.setArticleId(soapModel.getArticleId());
-		model.setVersion(soapModel.getVersion());
-		model.setUrlTitle(soapModel.getUrlTitle());
-		model.setDDMStructureKey(soapModel.getDDMStructureKey());
-		model.setDDMTemplateKey(soapModel.getDDMTemplateKey());
-		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
-		model.setLayoutUuid(soapModel.getLayoutUuid());
-		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setReviewDate(soapModel.getReviewDate());
-		model.setIndexable(soapModel.isIndexable());
-		model.setSmallImage(soapModel.isSmallImage());
-		model.setSmallImageId(soapModel.getSmallImageId());
-		model.setSmallImageURL(soapModel.getSmallImageURL());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<JournalArticle> toModels(
-		JournalArticleSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<JournalArticle> models = new ArrayList<JournalArticle>(
-			soapModels.length);
-
-		for (JournalArticleSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public JournalArticleModelImpl() {

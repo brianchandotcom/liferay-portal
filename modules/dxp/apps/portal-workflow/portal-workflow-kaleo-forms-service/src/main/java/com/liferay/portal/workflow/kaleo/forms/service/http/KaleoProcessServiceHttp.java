@@ -46,7 +46,6 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
  * </p>
  *
  * @author Marcellus Tavares
- * @see KaleoProcessServiceSoap
  * @generated
  */
 public class KaleoProcessServiceHttp {

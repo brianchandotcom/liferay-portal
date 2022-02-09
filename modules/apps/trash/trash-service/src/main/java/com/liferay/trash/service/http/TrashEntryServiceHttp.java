@@ -46,7 +46,6 @@ import com.liferay.trash.service.TrashEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see TrashEntryServiceSoap
  * @generated
  */
 public class TrashEntryServiceHttp {

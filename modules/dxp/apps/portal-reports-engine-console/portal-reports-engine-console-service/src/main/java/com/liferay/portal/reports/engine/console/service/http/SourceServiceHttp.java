@@ -46,7 +46,6 @@ import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SourceServiceSoap
  * @generated
  */
 public class SourceServiceHttp {

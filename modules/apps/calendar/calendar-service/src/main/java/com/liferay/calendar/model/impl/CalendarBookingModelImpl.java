@@ -16,7 +16,6 @@ package com.liferay.calendar.model.impl;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingModel;
-import com.liferay.calendar.model.CalendarBookingSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -51,12 +50,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -241,83 +238,6 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CalendarBooking toModel(CalendarBookingSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CalendarBooking model = new CalendarBookingImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setCalendarBookingId(soapModel.getCalendarBookingId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCalendarId(soapModel.getCalendarId());
-		model.setCalendarResourceId(soapModel.getCalendarResourceId());
-		model.setParentCalendarBookingId(
-			soapModel.getParentCalendarBookingId());
-		model.setRecurringCalendarBookingId(
-			soapModel.getRecurringCalendarBookingId());
-		model.setVEventUid(soapModel.getVEventUid());
-		model.setTitle(soapModel.getTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setLocation(soapModel.getLocation());
-		model.setStartTime(soapModel.getStartTime());
-		model.setEndTime(soapModel.getEndTime());
-		model.setAllDay(soapModel.isAllDay());
-		model.setRecurrence(soapModel.getRecurrence());
-		model.setFirstReminder(soapModel.getFirstReminder());
-		model.setFirstReminderType(soapModel.getFirstReminderType());
-		model.setSecondReminder(soapModel.getSecondReminder());
-		model.setSecondReminderType(soapModel.getSecondReminderType());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CalendarBooking> toModels(
-		CalendarBookingSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CalendarBooking> models = new ArrayList<CalendarBooking>(
-			soapModels.length);
-
-		for (CalendarBookingSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public CalendarBookingModelImpl() {

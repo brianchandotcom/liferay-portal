@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensAssetEntryServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensAssetEntryServiceSoap
  * @generated
  */
 public class ScreensAssetEntryServiceHttp {

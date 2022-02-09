@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactModel;
-import com.liferay.portal.kernel.model.ContactSoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -186,75 +183,6 @@ public class ContactModelImpl
 	 */
 	@Deprecated
 	public static final long CONTACTID_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Contact toModel(ContactSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Contact model = new ContactImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setContactId(soapModel.getContactId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setParentContactId(soapModel.getParentContactId());
-		model.setEmailAddress(soapModel.getEmailAddress());
-		model.setFirstName(soapModel.getFirstName());
-		model.setMiddleName(soapModel.getMiddleName());
-		model.setLastName(soapModel.getLastName());
-		model.setPrefixId(soapModel.getPrefixId());
-		model.setSuffixId(soapModel.getSuffixId());
-		model.setMale(soapModel.isMale());
-		model.setBirthday(soapModel.getBirthday());
-		model.setSmsSn(soapModel.getSmsSn());
-		model.setFacebookSn(soapModel.getFacebookSn());
-		model.setJabberSn(soapModel.getJabberSn());
-		model.setSkypeSn(soapModel.getSkypeSn());
-		model.setTwitterSn(soapModel.getTwitterSn());
-		model.setEmployeeStatusId(soapModel.getEmployeeStatusId());
-		model.setEmployeeNumber(soapModel.getEmployeeNumber());
-		model.setJobTitle(soapModel.getJobTitle());
-		model.setJobClass(soapModel.getJobClass());
-		model.setHoursOfOperation(soapModel.getHoursOfOperation());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Contact> toModels(ContactSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Contact> models = new ArrayList<Contact>(soapModels.length);
-
-		for (ContactSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

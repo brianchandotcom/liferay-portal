@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.model.AuditEventModel;
-import com.liferay.portal.security.audit.storage.model.AuditEventSoap;
 
 import java.io.Serializable;
 
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -149,62 +146,6 @@ public class AuditEventModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static AuditEvent toModel(AuditEventSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		AuditEvent model = new AuditEventImpl();
-
-		model.setAuditEventId(soapModel.getAuditEventId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setEventType(soapModel.getEventType());
-		model.setClassName(soapModel.getClassName());
-		model.setClassPK(soapModel.getClassPK());
-		model.setMessage(soapModel.getMessage());
-		model.setClientHost(soapModel.getClientHost());
-		model.setClientIP(soapModel.getClientIP());
-		model.setServerName(soapModel.getServerName());
-		model.setServerPort(soapModel.getServerPort());
-		model.setSessionID(soapModel.getSessionID());
-		model.setAdditionalInfo(soapModel.getAdditionalInfo());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<AuditEvent> toModels(AuditEventSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<AuditEvent> models = new ArrayList<AuditEvent>(soapModels.length);
-
-		for (AuditEventSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public AuditEventModelImpl() {

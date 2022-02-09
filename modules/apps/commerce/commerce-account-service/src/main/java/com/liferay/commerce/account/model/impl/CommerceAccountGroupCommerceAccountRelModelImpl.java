@@ -16,7 +16,6 @@ package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRelModel;
-import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -167,66 +164,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	@Deprecated
 	public static final long
 		COMMERCEACCOUNTGROUPCOMMERCEACCOUNTRELID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceAccountGroupCommerceAccountRel toModel(
-		CommerceAccountGroupCommerceAccountRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceAccountGroupCommerceAccountRel model =
-			new CommerceAccountGroupCommerceAccountRelImpl();
-
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceAccountGroupCommerceAccountRelId(
-			soapModel.getCommerceAccountGroupCommerceAccountRelId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceAccountGroupId(soapModel.getCommerceAccountGroupId());
-		model.setCommerceAccountId(soapModel.getCommerceAccountId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceAccountGroupCommerceAccountRel> toModels(
-		CommerceAccountGroupCommerceAccountRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceAccountGroupCommerceAccountRel> models =
-			new ArrayList<CommerceAccountGroupCommerceAccountRel>(
-				soapModels.length);
-
-		for (CommerceAccountGroupCommerceAccountRelSoap soapModel :
-				soapModels) {
-
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.account.service.util.ServiceProps.get(

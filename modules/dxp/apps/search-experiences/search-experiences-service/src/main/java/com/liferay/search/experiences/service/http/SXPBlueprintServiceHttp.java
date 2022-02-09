@@ -46,7 +46,6 @@ import com.liferay.search.experiences.service.SXPBlueprintServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SXPBlueprintServiceSoap
  * @generated
  */
 public class SXPBlueprintServiceHttp {

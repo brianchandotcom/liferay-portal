@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFileVersionModel;
-import com.liferay.document.library.kernel.model.DLFileVersionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -45,12 +44,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -230,80 +227,6 @@ public class DLFileVersionModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DLFileVersion toModel(DLFileVersionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DLFileVersion model = new DLFileVersionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setFileVersionId(soapModel.getFileVersionId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setRepositoryId(soapModel.getRepositoryId());
-		model.setFolderId(soapModel.getFolderId());
-		model.setFileEntryId(soapModel.getFileEntryId());
-		model.setTreePath(soapModel.getTreePath());
-		model.setFileName(soapModel.getFileName());
-		model.setExtension(soapModel.getExtension());
-		model.setMimeType(soapModel.getMimeType());
-		model.setTitle(soapModel.getTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setChangeLog(soapModel.getChangeLog());
-		model.setExtraSettings(soapModel.getExtraSettings());
-		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
-		model.setVersion(soapModel.getVersion());
-		model.setSize(soapModel.getSize());
-		model.setChecksum(soapModel.getChecksum());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setReviewDate(soapModel.getReviewDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DLFileVersion> toModels(DLFileVersionSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DLFileVersion> models = new ArrayList<DLFileVersion>(
-			soapModels.length);
-
-		for (DLFileVersionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

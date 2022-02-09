@@ -46,7 +46,6 @@ import com.liferay.remote.app.service.RemoteAppEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see RemoteAppEntryServiceSoap
  * @generated
  */
 public class RemoteAppEntryServiceHttp {

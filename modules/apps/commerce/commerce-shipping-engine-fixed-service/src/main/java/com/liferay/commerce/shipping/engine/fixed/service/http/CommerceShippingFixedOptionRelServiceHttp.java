@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Alessio Antonio Rendina
- * @see CommerceShippingFixedOptionRelServiceSoap
  * @generated
  */
 public class CommerceShippingFixedOptionRelServiceHttp {

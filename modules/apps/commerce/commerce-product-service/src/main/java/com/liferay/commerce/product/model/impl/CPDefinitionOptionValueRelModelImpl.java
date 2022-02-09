@@ -16,7 +16,6 @@ package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRelModel;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -49,12 +48,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -207,72 +204,6 @@ public class CPDefinitionOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 128L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CPDefinitionOptionValueRel toModel(
-		CPDefinitionOptionValueRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPDefinitionOptionValueRel model = new CPDefinitionOptionValueRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCPDefinitionOptionValueRelId(
-			soapModel.getCPDefinitionOptionValueRelId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCPDefinitionOptionRelId(
-			soapModel.getCPDefinitionOptionRelId());
-		model.setCPInstanceUuid(soapModel.getCPInstanceUuid());
-		model.setCProductId(soapModel.getCProductId());
-		model.setName(soapModel.getName());
-		model.setPriority(soapModel.getPriority());
-		model.setKey(soapModel.getKey());
-		model.setQuantity(soapModel.getQuantity());
-		model.setPreselected(soapModel.isPreselected());
-		model.setPrice(soapModel.getPrice());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CPDefinitionOptionValueRel> toModels(
-		CPDefinitionOptionValueRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> models =
-			new ArrayList<CPDefinitionOptionValueRel>(soapModels.length);
-
-		for (CPDefinitionOptionValueRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.service.util.ServiceProps.get(

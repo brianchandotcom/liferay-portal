@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageModel;
-import com.liferay.portal.kernel.model.ImageSoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,12 +37,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -138,56 +135,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 */
 	@Deprecated
 	public static final long IMAGEID_COLUMN_BITMASK = 2L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Image toModel(ImageSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Image model = new ImageImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setImageId(soapModel.getImageId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setType(soapModel.getType());
-		model.setHeight(soapModel.getHeight());
-		model.setWidth(soapModel.getWidth());
-		model.setSize(soapModel.getSize());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Image> toModels(ImageSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Image> models = new ArrayList<Image>(soapModels.length);
-
-		for (ImageSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

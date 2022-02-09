@@ -46,7 +46,6 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see DefinitionServiceSoap
  * @generated
  */
 public class DefinitionServiceHttp {

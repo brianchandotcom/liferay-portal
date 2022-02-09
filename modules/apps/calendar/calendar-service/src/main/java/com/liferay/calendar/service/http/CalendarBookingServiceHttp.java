@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Eduardo Lundgren
- * @see CalendarBookingServiceSoap
  * @generated
  */
 public class CalendarBookingServiceHttp {

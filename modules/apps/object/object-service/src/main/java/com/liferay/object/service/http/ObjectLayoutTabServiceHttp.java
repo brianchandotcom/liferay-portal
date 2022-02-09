@@ -38,7 +38,6 @@ package com.liferay.object.service.http;
  * </p>
  *
  * @author Marco Leo
- * @see ObjectLayoutTabServiceSoap
  * @generated
  */
 public class ObjectLayoutTabServiceHttp {

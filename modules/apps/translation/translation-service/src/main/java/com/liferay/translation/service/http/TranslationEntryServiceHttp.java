@@ -46,7 +46,6 @@ import com.liferay.translation.service.TranslationEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see TranslationEntryServiceSoap
  * @generated
  */
 public class TranslationEntryServiceHttp {

@@ -46,7 +46,6 @@ import com.liferay.search.experiences.service.SXPElementServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SXPElementServiceSoap
  * @generated
  */
 public class SXPElementServiceHttp {

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
-import com.liferay.portal.kernel.model.CompanySoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -180,69 +177,6 @@ public class CompanyModelImpl
 	 */
 	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Company toModel(CompanySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Company model = new CompanyImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setWebId(soapModel.getWebId());
-		model.setMx(soapModel.getMx());
-		model.setHomeURL(soapModel.getHomeURL());
-		model.setLogoId(soapModel.getLogoId());
-		model.setSystem(soapModel.isSystem());
-		model.setMaxUsers(soapModel.getMaxUsers());
-		model.setActive(soapModel.isActive());
-		model.setName(soapModel.getName());
-		model.setLegalName(soapModel.getLegalName());
-		model.setLegalId(soapModel.getLegalId());
-		model.setLegalType(soapModel.getLegalType());
-		model.setSicCode(soapModel.getSicCode());
-		model.setTickerSymbol(soapModel.getTickerSymbol());
-		model.setIndustry(soapModel.getIndustry());
-		model.setType(soapModel.getType());
-		model.setSize(soapModel.getSize());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Company> toModels(CompanySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Company> models = new ArrayList<Company>(soapModels.length);
-
-		for (CompanySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

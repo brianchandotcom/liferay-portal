@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.model.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.model.CommerceDiscountRuleModel;
-import com.liferay.commerce.discount.model.CommerceDiscountRuleSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -150,63 +147,6 @@ public class CommerceDiscountRuleModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceDiscountRule toModel(
-		CommerceDiscountRuleSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceDiscountRule model = new CommerceDiscountRuleImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceDiscountRuleId(soapModel.getCommerceDiscountRuleId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
-		model.setCommerceDiscountId(soapModel.getCommerceDiscountId());
-		model.setType(soapModel.getType());
-		model.setTypeSettings(soapModel.getTypeSettings());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceDiscountRule> toModels(
-		CommerceDiscountRuleSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceDiscountRule> models = new ArrayList<CommerceDiscountRule>(
-			soapModels.length);
-
-		for (CommerceDiscountRuleSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.discount.service.util.ServiceProps.get(

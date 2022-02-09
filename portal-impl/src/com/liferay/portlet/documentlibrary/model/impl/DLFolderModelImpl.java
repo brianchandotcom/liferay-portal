@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.document.library.kernel.model.DLFolderSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -48,12 +47,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -229,72 +226,6 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 1024L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DLFolder toModel(DLFolderSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DLFolder model = new DLFolderImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setFolderId(soapModel.getFolderId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setRepositoryId(soapModel.getRepositoryId());
-		model.setMountPoint(soapModel.isMountPoint());
-		model.setParentFolderId(soapModel.getParentFolderId());
-		model.setTreePath(soapModel.getTreePath());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setLastPostDate(soapModel.getLastPostDate());
-		model.setDefaultFileEntryTypeId(soapModel.getDefaultFileEntryTypeId());
-		model.setHidden(soapModel.isHidden());
-		model.setRestrictionType(soapModel.getRestrictionType());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DLFolder> toModels(DLFolderSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DLFolder> models = new ArrayList<DLFolder>(soapModels.length);
-
-		for (DLFolderSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME =
 		"DLFileEntryTypes_DLFolders";

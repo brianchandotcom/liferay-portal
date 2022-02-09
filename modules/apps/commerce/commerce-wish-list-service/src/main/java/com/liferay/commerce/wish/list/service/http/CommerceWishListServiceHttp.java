@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Andrea Di Giorgi
- * @see CommerceWishListServiceSoap
  * @generated
  */
 public class CommerceWishListServiceHttp {

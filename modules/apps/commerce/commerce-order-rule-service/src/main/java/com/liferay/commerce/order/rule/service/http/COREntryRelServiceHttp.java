@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Luca Pellizzon
- * @see COREntryRelServiceSoap
  * @generated
  */
 public class COREntryRelServiceHttp {

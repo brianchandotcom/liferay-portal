@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.model.UserSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -273,91 +270,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 16384L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static User toModel(UserSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		User model = new UserImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setUserId(soapModel.getUserId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDefaultUser(soapModel.isDefaultUser());
-		model.setContactId(soapModel.getContactId());
-		model.setPassword(soapModel.getPassword());
-		model.setPasswordEncrypted(soapModel.isPasswordEncrypted());
-		model.setPasswordReset(soapModel.isPasswordReset());
-		model.setPasswordModifiedDate(soapModel.getPasswordModifiedDate());
-		model.setDigest(soapModel.getDigest());
-		model.setReminderQueryQuestion(soapModel.getReminderQueryQuestion());
-		model.setReminderQueryAnswer(soapModel.getReminderQueryAnswer());
-		model.setGraceLoginCount(soapModel.getGraceLoginCount());
-		model.setScreenName(soapModel.getScreenName());
-		model.setEmailAddress(soapModel.getEmailAddress());
-		model.setFacebookId(soapModel.getFacebookId());
-		model.setGoogleUserId(soapModel.getGoogleUserId());
-		model.setLdapServerId(soapModel.getLdapServerId());
-		model.setOpenId(soapModel.getOpenId());
-		model.setPortraitId(soapModel.getPortraitId());
-		model.setLanguageId(soapModel.getLanguageId());
-		model.setTimeZoneId(soapModel.getTimeZoneId());
-		model.setGreeting(soapModel.getGreeting());
-		model.setComments(soapModel.getComments());
-		model.setFirstName(soapModel.getFirstName());
-		model.setMiddleName(soapModel.getMiddleName());
-		model.setLastName(soapModel.getLastName());
-		model.setJobTitle(soapModel.getJobTitle());
-		model.setLoginDate(soapModel.getLoginDate());
-		model.setLoginIP(soapModel.getLoginIP());
-		model.setLastLoginDate(soapModel.getLastLoginDate());
-		model.setLastLoginIP(soapModel.getLastLoginIP());
-		model.setLastFailedLoginDate(soapModel.getLastFailedLoginDate());
-		model.setFailedLoginAttempts(soapModel.getFailedLoginAttempts());
-		model.setLockout(soapModel.isLockout());
-		model.setLockoutDate(soapModel.getLockoutDate());
-		model.setAgreedToTermsOfUse(soapModel.isAgreedToTermsOfUse());
-		model.setEmailAddressVerified(soapModel.isEmailAddressVerified());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<User> toModels(UserSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<User> models = new ArrayList<User>(soapModels.length);
-
-		for (UserSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
 

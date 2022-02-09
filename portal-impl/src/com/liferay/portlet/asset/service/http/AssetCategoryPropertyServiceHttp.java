@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see AssetCategoryPropertyServiceSoap
  * @deprecated As of Judson (7.1.x), replaced by {@link
  com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  * @generated

@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensCommentServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensCommentServiceSoap
  * @generated
  */
 public class ScreensCommentServiceHttp {

@@ -16,7 +16,6 @@ package com.liferay.portlet.expando.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueModel;
-import com.liferay.expando.kernel.model.ExpandoValueSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
@@ -37,12 +36,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -164,58 +161,6 @@ public class ExpandoValueModelImpl
 	 */
 	@Deprecated
 	public static final long TABLEID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ExpandoValue toModel(ExpandoValueSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		ExpandoValue model = new ExpandoValueImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setValueId(soapModel.getValueId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setTableId(soapModel.getTableId());
-		model.setColumnId(soapModel.getColumnId());
-		model.setRowId(soapModel.getRowId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setData(soapModel.getData());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<ExpandoValue> toModels(ExpandoValueSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<ExpandoValue> models = new ArrayList<ExpandoValue>(
-			soapModels.length);
-
-		for (ExpandoValueSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

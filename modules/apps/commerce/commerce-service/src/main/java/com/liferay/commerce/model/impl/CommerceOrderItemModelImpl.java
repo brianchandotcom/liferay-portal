@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderItemModel;
-import com.liferay.commerce.model.CommerceOrderItemSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -48,12 +47,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -281,126 +278,6 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceOrderItem toModel(CommerceOrderItemSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceOrderItem model = new CommerceOrderItemImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceOrderItemId(soapModel.getCommerceOrderItemId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setBookedQuantityId(soapModel.getBookedQuantityId());
-		model.setCommerceOrderId(soapModel.getCommerceOrderId());
-		model.setCommercePriceListId(soapModel.getCommercePriceListId());
-		model.setCPInstanceId(soapModel.getCPInstanceId());
-		model.setCPMeasurementUnitId(soapModel.getCPMeasurementUnitId());
-		model.setCProductId(soapModel.getCProductId());
-		model.setParentCommerceOrderItemId(
-			soapModel.getParentCommerceOrderItemId());
-		model.setDecimalQuantity(soapModel.getDecimalQuantity());
-		model.setDeliveryGroup(soapModel.getDeliveryGroup());
-		model.setDeliveryMaxSubscriptionCycles(
-			soapModel.getDeliveryMaxSubscriptionCycles());
-		model.setDeliverySubscriptionLength(
-			soapModel.getDeliverySubscriptionLength());
-		model.setDeliverySubscriptionType(
-			soapModel.getDeliverySubscriptionType());
-		model.setDeliverySubscriptionTypeSettings(
-			soapModel.getDeliverySubscriptionTypeSettings());
-		model.setDepth(soapModel.getDepth());
-		model.setDiscountAmount(soapModel.getDiscountAmount());
-		model.setDiscountPercentageLevel1(
-			soapModel.getDiscountPercentageLevel1());
-		model.setDiscountPercentageLevel2(
-			soapModel.getDiscountPercentageLevel2());
-		model.setDiscountPercentageLevel3(
-			soapModel.getDiscountPercentageLevel3());
-		model.setDiscountPercentageLevel4(
-			soapModel.getDiscountPercentageLevel4());
-		model.setDiscountPercentageLevel1WithTaxAmount(
-			soapModel.getDiscountPercentageLevel1WithTaxAmount());
-		model.setDiscountPercentageLevel2WithTaxAmount(
-			soapModel.getDiscountPercentageLevel2WithTaxAmount());
-		model.setDiscountPercentageLevel3WithTaxAmount(
-			soapModel.getDiscountPercentageLevel3WithTaxAmount());
-		model.setDiscountPercentageLevel4WithTaxAmount(
-			soapModel.getDiscountPercentageLevel4WithTaxAmount());
-		model.setDiscountWithTaxAmount(soapModel.getDiscountWithTaxAmount());
-		model.setFinalPrice(soapModel.getFinalPrice());
-		model.setFinalPriceWithTaxAmount(
-			soapModel.getFinalPriceWithTaxAmount());
-		model.setFreeShipping(soapModel.isFreeShipping());
-		model.setHeight(soapModel.getHeight());
-		model.setJson(soapModel.getJson());
-		model.setManuallyAdjusted(soapModel.isManuallyAdjusted());
-		model.setMaxSubscriptionCycles(soapModel.getMaxSubscriptionCycles());
-		model.setName(soapModel.getName());
-		model.setPrintedNote(soapModel.getPrintedNote());
-		model.setPromoPrice(soapModel.getPromoPrice());
-		model.setPromoPriceWithTaxAmount(
-			soapModel.getPromoPriceWithTaxAmount());
-		model.setQuantity(soapModel.getQuantity());
-		model.setRequestedDeliveryDate(soapModel.getRequestedDeliveryDate());
-		model.setShippingAddressId(soapModel.getShippingAddressId());
-		model.setShipSeparately(soapModel.isShipSeparately());
-		model.setShippable(soapModel.isShippable());
-		model.setShippedQuantity(soapModel.getShippedQuantity());
-		model.setShippingExtraPrice(soapModel.getShippingExtraPrice());
-		model.setSku(soapModel.getSku());
-		model.setSubscription(soapModel.isSubscription());
-		model.setSubscriptionLength(soapModel.getSubscriptionLength());
-		model.setSubscriptionType(soapModel.getSubscriptionType());
-		model.setSubscriptionTypeSettings(
-			soapModel.getSubscriptionTypeSettings());
-		model.setUnitPrice(soapModel.getUnitPrice());
-		model.setUnitPriceWithTaxAmount(soapModel.getUnitPriceWithTaxAmount());
-		model.setWeight(soapModel.getWeight());
-		model.setWidth(soapModel.getWidth());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceOrderItem> toModels(
-		CommerceOrderItemSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceOrderItem> models = new ArrayList<CommerceOrderItem>(
-			soapModels.length);
-
-		for (CommerceOrderItemSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

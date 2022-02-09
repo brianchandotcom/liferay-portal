@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CPDefinitionInventoryModel;
-import com.liferay.commerce.model.CPDefinitionInventorySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -186,74 +183,6 @@ public class CPDefinitionInventoryModelImpl
 	 */
 	@Deprecated
 	public static final long CPDEFINITIONINVENTORYID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CPDefinitionInventory toModel(
-		CPDefinitionInventorySoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPDefinitionInventory model = new CPDefinitionInventoryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCPDefinitionInventoryId(
-			soapModel.getCPDefinitionInventoryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCPDefinitionId(soapModel.getCPDefinitionId());
-		model.setCPDefinitionInventoryEngine(
-			soapModel.getCPDefinitionInventoryEngine());
-		model.setLowStockActivity(soapModel.getLowStockActivity());
-		model.setDisplayAvailability(soapModel.isDisplayAvailability());
-		model.setDisplayStockQuantity(soapModel.isDisplayStockQuantity());
-		model.setMinStockQuantity(soapModel.getMinStockQuantity());
-		model.setBackOrders(soapModel.isBackOrders());
-		model.setMinOrderQuantity(soapModel.getMinOrderQuantity());
-		model.setMaxOrderQuantity(soapModel.getMaxOrderQuantity());
-		model.setAllowedOrderQuantities(soapModel.getAllowedOrderQuantities());
-		model.setMultipleOrderQuantity(soapModel.getMultipleOrderQuantity());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CPDefinitionInventory> toModels(
-		CPDefinitionInventorySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPDefinitionInventory> models =
-			new ArrayList<CPDefinitionInventory>(soapModels.length);
-
-		for (CPDefinitionInventorySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

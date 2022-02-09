@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderModel;
-import com.liferay.commerce.model.CommerceOrderSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -47,12 +46,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -252,147 +249,6 @@ public class CommerceOrderModelImpl
 		com.liferay.commerce.service.util.ServiceProps.get(
 			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrder"),
 		true);
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceOrder toModel(CommerceOrderSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceOrder model = new CommerceOrderImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceOrderId(soapModel.getCommerceOrderId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceAccountId(soapModel.getCommerceAccountId());
-		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
-		model.setCommerceOrderTypeId(soapModel.getCommerceOrderTypeId());
-		model.setBillingAddressId(soapModel.getBillingAddressId());
-		model.setShippingAddressId(soapModel.getShippingAddressId());
-		model.setCommercePaymentMethodKey(
-			soapModel.getCommercePaymentMethodKey());
-		model.setTransactionId(soapModel.getTransactionId());
-		model.setCommerceShippingMethodId(
-			soapModel.getCommerceShippingMethodId());
-		model.setShippingOptionName(soapModel.getShippingOptionName());
-		model.setPurchaseOrderNumber(soapModel.getPurchaseOrderNumber());
-		model.setCouponCode(soapModel.getCouponCode());
-		model.setLastPriceUpdateDate(soapModel.getLastPriceUpdateDate());
-		model.setSubtotal(soapModel.getSubtotal());
-		model.setSubtotalDiscountAmount(soapModel.getSubtotalDiscountAmount());
-		model.setSubtotalDiscountPercentageLevel1(
-			soapModel.getSubtotalDiscountPercentageLevel1());
-		model.setSubtotalDiscountPercentageLevel2(
-			soapModel.getSubtotalDiscountPercentageLevel2());
-		model.setSubtotalDiscountPercentageLevel3(
-			soapModel.getSubtotalDiscountPercentageLevel3());
-		model.setSubtotalDiscountPercentageLevel4(
-			soapModel.getSubtotalDiscountPercentageLevel4());
-		model.setShippingAmount(soapModel.getShippingAmount());
-		model.setShippingDiscountAmount(soapModel.getShippingDiscountAmount());
-		model.setShippingDiscountPercentageLevel1(
-			soapModel.getShippingDiscountPercentageLevel1());
-		model.setShippingDiscountPercentageLevel2(
-			soapModel.getShippingDiscountPercentageLevel2());
-		model.setShippingDiscountPercentageLevel3(
-			soapModel.getShippingDiscountPercentageLevel3());
-		model.setShippingDiscountPercentageLevel4(
-			soapModel.getShippingDiscountPercentageLevel4());
-		model.setTaxAmount(soapModel.getTaxAmount());
-		model.setTotal(soapModel.getTotal());
-		model.setTotalDiscountAmount(soapModel.getTotalDiscountAmount());
-		model.setTotalDiscountPercentageLevel1(
-			soapModel.getTotalDiscountPercentageLevel1());
-		model.setTotalDiscountPercentageLevel2(
-			soapModel.getTotalDiscountPercentageLevel2());
-		model.setTotalDiscountPercentageLevel3(
-			soapModel.getTotalDiscountPercentageLevel3());
-		model.setTotalDiscountPercentageLevel4(
-			soapModel.getTotalDiscountPercentageLevel4());
-		model.setSubtotalWithTaxAmount(soapModel.getSubtotalWithTaxAmount());
-		model.setSubtotalDiscountWithTaxAmount(
-			soapModel.getSubtotalDiscountWithTaxAmount());
-		model.setSubtotalDiscountPercentageLevel1WithTaxAmount(
-			soapModel.getSubtotalDiscountPercentageLevel1WithTaxAmount());
-		model.setSubtotalDiscountPercentageLevel2WithTaxAmount(
-			soapModel.getSubtotalDiscountPercentageLevel2WithTaxAmount());
-		model.setSubtotalDiscountPercentageLevel3WithTaxAmount(
-			soapModel.getSubtotalDiscountPercentageLevel3WithTaxAmount());
-		model.setSubtotalDiscountPercentageLevel4WithTaxAmount(
-			soapModel.getSubtotalDiscountPercentageLevel4WithTaxAmount());
-		model.setShippingWithTaxAmount(soapModel.getShippingWithTaxAmount());
-		model.setShippingDiscountWithTaxAmount(
-			soapModel.getShippingDiscountWithTaxAmount());
-		model.setShippingDiscountPercentageLevel1WithTaxAmount(
-			soapModel.getShippingDiscountPercentageLevel1WithTaxAmount());
-		model.setShippingDiscountPercentageLevel2WithTaxAmount(
-			soapModel.getShippingDiscountPercentageLevel2WithTaxAmount());
-		model.setShippingDiscountPercentageLevel3WithTaxAmount(
-			soapModel.getShippingDiscountPercentageLevel3WithTaxAmount());
-		model.setShippingDiscountPercentageLevel4WithTaxAmount(
-			soapModel.getShippingDiscountPercentageLevel4WithTaxAmount());
-		model.setTotalWithTaxAmount(soapModel.getTotalWithTaxAmount());
-		model.setTotalDiscountWithTaxAmount(
-			soapModel.getTotalDiscountWithTaxAmount());
-		model.setTotalDiscountPercentageLevel1WithTaxAmount(
-			soapModel.getTotalDiscountPercentageLevel1WithTaxAmount());
-		model.setTotalDiscountPercentageLevel2WithTaxAmount(
-			soapModel.getTotalDiscountPercentageLevel2WithTaxAmount());
-		model.setTotalDiscountPercentageLevel3WithTaxAmount(
-			soapModel.getTotalDiscountPercentageLevel3WithTaxAmount());
-		model.setTotalDiscountPercentageLevel4WithTaxAmount(
-			soapModel.getTotalDiscountPercentageLevel4WithTaxAmount());
-		model.setAdvanceStatus(soapModel.getAdvanceStatus());
-		model.setPaymentStatus(soapModel.getPaymentStatus());
-		model.setOrderDate(soapModel.getOrderDate());
-		model.setOrderStatus(soapModel.getOrderStatus());
-		model.setPrintedNote(soapModel.getPrintedNote());
-		model.setRequestedDeliveryDate(soapModel.getRequestedDeliveryDate());
-		model.setManuallyAdjusted(soapModel.isManuallyAdjusted());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceOrder> toModels(CommerceOrderSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceOrder> models = new ArrayList<CommerceOrder>(
-			soapModels.length);
-
-		for (CommerceOrderSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

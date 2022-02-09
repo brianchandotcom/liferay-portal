@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppModel;
-import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap;
 
 import java.io.Serializable;
 
@@ -40,12 +39,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -152,60 +149,6 @@ public class WeDeployAuthAppModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static WeDeployAuthApp toModel(WeDeployAuthAppSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		WeDeployAuthApp model = new WeDeployAuthAppImpl();
-
-		model.setWeDeployAuthAppId(soapModel.getWeDeployAuthAppId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
-		model.setRedirectURI(soapModel.getRedirectURI());
-		model.setClientId(soapModel.getClientId());
-		model.setClientSecret(soapModel.getClientSecret());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<WeDeployAuthApp> toModels(
-		WeDeployAuthAppSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<WeDeployAuthApp> models = new ArrayList<WeDeployAuthApp>(
-			soapModels.length);
-
-		for (WeDeployAuthAppSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public WeDeployAuthAppModelImpl() {

@@ -46,7 +46,6 @@ import com.liferay.segments.service.SegmentsEntryServiceUtil;
  * </p>
  *
  * @author Eduardo Garcia
- * @see SegmentsEntryServiceSoap
  * @generated
  */
 public class SegmentsEntryServiceHttp {

@@ -46,7 +46,6 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceServiceUtil
  * </p>
  *
  * @author Bruno Farache
- * @see PushNotificationsDeviceServiceSoap
  * @generated
  */
 public class PushNotificationsDeviceServiceHttp {

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.model.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordModel;
-import com.liferay.dynamic.data.lists.model.DDLRecordSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -199,67 +196,6 @@ public class DDLRecordModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DDLRecord toModel(DDLRecordSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		DDLRecord model = new DDLRecordImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setRecordId(soapModel.getRecordId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setVersionUserId(soapModel.getVersionUserId());
-		model.setVersionUserName(soapModel.getVersionUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDDMStorageId(soapModel.getDDMStorageId());
-		model.setRecordSetId(soapModel.getRecordSetId());
-		model.setRecordSetVersion(soapModel.getRecordSetVersion());
-		model.setClassName(soapModel.getClassName());
-		model.setClassPK(soapModel.getClassPK());
-		model.setVersion(soapModel.getVersion());
-		model.setDisplayIndex(soapModel.getDisplayIndex());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<DDLRecord> toModels(DDLRecordSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DDLRecord> models = new ArrayList<DDLRecord>(soapModels.length);
-
-		for (DDLRecordSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DDLRecordModelImpl() {

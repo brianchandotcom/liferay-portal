@@ -46,7 +46,6 @@ import com.liferay.sync.service.SyncDeviceServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SyncDeviceServiceSoap
  * @generated
  */
 public class SyncDeviceServiceHttp {

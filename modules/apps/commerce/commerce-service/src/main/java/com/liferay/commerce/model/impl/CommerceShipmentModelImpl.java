@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentModel;
-import com.liferay.commerce.model.CommerceShipmentSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -170,68 +167,6 @@ public class CommerceShipmentModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceShipment toModel(CommerceShipmentSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceShipment model = new CommerceShipmentImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceShipmentId(soapModel.getCommerceShipmentId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceAccountId(soapModel.getCommerceAccountId());
-		model.setCommerceAddressId(soapModel.getCommerceAddressId());
-		model.setCommerceShippingMethodId(
-			soapModel.getCommerceShippingMethodId());
-		model.setShippingOptionName(soapModel.getShippingOptionName());
-		model.setCarrier(soapModel.getCarrier());
-		model.setTrackingNumber(soapModel.getTrackingNumber());
-		model.setShippingDate(soapModel.getShippingDate());
-		model.setExpectedDate(soapModel.getExpectedDate());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceShipment> toModels(
-		CommerceShipmentSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceShipment> models = new ArrayList<CommerceShipment>(
-			soapModels.length);
-
-		for (CommerceShipmentSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

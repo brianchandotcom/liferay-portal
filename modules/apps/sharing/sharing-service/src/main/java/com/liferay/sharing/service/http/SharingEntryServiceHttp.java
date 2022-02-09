@@ -46,7 +46,6 @@ import com.liferay.sharing.service.SharingEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SharingEntryServiceSoap
  * @generated
  */
 public class SharingEntryServiceHttp {

@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressModel;
-import com.liferay.commerce.model.CommerceAddressSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -44,12 +43,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -226,76 +223,6 @@ public class CommerceAddressModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 1024L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceAddress toModel(CommerceAddressSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceAddress model = new CommerceAddressImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceAddressId(soapModel.getCommerceAddressId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setStreet1(soapModel.getStreet1());
-		model.setStreet2(soapModel.getStreet2());
-		model.setStreet3(soapModel.getStreet3());
-		model.setCity(soapModel.getCity());
-		model.setZip(soapModel.getZip());
-		model.setRegionId(soapModel.getRegionId());
-		model.setCountryId(soapModel.getCountryId());
-		model.setLatitude(soapModel.getLatitude());
-		model.setLongitude(soapModel.getLongitude());
-		model.setPhoneNumber(soapModel.getPhoneNumber());
-		model.setDefaultBilling(soapModel.isDefaultBilling());
-		model.setDefaultShipping(soapModel.isDefaultShipping());
-		model.setType(soapModel.getType());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceAddress> toModels(
-		CommerceAddressSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceAddress> models = new ArrayList<CommerceAddress>(
-			soapModels.length);
-
-		for (CommerceAddressSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

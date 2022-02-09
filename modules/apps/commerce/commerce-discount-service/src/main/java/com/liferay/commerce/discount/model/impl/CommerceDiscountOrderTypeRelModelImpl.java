@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.model.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel;
 import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRelModel;
-import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -171,66 +168,6 @@ public class CommerceDiscountOrderTypeRelModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceDiscountOrderTypeRel toModel(
-		CommerceDiscountOrderTypeRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceDiscountOrderTypeRel model =
-			new CommerceDiscountOrderTypeRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCommerceDiscountOrderTypeRelId(
-			soapModel.getCommerceDiscountOrderTypeRelId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceDiscountId(soapModel.getCommerceDiscountId());
-		model.setCommerceOrderTypeId(soapModel.getCommerceOrderTypeId());
-		model.setPriority(soapModel.getPriority());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceDiscountOrderTypeRel> toModels(
-		CommerceDiscountOrderTypeRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceDiscountOrderTypeRel> models =
-			new ArrayList<CommerceDiscountOrderTypeRel>(soapModels.length);
-
-		for (CommerceDiscountOrderTypeRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.discount.service.util.ServiceProps.get(

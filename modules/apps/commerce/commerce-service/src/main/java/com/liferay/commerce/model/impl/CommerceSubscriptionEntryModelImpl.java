@@ -16,7 +16,6 @@ package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.model.CommerceSubscriptionEntryModel;
-import com.liferay.commerce.model.CommerceSubscriptionEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -44,12 +43,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -230,91 +227,6 @@ public class CommerceSubscriptionEntryModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceSubscriptionEntry toModel(
-		CommerceSubscriptionEntrySoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceSubscriptionEntry model = new CommerceSubscriptionEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCommerceSubscriptionEntryId(
-			soapModel.getCommerceSubscriptionEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCPInstanceUuid(soapModel.getCPInstanceUuid());
-		model.setCProductId(soapModel.getCProductId());
-		model.setCommerceOrderItemId(soapModel.getCommerceOrderItemId());
-		model.setSubscriptionLength(soapModel.getSubscriptionLength());
-		model.setSubscriptionType(soapModel.getSubscriptionType());
-		model.setSubscriptionTypeSettings(
-			soapModel.getSubscriptionTypeSettings());
-		model.setCurrentCycle(soapModel.getCurrentCycle());
-		model.setMaxSubscriptionCycles(soapModel.getMaxSubscriptionCycles());
-		model.setSubscriptionStatus(soapModel.getSubscriptionStatus());
-		model.setLastIterationDate(soapModel.getLastIterationDate());
-		model.setNextIterationDate(soapModel.getNextIterationDate());
-		model.setStartDate(soapModel.getStartDate());
-		model.setDeliverySubscriptionLength(
-			soapModel.getDeliverySubscriptionLength());
-		model.setDeliverySubscriptionType(
-			soapModel.getDeliverySubscriptionType());
-		model.setDeliverySubscriptionTypeSettings(
-			soapModel.getDeliverySubscriptionTypeSettings());
-		model.setDeliveryCurrentCycle(soapModel.getDeliveryCurrentCycle());
-		model.setDeliveryMaxSubscriptionCycles(
-			soapModel.getDeliveryMaxSubscriptionCycles());
-		model.setDeliverySubscriptionStatus(
-			soapModel.getDeliverySubscriptionStatus());
-		model.setDeliveryLastIterationDate(
-			soapModel.getDeliveryLastIterationDate());
-		model.setDeliveryNextIterationDate(
-			soapModel.getDeliveryNextIterationDate());
-		model.setDeliveryStartDate(soapModel.getDeliveryStartDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceSubscriptionEntry> toModels(
-		CommerceSubscriptionEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> models =
-			new ArrayList<CommerceSubscriptionEntry>(soapModels.length);
-
-		for (CommerceSubscriptionEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(

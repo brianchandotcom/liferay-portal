@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.model.SXPBlueprintModel;
-import com.liferay.search.experiences.model.SXPBlueprintSoap;
 
 import java.io.Serializable;
 
@@ -48,12 +47,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -167,65 +164,6 @@ public class SXPBlueprintModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static SXPBlueprint toModel(SXPBlueprintSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		SXPBlueprint model = new SXPBlueprintImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setSXPBlueprintId(soapModel.getSXPBlueprintId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setConfigurationJSON(soapModel.getConfigurationJSON());
-		model.setDescription(soapModel.getDescription());
-		model.setElementInstancesJSON(soapModel.getElementInstancesJSON());
-		model.setSchemaVersion(soapModel.getSchemaVersion());
-		model.setTitle(soapModel.getTitle());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<SXPBlueprint> toModels(SXPBlueprintSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<SXPBlueprint> models = new ArrayList<SXPBlueprint>(
-			soapModels.length);
-
-		for (SXPBlueprintSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public SXPBlueprintModelImpl() {

@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionModel;
-import com.liferay.object.model.ObjectDefinitionSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -202,77 +199,6 @@ public class ObjectDefinitionModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ObjectDefinition toModel(ObjectDefinitionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		ObjectDefinition model = new ObjectDefinitionImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setObjectDefinitionId(soapModel.getObjectDefinitionId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDescriptionObjectFieldId(
-			soapModel.getDescriptionObjectFieldId());
-		model.setTitleObjectFieldId(soapModel.getTitleObjectFieldId());
-		model.setActive(soapModel.isActive());
-		model.setDBTableName(soapModel.getDBTableName());
-		model.setLabel(soapModel.getLabel());
-		model.setClassName(soapModel.getClassName());
-		model.setName(soapModel.getName());
-		model.setPanelAppOrder(soapModel.getPanelAppOrder());
-		model.setPanelCategoryKey(soapModel.getPanelCategoryKey());
-		model.setPKObjectFieldDBColumnName(
-			soapModel.getPKObjectFieldDBColumnName());
-		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
-		model.setPluralLabel(soapModel.getPluralLabel());
-		model.setPortlet(soapModel.isPortlet());
-		model.setScope(soapModel.getScope());
-		model.setSystem(soapModel.isSystem());
-		model.setVersion(soapModel.getVersion());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<ObjectDefinition> toModels(
-		ObjectDefinitionSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<ObjectDefinition> models = new ArrayList<ObjectDefinition>(
-			soapModels.length);
-
-		for (ObjectDefinitionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public ObjectDefinitionModelImpl() {

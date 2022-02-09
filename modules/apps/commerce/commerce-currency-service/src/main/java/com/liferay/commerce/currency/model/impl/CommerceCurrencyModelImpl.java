@@ -16,7 +16,6 @@ package com.liferay.commerce.currency.model.impl;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
-import com.liferay.commerce.currency.model.CommerceCurrencySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -49,12 +48,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -195,70 +192,6 @@ public class CommerceCurrencyModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceCurrency toModel(CommerceCurrencySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceCurrency model = new CommerceCurrencyImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCode(soapModel.getCode());
-		model.setName(soapModel.getName());
-		model.setSymbol(soapModel.getSymbol());
-		model.setRate(soapModel.getRate());
-		model.setFormatPattern(soapModel.getFormatPattern());
-		model.setMaxFractionDigits(soapModel.getMaxFractionDigits());
-		model.setMinFractionDigits(soapModel.getMinFractionDigits());
-		model.setRoundingMode(soapModel.getRoundingMode());
-		model.setPrimary(soapModel.isPrimary());
-		model.setPriority(soapModel.getPriority());
-		model.setActive(soapModel.isActive());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceCurrency> toModels(
-		CommerceCurrencySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceCurrency> models = new ArrayList<CommerceCurrency>(
-			soapModels.length);
-
-		for (CommerceCurrencySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.currency.service.util.ServiceProps.get(

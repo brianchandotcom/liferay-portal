@@ -46,7 +46,6 @@ import com.liferay.style.book.service.StyleBookEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see StyleBookEntryServiceSoap
  * @generated
  */
 public class StyleBookEntryServiceHttp {

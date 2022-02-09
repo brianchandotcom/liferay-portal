@@ -46,7 +46,6 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see WikiNodeServiceSoap
  * @generated
  */
 public class WikiNodeServiceHttp {

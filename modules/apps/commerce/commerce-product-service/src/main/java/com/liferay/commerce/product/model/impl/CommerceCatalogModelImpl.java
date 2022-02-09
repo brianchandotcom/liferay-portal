@@ -16,7 +16,6 @@ package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceCatalogModel;
-import com.liferay.commerce.product.model.CommerceCatalogSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,12 +41,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -161,63 +158,6 @@ public class CommerceCatalogModelImpl
 	 */
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceCatalog toModel(CommerceCatalogSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceCatalog model = new CommerceCatalogImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setCommerceCatalogId(soapModel.getCommerceCatalogId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
-		model.setCommerceCurrencyCode(soapModel.getCommerceCurrencyCode());
-		model.setCatalogDefaultLanguageId(
-			soapModel.getCatalogDefaultLanguageId());
-		model.setSystem(soapModel.isSystem());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceCatalog> toModels(
-		CommerceCatalogSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceCatalog> models = new ArrayList<CommerceCatalog>(
-			soapModels.length);
-
-		for (CommerceCatalogSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.service.util.ServiceProps.get(

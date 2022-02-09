@@ -17,7 +17,6 @@ package com.liferay.batch.engine.model.impl;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskContentBlobModel;
 import com.liferay.batch.engine.model.BatchEngineImportTaskModel;
-import com.liferay.batch.engine.model.BatchEngineImportTaskSoap;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -44,12 +43,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -177,76 +174,6 @@ public class BatchEngineImportTaskModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static BatchEngineImportTask toModel(
-		BatchEngineImportTaskSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		BatchEngineImportTask model = new BatchEngineImportTaskImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setBatchEngineImportTaskId(
-			soapModel.getBatchEngineImportTaskId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setBatchSize(soapModel.getBatchSize());
-		model.setCallbackURL(soapModel.getCallbackURL());
-		model.setClassName(soapModel.getClassName());
-		model.setContent(soapModel.getContent());
-		model.setContentType(soapModel.getContentType());
-		model.setEndTime(soapModel.getEndTime());
-		model.setErrorMessage(soapModel.getErrorMessage());
-		model.setExecuteStatus(soapModel.getExecuteStatus());
-		model.setFieldNameMapping(soapModel.getFieldNameMapping());
-		model.setImportStrategy(soapModel.getImportStrategy());
-		model.setOperation(soapModel.getOperation());
-		model.setParameters(soapModel.getParameters());
-		model.setProcessedItemsCount(soapModel.getProcessedItemsCount());
-		model.setStartTime(soapModel.getStartTime());
-		model.setTaskItemDelegateName(soapModel.getTaskItemDelegateName());
-		model.setTotalItemsCount(soapModel.getTotalItemsCount());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<BatchEngineImportTask> toModels(
-		BatchEngineImportTaskSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<BatchEngineImportTask> models =
-			new ArrayList<BatchEngineImportTask>(soapModels.length);
-
-		for (BatchEngineImportTaskSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public BatchEngineImportTaskModelImpl() {

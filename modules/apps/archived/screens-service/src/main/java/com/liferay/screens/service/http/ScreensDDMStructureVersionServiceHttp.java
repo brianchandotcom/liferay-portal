@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensDDMStructureVersionServiceSoap
  * @generated
  */
 public class ScreensDDMStructureVersionServiceHttp {

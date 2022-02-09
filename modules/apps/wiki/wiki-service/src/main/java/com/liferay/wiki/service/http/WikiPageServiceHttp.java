@@ -46,7 +46,6 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see WikiPageServiceSoap
  * @generated
  */
 public class WikiPageServiceHttp {

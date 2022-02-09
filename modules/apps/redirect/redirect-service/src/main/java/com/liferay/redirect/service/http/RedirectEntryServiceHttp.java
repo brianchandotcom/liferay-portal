@@ -46,7 +46,6 @@ import com.liferay.redirect.service.RedirectEntryServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see RedirectEntryServiceSoap
  * @generated
  */
 public class RedirectEntryServiceHttp {

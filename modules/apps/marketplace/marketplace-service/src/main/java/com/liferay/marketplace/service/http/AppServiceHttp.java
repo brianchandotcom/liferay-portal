@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Ryan Park
- * @see AppServiceSoap
  * @generated
  */
 public class AppServiceHttp {

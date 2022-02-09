@@ -16,7 +16,6 @@ package com.liferay.account.model.impl;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
-import com.liferay.account.model.AccountEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -41,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -183,74 +180,6 @@ public class AccountEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static AccountEntry toModel(AccountEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		AccountEntry model = new AccountEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setAccountEntryId(soapModel.getAccountEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDefaultBillingAddressId(
-			soapModel.getDefaultBillingAddressId());
-		model.setDefaultDeliveryCTermEntryId(
-			soapModel.getDefaultDeliveryCTermEntryId());
-		model.setDefaultPaymentCTermEntryId(
-			soapModel.getDefaultPaymentCTermEntryId());
-		model.setDefaultShippingAddressId(
-			soapModel.getDefaultShippingAddressId());
-		model.setParentAccountEntryId(soapModel.getParentAccountEntryId());
-		model.setDescription(soapModel.getDescription());
-		model.setDomains(soapModel.getDomains());
-		model.setEmailAddress(soapModel.getEmailAddress());
-		model.setLogoId(soapModel.getLogoId());
-		model.setName(soapModel.getName());
-		model.setTaxExemptionCode(soapModel.getTaxExemptionCode());
-		model.setTaxIdNumber(soapModel.getTaxIdNumber());
-		model.setType(soapModel.getType());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<AccountEntry> toModels(AccountEntrySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<AccountEntry> models = new ArrayList<AccountEntry>(
-			soapModels.length);
-
-		for (AccountEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public AccountEntryModelImpl() {

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentModel;
-import com.liferay.segments.model.SegmentsExperimentSoap;
 
 import java.io.Serializable;
 
@@ -45,12 +44,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -202,69 +199,6 @@ public class SegmentsExperimentModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static SegmentsExperiment toModel(SegmentsExperimentSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		SegmentsExperiment model = new SegmentsExperimentImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setSegmentsExperimentId(soapModel.getSegmentsExperimentId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setSegmentsEntryId(soapModel.getSegmentsEntryId());
-		model.setSegmentsExperienceId(soapModel.getSegmentsExperienceId());
-		model.setSegmentsExperimentKey(soapModel.getSegmentsExperimentKey());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setStatus(soapModel.getStatus());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<SegmentsExperiment> toModels(
-		SegmentsExperimentSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<SegmentsExperiment> models = new ArrayList<SegmentsExperiment>(
-			soapModels.length);
-
-		for (SegmentsExperimentSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public SegmentsExperimentModelImpl() {

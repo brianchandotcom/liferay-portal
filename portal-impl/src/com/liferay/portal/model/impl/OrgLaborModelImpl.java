@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrgLaborModel;
-import com.liferay.portal.kernel.model.OrgLaborSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,12 +37,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -156,66 +153,6 @@ public class OrgLaborModelImpl
 	 */
 	@Deprecated
 	public static final long TYPEID_COLUMN_BITMASK = 2L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static OrgLabor toModel(OrgLaborSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		OrgLabor model = new OrgLaborImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setOrgLaborId(soapModel.getOrgLaborId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setOrganizationId(soapModel.getOrganizationId());
-		model.setTypeId(soapModel.getTypeId());
-		model.setSunOpen(soapModel.getSunOpen());
-		model.setSunClose(soapModel.getSunClose());
-		model.setMonOpen(soapModel.getMonOpen());
-		model.setMonClose(soapModel.getMonClose());
-		model.setTueOpen(soapModel.getTueOpen());
-		model.setTueClose(soapModel.getTueClose());
-		model.setWedOpen(soapModel.getWedOpen());
-		model.setWedClose(soapModel.getWedClose());
-		model.setThuOpen(soapModel.getThuOpen());
-		model.setThuClose(soapModel.getThuClose());
-		model.setFriOpen(soapModel.getFriOpen());
-		model.setFriClose(soapModel.getFriClose());
-		model.setSatOpen(soapModel.getSatOpen());
-		model.setSatClose(soapModel.getSatClose());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<OrgLabor> toModels(OrgLaborSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<OrgLabor> models = new ArrayList<OrgLabor>(soapModels.length);
-
-		for (OrgLaborSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

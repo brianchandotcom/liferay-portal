@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.model.SocialActivitySettingModel;
-import com.liferay.social.kernel.model.SocialActivitySettingSoap;
 
 import java.io.Serializable;
 
@@ -40,12 +39,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -163,61 +160,6 @@ public class SocialActivitySettingModelImpl
 	 */
 	@Deprecated
 	public static final long ACTIVITYSETTINGID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static SocialActivitySetting toModel(
-		SocialActivitySettingSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		SocialActivitySetting model = new SocialActivitySettingImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setActivitySettingId(soapModel.getActivitySettingId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setActivityType(soapModel.getActivityType());
-		model.setName(soapModel.getName());
-		model.setValue(soapModel.getValue());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<SocialActivitySetting> toModels(
-		SocialActivitySettingSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<SocialActivitySetting> models =
-			new ArrayList<SocialActivitySetting>(soapModels.length);
-
-		for (SocialActivitySettingSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

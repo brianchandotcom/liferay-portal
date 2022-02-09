@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupModel;
-import com.liferay.portal.kernel.model.UserGroupSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -174,61 +171,6 @@ public class UserGroupModelImpl
 	 */
 	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static UserGroup toModel(UserGroupSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		UserGroup model = new UserGroupImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setUserGroupId(soapModel.getUserGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setParentUserGroupId(soapModel.getParentUserGroupId());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setAddedByLDAPImport(soapModel.isAddedByLDAPImport());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<UserGroup> toModels(UserGroupSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<UserGroup> models = new ArrayList<UserGroup>(soapModels.length);
-
-		for (UserGroupSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME =
 		"Groups_UserGroups";

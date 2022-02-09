@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Igor Beslic
- * @see BatchPlannerPolicyServiceSoap
  * @generated
  */
 public class BatchPlannerPolicyServiceHttp {

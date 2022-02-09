@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
-import com.liferay.wiki.model.WikiPageSoap;
 
 import java.io.Serializable;
 
@@ -48,12 +47,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -242,73 +239,6 @@ public class WikiPageModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static WikiPage toModel(WikiPageSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		WikiPage model = new WikiPageImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setPageId(soapModel.getPageId());
-		model.setResourcePrimKey(soapModel.getResourcePrimKey());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setNodeId(soapModel.getNodeId());
-		model.setTitle(soapModel.getTitle());
-		model.setVersion(soapModel.getVersion());
-		model.setMinorEdit(soapModel.isMinorEdit());
-		model.setContent(soapModel.getContent());
-		model.setSummary(soapModel.getSummary());
-		model.setFormat(soapModel.getFormat());
-		model.setHead(soapModel.isHead());
-		model.setParentTitle(soapModel.getParentTitle());
-		model.setRedirectTitle(soapModel.getRedirectTitle());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<WikiPage> toModels(WikiPageSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<WikiPage> models = new ArrayList<WikiPage>(soapModels.length);
-
-		for (WikiPageSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public WikiPageModelImpl() {

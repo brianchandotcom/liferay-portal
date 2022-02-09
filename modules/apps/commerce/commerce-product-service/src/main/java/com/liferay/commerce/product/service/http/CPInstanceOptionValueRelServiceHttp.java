@@ -38,7 +38,6 @@ package com.liferay.commerce.product.service.http;
  * </p>
  *
  * @author Marco Leo
- * @see CPInstanceOptionValueRelServiceSoap
  * @generated
  */
 public class CPInstanceOptionValueRelServiceHttp {

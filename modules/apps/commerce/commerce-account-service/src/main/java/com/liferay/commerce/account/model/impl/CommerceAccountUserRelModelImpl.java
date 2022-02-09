@@ -16,7 +16,6 @@ package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.model.CommerceAccountUserRelModel;
-import com.liferay.commerce.account.model.CommerceAccountUserRelSoap;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -39,12 +38,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -147,59 +144,6 @@ public class CommerceAccountUserRelModelImpl
 	 */
 	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceAccountUserRel toModel(
-		CommerceAccountUserRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceAccountUserRel model = new CommerceAccountUserRelImpl();
-
-		model.setCommerceAccountId(soapModel.getCommerceAccountId());
-		model.setCommerceAccountUserId(soapModel.getCommerceAccountUserId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceAccountUserRel> toModels(
-		CommerceAccountUserRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceAccountUserRel> models =
-			new ArrayList<CommerceAccountUserRel>(soapModels.length);
-
-		for (CommerceAccountUserRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.account.service.util.ServiceProps.get(

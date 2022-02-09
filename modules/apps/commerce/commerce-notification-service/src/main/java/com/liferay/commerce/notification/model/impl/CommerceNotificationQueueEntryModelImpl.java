@@ -16,7 +16,6 @@ package com.liferay.commerce.notification.model.impl;
 
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntryModel;
-import com.liferay.commerce.notification.model.CommerceNotificationQueueEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -43,12 +42,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -199,77 +196,6 @@ public class CommerceNotificationQueueEntryModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 64L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceNotificationQueueEntry toModel(
-		CommerceNotificationQueueEntrySoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceNotificationQueueEntry model =
-			new CommerceNotificationQueueEntryImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceNotificationQueueEntryId(
-			soapModel.getCommerceNotificationQueueEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setCommerceNotificationTemplateId(
-			soapModel.getCommerceNotificationTemplateId());
-		model.setFrom(soapModel.getFrom());
-		model.setFromName(soapModel.getFromName());
-		model.setTo(soapModel.getTo());
-		model.setToName(soapModel.getToName());
-		model.setCc(soapModel.getCc());
-		model.setBcc(soapModel.getBcc());
-		model.setSubject(soapModel.getSubject());
-		model.setBody(soapModel.getBody());
-		model.setPriority(soapModel.getPriority());
-		model.setSent(soapModel.isSent());
-		model.setSentDate(soapModel.getSentDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceNotificationQueueEntry> toModels(
-		CommerceNotificationQueueEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> models =
-			new ArrayList<CommerceNotificationQueueEntry>(soapModels.length);
-
-		for (CommerceNotificationQueueEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.notification.service.util.ServiceProps.get(

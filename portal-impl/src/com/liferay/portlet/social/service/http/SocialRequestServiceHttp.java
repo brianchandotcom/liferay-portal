@@ -46,7 +46,6 @@ import com.liferay.social.kernel.service.SocialRequestServiceUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SocialRequestServiceSoap
  * @generated
  */
 public class SocialRequestServiceHttp {

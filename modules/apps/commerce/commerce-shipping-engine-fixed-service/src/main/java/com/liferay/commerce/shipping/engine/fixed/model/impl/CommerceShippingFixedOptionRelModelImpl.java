@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.engine.fixed.model.impl;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelModel;
-import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -43,12 +42,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -171,76 +168,6 @@ public class CommerceShippingFixedOptionRelModelImpl
 	 */
 	@Deprecated
 	public static final long COUNTRYID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CommerceShippingFixedOptionRel toModel(
-		CommerceShippingFixedOptionRelSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		CommerceShippingFixedOptionRel model =
-			new CommerceShippingFixedOptionRelImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCommerceShippingFixedOptionRelId(
-			soapModel.getCommerceShippingFixedOptionRelId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceShippingMethodId(
-			soapModel.getCommerceShippingMethodId());
-		model.setCommerceShippingFixedOptionId(
-			soapModel.getCommerceShippingFixedOptionId());
-		model.setCommerceInventoryWarehouseId(
-			soapModel.getCommerceInventoryWarehouseId());
-		model.setCountryId(soapModel.getCountryId());
-		model.setRegionId(soapModel.getRegionId());
-		model.setZip(soapModel.getZip());
-		model.setWeightFrom(soapModel.getWeightFrom());
-		model.setWeightTo(soapModel.getWeightTo());
-		model.setFixedPrice(soapModel.getFixedPrice());
-		model.setRateUnitWeightPrice(soapModel.getRateUnitWeightPrice());
-		model.setRatePercentage(soapModel.getRatePercentage());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<CommerceShippingFixedOptionRel> toModels(
-		CommerceShippingFixedOptionRelSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionRel> models =
-			new ArrayList<CommerceShippingFixedOptionRel>(soapModels.length);
-
-		for (CommerceShippingFixedOptionRelSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.shipping.engine.fixed.service.util.ServiceProps.

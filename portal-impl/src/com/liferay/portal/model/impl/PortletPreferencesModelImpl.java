@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
-import com.liferay.portal.kernel.model.PortletPreferencesSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,12 +37,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -164,58 +161,6 @@ public class PortletPreferencesModelImpl
 	 */
 	@Deprecated
 	public static final long PORTLETPREFERENCESID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static PortletPreferences toModel(PortletPreferencesSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		PortletPreferences model = new PortletPreferencesImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
-		model.setPortletPreferencesId(soapModel.getPortletPreferencesId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setOwnerId(soapModel.getOwnerId());
-		model.setOwnerType(soapModel.getOwnerType());
-		model.setPlid(soapModel.getPlid());
-		model.setPortletId(soapModel.getPortletId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<PortletPreferences> toModels(
-		PortletPreferencesSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<PortletPreferences> models = new ArrayList<PortletPreferences>(
-			soapModels.length);
-
-		for (PortletPreferencesSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(

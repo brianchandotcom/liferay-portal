@@ -46,7 +46,6 @@ import com.liferay.portal.language.override.service.PLOEntryServiceUtil;
  * </p>
  *
  * @author Drew Brokke
- * @see PLOEntryServiceSoap
  * @generated
  */
 public class PLOEntryServiceHttp {

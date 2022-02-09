@@ -46,7 +46,6 @@ import com.liferay.screens.service.ScreensDDLRecordServiceUtil;
  * </p>
  *
  * @author José Manuel Navarro
- * @see ScreensDDLRecordServiceSoap
  * @generated
  */
 public class ScreensDDLRecordServiceHttp {

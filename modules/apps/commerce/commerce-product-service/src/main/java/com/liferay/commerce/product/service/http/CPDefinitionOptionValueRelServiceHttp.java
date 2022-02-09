@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Marco Leo
- * @see CPDefinitionOptionValueRelServiceSoap
  * @generated
  */
 public class CPDefinitionOptionValueRelServiceHttp {

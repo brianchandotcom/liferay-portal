@@ -38,7 +38,6 @@ package com.liferay.portal.tools.service.builder.test.service.http;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see LazyBlobEntryServiceSoap
  * @generated
  */
 public class LazyBlobEntryServiceHttp {

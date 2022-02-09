@@ -1,34 +1,11 @@
 definition {
 
-	macro viewDayTableIsDisplayed {
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY");
+	macro clickOnTheCaretLeftIcon {
+		var key_text = "caret-left";
+
+		Click(locator1 = "Icon#ANY");
 	}
 
-	macro viewWeekTableIsDisplayed {
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
-	}
-
-	macro viewMonthTableIsDisplayed {
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
-	}
-	macro viewAgendaTableIsDisplayed {
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_AGENDA");
-	}
-
-	macro viewMiniCalendarSideBar {
-		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDEBAR");
-	}
-
-	macro viewMonthCurrentMiniCalendar {
-		AssertTextEquals(
-			locator1 = "CalendarPage#CURRENT_MONTH_MINI_CALENDAR",
-			value1 = "${monthCurrent}");
-	}
-	
-	macro viewCurrentDayForCalendarDay {
-        CalendarNavigator.gotoView(viewType = "Day");
-	}
-	
 	macro viewCurrentDayForCalendarAgenda {
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
@@ -60,18 +37,39 @@ definition {
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
 	}
-	var siteName = "Liferay";
 
-	macro clickCaretLeftIcon {
-		Click(locator1 = "CalendarPage#CARET_LEFT_ICON");
+	macro viewCurrentMonthByMiniCalendar {
+		var currentMonth = selenium.getText("CalendarPage#CURRENT_MONTH_BY_MINI_CALENDAR");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CalendarPage#CURRENT_MONTH_BY_BASE_NAV",
+			value1 = "${currentMonth}");
 	}
 
-	macro viewLeftSideBar {
-		AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR");
+	macro viewMiniCalendarOnSideBar {
+		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDE_BAR");
 	}
 
-	macro viewLeftSideBarHide {
-		AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR_HIDE");
+	macro viewNoMiniCalendarOnSideBar {
+		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDE_BAR_HIDE");
+	}
+
+	macro viewTypeOfTableView {
+		if ("${tableType}" == "Day") {
+			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY");
+		}
+
+		if ("${tableType}" == "Week") {
+			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
+		}
+
+		if ("${tableType}" == "Month") {
+			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
+		}
+
+		if ("${tableType}" == "Agenda") {
+			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_AGENDA");
+		}
 	}
 
 }

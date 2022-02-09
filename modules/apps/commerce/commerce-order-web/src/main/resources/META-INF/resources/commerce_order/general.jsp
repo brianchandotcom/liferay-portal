@@ -278,6 +278,13 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:otherwise>
 						</c:choose>
 					</commerce-ui:info-box>
+
+					<commerce-ui:info-box
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "order-type") %>'
+					>
+						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceOrderTypeName(LanguageUtil.getLanguageId(locale))) %>
+					</commerce-ui:info-box>
 				</div>
 
 				<div class="col-xl-3">

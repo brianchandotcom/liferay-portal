@@ -18,6 +18,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +52,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -164,7 +166,10 @@ public class PortalInstances {
 				TreeMap<String, String> virtualHostnames =
 					layoutSet.getVirtualHostnames();
 
-				if (virtualHostnames.isEmpty()) {
+				if (virtualHostnames.isEmpty() ||
+					_isCompanyVirtualHostName(
+						companyId, httpServletRequest.getServerName())) {
+
 					httpServletRequest.setAttribute(
 						WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 				}
@@ -515,6 +520,25 @@ public class PortalInstances {
 		}
 
 		return 0;
+	}
+
+	private static boolean _isCompanyVirtualHostName(
+			long companyId, String serverName)
+		throws PortalException {
+
+		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+		String defaultVirtualHostName = "localhost";
+
+		if (Validator.isNotNull(company.getVirtualHostname())) {
+			defaultVirtualHostName = company.getVirtualHostname();
+		}
+
+		if (Objects.equals(defaultVirtualHostName, serverName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private PortalInstances() {

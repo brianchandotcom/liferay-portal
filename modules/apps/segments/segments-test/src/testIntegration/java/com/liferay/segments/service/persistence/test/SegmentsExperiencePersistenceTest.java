@@ -271,15 +271,6 @@ public class SegmentsExperiencePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_S(0L, "null");
-
-		_persistence.countByG_S(0L, (String)null);
-	}
-
-	@Test
 	public void testCountByG_C_C() throws Exception {
 		_persistence.countByG_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -295,6 +286,17 @@ public class SegmentsExperiencePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_S_C_C(0L, 0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_SEK_C_C() throws Exception {
+		_persistence.countByG_SEK_C_C(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_SEK_C_C(0L, "null", 0L, 0L);
+
+		_persistence.countByG_SEK_C_C(0L, (String)null, 0L, 0L);
 	}
 
 	@Test
@@ -691,6 +693,16 @@ public class SegmentsExperiencePersistenceTest {
 			ReflectionTestUtil.invoke(
 				segmentsExperience, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "segmentsExperienceKey"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperience.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperience.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getGroupId()),

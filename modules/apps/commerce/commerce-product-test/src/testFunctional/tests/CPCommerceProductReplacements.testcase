@@ -1,0 +1,76 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "Verify a product can be set as discontinued"
+	@priority = "3"
+	test SetProductAsDiscontinued {
+		task ("Given a simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product",
+				productType = "simple",
+				sku = "MIN70291");
+		}
+
+		task ("When the SKU is not set as discontinued") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN70291");
+
+			SelectFrame(
+				key_title = "",
+				locator1 = "IFrame#MODAL_ANY");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_definition = "Off",
+				locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+		}
+
+		task ("Then the Replacement field is not visible and the End of Life Date field is disabled") {
+			AssertNotVisible(locator1 = "TextInput#REPLACEMENT");
+
+			AssertElementPresent(locator1 = "TextInput#DISCONTINUED_DATE_DISABLED");
+		}
+
+		task ("When the product specialist sets the sku as discontinued") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the Replacement field is visible and the End of Life Date field is enabled") {
+			AssertVisible(locator1 = "TextInput#REPLACEMENT");
+
+			AssertElementPresent(locator1 = "TextInput#DISCONTINUED_DATE");
+		}
+	}
+
+}

@@ -366,8 +366,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		FileEntry newFileEntry = _dlAppLocalService.getFileEntry(
-			fileEntryId);
+		FileEntry newFileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		if (!Objects.equals(newFileEntry.getExtension(), "jrxml")) {
 			throw new FileExtensionException();
@@ -376,8 +375,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		if (existingFileEntry == null) {
 			String fileName = newFileEntry.getFileName();
 
-			int extensionIndex = fileName.indexOf(
-				newFileEntry.getExtension());
+			int extensionIndex = fileName.indexOf(newFileEntry.getExtension());
 
 			String formattedFileName = StringBundler.concat(
 				fileName.substring(0, extensionIndex - 1), StringPool.UNDERLINE,
@@ -389,12 +387,10 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 					"ORDER_PRINT_TEMPLATE", commerceChannel.getUserId(),
 					commerceChannel.getGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					newFileEntry.getFileName(),
-					newFileEntry.getMimeType(), formattedFileName,
-					StringPool.BLANK, StringPool.BLANK,
-					newFileEntry.getContentStream(),
-					newFileEntry.getSize(), null, null,
-					new ServiceContext());
+					newFileEntry.getFileName(), newFileEntry.getMimeType(),
+					formattedFileName, StringPool.BLANK, StringPool.BLANK,
+					newFileEntry.getContentStream(), newFileEntry.getSize(),
+					null, null, new ServiceContext());
 			}
 			finally {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
@@ -402,16 +398,12 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			_dlAppLocalService.updateFileEntry(
-				commerceChannel.getUserId(),
-				existingFileEntry.getFileEntryId(),
-				newFileEntry.getFileName(),
-				newFileEntry.getMimeType(),
+				commerceChannel.getUserId(), existingFileEntry.getFileEntryId(),
+				newFileEntry.getFileName(), newFileEntry.getMimeType(),
 				existingFileEntry.getTitle(),
 				existingFileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.NONE,
-				newFileEntry.getContentStream(),
-				newFileEntry.getSize(), null, null,
-				new ServiceContext());
+				DLVersionNumberIncrease.NONE, newFileEntry.getContentStream(),
+				newFileEntry.getSize(), null, null, new ServiceContext());
 		}
 	}
 

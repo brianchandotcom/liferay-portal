@@ -235,6 +235,7 @@ const Collection = React.memo(
 					classNameId: itemClassNameId,
 					classPK: itemClassPK,
 					collection: collectionConfig.collection,
+					displayAllItems: collectionConfig.displayAllItems,
 					languageId,
 					listItemStyle: collectionConfig.listItemStyle || null,
 					listStyle: collectionConfig.listStyle,
@@ -242,7 +243,6 @@ const Collection = React.memo(
 					numberOfItemsPerPage: collectionConfig.numberOfItemsPerPage,
 					onNetworkStatus: dispatch,
 					paginationType: collectionConfig.paginationType,
-					showAllItems: collectionConfig.showAllItems,
 					templateKey: collectionConfig.templateKey || null,
 				})
 					.then((response) => {
@@ -383,7 +383,7 @@ const Collection = React.memo(
 Collection.displayName = 'Collection';
 
 function getNumberOfItems(collection, collectionConfig) {
-	return !collectionConfig.paginationType && collectionConfig.showAllItems
+	return !collectionConfig.paginationType && collectionConfig.displayAllItems
 		? collection.totalNumberOfItems
 		: Math.min(
 				collectionConfig.numberOfItems,

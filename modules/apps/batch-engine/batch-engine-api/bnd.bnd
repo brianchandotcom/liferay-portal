@@ -4,6 +4,7 @@ Bundle-Version: 14.8.1
 Export-Package:\
 	com.liferay.batch.engine,\
 	com.liferay.batch.engine.configuration,\
+	com.liferay.batch.engine.constants,\
 	com.liferay.batch.engine.exception,\
 	com.liferay.batch.engine.model,\
 	com.liferay.batch.engine.pagination,\

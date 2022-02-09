@@ -40,6 +40,10 @@ definition {
 			locator1 = "OpenIDConnect#LOGIN_USERNAME_FIELD",
 			value1 = "${userEmailAddress}");
 
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON")) {
+			Click(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON");
+		}
+
 		if (IsElementPresent(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON")) {
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 		}
@@ -53,6 +57,10 @@ definition {
 		}
 		else {
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
+		}
+
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON")) {
+			Click(locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON");
 		}
 	}
 
@@ -71,9 +79,16 @@ definition {
 			fieldName = "openIdConnectClientSecret",
 			fieldValue = "${openIdConnectClientSecret}");
 
-		FormFields.editTextMultiline(
-			fieldName = "discoveryEndPoint",
-			fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
+		if (isSet(discoveryEndpoint)) {
+			FormFields.editTextMultiline(
+				fieldName = "discoveryEndPoint",
+				fieldValue = "${discoveryEndpoint}");
+		}
+		else {
+			FormFields.editTextMultiline(
+				fieldName = "discoveryEndPoint",
+				fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
+		}
 
 		FormFields.editTextMultiline(
 			fieldName = "registeredIdTokenSigningAlg",

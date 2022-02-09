@@ -29,6 +29,10 @@ definition {
 			var shortDescription = "";
 		}
 
+		if (!(isSet(sku))) {
+			var sku = "default";
+		}
+
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
 
 		var curl = '''
@@ -41,6 +45,7 @@ definition {
 					"catalogId": "${catalogId}",
 					"categories": [],
 					"customFields": [],
+					"defaultSku": "${sku}",
 					"description": {
 					  "en_US": "${productDescription}"
 					},
@@ -65,7 +70,6 @@ definition {
 					"shortDescription": {
 					  "en_US": "${shortDescription}"
 					},
-					"skuFormatted": "default",
 					"tags": [],
 					"workflowStatusInfo": {
 					  "code": 0,

@@ -1,7 +1,7 @@
 @component-name = "portal-solutions"
 definition {
 
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
@@ -11,19 +11,17 @@ definition {
 		User.firstLoginPG();
 
 		Raylife.createRaylifeSite(siteName = "Raylife");
-
-		RaylifePaymentMethod.enablePayPalPayment();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Raylife.tearDownCP();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Raylife.tearDownCP();
-
 			User.logoutPG();
 		}
 	}
@@ -31,6 +29,8 @@ definition {
 	@description = "Check if I am redirected to the payment confirmation page, after successful payment by PayPal"
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -47,7 +47,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
@@ -61,6 +61,8 @@ definition {
 	@description = "Check if the payment method is not selected by default"
 	@priority = "3"
 	test CanViewPaymentMethodNotSelected {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -77,7 +79,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		AssertElementNotPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_DISABLED");
 	}
@@ -85,6 +87,8 @@ definition {
 	@description = "Check if the Raylife terms and conditions option is unchecked by default"
 	@priority = "3"
 	test CheckRaylifeTermsAndConditionsNotSelected {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -101,7 +105,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
@@ -111,6 +115,8 @@ definition {
 	@description = "Check if user can select the option to pay in installments"
 	@priority = "3"
 	test CheckSelectInstallmentPayment {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -127,7 +133,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
@@ -143,6 +149,8 @@ definition {
 	@description = "Check if the Pay Now button is enabled when selecting Raylife terms and conditions"
 	@priority = "4"
 	test IsPayNowButtonEnabled {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -159,7 +167,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
@@ -171,6 +179,8 @@ definition {
 	@description = "Check if after you finish uploading the documents the payment section is expanded"
 	@priority = "4"
 	test ViewExtendedPaymentSection {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -187,7 +197,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD");
 	}
@@ -195,6 +205,8 @@ definition {
 	@description = "Verify that when selecting the PayPal payment method, the payment collection options are displayed"
 	@priority = "4"
 	test ViewPaymentCollectionOptions {
+		RaylifePaymentMethod.enablePayPalPayment();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -211,7 +223,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpg",
 			title = "Build");
 
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOAD");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 

@@ -61,7 +61,10 @@ public class OrderValidatorExceptionMapper
 	public Response toResponse(
 		CommerceOrderValidatorException commerceOrderValidatorException) {
 
-		_log.error("General REST exception", commerceOrderValidatorException);
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"General REST exception", commerceOrderValidatorException);
+		}
 
 		Response.ResponseBuilder responseBuilder = Response.status(getStatus());
 

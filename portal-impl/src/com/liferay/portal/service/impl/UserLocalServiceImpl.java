@@ -321,14 +321,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean passwordReset = false;
 
 		try {
-			PasswordPolicy passwordPolicy =
-				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
-
-			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-				passwordPolicy.isChangeRequired()) {
-
-				passwordReset = true;
-			}
+			passwordReset = _isPasswordReset(
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(
+					companyId));
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -1253,16 +1248,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setPasswordEncrypted(true);
 
-		PasswordPolicy passwordPolicy = defaultUser.getPasswordPolicy();
+		boolean passwordReset = false;
 
-		if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-			passwordPolicy.isChangeRequired()) {
+		try {
+			passwordReset = _isPasswordReset(defaultUser.getPasswordPolicy());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
 
-			user.setPasswordReset(true);
-		}
-		else {
-			user.setPasswordReset(false);
-		}
+		user.setPasswordReset(passwordReset);
 
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
@@ -4814,16 +4811,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			user.setPasswordEncrypted(true);
 
-			PasswordPolicy passwordPolicy = defaultUser.getPasswordPolicy();
+			boolean passwordReset = false;
 
-			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-				passwordPolicy.isChangeRequired()) {
+			try {
+				passwordReset = _isPasswordReset(
+					defaultUser.getPasswordPolicy());
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException, portalException);
+				}
+			}
 
-				user.setPasswordReset(true);
-			}
-			else {
-				user.setPasswordReset(false);
-			}
+			user.setPasswordReset(passwordReset);
 
 			user.setScreenName(screenName);
 			user.setLanguageId(locale.toString());
@@ -7536,6 +7536,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					ticket.getExtraInfo(), new Date());
 			}
 		}
+	}
+
+	private boolean _isPasswordReset(PasswordPolicy passwordPolicy) {
+		if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+			passwordPolicy.isChangeRequired()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isPasswordUnchanged(

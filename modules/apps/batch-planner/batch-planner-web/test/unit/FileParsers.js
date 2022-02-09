@@ -102,7 +102,10 @@ describe('parseFile', () => {
 			onError,
 		});
 
-		expect(onComplete).toBeCalledWith(fileSchema);
+		expect(onComplete).toBeCalledWith({
+			extension: 'csv',
+			fields: fileSchema,
+		});
 		expect(onError).not.toBeCalled();
 	});
 });

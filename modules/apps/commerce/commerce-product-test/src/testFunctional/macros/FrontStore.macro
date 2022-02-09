@@ -46,6 +46,50 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro assertProductDetails {
+		if (isSet(productName)) {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+				value1 = "${productName}");
+		}
+
+		if (isSet(productStockQuantity)) {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
+				value1 = "${productStockQuantity}");
+		}
+
+		if (isSet(productAvailability)) {
+			AssertElementPresent(
+				key_availability = "${productAvailability}",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+
+		if (isSet(productSKU)) {
+			AssertElementPresent(
+				key_detail = "SKU",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
+				value1 = "${productSKU}");
+		}
+
+		if (isSet(productMPN)) {
+			AssertElementPresent(
+				key_detail = "MPN",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
+				value1 = "${productMPN}");
+		}
+
+		if (isSet(productListPrice)) {
+			AssertElementPresent(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "${productListPrice}");
+		}
+
+		AssertElementPresent(
+			key_fsProductImage = "",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+	}
+
 	macro getCurrentCartItemCount {
 		CommerceNavigator.gotoMiniCart();
 

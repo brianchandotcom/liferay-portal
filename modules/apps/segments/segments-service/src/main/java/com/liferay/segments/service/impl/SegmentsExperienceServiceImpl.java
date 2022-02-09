@@ -129,12 +129,13 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException {
 
 		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
-				groupId, segmentsExperienceKey);
+				groupId, segmentsExperienceKey, classNameId, classPK);
 
 		_segmentsExperienceResourcePermission.check(
 			getPermissionChecker(), segmentsExperience, ActionKeys.VIEW);

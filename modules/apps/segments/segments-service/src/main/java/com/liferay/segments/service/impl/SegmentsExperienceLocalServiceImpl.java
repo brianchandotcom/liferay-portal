@@ -362,10 +362,11 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-		long groupId, String segmentsExperienceKey) {
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK) {
 
-		return segmentsExperiencePersistence.fetchByG_S(
-			groupId, segmentsExperienceKey);
+		return segmentsExperiencePersistence.fetchByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
 	}
 
 	@Override
@@ -378,11 +379,12 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience getSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException {
 
-		return segmentsExperiencePersistence.findByG_S(
-			groupId, segmentsExperienceKey);
+		return segmentsExperiencePersistence.findByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId, classPK);
 	}
 
 	@Override

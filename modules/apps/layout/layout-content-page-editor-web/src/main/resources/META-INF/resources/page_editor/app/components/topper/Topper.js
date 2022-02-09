@@ -41,6 +41,7 @@ import {
 	useDropTarget,
 } from '../../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
+import {useId} from '../../utils/useId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
 
@@ -80,18 +81,17 @@ function TopperContent({
 	style,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const hoverItem = useHoverItem();
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const hoverItem = useHoverItem();
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const selectItem = useSelectItem();
+	const topperLabelId = useId();
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
-
-	const selectItem = useSelectItem();
-
-	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 
 	const name =
 		getLayoutDataItemLabel(item, fragmentEntryLinks) ||
@@ -119,10 +119,10 @@ function TopperContent({
 
 	const isDraggingSource = itemIsDraggingSource || topperIsDraggingSource;
 
-	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
-
 	return (
 		<div
+			aria-label={name}
+			aria-labelledby={isActive ? topperLabelId : null}
 			className={classNames(className, 'page-editor__topper', {
 				'active': isActive,
 				'drag-over-bottom':
@@ -185,7 +185,10 @@ function TopperContent({
 							</li>
 						)}
 
-						<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
+						<li
+							className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand"
+							id={topperLabelId}
+						>
 							{name}
 						</li>
 

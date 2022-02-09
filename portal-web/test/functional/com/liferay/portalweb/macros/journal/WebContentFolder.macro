@@ -182,12 +182,9 @@ definition {
 	macro selectFolderTreeNode {
 		Portlet.expandTree();
 
-		if (IsElementPresent(key_nodeName = "${nodeName}", locator1 = "Treeview#NODE_UNSELECTED")) {
-			AssertClick.assertPartialTextClickAt(
-				key_nodeName = "${nodeName}",
-				locator1 = "Treeview#NODE_UNSELECTED",
-				value1 = "${nodeName}");
-		}
+		Click(
+			key_nodeName = "${nodeName}",
+			locator1 = "Treeview#NODE_ITEM");
 	}
 
 	macro viewFolderWorkflow {

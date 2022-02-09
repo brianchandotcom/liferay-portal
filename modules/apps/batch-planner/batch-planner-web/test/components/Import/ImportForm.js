@@ -51,7 +51,8 @@ const SCHEMA = {
 	},
 };
 
-const fileSchema = ['currencyCode', 'type', 'name'];
+const fileSchema1 = ['currencyCode', 'type', 'name'];
+const fileSchema2 = ['code', 'fabio', 'igor'];
 
 describe('ImportForm', () => {
 	afterEach(cleanup);
@@ -68,11 +69,11 @@ describe('ImportForm', () => {
 				schema: SCHEMA,
 			});
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				schema: fileSchema,
+				schema: fileSchema1,
 			});
 		});
 
-		fileSchema.forEach((field) => getByLabelText(field));
+		fileSchema1.forEach((field) => getByLabelText(field));
 	});
 
 	it('must have button disabled with no selection', () => {
@@ -83,7 +84,7 @@ describe('ImportForm', () => {
 				schema: SCHEMA,
 			});
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				schema: fileSchema,
+				schema: fileSchema2,
 			});
 		});
 
@@ -99,7 +100,7 @@ describe('ImportForm', () => {
 				schema: SCHEMA,
 			});
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				schema: fileSchema,
+				schema: fileSchema2,
 			});
 		});
 
@@ -125,7 +126,7 @@ describe('ImportForm', () => {
 				schema: SCHEMA,
 			});
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				schema: fileSchema,
+				schema: fileSchema2,
 			});
 		});
 

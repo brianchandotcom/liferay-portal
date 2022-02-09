@@ -364,16 +364,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Treeview#NODE_COLLAPSED");
 	}
 
-	macro expandTreeNew {
-		WaitForVisible(locator1 = "Treeview#NODE_LIST");
-
-		while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED_NEW")) {
-			Click(locator1 = "Treeview#NODE_COLLAPSED_BUTTON");
-		}
-
-		AssertElementNotPresent(locator1 = "Treeview#NODE_COLLAPSED_NEW");
-	}
-
 	macro gotoPortletOptions {
 		if (isSet(portletName)) {
 			var key_portletName = "${portletName}";

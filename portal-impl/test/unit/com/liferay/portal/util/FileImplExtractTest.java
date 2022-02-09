@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -102,6 +104,14 @@ public class FileImplExtractTest {
 		text = extractText("test-2010.docx");
 
 		Assert.assertTrue(text, text.contains("Extract test."));
+	}
+
+	@Test
+	public void testEmpty() {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_file.extractText(
+				new UnsyncByteArrayInputStream(new byte[0]), null));
 	}
 
 	@Test

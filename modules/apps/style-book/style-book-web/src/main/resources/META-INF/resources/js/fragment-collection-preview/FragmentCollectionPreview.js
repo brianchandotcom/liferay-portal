@@ -13,17 +13,41 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {FragmentPreview} from './FragmentPreview';
 
 import '../../css/FragmentCollectionPreview.scss';
 
-export default function FragmentCollectionPreview({fragments, namespace}) {
+const FRAGMENT_COLLECTION_BLOCKLIST = {
+	BASIC_COMPONENT: [
+		'BASIC_COMPONENT-external-video',
+		'BASIC_COMPONENT-html',
+		'BASIC_COMPONENT-separator',
+		'BASIC_COMPONENT-spacer',
+		'BASIC_COMPONENT-video',
+	],
+};
+
+export default function FragmentCollectionPreview({
+	fragmentCollectionKey,
+	fragments,
+	namespace,
+}) {
+	const filteredFragments = useMemo(() => {
+		const blocklist = FRAGMENT_COLLECTION_BLOCKLIST[fragmentCollectionKey];
+
+		return blocklist
+			? fragments.filter(
+					(fragment) => !blocklist.includes(fragment.fragmentEntryKey)
+			  )
+			: fragments;
+	}, [fragmentCollectionKey, fragments]);
+
 	return (
 		<>
-			{fragments.length ? (
-				fragments.map((fragment) => (
+			{filteredFragments.length ? (
+				filteredFragments.map((fragment) => (
 					<FragmentPreview
 						fragment={fragment}
 						key={fragment.fragmentEntryKey}

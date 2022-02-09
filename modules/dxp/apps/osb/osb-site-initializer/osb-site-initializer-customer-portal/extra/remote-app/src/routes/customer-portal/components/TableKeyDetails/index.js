@@ -11,6 +11,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {useEffect, useState} from 'react';
 import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
 import {
 	getFormatedProductName,
@@ -18,7 +19,7 @@ import {
 	getProductName,
 	getStatusActivationTag,
 	hasVirtualCluster,
-} from '../../containers/DXPActivationKeysTable/utils/constants';
+} from '../../containers/DXPActivationKeysTable/utils';
 
 const HOST_NAME = 'Host Name';
 const IP_ADDRESSES = 'IP Addresses';
@@ -32,10 +33,18 @@ const TableKeyDetails = ({
 	assetsPath,
 	setValueToCopyToClipboard,
 }) => {
-	const instanceSizeFormated = activationKeys.sizing.slice(7, 8);
+	const [actionToCopy, setActionToCopy] = useState('');
+	const instanceSizeFormated = activationKeys.sizing?.slice(7, 8);
 
-	const unlimitedLicenseDate = new Date().setFullYear(
-		new Date().getFullYear() + NO_EXPIRATION_DATE
+	const now = new Date();
+
+	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
+		activationKeys?.licenseEntryType
+	);
+	const statusActivationTag = getStatusActivationTag(activationKeys);
+
+	const unlimitedLicenseDate = now.setFullYear(
+		now.getFullYear() + NO_EXPIRATION_DATE
 	);
 
 	const handleExpiredDate =
@@ -44,9 +53,13 @@ const TableKeyDetails = ({
 			? 'Does Not Expire'
 			: getCurrentEndDate(activationKeys.expirationDate);
 
-	const handleCopyToClipboard = (value, action) => {
-		navigator.clipboard.writeText(action);
+	useEffect(() => {
+		if (actionToCopy) {
+			navigator.clipboard.writeText(actionToCopy);
+		}
+	}, [actionToCopy]);
 
+	const handleCopyToClipboard = (value) => {
 		setValueToCopyToClipboard(value);
 	};
 
@@ -95,25 +108,27 @@ const TableKeyDetails = ({
 
 				<div className="row">
 					<div className="col-2">
-						<p className="align-items-center bg-brand-primary-lighten-5 d-flex key-details-paragraph px-3 py-2 rounded">
+						<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 							<img
 								className="mr-2"
 								src={`${assetsPath}/assets/navigation-menu/${SUBSCRIPTION_IMAGE_FILE}`}
 							/>
 
-							{getFormatedProductName(activationKeys)}
+							{getFormatedProductName(
+								activationKeys?.productName
+							)}
 						</p>
 					</div>
 
 					<div className="col-3">
-						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
+						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
 							{activationKeys.productVersion}
 						</p>
 					</div>
 
 					<div className="col-4">
-						<p className="bg-neutral-1 key-details-paragraph px-3 py-2 rounded">
-							{hasVirtualCluster(activationKeys)
+						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
+							{hasVirtualClusterForActivationKeys
 								? 'Virtual Cluster'
 								: 'On-Premise'}
 						</p>
@@ -121,11 +136,9 @@ const TableKeyDetails = ({
 
 					<div className="col-3">
 						<p
-							className={`key-details-paragraph label-tonal-${
-								getStatusActivationTag(activationKeys).color
-							} px-3 py-2 rounded`}
+							className={`cp-key-details-paragraph label-tonal-${statusActivationTag?.color} px-3 py-2 rounded`}
 						>
-							{getStatusActivationTag(activationKeys).title}
+							{statusActivationTag?.title}
 						</p>
 					</div>
 				</div>
@@ -139,7 +152,7 @@ const TableKeyDetails = ({
 
 					<div className="col-4">
 						<p className="text-neutral-8 text-paragraph-sm">
-							{hasVirtualCluster(activationKeys)
+							{hasVirtualClusterForActivationKeys
 								? 'Cluster Nodes'
 								: HOST_NAME}
 						</p>
@@ -154,30 +167,34 @@ const TableKeyDetails = ({
 
 				<div className="row">
 					<div className="col-2">
-						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
+						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
 							{getProductName(activationKeys)}
 						</p>
 					</div>
 
 					<div className="col-3">
-						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
-							{getProductDescription(activationKeys)}
+						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
+							{getProductDescription(
+								activationKeys?.complimentary
+							)}
 						</p>
 					</div>
 
 					<div className="col-4">
-						<p className="bg-neutral-1 d-flex key-details-paragraph px-3 py-2 rounded">
-							{hasVirtualCluster(activationKeys)
-								? `${activationKeys.maxClusterNodes}`
+						<p className="bg-neutral-1 cp-key-details-paragraph d-flex px-3 py-2 rounded">
+							{hasVirtualClusterForActivationKeys
+								? activationKeys.maxClusterNodes
 								: activationKeys.hostName || '-'}
 
 							{activationKeys.hostName && (
 								<ClayIcon
-									className="copy-clipboard-icon ml-3 mt-1 text-neutral-5"
+									className="cp-copy-clipboard-icon ml-3 mt-1 text-neutral-5"
 									onClick={() =>
 										handleCopyToClipboard(
 											HOST_NAME,
-											activationKeys.hostName
+											setActionToCopy(
+												activationKeys.hostName
+											)
 										)
 									}
 									symbol="copy"
@@ -187,7 +204,7 @@ const TableKeyDetails = ({
 					</div>
 
 					<div className="col-3">
-						<p className="bg-neutral-1 key-details-paragraph px-3 py-2 rounded">
+						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
 							{getCurrentEndDate(activationKeys.createDate)}
 						</p>
 					</div>
@@ -195,9 +212,7 @@ const TableKeyDetails = ({
 
 				<div
 					className={classNames('row', {
-						'justify-content-between': hasVirtualCluster(
-							activationKeys
-						),
+						'justify-content-between': hasVirtualClusterForActivationKeys,
 					})}
 				>
 					<div className="col-5">
@@ -206,7 +221,7 @@ const TableKeyDetails = ({
 						</p>
 					</div>
 
-					{!hasVirtualCluster(activationKeys) && (
+					{!hasVirtualClusterForActivationKeys && (
 						<div className="col-4">
 							<p className="text-neutral-8 text-paragraph-sm">
 								{IP_ADDRESSES}
@@ -223,29 +238,29 @@ const TableKeyDetails = ({
 
 				<div
 					className={classNames('row', {
-						'justify-content-between': hasVirtualCluster(
-							activationKeys
-						),
+						'justify-content-between': hasVirtualClusterForActivationKeys,
 					})}
 				>
 					<div className="col-5">
-						<p className="bg-brand-primary-lighten-5 key-details-paragraph px-3 py-2 rounded">
+						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
 							{instanceSizeFormated}
 						</p>
 					</div>
 
-					{!hasVirtualCluster(activationKeys) && (
+					{!hasVirtualClusterForActivationKeys && (
 						<div className="col-4">
-							<p className="bg-neutral-1 d-flex key-details-paragraph px-3 py-2 rounded">
+							<p className="bg-neutral-1 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 								{activationKeys.ipAddresses || '-'}
 
 								{activationKeys.ipAddresses && (
 									<ClayIcon
-										className="copy-clipboard-icon ml-3 mt-1 text-neutral-5"
+										className="cp-copy-clipboard-icon ml-3 mt-1 text-neutral-5"
 										onClick={() =>
 											handleCopyToClipboard(
 												IP_ADDRESSES,
-												activationKeys.ipAddresses
+												setActionToCopy(
+													activationKeys.ipAddresses
+												)
 											)
 										}
 										symbol="copy"
@@ -256,13 +271,13 @@ const TableKeyDetails = ({
 					)}
 
 					<div className="col-3">
-						<p className="bg-neutral-1 key-details-paragraph px-3 py-2 rounded">
+						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
 							{handleExpiredDate}
 						</p>
 					</div>
 				</div>
 
-				{!hasVirtualCluster(activationKeys) && (
+				{!hasVirtualClusterForActivationKeys && (
 					<>
 						<div className="justify-content-center row">
 							<div className="col-2">
@@ -273,16 +288,18 @@ const TableKeyDetails = ({
 						</div>
 						<div className="justify-content-center row">
 							<div className="col-4 ml-8">
-								<p className="bg-neutral-1 d-flex key-details-paragraph px-3 py-2 rounded">
+								<p className="bg-neutral-1 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 									{activationKeys.macAddresses || '-'}
 
 									{activationKeys.macAddresses && (
 										<ClayIcon
-											className="copy-clipboard-icon ml-3 mt-1 text-neutral-5"
+											className="cp-copy-clipboard-icon ml-3 mt-1 text-neutral-5"
 											onClick={() =>
 												handleCopyToClipboard(
 													MAC_ADDRESSES,
-													activationKeys.macAddresses
+													setActionToCopy(
+														activationKeys.macAddresses
+													)
 												)
 											}
 											symbol="copy"

@@ -115,6 +115,21 @@ public class SegmentsExperienceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addSegmentsExperience(
+			segmentsEntryId, String.valueOf(counterLocalService.increment()),
+			classNameId, classPK, nameMap, priority, active,
+			typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	@Override
+	public SegmentsExperience addSegmentsExperience(
+			long segmentsEntryId, String segmentsExperienceKey,
+			long classNameId, long classPK, Map<Locale, String> nameMap,
+			int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Segments experience
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -140,8 +155,7 @@ public class SegmentsExperienceLocalServiceImpl
 		segmentsExperience.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		segmentsExperience.setSegmentsEntryId(segmentsEntryId);
-		segmentsExperience.setSegmentsExperienceKey(
-			String.valueOf(counterLocalService.increment()));
+		segmentsExperience.setSegmentsExperienceKey(segmentsExperienceKey);
 		segmentsExperience.setClassNameId(classNameId);
 		segmentsExperience.setClassPK(publishedClassPK);
 		segmentsExperience.setNameMap(nameMap);

@@ -31,6 +31,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongText",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "Clob",

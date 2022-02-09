@@ -308,13 +308,13 @@ definition {
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "TestStartNode Node Description",
 			nodeName = "TestStartNode",
-			nodeNodeLabel = "TestStartNode",
+			nodeNodeLabel = "Start",
 			nodeType = "start");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "TestStartNode");
 
 		KaleoDesigner.viewNodeType(
-			nodeNodeLabel = "TestStartNode",
+			nodeNodeLabel = "Start",
 			nodeType = "start");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "TestStartNode");
@@ -499,7 +499,6 @@ definition {
 	@description = "This is a use case for LPS-37209."
 	@priority = "4"
 	test ConfigureTaskTimersViaViewTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -543,7 +542,7 @@ definition {
 		}
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<name>Timer Name</name>''',
+			kdSourceXml = '''<name>Timer Name</name>''',
 			line = "17");
 
 		KaleoDesigner.viewSourceXMLLine(
@@ -813,25 +812,18 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
 
 		KaleoDesigner.addNodeViaViewTab(
-			nodeDescription = "Start Node Description",
-			nodeName = "Start",
-			nodeNodeLabel = "Start",
-			nodeType = "start");
+			nodeDescription = "End Node Description",
+			nodeName = "End",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Approve",
-			newNode = "Task",
-			newNodeDescription = "End Node Description",
-			newNodeName = "End",
-			newNodeType = "task",
-			nodeType = "start");
-
-		KaleoDesigner.deleteConnector(connectorLabel = "Approve");
-
-		KaleoDesigner.addConnectorViaViewTab(
 			connectorName = "Reverse",
-			nodeType = "task",
-			nodeTypeDestination = "start2");
+			newNode = "Start",
+			newNodeDescription = "Start Node Description",
+			newNodeName = "Start",
+			newNodeType = "start",
+			nodeType = "task");
 
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Start node cannot have an incoming transition.");
 	}
@@ -1068,7 +1060,7 @@ definition {
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "TestStartNode Node Description",
 			nodeName = "TestStartNode",
-			nodeNodeLabel = "TestStartNode",
+			nodeNodeLabel = "Start",
 			nodeType = "start");
 
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The workflow has too many start nodes (state nodes StartNode and TestStartNode).");

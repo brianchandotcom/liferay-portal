@@ -248,11 +248,11 @@ definition {
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Task Description",
-			nodeName = "Tast Name",
+			nodeName = "Test Name",
 			nodeNodeLabel = "Task",
 			nodeType = "task");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "Tast Name");
+		KaleoDesigner.selectNode(nodeNodeLabel = "Test Name");
 
 		KaleoDesigner.editNodeAssignments(
 			autoCreate = "true",
@@ -461,7 +461,7 @@ definition {
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Task Description",
-			nodeName = "Tast Name",
+			nodeName = "Task Name",
 			nodeNodeLabel = "Task",
 			nodeType = "task");
 
@@ -1011,22 +1011,36 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+
 		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
 
 		KaleoDesigner.addNodeViaViewTab(
-			nodeDescription = "Task Node Description",
-			nodeName = "Task",
-			nodeNodeLabel = "Task",
-			nodeType = "task");
+			nodeDescription = "Start Node Description",
+			nodeName = "Start",
+			nodeNodeLabel = "Start",
+			nodeType = "start");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Submit",
+			newNode = "Join XOR",
+			newNodeDescription = "JoinXOR Description",
+			newNodeName = "JoinXOR",
+			newNodeType = "join-xor",
+			nodeType = "start");
+
+		KaleoDesigner.deleteConnector(connectorLabel = "Submit");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Start");
 
 		KaleoDesigner.addConnectorViaViewTab(
-			connectorName = "Connector 1",
+			connectorName = "transition",
 			nodeType = "start",
-			nodeTypeDestination = "task");
+			nodeTypeDestination = "join-xor");
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#CIRCLE_ORANGE_CONNECTOR");
 	}

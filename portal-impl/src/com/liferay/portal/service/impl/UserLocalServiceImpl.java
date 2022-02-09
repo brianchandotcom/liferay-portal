@@ -318,20 +318,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		boolean passwordReset = false;
-
-		try {
-			passwordReset = _isPasswordReset(
-				_passwordPolicyLocalService.getDefaultPasswordPolicy(
-					companyId));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
-
-		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
+		updatePasswordReset(
+			defaultAdminUser.getUserId(), _isPasswordReset(companyId));
 
 		return defaultAdminUser;
 	}
@@ -1247,20 +1235,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setPasswordEncrypted(true);
-
-		boolean passwordReset = false;
-
-		try {
-			passwordReset = _isPasswordReset(defaultUser.getPasswordPolicy());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
-
-		user.setPasswordReset(passwordReset);
-
+		user.setPasswordReset(_isPasswordReset(companyId));
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 
@@ -4810,21 +4785,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			user.setPasswordEncrypted(true);
-
-			boolean passwordReset = false;
-
-			try {
-				passwordReset = _isPasswordReset(
-					defaultUser.getPasswordPolicy());
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException, portalException);
-				}
-			}
-
-			user.setPasswordReset(passwordReset);
-
+			user.setPasswordReset(_isPasswordReset(companyId));
 			user.setScreenName(screenName);
 			user.setLanguageId(locale.toString());
 			user.setTimeZoneId(defaultUser.getTimeZoneId());
@@ -7538,11 +7499,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 	}
 
-	private boolean _isPasswordReset(PasswordPolicy passwordPolicy) {
-		if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-			passwordPolicy.isChangeRequired()) {
+	private boolean _isPasswordReset(long companyId) {
+		try {
+			PasswordPolicy passwordPolicy =
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 
-			return true;
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+				passwordPolicy.isChangeRequired()) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
 		}
 
 		return false;

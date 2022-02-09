@@ -438,6 +438,12 @@ definition {
 			value1 = "${itemName}");
 	}
 
+	macro viewItemSelectorText {
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "SiteNavigationMenu#ITEM_SELECTOR_CONTENT_INPUT",
+			value1 = "${text}");
+	}
 	macro viewMenuTitle {
 		LexiconTable.viewTableEntryTitle(tableEntry = "${navigationMenu}");
 	}

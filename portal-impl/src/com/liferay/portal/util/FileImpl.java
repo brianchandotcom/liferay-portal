@@ -398,14 +398,12 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String extractText(InputStream inputStream, String fileName) {
-		return extractText(inputStream, fileName, -1);
+	public String extractText(InputStream inputStream) {
+		return extractText(inputStream, -1);
 	}
 
 	@Override
-	public String extractText(
-		InputStream inputStream, String fileName, int maxStringLength) {
-
+	public String extractText(InputStream inputStream, int maxStringLength) {
 		if (maxStringLength == 0) {
 			return StringPool.BLANK;
 		}

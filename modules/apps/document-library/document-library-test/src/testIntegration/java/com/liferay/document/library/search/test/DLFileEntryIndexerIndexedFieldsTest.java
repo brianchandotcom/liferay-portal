@@ -146,8 +146,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	protected String getContents(FileEntry fileEntry) throws Exception {
 		String contents = FileUtil.extractText(
 			_dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false),
-			fileEntry.getTitle());
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false));
 
 		return contents.trim();
 	}

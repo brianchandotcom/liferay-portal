@@ -147,14 +147,12 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String extractText(InputStream inputStream, String fileName) {
+	public String extractText(InputStream inputStream) {
 		return null;
 	}
 
 	@Override
-	public String extractText(
-		InputStream inputStream, String fileName, int maxStringLength) {
-
+	public String extractText(InputStream inputStream, int maxStringLength) {
 		return null;
 	}
 

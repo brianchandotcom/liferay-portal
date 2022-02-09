@@ -110,8 +110,7 @@ public class FileImplExtractTest {
 	public void testEmpty() {
 		Assert.assertEquals(
 			StringPool.BLANK,
-			_file.extractText(
-				new UnsyncByteArrayInputStream(new byte[0]), null));
+			_file.extractText(new UnsyncByteArrayInputStream(new byte[0])));
 	}
 
 	@Test
@@ -213,7 +212,7 @@ public class FileImplExtractTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + fileName);
 
-		String text = _file.extractText(inputStream, fileName);
+		String text = _file.extractText(inputStream);
 
 		return text.trim();
 	}

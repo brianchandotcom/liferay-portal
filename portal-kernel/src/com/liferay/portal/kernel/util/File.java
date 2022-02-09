@@ -85,10 +85,9 @@ public interface File {
 
 	public boolean exists(String fileName);
 
-	public String extractText(InputStream inputStream, String fileName);
+	public String extractText(InputStream inputStream);
 
-	public String extractText(
-		InputStream inputStream, String fileName, int maxStringLength);
+	public String extractText(InputStream inputStream, int maxStringLength);
 
 	public String getAbsolutePath(java.io.File file);
 

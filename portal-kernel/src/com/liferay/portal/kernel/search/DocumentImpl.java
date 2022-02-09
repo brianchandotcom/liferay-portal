@@ -147,7 +147,7 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public void addFile(String name, InputStream inputStream, String fileExt) {
-		addText(name, FileUtil.extractText(inputStream, fileExt));
+		addText(name, FileUtil.extractText(inputStream));
 	}
 
 	@Override
@@ -155,8 +155,7 @@ public class DocumentImpl implements Document {
 		String name, InputStream inputStream, String fileExt,
 		int maxStringLength) {
 
-		addText(
-			name, FileUtil.extractText(inputStream, fileExt, maxStringLength));
+		addText(name, FileUtil.extractText(inputStream, maxStringLength));
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.BatchEngineImportTaskStrategy;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
@@ -62,6 +62,8 @@ public class BatchEngineImportTaskLocalServiceImpl
 				(String)parameters.getOrDefault("enclosingCharacter", null));
 		}
 
+		_validateImportStrategy(importStrategy);
+
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskPersistence.create(
 				counterLocalService.increment(
@@ -103,8 +105,8 @@ public class BatchEngineImportTaskLocalServiceImpl
 		return addBatchEngineImportTask(
 			companyId, userId, batchSize, callbackURL, className, content,
 			contentType, executeStatus, fieldNameMappingMap,
-			BatchEngineImportTaskStrategy.ON_ERROR_FAIL.getStrategy(),
-			operation, parameters, taskItemDelegateName);
+			BatchEngineImportTaskConstants.ON_ERROR_FAIL, operation, parameters,
+			taskItemDelegateName);
 	}
 
 	@Override
@@ -161,6 +163,20 @@ public class BatchEngineImportTaskLocalServiceImpl
 			throw new BatchEngineImportTaskParametersException(
 				"Illegal enclosing character value " + enclosingCharacter);
 		}
+	}
+
+	private void _validateImportStrategy(int importStrategy)
+		throws BatchEngineImportTaskParametersException {
+
+		if ((importStrategy ==
+				BatchEngineImportTaskConstants.ON_ERROR_CONTINUE) ||
+			(importStrategy == BatchEngineImportTaskConstants.ON_ERROR_FAIL)) {
+
+			return;
+		}
+
+		throw new BatchEngineImportTaskParametersException(
+			"Illegal import strategy value " + importStrategy);
 	}
 
 	private static final String _INVALID_ENCLOSING_CHARACTERS =

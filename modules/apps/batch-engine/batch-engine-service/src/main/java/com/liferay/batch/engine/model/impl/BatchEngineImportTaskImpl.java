@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.model.impl;
 
-import com.liferay.batch.engine.BatchEngineImportTaskStrategy;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 
@@ -39,10 +38,6 @@ public class BatchEngineImportTaskImpl extends BatchEngineImportTaskBaseImpl {
 	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors() {
 		return BatchEngineImportTaskErrorLocalServiceUtil.
 			getBatchEngineImportTaskErrors(getBatchEngineImportTaskId());
-	}
-
-	public BatchEngineImportTaskStrategy getBatchEngineImportTaskStrategy() {
-		return BatchEngineImportTaskStrategy.valueOf(getImportStrategy());
 	}
 
 }

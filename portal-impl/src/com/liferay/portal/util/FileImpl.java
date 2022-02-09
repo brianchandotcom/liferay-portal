@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
@@ -77,7 +78,6 @@ import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.extractor.EmbeddedDocumentExtractor;
 import org.apache.tika.extractor.ParsingEmbeddedDocumentExtractor;
-import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
@@ -419,10 +419,12 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			boolean forkProcess = false;
 
-			TikaInputStream tikaInputStream = TikaInputStream.get(inputStream);
+			if (!inputStream.markSupported()) {
+				inputStream = new UnsyncBufferedInputStream(inputStream);
+			}
 
 			if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
-				String mimeType = tika.detect(tikaInputStream);
+				String mimeType = tika.detect(inputStream);
 
 				if (ArrayUtil.contains(
 						PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
@@ -433,6 +435,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 
 			if (forkProcess) {
+				InputStream finalInputStream = inputStream;
+
 				ProcessChannel<String> processChannel =
 					SystemBundleUtil.callService(
 						ProcessExecutor.class,
@@ -442,7 +446,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 									PortalClassPathUtil.
 										getPortalProcessConfig(),
 									new ExtractTextProcessCallable(
-										getBytes(tikaInputStream)));
+										getBytes(finalInputStream)));
 							}
 							catch (Exception exception) {
 								return ReflectionUtil.throwException(exception);
@@ -455,8 +459,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				text = future.get();
 			}
 			else {
-				if (!_isEmptyTikaInputStream(tikaInputStream)) {
-					text = _parseToString(tika, tikaInputStream);
+				if (!_isEmptyInputStream(inputStream)) {
+					text = _parseToString(tika, inputStream);
 				}
 			}
 		}
@@ -1087,8 +1091,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
-	private static String _parseToString(
-			Tika tika, TikaInputStream tikaInputStream)
+	private static String _parseToString(Tika tika, InputStream inputStream)
 		throws IOException, TikaException {
 
 		UniversalEncodingDetector universalEncodingDetector =
@@ -1097,7 +1100,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		Metadata metadata = new Metadata();
 
 		Charset charset = universalEncodingDetector.detect(
-			tikaInputStream, metadata);
+			inputStream, metadata);
 
 		String contentEncoding = StringPool.BLANK;
 
@@ -1144,7 +1147,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			parseContext.set(Parser.class, parser);
 
 			parser.parse(
-				tikaInputStream, new BodyContentHandler(writeOutContentHandler),
+				inputStream, new BodyContentHandler(writeOutContentHandler),
 				metadata, parseContext);
 		}
 		catch (SAXException saxException) {
@@ -1154,28 +1157,27 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 		}
 		finally {
-			tikaInputStream.close();
+			inputStream.close();
 		}
 
 		return writeOutContentHandler.toString();
 	}
 
-	private boolean _isEmptyTikaInputStream(TikaInputStream tikaInputStream)
+	private boolean _isEmptyInputStream(InputStream inputStream)
 		throws IOException {
 
-		if (tikaInputStream.hasLength() && (tikaInputStream.getLength() > 0)) {
+		inputStream.mark(1);
+
+		try {
+			if (inputStream.read() == -1) {
+				return true;
+			}
+
 			return false;
 		}
-
-		byte[] bytes = new byte[1];
-
-		int count = tikaInputStream.peek(bytes);
-
-		if (count > 0) {
-			return false;
+		finally {
+			inputStream.reset();
 		}
-
-		return true;
 	}
 
 	private static final String[] _SAFE_FILE_NAME_1 = {
@@ -1221,9 +1223,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			try {
-				InputStream inputStream = new UnsyncByteArrayInputStream(_data);
-
-				return _parseToString(tika, TikaInputStream.get(inputStream));
+				return _parseToString(
+					tika, new UnsyncByteArrayInputStream(_data));
 			}
 			catch (Exception exception) {
 				throw new ProcessException(exception);

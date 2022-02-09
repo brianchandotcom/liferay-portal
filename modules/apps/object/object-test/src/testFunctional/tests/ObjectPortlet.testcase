@@ -597,6 +597,8 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"
 	@priority = "4"
 	test CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -605,6 +607,7 @@ definition {
 			scope = "site");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",

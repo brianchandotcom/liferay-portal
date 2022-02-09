@@ -4037,7 +4037,7 @@ definition {
 		}
 
 		if (isSet(alignment)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_alignment = "${alignment}",
@@ -4046,7 +4046,7 @@ definition {
 		}
 
 		if (isSet(backgroundColor)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4055,7 +4055,7 @@ definition {
 		}
 
 		if (isSet(borderColor)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4064,7 +4064,7 @@ definition {
 		}
 
 		if (isSet(borderRadius)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_borderRadius = "${borderRadius}",
@@ -4079,7 +4079,7 @@ definition {
 		}
 
 		if (isSet(boxShadow)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_boxShadow = "${boxShadow}",
@@ -4090,20 +4090,11 @@ definition {
 		if (isSet(headingLevel)) {
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
-			if ("${fragmentName}" == "card") {
-				AssertElementPresent(
-					key_fragmentName = "${fragmentName}",
-					key_headingLevel = "${headingLevel}",
-					key_text = "${text}",
-					locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER_CARD");
-			}
-			else {
-				AssertElementPresent(
-					key_fragmentName = "${fragmentName}",
-					key_headingLevel = "${headingLevel}",
-					key_position = "${position}",
-					locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
-			}
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_headingLevel = "${headingLevel}",
+				key_position = "${position}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
 		}
 
 		if (isSet(height)) {
@@ -4122,7 +4113,7 @@ definition {
 		}
 
 		if (isSet(marginBottom)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4131,7 +4122,7 @@ definition {
 		}
 
 		if (isSet(marginLeft)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4140,7 +4131,7 @@ definition {
 		}
 
 		if (isSet(marginRight)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4149,7 +4140,7 @@ definition {
 		}
 
 		if (isSet(marginTop)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4158,7 +4149,7 @@ definition {
 		}
 
 		if (isSet(paddingBottom)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4167,7 +4158,7 @@ definition {
 		}
 
 		if (isSet(paddingLeft)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4176,7 +4167,7 @@ definition {
 		}
 
 		if (isSet(paddingRight)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4185,7 +4176,7 @@ definition {
 		}
 
 		if (isSet(paddingTop)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
@@ -4209,7 +4200,7 @@ definition {
 		}
 
 		if (isSet(textColor)) {
-			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",

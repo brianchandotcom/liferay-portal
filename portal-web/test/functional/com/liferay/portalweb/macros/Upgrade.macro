@@ -3891,106 +3891,52 @@ definition {
 
 		task ("Assert styles of Button in view mode") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "button",
+				alignment = "center",
+				fragmentName = "Button",
+				marginBottom = "1",
 				size = "lg",
 				type = "link");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_fragmentName = "button",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
 		}
 
 		task ("Assert styles of Card in view mode") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "card",
-				imageSize = "0");
-
-			AssertElementPresent(
-				key_borderRadius = "0.375rem",
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_boxShadow = "0 1rem 3rem rgba(0, 0, 0, .175)",
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_fragmentName = "card",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+				alignment = "center",
+				borderRadius = "0.375rem",
+				boxShadow = "0 1rem 3rem rgba(0, 0, 0, .175)",
+				fragmentName = "Card",
+				imageSize = "0",
+				marginBottom = "1");
 		}
 
 		task ("Assert styles of Heading in view mode") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
-				headingLevel = "h2");
-
-			AssertElementPresent(
-				key_fragmentName = "heading",
-				key_textColor = "#287D3C",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_fragmentName = "heading",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+				alignment = "center",
+				fragmentName = "Heading",
+				headingLevel = "h2",
+				marginBottom = "1",
+				textColor = "#287D3C");
 		}
 
 		task ("Assert styles of HTML in view mode") {
-			AssertElementPresent(
-				key_fragmentName = "html",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "HTML",
+				marginBottom = "1");
 		}
 
 		task ("Assert styles of Image in view mode") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "image",
-				imageSize = "0");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "image",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_fragmentName = "image",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+				alignment = "center",
+				fragmentName = "Image",
+				imageSize = "0",
+				marginBottom = "1");
 		}
 
 		task ("Assert styles of Paragraph in view mode") {
-			AssertElementPresent(
-				key_fragmentName = "paragraph",
-				key_textColor = "#B95000",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_fragmentName = "paragraph",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "Paragraph",
+				marginBottom = "1",
+				textColor = "#B95000");
 		}
 
 		task ("Assert styles of Separator in view mode") {
@@ -4053,16 +3999,11 @@ definition {
 		task ("Assert styles of Card in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "card",
+				borderRadius = "0.375rem",
+				boxShadow = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem",
+				fragmentName = "Card",
 				imageSize = "0",
 				marginBottom = "1");
-
-			AssertElementPresent(
-				key_borderRadius = "0.375rem",
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
-
-			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Card')]/parent::div[contains(@style,'box-shadow: rgba(0, 0, 0, 0.176) 0px 1rem 3rem')]");
 		}
 
 		task ("Assert styles of Heading in edit mode") {
@@ -4070,12 +4011,8 @@ definition {
 				alignment = "center",
 				fragmentName = "heading",
 				headingLevel = "h2",
-				marginBottom = "1");
-
-			AssertElementPresent(
-				key_fragmentName = "heading",
-				key_textColor = "rgb(40, 125, 60)",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+				marginBottom = "1",
+				textColor = "rgb(40, 125, 60)");
 		}
 
 		task ("Assert styles of HTML in edit mode") {
@@ -4093,15 +4030,11 @@ definition {
 		}
 
 		task ("Assert styles of Paragraph in edit mode") {
-			AssertElementPresent(
-				key_fragmentName = "paragraph",
-				key_textColor = "rgb(185, 80, 0)",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
-
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				fragmentName = "paragraph",
-				marginBottom = "1");
+				marginBottom = "1",
+				textColor = "rgb(185, 80, 0)");
 		}
 
 		task ("Assert styles of Separator in edit mode") {

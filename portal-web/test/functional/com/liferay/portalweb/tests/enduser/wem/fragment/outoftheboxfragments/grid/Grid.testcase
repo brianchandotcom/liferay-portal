@@ -575,30 +575,18 @@ definition {
 
 		task ("View the Heading's style in view mode") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
-				headingLevel = "h2");
-
-			AssertElementPresent(
-				key_fragmentName = "heading",
-				key_textColor = "var(--success)",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+				alignment = "center",
+				fragmentName = "Heading",
+				headingLevel = "h2",
+				textColor = "success");
 		}
 
 		task ("View the Button's style in view mode") {
 			PageEditor.viewFragmentStyle(
+				alignment = "center",
 				fragmentName = "button",
 				size = "lg",
 				type = "link");
-
-			AssertElementPresent(
-				key_alignment = "center",
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
 		}
 	}
 

@@ -156,7 +156,7 @@ public class BlogsStatsUserLocalServiceImpl
 		).where(
 			predicate
 		).groupBy(
-			BlogsEntryTable.INSTANCE.userId
+			BlogsEntryTable.INSTANCE.groupId, BlogsEntryTable.INSTANCE.userId
 		);
 
 		LimitStep limitStep = orderByStep;

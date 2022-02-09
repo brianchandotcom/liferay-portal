@@ -110,10 +110,7 @@ export function FormBuilder() {
 
 	const emailContentRef = useRef({
 		addresses: [],
-		message: Liferay.Util.sub(
-			Liferay.Language.get('please-fill-out-this-form-x'),
-			sharedFormURL
-		),
+		message: '',
 		subject: localizedName[themeDisplay.getLanguageId()],
 	});
 
@@ -344,6 +341,11 @@ export function FormBuilder() {
 
 	const onShareClick = useCallback(async () => {
 		const url = await getFormUrl();
+
+		emailContentRef.current.message = Liferay.Util.sub(
+			Liferay.Language.get('please-fill-out-this-form-x'),
+			url
+		);
 
 		if (published) {
 			modalDispatch({

@@ -92,6 +92,7 @@ definition {
 			  -d layoutPageTemplateCollectionId=0 \
 			  -d name=${masterPageTemplateEntryName} \
 			  -d type=3 \
+			  -d masterLayoutPlid=0 \
 			  -d status=2 \
 			  -d serviceContext=${serviceContext}
 		''';

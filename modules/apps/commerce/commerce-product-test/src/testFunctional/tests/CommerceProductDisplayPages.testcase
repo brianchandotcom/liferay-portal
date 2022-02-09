@@ -53,7 +53,14 @@ definition {
 		}
 
 		task ("Then I should be redirected to the product detail page") {
-			FrontStore.viewProductDetail(fsProductName = "U-Joint");
+			ControlMenu.viewHeaderTitle(headerTitle = "Product Detail");
+
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
 		}
 	}
 
@@ -238,7 +245,10 @@ definition {
 		}
 
 		task ("Then I should be redirected to the content page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(fsProductName = "U-Joint");
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
@@ -279,7 +289,10 @@ definition {
 		}
 
 		task ("Then I should be redirected to the widget page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(fsProductName = "U-Joint");
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
 
@@ -334,7 +347,10 @@ definition {
 		}
 
 		task ("Then I should be redirected to the content page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(fsProductName = "U-Joint");
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
@@ -375,7 +391,10 @@ definition {
 		}
 
 		task ("Then I should be redirected to the widget page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(fsProductName = "U-Joint");
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 

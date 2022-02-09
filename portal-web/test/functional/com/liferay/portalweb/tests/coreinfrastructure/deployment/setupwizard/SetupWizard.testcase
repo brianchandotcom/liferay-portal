@@ -6,6 +6,48 @@ definition {
 	property test.prepare.bundle.properties = "false";
 	property testray.main.component.name = "Setup Wizard";
 
+	@description = "This is a use case for LPS-107347. It asserts that an admin is still required to change password with Setup Wizard disabled."
+	@priority = "4"
+	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
+		property custom.properties = "passwords.default.policy.changeable=true${line.separator}setup.wizard.enabled=false";
+		property database.types = "mysql";
+		property testray.main.component.name = "Users and Organizations";
+
+		task ("When an admin logs in with Setup Wizard disabled") {
+			Navigator.openURL();
+
+			User._clickSignInLink();
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			User._clickSignInButton();
+
+			SignIn.agreeToTermsOfUse();
+		}
+
+		task ("Then the admin is still required to reset its password") {
+			Type(
+				locator1 = "TextInput#PASSWORD_1",
+				value1 = "test2");
+
+			Type(
+				locator1 = "TextInput#PASSWORD_2",
+				value1 = "test2");
+
+			Button.clickSubmitButton();
+
+			SignIn.setPasswordReminder();
+
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
+	}
+
 	@priority = "4"
 	test BasicConfigurationVisualLook {
 		property database.types = "mysql";

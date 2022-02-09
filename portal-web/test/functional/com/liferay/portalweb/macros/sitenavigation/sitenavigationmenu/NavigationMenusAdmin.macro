@@ -317,6 +317,10 @@ definition {
 				locator1 = "Treeview#NODE_UNSELECTED");
 
 			SelectFrame.selectFrameTop();
+
+			NavigationMenusAdmin.viewItemSelectorText(
+				fieldLabel = "Item",
+				text = "${assetTitle}");
 		}
 
 		if (isSet(customField)) {
@@ -324,6 +328,20 @@ definition {
 				key_fieldLabel = "${customField}",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${fieldValue}");
+		}
+
+		if (isSet(viewItemWarning)) {
+			AssertElementPresent(
+				key_itemName = "${itemName}",
+				locator1 = "SiteNavigationMenu#ITEM_WARNING");
+
+			AssertElementNotPresent(
+				key_warningMessage = "No Display Page",
+				locator1 = "Message#WARNING_SPECIFIC");
+
+			AssertElementNotPresent(
+				locator1 = "Message#EMPTY_INFO_DEPOT",
+				value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
 		}
 
 		PortletEntry.save();
@@ -344,8 +362,6 @@ definition {
 	}
 
 	macro openItemSidebar {
-		Refresh();
-
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY");

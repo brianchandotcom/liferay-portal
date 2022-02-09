@@ -363,6 +363,130 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-72792. Users could login and logout using Auth0 as OpenID Connect provider."
+	@priority = "5"
+	test OpenIDConnectSmokeWithAuth0 {
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAuth0";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+
+		var userEmailAddress = PropsUtil.get("openid.provider.auth0.test.account.email.address");
+		var userPassword = PropsUtil.get("openid.provider.auth0.test.account.password");
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Auth0.config");
+		}
+
+		task ("Logout and login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userEmailAddress}",
+				userPassword = "${userPassword}");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LRQA-72792. Users could login and logout using Azure as OpenID Connect provider."
+	@priority = "5"
+	test OpenIDConnectSmokeWithAzure {
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAzure";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+
+		var userEmailAddress = PropsUtil.get("openid.provider.azure.test.account.email.address");
+		var userPassword = PropsUtil.get("openid.provider.azure.test.account.password");
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Azure.config");
+		}
+
+		task ("Logout and login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userEmailAddress}",
+				userPassword = "${userPassword}");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LRQA-72792. Users could login and logout using Okta as OpenID Connect provider."
+	@priority = "5"
+	test OpenIDConnectSmokeWithOkta {
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithOkta";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+
+		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");
+		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
+		}
+
+		task ("Logout and login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userEmailAddress}",
+				userPassword = "${userPassword}");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LRQA-72792. Users could login and logout using PingOne as OpenID Connect provider."
+	@priority = "5"
+	test OpenIDConnectSmokeWithPingOne {
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithPingOne";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+
+		var userName = PropsUtil.get("openid.provider.pingone.test.account.username");
+		var userPassword = PropsUtil.get("openid.provider.pingone.test.account.password");
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~PingOne.config");
+		}
+
+		task ("Logout and login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userName}",
+				userPassword = "${userPassword}");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG();
+		}
+	}
+
 	@description = "This is a use case for LRQA-43015. Ignore test due to OpenAM 12 doesn't support Tomcat 9."
 	@ignore = "true"
 	@priority = "5"

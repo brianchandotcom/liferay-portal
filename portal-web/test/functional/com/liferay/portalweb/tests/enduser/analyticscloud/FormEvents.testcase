@@ -184,7 +184,6 @@ definition {
 	@priority = "5"
 	test CheckFieldBlurredWhenFieldLosesFocus {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Get formId of form") {
 			var formId = JSONDDMForm.getFormInstanceId(

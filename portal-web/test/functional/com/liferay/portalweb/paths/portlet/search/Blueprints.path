@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADMIN_ENTRY_CELL</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][${cellPosition}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
 	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][2]</td>
 	<td></td>

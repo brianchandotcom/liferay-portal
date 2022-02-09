@@ -1325,6 +1325,49 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 	}
 
+	test PaginateBlueprintsPreview {
+		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(
+			description = "Test Description",
+			title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "WC");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "WC Title 10");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "WC Title 11");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "11");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "WC Title 11");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "WC Title 10");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "2");
+	}
+
 	test PaginateElementsAdmin {
 		Blueprints.openBlueprintsAdmin();
 

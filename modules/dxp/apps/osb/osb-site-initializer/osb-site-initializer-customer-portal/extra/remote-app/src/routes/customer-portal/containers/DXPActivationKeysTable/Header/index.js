@@ -48,11 +48,14 @@ const DXPActivationKeysTableHeader = ({
 
 		const keyCanBeDownloaded = restSelectedKeys.every(
 			(selectedKey) =>
-				DOWNLOADABLE_LICENSE_KEYS.above71(
+				DOWNLOADABLE_LICENSE_KEYS.above71DXPVersion(
 					firstSelectedKey,
 					selectedKey
 				) ||
-				DOWNLOADABLE_LICENSE_KEYS.below71(firstSelectedKey, selectedKey)
+				DOWNLOADABLE_LICENSE_KEYS.below71DXPVersion(
+					firstSelectedKey,
+					selectedKey
+				)
 		);
 
 		return keyCanBeDownloaded;
@@ -66,14 +69,14 @@ const DXPActivationKeysTableHeader = ({
 		);
 	};
 
-	const ACTIVATION_KEYS_ACTION_ITEMS = getActivationKeysActionsItems(
+	const activationKeysActionsItems = getActivationKeysActionsItems(
 		accountKey,
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus
 	);
 
-	const ACTIVATION_KEYS_DOWNLOAD_ITEMS = getActivationKeysDownloadItems(
+	const activationKeysDownloadItems = getActivationKeysDownloadItems(
 		isAbleToDownloadAggregateKeys,
 		selectedKeysIDs,
 		licenseKeyDownloadURL,
@@ -85,7 +88,7 @@ const DXPActivationKeysTableHeader = ({
 		if (selectedKeys.length > 1) {
 			return (
 				<ButtonDropDown
-					items={ACTIVATION_KEYS_DOWNLOAD_ITEMS}
+					items={activationKeysDownloadItems}
 					label="Download"
 					menuElementAttrs={{
 						className: 'p-0',
@@ -114,7 +117,7 @@ const DXPActivationKeysTableHeader = ({
 
 		return (
 			<ButtonDropDown
-				items={ACTIVATION_KEYS_ACTION_ITEMS}
+				items={activationKeysActionsItems}
 				label="Actions"
 				menuElementAttrs={{
 					className: 'p-0',

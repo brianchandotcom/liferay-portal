@@ -13,10 +13,10 @@ const PRODUCTION_VERSION = 7.1;
 const PRODUCTION_ENVIRONMENT = 'production';
 
 export const DOWNLOADABLE_LICENSE_KEYS = {
-	above71: (firstSelectedKey, selectedKey) =>
+	above71DXPVersion: (firstSelectedKey, selectedKey) =>
 		Number(selectedKey.productVersion) >= PRODUCTION_VERSION &&
 		Number(firstSelectedKey.productVersion) >= PRODUCTION_VERSION,
-	below71: (firstSelectedKey, selectedKey) =>
+	below71DXPVersion: (firstSelectedKey, selectedKey) =>
 		firstSelectedKey.licenseEntryType === PRODUCTION_ENVIRONMENT &&
 		firstSelectedKey.sizing === selectedKey.sizing &&
 		firstSelectedKey.startDate === selectedKey.startDate &&

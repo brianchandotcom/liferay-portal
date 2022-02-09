@@ -1,0 +1,15 @@
+dependencies {
+	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
+	compileInclude group: "org.apache.tika", name: "tika-core", version: "1.26"
+	compileInclude group: "org.apache.tika", name: "tika-parsers", version: "1.26"
+	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-process")
+	compileOnly project(":core:petra:petra-string")
+}

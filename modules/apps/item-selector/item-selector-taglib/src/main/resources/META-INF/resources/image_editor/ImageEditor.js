@@ -280,7 +280,7 @@ function ImageEditor({
 ImageEditor.propTypes = {
 	imageId: PropTypes.string.isRequired,
 	imageSrc: PropTypes.string.isRequired,
-	itemReturnType: PropTypes.string.isRequired,
+	itemReturnType: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSave: PropTypes.func,
 	saveURL: PropTypes.string.isRequired,

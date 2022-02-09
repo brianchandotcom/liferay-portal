@@ -528,9 +528,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 						</if>
 
 						<if>
-							<not>
-								<matches pattern="\.(js|json|jsp|jspf|scss|ts|tsx)(${line.separator}|$)" string="${baseline.current.branch.file.names}" />
-							</not>
+							<or>
+								<matches pattern="modules/test/poshi" string="${baseline.current.branch.file.names}" />
+								<not>
+									<matches pattern="\.(js|json|jsp|jspf|scss|ts|tsx)(${line.separator}|$)" string="${baseline.current.branch.file.names}" />
+								</not>
+							</or>
 							<then>
 								<property name="skip.node.task" value="true" />
 							</then>

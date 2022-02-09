@@ -19,7 +19,7 @@
 <!--KEYCLOAK LOGIN-->
 <tr>
 	<td>LOGIN_USERNAME_FIELD</td>
-	<td>//input[contains(@id,'username') or contains(@id,'identifierId')]</td>
+	<td>//input[contains(@id,'username') or contains(@id,'identifierId') or contains(@data-report-value,'Email_Phone_Skype_Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,7 +29,7 @@
 </tr>
 <tr>
 	<td>LOGIN_SIGN_IN_BUTTON</td>
-	<td>//input[contains(@id,'kc-login')]</td>
+	<td>//input[contains(@id,'kc-login') or contains(@id,'okta-signin-submit') or contains(@value,'Sign in')] | //button[contains(text(),'Continue')] | //button[contains(text(),'Sign On')]</td>
 	<td></td>
 </tr>
 </tbody>

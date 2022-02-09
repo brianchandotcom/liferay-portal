@@ -83,8 +83,7 @@ public class AddFragmentCompositionMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			actionRequest, "fragmentCollectionId");
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.fetchFragmentCollection(

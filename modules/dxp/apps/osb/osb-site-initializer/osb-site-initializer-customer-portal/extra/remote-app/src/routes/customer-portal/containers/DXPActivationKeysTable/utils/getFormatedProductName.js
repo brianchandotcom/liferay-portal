@@ -8,20 +8,9 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {getProductDescription, getProductName} from '../../index';
 
-const EnvironmentTypeColumn = ({activationKey}) => {
-	return (
-		<div>
-			<p className="font-weight-bold m-0 text-neutral-10">
-				{getProductName(activationKey)?.replace('Production', 'Prod')}
-			</p>
+export function getFormatedProductName(productName) {
+	const productNameFormated = productName?.slice(0, 4);
 
-			<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">
-				{getProductDescription(activationKey?.complimentary)}
-			</p>
-		</div>
-	);
-};
-
-export {EnvironmentTypeColumn};
+	return productNameFormated;
+}

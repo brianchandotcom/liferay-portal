@@ -13,8 +13,3 @@ export * from './activationKeysLicenseFilterTypes';
 export * from './activationStatus';
 export * from './columns';
 export * from './alertActivationKeysDownloadText';
-export * from './getFormatedProductName';
-export * from './getProductDescription';
-export * from './getProductName';
-export * from './getStatusActivationTag';
-export * from './hasVirtualCluster';

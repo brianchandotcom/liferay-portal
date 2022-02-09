@@ -168,11 +168,7 @@ public class ImportTaskSerDes {
 
 			sb.append("\"importStrategy\": ");
 
-			sb.append("\"");
-
 			sb.append(importTask.getImportStrategy());
-
-			sb.append("\"");
 		}
 
 		if (importTask.getOperation() != null) {
@@ -410,8 +406,7 @@ public class ImportTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "importStrategy")) {
 				if (jsonParserFieldValue != null) {
 					importTask.setImportStrategy(
-						ImportTask.ImportStrategy.create(
-							(String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "operation")) {

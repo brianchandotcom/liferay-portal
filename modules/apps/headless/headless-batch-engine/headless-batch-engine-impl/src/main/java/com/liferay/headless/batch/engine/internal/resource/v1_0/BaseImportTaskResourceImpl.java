@@ -101,7 +101,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
@@ -157,7 +157,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
@@ -225,7 +225,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String fieldNameMapping,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
@@ -288,7 +288,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String fieldNameMapping,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
@@ -349,7 +349,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
@@ -405,7 +405,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("importStrategy")
-			String importStrategy,
+			Integer importStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,

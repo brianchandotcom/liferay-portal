@@ -41,67 +41,67 @@ public interface ImportTaskResource {
 	}
 
 	public ImportTask deleteImportTask(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask deleteFormDataImportTask(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteFormDataImportTaskHttpResponse(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public ImportTask postImportTask(
 			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName, Object object)
+			Integer importStrategy, String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postImportTaskHttpResponse(
 			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName, Object object)
+			Integer importStrategy, String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask postFormDataImportTask(
 			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName,
+			Integer importStrategy, String taskItemDelegateName,
 			ImportTask importTask, Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postFormDataImportTaskHttpResponse(
 			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName,
+			Integer importStrategy, String taskItemDelegateName,
 			ImportTask importTask, Map<String, File> multipartFiles)
 		throws Exception;
 
 	public ImportTask putImportTask(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putImportTaskHttpResponse(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask putFormDataImportTask(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putFormDataImportTaskHttpResponse(
-			String className, String callbackURL, String importStrategy,
+			String className, String callbackURL, Integer importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
 			Map<String, File> multipartFiles)
 		throws Exception;
@@ -183,7 +183,7 @@ public interface ImportTaskResource {
 	public static class ImportTaskResourceImpl implements ImportTaskResource {
 
 		public ImportTask deleteImportTask(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, Object object)
 			throws Exception {
 
@@ -230,7 +230,7 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, Object object)
 			throws Exception {
 
@@ -287,7 +287,7 @@ public interface ImportTaskResource {
 		}
 
 		public ImportTask deleteFormDataImportTask(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, ImportTask importTask,
 				Map<String, File> multipartFiles)
 			throws Exception {
@@ -335,7 +335,7 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteFormDataImportTaskHttpResponse(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, ImportTask importTask,
 				Map<String, File> multipartFiles)
 			throws Exception {
@@ -400,7 +400,7 @@ public interface ImportTaskResource {
 
 		public ImportTask postImportTask(
 				String className, String callbackURL, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
+				Integer importStrategy, String taskItemDelegateName,
 				Object object)
 			throws Exception {
 
@@ -447,7 +447,7 @@ public interface ImportTaskResource {
 
 		public HttpInvoker.HttpResponse postImportTaskHttpResponse(
 				String className, String callbackURL, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
+				Integer importStrategy, String taskItemDelegateName,
 				Object object)
 			throws Exception {
 
@@ -510,7 +510,7 @@ public interface ImportTaskResource {
 
 		public ImportTask postFormDataImportTask(
 				String className, String callbackURL, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
+				Integer importStrategy, String taskItemDelegateName,
 				ImportTask importTask, Map<String, File> multipartFiles)
 			throws Exception {
 
@@ -558,7 +558,7 @@ public interface ImportTaskResource {
 
 		public HttpInvoker.HttpResponse postFormDataImportTaskHttpResponse(
 				String className, String callbackURL, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
+				Integer importStrategy, String taskItemDelegateName,
 				ImportTask importTask, Map<String, File> multipartFiles)
 			throws Exception {
 
@@ -626,7 +626,7 @@ public interface ImportTaskResource {
 		}
 
 		public ImportTask putImportTask(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, Object object)
 			throws Exception {
 
@@ -672,7 +672,7 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse putImportTaskHttpResponse(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, Object object)
 			throws Exception {
 
@@ -729,7 +729,7 @@ public interface ImportTaskResource {
 		}
 
 		public ImportTask putFormDataImportTask(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, ImportTask importTask,
 				Map<String, File> multipartFiles)
 			throws Exception {
@@ -777,7 +777,7 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse putFormDataImportTaskHttpResponse(
-				String className, String callbackURL, String importStrategy,
+				String className, String callbackURL, Integer importStrategy,
 				String taskItemDelegateName, ImportTask importTask,
 				Map<String, File> multipartFiles)
 			throws Exception {

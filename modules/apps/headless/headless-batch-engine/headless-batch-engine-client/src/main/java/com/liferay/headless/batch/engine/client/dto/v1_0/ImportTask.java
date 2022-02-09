@@ -188,25 +188,16 @@ public class ImportTask implements Cloneable, Serializable {
 
 	protected Long id;
 
-	public ImportStrategy getImportStrategy() {
+	public Integer getImportStrategy() {
 		return importStrategy;
 	}
 
-	public String getImportStrategyAsString() {
-		if (importStrategy == null) {
-			return null;
-		}
-
-		return importStrategy.toString();
-	}
-
-	public void setImportStrategy(ImportStrategy importStrategy) {
+	public void setImportStrategy(Integer importStrategy) {
 		this.importStrategy = importStrategy;
 	}
 
 	public void setImportStrategy(
-		UnsafeSupplier<ImportStrategy, Exception>
-			importStrategyUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> importStrategyUnsafeSupplier) {
 
 		try {
 			importStrategy = importStrategyUnsafeSupplier.get();
@@ -216,7 +207,7 @@ public class ImportTask implements Cloneable, Serializable {
 		}
 	}
 
-	protected ImportStrategy importStrategy;
+	protected Integer importStrategy;
 
 	public Operation getOperation() {
 		return operation;
@@ -368,39 +359,6 @@ public class ImportTask implements Cloneable, Serializable {
 		}
 
 		private ExecuteStatus(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	public static enum ImportStrategy {
-
-		ON_ERROR_CONTINUE("ON_ERROR_CONTINUE"), ON_ERROR_FAIL("ON_ERROR_FAIL");
-
-		public static ImportStrategy create(String value) {
-			for (ImportStrategy importStrategy : values()) {
-				if (Objects.equals(importStrategy.getValue(), value) ||
-					Objects.equals(importStrategy.name(), value)) {
-
-					return importStrategy;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ImportStrategy(String value) {
 			_value = value;
 		}
 

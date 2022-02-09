@@ -19,7 +19,6 @@
 <%
 String catalogNavigationItem = ParamUtil.getString(request, "catalogNavigationItem", "view-all-product-definitions");
 
-
 CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 request.setAttribute("view.jsp-portletURL", cpDefinitionsDisplayContext.getPortletURL());

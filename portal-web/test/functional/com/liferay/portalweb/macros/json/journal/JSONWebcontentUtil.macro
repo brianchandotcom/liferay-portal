@@ -5,10 +5,10 @@ definition {
 		Variables.assertDefined(parameterList = "${content}");
 
 		if (isSet(source)) {
-			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09${content}%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
+			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
 		}
 		else {
-			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<p>${content}</p>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
+			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[<p>${content}</p>]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
 		}
 
 		return "${contentXml}";

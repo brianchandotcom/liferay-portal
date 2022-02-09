@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -114,37 +113,9 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void buildCreateFile(String sqlDir, String databaseName)
-		throws IOException {
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void buildCreateFile(
-			String sqlDir, String databaseName, int population)
-		throws IOException {
-	}
-
 	@Override
 	public abstract String buildSQL(String template)
 		throws IOException, SQLException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void buildSQLFile(String sqlDir, String fileName)
-		throws IOException {
-	}
 
 	@Override
 	public DBType getDBType() {
@@ -267,36 +238,6 @@ public abstract class BaseDB implements DB {
 		return _majorVersion + StringPool.PERIOD + _minorVersion;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             CounterLocalServiceUtil#increment()}
-	 */
-	@Deprecated
-	@Override
-	public long increment() {
-		return CounterLocalServiceUtil.increment();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             CounterLocalServiceUtil#increment(String)}
-	 */
-	@Deprecated
-	@Override
-	public long increment(String name) {
-		return CounterLocalServiceUtil.increment(name);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             CounterLocalServiceUtil#increment(String, int)}
-	 */
-	@Deprecated
-	@Override
-	public long increment(String name, int size) {
-		return CounterLocalServiceUtil.increment(name, size);
-	}
-
 	@Override
 	public boolean isSupportsAlterColumnName() {
 		return _SUPPORTS_ALTER_COLUMN_NAME;
@@ -407,53 +348,6 @@ public abstract class BaseDB implements DB {
 		try (Connection connection = DataAccess.getConnection()) {
 			runSQL(connection, sqls);
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             DBProcess#runSQLTemplate(String)}
-	 */
-	@Deprecated
-	@Override
-	public void runSQLTemplate(String path)
-		throws IOException, NamingException, SQLException {
-
-		runSQLTemplate(path, true);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             DBProcess#runSQLTemplate(String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void runSQLTemplate(String path, boolean failOnError)
-		throws IOException, NamingException, SQLException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/tools/sql/dependencies/" + path);
-
-		if (inputStream == null) {
-			inputStream = classLoader.getResourceAsStream(path);
-		}
-
-		if (inputStream == null) {
-			_log.error("Invalid path " + path);
-
-			if (failOnError) {
-				throw new IOException("Invalid path " + path);
-			}
-
-			return;
-		}
-
-		String template = StringUtil.read(inputStream);
-
-		runSQLTemplateString(template, failOnError);
 	}
 
 	@Override
@@ -575,20 +469,6 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #runSQLTemplateString(Connection, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void runSQLTemplateString(
-			Connection connection, String template, boolean evaluate,
-			boolean failOnError)
-		throws IOException, NamingException, SQLException {
-
-		runSQLTemplateString(connection, template, failOnError);
-	}
-
 	@Override
 	public void runSQLTemplateString(String template, boolean failOnError)
 		throws IOException, NamingException, SQLException {
@@ -596,19 +476,6 @@ public abstract class BaseDB implements DB {
 		try (Connection connection = DataAccess.getConnection()) {
 			runSQLTemplateString(connection, template, failOnError);
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #runSQLTemplateString(String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void runSQLTemplateString(
-			String template, boolean evaluate, boolean failOnError)
-		throws IOException, NamingException, SQLException {
-
-		runSQLTemplateString(template, failOnError);
 	}
 
 	@Override

@@ -84,14 +84,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 		return _SUPPORTS_VARIABLE_LIMIT;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void addOptimizeForLimitedRows(
-		com.liferay.portal.kernel.util.StringBundler sb, int limit) {
-	}
-
 	protected void addQueryForLimitedRows(
 		StringBundler sb, String sql, int limit) {
 
@@ -101,22 +93,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 			StringUtil.replace(
 				_SQL_FETCH_FIRST_LIMITED_ROWS_ONLY, "[$LIMIT$]",
 				String.valueOf(limit)));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addQueryForLimitedRows(StringBundler, String, int)}
-	 */
-	@Deprecated
-	protected void addQueryForLimitedRows(
-		com.liferay.portal.kernel.util.StringBundler sb, String sql,
-		int limit) {
-
-		StringBundler petraSB = new StringBundler();
-
-		addQueryForLimitedRows(petraSB, sql, limit);
-
-		sb.append(petraSB.getStrings());
 	}
 
 	private static final String _SQL_FETCH_FIRST_LIMITED_ROWS_ONLY =

@@ -19,28 +19,10 @@ package com.liferay.portal.kernel.dao.orm;
  */
 public class DynamicQueryFactoryUtil {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #forClass(Class,
-	 *             ClassLoader)}
-	 */
-	@Deprecated
-	public static DynamicQuery forClass(Class<?> clazz) {
-		return _dynamicQueryFactory.forClass(clazz);
-	}
-
 	public static DynamicQuery forClass(
 		Class<?> clazz, ClassLoader classLoader) {
 
 		return _dynamicQueryFactory.forClass(clazz, classLoader);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #forClass(Class,
-	 *             String, ClassLoader)}
-	 */
-	@Deprecated
-	public static DynamicQuery forClass(Class<?> clazz, String alias) {
-		return _dynamicQueryFactory.forClass(clazz, alias);
 	}
 
 	public static DynamicQuery forClass(

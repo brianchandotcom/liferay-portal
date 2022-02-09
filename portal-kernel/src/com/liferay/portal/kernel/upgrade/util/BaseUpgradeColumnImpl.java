@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -58,18 +55,6 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 	@Override
 	public Object getOldValue() {
 		return _oldValue;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             CounterLocalServiceUtil#increment()}
-	 */
-	@Deprecated
-	@Override
-	public long increment() {
-		DB db = DBManagerUtil.getDB();
-
-		return db.increment();
 	}
 
 	@Override

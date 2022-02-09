@@ -32,13 +32,6 @@ public interface UpgradeColumn {
 
 	public Object getOldValue();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             CounterLocalServiceUtil#increment()}
-	 */
-	@Deprecated
-	public long increment();
-
 	public boolean isApplicable(String name);
 
 	public void setNewValue(Object newValue);

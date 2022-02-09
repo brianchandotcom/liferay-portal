@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -81,18 +81,15 @@ const renderComponent = ({
 };
 
 describe('PageDesignOptionsSidebar', () => {
-	afterEach(cleanup);
-	changeMasterLayout.mockClear();
-
 	it('has a sidebar panel title', () => {
-		const {getByText} = renderComponent();
+		renderComponent();
 
-		expect(getByText('page-design-options')).toBeInTheDocument();
+		expect(screen.getByText('page-design-options')).toBeInTheDocument();
 	});
 
 	it('calls changeMasterLayout when a master layout is selected', async () => {
-		const {getByLabelText} = renderComponent();
-		const button = getByLabelText('Pablo Master Layout');
+		renderComponent();
+		const button = screen.getByLabelText('Pablo Master Layout');
 
 		await act(async () => {
 			userEvent.click(button);
@@ -104,8 +101,8 @@ describe('PageDesignOptionsSidebar', () => {
 	});
 
 	it('calls changeStyleBookEntry when a style is selected', () => {
-		const {getByLabelText} = renderComponent();
-		const button = getByLabelText('Pablo Style');
+		renderComponent();
+		const button = screen.getByLabelText('Pablo Style');
 
 		userEvent.click(button);
 

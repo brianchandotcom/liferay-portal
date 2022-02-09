@@ -17,6 +17,7 @@ package com.liferay.segments.experiment.web.internal.processor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -117,7 +118,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		segmentsExperienceId = _getCurrentSegmentsExperienceId(
-			httpServletRequest, groupId);
+			classNameId, classPK, httpServletRequest, groupId);
 
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
@@ -232,7 +233,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	}
 
 	private long _getCurrentSegmentsExperienceId(
-		HttpServletRequest httpServletRequest, long groupId) {
+		long classNameId, long classPK, HttpServletRequest httpServletRequest,
+		long groupId) {
 
 		Optional<Cookie> cookieOptional = _getCookieOptional(
 			httpServletRequest);
@@ -243,11 +245,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		Cookie cookie = cookieOptional.get();
 
-		return _getSegmentsExperienceId(groupId, cookie.getValue());
+		return _getSegmentsExperienceId(
+			classNameId, classPK, groupId, cookie.getValue());
 	}
 
 	private long _getSegmentsExperienceId(
-		long groupId, String segmentsExperienceKey) {
+		long classNameId, long classPK, long groupId,
+		String segmentsExperienceKey) {
 
 		if (Objects.equals(
 				segmentsExperienceKey,
@@ -259,7 +263,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					groupId, segmentsExperienceKey);
+					groupId, segmentsExperienceKey, classNameId, classPK);
 
 			if (segmentsExperience != null) {
 				return segmentsExperience.getSegmentsExperienceId();
@@ -332,6 +336,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			httpServletRequest, "segmentsExperienceKey");
 
 		return _getSegmentsExperienceId(
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey);
 	}
 

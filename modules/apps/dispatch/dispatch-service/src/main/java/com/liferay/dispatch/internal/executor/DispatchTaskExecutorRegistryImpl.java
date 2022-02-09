@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.liferay.portal.kernel.util.PortalRunMode;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -67,8 +66,7 @@ public class DispatchTaskExecutorRegistryImpl
 		DispatchTaskExecutor dispatchTaskExecutor,
 		Map<String, Object> properties) {
 
-
-  		String dispatchTaskExecutorType = (String)properties.get(
+		String dispatchTaskExecutorType = (String)properties.get(
 			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
 
 		_validateDispatchTaskExecutorProperties(
@@ -80,7 +78,7 @@ public class DispatchTaskExecutorRegistryImpl
 		if (!dispatchTaskExecutorRestricted.equals("true")) {
 			_dispatchTaskExecutorNames.put(
 				dispatchTaskExecutorType,
-				(String) properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
+				(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
 		}
 
 		_dispatchTaskExecutors.put(

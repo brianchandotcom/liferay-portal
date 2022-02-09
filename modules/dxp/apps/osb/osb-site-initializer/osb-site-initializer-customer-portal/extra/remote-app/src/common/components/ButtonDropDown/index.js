@@ -34,18 +34,19 @@ const ButtonDropDown = ({
 			{...props}
 		>
 			<ClayDropDown.ItemList>
-				{items.map(({disabled, icon, label, onClick}) => (
+				{items.map(({disabled, icon, label, onClick, tooltip}) => (
 					<ClayDropDown.Item
 						className={classNames(
 							'font-weight-semi-bold px-3 rounded-xs',
 							{
-								'common-drop-down-item text-neutral-8': !disabled,
+								'cp-common-drop-down-item text-neutral-8': !disabled,
 								'text-neutral-5': disabled,
 							}
 						)}
 						disabled={disabled}
 						key={label}
 						onClick={onClick}
+						title={disabled ? tooltip : null}
 					>
 						<div className="d-flex">
 							{icon && <div className="mr-1">{icon}</div>}

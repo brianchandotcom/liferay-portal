@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {TOOLTIP_CLASSNAMES_TYPES} from './constants';
 import {downloadAggregatedActivationKey} from './downloadActivationLicenseKey';
 
 export function getActivationKeysDownloadItems(
@@ -35,6 +36,7 @@ export function getActivationKeysDownloadItems(
 
 				return handleAlertStatus(downloadedAggregated);
 			},
+			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
 		},
 	];
 }

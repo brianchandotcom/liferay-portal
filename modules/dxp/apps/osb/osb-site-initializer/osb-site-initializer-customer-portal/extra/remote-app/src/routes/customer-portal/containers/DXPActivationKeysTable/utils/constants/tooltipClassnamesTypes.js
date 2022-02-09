@@ -9,10 +9,6 @@
  * distribution rights of the Software.
  */
 
-export * from './activationKeysLicenseFilterTypes';
-export * from './activationStatus';
-export * from './columns';
-export * from './alertActivationKeysDownloadText';
-export * from './downlodableLicenseKeys';
-export * from './tooltipContentRendererTypes';
-export * from './tooltipClassnamesTypes';
+export const TOOLTIP_CLASSNAMES_TYPES = {
+	dropDownItem: 'common-drop-down-item-disabled',
+};

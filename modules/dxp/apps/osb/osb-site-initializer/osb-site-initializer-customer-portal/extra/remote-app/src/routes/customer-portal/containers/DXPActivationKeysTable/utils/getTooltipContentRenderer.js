@@ -9,10 +9,20 @@
  * distribution rights of the Software.
  */
 
-export * from './activationKeysLicenseFilterTypes';
-export * from './activationStatus';
-export * from './columns';
-export * from './alertActivationKeysDownloadText';
-export * from './downlodableLicenseKeys';
-export * from './tooltipContentRendererTypes';
-export * from './tooltipClassnamesTypes';
+import {
+	TOOLTIP_CLASSNAMES_TYPES,
+	TOOLTIP_CONTENT_RENDERER_TYPES,
+} from './constants';
+import {getTooltipTitles} from './getTooltipTitles';
+
+export function getTooltipContentRenderer(title) {
+	const hasDropdownTooltip = title === TOOLTIP_CLASSNAMES_TYPES.dropDownItem;
+
+	if (hasDropdownTooltip) {
+		return TOOLTIP_CONTENT_RENDERER_TYPES[
+			TOOLTIP_CLASSNAMES_TYPES.dropDownItem
+		];
+	}
+
+	return getTooltipTitles(title);
+}

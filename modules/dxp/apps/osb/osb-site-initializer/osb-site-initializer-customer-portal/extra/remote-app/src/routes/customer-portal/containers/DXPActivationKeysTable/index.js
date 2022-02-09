@@ -31,7 +31,7 @@ import {
 } from './utils/constants/columns-definitions';
 import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey';
 import {getGroupButtons} from './utils/getGroupButtons';
-import {getTooltipTitles} from './utils/getTooltipTitles';
+import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
 const MAX_ITEMS = 9999;
 const PAGE = 1;
@@ -164,30 +164,30 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	};
 
 	return (
-		<div>
-			<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between mb-2">
-				<h3 className="m-0">Activation Keys</h3>
+		<ClayTooltipProvider
+			contentRenderer={({title}) => getTooltipContentRenderer(title)}
+			delay={100}
+		>
+			<div>
+				<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between mb-2">
+					<h3 className="m-0">Activation Keys</h3>
 
-				<RoundedGroupButtons
-					groupButtons={groupButtons}
-					handleOnChange={(value) => setFilterStatusBar(value)}
-				/>
-			</div>
+					<RoundedGroupButtons
+						groupButtons={groupButtons}
+						handleOnChange={(value) => setFilterStatusBar(value)}
+					/>
+				</div>
 
-			<div className="mt-4 py-2">
-				<DXPActivationKeysTableHeader
-					accountKey={project.accountKey}
-					activationKeys={activationKeysFiltered}
-					licenseKeyDownloadURL={licenseKeyDownloadURL}
-					selectedKeys={activationKeysChecked}
-					sessionId={sessionId}
-				/>
-			</div>
+				<div className="mt-4 py-2">
+					<DXPActivationKeysTableHeader
+						accountKey={project.accountKey}
+						activationKeys={activationKeysFiltered}
+						licenseKeyDownloadURL={licenseKeyDownloadURL}
+						selectedKeys={activationKeysChecked}
+						sessionId={sessionId}
+					/>
+				</div>
 
-			<ClayTooltipProvider
-				contentRenderer={({title}) => getTooltipTitles(title)}
-				delay={100}
-			>
 				<Table
 					checkboxConfig={{
 						checkboxesChecked: activationKeysChecked,
@@ -250,8 +250,8 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 						status: <StatusColumn activationKey={activationKey} />,
 					}))}
 				/>
-			</ClayTooltipProvider>
-		</div>
+			</div>
+		</ClayTooltipProvider>
 	);
 };
 

@@ -8,11 +8,15 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {TOOLTIP_CLASSNAMES_TYPES} from './tooltipClassnamesTypes';
 
-export * from './activationKeysLicenseFilterTypes';
-export * from './activationStatus';
-export * from './columns';
-export * from './alertActivationKeysDownloadText';
-export * from './downlodableLicenseKeys';
-export * from './tooltipContentRendererTypes';
-export * from './tooltipClassnamesTypes';
+export const TOOLTIP_CONTENT_RENDERER_TYPES = {
+	[TOOLTIP_CLASSNAMES_TYPES.dropDownItem]: (
+		<p className="m-0">
+			To download an aggregate key, select keys with identical
+			<b>{' Type, Start Date, End Date, '}</b>
+			and
+			<b>Instance Size</b>
+		</p>
+	),
+};

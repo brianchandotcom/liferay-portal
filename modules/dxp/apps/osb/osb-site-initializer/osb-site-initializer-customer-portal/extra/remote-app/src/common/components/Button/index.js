@@ -11,10 +11,11 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {forwardRef} from 'react';
 
-const Button = ({appendIcon, children, prependIcon, ...props}) => {
+const ButtonBase = ({appendIcon, children, prependIcon, ...props}, ref) => {
 	return (
-		<ClayButton {...props}>
+		<ClayButton ref={ref} {...props}>
 			{prependIcon && (
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol={prependIcon} />
@@ -31,5 +32,5 @@ const Button = ({appendIcon, children, prependIcon, ...props}) => {
 		</ClayButton>
 	);
 };
-
+const Button = forwardRef(ButtonBase);
 export default Button;

@@ -113,10 +113,7 @@ components:
                     minimum: 0
                     type: integer
                 importStrategy:
-                    description:
-                        Defines if import task will fail when error occurs or continue importing rest of the items.
-                    enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                    type: string
+                    type: integer
                 operation:
                     description:
                         The operation of import task.
@@ -254,8 +251,7 @@ paths:
                 - in: query
                   name: importStrategy
                   schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
+                      type: integer
                 - in: query
                   name: taskItemDelegateName
                   schema:
@@ -314,8 +310,7 @@ paths:
                 - in: query
                   name: importStrategy
                   schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
+                      type: integer
                 - in: query
                   name: taskItemDelegateName
                   schema:
@@ -370,8 +365,7 @@ paths:
                 - in: query
                   name: importStrategy
                   schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
+                      type: integer
                 - in: query
                   name: taskItemDelegateName
                   schema:

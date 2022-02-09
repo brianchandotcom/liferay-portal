@@ -184,7 +184,7 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"modified-date", "id"};
+		return new String[] {"name", "modified-date", "id"};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -244,13 +244,6 @@ public class BatchEngineImportTaskWrapper
 		return model.getBatchEngineImportTaskId();
 	}
 
-	@Override
-	public com.liferay.batch.engine.BatchEngineImportTaskStrategy
-		getBatchEngineImportTaskStrategy() {
-
-		return model.getBatchEngineImportTaskStrategy();
-	}
-
 	/**
 	 * Returns the batch size of this batch engine import task.
 	 *

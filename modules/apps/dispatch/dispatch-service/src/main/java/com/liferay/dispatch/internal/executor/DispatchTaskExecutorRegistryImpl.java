@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.liferay.portal.kernel.util.PortalRunMode;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -66,15 +67,22 @@ public class DispatchTaskExecutorRegistryImpl
 		DispatchTaskExecutor dispatchTaskExecutor,
 		Map<String, Object> properties) {
 
-		String dispatchTaskExecutorType = (String)properties.get(
+
+  		String dispatchTaskExecutorType = (String)properties.get(
 			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
 
 		_validateDispatchTaskExecutorProperties(
 			dispatchTaskExecutor, dispatchTaskExecutorType);
 
-		_dispatchTaskExecutorNames.put(
-			dispatchTaskExecutorType,
-			(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
+		String dispatchTaskExecutorRestricted = (String)properties.getOrDefault(
+			_KEY_DISPATCH_TASK_EXECUTOR_RESTRICTED, "false");
+
+		if (!dispatchTaskExecutorRestricted.equals("true")) {
+			_dispatchTaskExecutorNames.put(
+				dispatchTaskExecutorType,
+				(String) properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
+		}
+
 		_dispatchTaskExecutors.put(
 			dispatchTaskExecutorType, dispatchTaskExecutor);
 	}
@@ -114,6 +122,9 @@ public class DispatchTaskExecutorRegistryImpl
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_NAME =
 		"dispatch.task.executor.name";
+
+	private static final String _KEY_DISPATCH_TASK_EXECUTOR_RESTRICTED =
+		"dispatch.task.executor.restricted";
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_TYPE =
 		"dispatch.task.executor.type";

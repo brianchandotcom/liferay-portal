@@ -63,7 +63,4 @@ public interface BatchEngineImportTask
 	public java.util.List<BatchEngineImportTaskError>
 		getBatchEngineImportTaskErrors();
 
-	public com.liferay.batch.engine.BatchEngineImportTaskStrategy
-		getBatchEngineImportTaskStrategy();
-
 }

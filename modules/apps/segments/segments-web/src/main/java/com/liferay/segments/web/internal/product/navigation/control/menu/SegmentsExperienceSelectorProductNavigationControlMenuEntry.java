@@ -91,7 +91,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 				_portal.getClassNameId(Layout.class.getName()),
 				themeDisplay.getPlid(), true);
 
-		if (segmentsExperiencesCount <= 0) {
+		if (segmentsExperiencesCount <= 1) {
 			return false;
 		}
 

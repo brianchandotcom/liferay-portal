@@ -39,7 +39,7 @@ public class C3P0ConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException.getMessage());
+				_log.debug(sqlException);
 			}
 
 			return -1;
@@ -53,7 +53,7 @@ public class C3P0ConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException.getMessage());
+				_log.debug(sqlException);
 			}
 
 			return -1;

@@ -197,7 +197,7 @@ public class HtmlEngine extends BaseWikiEngine {
 			}
 			catch (NoSuchNodeException noSuchNodeException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchNodeException.getMessage());
+					_log.warn(noSuchNodeException);
 				}
 			}
 		}

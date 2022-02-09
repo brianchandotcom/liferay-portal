@@ -62,7 +62,7 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 				_log.debug(exception);
 			}
 			else {
-				_log.error(exception.getMessage());
+				_log.error(exception);
 			}
 
 			Class<?> clazz = exception.getClass();

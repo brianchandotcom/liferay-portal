@@ -126,14 +126,14 @@ public class OpenSSOImpl implements OpenSSO {
 			}
 		}
 		catch (MalformedURLException malformedURLException) {
-			_log.error(malformedURLException.getMessage());
+			_log.error(malformedURLException);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(malformedURLException);
 			}
 		}
 		catch (IOException ioException) {
-			_log.error(ioException.getMessage());
+			_log.error(ioException);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(ioException);

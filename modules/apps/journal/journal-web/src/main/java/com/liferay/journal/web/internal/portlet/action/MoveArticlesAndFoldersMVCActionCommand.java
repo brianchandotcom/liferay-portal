@@ -89,7 +89,7 @@ public class MoveArticlesAndFoldersMVCActionCommand
 			}
 			catch (InvalidDDMStructureException invalidDDMStructureException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(invalidDDMStructureException.getMessage());
+					_log.warn(invalidDDMStructureException);
 				}
 
 				invalidArticleIds.add(articleId);

@@ -102,7 +102,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception.getMessage());
+				_log.warn(exception);
 			}
 		}
 	}
@@ -172,7 +172,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception.getMessage());
+				_log.warn(exception);
 			}
 		}
 
@@ -231,7 +231,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception.getMessage());
+				_log.warn(exception);
 			}
 		}
 

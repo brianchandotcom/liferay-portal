@@ -6101,7 +6101,7 @@ public class PortalImpl implements Portal {
 		}
 		catch (NoSuchUserException noSuchUserException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchUserException.getMessage());
+				_log.warn(noSuchUserException);
 			}
 
 			long userId = getUserId(httpServletRequest);

@@ -747,7 +747,7 @@ public class PortletRequestModel implements Serializable {
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(illegalStateException.getMessage());
+				_log.warn(illegalStateException);
 			}
 		}
 	}
@@ -765,7 +765,7 @@ public class PortletRequestModel implements Serializable {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(illegalStateException.getMessage());
+					_log.warn(illegalStateException);
 				}
 			}
 
@@ -831,7 +831,7 @@ public class PortletRequestModel implements Serializable {
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(illegalStateException.getMessage());
+					_log.warn(illegalStateException);
 				}
 			}
 

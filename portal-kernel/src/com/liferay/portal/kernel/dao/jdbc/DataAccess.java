@@ -47,7 +47,7 @@ public class DataAccess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException.getMessage());
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -76,7 +76,7 @@ public class DataAccess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException.getMessage());
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class DataAccess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException.getMessage());
+				_log.warn(sqlException);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public class DataAccess {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqlException.getMessage());
+				_log.warn(sqlException);
 			}
 		}
 	}

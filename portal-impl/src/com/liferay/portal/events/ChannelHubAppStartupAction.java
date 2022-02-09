@@ -41,7 +41,7 @@ public class ChannelHubAppStartupAction extends SimpleAction {
 		}
 		catch (DuplicateChannelHubException duplicateChannelHubException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(duplicateChannelHubException.getMessage());
+				_log.warn(duplicateChannelHubException);
 			}
 		}
 		catch (Exception exception) {

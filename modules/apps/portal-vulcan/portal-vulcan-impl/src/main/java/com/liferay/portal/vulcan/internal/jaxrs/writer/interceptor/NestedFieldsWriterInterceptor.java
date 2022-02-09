@@ -317,7 +317,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				}
 				catch (NoSuchFieldException noSuchFieldException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchFieldException.getMessage());
+						_log.debug(noSuchFieldException);
 					}
 				}
 			}
@@ -422,7 +422,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchMethodException.getMessage());
+					_log.debug(noSuchMethodException);
 				}
 			}
 

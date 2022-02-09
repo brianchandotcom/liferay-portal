@@ -86,7 +86,7 @@ public class BasicLoginModule implements LoginModule {
 			credentials = authenticate();
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			_log.error(exception);
 
 			throw new LoginException();
 		}

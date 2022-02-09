@@ -300,7 +300,7 @@ public class DLReferencesExportImportContentProcessor
 				_log.debug(exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(exception.getMessage());
+				_log.warn(exception);
 			}
 		}
 
@@ -566,7 +566,7 @@ public class DLReferencesExportImportContentProcessor
 						_log.debug(portalException);
 					}
 					else if (_log.isWarnEnabled()) {
-						_log.warn(portalException.getMessage());
+						_log.warn(portalException);
 					}
 
 					if (content.startsWith("[#dl-reference=", endPos)) {

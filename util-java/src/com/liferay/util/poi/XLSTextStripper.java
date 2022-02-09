@@ -89,7 +89,7 @@ public class XLSTextStripper {
 			text = sb.toString();
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			_log.error(exception);
 		}
 
 		_text = text;

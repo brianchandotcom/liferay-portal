@@ -68,7 +68,7 @@ public class FragmentEntryExceptionRequestHandler {
 				themeDisplay.getRequest(), "please-enter-a-valid-name");
 		}
 		else {
-			_log.error(portalException.getMessage());
+			_log.error(portalException);
 		}
 
 		JSONObject jsonObject = JSONUtil.put("error", errorMessage);

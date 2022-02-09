@@ -216,7 +216,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				if (!(exception instanceof AuthnAgeException ||
 					  exception instanceof SubjectException)) {
 
-					_log.error(exception.getMessage());
+					_log.error(exception);
 				}
 			}
 

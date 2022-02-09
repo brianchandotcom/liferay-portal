@@ -152,7 +152,7 @@ public class LiferayPortletURLPrivilegedAction {
 			}
 		}
 		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException.getMessage());
+			_log.error(windowStateException);
 		}
 
 		try {
@@ -164,7 +164,7 @@ public class LiferayPortletURLPrivilegedAction {
 			}
 		}
 		catch (PortletModeException portletModeException) {
-			_log.error(portletModeException.getMessage());
+			_log.error(portletModeException);
 		}
 
 		return portletURL;

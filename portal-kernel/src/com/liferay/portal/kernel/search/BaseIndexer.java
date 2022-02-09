@@ -1407,7 +1407,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			}
 			catch (NoSuchCountryException noSuchCountryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchCountryException.getMessage());
+					_log.warn(noSuchCountryException);
 				}
 			}
 		}
@@ -1422,7 +1422,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			}
 			catch (NoSuchRegionException noSuchRegionException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchRegionException.getMessage());
+					_log.warn(noSuchRegionException);
 				}
 			}
 		}

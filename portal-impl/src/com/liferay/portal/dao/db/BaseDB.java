@@ -537,7 +537,7 @@ public abstract class BaseDB implements DB {
 								throw ioException;
 							}
 							else if (_log.isWarnEnabled()) {
-								_log.warn(ioException.getMessage());
+								_log.warn(ioException);
 							}
 						}
 						catch (SecurityException securityException) {
@@ -545,7 +545,7 @@ public abstract class BaseDB implements DB {
 								throw securityException;
 							}
 							else if (_log.isWarnEnabled()) {
-								_log.warn(securityException.getMessage());
+								_log.warn(securityException);
 							}
 						}
 						catch (SQLException sqlException) {

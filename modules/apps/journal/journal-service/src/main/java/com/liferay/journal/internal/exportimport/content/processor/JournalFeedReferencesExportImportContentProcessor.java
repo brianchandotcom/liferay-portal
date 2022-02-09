@@ -121,7 +121,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 				_log.debug(exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(exception.getMessage());
+				_log.warn(exception);
 			}
 		}
 
@@ -376,7 +376,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 					_log.debug(portalException);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(portalException.getMessage());
+					_log.warn(portalException);
 				}
 
 				continue;

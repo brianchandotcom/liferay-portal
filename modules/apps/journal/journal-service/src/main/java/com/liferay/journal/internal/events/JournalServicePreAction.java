@@ -86,7 +86,7 @@ public class JournalServicePreAction extends Action {
 		}
 		catch (NoSuchArticleException noSuchArticleException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchArticleException.getMessage());
+				_log.warn(noSuchArticleException);
 			}
 		}
 	}

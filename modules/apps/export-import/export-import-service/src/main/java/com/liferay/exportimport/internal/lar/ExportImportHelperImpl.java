@@ -1127,7 +1127,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(configurationException.getMessage());
+				_log.warn(configurationException);
 			}
 		}
 

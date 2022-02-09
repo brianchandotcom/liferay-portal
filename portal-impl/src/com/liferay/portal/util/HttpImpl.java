@@ -287,7 +287,7 @@ public class HttpImpl implements Http {
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(illegalArgumentException.getMessage());
+				_log.warn(illegalArgumentException);
 			}
 		}
 

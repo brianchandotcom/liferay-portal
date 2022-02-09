@@ -46,7 +46,7 @@ public class KBArticleAttachmentsUtil {
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/articles");
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			_log.error(exception);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class KBArticleAttachmentsUtil {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			_log.error(exception);
 		}
 	}
 

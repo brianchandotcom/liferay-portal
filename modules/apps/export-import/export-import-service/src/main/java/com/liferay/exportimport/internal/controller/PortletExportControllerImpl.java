@@ -575,7 +575,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException.getMessage());
+				_log.warn(ioException);
 			}
 		}
 	}

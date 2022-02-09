@@ -1632,7 +1632,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 		catch (CompanyVirtualHostException companyVirtualHostException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(companyVirtualHostException.getMessage());
+				_log.warn(companyVirtualHostException);
 			}
 
 			throw companyVirtualHostException;

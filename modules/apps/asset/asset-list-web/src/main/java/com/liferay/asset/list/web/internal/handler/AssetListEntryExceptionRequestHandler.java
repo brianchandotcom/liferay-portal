@@ -62,7 +62,7 @@ public class AssetListEntryExceptionRequestHandler {
 			errorMessage = "a-collection-with-that-title-already-exists";
 		}
 		else {
-			_log.error(portalException.getMessage());
+			_log.error(portalException);
 		}
 
 		JSONObject jsonObject = JSONUtil.put(

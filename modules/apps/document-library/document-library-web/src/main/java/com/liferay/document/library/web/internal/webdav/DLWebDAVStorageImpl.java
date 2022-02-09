@@ -924,7 +924,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 		catch (InvalidLockException invalidLockException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(invalidLockException.getMessage());
+				_log.warn(invalidLockException);
 			}
 		}
 		catch (Exception exception) {

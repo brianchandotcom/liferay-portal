@@ -245,7 +245,7 @@ public class SelectUsersDisplayContext {
 				}
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(portalException.getMessage());
+						_log.debug(portalException);
 					}
 
 					return false;

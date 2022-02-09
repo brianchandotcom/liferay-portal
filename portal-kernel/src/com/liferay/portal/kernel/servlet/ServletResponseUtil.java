@@ -552,7 +552,7 @@ public class ServletResponseUtil {
 			isClientAbortException(ioException)) {
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioException.getMessage());
+				_log.warn(ioException);
 			}
 
 			if (_log.isDebugEnabled()) {

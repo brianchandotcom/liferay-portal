@@ -68,7 +68,7 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(portalException.getMessage());
+							_log.warn(portalException);
 						}
 
 						return new long[0];

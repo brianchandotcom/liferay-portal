@@ -209,7 +209,7 @@ public class AMImageHTMLExportImportContentProcessor
 					_log.debug(portalException);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(portalException.getMessage());
+					_log.warn(portalException);
 				}
 			}
 		}

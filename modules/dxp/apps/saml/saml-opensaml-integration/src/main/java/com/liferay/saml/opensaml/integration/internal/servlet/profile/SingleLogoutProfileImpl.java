@@ -377,7 +377,7 @@ public class SingleLogoutProfileImpl
 				_log.debug(systemException.getMessage(), systemException);
 			}
 			else {
-				_log.error(systemException.getMessage());
+				_log.error(systemException);
 			}
 		}
 	}
@@ -416,7 +416,7 @@ public class SingleLogoutProfileImpl
 					_log.debug(systemException.getMessage(), systemException);
 				}
 				else {
-					_log.error(systemException.getMessage());
+					_log.error(systemException);
 				}
 			}
 		}

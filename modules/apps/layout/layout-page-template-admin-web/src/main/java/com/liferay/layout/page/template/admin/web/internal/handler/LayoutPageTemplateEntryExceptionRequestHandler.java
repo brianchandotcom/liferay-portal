@@ -98,7 +98,7 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getLocale(), "an-unexpected-error-occurred");
 
-			_log.error(portalException.getMessage());
+			_log.error(portalException);
 		}
 
 		return JSONUtil.put("error", errorMessage);

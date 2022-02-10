@@ -476,7 +476,9 @@ definition {
 	}
 
 	macro viewItemWarningMessage {
-		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+		if (isSet(itemName)) {
+			NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+		}
 
 		AssertElementPresent(
 			key_warningMessage = "No Display Page",
@@ -488,7 +490,9 @@ definition {
 	}
 
 	macro viewItemWarningMessageNotPresent {
-		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+		if (isSet(itemName)) {
+			NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+		}
 
 		AssertElementNotPresent(
 			key_warningMessage = "No Display Page",

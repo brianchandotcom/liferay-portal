@@ -14,11 +14,11 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.frontend.taglib.clay.internal.util.DropdownItemListUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
@@ -227,7 +227,7 @@ public class HorizontalCardTag extends BaseCardTag {
 
 		jspWriter.write("</span></p></div>");
 
-		if (!ListUtil.isEmpty(getActionDropdownItems())) {
+		if (!DropdownItemListUtil.isEmpty(getActionDropdownItems())) {
 			jspWriter.write("<div class=\"autofit-col\">");
 
 			DropdownActionsTag dropdownActionsTag = new DropdownActionsTag();

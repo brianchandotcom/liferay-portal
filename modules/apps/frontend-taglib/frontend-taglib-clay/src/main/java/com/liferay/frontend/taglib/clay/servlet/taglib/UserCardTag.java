@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.frontend.taglib.clay.internal.util.DropdownItemListUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -294,7 +294,7 @@ public class UserCardTag extends BaseCardTag {
 
 		List<DropdownItem> actionDropdownItems = getActionDropdownItems();
 
-		if (!ListUtil.isEmpty(actionDropdownItems)) {
+		if (!DropdownItemListUtil.isEmpty(actionDropdownItems)) {
 			jspWriter.write("<div class=\"autofit-col\">");
 
 			DropdownActionsTag dropdownActionsTag = new DropdownActionsTag();

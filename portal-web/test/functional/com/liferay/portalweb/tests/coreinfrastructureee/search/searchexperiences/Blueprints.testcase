@@ -340,6 +340,7 @@ definition {
 			scope = "site");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "title",
 			fieldName = "title",
 			fieldType = "String",

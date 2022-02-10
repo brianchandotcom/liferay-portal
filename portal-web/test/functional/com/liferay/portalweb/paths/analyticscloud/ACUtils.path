@@ -26,6 +26,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_NAME_BUTTON</td>
+	<td>//div[contains(@class,'editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@name='name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL</td>
 	<td>//label[normalize-space()='${label}']</td>
 	<td></td>

@@ -318,7 +318,7 @@ definition {
 
 			SelectFrame.selectFrameTop();
 
-			NavigationMenusAdmin.viewItemSelectorText(
+			InputField.viewText(
 				fieldLabel = "Item",
 				text = "${assetTitle}");
 
@@ -451,13 +451,6 @@ definition {
 			key_index = "${index}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_N",
 			value1 = "${itemName}");
-	}
-
-	macro viewItemSelectorText {
-		AssertTextEquals(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "SiteNavigationMenu#ITEM_SELECTOR_CONTENT_INPUT",
-			value1 = "${text}");
 	}
 
 	macro viewItemWarningIcon {

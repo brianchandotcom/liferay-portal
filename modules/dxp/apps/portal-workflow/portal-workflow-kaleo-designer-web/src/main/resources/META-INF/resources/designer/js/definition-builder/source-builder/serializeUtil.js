@@ -548,10 +548,16 @@ function serializeDefinition(
 			buffer.push(XMLUtil.create('initial', initial));
 		}
 
-		appendXMLActions(buffer, item.data.actions, item.data.notifications);
+		if (item.data.actions) {
+			appendXMLActions(buffer, item.data.actions);
+		}
 
 		if (item.data.assignments) {
 			appendXMLAssignments(buffer, item.data.assignments);
+		}
+
+		if (item.data.notifications) {
+			appendXMLNotifications(buffer, item.data.notifications);
 		}
 
 		const xmlLabels = XMLUtil.createObj('labels');

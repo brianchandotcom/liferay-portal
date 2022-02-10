@@ -32,13 +32,23 @@ export function useDeleteStyleError() {
 	return useCallback(
 		(fieldName, itemId = 'defaultId') => {
 			if (state[itemId]?.[fieldName]) {
-				delete state[itemId][fieldName];
+				const filteredErrors = {};
+				const {[itemId]: itemErrors, ...rest} = state;
 
-				if (Object.keys(state[itemId]).length === 0) {
-					delete state[itemId];
+				for (const key in itemErrors) {
+					if (key !== fieldName) {
+						filteredErrors[key] = itemErrors[key];
+					}
 				}
 
-				setState(state);
+				const nextState = {
+					...rest,
+					...(Object.keys(filteredErrors).length > 0 && {
+						[itemId]: filteredErrors,
+					}),
+				};
+
+				setState(nextState);
 			}
 		},
 		[setState, state]

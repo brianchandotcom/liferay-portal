@@ -53,35 +53,31 @@ public class StructureNameComparatorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_defaultLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 		_otherLocale = LocaleUtil.SPAIN;
 
 		_ddmStructure1 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			_defaultLocale);
+			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
-		_ddmStructure1.setName("default name A", _defaultLocale);
+		_ddmStructure1.setName("default name A", defaultLocale);
 		_ddmStructure1.setName("spanish name A", _otherLocale);
 
 		_ddmStructure2 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			_defaultLocale);
+			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
-		_ddmStructure2.setName("default name b", _defaultLocale);
+		_ddmStructure2.setName("default name b", defaultLocale);
 		_ddmStructure2.setName("spanish name B", _otherLocale);
 
 		_ddmStructure3 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			_defaultLocale);
+			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
-		_ddmStructure3.setName("default name c", _defaultLocale);
+		_ddmStructure3.setName("default name c", defaultLocale);
 		_ddmStructure3.setName("spanish name C", _otherLocale);
 
 		_ddmStructure4 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			_defaultLocale);
+			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
-		_ddmStructure4.setName("default name D", _defaultLocale);
+		_ddmStructure4.setName("default name D", defaultLocale);
 	}
 
 	@Test
@@ -127,7 +123,6 @@ public class StructureNameComparatorTest {
 	private DDMStructure _ddmStructure2;
 	private DDMStructure _ddmStructure3;
 	private DDMStructure _ddmStructure4;
-	private Locale _defaultLocale;
 
 	@DeleteAfterTestRun
 	private Group _group;

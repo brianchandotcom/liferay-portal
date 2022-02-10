@@ -209,9 +209,10 @@ public class PortalImplEscapeRedirectTest {
 			"user/test/~/control_panel/manage/-/select/image,url/",
 			_portalImpl.escapeRedirect(
 				"user/test/~/control_panel/manage/-/select/image,url/"));
-		Assert.assertEquals("?param1=abc", "?param1=abc");
-		Assert.assertEquals("#abc", "#abc");
-		Assert.assertEquals("", "");
+		Assert.assertEquals(
+			"?param1=abc", _portalImpl.escapeRedirect("?param1=abc"));
+		Assert.assertEquals("#abc", _portalImpl.escapeRedirect("#abc"));
+		Assert.assertEquals("", _portalImpl.escapeRedirect(""));
 
 		// Relative path with protocol
 

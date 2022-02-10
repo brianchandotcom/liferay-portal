@@ -15,52 +15,179 @@
 package com.liferay.site.initializer.testray.extra.java.function;
 
 import com.google.api.gax.paging.Page;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import org.json.JSONObject;
+import java.util.HashMap; // import the HashMap class
+import java.io.FileInputStream;
 import java.nio.file.Paths;
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import com.liferay.portal.kernel.util.StringUtil;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import com.liferay.util.HttpClient;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 /**
  * @author José Abelenda
  */
 public class ImportResults {
 
-	public static void downloadObject(
-		String projectId, String bucketName, String objectName,
-		String destFilePath) {
+	public static void addProject() {
+		try {
+			Map<String, String> json = null;
+			File inputFile = new File("/home/me/Downloads/key.xml");
+			DocumentBuilderFactory dbFactory =
+				DocumentBuilderFactory.newInstance();
 
-		// The ID of your GCP project
-		// String projectId = "your-project-id";
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-		// The ID of your GCS bucket
-		// String bucketName = "testray-results";
+			Document doc = dBuilder.parse(inputFile);
 
-		// The ID of your GCS object
-		// String objectName = "your-object-name";
+			doc.getDocumentElement(
+			).normalize();
 
-		// The path to which the file should be downloaded
-		// String destFilePath = "/local/path/to/file.txt";
+			NodeList nList = doc.getElementsByTagName("property");
 
-		Storage storage = StorageOptions.newBuilder(
-		).setProjectId(
-			projectId
-		).build(
-		).getService();
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node nNode = nList.item(temp);
 
-		Blob blob = storage.get(BlobId.of(bucketName, objectName));
+				if ((nNode.getNodeType() == Node.ELEMENT_NODE) &&
+					(nNode.getNodeName() != "#text") &&
+					(nNode.getAttributes(
+					).getLength() > 0)) {
 
-		blob.downloadTo(Paths.get(destFilePath));
+					String name = nNode.getAttributes(
+					).getNamedItem(
+						"name"
+					).getTextContent();
+					String value = nNode.getAttributes(
+					).getNamedItem(
+						"value"
+					).getTextContent();
 
-		System.out.println("Downloaded object " + objectName);
+					if (name.equals("testray.project.name")) {
+						json = HashMapBuilder.put(
+							"description", name
+						).put(
+							"name", value
+						).build();
+					}
+				}
+			}
+
+			try {
+				JSONObject jsonObject = new JSONObject(json);
+
+				System.out.println(jsonObject);
+				HttpClient.post(
+					"http://localhost:8080/o/c/" + "testrayprojects" +
+						"/scopes/" + "42532",
+					jsonObject);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void addTestCase() {
+		try {
+			Map<String, String> json = null;
+			File inputFile = new File("/home/me/Downloads/key.xml");
+			DocumentBuilderFactory dbFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+			Document doc = dBuilder.parse(inputFile);
+
+			doc.getDocumentElement(
+			).normalize();
+
+			System.out.println(
+				"Root element :" +
+					doc.getDocumentElement(
+					).getNodeName());
+			NodeList a = doc.getElementsByTagName("testcase");
+
+			Node b = a.item(0);
+
+			NodeList c = b.getChildNodes();
+
+			NodeList nList = (NodeList)c.item(1);
+
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node nNode = nList.item(temp);
+
+				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+				if ((nNode.getNodeType() == Node.ELEMENT_NODE) &&
+					(nNode.getNodeName() != "#text") &&
+					(nNode.getAttributes(
+					).getLength() > 0)) {
+
+					String name = nNode.getAttributes(
+					).getNamedItem(
+						"name"
+					).getTextContent();
+					String value = nNode.getAttributes(
+					).getNamedItem(
+						"value"
+					).getTextContent();
+
+					json = HashMapBuilder.put(
+						"name", name
+					).put(
+						"stepsType", value
+					).build();
+				}
+			}
+
+			try {
+				JSONObject jsonObject = new JSONObject(json);
+
+				System.out.println(jsonObject);
+				HttpClient.post(
+					"http://localhost:8080/o/c/" + "testraycases" + "/scopes/" +
+						"42532",
+					jsonObject);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void listBuckets(String projectId) throws Exception {
+		GoogleCredentials credentials = GoogleCredentials.fromStream(
+			new FileInputStream("/home/me/Downloads/key.json"));
+
 		Storage storage = StorageOptions.newBuilder(
 		).setProjectId(
 			projectId
+		).setCredentials(
+			credentials
 		).build(
 		).getService();
 
@@ -68,6 +195,14 @@ public class ImportResults {
 
 		for (Bucket bucket : bucketsPage.iterateAll()) {
 			System.out.println(bucket.getName());
+
+			Page<Blob> blobsPage = storage.list(bucket.getName());
+
+			for (Blob blob : blobsPage.iterateAll()) {
+				System.out.println(blob.getName());
+
+				blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+			}
 		}
 	}
 
@@ -75,11 +210,14 @@ public class ImportResults {
 		try {
 			System.out.println("Hello World!");
 
-			listBuckets("testray-340800");
+			//	listBuckets("wise-aegis-340917");
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+
+		addTestCase();
+		//addProject();
 	}
 
 }

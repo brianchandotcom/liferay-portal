@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.client.pagination.Page;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,6 +34,14 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_deleteSXPElements();
+
+		super.tearDown();
+	}
 
 	@Ignore
 	@Override
@@ -93,6 +103,8 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	protected SXPElement randomSXPElement() throws Exception {
 		SXPElement sxpElement = super.randomSXPElement();
 
+		sxpElement.setTitle(_TITLE_PREFIX + sxpElement.getTitle());
+
 		sxpElement.setTitle_i18n(
 			Collections.singletonMap("en_US", sxpElement.getTitle()));
 
@@ -150,5 +162,20 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	private SXPElement _addSXPElement(SXPElement sxpElement) throws Exception {
 		return sxpElementResource.postSXPElement(sxpElement);
 	}
+
+	private void _deleteSXPElements() throws Exception {
+		Page<SXPElement> page = sxpElementResource.getSXPElementsPage(
+			null, null, null, null);
+
+		for (SXPElement sxpElement : page.getItems()) {
+			String title = sxpElement.getTitle();
+
+			if (title.startsWith(_TITLE_PREFIX)) {
+				sxpElementResource.deleteSXPElement(sxpElement.getId());
+			}
+		}
+	}
+
+	private static final String _TITLE_PREFIX = "SXPERT";
 
 }

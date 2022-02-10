@@ -18,9 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.client.pagination.Page;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,6 +33,14 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_deleteSXPBlueprints();
+
+		super.tearDown();
+	}
 
 	@Ignore
 	@Override
@@ -80,6 +90,8 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	@Override
 	protected SXPBlueprint randomSXPBlueprint() throws Exception {
 		SXPBlueprint sxpBlueprint = super.randomSXPBlueprint();
+
+		sxpBlueprint.setTitle(_TITLE_PREFIX + sxpBlueprint.getTitle());
 
 		sxpBlueprint.setTitle_i18n(
 			Collections.singletonMap("en_US", sxpBlueprint.getTitle()));
@@ -147,5 +159,20 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 
 		return sxpBlueprintResource.postSXPBlueprint(sxpBlueprint);
 	}
+
+	private void _deleteSXPBlueprints() throws Exception {
+		Page<SXPBlueprint> page = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, null, null, null);
+
+		for (SXPBlueprint sxpBlueprint : page.getItems()) {
+			String title = sxpBlueprint.getTitle();
+
+			if (title.startsWith(_TITLE_PREFIX)) {
+				sxpBlueprintResource.deleteSXPBlueprint(sxpBlueprint.getId());
+			}
+		}
+	}
+
+	private static final String _TITLE_PREFIX = "SXPBRT";
 
 }

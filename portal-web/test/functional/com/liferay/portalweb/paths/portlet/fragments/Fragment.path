@@ -323,8 +323,8 @@
 </tr>
 <!--FRAGMENT_HEADER-->
 <tr>
-	<td>FRAGMENT_HEADER_ANY</td>
-	<td>xpath=(//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')])[${key_index}]</td>
+	<td>FRAGMENT_HEADER</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -334,7 +334,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_ELLIPSIS</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(@class,'active')]//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]/following-sibling::li//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]/following-sibling::li//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

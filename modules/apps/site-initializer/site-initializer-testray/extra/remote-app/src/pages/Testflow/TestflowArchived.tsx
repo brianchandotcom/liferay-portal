@@ -12,6 +12,8 @@
  * details.
  */
 
-const TestflowArchived = () => <div>oi</div>;
+import Container from '../../components/Layout/Container';
+
+const TestflowArchived = () => <Container title="Testflow Archived" />;
 
 export default TestflowArchived;

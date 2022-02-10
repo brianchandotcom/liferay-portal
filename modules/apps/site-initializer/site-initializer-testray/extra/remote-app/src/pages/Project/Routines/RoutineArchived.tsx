@@ -14,8 +14,6 @@
 
 import Container from '../../../components/Layout/Container';
 
-const RoutineArchived = () => {
-	return <Container title="Routine Archived" />;
-};
+const RoutineArchived = () => <Container title="Routine Archived" />;
 
 export default RoutineArchived;

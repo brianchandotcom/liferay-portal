@@ -298,8 +298,14 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	private void _assertActionDropdownItemExport(DropdownItem dropdownItem) {
 		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"action", "exportForm"
+			).put(
+				"exportFormURL", _EXPORT_FORM_URL
+			).build(),
+			dropdownItem.get("data"));
+		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
-		Assert.assertTrue(Validator.isNotNull(dropdownItem.get("href")));
 		Assert.assertEquals("export", dropdownItem.get("label"));
 	}
 
@@ -447,7 +453,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 		_ddmFormAdminActionDropdownItemsProvider =
 			new DDMFormAdminActionDropdownItemsProvider(
-				_AUTOCOMPLETE_USER_URL, _ddmFormInstance,
+				_AUTOCOMPLETE_USER_URL, _ddmFormInstance, _EXPORT_FORM_URL,
 				_formInstancePermissionCheckerHelper, formPublished,
 				_mockHttpServletRequest(), _INVALID_DDM_FORM_INSTANCE,
 				JSONUtil.put("en_US", "Test US"), _PUBLISHED_FORM_URL,
@@ -471,6 +477,9 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 		RandomTestUtil.randomString();
 
 	private static final String _CURRENT_URL = RandomTestUtil.randomString();
+
+	private static final String _EXPORT_FORM_URL =
+		RandomTestUtil.randomString();
 
 	private static final long _FORM_INSTANCE_ID = RandomTestUtil.randomLong();
 

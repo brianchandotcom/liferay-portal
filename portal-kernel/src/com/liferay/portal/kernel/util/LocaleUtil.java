@@ -287,16 +287,29 @@ public class LocaleUtil {
 
 		Locale locale = _fromLanguageId(languageId);
 
-		if (validate && !LanguageUtil.isAvailableLocale(locale)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(languageId + " is not a valid language id");
+		if (validate) {
+			boolean languageCode = false;
+
+			if ((languageId.indexOf(CharPool.UNDERLINE) < 0) &&
+				(languageId.indexOf(CharPool.MINUS) < 0)) {
+
+				languageCode = true;
 			}
 
-			if (useDefault) {
-				return _locale;
-			}
+			if ((languageCode &&
+				 !LanguageUtil.isAvailableLanguageCode(languageId)) ||
+				(!languageCode && !LanguageUtil.isAvailableLocale(locale))) {
 
-			return null;
+				if (_log.isWarnEnabled()) {
+					_log.warn(languageId + " is not a valid language id");
+				}
+
+				if (useDefault) {
+					return _locale;
+				}
+
+				return null;
+			}
 		}
 
 		return locale;

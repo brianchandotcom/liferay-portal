@@ -447,9 +447,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
 
-		AssertElementPresent(
-			key_accountName = "Person Account",
-			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON_DISABLED");
+		AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No accounts were found.");
 	}
 
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."

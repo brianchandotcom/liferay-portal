@@ -24,19 +24,22 @@ const ViewFilesPanel = ({sections = []}) => {
 			{sections.map((section, index) => {
 				if (section.files.length) {
 					return (
-						<div className="view-section" key={index}>
-							<h3>{section.title.toUpperCase()}</h3>
+						<div className="mb-4 view-section" key={index}>
+							<h3 className="font-weight-bolder mb-2 text-neutral-8 text-paragraph-sm">
+								{section.title.toUpperCase()}
+							</h3>
 
-							<div className="content">
+							<div className="content d-flex flex-row">
 								{section.files.map((file, sectionIndex) => {
 									if (file.type.includes('image')) {
 										return (
 											<div
-												className="image"
+												className="image mr-2 rounded-xs"
 												key={sectionIndex}
 											>
 												<img
 													alt={file.name}
+													className="rounded-xs"
 													src={file.fileURL}
 												/>
 											</div>
@@ -45,7 +48,7 @@ const ViewFilesPanel = ({sections = []}) => {
 
 									return (
 										<div
-											className="documents"
+											className="align-items-center bg-neutral-0 d-flex documents justify-content-center mr-2 rounded-xs"
 											key={sectionIndex}
 										>
 											<ClayIcon

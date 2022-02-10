@@ -53,10 +53,11 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 	}, [sections]);
 
 	return (
-		<div className="d-flex flex-row justify-content-end panel-right">
+		<div className="d-flex flex-row justify-content-end order-3 panel-right">
 			<div className="change-link">
 				{checked && !hasError && !expanded && (
 					<span
+						className="mr-4"
 						onClick={() => {
 							dispatch({
 								payload: {
@@ -87,7 +88,10 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 				)}
 
 				{!checked && expanded && showDiscardChanges && (
-					<span onClick={() => setShowDiscardFilesModal(true)}>
+					<span
+						className="mr-4"
+						onClick={() => setShowDiscardFilesModal(true)}
+					>
 						Discard Changes
 					</span>
 				)}

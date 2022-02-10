@@ -49,6 +49,18 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 
 					</aui:select>
 				</div>
+
+				<div class="col-auto">
+					<aui:select label="apply-to" name='<%= "type--settings--" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO + "--" %>' required="<%= true %>" title="apply-to">
+
+						<%
+						String applyTo = corEntryDisplayContext.getApplyTo();
+						%>
+
+						<aui:option label="total" selected="<%= Validator.isNull(applyTo) || applyTo.equals(COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_TOTAL) %>" value="<%= COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_TOTAL %>" />
+						<aui:option label="sub-total" selected="<%= applyTo.equals(COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL) %>" value="<%= COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL %>" />
+					</aui:select>
+				</div>
 			</div>
 		</commerce-ui:panel>
 	</div>

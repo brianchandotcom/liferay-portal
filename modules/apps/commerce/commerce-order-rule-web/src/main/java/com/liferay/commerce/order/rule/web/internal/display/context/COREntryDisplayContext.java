@@ -95,6 +95,23 @@ public class COREntryDisplayContext {
 		).buildString();
 	}
 
+	public String getApplyTo() throws Exception {
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				corEntry.getTypeSettings()
+			).build();
+
+		return GetterUtil.getString(
+			typeSettingsUnicodeProperties.getProperty(
+				COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO));
+	}
+
 	public List<CommerceCurrency> getCommerceCurrencies()
 		throws PortalException {
 

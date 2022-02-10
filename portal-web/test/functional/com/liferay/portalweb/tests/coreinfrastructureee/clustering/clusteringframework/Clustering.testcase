@@ -564,6 +564,105 @@ definition {
 		Clustering.viewLiveSessionCount(count = "3");
 	}
 
+	@description = "This is a use case for LPS-142472."
+	@priority = "4"
+	test ValidatePublishOnTwoNodes {
+		property test.name.skip.portal.instance = "Clustering#ValidatePublishOnTwoNodes";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoStagedView();
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title");
+	}
+
 	@priority = "4"
 	test ValidateSchedulerOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateSchedulerOnSeparateNodes";

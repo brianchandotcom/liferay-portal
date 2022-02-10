@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -54,14 +53,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -530,59 +527,6 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 
 		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
-	}
-
-	@Override
-	public void updateFragmentEntryLinks(
-			long userId, long groupId, long plid, long[] fragmentEntryIds,
-			String editableValues, ServiceContext serviceContext)
-		throws PortalException {
-
-		deleteLayoutPageTemplateEntryFragmentEntryLinks(groupId, plid);
-
-		if (ArrayUtil.isEmpty(fragmentEntryIds)) {
-			return;
-		}
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(editableValues);
-
-		int position = 0;
-
-		for (long fragmentEntryId : fragmentEntryIds) {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
-
-			addFragmentEntryLink(
-				userId, groupId, 0, fragmentEntry.getFragmentEntryId(),
-				SegmentsExperienceConstants.ID_DEFAULT, plid,
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-				jsonObject.getString(String.valueOf(position)),
-				StringPool.BLANK, position++, null, serviceContext);
-		}
-	}
-
-	@Override
-	public void updateFragmentEntryLinks(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink = null;
-
-		for (Map.Entry<Long, String> entry :
-				fragmentEntryLinksEditableValuesMap.entrySet()) {
-
-			fragmentEntryLink = fetchFragmentEntryLink(entry.getKey());
-
-			fragmentEntryLink.setEditableValues(entry.getValue());
-
-			fragmentEntryLink = fragmentEntryLinkPersistence.update(
-				fragmentEntryLink);
-		}
-
-		if (fragmentEntryLink != null) {
-			updateClassedModel(fragmentEntryLink.getPlid());
-		}
 	}
 
 	@Override

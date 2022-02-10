@@ -773,41 +773,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name,
-			long[] fragmentEntryIds, String editableValues,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		// Layout page template entry
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryPersistence.findByPrimaryKey(
-				layoutPageTemplateEntryId);
-
-		if (!Objects.equals(layoutPageTemplateEntry.getName(), name)) {
-			validate(
-				layoutPageTemplateEntry.getGroupId(), name,
-				layoutPageTemplateEntry.getType());
-		}
-
-		layoutPageTemplateEntry.setModifiedDate(new Date());
-		layoutPageTemplateEntry.setName(name);
-
-		layoutPageTemplateEntry = layoutPageTemplateEntryPersistence.update(
-			layoutPageTemplateEntry);
-
-		// Fragment entry instance links
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			serviceContext.getUserId(), layoutPageTemplateEntry.getGroupId(),
-			layoutPageTemplateEntry.getPlid(), fragmentEntryIds, editableValues,
-			serviceContext);
-
-		return layoutPageTemplateEntry;
-	}
-
-	@Override
 	public LayoutPageTemplateEntry updateStatus(
 			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException {

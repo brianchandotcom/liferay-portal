@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -798,21 +797,6 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long[] fragmentEntryIds,
-			String editableValues, ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, layoutPageTemplateEntry.getName(),
-				fragmentEntryIds, editableValues, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
 		throws PortalException {
 
@@ -822,22 +806,6 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntryId, name);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name,
-			long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			getPermissionChecker(), layoutPageTemplateEntryId,
-			ActionKeys.UPDATE);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, name, fragmentEntryIds,
-				StringPool.BLANK, serviceContext);
 	}
 
 	@Override

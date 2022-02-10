@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -101,39 +100,6 @@ public class FragmentEntryLinkServiceImpl
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
-	}
-
-	@Override
-	public void updateFragmentEntryLinks(
-			long groupId, long plid, long[] fragmentEntryIds,
-			String editableValues, ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkPermission(groupId, plid, true);
-
-		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			getUserId(), groupId, plid, fragmentEntryIds, editableValues,
-			serviceContext);
-	}
-
-	@Override
-	public void updateFragmentEntryLinks(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws PortalException {
-
-		for (Map.Entry<Long, String> entry :
-				fragmentEntryLinksEditableValuesMap.entrySet()) {
-
-			FragmentEntryLink fragmentEntryLink =
-				fragmentEntryLinkPersistence.findByPrimaryKey(entry.getKey());
-
-			_checkPermission(
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-				true);
-		}
-
-		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			fragmentEntryLinksEditableValuesMap);
 	}
 
 	private void _checkPermission(

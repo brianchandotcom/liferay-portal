@@ -26,6 +26,7 @@ import Requirements from './pages/Project/Requirements';
 import Requirement from './pages/Project/Requirements/Requirement';
 import Routine from './pages/Project/Routines';
 import Build from './pages/Project/Routines/Builds/Build';
+import BuildOutlet from './pages/Project/Routines/Builds/BuildOutlet';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
 import Results from './pages/Project/Routines/Builds/Inner/Results';
@@ -79,12 +80,17 @@ const TestrayRoute = () => (
 								path="archived"
 							/>
 
-							<Route element={<Build />} path=":testrayBuildId">
-								<Route element={<Runs />} path="run" />
+							<Route
+								element={<BuildOutlet />}
+								path="build/:testrayBuildId"
+							>
+								<Route element={<Build />} index />
+
+								<Route element={<Runs />} path="runs" />
 
 								<Route
 									element={<CaseTypes />}
-									path="case_types"
+									path="case-types"
 								/>
 
 								<Route element={<Teams />} path="teams" />

@@ -321,6 +321,10 @@ definition {
 			NavigationMenusAdmin.viewItemSelectorText(
 				fieldLabel = "Item",
 				text = "${assetTitle}");
+
+			AssertTextEquals(
+				locator1 = "Sidebar#TITLE",
+				value1 = "${itemName}");
 		}
 
 		if (isSet(customField)) {

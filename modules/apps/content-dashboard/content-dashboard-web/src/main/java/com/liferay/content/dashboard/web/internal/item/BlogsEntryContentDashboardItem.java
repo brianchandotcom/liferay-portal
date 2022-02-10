@@ -121,7 +121,7 @@ public class BlogsEntryContentDashboardItem
 				_portal.getSiteDefaultLocale(_blogsEntry.getGroupId()));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return Collections.emptyList();
 		}
@@ -152,9 +152,7 @@ public class BlogsEntryContentDashboardItem
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
 
-					_log.error(
-						contentDashboardItemActionException,
-						contentDashboardItemActionException);
+					_log.error(contentDashboardItemActionException);
 				}
 
 				return Optional.<ContentDashboardItemAction>empty();
@@ -256,7 +254,7 @@ public class BlogsEntryContentDashboardItem
 			return _portal.getSiteDefaultLocale(_blogsEntry.getGroupId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return LocaleUtil.getDefault();
 		}
@@ -385,9 +383,7 @@ public class BlogsEntryContentDashboardItem
 		catch (ContentDashboardItemActionException
 					contentDashboardItemActionException) {
 
-			_log.error(
-				contentDashboardItemActionException,
-				contentDashboardItemActionException);
+			_log.error(contentDashboardItemActionException);
 
 			return null;
 		}

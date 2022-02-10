@@ -197,6 +197,173 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7842. Verify user can override the default product display page for different products."
+	@priority = "3"
+	test OverrideDefaultProductDisplayPageForDifferentProducts {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given the Minium site has a public content page with a Product widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Public Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Public Content Page",
+				siteName = "Minium");
+
+			PageEditor.addWidget(portletName = "Product Details");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("And given the Minium site has a public widget page with a Product Details widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Public Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Public Widget Page",
+				widgetName = "Product Details");
+		}
+
+		task ("And given the Minium site has a private content page with a Product Details widget") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Test Private Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Private Content Page",
+				privateLayout = "true",
+				siteName = "Minium");
+
+			PageEditor.addWidget(portletName = "Product Details");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the Test Public Content Page is set as Default Product Display Page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Content Page",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
+				pageName = "Test Public Content Page",
+				pageType = "Public");
+		}
+
+		task ("And given the user can not override the default product display page by selecting only a product") {
+			CommerceChannels.addProduct(product = "Torque Converters");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Button.clickSave();
+
+			Alert.viewErrorMessage(errorMessage = "Please select a valid layout.");
+		}
+
+		task ("And given the user can not override the default product display page by selecting only a page") {
+			CommerceChannels.chooseDisplayPageFromSidePanel(
+				pageName = "Test Public Widget Page",
+				pageType = "Public");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Button.clickSave();
+
+			Alert.viewErrorMessage(errorMessage = "Please select a valid product.");
+		}
+
+		task ("And given the Test Public Widget Page is set as Override Default Product Display Page for Torque Converters") {
+			Refresh();
+
+			CommerceChannels.overrideProductDisplayPage(
+				pageName = "Test Public Widget Page",
+				pageType = "Public",
+				product = "Torque Converters");
+
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Torque Converters",
+				layout = "Test Public Widget Page");
+		}
+
+		task ("And given the Test Private Content Page is set as Override Default Product Display Page for Transmission Cooler Line Assembly") {
+			CommerceChannels.overrideProductDisplayPage(
+				pageName = "Test Private Content Page",
+				pageType = "Private",
+				product = "Transmission Cooler Line Assembly");
+
+			CommerceEntry.assertDisplayPageOverride(
+				entryName = "Transmission Cooler Line Assembly",
+				layout = "Test Private Content Page");
+		}
+
+		task ("When I click on U-Joint in the Catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		}
+
+		task ("Then I should be redirected to the Test Public Content Page with the Product Details widget showing the product details") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
+		}
+
+		task ("When I click on Torque Converters in the Catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Torque Converters");
+		}
+
+		task ("Then I should be redirected to the Test Public Widget Page with the Product Details widget showing the product details") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/torque-converter");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converter",
+				productSKU = "MIN55859");
+		}
+
+		task ("When I click on Transmission Cooler Line Assembly in the Catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Transmission Cooler Line Assembly");
+		}
+
+		task ("Then I should be redirected to the Test Private Content Page with the Product Details widget showing the product details") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
+
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/transmission-cooler-line-assembly");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "15.00",
+				productName = "Transmission Cooler Line Assembly",
+				productSKU = "MIN55860");
+		}
+	}
+
 	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {

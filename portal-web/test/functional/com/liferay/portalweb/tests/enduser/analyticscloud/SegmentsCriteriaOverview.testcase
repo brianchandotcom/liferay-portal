@@ -48,7 +48,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACUtils.fileName(fileName = "Dynamic Segment Test");
 		}
 
 		task ("Add View Blog field and add 21 copies") {
@@ -92,7 +92,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACUtils.fileName(fileName = "Dynamic Segment Test");
 		}
 
 		task ("Add an email criteria from Individual Attributes") {

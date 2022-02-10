@@ -103,7 +103,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -155,7 +155,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -279,7 +279,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -361,7 +361,7 @@ definition {
 		}
 
 		task ("Add dynamic segment individual attribute") {
-			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACUtils.fileName(fileName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -421,7 +421,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -489,7 +489,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -562,7 +562,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -635,7 +635,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {
@@ -710,7 +710,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add multiple members") {

@@ -212,12 +212,12 @@ public class JournalDDMStructuresDisplayContext {
 		if (_orderByCol.equals("id")) {
 			orderByComparator = new StructureIdComparator(orderByAsc);
 		}
+		else if (_orderByCol.equals("modified-date")) {
+			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
+		}
 		else if (_orderByCol.equals("name")) {
 			orderByComparator = new StructureNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
-		}
-		else if (_orderByCol.equals("modified-date")) {
-			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;

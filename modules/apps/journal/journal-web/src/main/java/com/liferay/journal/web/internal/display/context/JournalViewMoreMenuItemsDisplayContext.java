@@ -234,12 +234,12 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		OrderByComparator<DDMStructure> orderByComparator = null;
 
-		if (_orderByCol.equals("name")) {
+		if (_orderByCol.equals("modified-date")) {
+			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
+		}
+		else if (_orderByCol.equals("name")) {
 			orderByComparator = new StructureNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
-		}
-		else if (_orderByCol.equals("modified-date")) {
-			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;

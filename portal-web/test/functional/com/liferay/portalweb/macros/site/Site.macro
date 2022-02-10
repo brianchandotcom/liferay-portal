@@ -82,8 +82,9 @@ definition {
 				Navigator.gotoBack();
 			}
 		}
-
-		WaitForPageLoad();
+		while (IsElementPresent(locator1 = "Button#ADD_DISABLED")) {
+			WaitForPageLoad();
+		}
 
 		Click(
 			key_itemName = "Site Configuration",

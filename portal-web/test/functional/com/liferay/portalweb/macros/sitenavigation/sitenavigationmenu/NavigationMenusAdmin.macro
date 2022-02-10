@@ -340,7 +340,7 @@ definition {
 				locator1 = "Message#WARNING_SPECIFIC");
 
 			AssertElementNotPresent(
-				locator1 = "Message#EMPTY_INFO_DEPOT",
+				locator1 = "Message#SUBTITLE",
 				value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
 		}
 
@@ -473,7 +473,7 @@ definition {
 			locator1 = "Message#WARNING_SPECIFIC");
 
 		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_DEPOT",
+			locator1 = "Message#SUBTITLE",
 			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
 	}
 
@@ -489,7 +489,7 @@ definition {
 			locator1 = "Message#WARNING_SPECIFIC");
 
 		AssertElementNotPresent(
-			locator1 = "Message#EMPTY_INFO_DEPOT",
+			locator1 = "Message#SUBTITLE",
 			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
 	}
 

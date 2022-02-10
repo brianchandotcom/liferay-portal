@@ -89,7 +89,7 @@ definition {
 
 	macro viewMutedMessage {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO_DEPOT",
+			locator1 = "Message#SUBTITLE",
 			value1 = "${muteMessage}");
 	}
 

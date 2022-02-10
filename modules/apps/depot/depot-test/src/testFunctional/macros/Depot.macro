@@ -1101,7 +1101,7 @@ definition {
 
 	macro viewNoConnectedSiteCP {
 		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_DEPOT",
+			locator1 = "Message#SUBTITLE",
 			value1 = "No sites are connected yet.");
 	}
 

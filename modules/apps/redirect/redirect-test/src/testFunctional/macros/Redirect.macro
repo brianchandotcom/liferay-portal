@@ -370,6 +370,19 @@ definition {
 			value1 = "All your pages are connected or redirected.");
 	}
 
+	macro view404URLsTab {
+		if (isSet(disabled404Tracking)) {
+			AssertElementNotPresent(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+		}
+		else {
+			AssertElementPresent(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+		}
+	}
+
 	macro viewDefault {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",

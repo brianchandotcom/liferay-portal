@@ -950,19 +950,16 @@ public class PortalImpl implements Portal {
 
 		if (!uri.isAbsolute()) {
 
-			// !uri.isAbsolute() ==
 			// https://datatracker.ietf.org/doc/html/rfc3986#section-4.2
 
+			if (url.startsWith(StringPool.DOUBLE_SLASH)) {
+
+				// "//" authority path-abempty
+
+				return null;
+			}
+
 			return url;
-		}
-
-		String protocol = uri.getScheme();
-
-		if (protocol == null) {
-
-			// Protocol is required
-
-			return null;
 		}
 
 		String domain = uri.getHost();

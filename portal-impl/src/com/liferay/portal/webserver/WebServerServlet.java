@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -127,9 +128,11 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -177,6 +180,14 @@ public class WebServerServlet extends HttpServlet {
 			}
 			else if (Validator.isNumber(pathArray[0])) {
 				_checkFileEntry(pathArray);
+			}
+			else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+				Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+					httpServletRequest, pathArray);
+
+				if (!fileEntryOptional.isPresent()) {
+					return false;
+				}
 			}
 			else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
 				FileEntry fileEntry = getPortletFileEntry(
@@ -1179,8 +1190,9 @@ public class WebServerServlet extends HttpServlet {
 				HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
 
 		ServletResponseUtil.sendFile(
-			null, httpServletResponse, title, fileEntry.getContentStream(),
-			fileEntry.getSize(), fileEntry.getMimeType(),
+			null, httpServletResponse, fileEntry.getTitle(),
+			fileEntry.getContentStream(), fileEntry.getSize(),
+			fileEntry.getMimeType(),
 			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 	}
 
@@ -1450,6 +1462,22 @@ public class WebServerServlet extends HttpServlet {
 			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
 	}
 
+	private static Optional<FileEntry> _resolveFileEntry(
+			HttpServletRequest httpServletRequest, String[] pathArray)
+		throws Exception {
+
+		if (_fileEntryFriendlyURLResolver == null) {
+			return Optional.empty();
+		}
+
+		User user = _getUser(httpServletRequest);
+
+		Group group = _getGroup(user.getCompanyId(), pathArray[1]);
+
+		return _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			group.getGroupId(), pathArray[2]);
+	}
+
 	private void _checkExpiredFileEntry(
 			FileEntry fileEntry, HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -1561,6 +1589,11 @@ public class WebServerServlet extends HttpServlet {
 						httpServletRequest, httpServletResponse, user,
 						pathArray);
 				}
+				else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+					sendFile(
+						httpServletRequest, httpServletResponse, user,
+						pathArray);
+				}
 				else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
 					sendPortletFileEntry(
 						httpServletRequest, httpServletResponse, pathArray);
@@ -1627,6 +1660,15 @@ public class WebServerServlet extends HttpServlet {
 			_checkExpiredFileEntry(fileEntry, httpServletRequest);
 
 			return fileEntry;
+		}
+		else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+			Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+				httpServletRequest, pathArray);
+
+			return fileEntryOptional.orElseThrow(
+				() -> new NoSuchFileEntryException(
+					"No file entry found for friendly url " +
+						Arrays.toString(pathArray)));
 		}
 		else if (pathArray.length == 3) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
@@ -1737,6 +1779,8 @@ public class WebServerServlet extends HttpServlet {
 		return true;
 	}
 
+	private static final String _PATH_FILE_ENTRY_FRIENDLY_URL = "d";
+
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(
 			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY,
@@ -1751,6 +1795,11 @@ public class WebServerServlet extends HttpServlet {
 
 	private static final Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
+	private static volatile FileEntryFriendlyURLResolver
+		_fileEntryFriendlyURLResolver =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				FileEntryFriendlyURLResolver.class, WebServerServlet.class,
+				"_fileEntryFriendlyURLResolver", false, true);
 	private static volatile InactiveRequestHandler _inactiveRequestHandler =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,

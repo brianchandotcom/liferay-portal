@@ -17,9 +17,9 @@ import RoundedGroupButtons from '../../../../common/components/RoundedGroupButto
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import ModalKeyDetails from '../../components/ModalKeyDetails';
 import {useCustomerPortal} from '../../context';
-import DXPActivationKeysTableHeader from './Header';
+import DXPActivationKeysTableHeader from './components/Header';
+import ModalKeyDetails from './components/ModalKeyDetails';
 import {
 	ACTIVATION_KEYS_LICENSE_FILTER_TYPES,
 	ACTIVATION_STATUS,

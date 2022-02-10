@@ -16,8 +16,3 @@ export * from './alertActivationKeysDownloadText';
 export * from './downlodableLicenseKeys';
 export * from './tooltipContentRendererTypes';
 export * from './tooltipClassnamesTypes';
-export * from './getFormatedProductName';
-export * from './getProductDescription';
-export * from './getProductName';
-export * from './getStatusActivationTag';
-export * from './hasVirtualCluster';

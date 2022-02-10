@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import {useMemo, useState} from 'react';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {ALERT_DOWNLOAD_TYPE} from '../../../utils/constants/alertDownloadType';
-import {AUTO_CLOSE_DOWNLOAD_ALERT_TIME} from '../../../utils/constants/autoCloseDownloadAlertTime';
+import {AUTO_CLOSE_ALERT_TIME} from '../../../utils/constants/autoCloseAlertTime';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../utils/constants';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../utils/constants/alertAggregateKeysDownloadText';
 import {getActivationKeyDownload} from '../utils/getActivationKeyDownload';
@@ -154,9 +154,7 @@ const DXPActivationKeysTableHeader = ({
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={
-							AUTO_CLOSE_DOWNLOAD_ALERT_TIME[
-								activationKeysDownloadStatus
-							]
+							AUTO_CLOSE_ALERT_TIME[activationKeysDownloadStatus]
 						}
 						className="cp-activation-key-download-alert"
 						displayType={

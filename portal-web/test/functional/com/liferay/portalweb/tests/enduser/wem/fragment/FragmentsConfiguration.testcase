@@ -590,6 +590,7 @@ main();
 
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
+				fieldLabel = "applied-style",
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 
@@ -656,6 +657,7 @@ main();
 
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
+				fieldLabel = "applied-style",
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 
@@ -715,6 +717,7 @@ main();
 
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
+				fieldLabel = "applied-style",
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 

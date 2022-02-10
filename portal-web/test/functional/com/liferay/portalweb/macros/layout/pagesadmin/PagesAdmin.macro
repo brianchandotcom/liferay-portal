@@ -635,6 +635,12 @@ definition {
 		if (isSet(hasChildren)) {
 			AssertConfirm(value1 = "Are you sure you want to delete the page &quot;${pageName}&quot;? This page contains child pages that will also be removed.");
 		}
+		else if (isSet(hasChidrenAndScopedContent)) {
+			AssertConfirm(value1 = "Are you sure you want to delete the page &quot;${pageName}&quot;? This page serves as a scope for content and also contains child pages. Any content scoped to this page and child pages will also be removed.");
+		}
+		else if (isSet(hasScopedContent)) {
+			AssertConfirm(value1 = "Are you sure you want to delete the page &quot;${pageName}&quot;? This page serves as a scope for content. Any content that is scoped to this page will also be removed.");
+		}
 		else {
 			AssertConfirm(value1 = "Are you sure you want to delete the page &quot;${pageName}&quot;? It will be removed immediately.");
 		}

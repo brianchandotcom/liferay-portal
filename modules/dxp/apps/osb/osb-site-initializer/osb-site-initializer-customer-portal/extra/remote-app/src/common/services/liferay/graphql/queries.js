@@ -265,9 +265,9 @@ export const getAccountSubscriptionGroups = gql`
 `;
 
 export const getKoroneikiAccounts = gql`
-	query getKoroneikiAccounts($filter: String) {
+	query getKoroneikiAccounts($filter: String, $pageSize: Int = 20) {
 		c {
-			koroneikiAccounts(filter: $filter) {
+			koroneikiAccounts(filter: $filter, pageSize: $pageSize) {
 				items {
 					accountKey
 					code
@@ -307,7 +307,7 @@ export const getListTypeDefinitions = gql`
 `;
 
 export const getAccounts = gql`
-	query getAccounts($pageSize: Long) {
+	query getAccounts($pageSize: Int) {
 		accounts(pageSize: $pageSize) {
 			items {
 				externalReferenceCode

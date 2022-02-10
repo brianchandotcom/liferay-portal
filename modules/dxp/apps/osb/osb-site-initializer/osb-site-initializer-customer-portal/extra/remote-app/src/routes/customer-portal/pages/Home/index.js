@@ -81,8 +81,7 @@ const Home = ({userAccount}) => {
 					accounts = dataAccounts?.accounts?.items;
 					accountKeysFilter = getKoroneikiFilter(accounts);
 				}
-			}
-			else if (userAccount?.accountBriefs?.length) {
+			} else if (userAccount?.accountBriefs?.length) {
 				accounts = userAccount?.accountBriefs;
 				accountKeysFilter = getKoroneikiFilter(accounts);
 			}
@@ -92,6 +91,7 @@ const Home = ({userAccount}) => {
 					query: getKoroneikiAccounts,
 					variables: {
 						filter: accountKeysFilter,
+						pageSize: MAX_PAGE_SIZE,
 					},
 				});
 

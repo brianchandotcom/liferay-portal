@@ -8,6 +8,7 @@
 
 		alt = fileJSONObject.getString("alt")
 		src = fileJSONObject.getString("data")
+		fileEntry = getFileEntry(fileJSONObject)
 	/>
 </#if>
 
@@ -22,14 +23,23 @@
 		[ <a href="javascript:;" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
 
 		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
-			<img alt="${escapeAttribute(alt)}" class="img-polaroid" id="${portletNamespace}${namespacedFieldName}Image" src="${escapeAttribute(src)}" />
+			<#if validator.isNotNull(src)>
+				<img alt="${escapeAttribute(alt)}" class="img-polaroid" id="${portletNamespace}${namespacedFieldName}Image" src="${escapeAttribute(src)}" />
+			<#else>
+				<img alt="${escapeAttribute(alt)}" class="img-polaroid" id="${portletNamespace}${namespacedFieldName}Image" src="${getFileEntryURL(fileEntry)}" />
+			</#if>
 		</div>
 
 		<#if !disabled>
 			<@liferay_aui.input
 				name="${namespacedFieldName}URL"
 				type="hidden"
+				<#if validator.isNotNull(src)
+			>
 				value="${src}"
+				<#else>
+				value="${getFileEntryURL(fileEntry)}"
+				</#if>
 			/>
 
 			<@liferay_aui.input

@@ -343,6 +343,14 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if ("${portlet}" == "AWS Translator") {
+			var portletId = "com.liferay.translation.translator.aws.internal.configuration.AWSTranslatorConfiguration";
+		}
+
+		if ("${portlet}" == "Azure Translator") {
+			var portletId = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration";
+		}
+
 		if ("${portlet}" == "File Entries") {
 			var portletId = "com.liferay.document.library.configuration.DLFileEntryConfiguration";
 		}

@@ -717,16 +717,15 @@ definition {
 		}
 
 		task ("Assert all common fragment style fieldsets are available on Desktop viewport") {
-			PageEditor.clickConfigurableField(fragmentName = "Heading");
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
-			Pause(locator1 = "3000");
+			AssertElementPresent(
+				key_fieldSetLabel = "Size",
+				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 
-			AssertClick(
-				key_navItem = "Styles",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Styles");
+			Navigator.gotoNavTab(navTab = "Styles");
 
-			for (var fieldSetLabel : list "Margin,Padding,Size,Text,Background,Borders,Effects") {
+			for (var fieldSetLabel : list "Margin,Padding,Text,Background,Borders,Effects") {
 				AssertElementPresent(
 					key_fieldSetLabel = "${fieldSetLabel}",
 					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");

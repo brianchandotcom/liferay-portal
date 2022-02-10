@@ -149,3 +149,23 @@ export async function associateContactRoleNameByEmailByProject(
 
 	return response;
 }
+
+export async function putDeactivateKeys(
+	licenseKeyDownloadURL,
+	licenseKeyIds,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/license-keys/deactivate?${licenseKeyIds}`,
+
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'PUT',
+		}
+	);
+
+	return response;
+}

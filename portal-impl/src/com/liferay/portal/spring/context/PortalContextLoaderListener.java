@@ -86,8 +86,6 @@ import javax.servlet.ServletContextEvent;
 
 import javax.sql.DataSource;
 
-import org.apache.tika.config.ServiceLoader;
-
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
@@ -262,8 +260,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		serviceLatch.openOn(
 			() -> _serviceWrapperRegistry = new ServiceWrapperRegistry());
-
-		ServiceLoader.setContextClassLoader(portalClassLoader);
 
 		FutureTask<Void> springInitTask = null;
 

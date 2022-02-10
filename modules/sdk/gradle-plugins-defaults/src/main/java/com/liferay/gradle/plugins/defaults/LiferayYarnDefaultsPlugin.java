@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.defaults;
 import com.liferay.gradle.plugins.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPatcherPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
@@ -43,11 +44,11 @@ public class LiferayYarnDefaultsPlugin implements Plugin<Project> {
 		com.liferay.gradle.plugins.defaults.internal.NodeDefaultsPlugin.
 			INSTANCE.apply(project);
 
-		if (_isRunningInCIEnvironment()) {
+		if (CIUtil.isRunningInCIEnvironment()) {
 			LiferayCIPlugin.INSTANCE.apply(project);
 		}
 
-		if (_isRunningInCIPatcherEnvironment()) {
+		if (CIUtil.isRunningInCIPatcherEnvironment()) {
 			LiferayCIPatcherPlugin.INSTANCE.apply(project);
 		}
 
@@ -82,24 +83,6 @@ public class LiferayYarnDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private boolean _isRunningInCIEnvironment() {
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isRunningInCIPatcherEnvironment() {
-		if (Validator.isNotNull(
-				System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

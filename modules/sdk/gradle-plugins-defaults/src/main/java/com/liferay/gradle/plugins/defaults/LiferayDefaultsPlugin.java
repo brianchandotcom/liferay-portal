@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayProfileDXPPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.MavenDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.NodeDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.LiferayRelengUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -62,15 +63,17 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 
 		String projectPath = project.getPath();
 
-		if (projectPath.startsWith(":dxp:") && !_isRunningInCIEnvironment()) {
+		if (projectPath.startsWith(":dxp:") &&
+			!CIUtil.isRunningInCIEnvironment()) {
+
 			LiferayProfileDXPPlugin.INSTANCE.apply(project);
 		}
 
-		if (_isRunningInCIEnvironment()) {
+		if (CIUtil.isRunningInCIEnvironment()) {
 			LiferayCIPlugin.INSTANCE.apply(project);
 		}
 
-		if (_isRunningInCIPatcherEnvironment()) {
+		if (CIUtil.isRunningInCIPatcherEnvironment()) {
 			LiferayCIPatcherPlugin.INSTANCE.apply(project);
 		}
 	}
@@ -88,24 +91,6 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 	@Override
 	protected Class<? extends Plugin<Project>> getThemePluginClass() {
 		return LiferayThemeDefaultsPlugin.class;
-	}
-
-	private boolean _isRunningInCIEnvironment() {
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isRunningInCIPatcherEnvironment() {
-		if (Validator.isNotNull(
-				System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

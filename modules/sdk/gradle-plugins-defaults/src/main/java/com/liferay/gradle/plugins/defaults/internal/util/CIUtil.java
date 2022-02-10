@@ -78,4 +78,22 @@ public class CIUtil {
 		return true;
 	}
 
+	public static boolean isRunningInCIEnvironment() {
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isRunningInCIPatcherEnvironment() {
+		if (Validator.isNotNull(
+				System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

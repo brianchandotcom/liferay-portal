@@ -25,6 +25,7 @@ const taskbarClassNames: any = {
 };
 
 type TaskbarProgress = {
+	displayTotalCompleted: boolean;
 	items: [string, number][];
 	legend?: boolean;
 	total: number;
@@ -32,6 +33,7 @@ type TaskbarProgress = {
 };
 
 const TaskbarProgress: React.FC<TaskbarProgress> = ({
+	displayTotalCompleted,
 	items,
 	legend,
 	total,
@@ -61,23 +63,25 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 
 		{legend && (
 			<div className="d-flex testray-progress-bar">
-				<div className="justify-content-between mr-5">
-					<div className="align-items-center d-flex">
-						<span className="font-family-sans-serif font-weight-semi-bold mr-1 text-paragraph-lg">
-							{totalCompleted}
-						</span>
+				{displayTotalCompleted && (
+					<div className="justify-content-between mr-5">
+						<div className="align-items-center d-flex">
+							<span className="font-family-sans-serif font-weight-semi-bold mr-1 text-paragraph-lg">
+								{totalCompleted}
+							</span>
 
-						<span>/</span>
+							<span>/</span>
 
-						<span className="font-family-sans-serif ml-1 text-paragraph-sm">
-							{total}
+							<span className="font-family-sans-serif ml-1 text-paragraph-sm">
+								{total}
+							</span>
+						</div>
+
+						<span className="font-family-sans-serif text-neutral-6 text-paragraph-xs">
+							TOTAL COMPLETED
 						</span>
 					</div>
-
-					<span className="font-family-sans-serif text-neutral-6 text-paragraph-xs">
-						TOTAL COMPLETED
-					</span>
-				</div>
+				)}
 
 				{items.map((item, index) => {
 					const [label, value] = item;

@@ -16,11 +16,16 @@ import {Progress, Tasks} from '../../util/mock';
 import TaskbarProgress from './TaskbarProgress';
 
 type ProgressBarProps = {
+	displayTotalCompleted?: boolean;
 	items: Tasks | Progress;
 	legend?: boolean;
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = ({items, legend}) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({
+	displayTotalCompleted = true,
+	items,
+	legend,
+}) => {
 	const sortedItems = Object.entries(items).sort(
 		([, valueA], [, valueB]) => valueB - valueA
 	);
@@ -40,6 +45,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({items, legend}) => {
 
 	return (
 		<TaskbarProgress
+			displayTotalCompleted={displayTotalCompleted}
 			items={sortedItems}
 			legend={legend}
 			total={total}

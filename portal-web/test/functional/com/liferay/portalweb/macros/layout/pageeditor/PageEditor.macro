@@ -977,7 +977,7 @@ definition {
 		}
 
 		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(
+			Click.javaScriptClick(
 				index = "${index}",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_CONTENT");

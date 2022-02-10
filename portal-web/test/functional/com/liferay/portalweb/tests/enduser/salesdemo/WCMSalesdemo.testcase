@@ -61,6 +61,43 @@ definition {
 		SelectFrameTop();
 	}
 
+	@description = "This is a test for LPS-140253. View no private page in page administration."
+	@priority = "4"
+	test IFrameDemoFF {
+		property testray.component.names = "IFrame Portlet";
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "IFrame Page");
+
+		PagesAdmin.configurePage(
+			columnName = "1 Column",
+			pageName = "IFrame Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "IFrame Page");
+
+		Portlet.addPG(portletName = "IFrame");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		IFrame.addCP(sourceURL = "http://iscaliforniaonfire.com");
+
+		Navigator.gotoPage(pageName = "IFrame Page");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
+
+		AssertVisible(
+			key_title = "Yes",
+			locator1 = "Header#H1_TITLE");
+
+		SelectFrameTop();
+	}
+
 	@priority = "4"
 	test SalesDemo {
 		property testray.component.names = "Web Content Administration,Web Content Display";

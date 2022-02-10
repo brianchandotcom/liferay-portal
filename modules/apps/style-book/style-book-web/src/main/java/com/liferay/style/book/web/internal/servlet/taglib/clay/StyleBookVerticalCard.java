@@ -152,6 +152,15 @@ public class StyleBookVerticalCard
 		return _styleBookEntry.getName();
 	}
 
+	@Override
+	public boolean isSelectable() {
+		if (_styleBookEntry.getStyleBookEntryId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;

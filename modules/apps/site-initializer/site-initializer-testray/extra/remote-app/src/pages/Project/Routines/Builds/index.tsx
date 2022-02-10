@@ -31,39 +31,41 @@ const testrayData = [...new Array(20)].map((value, index) => ({
 	test_fix: getRandom(10),
 }));
 
-const Build = () => (
-	<Container title="Build History">
-		<Chart data={testrayData} />
+const Routine = () => {
+	return (
+		<Container title="Build History">
+			<Chart data={testrayData} />
 
-		<Table
-			className="mt-4"
-			columns={[
-				{key: 'create_date', value: 'Create Date'},
-				{key: 'git_hash', value: 'Git Hash'},
-				{key: 'product_version', value: 'Product Version'},
-				{key: 'name', value: 'Build'},
-				{key: 'failed', value: 'Failed'},
-				{key: 'blocked', value: 'Blocked'},
-				{key: 'test_fix', value: 'Test Fix'},
-				{
-					key: 'metrics',
-					render: (_a: any, b: any) => (
-						<ProgressBar
-							items={{
-								blocked: b.blocked,
-								failed: b.failed,
-								incomplete: b.incomplete,
-								passed: b.passed,
-								test_fix: b.test_fix,
-							}}
-						/>
-					),
-					value: 'metrics',
-				},
-			]}
-			items={testrayData}
-		/>
-	</Container>
-);
+			<Table
+				className="mt-4"
+				columns={[
+					{key: 'create_date', value: 'Create Date'},
+					{key: 'git_hash', value: 'Git Hash'},
+					{key: 'product_version', value: 'Product Version'},
+					{key: 'name', value: 'Build'},
+					{key: 'failed', value: 'Failed'},
+					{key: 'blocked', value: 'Blocked'},
+					{key: 'test_fix', value: 'Test Fix'},
+					{
+						key: 'metrics',
+						render: (_a: any, b: any) => (
+							<ProgressBar
+								items={{
+									blocked: b.blocked,
+									failed: b.failed,
+									incomplete: b.incomplete,
+									passed: b.passed,
+									test_fix: b.test_fix,
+								}}
+							/>
+						),
+						value: 'metrics',
+					},
+				]}
+				items={testrayData}
+			/>
+		</Container>
+	);
+};
 
-export default Build;
+export default Routine;

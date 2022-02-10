@@ -30,8 +30,13 @@ const Routines = () => {
 					columns: [
 						{
 							key: 'name',
-							render: (routine: string) => (
-								<Link to="build">{routine}</Link>
+							render: (
+								routine: string,
+								{testrayRoutineId}: any
+							) => (
+								<Link to={`${testrayRoutineId}`}>
+									{routine}
+								</Link>
 							),
 							value: 'ROUTINE',
 						},

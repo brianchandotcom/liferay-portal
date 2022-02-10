@@ -542,6 +542,18 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
 		}
+
+		task ("View alert while delete a content page with child") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.deletePage(
+				hasChildren = "true",
+				pageName = "Test Page Name 1");
+
+			PagesAdmin.viewPageItemNotPresent(
+				pageName = "Test Page Name 1",
+				privacy = "Public Pages");
+		}
 	}
 
 	@description = "This is a test for LPS-110108. Move child page to parent page level via drag and drop."

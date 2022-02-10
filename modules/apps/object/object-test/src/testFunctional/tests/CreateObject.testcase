@@ -5238,8 +5238,6 @@ definition {
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) and its relations to be deleted"
 	@priority = "5"
 	test CascadeDeletionOneToManyWillAllowDeleteParent {
-		property portal.acceptance = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
@@ -5305,6 +5303,8 @@ definition {
 		ObjectPortlet.deleteEntry(entry = "Entry A");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Entry A");
+
+		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
 

@@ -330,18 +330,11 @@ definition {
 				value1 = "${fieldValue}");
 		}
 
-		if (isSet(viewItemWarning)) {
-			AssertElementPresent(
-				key_itemName = "${itemName}",
-				locator1 = "SiteNavigationMenu#ITEM_WARNING");
-
-			AssertElementNotPresent(
-				key_warningMessage = "No Display Page",
-				locator1 = "Message#WARNING_SPECIFIC");
-
-			AssertElementNotPresent(
-				locator1 = "Message#SUBTITLE",
-				value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+		if ("${showWarningMessage}" == "true") {
+			NavigationMenusAdmin.viewItemWarningMessage();
+		}
+		else if ("${showWarningMessage}" == "false") {
+			NavigationMenusAdmin.viewItemWarningMessageNotPresent();
 		}
 
 		PortletEntry.save();

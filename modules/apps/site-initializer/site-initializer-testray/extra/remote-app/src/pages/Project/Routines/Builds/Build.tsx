@@ -126,7 +126,7 @@ const Build = () => {
 				</div>
 			</Container>
 
-			<Outlet></Outlet>
+			<Outlet />
 		</>
 	);
 };

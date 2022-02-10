@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.metadata;
+package com.liferay.portal.tika.internal.metadata;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -74,6 +73,9 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -82,6 +84,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Alexander Chow
  * @author Shuyang Zhou
  */
+@Component(service = RawMetadataProcessor.class)
 public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 	public TikaRawMetadataProcessor() throws Exception {
@@ -273,10 +276,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private static final Map<String, String> _fields;
-	private static volatile ProcessExecutor _processExecutor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ProcessExecutor.class, TikaRawMetadataProcessor.class,
-			"_processExecutor", true);
 
 	static {
 		Map<String, String> fields = new HashMap<>();
@@ -303,6 +302,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private final Parser _parser;
+
+	@Reference
+	private ProcessExecutor _processExecutor;
 
 	private static class ExtractMetadataProcessCallable
 		implements ProcessCallable<Metadata> {

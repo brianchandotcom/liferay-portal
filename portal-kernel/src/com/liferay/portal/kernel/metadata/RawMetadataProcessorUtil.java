@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.metadata;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.InputStream;
 
@@ -42,12 +43,9 @@ public class RawMetadataProcessorUtil {
 		return _rawMetadataProcessor;
 	}
 
-	public void setRawMetadataProcessor(
-		RawMetadataProcessor rawMetadataProcessor) {
-
-		_rawMetadataProcessor = rawMetadataProcessor;
-	}
-
-	private static RawMetadataProcessor _rawMetadataProcessor;
+	private static volatile RawMetadataProcessor _rawMetadataProcessor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			RawMetadataProcessor.class, RawMetadataProcessorUtil.class,
+			"_rawMetadataProcessor", true);
 
 }

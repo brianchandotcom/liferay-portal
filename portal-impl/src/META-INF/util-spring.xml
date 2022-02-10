@@ -116,10 +116,6 @@
 	<bean class="com.liferay.portal.kernel.license.util.LicenseManagerUtil" id="com.liferay.portal.kernel.license.util.LicenseManagerUtil">
 		<property name="licenseManager" ref="com.liferay.portal.kernel.license.util.LicenseManager" />
 	</bean>
-	<bean class="com.liferay.portal.metadata.TikaRawMetadataProcessor" id="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
-	<bean class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">
-		<property name="rawMetadataProcessor" ref="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />

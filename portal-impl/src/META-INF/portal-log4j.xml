@@ -120,7 +120,6 @@
 		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
 		<Logger level="ERROR" name="com.liferay.portal.lar" />
 		<Logger level="INFO" name="com.liferay.portal.license" />
-		<Logger level="WARN" name="com.liferay.portal.metadata.TikaRawMetadataProcessor" />
 		<Logger level="ERROR" name="com.liferay.portal.microsofttranslator" />
 		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />
 		<Logger level="WARN" name="com.liferay.portal.patcher.PatcherImpl" />

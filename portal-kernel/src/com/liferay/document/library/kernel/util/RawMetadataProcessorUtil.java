@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  *
  * <p>
  * This processor automatically and assynchronously extracts the metadata from
- * all of the files stored in the document library. The metadata extraction is
- * done with the help of {@link
- * com.liferay.portal.metadata.TikaRawMetadataProcessor}
+ * all of the files stored in the document library.
  * </p>
  *
  * @author Alexander Chow
@@ -95,11 +93,6 @@ public class RawMetadataProcessorUtil {
 
 	/**
 	 * Saves the raw metadata present in the file version.
-	 *
-	 * <p>
-	 * The raw metadata present in the file version is extracted and persisted
-	 * using {@link com.liferay.portal.metadata.TikaRawMetadataProcessor}.
-	 * </p>
 	 *
 	 * @param fileVersion the file version from which the raw metatada is to be
 	 *        extracted and persisted

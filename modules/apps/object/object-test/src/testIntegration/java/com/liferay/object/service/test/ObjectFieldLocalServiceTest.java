@@ -121,8 +121,7 @@ public class ObjectFieldLocalServiceTest {
 
 		for (String dbType : dbTypes) {
 			_testAddSystemObjectField(
-				ObjectFieldUtil.createObjectField(
-					"Text", dbType, "Able", "able"));
+				ObjectFieldUtil.createObjectField("", dbType, "Able", "able"));
 		}
 
 		try {

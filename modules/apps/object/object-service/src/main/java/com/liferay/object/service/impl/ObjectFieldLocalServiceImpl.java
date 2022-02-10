@@ -443,6 +443,8 @@ public class ObjectFieldLocalServiceImpl
 	private final Map<String, String> _businessTypes = HashMapBuilder.put(
 		"BigDecimal", "PrecisionDecimal"
 	).put(
+		"Blob", "LargeFile"
+	).put(
 		"Boolean", "Boolean"
 	).put(
 		"Clob", "LongText"

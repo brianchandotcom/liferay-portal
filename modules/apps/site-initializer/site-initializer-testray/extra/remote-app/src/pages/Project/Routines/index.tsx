@@ -12,10 +12,14 @@
  * details.
  */
 
+import {Link} from 'react-router-dom';
+
 import Chart from '../../../components/Charts';
 import Container from '../../../components/Layout/Container';
+import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import Table from '../../../components/Table';
+import {getTestrayBuilds} from '../../../graphql/queries';
+import {Liferay} from '../../../services/liferay/liferay';
 
 const getRandom = (max = 50) => Math.ceil(Math.random() * max);
 
@@ -36,33 +40,47 @@ const Routine = () => {
 		<Container title="Build History">
 			<Chart data={testrayData} />
 
-			<Table
-				className="mt-4"
-				columns={[
-					{key: 'create_date', value: 'Create Date'},
-					{key: 'git_hash', value: 'Git Hash'},
-					{key: 'product_version', value: 'Product Version'},
-					{key: 'name', value: 'Build'},
-					{key: 'failed', value: 'Failed'},
-					{key: 'blocked', value: 'Blocked'},
-					{key: 'test_fix', value: 'Test Fix'},
-					{
-						key: 'metrics',
-						render: (_a: any, b: any) => (
-							<ProgressBar
-								items={{
-									blocked: b.blocked,
-									failed: b.failed,
-									incomplete: b.incomplete,
-									passed: b.passed,
-									test_fix: b.test_fix,
-								}}
-							/>
-						),
-						value: 'metrics',
-					},
-				]}
-				items={testrayData}
+			<ListView
+				query={getTestrayBuilds}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							render: (
+								name: string,
+								{testrayBuildId}: {testrayBuildId: number}
+							) => (
+								<Link to={`build/${testrayBuildId}`}>
+									{name}
+								</Link>
+							),
+							value: 'Build',
+						},
+						{key: 'dateCreated', value: 'Create Date'},
+						{key: 'gitHash', value: 'Git Hash'},
+						{key: 'product_version', value: 'Product Version'},
+						{key: 'failed', value: 'Failed'},
+						{key: 'blocked', value: 'Blocked'},
+						{key: 'test_fix', value: 'Test Fix'},
+						{
+							key: 'metrics',
+							render: () => (
+								<ProgressBar
+									items={{
+										blocked: 0,
+										failed: 2,
+										incomplete: 0,
+										passed: 30,
+										test_fix: 0,
+									}}
+								/>
+							),
+							value: 'Metrics',
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayBuilds}
+				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
 			/>
 		</Container>
 	);

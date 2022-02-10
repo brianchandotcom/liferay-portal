@@ -1701,7 +1701,7 @@ public class VerifyProperties extends VerifyProcess {
 		"hibernate.cache.use_structured_entries", "icq.jar", "icq.login",
 		"icq.password", "index.filter.search.limit", "index.on.upgrade",
 		"index.portal.field.analyzer.enabled", "index.search.highlight.enabled",
-		"index.read.only", "intraband.impl",
+		"index.read.only", "index.with.thread", "intraband.impl",
 		"intraband.mailbox.reaper.thread.enabled",
 		"intraband.mailbox.storage.life", "intraband.proxy.dump.classes.dir",
 		"intraband.proxy.dump.classes.enabled", "intraband.timeout.default",

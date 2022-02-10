@@ -1184,9 +1184,6 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD));
 
-	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
-
 	public static final boolean JAVASCRIPT_BAREBONE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JAVASCRIPT_BAREBONE_ENABLED));

@@ -16,25 +16,22 @@ import React, {useCallback, useContext, useState} from 'react';
 
 import {useActiveItemId} from './ControlsContext';
 
-const StyleErrorsDispatchContext = React.createContext(() => {});
 const StyleErrorsStateContext = React.createContext({});
 
-export function StyleErrorsContextProvider({children}) {
-	const [styleErrors, setStyleErrors] = useState({});
+export function StyleErrorsContextProvider({children, initialState = {}}) {
+	const [state, setState] = useState(initialState);
 
 	return (
-		<StyleErrorsDispatchContext.Provider value={setStyleErrors}>
-			<StyleErrorsStateContext.Provider value={styleErrors}>
-				{children}
-			</StyleErrorsStateContext.Provider>
-		</StyleErrorsDispatchContext.Provider>
+		<StyleErrorsStateContext.Provider value={{setState, state}}>
+			{children}
+		</StyleErrorsStateContext.Provider>
 	);
 }
 
 export function useDeleteStyleError() {
 	const activeItemId = useActiveItemId() || 'defaultId';
-	const setState = useContext(StyleErrorsDispatchContext);
-	const state = useContext(StyleErrorsStateContext);
+
+	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
 		(fieldName) => {
@@ -53,15 +50,14 @@ export function useDeleteStyleError() {
 }
 
 export function useHasStyleErrors() {
-	const state = useContext(StyleErrorsStateContext);
+	const {state} = useContext(StyleErrorsStateContext);
 
 	return Object.keys(state).length > 0;
 }
 
 export function useSetStyleError() {
 	const activeItemId = useActiveItemId() || 'defaultId';
-	const setState = useContext(StyleErrorsDispatchContext);
-	const state = useContext(StyleErrorsStateContext);
+	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
 		(fieldName, value) => {
@@ -90,5 +86,7 @@ export function useSetStyleError() {
 }
 
 export function useStyleErrors() {
-	return useContext(StyleErrorsStateContext);
+	const {state} = useContext(StyleErrorsStateContext);
+
+	return state;
 }

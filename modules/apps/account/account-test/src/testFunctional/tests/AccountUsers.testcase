@@ -426,30 +426,36 @@ definition {
 	@description = "This test asserts that a person account cannot be selected in Edit User when a user is already assigned to a Person Account."
 	@priority = "4"
 	test CannotSelectPersonAccountWithUserAssigned {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
+		task ("Given there is a Person account with a user assigned") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account",
+				accountEntryType = "Person");
 
-		AccountUsers.openAccountUsersAdmin();
+			AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUser(
-			accountName = "Person Account",
-			userEmailAddress = "personuser@liferay.com",
-			userFirstName = "person",
-			userLastName = "user",
-			userScreenName = "personuser");
+			AccountUsers.addUser(
+				accountName = "Person Account",
+				userEmailAddress = "personuser@liferay.com",
+				userFirstName = "person",
+				userLastName = "user",
+				userScreenName = "personuser");
+		}
 
-		AccountUsers.openAccountUsersAdmin();
+		task ("When an admin attempts to add a new user in Account Users portlet") {
+			AccountUsers.openAccountUsersAdmin();
 
-		LexiconEntry.gotoAdd();
+			LexiconEntry.gotoAdd();
 
-		Pause(locator1 = "3000");
+			Pause(locator1 = "3000");
 
-		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
+			SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
+		}
 
-		AssertTextEquals(
+		task ("Then Person accounts with assigned users do not display") {
+			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No accounts were found.");
+		}
 	}
 
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."

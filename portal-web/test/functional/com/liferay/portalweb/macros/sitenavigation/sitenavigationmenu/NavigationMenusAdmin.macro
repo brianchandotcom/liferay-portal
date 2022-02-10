@@ -341,7 +341,9 @@ definition {
 			NavigationMenusAdmin.viewItemWarningMessageNotPresent();
 		}
 
-		PortletEntry.save();
+		if (!(isSet(configureWithoutSave))) {
+			PortletEntry.save();
+		}
 	}
 
 	macro editMenu {

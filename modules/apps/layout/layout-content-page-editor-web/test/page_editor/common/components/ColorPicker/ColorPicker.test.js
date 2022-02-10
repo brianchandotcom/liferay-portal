@@ -17,6 +17,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {StoreContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {StyleErrorsContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StyleErrorsContext';
 import {ColorPicker} from '../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ColorPicker/ColorPicker';
 
 const CONFIG = {
@@ -59,6 +60,9 @@ const TOKEN_VALUES = {
 	},
 };
 
+const ERRORS = {
+	defaultId: {background: {error: 'I am an error', value: 'error'}},
+};
 const FIELD = {label: INPUT_NAME, name: INPUT_NAME};
 
 const renderColorPicker = ({
@@ -69,14 +73,16 @@ const renderColorPicker = ({
 }) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
-			<ColorPicker
-				config={CONFIG}
-				editedTokenValues={editedTokenValues}
-				field={field}
-				onValueSelect={onValueSelect}
-				tokenValues={TOKEN_VALUES}
-				value={value}
-			/>
+			<StyleErrorsContextProvider initialState={ERRORS}>
+				<ColorPicker
+					config={CONFIG}
+					editedTokenValues={editedTokenValues}
+					field={field}
+					onValueSelect={onValueSelect}
+					tokenValues={TOKEN_VALUES}
+					value={value}
+				/>
+			</StyleErrorsContextProvider>
 		</StoreContextProvider>
 	);
 

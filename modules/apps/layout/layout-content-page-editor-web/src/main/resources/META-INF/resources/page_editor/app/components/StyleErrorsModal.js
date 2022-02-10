@@ -23,7 +23,12 @@ export function StyleErrorsModal({onCloseModal, onSubmit}) {
 	});
 
 	return (
-		<ClayModal observer={observer} size="lg" status="warning">
+		<ClayModal
+			aria-label={Liferay.Language.get('style-errors-detected')}
+			observer={observer}
+			size="lg"
+			status="warning"
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('style-errors-detected')}
 			</ClayModal.Header>

@@ -30,7 +30,6 @@ import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
-import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
@@ -39,7 +38,7 @@ import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import PreviewModal from './PreviewModal';
-import {StyleErrorsModal} from './StyleErrorsModal';
+import PublishButton from './PublishButton';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
@@ -57,7 +56,6 @@ function ToolbarBody({className}) {
 	const load = useLoad();
 	const selectItem = useSelectItem();
 	const store = useSelector((state) => state);
-	const hasStyleErrors = useHasStyleErrors();
 
 	const canPublish = selectCanPublish(store);
 
@@ -71,7 +69,6 @@ function ToolbarBody({className}) {
 	} = store;
 
 	const [openPreviewModal, setOpenPreviewModal] = useState(false);
-	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
 	const {observer: observerPreviewModal} = useModal({
 		onClose: () => {
@@ -323,45 +320,13 @@ function ToolbarBody({className}) {
 				)}
 
 				<li className="nav-item">
-					<form
-						action={config.publishURL}
-						method="POST"
-						ref={formRef}
-					>
-						<input
-							name={`${config.portletNamespace}redirect`}
-							type="hidden"
-							value={config.redirectURL}
-						/>
-
-						<ClayButton
-							disabled={config.pending || !canPublish}
-							displayType="primary"
-							onClick={
-								config.tokenReuseEnabled && hasStyleErrors
-									? () => setOpenStyleErrorsModal(true)
-									: handleSubmit
-							}
-							small
-							type={
-								config.tokenReuseEnabled && hasStyleErrors
-									? 'button'
-									: 'submit'
-							}
-						>
-							{publishButtonLabel}
-						</ClayButton>
-					</form>
+					<PublishButton
+						canPublish={canPublish}
+						formRef={formRef}
+						handleSubmit={handleSubmit}
+						label={publishButtonLabel}
+					/>
 				</li>
-
-				{config.tokenReuseEnabled &&
-					openStyleErrorsModal &&
-					hasStyleErrors && (
-						<StyleErrorsModal
-							onCloseModal={() => setOpenStyleErrorsModal(false)}
-							onSubmit={handleSubmit}
-						/>
-					)}
 			</ul>
 
 			{openPreviewModal && (

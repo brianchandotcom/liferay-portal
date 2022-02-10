@@ -1,0 +1,28 @@
+definition {
+
+	macro enablePayPalPayment {
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+		Refresh();
+
+		CommerceChannels.configurationPaypal(mode = "Sandbox");
+
+		Refresh();
+	}
+
+	macro PayPalFlow {
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+	}
+
+}

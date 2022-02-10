@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>RaylifePaymentMethod</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifePaymentMethod</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>PAYMENT_METHOD_PAYPAL</td>
+	<td>//div[contains(@class, 'custom-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAYMENT_METHOD_DISABLED</td>
+	<td>//div[contains(@class, 'brand-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAYMENT_METHOD</td>
+	<td>//h5[contains(text(),'Payment Method')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BILLING_OPTIONS</td>
+	<td>//div[contains(@class, 'justify-content') and contains(., '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BILLING_SELECTED</td>
+	<td>//div[contains(@class, 'payment') and contains(@class, 'selected') and contains(., '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TERMS_CONDITIONS_DISABLED</td>
+	<td>//input[contains(@name, 'agree-check') and contains(@value, 'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TERMS_CONDITIONS_CHECKBOX</td>
+	<td>//div[contains(@class, 'custom-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAY_NOW</td>
+	<td>//button[contains(text(),'Pay Now')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONGRATS</td>
+	<td>//h1[contains(text(),'Congrats!')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

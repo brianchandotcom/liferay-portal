@@ -117,11 +117,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_NAME_BUTTON</td>
-	<td>//div[contains(@class,'editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FORM_HEADER_LOADING_ANIMATION</td>
 	<td>//div[contains(@class,'form-header')]//span[contains(@class,'loading-animation')]</td>
 	<td></td>
@@ -159,11 +154,6 @@
 <tr>
 	<td>SEARCH_MEMBER</td>
 	<td>//div[@class='input-group search']//input[@type='text'and @placeholder='Search'and not(@disabled)]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME_FIELD</td>
-	<td>//input[@name='name']</td>
 	<td></td>
 </tr>
 <tr>

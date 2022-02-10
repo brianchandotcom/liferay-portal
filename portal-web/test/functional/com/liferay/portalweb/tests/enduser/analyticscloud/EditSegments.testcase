@@ -69,7 +69,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACUtils.fileName(fileName = "Dynamic Segment Test");
 		}
 
 		task ("Add Segment Field and Edit Web Behavior Criteria") {
@@ -135,7 +135,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		ACUtils.fileName(fileName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -247,7 +247,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test");
+		ACUtils.fileName(fileName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -313,7 +313,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		ACUtils.fileName(fileName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -329,7 +329,7 @@ definition {
 
 		ACSegments.editSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.nameSegment(segmentName = "Rename Dynamic Segment Test");
+		ACUtils.fileName(fileName = "Rename Dynamic Segment Test");
 
 		ACSegments.saveSegment();
 
@@ -374,7 +374,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test");
+		ACUtils.fileName(fileName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -420,7 +420,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test");
+		ACUtils.fileName(fileName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -485,7 +485,7 @@ definition {
 		task ("Create segments and add 1 member") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac1 ac1");
 
@@ -593,7 +593,7 @@ definition {
 		task ("Create segment test and save") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -655,7 +655,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -737,7 +737,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "New Segment Test");
+			ACUtils.fileName(fileName = "New Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -823,7 +823,7 @@ definition {
 		task ("Create a static segment add set name") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add All Members and View Added Members") {
@@ -886,7 +886,7 @@ definition {
 		task ("Create a static segment, add two static members and save segment") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			for (var name : list "${users}") {
 				ACSegments.addStaticMember(tableMember = "${name} ${name}");
@@ -969,7 +969,7 @@ definition {
 		task ("Create segment test and save") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 		}

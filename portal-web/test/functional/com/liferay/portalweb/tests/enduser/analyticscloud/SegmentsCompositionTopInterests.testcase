@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add the new user as member") {
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add the new user as member") {
@@ -295,7 +295,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 		}
 
 		task ("Add the new user as member") {

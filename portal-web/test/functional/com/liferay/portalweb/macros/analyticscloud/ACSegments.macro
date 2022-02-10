@@ -193,7 +193,7 @@ definition {
 	macro createDynamicSegmentAndFillFields {
 		ACSegments.createDynamicSegment();
 
-		ACSegments.nameSegment(segmentName = "${segments}");
+		ACUtils.fileName(fileName = "${segments}");
 
 		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
 
@@ -488,20 +488,6 @@ definition {
 
 	macro includeAnonymous {
 		Check.checkToggleSwitch(locator1 = "ACSegments#ANONYMOUS_SWITCH");
-	}
-
-	macro nameSegment {
-		WaitForElementPresent(locator1 = "ACSegments#SEGMENT_CREATION_PAGE");
-
-		if (IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "DYNAMIC")) {
-			Click(locator1 = "ACSegments#EDIT_NAME_BUTTON");
-		}
-
-		Type.sendKeys(
-			locator1 = "ACSegments#NAME_FIELD",
-			value1 = "${segmentName}");
-
-		Click(locator1 = "ACSegments#SEGMENT_LABEL");
 	}
 
 	macro previewSegmentMembership {

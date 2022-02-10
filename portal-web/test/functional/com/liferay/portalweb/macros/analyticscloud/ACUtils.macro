@@ -937,4 +937,16 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro fileName {
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL") || IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT")) {
+			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
+		}
+
+		Type.sendKeys(
+			locator1 = "ACUtils#NAME_FIELD",
+			value1 = "${fileName}");
+	}
+
 }

@@ -260,7 +260,7 @@ public class JournalUtil {
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					JournalArticle.class.getName());
 
-		if (count == 0) {
+		if (count > 0) {
 			return true;
 		}
 
@@ -271,11 +271,11 @@ public class JournalUtil {
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					JournalArticle.class.getName());
 
-		if (count == 0) {
-			return false;
+		if (count > 0) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public static boolean isIncludeVersionHistory() {

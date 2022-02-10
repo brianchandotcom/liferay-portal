@@ -38,12 +38,7 @@ const ACTIONS = {
 	},
 
 	markAsDefaultStyleBookEntry({markAsDefaultStyleBookEntryURL, message}) {
-		if (message !== '') {
-			if (confirm(message)) {
-				submitForm(document.hrefFm, markAsDefaultStyleBookEntryURL);
-			}
-		}
-		else {
+		if (confirm(message)) {
 			submitForm(document.hrefFm, markAsDefaultStyleBookEntryURL);
 		}
 	},

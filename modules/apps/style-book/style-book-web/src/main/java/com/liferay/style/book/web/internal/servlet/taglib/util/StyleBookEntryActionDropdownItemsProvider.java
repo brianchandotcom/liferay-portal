@@ -22,7 +22,6 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -292,30 +291,25 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
 				).buildString());
 
-			String message = StringPool.BLANK;
-
-			StyleBookEntry defaultLStyleBookEntry =
+			StyleBookEntry defaultStyleBookEntry =
 				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
 					_styleBookEntry.getGroupId());
 
-			if (defaultLStyleBookEntry != null) {
-				long defaultLStyleBookEntryId =
-					defaultLStyleBookEntry.getStyleBookEntryId();
-				long styleBookEntryId = _styleBookEntry.getStyleBookEntryId();
+			String defaultStyleBookEntryName = LanguageUtil.get(
+				_httpServletRequest, "styles-from-theme");
 
-				if (defaultLStyleBookEntryId != styleBookEntryId) {
-					message = LanguageUtil.format(
-						_httpServletRequest,
-						"do-you-want-to-replace-x-for-x-as-the-default-style-" +
-							"book",
-						new String[] {
-							_styleBookEntry.getName(),
-							defaultLStyleBookEntry.getName()
-						});
-				}
+			if (defaultStyleBookEntry != null) {
+				defaultStyleBookEntryName = defaultStyleBookEntry.getName();
 			}
 
-			dropdownItem.putData("message", message);
+			dropdownItem.putData(
+				"message",
+				LanguageUtil.format(
+					_httpServletRequest,
+					"do-you-want-to-replace-x-for-x-as-the-default-style-book",
+					new String[] {
+						_styleBookEntry.getName(), defaultStyleBookEntryName
+					}));
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "mark-as-default"));

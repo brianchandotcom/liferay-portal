@@ -14,8 +14,6 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
-import com.github.erdi.gradle.webdriver.WebDriverBinariesPlugin;
-
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
@@ -88,7 +86,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, BasePlugin.class);
-		GradleUtil.applyPlugin(project, WebDriverBinariesPlugin.class);
 
 		final PoshiRunnerExtension poshiRunnerExtension =
 			GradleUtil.addExtension(

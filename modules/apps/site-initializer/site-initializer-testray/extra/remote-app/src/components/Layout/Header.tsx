@@ -16,18 +16,14 @@ import ClayTabs from '@clayui/tabs';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {HeaderContext, HeaderTitle} from '../../context/HeaderContext';
+import {HeaderContext} from '../../context/HeaderContext';
 import DropDown from '../DropDown';
+
+const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
 const Header = () => {
 	const [{heading, tabs}] = useContext(HeaderContext);
 	const navigate = useNavigate();
-
-	function separator(data: HeaderTitle[], index: number) {
-		if (data.length !== 0 && index !== data.length - 1) {
-			return <p className="mx-2 text-paragraph-lg"> / </p>;
-		}
-	}
 
 	return (
 		<div className="d-flex flex-column header-container pb-2 pt-4">
@@ -49,7 +45,10 @@ const Header = () => {
 										{header.title}
 									</p>
 
-									{separator(heading, index)}
+									{!!heading.length &&
+										heading.length !== index + 1 && (
+											<Divider />
+										)}
 								</div>
 							</span>
 						))}

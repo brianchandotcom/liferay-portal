@@ -11,7 +11,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-const taskbarClassNames: any = {
+
+import classNames from 'classnames';
+
+const statusBarClassNames: any = {
 	blocked: 'label-inverse-secondary',
 	failed: 'label-inverse-danger',
 	incomplete: 'label-inverse-light',
@@ -26,8 +29,8 @@ export type StatusBadgeProps = {
 };
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({type}) => (
-	<span className={`label ${taskbarClassNames[type]}`}>
-		{type.toUpperCase()}
+	<span className={classNames('label', statusBarClassNames[type])}>
+		{type}
 	</span>
 );
 

@@ -66,7 +66,7 @@ const useHeader = ({
 				setHeading(JSON.parse(useHeadingString));
 			}, timeout);
 		}
-	}, [setHeading, shouldUpdate, useHeadingString]);
+	}, [setHeading, shouldUpdate, timeout, useHeadingString]);
 
 	useEffect(() => {
 		if (shouldUpdate) {
@@ -74,7 +74,7 @@ const useHeader = ({
 				setTabs(JSON.parse(useTabsString));
 			}, timeout);
 		}
-	}, [setTabs, shouldUpdate, useTabsString]);
+	}, [setTabs, shouldUpdate, timeout, useTabsString]);
 
 	return {
 		setHeading,

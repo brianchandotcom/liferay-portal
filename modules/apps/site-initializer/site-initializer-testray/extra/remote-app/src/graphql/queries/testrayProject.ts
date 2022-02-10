@@ -14,6 +14,18 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayProject = {
+	description: string;
+	name: string;
+	testrayProjectId: number;
+};
+
+export type TestrayProjectQuery = {
+	c: {
+		testrayProject: TestrayProject;
+	};
+};
+
 export const getTestrayProjects = gql`
 	query getTestrayProjects(
 		$filter: String

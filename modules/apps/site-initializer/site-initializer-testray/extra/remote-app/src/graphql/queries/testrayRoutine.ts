@@ -40,3 +40,15 @@ export const getTestrayRoutines = gql`
 		}
 	}
 `;
+
+export const getTestrayRoutine = gql`
+	query getTestrayRoutine($testrayRoutineId: Long!) {
+		c {
+			testrayRoutine(testrayRoutineId: $testrayRoutineId) {
+				autoanalyze
+				name
+				testrayRoutineId
+			}
+		}
+	}
+`;

@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Login";
+	property testray.main.component.name = "OpenID Connect";
 
 	setUp {
 		TestCase.setUpPortalInstance();

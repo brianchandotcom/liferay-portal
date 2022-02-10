@@ -26,14 +26,16 @@ import {
 
 type UseHeader = {
 	shouldUpdate?: boolean;
+	timeout?: number;
 	useHeading?: HeaderTitle[];
 	useTabs?: HeaderTabs[];
 };
 
-const timeout = 0;
+const DEFAULT_TIMEOUT = 0;
 
 const useHeader = ({
 	shouldUpdate = true,
+	timeout = DEFAULT_TIMEOUT,
 	useHeading = initialState.heading,
 	useTabs = initialState.tabs,
 }: UseHeader = {}) => {

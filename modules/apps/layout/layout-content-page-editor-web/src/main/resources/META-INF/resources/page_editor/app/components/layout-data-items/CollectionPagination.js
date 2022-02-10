@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {config} from '../../config/index';
 import {useIsActive} from '../../contexts/ControlsContext';
 
 export default function CollectionPagination({
@@ -31,8 +32,10 @@ export default function CollectionPagination({
 }) {
 	const isActive = useIsActive();
 	const {
+		displayAllPages,
 		numberOfItems,
 		numberOfItemsPerPage,
+		numberOfPages,
 		paginationType,
 		showAllItems,
 	} = collectionConfig;
@@ -52,6 +55,19 @@ export default function CollectionPagination({
 			: Math.min(numberOfItems, totalNumberOfItems),
 	];
 
+	const itemsPerPage = Math.min(
+		numberOfItemsPerPage,
+		config.searchContainerPageMaxDelta
+	);
+
+	const numericPaginationLabelValues = [
+		totalNumberOfItems ? (activePage - 1) * itemsPerPage + 1 : 0,
+		Math.min(activePage * itemsPerPage, totalNumberOfItems),
+		displayAllPages
+			? totalNumberOfItems
+			: Math.min(numberOfPages * itemsPerPage, totalNumberOfItems),
+	];
+
 	return (
 		<div
 			className={classNames(
@@ -69,7 +85,9 @@ export default function CollectionPagination({
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							numericPaginationLabel
+							config.paginationImprovementsEnabled
+								? numericPaginationLabelValues
+								: numericPaginationLabel
 						)}
 					</ClayPaginationBar.Results>
 

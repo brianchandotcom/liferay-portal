@@ -92,13 +92,43 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTranslations {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72910 CanAddTranslations pending implementation
+		
+		ProcessBuilderKaleoDesignerReact.addNewWorkflow();
+
+		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
+			key_icon = "pt_BR",
+			success_or_warning = "warning");
+
+		ProcessBuilderKaleoDesignerReact.editTitleNewWorkflow(title = "Test Title");
+
+		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "pt-br");
+
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
+			key_icon = "fr_FR",
+			success_or_warning = "warning");
+
+		ProcessBuilderKaleoDesignerReact.editTitleNewWorkflow(title = "Test Title");
+
+		ProcessBuilderKaleoDesignerReact.saveNewWorkflowDefinition();
+
+		ProcessBuilderKaleoDesignerReact.gotoOptionsDefinitionTableSpecific(menuItem = "View");
+
+		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguage(
+			key_icon = "pt_BR",
+			success_or_warning = "success");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguage(
+			key_icon = "fr_FR",
+			success_or_warning = "success");
 
 	}
 

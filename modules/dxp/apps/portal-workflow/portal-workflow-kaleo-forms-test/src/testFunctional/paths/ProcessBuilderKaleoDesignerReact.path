@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>ProcessBuilderKaleoDesignerReact</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ProcessBuilderKaleoDesignerReact</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ICON_COUNTRY</td>
+	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_icon}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY</td>
+	<td>//div[@class='autofit-section' and contains(.,'${key_icon}')]//..//..//span[@class="label label-${success_or_warning}" and contains(.,'Translated')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

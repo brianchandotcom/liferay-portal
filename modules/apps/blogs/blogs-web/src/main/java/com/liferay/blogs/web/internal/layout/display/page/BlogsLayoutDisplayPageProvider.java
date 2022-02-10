@@ -21,7 +21,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,14 +43,12 @@ public class BlogsLayoutDisplayPageProvider
 			InfoItemReference infoItemReference) {
 
 		try {
-			if (Validator.isNull(infoItemReference.getClassPK())) {
-				return null;
-			}
-
-			BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(
+			BlogsEntry blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
 				infoItemReference.getClassPK());
 
-			if (blogsEntry.isDraft() || blogsEntry.isInTrash()) {
+			if ((blogsEntry == null) || blogsEntry.isDraft() ||
+				blogsEntry.isInTrash()) {
+
 				return null;
 			}
 

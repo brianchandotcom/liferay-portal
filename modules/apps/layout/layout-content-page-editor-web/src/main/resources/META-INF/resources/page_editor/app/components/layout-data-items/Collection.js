@@ -201,19 +201,20 @@ const Collection = React.memo(
 		const [loading, setLoading] = useState(false);
 
 		const numberOfItems = getNumberOfItems(collection, collectionConfig);
-		const totalPages = Math.ceil(
-			numberOfItems / collectionConfig.numberOfItemsPerPage
-		);
 
 		useEffect(() => {
-			if (activePage > totalPages) {
+			if (
+				activePage > collectionConfig.numberOfPages &&
+				!collectionConfig.displayAllPages
+			) {
 				setActivePage(1);
 			}
 		}, [
+			collectionConfig.displayAllPages,
 			collectionConfig.numberOfItems,
 			collectionConfig.numberOfItemsPerPage,
+			collectionConfig.numberOfPages,
 			activePage,
-			totalPages,
 		]);
 
 		const context = useContext(CollectionItemContext);
@@ -227,7 +228,11 @@ const Collection = React.memo(
 		const itemClassPK = classPK || displayPagePreviewItemData.classPK;
 
 		useEffect(() => {
-			if (collectionConfig.collection && activePage <= totalPages) {
+			if (
+				collectionConfig.collection &&
+				(activePage <= collectionConfig.numberOfPages ||
+					collectionConfig.displayAllPages)
+			) {
 				setLoading(true);
 
 				CollectionService.getCollectionField({
@@ -236,11 +241,13 @@ const Collection = React.memo(
 					classPK: itemClassPK,
 					collection: collectionConfig.collection,
 					displayAllItems: collectionConfig.displayAllItems,
+					displayAllPages: collectionConfig.displayAllPages,
 					languageId,
 					listItemStyle: collectionConfig.listItemStyle || null,
 					listStyle: collectionConfig.listStyle,
 					numberOfItems: collectionConfig.numberOfItems,
 					numberOfItemsPerPage: collectionConfig.numberOfItemsPerPage,
+					numberOfPages: collectionConfig.numberOfPages,
 					onNetworkStatus: dispatch,
 					paginationType: collectionConfig.paginationType,
 					templateKey: collectionConfig.templateKey || null,
@@ -312,7 +319,6 @@ const Collection = React.memo(
 			itemClassNameId,
 			itemClassPK,
 			languageId,
-			totalPages,
 		]);
 
 		const selectedViewportSize = useSelector(
@@ -372,7 +378,10 @@ const Collection = React.memo(
 						totalNumberOfItems={
 							collection.fakeCollection ? 0 : numberOfItems
 						}
-						totalPages={totalPages}
+						totalPages={getNumberOfPages(
+							collection,
+							collectionConfig
+						)}
 					/>
 				)}
 			</div>
@@ -383,11 +392,39 @@ const Collection = React.memo(
 Collection.displayName = 'Collection';
 
 function getNumberOfItems(collection, collectionConfig) {
-	return !collectionConfig.paginationType && collectionConfig.displayAllItems
+	if (collectionConfig.paginationType) {
+		const itemsPerPage = Math.min(
+			collectionConfig.numberOfItemsPerPage,
+			config.searchContainerPageMaxDelta
+		);
+
+		return collectionConfig.displayAllPages
+			? collection.totalNumberOfItems
+			: Math.min(
+					collectionConfig.numberOfPages * itemsPerPage,
+					collection.totalNumberOfItems
+			  );
+	}
+
+	return collectionConfig.displayAllItems
 		? collection.totalNumberOfItems
 		: Math.min(
 				collectionConfig.numberOfItems,
 				collection.totalNumberOfItems
+		  );
+}
+
+function getNumberOfPages(collection, collectionConfig) {
+	const itemsPerPage = Math.min(
+		collectionConfig.numberOfItemsPerPage,
+		config.searchContainerPageMaxDelta
+	);
+
+	return collectionConfig.displayAllPages
+		? Math.ceil(collection.totalNumberOfItems / itemsPerPage)
+		: Math.min(
+				Math.ceil(collection.totalNumberOfItems / itemsPerPage),
+				collectionConfig.numberOfPages
 		  );
 }
 

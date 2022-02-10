@@ -517,6 +517,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143841. The warning message won't be shown in contextual menu once change to an item with associated display page template."
+	@priority = "4"
+	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
+		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
+		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add two categories") {
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${i}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
+
+		task ("Add a Display Page Content fragment to a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Category DPT",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Associate the display page template to the second category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.editCP(
+				categoryName = "Category Name 2",
+				displayPageName = "Category DPT",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add an item based on the first category") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name 1");
+		}
+
+		task ("View a warning icon is shown in the item card") {
+			NavigationMenusAdmin.viewItemWarningIcon(itemName = "Category Name 1");
+		}
+
+		task ("View a warning message is shown in the item contextual menu") {
+			NavigationMenusAdmin.viewItemWarningMessage(itemName = "Category Name 1");
+		}
+
+		task ("Change to the second category via contextual menu without save") {
+			NavigationMenusAdmin.editItem(
+				assetTitle = "Category Name 2",
+				configureWithoutSave = "true",
+				item = "Category",
+				itemName = "Category Name 1",
+				showWarningMessage = "false");
+		}
+
+		task ("View the warning icon is still shown in item card") {
+			NavigationMenusAdmin.viewItemWarningIcon(itemName = "Category Name 1");
+		}
+
+		task ("View the warning icon is not shown after save changes") {
+			PortletEntry.save();
+
+			NavigationMenusAdmin.viewItemWarningIconNotPresent(itemName = "Category Name 2");
+		}
+	}
+
 	@description = "This is a test for LPS-76717. Can specify whether a Navigation Menu performs a specific function in fragments."
 	@ignore = "true"
 	@priority = "3"
@@ -602,79 +692,6 @@ definition {
 			NavigationMenusWidget.selectNavigation(menuType = "Social Navigation");
 
 			AssertTextPresent(value1 = "There is no Social Navigation available for the current site.");
-		}
-	}
-
-	@description = "This is a test for LPS-143841. The warning message won't be shown in contextual menu once change to an item with associated display page template."
-	@priority = "4"
-	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Add two categories") {
-			for (var i : list "1,2") {
-				JSONCategory.addCategory(
-					groupName = "Test Site Name",
-					title = "Category Name ${i}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-
-		task ("Add display page template for Category") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Category",
-				displayPageTemplateEntryName = "Category DPT",
-				groupName = "Test Site Name");
-		}
-
-		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Select a Specific display page template in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.editCP(
-				categoryName = "Category Name 2",
-				displayPageName = "Category DPT",
-				displayPageTemplateType = "Specific",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
-				siteNavigationMenuName = "Navigation Menu Name");
-		}
-
-		task ("View warning is shown after select a item without display page template") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
-
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name 1");
-
-			NavigationMenusAdmin.viewItemWarning(itemName = "Category Name 1");
-		}
-
-		task ("View warning is not shown on second category after changing item") {
-			NavigationMenusAdmin.editItem(
-				assetTitle = "Category Name 2",
-				item = "Category",
-				itemName = "Category Name 1",
-				viewItemWarning = "true");
-
-			NavigationMenusAdmin.viewItemWarningNotPresent(itemName = "Category Name 2");
 		}
 	}
 

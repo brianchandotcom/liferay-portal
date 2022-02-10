@@ -272,6 +272,100 @@ definition {
 		Notifications.viewNoNotifications();
 	}
 
+	@description = "This ensures that a user can mark all selected notifications as read via the management bar no matter if they are all in the same state or not."
+	@priority = "5"
+	test CanMarkNotificationsWithDifferentStatesAsRead {
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var num : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content${num}",
+				entryTitle = "Blogs Entry Title${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Site Page");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.markAsReadViaManagementBar(notificationsTitle = "Test Test sent you a Blogs Entry for review in the workflow");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.markAsReadViaManagementBar(selectAll = "true");
+
+		Notifications.viewNoNotifications(activePanel = "Notifications");
+	}
+
+	@description = "This ensures that a user can mark all selected notifications as unread via the management bar no matter if they are all in the same state or not."
+	@priority = "5"
+	test CanMarkNotificationsWithDifferentStatesAsUnread {
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var num : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content${num}",
+				entryTitle = "Blogs Entry Title${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Site Page");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.markAsReadViaManagementBar(notificationsTitle = "Test Test sent you a Blogs Entry for review in the workflow");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.markAsUnreadViaManagementBar(selectAll = "true");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+	}
+
+	@description = "This ensures that an obsolete notification can not be selected."
+	@priority = "5"
+	test CannotSelectObsoleteNotification {
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var num : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content${num}",
+				entryTitle = "Blogs Entry Title${num}");
+		}
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.moveToRecycleBinCP(
+			entryContent = "Blogs Entry Content2",
+			entryTitle = "Blogs Entry Title2");
+
+		Notifications.gotoNotifications();
+
+		AssertVisible(
+			key_rowEntry = "Notification no longer applies",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX_DISABLED");
+
+		PortletEntry.selectAll();
+
+		AssertNotChecked(
+			key_rowEntry = "Notification no longer applies",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+	}
+
 	@description = "This test covers LPS-102749. It views a notification of the edited Web Content Article when staging is turned on."
 	@priority = "4"
 	@refactordone
@@ -555,6 +649,36 @@ definition {
 	@uitest
 	test CanViewNotificationDefault {
 		Notifications.viewNoNotifications(activePanel = "Profile");
+
+		Notifications.viewNoRequest();
+
+		Notifications.viewNoNotificationEntry();
+	}
+
+	@description = "This ensures that the obsolete notification will be removed after refreshing the page."
+	@priority = "5"
+	test RefreshingPageRemovesObsoleteNotifications {
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var num : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content${num}",
+				entryTitle = "Blogs Entry Title${num}");
+		}
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.moveToRecycleBinCP(
+			entryContent = "Blogs Entry Content2",
+			entryTitle = "Blogs Entry Title2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.removeNotificationsViaManagementBar(selectAll = "true");
 
 		Notifications.viewNoRequest();
 

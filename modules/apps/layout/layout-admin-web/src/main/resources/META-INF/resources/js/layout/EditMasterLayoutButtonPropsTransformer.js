@@ -18,11 +18,7 @@ export default function propsTransformer({additionalProps, ...props}) {
 	return {
 		...props,
 		onClick() {
-			const {editMasterLayoutURL, editableMasterLayout} = additionalProps;
-
-			if (!editableMasterLayout) {
-				return;
-			}
+			const {editMasterLayoutURL} = additionalProps;
 
 			navigate(editMasterLayoutURL);
 		},

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Avatar, AvatarGroup} from '../../components/Avatar';
@@ -19,10 +20,27 @@ import Container from '../../components/Layout/Container';
 import ProgressBar from '../../components/ProgressBar';
 import Table from '../../components/Table';
 import QATable from '../../components/Table/QATable';
+import useHeader from '../../hooks/useHeader';
 import {progress, routines, subtask, tasks} from '../../util/mock';
 
 const TestFlowTasks: React.FC = () => {
 	const {assigned} = routines[0];
+
+	const {setHeading, setTabs} = useHeader();
+
+	useEffect(() => {
+		setTimeout(() => {
+			setHeading([
+				{
+					category: 'TASK',
+					title:
+						' [master] ci:test:analytics-cloud - 987 - 2022-02-07[16:07:08] ',
+				},
+			]);
+
+			setTabs([]);
+		}, 0);
+	}, [setHeading, setTabs]);
 
 	return (
 		<>
@@ -81,7 +99,11 @@ const TestFlowTasks: React.FC = () => {
 							]}
 						/>
 
-						<ProgressBar items={tasks[1]} legend />
+						<ProgressBar
+							displayTotalCompleted={false}
+							items={tasks[1]}
+							legend
+						/>
 					</div>
 				</div>
 			</Container>
@@ -113,7 +135,7 @@ const TestFlowTasks: React.FC = () => {
 						},
 						{key: 'score', value: 'Score'},
 						{key: 'tests', value: 'Tests'},
-						{key: 'erro', value: 'Errors'},
+						{key: 'error', value: 'Errors'},
 						{
 							key: 'assignee',
 							render: (assignee: any) => (
@@ -133,4 +155,5 @@ const TestFlowTasks: React.FC = () => {
 		</>
 	);
 };
-export {TestFlowTasks};
+
+export default TestFlowTasks;

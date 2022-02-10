@@ -14,6 +14,7 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
 import Role from './Role';
 
@@ -268,6 +269,10 @@ const NotificationsInfo = ({
 					<SidebarPanel panelTitle={Liferay.Language.get('type')}>
 						<ClayForm.Group className="recipient-type-form-group">
 							{recipientType === 'role' && <Role />}
+
+							{recipientType === 'scriptedRecipient' && (
+								<ScriptInput inputValue="" />
+							)}
 						</ClayForm.Group>
 					</SidebarPanel>
 				)}

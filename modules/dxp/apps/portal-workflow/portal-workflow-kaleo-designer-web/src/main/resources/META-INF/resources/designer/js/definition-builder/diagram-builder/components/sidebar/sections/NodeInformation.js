@@ -17,6 +17,7 @@ import React, {useContext} from 'react';
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../../constants';
 import {DiagramBuilderContext} from '../../../DiagramBuilderContext';
+import ScriptInput from '../../shared-components/ScriptInput';
 import SidebarPanel from '../SidebarPanel';
 import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
@@ -154,30 +155,18 @@ export default function NodeInformation({errors, setErrors}) {
 			</ClayForm.Group>
 
 			{selectedItem?.type === 'condition' && (
-				<ClayForm.Group>
-					<label htmlFor="nodeScript">
-						{`${Liferay.Language.get(
-							'script'
-						)} (${Liferay.Language.get('groovy')})`}
-					</label>
-
-					<ClayInput
-						component="textarea"
-						id="nodeScript"
-						onChange={({target}) =>
-							setSelectedItem({
-								...selectedItem,
-								data: {
-									...selectedItem.data,
-									script: target.value,
-								},
-							})
-						}
-						placeholder='returnValue = "Transition Name";'
-						type="text"
-						value={selectedItem?.data.script || ''}
-					/>
-				</ClayForm.Group>
+				<ScriptInput
+					inputValue={selectedItem?.data.script || ''}
+					updateSelectedItem={({target}) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								script: target.value,
+							},
+						})
+					}
+				/>
 			)}
 		</SidebarPanel>
 	);

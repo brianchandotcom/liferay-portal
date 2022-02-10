@@ -111,7 +111,7 @@
 				"en_US": "Steps Type"
 			},
 			"name": "stepsType",
-			"required": true,
+			"required": false,
 			"type": "String"
 		},
 		{

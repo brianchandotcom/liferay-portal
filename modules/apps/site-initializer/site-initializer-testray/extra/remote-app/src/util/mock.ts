@@ -32,7 +32,7 @@ export type Tasks = {
 
 export type Subtask = {
 	assignee: any;
-	erro: string;
+	error: string;
 	name: string;
 	score: number;
 	status: string;
@@ -94,7 +94,7 @@ export const tasks = generateItems<Tasks>(
 export const subtask = generateItems<Subtask>(
 	{
 		assignee,
-		erro: "java.lang.Exception: No results for path: $['users'][0]['id']",
+		error: "java.lang.Exception: No results for path: $['users'][0]['id']",
 		name: 'ST-1',
 		score: 10,
 		status: 'in analisys',

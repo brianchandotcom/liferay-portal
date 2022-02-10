@@ -461,7 +461,7 @@ definition {
 			value1 = "${text}");
 	}
 
-	macro viewItemWarning {
+	macro viewItemWarningMessage {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 
 		AssertElementPresent(
@@ -477,7 +477,7 @@ definition {
 			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
 	}
 
-	macro viewItemWarningNotPresent {
+	macro viewItemWarningMessageNotPresent {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 
 		AssertElementNotPresent(

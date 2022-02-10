@@ -92,6 +92,7 @@ const Home = ({userAccount}) => {
 					query: getKoroneikiAccounts,
 					variables: {
 						filter: accountKeysFilter,
+						pageSize: MAX_PAGE_SIZE,
 					},
 				});
 

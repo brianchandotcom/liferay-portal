@@ -92,6 +92,11 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		_variables.put(name, value);
 	}
 
+	@Override
+	public void setVariables(Map<String, Object> variables) {
+		_variables.putAll(variables);
+	}
+
 	protected DDMExpressionImpl(String expressionString)
 		throws DDMExpressionException {
 

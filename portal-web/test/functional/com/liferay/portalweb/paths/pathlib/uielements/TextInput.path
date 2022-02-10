@@ -536,6 +536,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPLACEMENT</td>
+	<td>//input[contains(@id,'replacement')]/following-sibling::input[contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVIEW_DATE</td>
 	<td>//span[contains(@id,'displayDate')]//input[contains(@id,'reviewDate')][1]</td>
 	<td></td>

@@ -1,54 +1,48 @@
 definition {
 
-    macro addNewWorkflow {
+	macro addNewWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
 
-        LexiconEntry.gotoAdd();
-    }
-    
-    macro buttonTranslationLanguage {
+		LexiconEntry.gotoAdd();
+	}
+
+	macro buttonTranslationLanguage {
 		Click(
 			key_icon = "${key_icon}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
-    
-    }
+	}
 
-	macro selectTranslationLanguage {
-        Click(
-			key_icon = "${key_icon}",
-			success_or_warning = "${success_or_warning}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY");
-		
-    }
-		
-
-    macro editTitleNewWorkflow {
-
+	macro editTitleNewWorkflow {
 		PortletEntry.inputTitle(title = "${title}");
+	}
 
-    }
-
-    macro saveNewWorkflowDefinition {
-        PortletEntry.save();
-    }
-		
-     macro gotoOptionsDefinitionTableSpecific{
-
-        Click(
+	macro gotoOptionsDefinitionTableSpecific {
+		Click(
 			key_workflowDefinitionTitle = "New Workflow",
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
-	
-	    MenuItem.clickNoError(menuItem = "${menuItem}");
-    }
 
-    
-    macro viewTranslationLanguage {
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
+	macro saveNewWorkflowDefinition {
+		PortletEntry.save();
+	}
+
+	macro selectTranslationLanguage {
+		Click(
+			key_icon = "${key_icon}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY",
+			success_or_warning = "${success_or_warning}");
+	}
+
+	macro viewTranslationLanguage {
 		AssertElementPresent(
 			key_icon = "${key_icon}",
-			success_or_warning = "${success_or_warning}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY");
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY",
+			success_or_warning = "${success_or_warning}");
 	}
+
 }

@@ -97,7 +97,6 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		
 		ProcessBuilderKaleoDesignerReact.addNewWorkflow();
 
 		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "en-us");
@@ -129,7 +128,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewTranslationLanguage(
 			key_icon = "fr_FR",
 			success_or_warning = "success");
-
 	}
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -164,12 +163,6 @@ public class LayoutPageTemplateStructureDataHandlerHelper {
 	private void _updateSegmentsExperiences(
 		long classNameId, long classPK,
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
-
-		if (existingLayoutPageTemplateStructureRel.getSegmentsExperienceId() ==
-				SegmentsExperienceConstants.ID_DEFAULT) {
-
-			return;
-		}
 
 		SegmentsExperience existingSegmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

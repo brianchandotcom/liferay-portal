@@ -605,9 +605,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-143841. The user can change an item that is not assigned to a Display Page Template in Navigation Menu."
+	@description = "This is a test for LPS-143841. The warning message won't be shown in contextual menu once change to an item with associated display page template."
 	@priority = "4"
-	test ChangeItemWithoutDisplayPageTemplate {
+	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
 		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
 		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
 

@@ -126,7 +126,7 @@ export function ColorPicker({
 	useEffect(() => {
 		if (config.tokenReuseEnabled) {
 			setError(null);
-			deleteStyleError(field.name);
+			deleteStyleError(field.name, activeItemId);
 		}
 	}, [value, config.tokenReuseEnabled]);
 
@@ -176,10 +176,14 @@ export function ColorPicker({
 			if (nextValue.error) {
 				setError(nextValue.error);
 				setCustomColors(['FFFFFF']);
-				setStyleError(field.name, {
-					error: nextValue.error,
-					value: target.value,
-				});
+				setStyleError(
+					field.name,
+					{
+						error: nextValue.error,
+						value: target.value,
+					},
+					activeItemId
+				);
 
 				return;
 			}
@@ -203,7 +207,7 @@ export function ColorPicker({
 	const onChangeAutocompleteInput = ({target: {value}}) => {
 		if (error) {
 			setError(null);
-			deleteStyleError(field.name);
+			deleteStyleError(field.name, activeItemId);
 		}
 
 		setActiveAutocomplete(value.length > 1 && filteredTokenValues.length);

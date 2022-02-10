@@ -14,8 +14,6 @@
 
 import React, {useCallback, useContext, useState} from 'react';
 
-import {useActiveItemId} from './ControlsContext';
-
 const StyleErrorsStateContext = React.createContext({});
 
 export function StyleErrorsContextProvider({children, initialState = {}}) {
@@ -29,23 +27,21 @@ export function StyleErrorsContextProvider({children, initialState = {}}) {
 }
 
 export function useDeleteStyleError() {
-	const activeItemId = useActiveItemId() || 'defaultId';
-
 	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
-		(fieldName) => {
-			if (state[activeItemId]?.[fieldName]) {
-				delete state[activeItemId][fieldName];
+		(fieldName, itemId = 'defaultId') => {
+			if (state[itemId]?.[fieldName]) {
+				delete state[itemId][fieldName];
 
-				if (Object.keys(state[activeItemId]).length === 0) {
-					delete state[activeItemId];
+				if (Object.keys(state[itemId]).length === 0) {
+					delete state[itemId];
 				}
 
 				setState(state);
 			}
 		},
-		[activeItemId, setState, state]
+		[setState, state]
 	);
 }
 
@@ -56,18 +52,17 @@ export function useHasStyleErrors() {
 }
 
 export function useSetStyleError() {
-	const activeItemId = useActiveItemId() || 'defaultId';
 	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
-		(fieldName, value) => {
+		(fieldName, value, itemId = 'defaultId') => {
 			let nextState;
 
-			if (state[activeItemId]) {
+			if (state[itemId]) {
 				nextState = {
 					...state,
-					[activeItemId]: {
-						...state[activeItemId],
+					[itemId]: {
+						...state[itemId],
 						[fieldName]: value,
 					},
 				};
@@ -75,13 +70,13 @@ export function useSetStyleError() {
 			else {
 				nextState = {
 					...state,
-					[activeItemId]: {[fieldName]: value},
+					[itemId]: {[fieldName]: value},
 				};
 			}
 
 			setState(nextState);
 		},
-		[activeItemId, setState, state]
+		[setState, state]
 	);
 }
 

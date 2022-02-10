@@ -17,12 +17,9 @@ package com.liferay.commerce.shop.by.diagram.model.impl;
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
-import com.liferay.commerce.shop.by.diagram.constants.CSDiagramSettingsConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -33,19 +30,15 @@ public class CSDiagramSettingImpl extends CSDiagramSettingBaseImpl {
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
 		throws PortalException {
 
-		CPDefinition cpDefinition =
-			CPDefinitionLocalServiceUtil.getCPDefinition(getCPDefinitionId());
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			CPAttachmentFileEntryLocalServiceUtil.getCPAttachmentFileEntry(
+				getCPAttachmentFileEntryId());
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			cpDefinition.getCPAttachmentFileEntries(
-				CSDiagramSettingsConstants.TYPE_DIAGRAM,
-				WorkflowConstants.STATUS_APPROVED);
-
-		if (cpAttachmentFileEntries.isEmpty()) {
+		if (!cpAttachmentFileEntry.isApproved()) {
 			throw new NoSuchCPAttachmentFileEntryException();
 		}
 
-		return cpAttachmentFileEntries.get(0);
+		return cpAttachmentFileEntry;
 	}
 
 	@Override

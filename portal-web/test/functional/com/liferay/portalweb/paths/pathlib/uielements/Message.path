@@ -71,7 +71,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMPTY_INFO_DEPOT</td>
+	<td>SUBTITLE</td>
 	<td>//p[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>

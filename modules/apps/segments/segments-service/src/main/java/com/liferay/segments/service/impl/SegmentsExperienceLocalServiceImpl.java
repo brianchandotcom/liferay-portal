@@ -357,7 +357,8 @@ public class SegmentsExperienceLocalServiceImpl
 		long groupId, long classNameId, long classPK, int priority) {
 
 		return segmentsExperiencePersistence.fetchByG_C_C_P(
-			groupId, classNameId, classPK, priority);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK),
+			priority);
 	}
 
 	@Override
@@ -366,7 +367,8 @@ public class SegmentsExperienceLocalServiceImpl
 		long classPK) {
 
 		return segmentsExperiencePersistence.fetchByG_SEK_C_C(
-			groupId, segmentsExperienceKey, classNameId, classPK);
+			groupId, segmentsExperienceKey, classNameId,
+			_getPublishedLayoutClassPK(classPK));
 	}
 
 	@Override
@@ -384,7 +386,8 @@ public class SegmentsExperienceLocalServiceImpl
 		throws PortalException {
 
 		return segmentsExperiencePersistence.findByG_SEK_C_C(
-			groupId, segmentsExperienceKey, classNameId, classPK);
+			groupId, segmentsExperienceKey, classNameId,
+			_getPublishedLayoutClassPK(classPK));
 	}
 
 	@Override

@@ -204,7 +204,7 @@ definition {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 
-		task ("And given the Minium site has a public content page with a Product widget") {
+		task ("And given the Minium site has a public content page with a Product Details widget") {
 			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Test Public Content Page",

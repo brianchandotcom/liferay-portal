@@ -16,3 +16,16 @@
 	bottom: 2rem;
 	left: 2rem;
 }
+
+.cp-error-alert {
+	background-color: var(--color-state-error-lighten-1);
+
+	svg {
+		height: 1.5rem;
+		width: 1.5rem;
+	}
+}
+
+.cp-deactivate-loading {
+	opacity: 0.5;
+}

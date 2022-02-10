@@ -72,11 +72,11 @@ public class FragmentEntryLinkServicePermissionTest {
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
-		_fragmentCollection = FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId());
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
+			fragmentCollection.getFragmentCollectionId());
 
 		_layout = LayoutTestUtil.addLayout(_group);
 	}
@@ -154,50 +154,6 @@ public class FragmentEntryLinkServicePermissionTest {
 			_createEditableValues());
 	}
 
-	@Test
-	public void testUpdateFragmentEntryLinks() throws Exception {
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
-
-		FragmentTestUtil.addFragmentEntryLink(fragmentEntry, _layout.getPlid());
-
-		_addSiteMemberUpdatePermission();
-
-		UserTestUtil.setUser(_user);
-
-		_fragmentEntryLinkService.updateFragmentEntryLinks(
-			_group.getGroupId(), _layout.getPlid(),
-			new long[] {
-				_fragmentEntry.getFragmentEntryId(),
-				fragmentEntry.getFragmentEntryId()
-			},
-			_createEditableValues(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateFragmentEntryLinksWithoutPermissions()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
-
-		FragmentTestUtil.addFragmentEntryLink(fragmentEntry, _layout.getPlid());
-
-		UserTestUtil.setUser(_user);
-
-		_fragmentEntryLinkService.updateFragmentEntryLinks(
-			_group.getGroupId(), _layout.getPlid(),
-			new long[] {
-				_fragmentEntry.getFragmentEntryId(),
-				fragmentEntry.getFragmentEntryId()
-			},
-			_createEditableValues(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
-	}
-
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testUpdateFragmentEntryLinkWithoutPermissions()
 		throws Exception {
@@ -231,7 +187,6 @@ public class FragmentEntryLinkServicePermissionTest {
 		return jsonObject.toString();
 	}
 
-	private FragmentCollection _fragmentCollection;
 	private FragmentEntry _fragmentEntry;
 
 	@Inject

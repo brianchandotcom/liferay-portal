@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
@@ -81,6 +82,34 @@ public class ObjectFieldLocalServiceTest {
 			Assert.assertEquals(
 				"Blob type is not indexable",
 				objectFieldDBTypeException.getMessage());
+		}
+
+		// business types
+
+		String[] businessTypes = {
+			"Boolean", "Date", "Decimal", "Integer", "LargeFile", "LongInteger",
+			"LongText", "Picklist", "PrecisionDecimal", "Relationship", "Text"
+		};
+
+		for (String businessType : businessTypes) {
+			_testAddSystemObjectField(
+				ObjectFieldUtil.createObjectField(
+					businessType, "", "Able", "able"));
+		}
+
+		try {
+			_testAddSystemObjectField(
+				ObjectFieldUtil.createObjectField(
+					"LargeText", "", "Able", "able"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldBusinessTypeException
+					objectFieldBusinessTypeException) {
+
+			Assert.assertEquals(
+				"Invalid business type LargeText",
+				objectFieldBusinessTypeException.getMessage());
 		}
 
 		// DB types

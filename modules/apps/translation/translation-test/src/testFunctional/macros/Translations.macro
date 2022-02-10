@@ -32,6 +32,12 @@ definition {
 		}
 	}
 
+	macro autoTranslate {
+		Click(
+			key_text = "Auto Translate",
+			locator1 = "Button#ANY");
+	}
+
 	macro changeBaseLocale {
 		Portlet.waitForForm();
 
@@ -515,16 +521,10 @@ definition {
 		}
 	}
 
-	macro translateSpecificFieldWithGoogle {
+	macro translateSpecificField {
 		Click.clickNoMouseOver(
 			key_title = "Auto Translate ${fieldName} Field",
 			locator1 = "Button#ANY_TITLE");
-	}
-
-	macro translateWithGoogle {
-		Click(
-			key_text = "Auto Translate",
-			locator1 = "Button#ANY");
 	}
 
 	macro updateTranslateFileID {

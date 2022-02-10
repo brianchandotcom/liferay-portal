@@ -64,7 +64,7 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Content");
+		Translations.translateSpecificField(fieldName = "Content");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Content", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
@@ -105,7 +105,7 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Description");
+		Translations.translateSpecificField(fieldName = "Description");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Description", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
@@ -180,7 +180,7 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Decimal");
+		Translations.translateSpecificField(fieldName = "Decimal");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
@@ -192,7 +192,7 @@ definition {
 				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
 				value1 = "10");
 
-			Translations.translateSpecificFieldWithGoogle(fieldName = "Numeric");
+			Translations.translateSpecificField(fieldName = "Numeric");
 
 			Translations.viewTargetFields(
 				webContentDecimal = "1.0",
@@ -254,14 +254,14 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
+		Translations.translateSpecificField(fieldName = "Title");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentSourceHtml = "This is the content of the rich text field",
 				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 
-			Translations.translateSpecificFieldWithGoogle(fieldName = "Rich Text");
+			Translations.translateSpecificField(fieldName = "Rich Text");
 
 			Translations.viewTargetFields(
 				webContentSourceHtml = "これはリッチテキストフィールドの内容です",
@@ -330,14 +330,14 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
+		Translations.translateSpecificField(fieldName = "Title");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentTextBox = "This is the content of the text box field",
 				webContentTitle = "これはウェブ記事のタイトルです");
 
-			Translations.translateSpecificFieldWithGoogle(fieldName = "Text Box");
+			Translations.translateSpecificField(fieldName = "Text Box");
 
 			Translations.viewTargetFields(
 				webContentTextBox = "これはテキストボックスフィールドの内容です",
@@ -403,14 +403,14 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
+		Translations.translateSpecificField(fieldName = "Title");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentText = "This is the content of the text field",
 				webContentTitle = "これはウェブ記事のタイトルです");
 
-			Translations.translateSpecificFieldWithGoogle(fieldName = "Text");
+			Translations.translateSpecificField(fieldName = "Text");
 
 			Translations.viewTargetFields(
 				webContentText = "これはテキストフィールドの内容です",
@@ -448,7 +448,7 @@ definition {
 
 		// End the test if the Google refresh token limit is exceeded.
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
+		Translations.translateSpecificField(fieldName = "Title");
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
@@ -489,7 +489,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "ja-JP");
 
-		Translations.translateWithGoogle();
+		Translations.autoTranslate();
 
 		// End the test if the Google refresh token limit is exceeded.
 
@@ -526,7 +526,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
-		Translations.translateWithGoogle();
+		Translations.autoTranslate();
 
 		// End the test if the Google refresh token limit is exceeded.
 

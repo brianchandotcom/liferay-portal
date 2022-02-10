@@ -151,6 +151,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISCONTINUED_DATE</td>
+	<td>//input[not(contains(@type,'disabled')) and contains(@id,'discontinuedDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONTINUED_DATE_DISABLED</td>
+	<td>//input[contains(@class,'disabled') and contains(@id,'discontinuedDate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE</td>
 	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>

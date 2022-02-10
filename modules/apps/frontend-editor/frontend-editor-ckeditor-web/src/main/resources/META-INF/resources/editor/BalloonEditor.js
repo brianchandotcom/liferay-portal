@@ -85,16 +85,6 @@ const BalloonEditor = ({
 					});
 				}
 
-				if (editorConfig.toolbarTable) {
-					balloonToolbars.create({
-						buttons: editorConfig.toolbarTable,
-						cssSelector: 'td',
-						priority:
-							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
-								.HIGH,
-					});
-				}
-
 				if (editorConfig.toolbarVideo) {
 					balloonToolbars.create({
 						buttons: editorConfig.toolbarVideo,

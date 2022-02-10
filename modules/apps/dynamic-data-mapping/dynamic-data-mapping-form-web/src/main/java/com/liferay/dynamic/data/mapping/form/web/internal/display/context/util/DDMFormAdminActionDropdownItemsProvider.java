@@ -20,11 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -44,6 +42,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 
 	public DDMFormAdminActionDropdownItemsProvider(
 		String autocompleteUserURL, DDMFormInstance ddmFormInstance,
+		String exportFormURL,
 		FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper,
 		boolean formPublished, HttpServletRequest httpServletRequest,
 		boolean invalidDDMFormInstance, JSONObject localizedNameJSONObject,
@@ -52,6 +51,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 
 		_autocompleteUserURL = autocompleteUserURL;
 		_ddmFormInstance = ddmFormInstance;
+		_exportFormURL = exportFormURL;
 		_formInstancePermissionCheckerHelper =
 			formInstancePermissionCheckerHelper;
 		_formPublished = formPublished;
@@ -204,24 +204,13 @@ public class DDMFormAdminActionDropdownItemsProvider {
 		_getExportActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			dropdownItem.setData(
+				HashMapBuilder.<String, Object>put(
+					"action", "exportForm"
+				).put(
+					"exportFormURL", _exportFormURL
+				).build());
 			dropdownItem.setDisabled(_invalidDDMFormInstance);
-
-			LiferayPortletURL liferayPortletURL =
-				(LiferayPortletURL)_renderResponse.createResourceURL();
-
-			liferayPortletURL.setCopyCurrentRenderParameters(false);
-			liferayPortletURL.setParameter(
-				"formInstanceId",
-				String.valueOf(_ddmFormInstance.getFormInstanceId()));
-			liferayPortletURL.setResourceID(
-				"/dynamic_data_mapping_form/export_form_instance");
-
-			dropdownItem.setHref(
-				StringBundler.concat(
-					"javascript:", _renderResponse.getNamespace(),
-					"exportFormInstance('", liferayPortletURL.toString(),
-					"');"));
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -299,6 +288,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 
 	private final String _autocompleteUserURL;
 	private final DDMFormInstance _ddmFormInstance;
+	private final String _exportFormURL;
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
 	private final boolean _formPublished;

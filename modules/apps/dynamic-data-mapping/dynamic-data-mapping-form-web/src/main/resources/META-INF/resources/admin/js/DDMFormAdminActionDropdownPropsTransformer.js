@@ -27,6 +27,10 @@ const ACTIONS = {
 		}
 	},
 
+	exportForm({exportFormURL}) {
+		Liferay.fire('openExportFormModal', {exportFormURL});
+	},
+
 	permissions({permissionsFormInstanceURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

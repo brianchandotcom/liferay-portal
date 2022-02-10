@@ -233,6 +233,7 @@ public class DDMFormAdminDisplayContext {
 			ddmFormAdminActionDropdownItemsProvider =
 				new DDMFormAdminActionDropdownItemsProvider(
 					getAutocompleteUserURL(), ddmFormInstance,
+					getExportFormURL(ddmFormInstance.getFormInstanceId()),
 					_formInstancePermissionCheckerHelper,
 					isFormPublished(ddmFormInstance),
 					ddmFormAdminRequestHelper.getRequest(),
@@ -648,6 +649,19 @@ public class DDMFormAdminDisplayContext {
 		return LanguageUtil.get(
 			ddmFormAdminRequestHelper.getRequest(),
 			search.getEmptyResultsMessage());
+	}
+
+	public String getExportFormURL(long formInstanceId) {
+		LiferayPortletURL liferayPortletURL =
+			(LiferayPortletURL)renderResponse.createResourceURL();
+
+		liferayPortletURL.setCopyCurrentRenderParameters(false);
+		liferayPortletURL.setParameter(
+			"formInstanceId", String.valueOf(formInstanceId));
+		liferayPortletURL.setResourceID(
+			"/dynamic_data_mapping_form/export_form_instance");
+
+		return liferayPortletURL.toString();
 	}
 
 	public String getFieldSetDefinitionURL() throws PortalException {

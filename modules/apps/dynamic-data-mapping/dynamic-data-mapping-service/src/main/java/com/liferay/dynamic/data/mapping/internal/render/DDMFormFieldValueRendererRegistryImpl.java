@@ -93,6 +93,7 @@ public class DDMFormFieldValueRendererRegistryImpl
 			new DecimalDDMFormFieldValueRenderer(),
 			new DocumentLibraryDDMFormFieldValueRenderer(),
 			new GeolocationDDMFormFieldValueRenderer(),
+			new ImageDDMFormFieldValueRenderer(),
 			new IntegerDDMFormFieldValueRenderer(),
 			new LinkToPageDDMFormFieldValueRenderer(),
 			new NumberDDMFormFieldValueRenderer(),

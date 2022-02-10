@@ -16,6 +16,7 @@ import {useMemo, useState} from 'react';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {ALERT_DOWNLOAD_TYPE} from '../../../utils/constants/alertDownloadType';
 import {AUTO_CLOSE_ALERT_TIME} from '../../../utils/constants/autoCloseAlertTime';
+import DeactivateButton from '../Deactivate';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../utils/constants';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../utils/constants/alertAggregateKeysDownloadText';
 import {getActivationKeyDownload} from '../utils/getActivationKeyDownload';
@@ -28,6 +29,7 @@ const DXPActivationKeysTableHeader = ({
 	licenseKeyDownloadURL,
 	selectedKeys,
 	sessionId,
+	setActivationKeys,
 }) => {
 	const [
 		activationKeysDownloadStatus,
@@ -129,23 +131,25 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				{!!selectedKeys.length && (
-					<>
-						<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-							{`${selectedKeys.length} Keys Selected`}
-						</p>
-
-						<Button className="btn-outline-danger cp-deactivate-button mx-2">
-							Deactivate
-						</Button>
-					</>
-				)}
-
 				<div
-					className={classNames({
+					className={classNames('align-items-center d-flex', {
 						'ml-auto': !selectedKeys.length,
 					})}
 				>
+					{!!selectedKeys.length && (
+						<>
+							<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
+								{`${selectedKeys.length} Keys Selected`}
+							</p>
+
+							<DeactivateButton
+								selectedKeys={selectedKeys}
+								sessionId={sessionId}
+								setActivationKeys={setActivationKeys}
+							/>
+						</>
+					)}
+
 					{getCurrentButton()}
 				</div>
 			</div>

@@ -15,10 +15,14 @@ import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {putDeactivateKeys} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../utils/constants';
+import {
+	ALERT_DOWNLOAD_TYPE,
+	AUTO_CLOSE_DOWNLOAD_ALERT_TIME,
+	STATUS_CODE,
+} from '../../../utils/constants';
 import DeactivateKeysModal from './Modal';
 
-const DeactivateButton = ({selectedKeys, sessionId}) => {
+const DeactivateButton = ({selectedKeys, sessionId, setActivationKeys}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [deactivateKeysStatus, setDeactivateKeysStatus] = useState('');
 	const [isDeactivating, setIsDeactivating] = useState(false);
@@ -45,6 +49,11 @@ const DeactivateButton = ({selectedKeys, sessionId}) => {
 		if (response.status === STATUS_CODE.sucess) {
 			setIsDeactivating(false);
 			setIsVisibleModal(false);
+			setActivationKeys((previousActivationKeys) =>
+				previousActivationKeys.filter(
+					(activationKeys) => !selectedKeys.includes(activationKeys)
+				)
+			);
 
 			return setDeactivateKeysStatus(ALERT_DOWNLOAD_TYPE.success);
 		}
@@ -58,7 +67,7 @@ const DeactivateButton = ({selectedKeys, sessionId}) => {
 			{deactivateKeysStatus === ALERT_DOWNLOAD_TYPE.success && (
 				<ClayAlert.ToastContainer>
 					<ClayAlert
-						autoClose={2000}
+						autoClose={AUTO_CLOSE_DOWNLOAD_ALERT_TIME.success}
 						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
 						displayType={ALERT_DOWNLOAD_TYPE[deactivateKeysStatus]}
 						onClose={() => setDeactivateKeysStatus('')}

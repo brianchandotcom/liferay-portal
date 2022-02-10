@@ -63,7 +63,7 @@ const RoutineOutlet = () => {
 	}, [setHeading, testrayProject, testrayRoutine]);
 
 	if (testrayProject && testrayRoutine) {
-		return <Outlet />;
+		return <Outlet context={{testrayProject, testrayRoutine}} />;
 	}
 
 	return null;

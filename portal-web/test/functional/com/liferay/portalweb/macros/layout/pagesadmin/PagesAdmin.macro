@@ -336,6 +336,44 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+		}
+
+		PagesAdmin._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
+			collectionName = "${collectionName}",
+			componentName = "${componentName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
+			inheritChanges = "${inheritChanges}",
+			linkPageName = "${linkPageName}",
+			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			portlet = "${portlet}",
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
+	}
+
 	macro addPrivateChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -563,7 +601,9 @@ definition {
 				portlet = "Pages");
 		}
 
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		if (isSet(privacy)) {
+			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		}
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

@@ -343,38 +343,45 @@ public class SelectAssetDisplayPageDisplayContext {
 			return false;
 		}
 
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
-			LayoutDisplayPageProviderTrackerUtil.
-				getLayoutDisplayPageProviderTracker();
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(
-					PortalUtil.getClassName(_classNameId));
-
-		if (layoutDisplayPageProvider == null) {
-			return false;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		InfoItemReference infoItemReference = new InfoItemReference(
-			PortalUtil.getClassName(_classNameId), _classPK);
+		try {
+			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
+				LayoutDisplayPageProviderTrackerUtil.
+					getLayoutDisplayPageProviderTracker();
 
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				infoItemReference);
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						PortalUtil.getClassName(_classNameId));
 
-		if ((layoutDisplayPageObjectProvider == null) ||
-			!AssetDisplayPageUtil.hasAssetDisplayPage(
-				themeDisplay.getScopeGroupId(),
-				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK(),
-				layoutDisplayPageObjectProvider.getClassTypeId())) {
+			if (layoutDisplayPageProvider == null) {
+				return false;
+			}
 
-			return false;
+			InfoItemReference infoItemReference = new InfoItemReference(
+				PortalUtil.getClassName(_classNameId), _classPK);
+
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					infoItemReference);
+
+			if ((layoutDisplayPageObjectProvider == null) ||
+				!AssetDisplayPageUtil.hasAssetDisplayPage(
+					themeDisplay.getScopeGroupId(),
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK(),
+					layoutDisplayPageObjectProvider.getClassTypeId())) {
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		return true;

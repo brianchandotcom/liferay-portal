@@ -96,7 +96,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test");
+		ACUtils.fileName(fileName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -106,7 +106,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test 2");
+		ACUtils.fileName(fileName = "Static Segment Test 2");
 
 		ACSegments.addStaticMember(tableMember = "userea userea");
 
@@ -152,7 +152,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACSegments.nameSegment(segmentName = "Static Segment Test");
+		ACUtils.fileName(fileName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "userfn userln");
 
@@ -162,7 +162,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		ACUtils.fileName(fileName = "Dynamic Segment Test");
 
 		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -225,7 +225,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACSegments.nameSegment(segmentName = "${segmentName}");
+				ACUtils.fileName(fileName = "${segmentName}");
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3");
@@ -328,7 +328,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACSegments.nameSegment(segmentName = "${segmentName}");
+				ACUtils.fileName(fileName = "${segmentName}");
 
 				ACSegments.addStaticMember(tableMember = "userfn userln");
 
@@ -427,7 +427,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACSegments.nameSegment(segmentName = "${segmentName}");
+				ACUtils.fileName(fileName = "${segmentName}");
 
 				ACSegments.addStaticMember(tableMember = "userfn userln");
 

@@ -109,7 +109,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "${usernameList} ${usernameList}");
 
@@ -189,7 +189,7 @@ definition {
 		task ("Create a static segment and add a member to it") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "${usernameList} ${usernameList}");
 
@@ -271,7 +271,7 @@ definition {
 		task ("Create a static segment and add a member to it") {
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "${usernameList} ${usernameList}");
 

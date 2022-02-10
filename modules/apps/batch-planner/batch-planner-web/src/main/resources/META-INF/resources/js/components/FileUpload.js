@@ -29,7 +29,7 @@ function updateExtensionInputValue(namespace, value) {
 	);
 
 	if (externalTypeInput) {
-		externalTypeInput.value = value;
+		externalTypeInput.value = value.toUpperCase();
 	}
 }
 

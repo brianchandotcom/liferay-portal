@@ -461,12 +461,22 @@ definition {
 			value1 = "${text}");
 	}
 
+	macro viewItemWarningIcon {
+		AssertVisible(
+			key_card = "${itemName}",
+			key_icon = "warning",
+			locator1 = "Card#CARD_STICKER");
+	}
+
+	macro viewItemWarningIconNotPresent {
+		AssertElementNotPresent(
+			key_card = "${itemName}",
+			key_icon = "warning",
+			locator1 = "Card#CARD_STICKER");
+	}
+
 	macro viewItemWarningMessage {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
-
-		AssertElementPresent(
-			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_WARNING");
 
 		AssertElementPresent(
 			key_warningMessage = "No Display Page",
@@ -479,10 +489,6 @@ definition {
 
 	macro viewItemWarningMessageNotPresent {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
-
-		AssertElementNotPresent(
-			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_WARNING");
 
 		AssertElementNotPresent(
 			key_warningMessage = "No Display Page",

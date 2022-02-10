@@ -1,0 +1,93 @@
+[
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"testrayComponentId": 0,
+		"testrayRunId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": null,
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"testrayComponentId": 0,
+		"testrayRunId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": null,
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"testrayComponentId": 0,
+		"testrayRunId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": null,
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"testrayComponentId": 0,
+		"testrayRunId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": null,
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"testrayComponentId": 0,
+		"testrayRunId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": null,
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": "",
+		"companyId": "20115",
+		"testrayComponentId": "32088",
+		"dueStatus": 2
+	},
+	{
+		"commentMBMessageId": 0,
+		"testrayBuildId": 0,
+		"testrayCaseId": 0,
+		"assignedUserId": 0,
+		"startDate": "2021-02-08 15:27:50.000000",
+		"closedDate": "2021-02-08 15:27:50.000000",
+		"attachments": "{}",
+		"errors": "java.lang.Exception: Element is present at \"//*[contains(@class,'btn')][normalize-space(text())='Sign In']\"",
+		"companyId": "20115",
+		"testrayComponentId": "32088",
+		"dueStatus": 3
+	}
+]

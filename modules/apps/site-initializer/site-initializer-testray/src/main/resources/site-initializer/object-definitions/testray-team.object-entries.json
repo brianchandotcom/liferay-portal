@@ -1,20 +1,8 @@
 [
 	{
-		"name": "Segmentation And Personalization"
+		"name": "Staging"
 	},
 	{
-		"name": "Frontend Infrastructure"
-	},
-	{
-		"name": "User And System Management"
-	},
-	{
-		"name": "Collaboration"
-	},
-	{
-		"name": "Security"
-	},
-	{
-		"name": "App Builder"
+		"name": "Web Content Management"
 	}
 ]

@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
-
 Group group = layoutsAdminDisplayContext.getGroup();
 
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
@@ -42,6 +40,10 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <aui:input name="devices" type="hidden" value="regular" />
 <aui:input name="masterLayoutPlid" type="hidden" />
 <aui:input name="styleBookEntryId" type="hidden" />
+
+<%
+LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
+%>
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
 	<clay:sheet-section>

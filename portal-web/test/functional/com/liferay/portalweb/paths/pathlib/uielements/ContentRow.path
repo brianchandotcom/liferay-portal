@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ENTRY_CHECKBOX_DISABLED</td>
+	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//input[@title='Select' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ENTRY_CHOOSE</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//span[contains(.,'Choose')]</td>
 	<td></td>

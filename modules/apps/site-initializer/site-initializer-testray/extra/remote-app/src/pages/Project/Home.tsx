@@ -16,10 +16,14 @@ import {Link} from 'react-router-dom';
 
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
+import {initialState} from '../../context/HeaderContext';
 import {getTestrayProjects} from '../../graphql/queries';
+import useHeader from '../../hooks/useHeader';
 import {Liferay} from '../../services/liferay/liferay';
 
 const Home = () => {
+	useHeader({useHeading: initialState.heading});
+
 	return (
 		<Container title="Projects">
 			<ListView

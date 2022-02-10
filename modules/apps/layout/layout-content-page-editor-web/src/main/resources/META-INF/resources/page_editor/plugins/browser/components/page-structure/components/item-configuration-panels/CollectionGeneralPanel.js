@@ -74,9 +74,6 @@ const ERROR_MESSAGES = {
 	maximumItemsPerPage: Liferay.Language.get(
 		'you-can-only-display-a-maximum-of-x-items-per-page'
 	),
-	neededItem: Liferay.Language.get(
-		'you-need-at-least-one-item-to-use-this-configuration'
-	),
 	noItems: Liferay.Language.get('this-collection-has-no-items'),
 };
 
@@ -444,9 +441,15 @@ function NoPaginationOptions({
 		});
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
-		if (Number(numberOfItems) !== initialNumberOfItems) {
+		const nextValue = Number(event.target.value) || 1;
+
+		if (!numberOfItems) {
+			setNumberOfItems(nextValue);
+		}
+
+		if (numberOfItems !== initialNumberOfItems) {
 			handleConfigurationChanged({
-				numberOfItems: Number(event.target.value),
+				numberOfItems: nextValue,
 			});
 		}
 	};
@@ -554,9 +557,15 @@ function PaginationOptions({
 	}, [isMaximumValuePerPageError, initialNumberOfItemsPerPage]);
 
 	const handleCollectionNumberOfItemsPerPageBlurred = (event) => {
-		if (Number(numberOfItemsPerPage) !== initialNumberOfItemsPerPage) {
+		const nextValue = Number(event.target.value) || 1;
+
+		if (!numberOfItemsPerPage) {
+			setNumberOfItemsPerPage(nextValue);
+		}
+
+		if (numberOfItemsPerPage !== initialNumberOfItemsPerPage) {
 			handleConfigurationChanged({
-				numberOfItemsPerPage: Number(event.target.value),
+				numberOfItemsPerPage: nextValue,
 			});
 		}
 	};

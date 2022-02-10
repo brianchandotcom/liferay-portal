@@ -16,4 +16,6 @@ export default function downloadFromBlob(blob, filename) {
 	document.body.appendChild(a);
 	a.click();
 	a.remove();
+
+	return true;
 }

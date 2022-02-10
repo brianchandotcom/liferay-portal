@@ -179,6 +179,7 @@ function DisplayPageItemContextualSidebar({
 							className="text-secondary"
 							id={`${namespace}_itemInput`}
 							onClick={openChooseItemModal}
+							readOnly
 							type="text"
 							value={selectedItem.title}
 						/>

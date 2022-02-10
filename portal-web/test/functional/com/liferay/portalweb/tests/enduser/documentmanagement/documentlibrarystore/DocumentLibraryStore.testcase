@@ -64,6 +64,52 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
+	@description = "This is a use case for LPS-129271."
+	@priority = "4"
+	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
+		property aws.store.enabled = "true";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
+
+		JSONGroup.addGroup(groupName = "Site A");
+
+		var bucketID = PropsUtil.get("aws.bucket.id");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Site A",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site A",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		LAR.exportSiteCP(siteScopeName = "Site A");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Site B");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site B");
+
+		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
+	}
+
 	@priority = "5"
 	test AWSS3StoreSmoke {
 		property aws.store.enabled = "true";

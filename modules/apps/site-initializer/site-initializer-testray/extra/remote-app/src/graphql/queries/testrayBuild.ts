@@ -14,6 +14,15 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayBuild = {
+	dateCreated: string;
+	description: string;
+	dueStatus: number;
+	gitHash: string;
+	name: string;
+	promoted: boolean;
+};
+
 export const getTestrayBuilds = gql`
 	query getTestrayBuilds(
 		$filter: String
@@ -29,16 +38,33 @@ export const getTestrayBuilds = gql`
 				scopeKey: $scopeKey
 			) {
 				items {
+					dateCreated
 					description
-					name
-					gitHash
 					dueStatus
+					gitHash
+					name
 					promoted
+					testrayBuildId
 				}
 				lastPage
 				page
 				pageSize
 				totalCount
+			}
+		}
+	}
+`;
+
+export const getTestrayBuild = gql`
+	query getTestrayBuild($testrayBuildId: Long!) {
+		c {
+			testrayBuild(testrayBuildId: $testrayBuildId) {
+				dateCreated
+				description
+				dueStatus
+				gitHash
+				name
+				promoted
 			}
 		}
 	}

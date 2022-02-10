@@ -12,6 +12,12 @@
  * details.
  */
 
+export type CType<ObjectKey extends string, Query = any> = {
+	c: {
+		[key in ObjectKey]: Query;
+	};
+};
+
 export * from './testrayBuild';
 export * from './testrayCase';
 export * from './testrayProject';

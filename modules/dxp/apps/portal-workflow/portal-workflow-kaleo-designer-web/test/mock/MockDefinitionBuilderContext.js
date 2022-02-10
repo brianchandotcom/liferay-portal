@@ -15,12 +15,15 @@ import {ReactFlowProvider} from 'react-flow-renderer';
 import {DefinitionBuilderContextProvider} from '../../src/main/resources/META-INF/resources/designer/js/definition-builder/DefinitionBuilderContext';
 
 export default function MockDefinitionBuilderContext({children}) {
+	const [blockingErrors, setBlockingErrors] = useState({});
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [translations, setTranslations] = useState({});
 
 	const contextProps = {
+		blockingErrors,
 		defaultLanguageId: themeDisplay.getLanguageId(),
 		selectedLanguageId,
+		setBlockingErrors,
 		setSelectedLanguageId,
 		setTranslations,
 		translations,

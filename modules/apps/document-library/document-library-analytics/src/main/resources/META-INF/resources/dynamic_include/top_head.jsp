@@ -22,44 +22,76 @@
 	}
 </script>
 
-<aui:script sandbox="<%= true %>">
-	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
+<script>
+	const pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
+
+	function sendAnalyticsEvent(anchor) {
+		const fileEntryId =
+			anchor.dataset.analyticsFileEntryId ||
+			(anchor.parentElement &&
+				anchor.parentElement.dataset.analyticsFileEntryId);
+
+		const getParameterValue = (parameterName) => {
+			let result = null;
+
+			anchor.search
+				.substr(1)
+				.split('&')
+				.forEach((item) => {
+					const tmp = item.split('=');
+
+					if (tmp[0] === parameterName) {
+						result = decodeURIComponent(tmp[1]);
+					}
+				});
+
+			return result;
+		};
+
+		const match = pathnameRegexp.exec(anchor.pathname);
+
+		if (fileEntryId && match) {
+			Analytics.send('documentDownloaded', 'Document', {
+				groupId: match[1],
+				fileEntryId,
+				preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+				title: decodeURIComponent(match[3].replace(/\+/gi, ' ')),
+				version: getParameterValue('version'),
+			});
+		}
+	}
 
 	function handleDownloadClick(event) {
-		if (event.target.nodeName.toLowerCase() === 'a' && window.Analytics) {
-			var anchor = event.target;
-			var match = pathnameRegexp.exec(anchor.pathname);
+		if (window.Analytics) {
+			if (
+				event.target.dataset.action === 'download' ||
+				event.target.querySelector('.lexicon-icon-download') ||
+				event.target.classList.contains('lexicon-icon-download') ||
+				(event.target.parentNode &&
+					event.target.parentNode.classList.contains(
+						'lexicon-icon-download'
+					))
+			) {
+				const selectedFiles = document.querySelectorAll(
+					'.portlet-document-library .entry-selector:checked'
+				);
 
-			var fileEntryId =
-				anchor.dataset.analyticsFileEntryId ||
-				(anchor.parentElement &&
-					anchor.parentElement.dataset.analyticsFileEntryId);
+				selectedFiles.forEach(({value}) => {
+					const selectedFile = document.querySelector(
+						'[data-analytics-file-entry-id="' + value + '"]'
+					);
 
-			if (fileEntryId && match) {
-				var getParameterValue = function (parameterName) {
-					var result = null;
-
-					anchor.search
-						.substr(1)
-						.split('&')
-						.forEach((item) => {
-							var tmp = item.split('=');
-
-							if (tmp[0] === parameterName) {
-								result = decodeURIComponent(tmp[1]);
-							}
-						});
-
-					return result;
-				};
-
-				Analytics.send('documentDownloaded', 'Document', {
-					groupId: match[1],
-					fileEntryId: fileEntryId,
-					preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-					title: decodeURIComponent(match[3].replace(/\+/gi, ' ')),
-					version: getParameterValue('version'),
+					sendAnalyticsEvent(selectedFile);
 				});
+			}
+			else if (event.target.nodeName.toLowerCase() === 'a') {
+				sendAnalyticsEvent(event.target);
+			}
+			else if (
+				event.target.parentNode &&
+				event.target.parentNode.nodeName.toLowerCase() === 'a'
+			) {
+				sendAnalyticsEvent(event.target.parentNode);
 			}
 		}
 	}
@@ -71,4 +103,4 @@
 	Liferay.once('portletReady', () => {
 		document.body.addEventListener('click', handleDownloadClick);
 	});
-</aui:script>
+</script>

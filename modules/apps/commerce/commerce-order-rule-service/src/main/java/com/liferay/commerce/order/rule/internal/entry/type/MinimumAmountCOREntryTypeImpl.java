@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -73,16 +74,29 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 			GetterUtil.getDouble(
 				typeSettingsUnicodeProperties.getProperty(
 					COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
-		BigDecimal orderTotal = commerceOrder.getTotal();
+
+		String applyTo = typeSettingsUnicodeProperties.getProperty(
+			COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO);
+
+		BigDecimal applyToAmount = commerceOrder.getTotal();
+
+		if (Validator.isNotNull(applyTo) &&
+			applyTo.equals(
+				COREntryConstants.
+					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL)) {
+
+			applyToAmount = commerceOrder.getSubtotal();
+		}
 
 		if (!Objects.equals(
 				commerceCurrency.getCode(), orderCommerceCurrency.getCode())) {
 
 			minimumAmount = minimumAmount.multiply(commerceCurrency.getRate());
-			orderTotal = orderTotal.multiply(orderCommerceCurrency.getRate());
+			applyToAmount = applyToAmount.multiply(
+				orderCommerceCurrency.getRate());
 		}
 
-		if (minimumAmount.compareTo(orderTotal) > 0) {
+		if (minimumAmount.compareTo(applyToAmount) > 0) {
 			return false;
 		}
 
@@ -123,12 +137,25 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
+		String applyTo = typeSettingsUnicodeProperties.getProperty(
+			COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO);
+
+		BigDecimal applyToAmount = commerceOrder.getTotal();
+
+		if (Validator.isNotNull(applyTo) &&
+			applyTo.equals(
+				COREntryConstants.
+					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL)) {
+
+			applyToAmount = commerceOrder.getSubtotal();
+		}
+
 		String[] arguments = {
 			_commercePriceFormatter.format(
 				orderCommerceCurrency, orderCurrencyAmount, locale),
 			_commercePriceFormatter.format(
 				orderCommerceCurrency,
-				orderCurrencyAmount.subtract(commerceOrder.getTotal()), locale)
+				orderCurrencyAmount.subtract(applyToAmount), locale)
 		};
 
 		return LanguageUtil.format(

@@ -729,6 +729,52 @@ definition {
 		Redirect.viewDefault();
 	}
 
+	@description = "This ensures that there's no new 404 tracking is performed when it is re-disabled at system settings."
+	@priority = "4"
+	test CanDisable404InSystemSettings {
+		property test.name.skip.portal.instance = "Redirect#CanDisable404InSystemSettings";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openToConfigInSystemSettings();
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLs(
+			ignoreURL = "${portalURL}/web/test-site-name/my-url-that-does-not-exist",
+			requestNumber = "1");
+
+		Redirect.openToConfigInSystemSettings();
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLsTab(disabled404Tracking = "true");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
+
+		Redirect.openToConfigInSystemSettings();
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLs(
+			ignoreURL = "${portalURL}/web/test-site-name/my-url-that-does-not-exist",
+			requestNumber = "1");
+	}
+
 	@description = "This ensures that an unexpired redirect can be edited."
 	@priority = "5"
 	@refactordone
@@ -872,6 +918,30 @@ definition {
 		AssertElementNotPresent(
 			key_destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+	}
+
+	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled."
+	@priority = "5"
+	test CannotView404ByDefault {
+		property test.name.skip.portal.instance = "Redirect#CannotView404ByDefault";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLsTab(disabled404Tracking = "true");
+
+		Redirect.openToConfigInSystemSettings();
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		PortletEntry.save();
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLsDefault();
 	}
 
 	@description = "This ensures that the 404 URLs can be ordered by requests."

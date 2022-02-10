@@ -204,7 +204,7 @@ const PaymentMethod = () => {
 
 						{checkedMethod.options.length ? (
 							<>
-								<div className="c-px-3 d-flex row">
+								<div className="c-px-3 d-sm-flex">
 									{checkedMethod.options.map(
 										(option, index) => (
 											<div
@@ -263,7 +263,7 @@ const PaymentMethod = () => {
 										</span>
 									</p>
 								</div>
-								<div className="c-mb-2 c-mt-7 d-flex justify-content-center justify-content-lg-end payment-button">
+								<div className="c-mb-2 c-mt-7 d-flex justify-content-center justify-content-sm-end payment-button">
 									<ClayButton
 										className="btn-solid c-px-5 display-4 text-link-md text-uppercase"
 										disabled={!agree}
@@ -276,7 +276,7 @@ const PaymentMethod = () => {
 									</ClayButton>
 								</div>
 								{checkedMethod.value === 'paypal' && (
-									<p className="d-flex justify-content-center justify-content-lg-end option-message text-center">
+									<p className="d-flex justify-content-center justify-content-sm-end option-message text-center">
 										You will be redirected to PayPal to
 										complete payment
 									</p>

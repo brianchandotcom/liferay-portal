@@ -22,6 +22,7 @@ const Panel = ({
 	Middle = () => null,
 	Right = () => null,
 	title = '',
+	titleNumber = '',
 	hasError = false,
 }) => {
 	const [{panel}] = useContext(SelectedQuoteContext);
@@ -31,9 +32,17 @@ const Panel = ({
 
 	return (
 		<div className="p-0 panel-container px-md-6 py-5 w-100">
-			<div className="d-flex flex-row flex-wrap justify-content-between panel-header px-0 px-lg-3">
-				<div className="font-weight-bolder h4 mb-0 text-neutral-9">
-					{title}
+			<div className="d-flex flex-wrap justify-content-between panel-header px-0">
+				<div className="d-flex font-weight-bolder h4 mb-0 order-first text-neutral-9">
+					<div className="mr-1">{titleNumber}.</div>
+
+					<span
+						className={classNames('', {
+							'break-title': id === 'uploadDocuments',
+						})}
+					>
+						{title}
+					</span>
 				</div>
 
 				<Middle checked={checked} expanded={expanded} />
@@ -43,7 +52,8 @@ const Panel = ({
 
 			<div
 				className={classNames('panel-content', {
-					show,
+					'd-block': show,
+					'd-none': !show,
 				})}
 			>
 				{show && children}

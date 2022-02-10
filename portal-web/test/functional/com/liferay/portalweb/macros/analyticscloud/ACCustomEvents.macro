@@ -73,10 +73,18 @@ definition {
 		}
 	}
 
+	@summary = "Copy the sample JS from an already created custom event and modify the name of the attributes and their values"
 	macro copySampleJavascript {
-		if (isSet(disableAttributesList)) {
-			ACCustomEvents.disableAttributes(disableAttributesList = "${disableAttributesList}");
+		if (!(isSet(disableAttributesList))) {
+
+			// If the list is not set, you must always disable global attributes
+
+			var disableAttributesList = "canonicalUrl,pageTitle,referrer,url";
 		}
+
+		// Disable attributes that will not be included in the JS by the checkbox before copying
+
+		ACCustomEvents.disableAttributes(disableAttributesList = "${disableAttributesList}");
 
 		Copy(locator1 = "//code");
 
@@ -86,15 +94,23 @@ definition {
 
 		static var sampleJavascript = selenium.getText("TextArea#DESCRIPTION");
 
+		// Change single quotes to double quotes, remove spaces to be able to create WC with API
+
 		for (var attribute : list "${attributesList}") {
 			var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'${attribute}'", "${attribute}");
 		}
 
 		var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'", "\"");
 		var sampleJavascript = StringUtil.replace("${sampleJavascript}", " ", "");
+
+		// Change the custom event name to the new name
+
 		var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldCustomEventName}", "${newCustomEventName}");
 
 		if (isSet(oldAttributeList)) {
+
+			// If the list is set, change the name of the attributes present in the sample JS to put new attributes
+
 			var list1 = ListUtil.newListFromString("${oldAttributeList}");
 			var list2 = ListUtil.newListFromString("${newAttributeList}");
 			var size = ListUtil.size("${list1}");
@@ -107,6 +123,8 @@ definition {
 				var i = ${i} + 1;
 				var i = StringUtil.valueOf("${i}");
 			}
+
+			// If the list is set, change the value of the attributes present in the sample JS to put new values in the attributes
 
 			var list3 = ListUtil.newListFromString("${oldValueList}");
 			var list4 = ListUtil.newListFromString("${newValueList}");

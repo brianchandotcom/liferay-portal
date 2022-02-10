@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -172,11 +174,27 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 						resultSet.getLong("companyId"),
 						resultSet.getLong("userId")));
 
-				_segmentsEntryLocalService.addSegmentsEntry(
-					"ct_" + userSegmentId, nameMap, descriptionMap, true,
-					_getCriteria(userSegmentId),
-					SegmentsEntryConstants.SOURCE_DEFAULT, User.class.getName(),
-					serviceContext);
+				Locale oldLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
+				String defaultLanguageId =
+					LocalizationUtil.getDefaultLanguageId(
+						resultSet.getString("name"));
+
+				Locale defaultLocale = LocaleUtil.fromLanguageId(
+					defaultLanguageId);
+
+				LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+
+				try {
+					_segmentsEntryLocalService.addSegmentsEntry(
+						"ct_" + userSegmentId, nameMap, descriptionMap, true,
+						_getCriteria(userSegmentId),
+						SegmentsEntryConstants.SOURCE_DEFAULT,
+						User.class.getName(), serviceContext);
+				}
+				finally {
+					LocaleThreadLocal.setSiteDefaultLocale(oldLocale);
+				}
 			}
 		}
 	}

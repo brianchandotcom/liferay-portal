@@ -150,4 +150,104 @@ definition {
 			ACEventAnalysis.viewAnalysisInformation(informationValueList = "wetsuit,1");
 		}
 	}
+
+    @description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10559 | Test Summary: Edit an analysis report"
+	@priority = "5"
+	test CanEditAnalysisReport {
+		var attributeName1 = "price";
+        var attributeName2 = "like";
+        var filterName = "birthdate";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName1}");
+		}
+
+        task ("Name the report") {
+            ACUtils.fileName(fileName = "Save Analysis");
+        }
+
+		task ("Check the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,1");
+		}
+
+        task ("Save the newly created analysis") {
+			ACUtils.saveButton();
+		}
+
+        task ("Click on newly created analysis") {
+            ACNavigation.openItem(itemName = "Save Analysis");
+        }
+
+        task ("Name the report") {
+            ACUtils.fileName(fileName = "New Save Analysis");
+        }
+
+        task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName2}");
+		}
+
+        task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "25",
+				month = "November",
+				optionValue = "is",
+				year = "2021");
+		}
+
+        task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,true,1");
+		}
+
+        task ("Save the newly created analysis") {
+			ACUtils.saveButton();
+		}
+
+        task ("Click on newly created analysis") {
+            ACNavigation.openItem(itemName = "New Save Analysis");
+        }
+
+        task ("Check that the analysis dashboard contains the event,attribute and filter") {
+			ACEventAnalysis.viewAnalysisDashboard(
+				attributeName = "${attributeName1}",
+				eventName = "${customEventName}",
+				filterName = "${filterName}");
+
+            ACEventAnalysis.viewAnalysisDashboard(
+				attributeName = "${attributeName2}");
+		}
+
+        task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,true,1");
+		}
+	}
+
 }

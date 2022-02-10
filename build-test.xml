@@ -9677,6 +9677,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<antcall target="prepare-selenium-analytics-cloud-properties" />
 		<antcall target="prepare-selenium-app-server-properties" />
+		<antcall target="prepare-selenium-aws-translation-properties" />
+		<antcall target="prepare-selenium-azure-translation-properties" />
 		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-click-to-chat-properties" />
 		<antcall target="prepare-selenium-database-properties" />
@@ -9943,6 +9945,46 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					app.server.type=${app.server.type}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-aws-translation-properties">
+		<if>
+			<isset property="aws.translation.access.key.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					aws.translation.access.key.id=${aws.translation.access.key.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="aws.translation.secret.access.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					aws.translation.secret.access.key=${aws.translation.secret.access.key}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-azure-translation-properties">
+		<if>
+			<isset property="azure.translation.subscription.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					azure.translation.subscription.key=${azure.translation.subscription.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="azure.translation.resource.location" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					azure.translation.resource.location=${azure.translation.resource.location}
 				</echo>
 			</then>
 		</if>

@@ -49,6 +49,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortlet
 page import="com.liferay.layout.admin.web.internal.display.context.SelectCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutPageTemplateEntryDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.SelectStyleBookEntryDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.CollectionProvidersVerticalCard" %><%@
@@ -148,8 +149,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.segments.exception.RequiredSegmentsExperienceException" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
-page import="com.liferay.style.book.model.StyleBookEntry" %><%@
-page import="com.liferay.style.book.util.DefaultStyleBookEntryUtil" %>
+page import="com.liferay.style.book.model.StyleBookEntry" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@

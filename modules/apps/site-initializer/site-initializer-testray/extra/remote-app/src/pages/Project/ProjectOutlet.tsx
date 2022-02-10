@@ -16,79 +16,70 @@ import {useQuery} from '@apollo/client';
 import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {getTestrayProject} from '../../graphql/queries/testrayProject';
+import {
+	TestrayProjectQuery,
+	getTestrayProject,
+} from '../../graphql/queries/testrayProject';
 import useHeader from '../../hooks/useHeader';
 
-type TestrayProject = {
-	c: {
-		testrayProject: {
-			description: string;
-			name: string;
-		};
-	};
-};
-
 const ProjectOutlet = () => {
-	const {projectId} = useParams();
-
+	const {projectId, ...otherParams} = useParams();
+	const {pathname} = useLocation();
 	const {setHeading, setTabs} = useHeader();
 
-	const {data} = useQuery<TestrayProject>(getTestrayProject, {
+	const {data} = useQuery<TestrayProjectQuery>(getTestrayProject, {
 		variables: {testrayProjectId: projectId},
 	});
 
+	const hasOtherParams = !!Object.values(otherParams).length;
 	const testrayProject = data?.c.testrayProject;
-
-	const {pathname} = useLocation();
-
-	const currentPath = pathname
-		.split('/')
-		.filter(Boolean)
-		.slice(0, -1)
-		.join('/');
 
 	const getPath = useCallback(
 		(path: string) => {
-			const relativePath = `/${currentPath}/${path}`;
+			const relativePath = `/project/${projectId}/${path}`;
 
 			return {
 				active: relativePath === pathname,
 				path: relativePath,
 			};
 		},
-		[currentPath, pathname]
+		[projectId, pathname]
 	);
 
 	useEffect(() => {
-		if (testrayProject) {
+		if (testrayProject && !hasOtherParams) {
 			setHeading([{category: 'PROJECT', title: testrayProject.name}]);
 		}
-	}, [setHeading, testrayProject]);
+	}, [setHeading, testrayProject, hasOtherParams]);
 
 	useEffect(() => {
-		setTabs([
-			{
-				...getPath('overview'),
-				title: 'Overview',
-			},
-			{
-				...getPath('routines'),
-				title: 'Routines',
-			},
-			{
-				...getPath('suites'),
-				title: 'Suites',
-			},
-			{
-				...getPath('cases'),
-				title: 'Cases',
-			},
-			{
-				...getPath('requirements'),
-				title: 'Requirements',
-			},
-		]);
-	}, [getPath, setTabs]);
+		if (!hasOtherParams) {
+			setTimeout(() => {
+				setTabs([
+					{
+						...getPath('overview'),
+						title: 'Overview',
+					},
+					{
+						...getPath('routines'),
+						title: 'Routines',
+					},
+					{
+						...getPath('suites'),
+						title: 'Suites',
+					},
+					{
+						...getPath('cases'),
+						title: 'Cases',
+					},
+					{
+						...getPath('requirements'),
+						title: 'Requirements',
+					},
+				]);
+			}, 0);
+		}
+	}, [getPath, setTabs, hasOtherParams]);
 
 	if (testrayProject) {
 		return <Outlet context={{testrayProject}} />;

@@ -197,7 +197,7 @@ definition {
 		if ("${navTab}" == "Fragments") {
 			AssertElementPresent(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
+				key_elementHeader = "//div[@aria-label='${fragmentName}']",
 				key_position = "${position}",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -205,7 +205,7 @@ definition {
 		if ("${navTab}" == "Widgets") {
 			AssertElementPresent(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
+				key_elementHeader = "//div[@aria-label='${portletName}']",
 				key_position = "${position}",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -289,7 +289,7 @@ definition {
 
 			if ("${navTab}" == "Fragments") {
 				AssertElementPresent(
-					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
+					key_elementHeader = "//div[@aria-label='${fragmentName}']",
 					key_elementType = "Container",
 					key_position = "${position}",
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -297,7 +297,7 @@ definition {
 
 			if ("${navTab}" == "Widgets") {
 				AssertElementPresent(
-					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
+					key_elementHeader = "//div[@aria-label='${portletName}']",
 					key_elementType = "Container",
 					key_position = "${position}",
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -1438,7 +1438,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -1717,7 +1717,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -3235,7 +3235,7 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		AssertElementPresent(
-			key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${elementName}')]",
+			key_elementHeader = "//div[@aria-label='${elementName}']",
 			key_position = "1",
 			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 	}

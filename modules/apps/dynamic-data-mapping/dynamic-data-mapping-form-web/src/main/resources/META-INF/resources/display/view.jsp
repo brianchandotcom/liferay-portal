@@ -21,6 +21,10 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.isLimitToOneSubmissionPerUser(ddmFormDisplayContext.getFormInstance());
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <c:choose>
 	<c:when test="<%= formInstanceId == 0 %>">
 		<div class="alert alert-info">

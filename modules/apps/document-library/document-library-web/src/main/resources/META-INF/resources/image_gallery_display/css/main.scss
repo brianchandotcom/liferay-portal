@@ -27,6 +27,7 @@
 	}
 
 	.image-icon {
+		border-radius: 5px;
 		display: block;
 		float: left;
 		height: 170px;
@@ -76,6 +77,7 @@
 		img {
 			background: #eaeaea;
 			border: 1px solid #ccc;
+			border-radius: 4px;
 			margin: 0;
 			padding: 5px;
 		}

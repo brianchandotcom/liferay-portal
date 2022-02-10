@@ -89,6 +89,12 @@ html#{$cadmin-selector} {
 
 .portlet-boundary.yui3-dd-dragging {
 	opacity: 0.6;
+	transform: scale(0.8);
+	transition: transform 0.3s ease;
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
 
 	.portlet {
 		border: 2px dashed #ccc;

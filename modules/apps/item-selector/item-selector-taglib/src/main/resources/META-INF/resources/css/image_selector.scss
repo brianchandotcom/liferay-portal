@@ -44,6 +44,7 @@
 
 		.progressbar {
 			background: #b0b4bb;
+			border-radius: 0;
 			height: 6px;
 			margin: 5px auto;
 			opacity: 0.7;
@@ -183,6 +184,7 @@
 
 	.selection-status {
 		background: #fff;
+		border-radius: 30px;
 		left: 50%;
 		opacity: 0;
 		padding: 11px 15px;
@@ -190,6 +192,8 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		z-index: -1;
+
+		@include transition(opacity 0.2s ease-in-out);
 	}
 
 	.yui3-uploader-content {

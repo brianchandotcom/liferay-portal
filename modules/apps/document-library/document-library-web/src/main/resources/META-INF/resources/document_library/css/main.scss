@@ -809,6 +809,22 @@ $productMenuWidth: 320px;
 			float: right;
 		}
 	}
+
+	.common-file-metadata-container.selected {
+		border-radius: 5px;
+	}
+
+	.entry-thumbnail .label {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.document-container {
+		.upload-drop-active & {
+			box-shadow: inset 0 0 5px #b8c1d1;
+		}
+	}
 }
 
 .active-area-proxy {

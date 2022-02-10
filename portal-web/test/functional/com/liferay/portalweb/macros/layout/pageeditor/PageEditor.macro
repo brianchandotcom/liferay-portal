@@ -976,7 +976,7 @@ definition {
 			var index = "1";
 		}
 
-		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", key_index = "${index}", locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "Fragment#FRAGMENT_HEADER")) {
 			Click(
 				index = "${index}",
 				key_fragmentName = "${fragmentName}",
@@ -3953,25 +3953,15 @@ definition {
 	}
 
 	macro viewFragmentHeaderNotVisible {
-		if (!(isSet(position))) {
-			var position = "1";
-		}
-
 		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",
-			key_index = "${position}",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
 	macro viewFragmentHeaderVisible {
-		if (!(isSet(position))) {
-			var position = "1";
-		}
-
 		AssertVisible(
 			key_fragmentName = "${fragmentName}",
-			key_index = "${position}",
-			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
 	macro viewFragmentMessageInfo {

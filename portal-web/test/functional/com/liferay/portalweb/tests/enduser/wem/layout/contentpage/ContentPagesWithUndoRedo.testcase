@@ -241,8 +241,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_fragmentName = "Heading",
-				key_index = "2",
-				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+				locator1 = "Fragment#FRAGMENT_HEADER");
 
 			PageEditor.viewFragment(fragmentName = "Tabs");
 		}

@@ -12,6 +12,7 @@
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
+import SidebarPanel from '../../../SidebarPanel';
 import BaseRole from '../../shared-components/BaseRole';
 
 const Role = () => {
@@ -36,15 +37,18 @@ const Role = () => {
 	};
 
 	return (
-		<BaseRole
-			defaultFieldValue={{
-				id: selectedItem.data.assignments?.sectionsData?.id || '',
-				name: selectedItem.data.assignments?.sectionsData?.name || '',
-			}}
-			inputLabel={Liferay.Language.get('role-id')}
-			selectLabel={Liferay.Language.get('role')}
-			updateSelectedItem={updateSelectedItem}
-		></BaseRole>
+		<SidebarPanel panelTitle={Liferay.Language.get('select-role')}>
+			<BaseRole
+				defaultFieldValue={{
+					id: selectedItem.data.assignments?.sectionsData?.id || '',
+					name:
+						selectedItem.data.assignments?.sectionsData?.name || '',
+				}}
+				inputLabel={Liferay.Language.get('role-id')}
+				selectLabel={Liferay.Language.get('role')}
+				updateSelectedItem={updateSelectedItem}
+			/>
+		</SidebarPanel>
 	);
 };
 

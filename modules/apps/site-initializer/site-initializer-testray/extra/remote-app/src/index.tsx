@@ -15,23 +15,22 @@
 import {ApolloProvider} from '@apollo/client';
 import ReactDOM from 'react-dom';
 
+import TestrayRouter from './TestrayRouter';
 import ClayIconProvider from './context/ClayIconProvider';
 import apolloClient from './graphql/apolloClient';
-import TestrayRoute from './route';
 
 import './styles/index.scss';
 
-const App = () => (
-	<ApolloProvider client={apolloClient}>
-		<ClayIconProvider>
-			<TestrayRoute />
-		</ClayIconProvider>
-	</ApolloProvider>
-);
-
 class WebComponent extends HTMLElement {
 	connectedCallback() {
-		ReactDOM.render(<App />, this);
+		ReactDOM.render(
+			<ApolloProvider client={apolloClient}>
+				<ClayIconProvider>
+					<TestrayRouter />
+				</ClayIconProvider>
+			</ApolloProvider>,
+			this
+		);
 	}
 }
 

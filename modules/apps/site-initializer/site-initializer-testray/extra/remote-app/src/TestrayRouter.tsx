@@ -16,6 +16,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import Manage from './pages/Manage';
+import OutletBridge from './pages/OutletBridge';
 import Cases from './pages/Project/Cases';
 import Case from './pages/Project/Cases/Case';
 import Home from './pages/Project/Home';
@@ -23,17 +24,21 @@ import Overview from './pages/Project/Overview';
 import ProjectOutlet from './pages/Project/ProjectOutlet';
 import Requirements from './pages/Project/Requirements';
 import Requirement from './pages/Project/Requirements/Requirement';
-import Builds from './pages/Project/Routines/Builds';
+import Routine from './pages/Project/Routines';
 import Build from './pages/Project/Routines/Builds/Build';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
 import Results from './pages/Project/Routines/Builds/Inner/Results';
 import Runs from './pages/Project/Routines/Builds/Inner/Run';
 import Teams from './pages/Project/Routines/Builds/Inner/Teams';
+import RoutineArchived from './pages/Project/Routines/RoutineArchived';
+import RoutineOutlet from './pages/Project/Routines/RoutineOutlet';
 import Routines from './pages/Project/Routines/Routines';
 import Suites from './pages/Project/Suites';
 import Testflow from './pages/Testflow';
-import {TestFlowTasks} from './pages/Testflow/TestflowTasks';
+import TestflowArchived from './pages/Testflow/TestflowArchived';
+import TestflowOutlet from './pages/Testflow/TestflowOutlet';
+import TestFlowTasks from './pages/Testflow/TestflowTasks';
 
 const TestrayRoute = () => (
 	<HashRouter>
@@ -63,11 +68,16 @@ const TestrayRoute = () => (
 						/>
 					</Route>
 
-					<Route path="routines">
+					<Route element={<OutletBridge />} path="routines">
 						<Route element={<Routines />} index />
 
-						<Route path="build">
-							<Route element={<Builds />} index />
+						<Route element={<RoutineOutlet />} path=":routineId">
+							<Route element={<Routine />} index />
+
+							<Route
+								element={<RoutineArchived />}
+								path="archived"
+							/>
 
 							<Route element={<Build />} path=":testrayBuildId">
 								<Route element={<Runs />} path="run" />
@@ -92,8 +102,10 @@ const TestrayRoute = () => (
 
 				<Route element={<Manage />} path="manage" />
 
-				<Route path="testflow">
+				<Route element={<TestflowOutlet />} path="testflow">
 					<Route element={<Testflow />} index />
+
+					<Route element={<TestflowArchived />} path="archived" />
 
 					<Route element={<TestFlowTasks />} path=":testflowId" />
 				</Route>

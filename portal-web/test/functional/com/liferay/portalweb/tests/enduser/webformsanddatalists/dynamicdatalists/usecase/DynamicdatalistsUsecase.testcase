@@ -3121,8 +3121,8 @@ definition {
 	@description = "This is a use case for LPS-63290 and LPS-72216."
 	@priority = "4"
 	test ViewRepeatableNestedFields {
-		property test.assert.javascript.errors = "true";
-		property test.assert.warning.exceptions = "true";
+		property forms.functional = "test";
+		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewRepeatableNestedFields";
 
 		Navigator.openURL();
 

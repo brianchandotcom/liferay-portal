@@ -271,8 +271,6 @@ definition {
 	@description = "This is a test for LPS-98076. Verify that a user can see the Help Text on the Upload"
 	@priority = "4"
 	test VerifyRichFieldHelpTextOnUpload {
-		property portal.upstream = "quarantine";
-
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text");

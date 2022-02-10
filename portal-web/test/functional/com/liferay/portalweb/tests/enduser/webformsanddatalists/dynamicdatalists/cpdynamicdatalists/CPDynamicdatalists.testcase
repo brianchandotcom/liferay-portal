@@ -97,6 +97,8 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AddFormTemplate {
+		property test.name.skip.portal.instance = "CPDynamicdatalists#AddFormTemplate";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

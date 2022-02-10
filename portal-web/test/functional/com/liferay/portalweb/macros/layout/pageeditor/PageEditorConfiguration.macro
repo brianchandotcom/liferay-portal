@@ -26,8 +26,6 @@ definition {
 	}
 
 	macro changeConfigSelection {
-		var key_fragmentName = "${fragmentName}";
-
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		AssertVisible(
@@ -36,11 +34,10 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "General");
 
-		while (!(IsTextEqual(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT", value1 = "${optionValue}"))) {
-			Select(
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
-				value1 = "${optionValue}");
-		}
+		Select(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${optionValue}");
 
 		PageEditor.waitForAutoSave();
 	}

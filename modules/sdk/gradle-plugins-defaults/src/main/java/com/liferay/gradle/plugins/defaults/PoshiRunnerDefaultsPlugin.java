@@ -14,9 +14,6 @@
 
 package com.liferay.gradle.plugins.defaults;
 
-import com.github.erdi.gradle.webdriver.WebDriverBinariesPluginExtension;
-
-import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
@@ -36,30 +33,6 @@ public class PoshiRunnerDefaultsPlugin implements Plugin<Project> {
 		GradlePluginsDefaultsUtil.configureRepositories(project, null);
 
 		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
-
-		_configurePoshiRunner(project);
 	}
-
-	private void _configurePoshiRunner(Project project) {
-		WebDriverBinariesPluginExtension webDriverBinariesPluginExtension =
-			GradleUtil.getExtension(
-				project, WebDriverBinariesPluginExtension.class);
-
-		webDriverBinariesPluginExtension.setChromedriver("86.0.4240.22");
-
-		if (CIUtil.isRunningInCIEnvironment()) {
-			ResourceHandler resourceHandler = project.getResources();
-
-			TextResourceFactory textResourceFactory = resourceHandler.getText();
-
-			webDriverBinariesPluginExtension.setDriverUrlsConfiguration(
-				textResourceFactory.fromUri(_WEB_DRIVER_URI));
-		}
-	}
-
-	private static final String _WEB_DRIVER_URI =
-		"http://mirrors.lax.liferay.com/raw.githubusercontent.com" +
-			"/webdriverextensions/webdriverextensions-maven-plugin-repository" +
-				"/master/repository-3.0.json";
 
 }

@@ -579,9 +579,6 @@ public interface PropsKeys {
 	public static final String CONTROL_PANEL_NAVIGATION_MAX_ORGANIZATIONS =
 		"control.panel.navigation.max.organizations";
 
-	public static final String CONTROL_PANEL_NAVIGATION_MAX_SITES =
-		"control.panel.navigation.max.sites";
-
 	public static final String CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
 		"cors.disable.authorization.context.check";
 

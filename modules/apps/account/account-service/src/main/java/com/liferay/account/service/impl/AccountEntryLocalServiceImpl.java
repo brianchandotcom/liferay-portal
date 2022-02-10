@@ -982,7 +982,8 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		if (accountEntry.getAccountEntryId() != accountEntryId) {
-			throw new DuplicateAccountEntryExternalReferenceCodeException();
+			throw new DuplicateAccountEntryExternalReferenceCodeException(
+				"The external reference code belongs to another account");
 		}
 	}
 

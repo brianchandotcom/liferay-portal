@@ -12,10 +12,10 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
+import Role from './Role';
 
 const executionTypeOptions = [
 	{
@@ -93,48 +93,19 @@ const NotificationsInfo = ({
 	sectionsLength,
 	setSections,
 }) => {
-	const {setSelectedItem} = useContext(DiagramBuilderContext);
 	const [executionType, setExecutionType] = useState('');
 	const [notificationDescription, setNotificationDescription] = useState('');
 	const [notificationName, setNotificationName] = useState('');
 	const [notificationType, setNotificationType] = useState('');
-	const [recipientType, setRecipientType] = useState('');
+	const [recipientType, setRecipientType] = useState('assetCreator');
 	const [template, setTemplate] = useState('');
 	const [templateLanguage, setTemplateLanguage] = useState('');
-
-	const updateSelectedItem = (values) => {
-		setSelectedItem((previousItem) => ({
-			...previousItem,
-			data: {
-				...previousItem.data,
-				notifications: {
-					description: values.map(({description}) => description),
-					executionType: values.map(
-						({executionType}) => executionType
-					),
-					name: values.map(({name}) => name),
-					notificationType: values.map(
-						({notificationType}) => notificationType
-					),
-					recipientType: values.map(
-						({recipientType}) => recipientType
-					),
-					template: values.map(({template}) => template),
-					templateLanguage: values.map(
-						({templateLanguage}) => templateLanguage
-					),
-				},
-			},
-		}));
-	};
 
 	const deleteSection = () => {
 		setSections((prevSections) => {
 			const newSections = prevSections.filter(
 				(prevSection) => prevSection.identifier !== identifier
 			);
-
-			updateSelectedItem(newSections);
 
 			return newSections;
 		});
@@ -147,10 +118,10 @@ const NotificationsInfo = ({
 				...item,
 			};
 
-			updateSelectedItem(prev);
-
 			return prev;
 		});
+
+		setRecipientType(item.recipientType);
 	};
 
 	return (
@@ -291,6 +262,15 @@ const NotificationsInfo = ({
 					))}
 				</ClaySelect>
 			</ClayForm.Group>
+
+			{recipientType !== 'assetCreator' &&
+				recipientType !== 'taskAssignees' && (
+					<SidebarPanel panelTitle={Liferay.Language.get('type')}>
+						<ClayForm.Group className="recipient-type-form-group">
+							{recipientType === 'role' && <Role />}
+						</ClayForm.Group>
+					</SidebarPanel>
+				)}
 
 			<div className="sheet-subtitle" />
 

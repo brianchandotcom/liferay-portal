@@ -9,7 +9,7 @@
 		"@clayui/icon": "3.40.0",
 		"@clayui/layout": "3.40.0",
 		"@clayui/modal": "3.45.0",
-		"@clayui/multi-select": "3.45.0",
+		"@clayui/multi-select": "3.46.0",
 		"@clayui/sticker": "3.40.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",

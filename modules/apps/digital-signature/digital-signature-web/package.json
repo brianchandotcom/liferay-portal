@@ -6,7 +6,7 @@
 		"@clayui/icon": "3.40.0",
 		"@clayui/label": "3.45.0",
 		"@clayui/layout": "3.40.0",
-		"@clayui/pagination-bar": "3.45.0",
+		"@clayui/pagination-bar": "3.46.0",
 		"@clayui/table": "3.40.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",

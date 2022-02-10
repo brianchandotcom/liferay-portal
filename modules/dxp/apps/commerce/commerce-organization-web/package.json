@@ -7,7 +7,7 @@
 		"@clayui/icon": "3.40.0",
 		"@clayui/management-toolbar": "3.40.0",
 		"@clayui/modal": "3.45.0",
-		"@clayui/multi-select": "3.45.0",
+		"@clayui/multi-select": "3.46.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"classnames": "2.3.1",

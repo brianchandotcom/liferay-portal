@@ -55,6 +55,57 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro addContentPage {
+		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Page");
+
+		ContentPages._selectCard(
+			collectionName = "${collectionName}",
+			pageTemplateName = "${pageTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
+	macro addPage {
+		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Page");
+
+		PagesFinder._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
+			collectionName = "${collectionName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
+			inheritChanges = "${inheritChanges}",
+			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
+	}
+
 	macro addPrivatePage {
 		PagesFinder.selectPageType(optionValue = "Private Pages");
 

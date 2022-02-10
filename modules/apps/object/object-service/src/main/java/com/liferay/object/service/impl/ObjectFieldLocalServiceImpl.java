@@ -475,9 +475,10 @@ public class ObjectFieldLocalServiceImpl
 	private ObjectViewPersistence _objectViewPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
-		"companyid", "createdate", "groupid", "id", "lastpublishdate",
-		"modifieddate", "status", "statusbyuserid", "statusbyusername",
-		"statusdate", "userid", "username");
+		"actions", "companyid", "createdate", "creator", "datecreated",
+		"datemodified", "externalreferencecode", "groupid", "id",
+		"lastpublishdate", "modifieddate", "status", "statusbyuserid",
+		"statusbyusername", "statusdate", "userid", "username");
 
 	@Reference
 	private UserLocalService _userLocalService;

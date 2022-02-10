@@ -673,6 +673,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144835. Verify the search Bar Widget can be embedded in a Custom Fragment"
+	@priority = "3"
+	test VerifySearchBarEmbeddedInACustomFragment {
+		task ("Add a Fragment Collection and go to Team Extranet Fragments Admin") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Team Extranet",
+				name = "Collection Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+		}
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+		var fragmentHtml = '''<lfr-widget-search-bar>''';
+
+		var htmlSnippet = '''<lfr-''';
+
+		FragmentsEditor.autocompleteFragmentHTML(
+			autocompleteField = "lfr-widget-search-bar",
+			fragmentHtml = "${fragmentHtml}",
+			htmlSnippet = "${htmlSnippet}");
+
+		PortletEntry.publish();
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Team Extranet",
+			title = "WC WebContent Title");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+		ContentPages.addPrivatePage(pageName = "Test Page");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name");
+
+		PageEditor.openPreviewMode();
+
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+	}
+
 	@description = "This is a test for LPS-142641. View the Team Extranet Categories"
 	@priority = "3"
 	test ViewTeamExtranetCategories {
@@ -857,47 +901,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-144835. Verify the search Bar Widget can be embedded in a Custom Fragment"
-	@priority = "3"
-	test VerifySearchBarEmbeddedInACustomFragment {
-		task ("Add a Fragment Collection and go to Team Extranet Fragments Admin") {
-			JSONFragment.addFragmentCollection(
-			groupName = "Test Site Team Extranet",
-			name = "Collection Name");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
-		}
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			var fragmentHtml = '''<lfr-widget-search-bar>''';
-
-			var htmlSnippet = '''<lfr-''';
-
-			FragmentsEditor.autocompleteFragmentHTML(
-				autocompleteField = "lfr-widget-search-bar",
-				fragmentHtml = "${fragmentHtml}",
-				htmlSnippet = "${htmlSnippet}");
-
-			PortletEntry.publish();
-
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Team Extranet",
-				title = "WC WebContent Title");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			ContentPages.addPrivatePage(pageName = "Test Page");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Fragment Name");
-
-			PageEditor.openPreviewMode();
-
-			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
-	}
 }

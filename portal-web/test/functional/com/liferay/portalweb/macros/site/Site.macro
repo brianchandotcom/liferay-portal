@@ -82,6 +82,7 @@ definition {
 				Navigator.gotoBack();
 			}
 		}
+
 		while (IsElementPresent(locator1 = "Button#ADD_DISABLED")) {
 			WaitForPageLoad();
 		}

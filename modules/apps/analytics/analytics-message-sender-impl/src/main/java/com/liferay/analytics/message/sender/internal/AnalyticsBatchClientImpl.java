@@ -190,6 +190,9 @@ public class AnalyticsBatchClientImpl
 			"OSB-Asah-Faro-Backend-Security-Signature",
 			analyticsConfiguration.
 				liferayAnalyticsFaroBackendSecuritySignature());
+		httpUriRequest.setHeader(
+			"OSB-Asah-Project-ID",
+			analyticsConfiguration.liferayAnalyticsProjectId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

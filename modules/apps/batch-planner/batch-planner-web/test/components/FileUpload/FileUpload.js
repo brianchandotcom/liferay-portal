@@ -85,6 +85,6 @@ describe('FileUpload', () => {
 			fireEvent.change(getByLabelText('file'), {target: {files: [file]}});
 		});
 
-		expect(testInput.value).toBe('tst');
+		expect(testInput.value).toBe('TST');
 	});
 });

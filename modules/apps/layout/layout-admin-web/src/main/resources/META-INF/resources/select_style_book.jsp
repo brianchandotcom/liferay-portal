@@ -68,9 +68,9 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 	var delegateHandler = delegate(
 		document.body,
 		'click',
-		'.select-master-layout-option',
+		'.select-style-book-option',
 		(event) => {
-			var activeCards = document.querySelectorAll('.form-check-card.active');
+			var activeCards = document.querySelectorAll('.card.active');
 
 			if (activeCards.length) {
 				activeCards.forEach((card) => {
@@ -78,7 +78,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 				});
 			}
 
-			var newSelectedCard = event.delegateTarget.closest('.form-check-card');
+			var newSelectedCard = event.delegateTarget;
 
 			if (newSelectedCard) {
 				newSelectedCard.classList.add('active');

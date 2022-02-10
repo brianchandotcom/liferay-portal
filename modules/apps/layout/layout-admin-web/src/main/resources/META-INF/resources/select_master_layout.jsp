@@ -54,7 +54,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 		'click',
 		'.select-master-layout-option',
 		(event) => {
-			var activeCards = document.querySelectorAll('.form-check-card.active');
+			var activeCards = document.querySelectorAll('.card.active');
 
 			if (activeCards.length) {
 				activeCards.forEach((card) => {
@@ -62,7 +62,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 				});
 			}
 
-			var newSelectedCard = event.delegateTarget.closest('.form-check-card');
+			var newSelectedCard = event.delegateTarget;
 
 			if (newSelectedCard) {
 				newSelectedCard.classList.add('active');

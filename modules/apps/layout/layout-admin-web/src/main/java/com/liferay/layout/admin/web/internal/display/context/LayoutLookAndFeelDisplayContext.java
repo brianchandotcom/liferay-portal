@@ -131,7 +131,9 @@ public class LayoutLookAndFeelDisplayContext {
 			return _masterLayoutName;
 		}
 
-		_masterLayoutName = LanguageUtil.get(_httpServletRequest, "blank");
+		String masterLayoutName = LanguageUtil.get(
+			_httpServletRequest, "blank");
+
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
 		if (selLayout.getMasterLayoutPlid() > 0) {
@@ -140,8 +142,10 @@ public class LayoutLookAndFeelDisplayContext {
 					fetchLayoutPageTemplateEntryByPlid(
 						selLayout.getMasterLayoutPlid());
 
-			_masterLayoutName = layoutPageTemplateEntry.getName();
+			masterLayoutName = layoutPageTemplateEntry.getName();
 		}
+
+		_masterLayoutName = masterLayoutName;
 
 		return _masterLayoutName;
 	}
@@ -174,7 +178,7 @@ public class LayoutLookAndFeelDisplayContext {
 			return _hasEditableMasterLayout;
 		}
 
-		_hasEditableMasterLayout = false;
+		boolean hasEditableMasterLayout = false;
 
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -193,8 +197,10 @@ public class LayoutLookAndFeelDisplayContext {
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
-			_hasEditableMasterLayout = true;
+			hasEditableMasterLayout = true;
 		}
+
+		_hasEditableMasterLayout = hasEditableMasterLayout;
 
 		return _hasEditableMasterLayout;
 	}
@@ -204,7 +210,7 @@ public class LayoutLookAndFeelDisplayContext {
 			return _hasMasterLayout;
 		}
 
-		_hasMasterLayout = false;
+		boolean hasMasterLayout = false;
 
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -215,9 +221,11 @@ public class LayoutLookAndFeelDisplayContext {
 						selLayout.getMasterLayoutPlid());
 
 			if (layoutPageTemplateEntry != null) {
-				_hasMasterLayout = true;
+				hasMasterLayout = true;
 			}
 		}
+
+		_hasMasterLayout = hasMasterLayout;
 
 		return _hasMasterLayout;
 	}
@@ -227,7 +235,7 @@ public class LayoutLookAndFeelDisplayContext {
 			return _hasStyleBooks;
 		}
 
-		_hasStyleBooks = false;
+		boolean hasStyleBooks = false;
 
 		Group liveGroup = StagingUtil.getLiveGroup(
 			_layoutsAdminDisplayContext.getGroup());
@@ -237,8 +245,10 @@ public class LayoutLookAndFeelDisplayContext {
 				liveGroup.getGroupId());
 
 		if (styleBookEntriesCount > 0) {
-			_hasStyleBooks = true;
+			hasStyleBooks = true;
 		}
+
+		_hasStyleBooks = hasStyleBooks;
 
 		return _hasStyleBooks;
 	}

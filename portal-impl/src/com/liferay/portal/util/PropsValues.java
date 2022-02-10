@@ -1129,10 +1129,6 @@ public class PropsValues {
 	public static final String INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
-	public static final boolean INDEX_DUMP_COMPRESSION_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INDEX_DUMP_COMPRESSION_ENABLED));
-
 	public static boolean INDEX_ON_STARTUP = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 

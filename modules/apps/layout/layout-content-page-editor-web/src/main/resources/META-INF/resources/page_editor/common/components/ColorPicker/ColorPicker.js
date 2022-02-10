@@ -21,7 +21,7 @@ import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/contexts/ControlsContext';
 import {
@@ -122,13 +122,6 @@ export function ColorPicker({
 			}
 		}
 	);
-
-	useEffect(() => {
-		if (config.tokenReuseEnabled) {
-			setError(null);
-			deleteStyleError(field.name, activeItemId);
-		}
-	}, [value, config.tokenReuseEnabled]);
 
 	useLayoutEffect(() => {
 		if (config.tokenReuseEnabled) {
@@ -303,6 +296,11 @@ export function ColorPicker({
 												`#${color}`
 											);
 											setColor(`#${color}`);
+
+											if (error) {
+												setError(null);
+												deleteStyleError(field.name);
+											}
 										}}
 										showHex={false}
 										showPalette={false}
@@ -468,9 +466,18 @@ export function ColorPicker({
 										onSetActive={
 											setActiveDropdownColorPicker
 										}
-										onValueChange={({label, name, value}) =>
-											onSetValue(value, label, name)
-										}
+										onValueChange={({
+											label,
+											name,
+											value,
+										}) => {
+											onSetValue(value, label, name);
+
+											if (error) {
+												setError(null);
+												deleteStyleError(field.name);
+											}
+										}}
 										showSelector={false}
 										small
 										value={color}

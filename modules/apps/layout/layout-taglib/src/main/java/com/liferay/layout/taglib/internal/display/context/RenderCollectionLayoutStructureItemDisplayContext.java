@@ -77,6 +77,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 	public static final String PAGINATION_TYPE_NUMERIC = "numeric";
 
+	public static final String PAGINATION_TYPE_REGULAR = "regular";
+
 	public static final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	public RenderCollectionLayoutStructureItemDisplayContext(
@@ -694,6 +696,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		if (Objects.equals(
 				_collectionStyledLayoutStructureItem.getPaginationType(),
 				PAGINATION_TYPE_NUMERIC) ||
+			Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				PAGINATION_TYPE_REGULAR) ||
 			Objects.equals(
 				_collectionStyledLayoutStructureItem.getPaginationType(),
 				PAGINATION_TYPE_SIMPLE)) {

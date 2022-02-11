@@ -15,7 +15,6 @@
 package com.liferay.portal.bean;
 
 import com.liferay.petra.process.ClassPathUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -60,7 +59,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		try (SwappableSecurityManager swappableSecurityManager =
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
-					ReflectionUtil.class, securityException)) {
+					securityException)) {
 
 			Class.forName(ConstantsBeanFactoryImpl.class.getName());
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.asm;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
@@ -77,7 +76,7 @@ public class ASMWrapperUtilTest {
 
 		try (SwappableSecurityManager swappableSecurityManager =
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
-					ReflectionUtil.class, securityException)) {
+					securityException)) {
 
 			ASMWrapperUtil.createASMWrapper(
 				TestInterface.class.getClassLoader(), TestInterface.class,

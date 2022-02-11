@@ -27,7 +27,7 @@ import java.util.Objects;
 public class ReflectionUtilTestUtil {
 
 	public static SwappableSecurityManager throwForSuppressAccessChecks(
-			Class<?> callerClass, SecurityException securityException)
+			SecurityException securityException)
 		throws ClassNotFoundException {
 
 		Class.forName(ReflectionUtil.class.getName());
@@ -37,16 +37,10 @@ public class ReflectionUtilTestUtil {
 
 				@Override
 				public void checkPermission(Permission permission) {
-					if (!Objects.equals(
+					if (Objects.equals(
 							permission.getName(), "suppressAccessChecks")) {
 
-						return;
-					}
-
-					for (Class<?> clazz : getClassContext()) {
-						if (clazz == callerClass) {
-							throw securityException;
-						}
+						throw securityException;
 					}
 				}
 

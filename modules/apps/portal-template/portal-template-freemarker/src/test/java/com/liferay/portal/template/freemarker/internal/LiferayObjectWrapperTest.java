@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -169,7 +168,7 @@ public class LiferayObjectWrapperTest extends BaseObjectWrapperTestCase {
 
 		try (SwappableSecurityManager swappableSecurityManager =
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
-					ReflectionUtil.class, securityException)) {
+					securityException)) {
 
 			Class.forName(
 				"com.liferay.portal.template.freemarker.internal." +

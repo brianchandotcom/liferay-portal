@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
@@ -74,7 +73,7 @@ public class ConfigurableUtilTest {
 
 		try (SwappableSecurityManager swappableSecurityManager =
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
-					ReflectionUtil.class, securityException)) {
+					securityException)) {
 
 			Class.forName(ConfigurableUtil.class.getName());
 

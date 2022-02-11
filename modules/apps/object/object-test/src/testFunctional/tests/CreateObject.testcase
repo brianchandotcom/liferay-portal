@@ -5269,6 +5269,8 @@ definition {
 
 		Button.clickSave();
 
+		Navigator.openURL();
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
@@ -5279,8 +5281,6 @@ definition {
 				objectName = "CustomObject${fieldEntry}",
 				value = "Entry ${fieldEntry}");
 		}
-
-		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
 

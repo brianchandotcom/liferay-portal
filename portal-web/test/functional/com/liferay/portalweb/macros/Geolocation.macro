@@ -1,0 +1,21 @@
+definition {
+
+	macro getMarkerPosition {
+		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
+
+		var style = selenium.getAttribute("//img[contains(@class,'marker-icon')]@style");
+		var position = StringUtil.extractLast("${style}", "translate3d(");
+		var position = StringUtil.extractFirst("${position}", ")");
+
+		return "${position}";
+	}
+
+	macro setMarkerPosition {
+		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
+
+		DragAndDrop.dragAndDrop(
+			locator1 = "WCEditWebContent#MARKER",
+			value1 = "${destination}");
+	}
+
+}

@@ -73,4 +73,51 @@ definition {
 		}
 	}
 
+	@description = "Verify a product can be set as a replacement for a discontinued product"
+	@priority = "3"
+	test SetReplacementProduct {
+		task ("Given a simple product with a SKU marked as discontinued") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("And given another simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product Replacement",
+				productType = "simple",
+				sku = "SKU1002");
+		}
+
+		task ("When the product specialist defines a replacement product for the SKU marked as discontinued") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SKU1001");
+
+			SelectFrame(
+				key_title = "",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1002");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the Replacement SKU is visible on the Replacement field") {
+			AssertTextEquals(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1002");
+		}
+	}
+
 }

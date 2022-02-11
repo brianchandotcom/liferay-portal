@@ -12,13 +12,14 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayList from '@clayui/list';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import React, {FormEvent, useContext, useEffect, useState} from 'react';
 
+import {ManagementToolbarSearch} from './ManagementToolbarSearch/ManagementToolbarSearch';
 import ViewContext, {TYPES} from './context';
 
 import './ModalAddColumnsObjectCustomView.scss';
@@ -148,39 +149,10 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 							</ClayManagementToolbar.Item>
 						</ClayManagementToolbar.ItemList>
 
-						<ClayManagementToolbar.Search>
-							<ClayInput.Group>
-								<ClayInput.GroupItem>
-									<ClayInput
-										aria-label="Search"
-										className="form-control input-group-inset input-group-inset-after"
-										defaultValue=""
-										onChange={({target}) =>
-											setQuery(target.value)
-										}
-										placeholder={Liferay.Language.get(
-											'search'
-										)}
-										type="text"
-									/>
-
-									<ClayInput.GroupInsetItem after tag="span">
-										<ClayButtonWithIcon
-											className="navbar-breakpoint-d-none"
-											displayType="unstyled"
-											onClick={() => {}}
-											symbol="times"
-										/>
-
-										<ClayButtonWithIcon
-											displayType="unstyled"
-											symbol="search"
-											type="submit"
-										/>
-									</ClayInput.GroupInsetItem>
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</ClayManagementToolbar.Search>
+						<ManagementToolbarSearch
+							query={query}
+							setQuery={setQuery}
+						/>
 					</ClayManagementToolbar>
 
 					<ClayList className="lfr-object__object-view-modal-add-columns-list">

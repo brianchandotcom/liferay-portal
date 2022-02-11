@@ -201,17 +201,13 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 						{(item) => (
 							<ClayTreeView.Item>
 								<ClayTreeView.ItemStack>
-									<ClayCheckbox />
-
-									{item.name}
+									<ClayCheckbox label={item.name} />
 								</ClayTreeView.ItemStack>
 
 								<ClayTreeView.Group items={item.children}>
 									{(item) => (
 										<ClayTreeView.Item>
-											<ClayCheckbox />
-
-											{item.name}
+											<ClayCheckbox label={item.name} />
 										</ClayTreeView.Item>
 									)}
 								</ClayTreeView.Group>

@@ -568,6 +568,20 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			collectionJSONObject);
 	}
 
+	private int _getNumberOfItemsPerPage() {
+		int numberOfItemsPerPage =
+			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
+
+		if ((numberOfItemsPerPage <= 0) ||
+			(numberOfItemsPerPage >
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
+
+			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
+		}
+
+		return numberOfItemsPerPage;
+	}
+
 	private long[] _getSegmentsEntryIds() {
 		if (_segmentsEntryIds != null) {
 			return _segmentsEntryIds;

@@ -1,5 +1,23 @@
+.assign-to-me {
+	align-items: center;
+	background-color: transparent;
+	border-radius: 50%;
+	border: 1px dashed $color-gray;
+	color: $color-gray;
+	cursor: pointer;
+	display: flex;
+	height: 28px;
+	justify-content: center;
+	position: relative;
+	width: 28px;
+
+	.lexicon-icon {
+		margin-top: 0;
+	}
+}
+
 .avatar {
-	border: solid 2px #fff;
+	border: solid 2px $color-white;
 	cursor: pointer;
 	position: relative;
 }
@@ -17,6 +35,7 @@
 		left: 0;
 	}
 }
+
 .avatar-skeleton-loader:empty {
 	animation: shine 1s infinite;
 	background: linear-gradient(

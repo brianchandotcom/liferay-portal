@@ -26,3 +26,28 @@ export const DATA_COLORS = {
 	'metrics.passed': '#3CD587',
 	'metrics.test-fix': '#59BBFC',
 };
+
+export enum TEST_STATUS {
+	Blocked = 4,
+	'Did Not Run' = 6,
+	Failed = 3,
+	'In Progress' = 1,
+	'Passed' = 2,
+	'Test Fix' = 7,
+	'Untested' = 0,
+}
+
+export const TEST_STATUS_LABEL = {
+	0: 'Untested',
+	1: 'In Progress',
+	2: 'Passed',
+	3: 'Failed',
+	4: 'Blocked',
+	6: 'Did Not Run',
+	7: 'Test Fix',
+};
+
+const getStatusLabel = (status: number): string =>
+	(TEST_STATUS_LABEL as any)[status];
+
+export {getStatusLabel};

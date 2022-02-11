@@ -12,32 +12,20 @@
  * details.
  */
 
-import classNames from 'classnames';
+import ClayIcon from '@clayui/icon';
 
-const statusBarClassNames: any = {
-	blocked: 'label-inverse-secondary',
-	failed: 'label-inverse-danger',
-	incomplete: 'label-inverse-light',
-	other: 'label-inverse-primary',
-	passed: 'label-inverse-success',
-	self: 'label-inverse-info',
-	test_fix: 'label-tonal-success',
+type AssignToMeProps = {
+	onClick?: () => void;
 };
 
-export type StatusBadgeProps = {
-	type: string;
-};
-
-const StatusBadge: React.FC<StatusBadgeProps> = ({children, type}) => (
-	<span
-		className={classNames(
-			'label',
-			'text-uppercase',
-			statusBarClassNames[type]
-		)}
+const AssignToMe: React.FC<AssignToMeProps> = ({onClick}) => (
+	<div
+		className="assign-to-me cursor-pointer"
+		onClick={onClick}
+		title="Assign to Me"
 	>
-		{children}
-	</span>
+		<ClayIcon symbol="user-plus" />
+	</div>
 );
 
-export default StatusBadge;
+export default AssignToMe;

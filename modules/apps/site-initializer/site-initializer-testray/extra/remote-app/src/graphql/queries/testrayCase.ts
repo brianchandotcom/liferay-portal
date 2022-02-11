@@ -26,6 +26,7 @@ const testrayCaseFragment = gql`
 		priority
 		steps
 		stepsType
+		testrayCaseResult
 		testrayCaseId
 		testrayCaseTypeId
 		testrayComponentId

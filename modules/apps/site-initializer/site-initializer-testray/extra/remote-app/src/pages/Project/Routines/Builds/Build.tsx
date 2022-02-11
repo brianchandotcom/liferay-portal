@@ -12,10 +12,14 @@
  * details.
  */
 
+import {Avatar} from '../../../../components/Avatar';
+import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
+import StatusBadge from '../../../../components/StatusBadge';
 import {getTestrayCases} from '../../../../graphql/queries';
 import {Liferay} from '../../../../services/liferay/liferay';
+import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => {
 	return (
@@ -25,6 +29,7 @@ const Build = () => {
 				tableProps={{
 					columns: [
 						{
+							clickable: true,
 							key: 'priority',
 							value: 'Priority',
 						},
@@ -33,19 +38,39 @@ const Build = () => {
 							value: 'Component',
 						},
 						{
+							clickable: true,
 							key: 'name',
 							value: 'Case',
 						},
 						{
 							key: 'run',
+							render: () => '01',
 							value: 'Run',
 						},
 						{
 							key: 'assignee',
+							render: (_: any, {testrayCaseResult}: any) =>
+								testrayCaseResult?.assignedUserId ? (
+									<Avatar />
+								) : (
+									<AssignToMe></AssignToMe>
+								),
 							value: 'Assignee',
 						},
 						{
 							key: 'status',
+							render: (_: any, {testrayCaseResult}: any) =>
+								testrayCaseResult?.dueStatus && (
+									<StatusBadge
+										type={getStatusLabel(
+											testrayCaseResult?.dueStatus
+										)?.toLowerCase()}
+									>
+										{getStatusLabel(
+											testrayCaseResult?.dueStatus
+										)}
+									</StatusBadge>
+								),
 							value: 'Status',
 						},
 						{
@@ -54,9 +79,13 @@ const Build = () => {
 						},
 						{
 							key: 'error',
+							render: (_: any, {testrayCaseResult}: any) => (
+								<code>{testrayCaseResult?.errors}</code>
+							),
 							value: 'Errors',
 						},
 					],
+					navigateTo: (item) => `case/${item.testrayCaseId}`,
 				}}
 				transformData={(data) => data?.c?.testrayCases}
 				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}

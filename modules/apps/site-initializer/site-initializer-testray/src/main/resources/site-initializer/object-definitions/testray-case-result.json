@@ -28,16 +28,6 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Testray Case Id"
-			},
-			"name": "testrayCaseId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "Testray Component Id"
 			},
 			"name": "testrayComponentId",

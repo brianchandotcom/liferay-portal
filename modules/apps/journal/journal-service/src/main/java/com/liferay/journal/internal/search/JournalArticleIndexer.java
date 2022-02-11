@@ -29,19 +29,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -49,18 +43,14 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
-import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -132,48 +122,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		_modelPreFilterContributor.contribute(
 			contextBooleanFilter, null, searchContext);
-	}
-
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
-			SearchContext searchContext)
-		throws Exception {
-
-		_queryHelper.addSearchTerm(
-			searchQuery, searchContext, Field.ARTICLE_ID, false);
-		_queryHelper.addSearchTerm(
-			searchQuery, searchContext, Field.CLASS_PK, false);
-		_addSearchLocalizedTerm(searchQuery, searchContext, Field.CONTENT);
-		_addSearchLocalizedTerm(searchQuery, searchContext, Field.DESCRIPTION);
-		_queryHelper.addSearchTerm(
-			searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		_addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE);
-		_queryHelper.addSearchTerm(
-			searchQuery, searchContext, Field.USER_NAME, false);
-
-		LinkedHashMap<String, Object> params =
-			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
-
-		if (params != null) {
-			String expandoAttributes = (String)params.get("expandoAttributes");
-
-			if (Validator.isNotNull(expandoAttributes)) {
-				_expandoQueryContributor.contribute(
-					expandoAttributes, searchQuery,
-					new String[] {JournalArticle.class.getName()},
-					searchContext);
-			}
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		String[] localizedFieldNames =
-			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {Field.CONTENT, Field.DESCRIPTION, Field.TITLE},
-				searchContext);
-
-		queryConfig.addHighlightFieldNames(localizedFieldNames);
 	}
 
 	@Override
@@ -305,84 +253,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	@Reference
 	protected UIDFactory uidFactory;
-
-	private void _addLocalizedFields(
-		BooleanQuery booleanQuery, String fieldName, String value,
-		SearchContext searchContext) {
-
-		String[] localizedFieldNames =
-			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {fieldName}, searchContext);
-
-		for (String localizedFieldName : localizedFieldNames) {
-			_addTerm(booleanQuery, localizedFieldName, value);
-		}
-	}
-
-	private void _addLocalizedQuery(
-		BooleanQuery booleanQuery, BooleanQuery localizedQuery,
-		SearchContext searchContext) {
-
-		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
-
-		if (searchContext.isAndSearch()) {
-			booleanClauseOccur = BooleanClauseOccur.MUST;
-		}
-
-		try {
-			booleanQuery.add(localizedQuery, booleanClauseOccur);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(parseException);
-			}
-		}
-	}
-
-	private void _addSearchLocalizedTerm(
-		BooleanQuery booleanQuery, SearchContext searchContext,
-		String fieldName) {
-
-		if (Validator.isBlank(fieldName)) {
-			return;
-		}
-
-		String value = GetterUtil.getString(
-			searchContext.getAttribute(fieldName));
-
-		if (Validator.isBlank(value)) {
-			value = searchContext.getKeywords();
-		}
-
-		if (Validator.isBlank(value)) {
-			return;
-		}
-
-		if (Validator.isBlank(searchContext.getKeywords())) {
-			BooleanQuery localizedQuery = new BooleanQueryImpl();
-
-			_addLocalizedFields(
-				localizedQuery, fieldName, value, searchContext);
-
-			_addLocalizedQuery(booleanQuery, localizedQuery, searchContext);
-		}
-		else {
-			_addLocalizedFields(booleanQuery, fieldName, value, searchContext);
-		}
-	}
-
-	private void _addTerm(
-		BooleanQuery booleanQuery, String field, String value) {
-
-		try {
-			booleanQuery.addTerm(field, value, false);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(parseException);
-			}
-		}
-	}
 
 	private void _deleteDocument(JournalArticle article) throws Exception {
 		if ((article.getCtCollectionId() == 0) &&
@@ -557,9 +427,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private ExpandoQueryContributor _expandoQueryContributor;
-
-	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
 	private JournalArticleLocalService _journalArticleLocalService;
@@ -585,11 +452,5 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private QueryHelper _queryHelper;
-
-	@Reference
-	private SearchLocalizationHelper _searchLocalizationHelper;
 
 }

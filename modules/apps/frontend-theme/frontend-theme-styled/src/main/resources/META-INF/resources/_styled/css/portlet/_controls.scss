@@ -24,20 +24,22 @@ body.portlet {
 
 .portlet-icon-back {
 	margin-top: -2px;
+
+	.portlet-topper .portlet-topper-toolbar & {
+		background: url(../images/arrows/12_left.png) no-repeat 0 50%;
+		padding: 5px 5px 5px 18px;
+	}
 }
 
 .portlet-topper {
 	position: relative;
 
-	.portlet-topper-toolbar {
-		.portlet-icon-back {
-			background: url(../images/arrows/12_left.png) no-repeat 0 50%;
-			padding: 5px 5px 5px 18px;
-		}
+	.portlet-topper-toolbar .portlet-options .lfr-icon-menu-text {
+		display: none;
+	}
 
-		.portlet-options .lfr-icon-menu-text {
-			display: none;
-		}
+	.portlet-draggable & {
+		cursor: move;
 	}
 }
 
@@ -53,11 +55,9 @@ body.portlet {
 	text-overflow: ellipsis;
 	vertical-align: top;
 	white-space: nowrap;
-}
 
-.panel-page-content,
-.panel-page-body {
-	.portlet-title-text {
+	.panel-page-body &,
+	.panel-page-content & {
 		cursor: auto;
 	}
 }
@@ -72,22 +72,20 @@ body.portlet {
 	top: 0 !important;
 }
 
-.portlet-layout {
-	.portlet-header {
-		margin-bottom: $portlet-header-margin-bottom;
-	}
-}
-
-.portlet-draggable {
-	.portlet-topper {
-		cursor: move;
-	}
+.portlet-layout .portlet-header {
+	margin-bottom: $portlet-header-margin-bottom;
 }
 
 .portlet {
 	.visible-interaction {
 		@include media-breakpoint-up(sm) {
 			display: none;
+		}
+
+		.controls-hidden & {
+			@include media-breakpoint-down(sm) {
+				display: none;
+			}
 		}
 	}
 
@@ -96,12 +94,6 @@ body.portlet {
 		.visible-interaction {
 			display: block;
 		}
-	}
-}
-
-.controls-hidden .portlet .visible-interaction {
-	@include media-breakpoint-down(sm) {
-		display: none;
 	}
 }
 

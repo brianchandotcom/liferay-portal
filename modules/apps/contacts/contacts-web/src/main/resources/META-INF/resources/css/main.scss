@@ -700,6 +700,16 @@ $section-header-bg: #cce6f7;
 	}
 }
 
+.portlet-msg {
+	background: #eee none no-repeat 6px 50%;
+	border: 1px solid #555;
+	color: #34404f;
+	font-weight: bold;
+	margin: 2px auto 14px;
+	padding: 6px 6px 6px 30px;
+	text-align: left;
+}
+
 // ---------- Extras ----------
 
 .contacts-portlet {

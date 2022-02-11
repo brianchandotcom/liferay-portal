@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -702,9 +703,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addLocalizedQuery(
-			BooleanQuery searchQuery, BooleanQuery localizedQuery,
-			SearchContext searchContext)
-		throws Exception {
+		BooleanQuery searchQuery, BooleanQuery localizedQuery,
+		SearchContext searchContext) {
 
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
@@ -712,7 +712,14 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			booleanClauseOccur = BooleanClauseOccur.MUST;
 		}
 
-		searchQuery.add(localizedQuery, booleanClauseOccur);
+		try {
+			searchQuery.add(localizedQuery, booleanClauseOccur);
+		}
+		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException);
+			}
+		}
 	}
 
 	private void _addSearchLocalizedTerm(

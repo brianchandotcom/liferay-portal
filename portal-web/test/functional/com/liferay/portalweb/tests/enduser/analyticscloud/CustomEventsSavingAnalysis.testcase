@@ -15,7 +15,7 @@ definition {
 		}
 
 		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
+			// TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 		}
@@ -28,28 +28,28 @@ definition {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+		// task ("Add a new user") {
+		// 	JSONUser.addUser(
+		// 		userEmailAddress = "ac@liferay.com",
+		// 		userFirstName = "ac",
+		// 		userLastName = "ac",
+		// 		userScreenName = "ac");
 
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
+		// 	JSONUser.setFirstPassword(
+		// 		agreeToTermsAndAnswerReminderQuery = "true",
+		// 		requireReset = "false",
+		// 		userEmailAddress = "ac@liferay.com");
+		// }
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
+		// task ("Sign in as new user") {
+		// 	User.logoutAndLoginPG(
+		// 		userLoginEmailAddress = "ac@liferay.com",
+		// 		userLoginFullName = "ac ac");
+		// }
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
@@ -72,7 +72,7 @@ definition {
 
 		JSONUser.tearDownNonAdminUsers();
 
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10558 | Test Summary: Viewing newly created analysis report"
@@ -247,6 +247,74 @@ definition {
 
         task ("Check the analysis result appears") {
 			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,true,1");
+		}
+	}
+
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10560 | Test Summary: Delete an analysis report and Bulk delete analysis reports"
+	@priority = "5"
+	test CanDeleteAnalysisReport {
+		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2,Save Analysis 3";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+			task ("Add the custom event to analysis by the all tab") {
+				ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			}
+
+        	task ("Name the report") {
+            	ACUtils.fileName(fileName = "${eventAnalysisName}");
+        	}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName},1");
+			}
+
+        	task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+
+        	task ("Assert the analysis is saved and show up on event analysis list") {
+				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			}
+		}
+
+        task ("Delete one of the analysis from the list") {
+            ACUtils.deleteItemFromList(itemName = "Save Analysis 1");
+        }
+
+		task ("Assert analysis not present in event analysis list") {
+			ACUtils.viewNameListIsNotPresent(nameList = "Save Analysis 1");
+		}
+
+        task ("Delete all analysis from the list") {
+            ACEventAnalysis.deleteAllEventAnalysis();
+        }
+
+        task ("Assert analysis not present in event analysis list") {
+			ACUtils.viewNameListIsNotPresent(nameList = "Save Analysis 2,Save Analysis 3");
 		}
 	}
 

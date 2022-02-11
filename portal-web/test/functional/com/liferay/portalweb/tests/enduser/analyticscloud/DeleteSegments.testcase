@@ -271,6 +271,64 @@ definition {
 		ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
 	}
 
+	@description = "Feature ID: Bug | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
+	@priority = "5"
+	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		ACUtils.navigateToSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessionsAndWait();
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "ac ac");
+
+		ACSegments.saveSegment();
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "STATIC SEGMENT");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.viewSegmentName(searchTerm = "Static Segment Test");
+
+		ACSegments.deleteSegment(searchTerm = "Static Segment Test");
+
+		ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
+
+		ACNavigation.goToIndividuals();
+
+		ACIndividualsDashboard.goToKnownIndividualsTab();
+
+		ACUtils.searchBar(searchItem = "ac ac");
+
+		ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
 	@ignore = "true"
 	@priority = "4"

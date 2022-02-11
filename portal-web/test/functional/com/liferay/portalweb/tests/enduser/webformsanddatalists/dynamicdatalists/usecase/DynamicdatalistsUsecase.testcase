@@ -1173,6 +1173,7 @@ definition {
 			fieldName = "Text");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertGuestCannotEditRecord {
 		property portal.upstream = "quarantine";
@@ -1575,6 +1576,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertUserUpdateRejectedRecord {
 		property portal.upstream = "quarantine";
@@ -2477,6 +2479,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69667."
+	@ignore = "true"
 	@priority = "2"
 	test SelectLinkToPagePage {
 		property portal.upstream = "quarantine";
@@ -2539,6 +2542,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48743."
+	@ignore = "true"
 	@priority = "3"
 	test TemplateAddDeletedField {
 		property portal.upstream = "quarantine";
@@ -2668,6 +2672,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48913."
+	@ignore = "true"
 	@priority = "3"
 	test ViewFieldsNestedInDDLRecord {
 		property portal.upstream = "quarantine";

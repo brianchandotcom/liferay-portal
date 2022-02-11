@@ -43,6 +43,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddFormTemplate {
 		property portal.upstream = "quarantine";

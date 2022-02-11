@@ -83,36 +83,45 @@ describe('ResultRankingsForm', () => {
 	);
 
 	it.each`
-		initialAliases             | addedAliases | expected                           | description
-		${['one', 'two', 'three']} | ${[]}        | ${['one', 'two', 'three']}         | ${'initial aliases'}
-		${[]}                      | ${['one']}   | ${['one']}                         | ${'added alias'}
-		${['one', 'two', 'three']} | ${['four']}  | ${['one', 'two', 'three', 'four']} | ${'added alias with initial'}
-		${[]}                      | ${[' ']}     | ${[]}                              | ${'blank alias'}
-		${[]}                      | ${[' one ']} | ${['one']}                         | ${'trimmed alias'}
-		${['one', 'two', 'three']} | ${['one']}   | ${['one', 'two', 'three']}         | ${'no duplicate aliases'}
-	`('renders $description', ({addedAliases, expected, initialAliases}) => {
-		const {container} = renderTestResultRankingsForm({
-			initialAliases,
-		});
+		initialAliases             | addedAliases | expectedValue | expected                           | description
+		${['one', 'two', 'three']} | ${[]}        | ${''}         | ${['one', 'two', 'three']}         | ${'initial aliases'}
+		${[]}                      | ${['one']}   | ${''}         | ${['one']}                         | ${'added alias'}
+		${['one', 'two', 'three']} | ${['four']}  | ${''}         | ${['one', 'two', 'three', 'four']} | ${'added alias with initial'}
+		${[]}                      | ${[' ']}     | ${' '}        | ${[]}                              | ${'blank alias'}
+		${[]}                      | ${[' one ']} | ${''}         | ${['one']}                         | ${'trimmed alias'}
+		${['one', 'two', 'three']} | ${['one']}   | ${''}         | ${['one', 'two', 'three']}         | ${'no duplicate aliases'}
+	`(
+		'renders $description',
+		({addedAliases, expected, expectedValue, initialAliases}) => {
+			const {container} = renderTestResultRankingsForm({
+				initialAliases,
+			});
 
-		const input = container.querySelector('.form-control-inset');
+			const input = container.querySelector('.form-control-inset');
 
-		addedAliases.forEach((alias) => {
-			fireEvent.change(input, {target: {value: alias}});
+			addedAliases.forEach((alias) => {
+				fireEvent.change(input, {target: {value: alias}});
 
-			fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
-		});
+				fireEvent.keyDown(input, {
+					key: 'Enter',
+					keyCode: 13,
+					which: 13,
+				});
+			});
 
-		expect(input.getAttribute('value')).toBe('');
+			expect(input.getAttribute('value')).toBe(expectedValue);
 
-		const tagsElement = container.querySelectorAll('.label-item-expand');
+			const tagsElement = container.querySelectorAll(
+				'.label-item-expand'
+			);
 
-		expect(tagsElement).toHaveLength(expected.length);
+			expect(tagsElement).toHaveLength(expected.length);
 
-		tagsElement.forEach((element, i) => {
-			expect(element).toHaveTextContent(expected[i]);
-		});
-	});
+			tagsElement.forEach((element, i) => {
+				expect(element).toHaveTextContent(expected[i]);
+			});
+		}
+	);
 
 	it('removes an initial alias after clicking delete', async () => {
 		const {container} = renderTestResultRankingsForm({

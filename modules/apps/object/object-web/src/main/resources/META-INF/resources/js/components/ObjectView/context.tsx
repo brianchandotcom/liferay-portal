@@ -190,10 +190,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			newObjectFields.forEach((field) => {
 				objectViewColumns.forEach(
 					(column: {objectFieldName: string}) => {
-						if (
-							column.objectFieldName ===
-							field.label[defaultLanguageId]
-						) {
+						if (column.objectFieldName === field.name) {
 							field.checked = true;
 						}
 					}

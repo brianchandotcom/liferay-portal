@@ -21,4 +21,6 @@ public class ObjectDDMFormFieldTypeConstants {
 
 	public static final String ATTACHMENT = "attachment";
 
+	public static final String OBJECT_RELATIONSHIP = "object-relationship";
+
 }

@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.object.dynamic.data.mapping.internal.form.field.type;
+package com.liferay.object.dynamic.data.mapping.form.field.type.internal.object.relationship;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -32,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=relationship",
 		"ddm.form.field.type.label=object-relationship-field-type-label",
-		"ddm.form.field.type.name=object-relationship",
+		"ddm.form.field.type.name=" + ObjectDDMFormFieldTypeConstants.OBJECT_RELATIONSHIP,
 		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
@@ -48,13 +52,23 @@ public class ObjectRelationshipDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/ObjectRelationship" +
-			"/ObjectRelationship";
+		JSPackage jsPackage = _npmResolver.getJSPackage();
+
+		return jsPackage.getResolvedId() +
+			"/ObjectRelationship/ObjectRelationship";
 	}
 
 	@Override
 	public String getName() {
-		return "object-relationship";
+		return ObjectDDMFormFieldTypeConstants.OBJECT_RELATIONSHIP;
 	}
+
+	@Override
+	public boolean isCustomDDMFormFieldType() {
+		return true;
+	}
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -152,6 +153,10 @@ public class ViewDisplayContextFactory {
 
 	private String _getLanguageIdsString(
 		List<String> languageIds, String selectedLanguageId) {
+
+		if (ListUtil.isEmpty(languageIds)) {
+			return StringPool.BLANK;
+		}
 
 		StringBundler sb = new StringBundler(languageIds.size());
 

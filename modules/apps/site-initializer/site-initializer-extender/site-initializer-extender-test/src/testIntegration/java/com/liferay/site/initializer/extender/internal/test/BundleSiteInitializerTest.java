@@ -25,6 +25,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -94,6 +95,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -427,6 +432,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("site", commerceChannel.getType());
 
 		_assertCommerceNotificationTemplate(commerceChannel, group);
+		_assertDefaultCPDisplayLayout(commerceChannel, group);
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
@@ -601,6 +607,31 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
+	private void _assertDefaultCPDisplayLayout(
+			CommerceChannel commerceChannel, Group group)
+		throws Exception {
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String productLayoutUuid = modifiableSettings.getValue(
+			"productLayoutUuid", null);
+
+		Assert.assertNotNull(productLayoutUuid);
+
+		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), false);
+
+		Layout publicLayout = publicLayouts.get(0);
+
+		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
 	}
 
 	private void _assertDLFileEntry(Group group) throws Exception {
@@ -1315,6 +1346,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private ServletContext _servletContext;
+
+	@Inject
+	private SettingsFactory _settingsFactory;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

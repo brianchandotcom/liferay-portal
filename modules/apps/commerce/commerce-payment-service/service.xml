@@ -95,5 +95,6 @@
 	<exceptions>
 		<exception>CommercePaymentMethodGroupRelEngineKey</exception>
 		<exception>CommercePaymentMethodGroupRelName</exception>
+		<exception>DuplicateCommercePaymentMethodGroupRelQualifier</exception>
 	</exceptions>
 </service-builder>

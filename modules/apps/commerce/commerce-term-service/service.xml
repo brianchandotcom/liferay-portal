@@ -126,5 +126,6 @@
 		<exception>CommerceTermEntryName</exception>
 		<exception>CommerceTermEntryPriority</exception>
 		<exception>CommerceTermEntryType</exception>
+		<exception>DuplicateCommerceTermEntryRel</exception>
 	</exceptions>
 </service-builder>

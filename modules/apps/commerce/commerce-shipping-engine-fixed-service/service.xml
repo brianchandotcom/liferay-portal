@@ -130,4 +130,7 @@
 			<finder-column name="commerceShippingFixedOptionId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateCommerceShippingFixedOptionQualifier</exception>
+	</exceptions>
 </service-builder>

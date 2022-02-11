@@ -9,7 +9,8 @@ definition {
 	@description = "This is a use case for LPS-107347. It asserts that an admin is still required to change password with Setup Wizard disabled."
 	@priority = "4"
 	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
-		property custom.properties = "passwords.default.policy.changeable=true${line.separator}setup.wizard.enabled=false";
+		property custom.properties = "setup.wizard.enabled=false";
+		property test.prepare.bundle.properties = "true";
 		property database.types = "mysql";
 		property testray.main.component.name = "Users and Organizations";
 

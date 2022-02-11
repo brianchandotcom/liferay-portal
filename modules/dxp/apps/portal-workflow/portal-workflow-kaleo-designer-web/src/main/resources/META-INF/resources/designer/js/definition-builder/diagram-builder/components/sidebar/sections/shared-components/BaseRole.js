@@ -78,11 +78,7 @@ export default function BaseRole({
 		<>
 			<ClayForm.Group>
 				<ClayAutocomplete>
-					<label htmlFor="role-name">
-						{selectLabel}
-
-						<span className="ml-1 mr-1 text-warning">*</span>
-					</label>
+					<label htmlFor="role-name">{selectLabel}</label>
 
 					<ClayAutocomplete.Input
 						autoComplete="off"

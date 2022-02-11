@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -107,6 +108,8 @@ public class CommerceTermEntryLocalServiceImpl
 			double priority, String type, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		name = FriendlyURLNormalizerUtil.normalize(name);
 
 		_validate(null, serviceContext.getCompanyId(), name, priority, type);
 

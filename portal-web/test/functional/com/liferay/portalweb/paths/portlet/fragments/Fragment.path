@@ -339,7 +339,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_INSET_STYLE</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'topper__bar--inset') and contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'topper__bar--inset')]//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <!--TABS_FRAGMENT-->

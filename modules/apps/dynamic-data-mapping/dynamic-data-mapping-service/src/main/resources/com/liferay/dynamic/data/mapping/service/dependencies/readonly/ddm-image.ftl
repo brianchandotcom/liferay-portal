@@ -8,8 +8,14 @@
 
 		alt = fileJSONObject.getString("alt")
 		src = fileJSONObject.getString("data")
-		fileEntry = getFileEntry(fileJSONObject)
 	/>
+	<#if !validator.isNotNull(src)>
+		<#attempt>
+			<#assign fileEntry = getFileEntry(fileJSONObject) />
+			<#recover>
+				<#assign fileEntry = "" />
+		</#attempt>
+	</#if>
 </#if>
 
 <@liferay_aui["field-wrapper"] data=data>

@@ -43,6 +43,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -157,6 +158,46 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 				Assert.assertNotNull(friendlyURLEntry);
 
 				Assert.assertEquals("title", friendlyURLEntry.getUrlTitle());
+			},
+			true);
+	}
+
+	@Test
+	public void testDeleteFileEntryDeletesFriendlyURLEntry() throws Exception {
+		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), TestPropsValues.getUserId());
+
+				byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+				InputStream inputStream = new ByteArrayInputStream(bytes);
+
+				DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), group.getGroupId(),
+					group.getGroupId(), parentFolder.getFolderId(),
+					RandomTestUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					null, null, inputStream, bytes.length, null, null,
+					serviceContext);
+
+				FriendlyURLEntry friendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						dlFileEntry.getFileEntryId());
+
+				Assert.assertNotNull(friendlyURLEntry);
+
+				_dlFileEntryLocalService.deleteFileEntry(
+					dlFileEntry.getFileEntryId());
+
+				Assert.assertNull(
+					_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+						friendlyURLEntry.getFriendlyURLEntryId()));
 			},
 			true);
 	}

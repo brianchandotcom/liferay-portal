@@ -284,4 +284,16 @@ definition {
 		AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_TOTAL_NUMBER_RELATED_COLUMN_INFORMATION");
 	}
 
+	macro deleteAllEventAnalysis {
+		var key_actionButton = "Delete";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		Click(locator1 = "ACSettings#DELETE_USER");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
 }

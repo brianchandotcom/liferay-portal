@@ -862,11 +862,13 @@ definition {
 		}
 
 		task ("Move the Heading above the Button") {
+			PageEditor.clickConfigurableField(fragmentName = "Heading");
+
 			DragAndDrop.javaScriptDragAndDropToUp(
-				fragmentName = "heading",
-				id = "element-text",
+				fragmentName = "button",
+				id = "link",
 				index = "1",
-				key_dragFragmentName = "Button",
+				key_dragFragmentName = "Heading",
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
 				locator2 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "");
@@ -877,7 +879,7 @@ definition {
 		task ("View interaction states via Undo History") {
 			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
-			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Fragment,Delete Button,Add Heading,Update Heading Editable Values,Add Image,Update Image Editable Values,Move Button") {
+			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Fragment,Delete Button,Add Heading,Update Heading Editable Values,Add Image,Update Image Editable Values,Move Heading") {
 				MenuItem.viewVisible(menuItem = "${menuItem}");
 			}
 		}

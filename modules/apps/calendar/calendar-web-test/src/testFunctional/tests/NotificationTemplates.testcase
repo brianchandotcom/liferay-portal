@@ -75,6 +75,8 @@ definition {
 	@description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"
 	@priority = "5"
 	test FromNameFieldDisplaysUsername {
+		property portal.upstream = "quarantine";
+
 		NotificationTemplates.gotoCalendarMenuOption(
 			calendarName = "Test Test",
 			menuListOption = "Calendar Settings");

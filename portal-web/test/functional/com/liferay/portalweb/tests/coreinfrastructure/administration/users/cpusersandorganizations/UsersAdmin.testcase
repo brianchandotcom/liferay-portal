@@ -1266,6 +1266,8 @@ definition {
 
 	@priority = "4"
 	test EditUserAddresses {
+		property testray.component.names = "Address";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

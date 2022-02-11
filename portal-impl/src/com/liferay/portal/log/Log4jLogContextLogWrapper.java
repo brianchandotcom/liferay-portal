@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.ThreadContext;
@@ -178,17 +175,10 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		for (LogContext logContext : serviceTrackerList) {
 			Map<String, String> context = logContext.getContext();
 
-			if (context.isEmpty()) {
-				continue;
-			}
-
-			List<String> keys = ListUtil.fromMapKeys(context);
-
-			Collections.sort(keys);
-
-			for (String key : keys) {
+			for (Map.Entry<String, String> entry : context.entrySet()) {
 				ThreadContext.put(
-					logContext.getName() + "." + key, context.get(key));
+					logContext.getName() + "." + entry.getKey(),
+					entry.getValue());
 			}
 		}
 	}

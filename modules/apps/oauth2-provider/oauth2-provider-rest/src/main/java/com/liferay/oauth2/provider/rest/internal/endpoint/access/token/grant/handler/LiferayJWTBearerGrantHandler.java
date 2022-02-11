@@ -173,7 +173,7 @@ public class LiferayJWTBearerGrantHandler
 
 	@Override
 	protected boolean isGrantHandlerEnabled() {
-		return _oAuth2ProviderConfiguration.allowJWTBearerGrant();
+		return false;  // Release flag
 	}
 
 	private <U, V> void _addDefaults(Map<U, V> map, Map<U, V> defaultsMap) {

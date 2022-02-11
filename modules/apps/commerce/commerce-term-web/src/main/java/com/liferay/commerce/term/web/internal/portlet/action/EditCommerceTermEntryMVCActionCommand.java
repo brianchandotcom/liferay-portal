@@ -155,6 +155,9 @@ public class EditCommerceTermEntryMVCActionCommand
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 

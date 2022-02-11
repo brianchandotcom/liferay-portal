@@ -44,99 +44,135 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 
 	@Override
 	public void debug(Object message) {
-		super.debug(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.debug(message);
 	}
 
 	@Override
 	public void debug(Object message, Throwable throwable) {
-		super.debug(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.debug(message, throwable);
 	}
 
 	@Override
 	public void debug(Throwable throwable) {
-		super.debug(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.debug(null, throwable);
 	}
 
 	@Override
 	public void error(Object message) {
-		super.error(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.error(message);
 	}
 
 	@Override
 	public void error(Object message, Throwable throwable) {
-		super.error(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.error(message, throwable);
 	}
 
 	@Override
 	public void error(Throwable throwable) {
-		super.error(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.error(null, throwable);
 	}
 
 	@Override
 	public void fatal(Object message) {
-		super.fatal(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.fatal(message);
 	}
 
 	@Override
 	public void fatal(Object message, Throwable throwable) {
-		super.fatal(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.fatal(message, throwable);
 	}
 
 	@Override
 	public void fatal(Throwable throwable) {
-		super.fatal(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.fatal(null, throwable);
 	}
 
 	@Override
 	public void info(Object message) {
-		super.info(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.info(message);
 	}
 
 	@Override
 	public void info(Object message, Throwable throwable) {
-		super.info(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.info(message, throwable);
 	}
 
 	@Override
 	public void info(Throwable throwable) {
-		super.info(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.info(null, throwable);
 	}
 
 	@Override
 	public void trace(Object message) {
-		super.trace(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.trace(message);
 	}
 
 	@Override
 	public void trace(Object message, Throwable throwable) {
-		super.trace(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.trace(message, throwable);
 	}
 
 	@Override
 	public void trace(Throwable throwable) {
-		super.trace(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.trace(null, throwable);
 	}
 
 	@Override
 	public void warn(Object message) {
-		super.warn(_getLogContextMessage(message));
+		_populateThreadContext();
+
+		super.warn(message);
 	}
 
 	@Override
 	public void warn(Object message, Throwable throwable) {
-		super.warn(_getLogContextMessage(message), throwable);
+		_populateThreadContext();
+
+		super.warn(message, throwable);
 	}
 
 	@Override
 	public void warn(Throwable throwable) {
-		super.warn(_getLogContextMessage(null), throwable);
+		_populateThreadContext();
+
+		super.warn(null, throwable);
 	}
 
-	private Object _getLogContextMessage(Object message) {
+	private void _populateThreadContext() {
 		ServiceTrackerList<LogContext> serviceTrackerList = _serviceTrackerList;
 
 		if (serviceTrackerList == null) {
-			return message;
+			return;
 		}
 
 		for (LogContext logContext : serviceTrackerList) {
@@ -155,8 +191,6 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 					logContext.getName() + "." + key, context.get(key));
 			}
 		}
-
-		return message;
 	}
 
 	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;

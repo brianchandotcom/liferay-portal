@@ -47,10 +47,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	immediate = true,
-	service = TemplateInfoItemTemplatedRendererProviderTrackerImpl.class
-)
+@Component(immediate = true, service = {})
 public class TemplateInfoItemTemplatedRendererProviderTrackerImpl {
 
 	@Activate

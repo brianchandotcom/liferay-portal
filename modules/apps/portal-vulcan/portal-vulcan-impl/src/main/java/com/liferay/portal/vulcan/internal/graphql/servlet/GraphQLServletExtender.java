@@ -2385,10 +2385,14 @@ public class GraphQLServletExtender {
 				public String serialize(Object value)
 					throws CoercingSerializeException {
 
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm:ss'Z'");
+					if (value instanceof Date) {
+						SimpleDateFormat simpleDateFormat =
+							new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-					return simpleDateFormat.format((Date)value);
+						return simpleDateFormat.format((Date)value);
+					}
+
+					return value.toString();
 				}
 
 				private Date _toDate(Object value) {

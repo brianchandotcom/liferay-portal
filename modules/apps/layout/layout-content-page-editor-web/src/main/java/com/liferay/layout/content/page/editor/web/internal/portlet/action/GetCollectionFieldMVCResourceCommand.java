@@ -657,6 +657,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private boolean _isPaginationEnabled(String paginationType) {
 		if (Objects.equals(paginationType, "numeric") ||
+			Objects.equals(paginationType, "regular") ||
 			Objects.equals(paginationType, "simple")) {
 
 			return true;

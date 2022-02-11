@@ -310,14 +310,18 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("Assert the filters of pending and denied with workflow disabled") {
+		task ("View the available status filters of Web Content admin") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-			MenuItem.viewNotPresent(menuItem = "Denied");
+			for (var filterName : list "Draft,Scheduled,With Approved Versions,With Expired Versions") {
+				MenuItem.viewVisible(menuItem = "${filterName}");
+			}
 
-			MenuItem.viewNotPresent(menuItem = "Pending");
+			for (var filterName : list "Denied,Pending") {
+				MenuItem.viewNotPresent(menuItem = "${filterName}");
+			}
 		}
 
 		task ("Enable Single Approver Workflow for Web Content Article at site level") {
@@ -328,14 +332,14 @@ definition {
 				workflowResourceValue = "Web Content Article");
 		}
 
-		task ("Assert the filters of pending and denied with workflow enabled at site level") {
+		task ("View the available status filters of Web Content admin") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-			MenuItem.viewVisible(menuItem = "Denied");
-
-			MenuItem.viewVisible(menuItem = "Pending");
+			for (var filterName : list "Draft,Denied,Pending,Scheduled,With Approved Versions,With Expired Versions") {
+				MenuItem.viewVisible(menuItem = "${filterName}");
+			}
 		}
 	}
 

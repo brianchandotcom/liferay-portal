@@ -25,7 +25,6 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -277,29 +276,6 @@ public class FileEntryContentDashboardItem
 	public String getDescription(Locale locale) {
 		return InfoItemFieldValuesProviderUtil.getStringValue(
 			_fileEntry, _infoItemFieldValuesProvider, "description");
-	}
-
-	@Override
-	public Object getDisplayFieldValue(String fieldName, Locale locale) {
-		InfoFieldValue<Object> infoFieldValue =
-			_infoItemFieldValuesProvider.getInfoFieldValue(
-				_fileEntry, fieldName);
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		return infoFieldValue.getValue(locale);
-	}
-
-	@Override
-	public FileEntry getInfoItem() {
-		return _fileEntry;
-	}
-
-	@Override
-	public InfoItemFieldValuesProvider getInfoItemFieldValuesProvider() {
-		return _infoItemFieldValuesProvider;
 	}
 
 	@Override

@@ -295,13 +295,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public Object getDisplayFieldValue(
-				String fieldName, Locale locale) {
-
-				return null;
-			}
-
-			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(
 					RandomTestUtil.randomString(), RandomTestUtil.randomLong());

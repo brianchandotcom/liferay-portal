@@ -566,13 +566,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public Object getDisplayFieldValue(
-					String fieldName, Locale locale) {
-
-					return null;
-				}
-
-				@Override
 				public InfoItemReference getInfoItemReference() {
 					return new InfoItemReference(_className, _classPK);
 				}

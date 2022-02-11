@@ -20,25 +20,13 @@
 ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= viewSXPElementsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= viewSXPElementsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= viewSXPElementsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= SXPBlueprintAdminFDSNames.SXP_ELEMENTS %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	propsTransformer="sxp_blueprint_admin/js/view_sxp_elements/ViewSXPElementsPropsTransformer"
-	style="fluid"
-/>
-
-<div id="<portlet:namespace />addSXPElement">
+<div id="<portlet:namespace />viewSXPElements">
 	<react:component
-		module="sxp_blueprint_admin/js/view_sxp_elements/AddSXPElementModal"
+		module="sxp_blueprint_admin/js/view_sxp_elements/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"apiURL", viewSXPElementsDisplayContext.getAPIURL()
+			).put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 			).put(
 				"editSXPElementURL",
@@ -48,7 +36,9 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 					"/sxp_blueprint_admin/edit_sxp_element"
 				).buildString()
 			).put(
-				"portletNamespace", liferayPortletResponse.getNamespace()
+				"hasAddSXPElementPermission", viewSXPElementsDisplayContext.hasAddSXPElementPermission()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
 	/>

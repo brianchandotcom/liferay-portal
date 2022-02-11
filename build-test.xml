@@ -8752,7 +8752,7 @@ browser.launcher.url=
 
 setup.wizard.enabled=false
 
-passwords.default.policy.changeable=false
+passwords.default.policy.change.required=false
 
 mail.send.blacklist=
 

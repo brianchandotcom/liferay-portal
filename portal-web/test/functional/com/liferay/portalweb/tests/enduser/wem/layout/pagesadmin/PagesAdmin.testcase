@@ -309,6 +309,34 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145215. View alert message when delete a page with child page."
+	@priority = "4"
+	test DeletePageWithChildPage {
+		task ("Add a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Test Page",
+				parentLayoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("View alert message when delete a page with child") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.deletePage(
+				hasChildren = "true",
+				pageName = "Test Page Name");
+
+			AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
+	}
+
 	@description = "This is a test for LPS-145215. View alert message when delete a page with scoped content."
 	@priority = "4"
 	test DeletePageWithScopedContent {
@@ -541,18 +569,6 @@ definition {
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
-		}
-
-		task ("View alert while delete a content page with child") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.deletePage(
-				hasChildren = "true",
-				pageName = "Test Page Name 1");
-
-			PagesAdmin.viewPageItemNotPresent(
-				pageName = "Test Page Name 1",
-				privacy = "Public Pages");
 		}
 	}
 

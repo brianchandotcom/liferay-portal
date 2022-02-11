@@ -14,15 +14,12 @@
 
 package com.liferay.journal.internal.search;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 
@@ -62,11 +59,6 @@ public class JournalArticleIndexerPostProcessor
 	@Override
 	public void postProcessSummary(
 		Summary summary, Document document, Locale locale, String snippet) {
-
-		summary.setContent(
-			HtmlUtil.unescape(
-				StringUtil.replace(
-					summary.getContent(), "<br />", StringPool.NEW_LINE)));
 	}
 
 }

@@ -4593,8 +4593,6 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnRelationshipTab {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141620",
 			objectName = "CustomObject141620",
@@ -4646,6 +4644,8 @@ definition {
 			tabName = "Relationship Tab");
 
 		Button.clickSave();
+
+		Navigator.openURL();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141620");
 

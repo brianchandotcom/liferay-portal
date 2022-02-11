@@ -1,0 +1,22 @@
+@default = "setElementAttribute"
+definition {
+
+	function setElementAttribute {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		var javaScript = '''
+var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+element.setAttribute("${attribute}", "${value1}");
+		''';
+
+		selenium.runScript("${javaScript}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

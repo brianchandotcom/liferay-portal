@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
-	<td>//div[@aria-label='${key_fragmentName}']/div[contains(@class,'page-editor__topper__content')]//div[@aria-label='${key_inFragmentName}']</td>
+	<td>//div[@aria-label='${key_inFragmentName}']/div[contains(@class,'page-editor__topper__content')]//div[@aria-label='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>

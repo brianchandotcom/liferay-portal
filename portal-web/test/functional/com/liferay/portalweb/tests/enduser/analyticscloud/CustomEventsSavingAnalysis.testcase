@@ -497,4 +497,59 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10563 | Test Summary: Search for analysis report"
+	@priority = "3"
+	test AnalysisReportListSearchable {
+		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
+		var defaultEventName = "webContentViewed";
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+			task ("Add the event to analysis") {
+				ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+			}
+
+        	task ("Name the report") {
+            	ACUtils.fileName(fileName = "${eventAnalysisName}");
+        	}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${defaultEventName},1");
+			}
+
+        	task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+		}
+
+		task ("Search for the name of the analysis and check if it is present in the list") {
+			for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+				ACUtils.searchBar(searchItem = "${eventAnalysisName}");
+
+				ACUtils.viewPartialNameList(nameList = "${eventAnalysisName}");
+			}
+		}
+
+		task ("Search for an analysis name that does not exist and check that it is not present in the list") {
+			ACUtils.searchBar(searchItem = "ac dxp");
+
+			ACUtils.viewNameListIsNotPresent(nameList = "ac dxp");
+		}
+	}
+
 }

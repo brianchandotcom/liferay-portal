@@ -1256,8 +1256,9 @@ definition {
 
 		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
+				index = "1",
 				key_fragmentName = "Card",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			PageEditor.clickConfigurableField(fragmentName = "Card");
 
@@ -1268,8 +1269,9 @@ definition {
 
 		task ("Assert Header of Card moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
+				index = "1",
 				key_fragmentName = "Image",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			AssertElementPresent(
 				key_fragmentName = "Card",
@@ -1303,8 +1305,9 @@ definition {
 
 		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
+				index = "1",
 				key_fragmentName = "Blogs",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			PageEditor.clickConfigurableField(fragmentName = "Blogs");
 
@@ -1315,8 +1318,9 @@ definition {
 
 		task ("Assert Header of Blogs moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
+				index = "1",
 				key_fragmentName = "My Sites",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			AssertElementPresent(
 				key_fragmentName = "Blogs",

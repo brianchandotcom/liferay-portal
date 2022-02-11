@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -129,10 +130,6 @@ public class LiferayJWTBearerGrantHandler
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_jwtBearerGrantHandler = new CustomJWTBearerGrantHandler();
-
-		_jwtBearerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
-
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
 
@@ -143,7 +140,12 @@ public class LiferayJWTBearerGrantHandler
 
 	@Override
 	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
-		return _jwtBearerGrantHandler;
+		CustomJWTBearerGrantHandler customJWTBearerGrantHandler =
+			new CustomJWTBearerGrantHandler();
+
+		customJWTBearerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
+
+		return customJWTBearerGrantHandler;
 	}
 
 	protected Map<String, Map<String, JwsSignatureVerifier>>
@@ -292,7 +294,6 @@ public class LiferayJWTBearerGrantHandler
 	private final Map<Long, Map<String, Map<String, JwsSignatureVerifier>>>
 		_jwsSignatureVerifiers = Collections.synchronizedMap(
 			new LinkedHashMap<>());
-	private CustomJWTBearerGrantHandler _jwtBearerGrantHandler;
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
@@ -407,7 +408,18 @@ public class LiferayJWTBearerGrantHandler
 
 			Message message = JAXRSUtils.getCurrentMessage();
 
-			setAudience((String)message.get(Message.REQUEST_URL));
+			String audience = getAudience();
+
+			String expectedAudience = (String)message.get(Message.REQUEST_URL);
+
+			if (Validator.isNotNull(audience) &&
+				!audience.equals(expectedAudience)) {
+
+				throw new IllegalStateException(
+					"Already initialized for the audience " + audience);
+			}
+
+			setAudience(expectedAudience);
 		}
 
 	}

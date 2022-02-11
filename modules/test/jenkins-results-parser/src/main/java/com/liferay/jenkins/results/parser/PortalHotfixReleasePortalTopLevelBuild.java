@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -35,11 +37,39 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 	@Override
 	public String getBaseGitRepositoryName() {
+		String branchName = getBranchName();
+
+		if (branchName.equals("master")) {
+			return "liferay-portal";
+		}
+
 		return "liferay-portal-ee";
 	}
 
 	@Override
 	public String getBranchName() {
+		PortalRelease portalRelease = getPortalRelease();
+
+		String portalVersion = portalRelease.getPortalVersion();
+
+		Matcher patcherPortalVersion74Matcher =
+			_patcherPortalVersion74Pattern.matcher(portalVersion);
+
+		if (patcherPortalVersion74Matcher.find()) {
+			portalVersion = portalVersion.replace("-", ".");
+		}
+
+		try {
+			String portalBranchName = JenkinsResultsParserUtil.getBuildProperty(
+				"portal.branch.name[" + portalVersion + "]");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName)) {
+				return portalBranchName;
+			}
+		}
+		catch (IOException ioException) {
+		}
+
 		String testBuildHotfixZipURL = getParameterValue(
 			"TEST_BUILD_HOTFIX_ZIP_URL");
 
@@ -147,10 +177,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			if (patcherPortalVersion62Matcher.find()) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(patcherPortalVersion62Matcher.group("majorVersion"));
-				sb.append(".");
-				sb.append(patcherPortalVersion62Matcher.group("minorVersion"));
-				sb.append(".");
+				sb.append("6.2.");
 				sb.append(patcherPortalVersion62Matcher.group("fixVersion"));
 
 				String servicePackVersion = patcherPortalVersion62Matcher.group(
@@ -164,6 +191,16 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				}
 
 				_portalRelease = new PortalRelease(sb.toString());
+
+				return _portalRelease;
+			}
+
+			Matcher patcherPortalVersion74Matcher =
+				_patcherPortalVersion74Pattern.matcher(patcherPortalVersion);
+
+			if (patcherPortalVersion74Matcher.find()) {
+				_portalRelease = new PortalRelease(
+					patcherPortalVersion74Matcher.group());
 
 				return _portalRelease;
 			}
@@ -254,8 +291,10 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			"(?<fixVersion>\\d{2})\\.(lpkg|zip)");
 	private static final Pattern _patcherPortalVersion62Pattern =
 		Pattern.compile(
-			"(?<majorVersion>\\d)\\.(?<minorVersion>\\d)\\." +
-				"(?<fixVersion>\\d{2})( SP(?<servicePackVersion>\\d+))?");
+			"6\\.2\\.(?<fixVersion>\\d{2})( SP(?<servicePackVersion>\\d+))?");
+	private static final Pattern _patcherPortalVersion74Pattern =
+		Pattern.compile(
+			"7\\.4\\.(?<fixVersion>\\d{2})(\\-u(?<updateVersion>\\d+))?");
 	private static final Pattern _patcherPortalVersionDXPPattern =
 		Pattern.compile(
 			"fix-pack-(?<fixpackType>de|dxp)-(?<fixpackVersion>\\d+)-" +

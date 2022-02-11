@@ -51,7 +51,7 @@ definition {
 
 		task ("View the Banner Center is not inside of Container element") {
 			AssertElementNotPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'bg-gray500Color')][contains(@class,'page-editor__container')]",
+				key_elementHeader = "//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'bg-gray500Color')][contains(@class,'page-editor__container')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

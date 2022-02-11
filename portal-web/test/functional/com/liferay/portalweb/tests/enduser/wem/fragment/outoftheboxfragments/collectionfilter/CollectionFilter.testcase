@@ -1230,7 +1230,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary A");
@@ -1247,7 +1247,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary B");
@@ -2121,7 +2121,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary A");
@@ -2138,7 +2138,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary B");
@@ -3527,7 +3527,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Size");
@@ -3561,7 +3561,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[@aria-label='Collection Filter']//div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Pure Color");

@@ -3830,7 +3830,7 @@ definition {
 
 		AssertElementPresent(
 			key_columnNumber = "${moduleNumber}",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'${elementName}')]",
+			key_elementHeader = "//div[@aria-label='${elementName}']",
 			key_position = "${position}",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
@@ -3842,7 +3842,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_columnNumber = "${moduleNumber}",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'${elementName}')]",
+			key_elementHeader = "//div[@aria-label='${elementName}']",
 			key_position = "${position}",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}

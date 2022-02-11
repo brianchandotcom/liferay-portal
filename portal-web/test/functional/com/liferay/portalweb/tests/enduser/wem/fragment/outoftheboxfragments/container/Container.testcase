@@ -461,7 +461,7 @@ definition {
 			PageEditor.viewDuplicateFragment(fragmentName = "Container");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Grid']",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -971,7 +971,7 @@ definition {
 				position = "2");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--white)')]",
+				key_elementHeader = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--white)')]",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

@@ -198,11 +198,11 @@ NO CSS
 				key_portletName = "Asset Publisher",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Image')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				locator2 = "//div[@aria-label='Image']//div[contains(@class,'page-editor__topper__content')]",
 				value1 = "Asset Publisher");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+				key_elementHeader = "//div[@aria-label='Asset Publisher']",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
@@ -228,7 +228,7 @@ NO CSS
 
 			for (var elementName : list "Image,Asset Publisher") {
 				AssertElementPresent(
-					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${elementName}')]",
+					key_elementHeader = "//div[@aria-label='${elementName}']",
 					key_position = "2",
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 			}

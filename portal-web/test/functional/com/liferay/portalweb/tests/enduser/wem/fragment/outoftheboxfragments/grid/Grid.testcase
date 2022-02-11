@@ -66,7 +66,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Grid'][2]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -102,7 +102,7 @@ definition {
 				targetElementName = "Grid");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Grid'][2]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -151,13 +151,13 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "3",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Grid']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 
 		task ("Assert the height of the first module is greater than 20px") {
-			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
+			var moduleHeight = selenium.getElementHeight("//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
 			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
 			TestUtils.isGreaterThan(
@@ -314,7 +314,7 @@ definition {
 			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Grid'][2]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -353,7 +353,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
+				key_elementHeader = "//div[@aria-label='Web Content Display']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -376,7 +376,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_elementHeader = "//div[@aria-label='Heading']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -397,7 +397,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "3",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_elementHeader = "//div[@aria-label='Button']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -409,19 +409,19 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
+				key_elementHeader = "//div[@aria-label='Web Content Display']",
 				key_position = "2",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_elementHeader = "//div[@aria-label='Heading']",
 				key_position = "2",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_columnNumber = "3",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_elementHeader = "//div[@aria-label='Button']",
 				key_position = "2",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -520,11 +520,11 @@ definition {
 				columnCount = "3",
 				position = "1");
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][1]");
+			AssertElementPresent(locator1 = "//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][1]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][2]");
+			AssertElementNotPresent(locator1 = "//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][2]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][3]");
+			AssertElementNotPresent(locator1 = "//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][3]");
 
 			var thirdModuleWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'page-editor__col__border')])[3]");
 

@@ -114,14 +114,14 @@ definition {
 
 		Click.clickNoWaitForVisible(
 			key_colPosition = "1",
-			key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'${fragmentName}')]",
+			key_element = "//div[@aria-label='${fragmentName}']",
 			key_fragmentName = "Collection Display",
 			key_rowPosition = "1",
 			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 		Click(
 			key_colPosition = "1",
-			key_element = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'${fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]",
+			key_element = "//div[@aria-label='${fragmentName}']//div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]",
 			key_fragmentName = "Collection Display",
 			key_rowPosition = "1",
 			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");

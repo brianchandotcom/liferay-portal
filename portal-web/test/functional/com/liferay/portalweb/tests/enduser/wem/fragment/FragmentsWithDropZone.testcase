@@ -190,7 +190,7 @@ definition {
 
 		task ("View the fragment composition is rendered well") {
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+				key_elementHeader = "//div[@aria-label='Fragment Name']",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

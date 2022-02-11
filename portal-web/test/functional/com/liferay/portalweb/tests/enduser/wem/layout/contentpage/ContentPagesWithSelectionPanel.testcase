@@ -218,7 +218,7 @@ definition {
 			Pause(locator1 = "3000");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_elementHeader = "//div[@aria-label='Button']",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -236,7 +236,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+				key_elementHeader = "//div[@aria-label='Asset Publisher']",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -291,7 +291,7 @@ definition {
 			for (var n : list "1,2,3") {
 				AssertElementPresent(
 					key_colPosition = "1",
-					key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+					key_element = "//div[@aria-label='Heading']",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");

@@ -16,9 +16,11 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +52,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ObjectDefinitionsFieldsDisplayContext {
 
 	public ObjectDefinitionsFieldsDisplayContext(
+		FFBusinessTypeAttachmentConfiguration
+			ffBusinessTypeAttachmentConfiguration,
 		FFObjectFieldBusinessTypeConfigurationActivator
 			ffObjectFieldBusinessTypeConfigurationActivator,
 		HttpServletRequest httpServletRequest,
@@ -57,6 +62,8 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		ObjectFieldBusinessTypeServicesTracker
 			objectFieldBusinessTypeServicesTracker) {
 
+		_ffBusinessTypeAttachmentConfiguration =
+			ffBusinessTypeAttachmentConfiguration;
 		_ffObjectFieldBusinessTypeConfigurationActivator =
 			ffObjectFieldBusinessTypeConfigurationActivator;
 		_objectDefinitionModelResourcePermission =
@@ -139,7 +146,12 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				_objectFieldBusinessTypeServicesTracker.
 					getObjectFieldBusinessTypes()) {
 
-			if (!objectFieldBusinessType.isVisible()) {
+			if (!objectFieldBusinessType.isVisible() ||
+				(StringUtil.equals(
+					objectFieldBusinessType.getName(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				 !_ffBusinessTypeAttachmentConfiguration.enabled())) {
+
 				continue;
 			}
 
@@ -179,6 +191,8 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return _ffObjectFieldBusinessTypeConfigurationActivator.enabled();
 	}
 
+	private final FFBusinessTypeAttachmentConfiguration
+		_ffBusinessTypeAttachmentConfiguration;
 	private final FFObjectFieldBusinessTypeConfigurationActivator
 		_ffObjectFieldBusinessTypeConfigurationActivator;
 	private final ModelResourcePermission<ObjectDefinition>

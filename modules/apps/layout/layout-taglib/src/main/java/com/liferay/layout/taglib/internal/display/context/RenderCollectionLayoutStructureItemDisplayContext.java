@@ -36,6 +36,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.FFRenderCollectionLayoutStructureItemConfigurationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -123,42 +124,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getDefaultLayoutListRetrieverContext(
 				layoutListRetriever, listObjectReference);
 
-		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
-		int start = 0;
-
-		String paginationType =
-			_collectionStyledLayoutStructureItem.getPaginationType();
-
-		if (Objects.equals(paginationType, PAGINATION_TYPE_NUMERIC) ||
-			Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE)) {
-
-			int maxNumberOfItems =
-				_collectionStyledLayoutStructureItem.getNumberOfItems();
-
-			if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
-				maxNumberOfItems = getCollectionCount();
-			}
-
-			int numberOfItemsPerPage =
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
-
-			if (numberOfItemsPerPage >
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA) {
-
-				numberOfItemsPerPage =
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
-			}
-
-			end = Math.min(
-				Math.min(
-					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
-				getCollectionCount());
-
-			start = (getActivePage() - 1) * numberOfItemsPerPage;
-		}
-
-		defaultLayoutListRetrieverContext.setPagination(
-			Pagination.of(end, start));
+		defaultLayoutListRetrieverContext.setPagination(_getPagination());
 
 		return layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
@@ -284,17 +250,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _numberOfPages;
 		}
 
-		int maxNumberOfItems = Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
-
-		if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
-			maxNumberOfItems = getCollectionCount();
-		}
-
-		_numberOfPages = (int)Math.ceil(
-			(double)maxNumberOfItems /
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+		_numberOfPages = _getNumberOfPages();
 
 		return _numberOfPages;
 	}
@@ -337,20 +293,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		if ((Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				PAGINATION_TYPE_NUMERIC) ||
-			 Objects.equals(
-				 _collectionStyledLayoutStructureItem.getPaginationType(),
-				 PAGINATION_TYPE_SIMPLE)) &&
-			_collectionStyledLayoutStructureItem.isShowAllItems()) {
+		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
+				paginationImprovementsEnabled()) {
 
-			return getCollectionCount();
+			return _getTotalNumberOfItemsWithPaginationImprovementsEnabled();
 		}
 
-		return Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
+		return _getTotalNumberOfItemsWithPaginationImprovementsDisabled();
 	}
 
 	private Map<String, String[]> _getConfiguration() {
@@ -579,6 +528,115 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return numberOfItemsPerPage;
 	}
 
+	private int _getNumberOfPages() {
+		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
+				paginationImprovementsEnabled()) {
+
+			return _getNumberOfPagesWithPaginationImprovementsEnabled();
+		}
+
+		return _getNumberOfPagesWithPaginationImprovementsDisabled();
+	}
+
+	private int _getNumberOfPagesWithPaginationImprovementsDisabled() {
+		int maxNumberOfItems = Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
+
+		if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
+			maxNumberOfItems = getCollectionCount();
+		}
+
+		return (int)Math.ceil(
+			(double)maxNumberOfItems /
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+	}
+
+	private int _getNumberOfPagesWithPaginationImprovementsEnabled() {
+		int numberOfItemsPerPage = _getNumberOfItemsPerPage();
+
+		int maxNumberOfItems = getCollectionCount();
+
+		if (_collectionStyledLayoutStructureItem.getNumberOfPages() > 0) {
+			maxNumberOfItems = Math.min(
+				getCollectionCount(),
+				_collectionStyledLayoutStructureItem.getNumberOfPages() *
+					numberOfItemsPerPage);
+		}
+
+		if (_collectionStyledLayoutStructureItem.isDisplayAllPages()) {
+			maxNumberOfItems = getCollectionCount();
+		}
+
+		return (int)Math.ceil((double)maxNumberOfItems / numberOfItemsPerPage);
+	}
+
+	private Pagination _getPagination() {
+		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
+				paginationImprovementsEnabled()) {
+
+			return _getPaginationWithPaginationImprovementsEnabled();
+		}
+
+		return _getPaginationWithPaginationImprovementsDisabled();
+	}
+
+	private Pagination _getPaginationWithPaginationImprovementsDisabled() {
+		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
+		int start = 0;
+
+		if (_isPaginationEnabled()) {
+			int maxNumberOfItems =
+				_collectionStyledLayoutStructureItem.getNumberOfItems();
+
+			if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
+				maxNumberOfItems = getCollectionCount();
+			}
+
+			int numberOfItemsPerPage = _getNumberOfItemsPerPage();
+
+			end = Math.min(
+				Math.min(
+					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
+				getCollectionCount());
+
+			start = (getActivePage() - 1) * numberOfItemsPerPage;
+		}
+
+		return Pagination.of(end, start);
+	}
+
+	private Pagination _getPaginationWithPaginationImprovementsEnabled() {
+		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
+		int start = 0;
+
+		if (_isPaginationEnabled()) {
+			int maxNumberOfItems = getCollectionCount();
+
+			int numberOfItemsPerPage = _getNumberOfItemsPerPage();
+
+			if (!_collectionStyledLayoutStructureItem.isDisplayAllPages() &&
+				(_collectionStyledLayoutStructureItem.getNumberOfPages() > 0)) {
+
+				maxNumberOfItems =
+					_collectionStyledLayoutStructureItem.getNumberOfPages() *
+						numberOfItemsPerPage;
+			}
+
+			end = Math.min(
+				Math.min(
+					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
+				getCollectionCount());
+
+			start = (getActivePage() - 1) * numberOfItemsPerPage;
+		}
+		else if (_collectionStyledLayoutStructureItem.isDisplayAllItems()) {
+			end = getCollectionCount();
+		}
+
+		return Pagination.of(end, start);
+	}
+
 	private long[] _getSegmentsEntryIds() {
 		if (_segmentsEntryIds != null) {
 			return _segmentsEntryIds;
@@ -595,6 +653,41 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			requestContextMapper.map(_httpServletRequest));
 
 		return _segmentsEntryIds;
+	}
+
+	private int _getTotalNumberOfItemsWithPaginationImprovementsDisabled() {
+		if (_isPaginationEnabled() &&
+			_collectionStyledLayoutStructureItem.isShowAllItems()) {
+
+			return getCollectionCount();
+		}
+
+		return Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
+	}
+
+	private int _getTotalNumberOfItemsWithPaginationImprovementsEnabled() {
+		if (!_isPaginationEnabled()) {
+			if (_collectionStyledLayoutStructureItem.isDisplayAllItems()) {
+				return getCollectionCount();
+			}
+
+			return Math.min(
+				getCollectionCount(),
+				_collectionStyledLayoutStructureItem.getNumberOfItems());
+		}
+
+		if (_collectionStyledLayoutStructureItem.isDisplayAllPages() ||
+			(_collectionStyledLayoutStructureItem.getNumberOfPages() <= 0)) {
+
+			return getCollectionCount();
+		}
+
+		return Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfPages() *
+				_getNumberOfItemsPerPage());
 	}
 
 	private boolean _isPaginationEnabled() {

@@ -90,7 +90,8 @@ public class RemoteAppEntryModelImpl
 		{"bundledAppType", Types.VARCHAR}, {"bundledAppURL", Types.VARCHAR},
 		{"customElementCSSURLs", Types.CLOB},
 		{"customElementHTMLElementName", Types.VARCHAR},
-		{"customElementURLs", Types.CLOB}, {"description", Types.CLOB},
+		{"customElementURLs", Types.CLOB},
+		{"customElementUseESM", Types.BOOLEAN}, {"description", Types.CLOB},
 		{"friendlyURLMapping", Types.VARCHAR}, {"iFrameURL", Types.VARCHAR},
 		{"instanceable", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"portletCategoryName", Types.VARCHAR}, {"properties", Types.CLOB},
@@ -117,6 +118,7 @@ public class RemoteAppEntryModelImpl
 		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("customElementUseESM", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("friendlyURLMapping", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iFrameURL", Types.VARCHAR);
@@ -133,7 +135,7 @@ public class RemoteAppEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bundledAppType VARCHAR(75) null,bundledAppURL VARCHAR(75) null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bundledAppType VARCHAR(75) null,bundledAppURL STRING null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,customElementUseESM BOOLEAN,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
@@ -386,6 +388,12 @@ public class RemoteAppEntryModelImpl
 			"customElementURLs",
 			(BiConsumer<RemoteAppEntry, String>)
 				RemoteAppEntry::setCustomElementURLs);
+		attributeGetterFunctions.put(
+			"customElementUseESM", RemoteAppEntry::getCustomElementUseESM);
+		attributeSetterBiConsumers.put(
+			"customElementUseESM",
+			(BiConsumer<RemoteAppEntry, Boolean>)
+				RemoteAppEntry::setCustomElementUseESM);
 		attributeGetterFunctions.put(
 			"description", RemoteAppEntry::getDescription);
 		attributeSetterBiConsumers.put(
@@ -760,6 +768,27 @@ public class RemoteAppEntryModelImpl
 		}
 
 		_customElementURLs = customElementURLs;
+	}
+
+	@JSON
+	@Override
+	public boolean getCustomElementUseESM() {
+		return _customElementUseESM;
+	}
+
+	@JSON
+	@Override
+	public boolean isCustomElementUseESM() {
+		return _customElementUseESM;
+	}
+
+	@Override
+	public void setCustomElementUseESM(boolean customElementUseESM) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementUseESM = customElementUseESM;
 	}
 
 	@JSON
@@ -1358,6 +1387,7 @@ public class RemoteAppEntryModelImpl
 		remoteAppEntryImpl.setCustomElementHTMLElementName(
 			getCustomElementHTMLElementName());
 		remoteAppEntryImpl.setCustomElementURLs(getCustomElementURLs());
+		remoteAppEntryImpl.setCustomElementUseESM(isCustomElementUseESM());
 		remoteAppEntryImpl.setDescription(getDescription());
 		remoteAppEntryImpl.setFriendlyURLMapping(getFriendlyURLMapping());
 		remoteAppEntryImpl.setIFrameURL(getIFrameURL());
@@ -1410,6 +1440,8 @@ public class RemoteAppEntryModelImpl
 				"customElementHTMLElementName"));
 		remoteAppEntryImpl.setCustomElementURLs(
 			this.<String>getColumnOriginalValue("customElementURLs"));
+		remoteAppEntryImpl.setCustomElementUseESM(
+			this.<Boolean>getColumnOriginalValue("customElementUseESM"));
 		remoteAppEntryImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
 		remoteAppEntryImpl.setFriendlyURLMapping(
@@ -1615,6 +1647,8 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.customElementURLs = null;
 		}
 
+		remoteAppEntryCacheModel.customElementUseESM = isCustomElementUseESM();
+
 		remoteAppEntryCacheModel.description = getDescription();
 
 		String description = remoteAppEntryCacheModel.description;
@@ -1812,6 +1846,7 @@ public class RemoteAppEntryModelImpl
 	private String _customElementCSSURLs;
 	private String _customElementHTMLElementName;
 	private String _customElementURLs;
+	private boolean _customElementUseESM;
 	private String _description;
 	private String _friendlyURLMapping;
 	private String _iFrameURL;
@@ -1873,6 +1908,7 @@ public class RemoteAppEntryModelImpl
 		_columnOriginalValues.put(
 			"customElementHTMLElementName", _customElementHTMLElementName);
 		_columnOriginalValues.put("customElementURLs", _customElementURLs);
+		_columnOriginalValues.put("customElementUseESM", _customElementUseESM);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("friendlyURLMapping", _friendlyURLMapping);
 		_columnOriginalValues.put("iFrameURL", _iFrameURL);
@@ -1938,31 +1974,33 @@ public class RemoteAppEntryModelImpl
 
 		columnBitmasks.put("customElementURLs", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("customElementUseESM", 16384L);
 
-		columnBitmasks.put("friendlyURLMapping", 32768L);
+		columnBitmasks.put("description", 32768L);
 
-		columnBitmasks.put("iFrameURL", 65536L);
+		columnBitmasks.put("friendlyURLMapping", 65536L);
 
-		columnBitmasks.put("instanceable", 131072L);
+		columnBitmasks.put("iFrameURL", 131072L);
 
-		columnBitmasks.put("name", 262144L);
+		columnBitmasks.put("instanceable", 262144L);
 
-		columnBitmasks.put("portletCategoryName", 524288L);
+		columnBitmasks.put("name", 524288L);
 
-		columnBitmasks.put("properties", 1048576L);
+		columnBitmasks.put("portletCategoryName", 1048576L);
 
-		columnBitmasks.put("sourceCodeURL", 2097152L);
+		columnBitmasks.put("properties", 2097152L);
 
-		columnBitmasks.put("type_", 4194304L);
+		columnBitmasks.put("sourceCodeURL", 4194304L);
 
-		columnBitmasks.put("status", 8388608L);
+		columnBitmasks.put("type_", 8388608L);
 
-		columnBitmasks.put("statusByUserId", 16777216L);
+		columnBitmasks.put("status", 16777216L);
 
-		columnBitmasks.put("statusByUserName", 33554432L);
+		columnBitmasks.put("statusByUserId", 33554432L);
 
-		columnBitmasks.put("statusDate", 67108864L);
+		columnBitmasks.put("statusByUserName", 67108864L);
+
+		columnBitmasks.put("statusDate", 134217728L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

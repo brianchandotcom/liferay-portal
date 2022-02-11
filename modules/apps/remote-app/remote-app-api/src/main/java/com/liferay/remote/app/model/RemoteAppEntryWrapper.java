@@ -58,6 +58,7 @@ public class RemoteAppEntryWrapper
 		attributes.put(
 			"customElementHTMLElementName", getCustomElementHTMLElementName());
 		attributes.put("customElementURLs", getCustomElementURLs());
+		attributes.put("customElementUseESM", isCustomElementUseESM());
 		attributes.put("description", getDescription());
 		attributes.put("friendlyURLMapping", getFriendlyURLMapping());
 		attributes.put("iFrameURL", getIFrameURL());
@@ -162,6 +163,13 @@ public class RemoteAppEntryWrapper
 
 		if (customElementURLs != null) {
 			setCustomElementURLs(customElementURLs);
+		}
+
+		Boolean customElementUseESM = (Boolean)attributes.get(
+			"customElementUseESM");
+
+		if (customElementUseESM != null) {
+			setCustomElementUseESM(customElementUseESM);
 		}
 
 		String description = (String)attributes.get("description");
@@ -343,6 +351,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public String getCustomElementURLs() {
 		return model.getCustomElementURLs();
+	}
+
+	/**
+	 * Returns the custom element use esm of this remote app entry.
+	 *
+	 * @return the custom element use esm of this remote app entry
+	 */
+	@Override
+	public boolean getCustomElementUseESM() {
+		return model.getCustomElementUseESM();
 	}
 
 	@Override
@@ -667,6 +685,16 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this remote app entry is custom element use esm.
+	 *
+	 * @return <code>true</code> if this remote app entry is custom element use esm; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isCustomElementUseESM() {
+		return model.isCustomElementUseESM();
+	}
+
+	/**
 	 * Returns <code>true</code> if this remote app entry is denied.
 	 *
 	 * @return <code>true</code> if this remote app entry is denied; <code>false</code> otherwise
@@ -846,6 +874,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setCustomElementURLs(String customElementURLs) {
 		model.setCustomElementURLs(customElementURLs);
+	}
+
+	/**
+	 * Sets whether this remote app entry is custom element use esm.
+	 *
+	 * @param customElementUseESM the custom element use esm of this remote app entry
+	 */
+	@Override
+	public void setCustomElementUseESM(boolean customElementUseESM) {
+		model.setCustomElementUseESM(customElementUseESM);
 	}
 
 	/**

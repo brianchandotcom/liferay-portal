@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(customElementHTMLElementName);
 		sb.append(", customElementURLs=");
 		sb.append(customElementURLs);
+		sb.append(", customElementUseESM=");
+		sb.append(customElementUseESM);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", friendlyURLMapping=");
@@ -219,6 +221,8 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setCustomElementURLs(customElementURLs);
 		}
 
+		remoteAppEntryImpl.setCustomElementUseESM(customElementUseESM);
+
 		if (description == null) {
 			remoteAppEntryImpl.setDescription("");
 		}
@@ -320,6 +324,8 @@ public class RemoteAppEntryCacheModel
 		customElementCSSURLs = (String)objectInput.readObject();
 		customElementHTMLElementName = objectInput.readUTF();
 		customElementURLs = (String)objectInput.readObject();
+
+		customElementUseESM = objectInput.readBoolean();
 		description = (String)objectInput.readObject();
 		friendlyURLMapping = objectInput.readUTF();
 		iFrameURL = objectInput.readUTF();
@@ -407,6 +413,8 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeObject(customElementURLs);
 		}
 
+		objectOutput.writeBoolean(customElementUseESM);
+
 		if (description == null) {
 			objectOutput.writeObject("");
 		}
@@ -493,6 +501,7 @@ public class RemoteAppEntryCacheModel
 	public String customElementCSSURLs;
 	public String customElementHTMLElementName;
 	public String customElementURLs;
+	public boolean customElementUseESM;
 	public String description;
 	public String friendlyURLMapping;
 	public String iFrameURL;

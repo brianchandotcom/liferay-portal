@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.content.dashboard.web.internal.info.item.provider.util.InfoItemFieldValuesProviderUtil;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
@@ -69,7 +70,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alejandro Tardín
  */
 public class FileEntryContentDashboardItem
-	extends BaseContentDashboardItem<FileEntry> {
+	implements ContentDashboardItem<FileEntry> {
 
 	public FileEntryContentDashboardItem(
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
@@ -270,6 +271,12 @@ public class FileEntryContentDashboardItem
 
 			return LocaleUtil.getDefault();
 		}
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		return InfoItemFieldValuesProviderUtil.getStringValue(
+			_fileEntry, _infoItemFieldValuesProvider, "description");
 	}
 
 	@Override

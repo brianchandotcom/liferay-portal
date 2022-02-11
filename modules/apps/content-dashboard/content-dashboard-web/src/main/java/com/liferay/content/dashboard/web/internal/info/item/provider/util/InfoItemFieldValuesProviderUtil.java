@@ -12,44 +12,34 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.web.internal.info.item.provider.util;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 
-import java.util.Locale;
+import java.util.Optional;
 
 /**
- * @author Yurena Cabrera
+ * @author Cristina González
  */
-public abstract class BaseContentDashboardItem<T>
-	implements ContentDashboardItem<T> {
+public class InfoItemFieldValuesProviderUtil {
 
-	@Override
-	public String getDescription(Locale locale) {
-		InfoItemFieldValuesProvider infoItemFieldValuesProvider =
-			getInfoItemFieldValuesProvider();
+	public static <T> String getStringValue(
+		T infoItem, InfoItemFieldValuesProvider<T> infoItemFieldValuesProvider,
+		String infoFieldName) {
 
 		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(getInfoItem());
+			infoItemFieldValuesProvider.getInfoItemFieldValues(infoItem);
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("description");
-
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object description = infoFieldValue.getValue();
-
-		return description.toString();
+		return Optional.ofNullable(
+			infoItemFieldValues.getInfoFieldValue(infoFieldName)
+		).map(
+			InfoFieldValue::getValue
+		).orElse(
+			StringPool.BLANK
+		).toString();
 	}
-
-	public abstract T getInfoItem();
-
-	public abstract InfoItemFieldValuesProvider
-		getInfoItemFieldValuesProvider();
 
 }

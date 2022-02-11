@@ -831,6 +831,16 @@ definition {
 		}
 	}
 
+	macro viewNameListIsNotPresent {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			WaitForPageLoad();
+
+			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
+		}
+	}
+
 	macro viewNameListInOrder {
 		var key_userName = "${name}";
 		var index = "${index}";

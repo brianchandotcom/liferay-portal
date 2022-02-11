@@ -868,6 +868,22 @@ definition {
 		}
 	}
 
+	macro viewNameListIsNotPresent {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			WaitForPageLoad();
+
+			while (IsElementPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+				ACSegments.searchSegment(findSegment = "${name}");
+
+				ACUtils.clearSearchBar();
+			}
+
+			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
+		}
+	}
+
 	macro viewNameListInOrder {
 		var key_userName = "${name}";
 		var index = "${index}";

@@ -366,33 +366,6 @@ definition {
 		}
 	}
 
-	@description = "Delete a widget page via menu item in pages administration."
-	@priority = "5"
-	@uitest
-	test DeleteViaPagesAdmin {
-		property portal.acceptance = "true";
-
-		task ("Add two widget pages") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("Delete the first widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.deletePage(pageName = "Test Page Name 1");
-		}
-
-		task ("View first widget page is not shown") {
-			PagesAdmin.viewPageItemNotPresent(
-				pageName = "Test Page Name 1",
-				privacy = "Public Pages");
-		}
-	}
-
 	@description = "Can edit the page name and layout template via pages administration."
 	@priority = "5"
 	test EditViaPagesAdmin {

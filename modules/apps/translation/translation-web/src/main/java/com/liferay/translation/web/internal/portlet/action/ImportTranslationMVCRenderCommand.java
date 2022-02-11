@@ -19,6 +19,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -28,22 +29,27 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.translation.web.internal.display.context.ImportTranslationDisplayContext;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
+	configurationPid = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration",
 	property = {
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
 		"mvc.command.name=/translation/import_translation"
@@ -71,6 +77,7 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 					ParamUtil.getLong(renderRequest, "classNameId"),
 					translationRequestHelper.getModelClassPK(),
 					themeDisplay.getCompanyId(),
+					_ffBulkTranslationConfiguration,
 					ParamUtil.getLong(renderRequest, "groupId"),
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
@@ -86,6 +93,13 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffBulkTranslationConfiguration = ConfigurableUtil.createConfigurable(
+			FFBulkTranslationConfiguration.class, properties);
 	}
 
 	private Object _getModel(String className, long classPK)
@@ -128,6 +142,9 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 
 		return infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 	}
+
+	private volatile FFBulkTranslationConfiguration
+		_ffBulkTranslationConfiguration;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

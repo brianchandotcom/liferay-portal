@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration;
 
 import javax.portlet.PortletURL;
 
@@ -35,8 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ImportTranslationDisplayContext {
 
 	public ImportTranslationDisplayContext(
-		long classNameId, long classPK, long companyId, long groupId,
-		HttpServletRequest httpServletRequest,
+		long classNameId, long classPK, long companyId,
+		FFBulkTranslationConfiguration ffBulkTranslationConfiguration,
+		long groupId, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, String title,
 		TranslationEntryLocalService translationEntryLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
@@ -44,6 +46,7 @@ public class ImportTranslationDisplayContext {
 		_classNameId = classNameId;
 		_classPK = classPK;
 		_companyId = companyId;
+		_ffBulkTranslationConfiguration = ffBulkTranslationConfiguration;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -103,6 +106,10 @@ public class ImportTranslationDisplayContext {
 		return _title;
 	}
 
+	public boolean isBulkTranslationEnabled() {
+		return _ffBulkTranslationConfiguration.enabled();
+	}
+
 	public boolean isPending() throws PortalException {
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				_companyId, _groupId, TranslationEntry.class.getName()) &&
@@ -138,6 +145,8 @@ public class ImportTranslationDisplayContext {
 	private final long _classNameId;
 	private final long _classPK;
 	private final long _companyId;
+	private final FFBulkTranslationConfiguration
+		_ffBulkTranslationConfiguration;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -73,10 +73,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 						<c:if test="<%= languageItemDisplay.isOverride() %>">
 							<h6>
-								<clay:label
-									displayType="info"
-									label="overridden"
-								/>
+								<liferay-ui:message key="languages-with-override" />: <%= languageItemDisplay.getOverrideLanguageIdsString() %>
 							</h6>
 						</c:if>
 					</liferay-ui:search-container-column-text>

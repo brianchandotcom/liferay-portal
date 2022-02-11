@@ -154,4 +154,28 @@ definition {
 		return "${productsCount}";
 	}
 
+	macro _getSKUId {
+		Variables.assertDefined(parameterList = "${productSKU}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		if (isSet(productSKU)) {
+			var skuId = JSONCurlUtil.get("${curl}", "$.items[?(@['sku'] == '${productSKU}')].['id']");
+		}
+
+		echo("The SKU ID is: ${skuId}");
+
+		return "${skuId}";
+	}
+
 }

@@ -23,17 +23,6 @@
 
 		<antcall target="record-test-generated-properties" />
 
-		<if>
-			<isset property="vm.host" />
-			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#vm.host="
-					value="vm.host=${vm.host}"
-				/>
-			</then>
-		</if>
-
 		<antcall inheritAll="false" target="setup-testable-tomcat" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

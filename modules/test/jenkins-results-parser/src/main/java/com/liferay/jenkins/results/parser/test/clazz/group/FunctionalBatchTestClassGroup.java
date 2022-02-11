@@ -180,13 +180,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 			Properties properties = JenkinsResultsParserUtil.getProperties(
 				new File(
-					portalWorkingDirectory, "portal-web/poshi-ext.properties"),
-				new File(
-					portalWorkingDirectory,
-					"portal-web/test/test-portal-web.properties"),
-				new File(
-					portalWorkingDirectory,
-					"portal-web/test/test-portal-web-ext.properties"));
+					portalWorkingDirectory, "portal-web/poshi-ext.properties"));
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirPath)) {
 				properties.setProperty("test.base.dir.name", testBaseDirPath);

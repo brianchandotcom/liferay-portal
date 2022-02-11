@@ -659,10 +659,11 @@ public class ObjectField implements Serializable {
 	@GraphQLName("BusinessType")
 	public static enum BusinessType {
 
-		BOOLEAN("Boolean"), DATE("Date"), DECIMAL("Decimal"),
-		INTEGER("Integer"), LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
-		PICKLIST("Picklist"), PRECISION_DECIMAL("PrecisionDecimal"),
-		RELATIONSHIP("Relationship"), TEXT("Text");
+		ATTACHMENT("Attachment"), BOOLEAN("Boolean"), DATE("Date"),
+		DECIMAL("Decimal"), INTEGER("Integer"), LONG_INTEGER("LongInteger"),
+		LONG_TEXT("LongText"), PICKLIST("Picklist"),
+		PRECISION_DECIMAL("PrecisionDecimal"), RELATIONSHIP("Relationship"),
+		TEXT("Text");
 
 		@JsonCreator
 		public static BusinessType create(String value) {

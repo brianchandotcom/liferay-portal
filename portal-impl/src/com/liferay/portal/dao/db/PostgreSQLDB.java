@@ -79,10 +79,18 @@ public class PostgreSQLDB extends BaseDB {
 	public List<Index> getIndexes(Connection connection) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
+		// https://issues.liferay.com/browse/LPS-136307
+		// https://www.postgresql.org/docs/13/view-pg-indexes.html
+		// https://www.postgresql.org/docs/13/catalog-pg-class.html
+		// https://www.postgresql.org/docs/13/catalog-pg-index.html
+
 		String sql = StringBundler.concat(
-			"select indexname, tablename, indexdef from pg_indexes where ",
-			"schemaname = current_schema() and (indexname like 'liferay_%' or ",
-			"indexname like 'ix_%')");
+			"select pg_indexes.indexname, pg_indexes.tablename, ",
+			"pg_index.indisunique from pg_indexes, pg_index, pg_class where ",
+			"pg_indexes.schemaname = current_schema() and ",
+			"(pg_indexes.indexname like 'liferay_%' or pg_indexes.indexname ",
+			"like 'ix_%') and pg_class.relname = pg_indexes.indexname and ",
+			"pg_index.indexrelid = pg_class.oid");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
@@ -91,14 +99,7 @@ public class PostgreSQLDB extends BaseDB {
 			while (resultSet.next()) {
 				String indexName = resultSet.getString("indexname");
 				String tableName = resultSet.getString("tablename");
-				String indexSQL = StringUtil.toLowerCase(
-					StringUtil.trim(resultSet.getString("indexdef")));
-
-				boolean unique = true;
-
-				if (indexSQL.startsWith("create index ")) {
-					unique = false;
-				}
+				boolean unique = resultSet.getBoolean("indisunique");
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}

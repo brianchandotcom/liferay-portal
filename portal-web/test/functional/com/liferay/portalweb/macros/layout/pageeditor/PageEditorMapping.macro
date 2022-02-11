@@ -15,6 +15,7 @@ definition {
 		}
 
 		PageEditor.clickEditableField(
+			className = "${className}",
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}",
@@ -160,6 +161,7 @@ definition {
 
 	macro mapEditableTextToField {
 		PageEditorMapping.gotoEditableFieldMapping(
+			className = "${className}",
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}",

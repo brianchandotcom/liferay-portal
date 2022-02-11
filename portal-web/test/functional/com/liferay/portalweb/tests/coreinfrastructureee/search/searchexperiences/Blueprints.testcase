@@ -578,6 +578,28 @@ definition {
 		Blueprints.viewCopiedContent(text = "clauses");
 	}
 
+	test CopyElementJSONViaEditElementPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.editElement(
+			element = "Text Match Over Multiple Fields",
+			searchForElement = "true");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		Click(
+			key_text = "Dropdown",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "View Element JSON");
+
+		SelectFrameTop();
+
+		Click.javaScriptClick(locator1 = "Button#COPY");
+
+		Blueprints.viewCopiedContent(text = "queryConfiguration");
+	}
+
 	test CopyScoreExplanationViaBlueprintsQueryBuilder {
 		Blueprints.openBlueprintsAdmin();
 

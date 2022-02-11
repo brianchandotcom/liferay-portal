@@ -91,9 +91,7 @@ definition {
 				locator1 = "Icon#ANY");
 		}
 
-		Click(
-			key_buttonName = "Done",
-			locator1 = "ACUtils#GENERIC_BUTTON");
+		Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
 	}
 
 	macro changeAttributeDataType {

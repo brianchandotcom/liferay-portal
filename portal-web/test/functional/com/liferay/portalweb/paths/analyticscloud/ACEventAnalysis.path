@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_DONE_BUTTON</td>
+	<td>//*[contains(@class,'show-overflow')]//*[contains(@class,'button-root')and text()='Done']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_PENCIL</td>
 	<td>//button[contains(@class,'btn-secondary')]//*[contains(@class,'pencil')]</td>
 	<td></td>

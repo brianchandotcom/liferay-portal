@@ -25,28 +25,29 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.DuplicateCommerceChannelException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.DuplicateChannelException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateCommerceChannelExceptionMapper
+public class DuplicateChannelExceptionMapper
 	extends BaseExceptionMapper<DuplicateCommerceChannelException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Duplicated channel";
+		return "Duplicate channel";
 	}
 
 	@Override
 	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return Response.Status.CONFLICT;
 	}
 
 }

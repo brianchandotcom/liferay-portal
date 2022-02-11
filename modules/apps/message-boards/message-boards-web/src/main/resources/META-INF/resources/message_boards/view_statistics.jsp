@@ -32,7 +32,7 @@ PortletURL portletURL = mbViewStatisticsDisplayContext.getPortletURL();
 		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
-		<div class="main-content-body">
+		<div class="main-content-body mt-4">
 			<h3><liferay-ui:message key="statistics" /></h3>
 
 			<%@ include file="/message_boards/view_statistics_panel.jspf" %>

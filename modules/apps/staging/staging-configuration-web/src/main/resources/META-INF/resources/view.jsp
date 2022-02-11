@@ -47,7 +47,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		<%@ include file="/staging_configuration_exceptions.jspf" %>
 
 		<clay:container-fluid
-			cssClass="main-content-body"
+			cssClass="main-content-body mt-4"
 		>
 			<liferay-ui:breadcrumb
 				showLayout="<%= false %>"

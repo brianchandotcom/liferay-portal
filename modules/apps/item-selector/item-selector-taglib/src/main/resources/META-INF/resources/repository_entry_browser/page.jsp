@@ -177,7 +177,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
 		<liferay-ui:search-container
-			cssClass='<%= displayStyle.equals("list") ? "main-content-body" : StringPool.BLANK %>'
+			cssClass='<%= displayStyle.equals("list") ? "main-content-body mt-4" : StringPool.BLANK %>'
 			searchContainer="<%= searchContainer %>"
 			total="<%= repositoryEntriesCount %>"
 			var="listSearchContainer"

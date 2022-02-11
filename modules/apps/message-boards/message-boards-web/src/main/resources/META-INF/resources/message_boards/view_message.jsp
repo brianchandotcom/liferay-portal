@@ -48,7 +48,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		<%@ include file="/message_boards/nav.jspf" %>
 	</c:if>
 
-	<div <%= !portletTitleBasedNavigation ? "class=\"main-content-body\"" : StringPool.BLANK %>>
+	<div <%= !portletTitleBasedNavigation ? "class=\"main-content-body mt-4\"" : StringPool.BLANK %>>
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<liferay-ui:breadcrumb
 				showCurrentGroup="<%= false %>"

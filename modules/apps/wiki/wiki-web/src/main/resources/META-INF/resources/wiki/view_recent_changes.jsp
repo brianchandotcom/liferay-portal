@@ -22,7 +22,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<div class="main-content-body">
+<div class="main-content-body mt-4">
 	<liferay-ui:header
 		title="recent-changes"
 	/>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.friendly.url.internal.util;
 
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.CharPool;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.Normalizer;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

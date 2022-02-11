@@ -31,17 +31,19 @@
 		</div>
 
 		<#if !disabled>
-			<@liferay_aui.input
-				name="${namespacedFieldName}URL"
-				type="hidden"
-				<#if validator.isNotNull(src)
-			>
-				value="${src}"
-				<#else>
-				value="${getFileEntryURL(fileEntry)}"
-				</#if>
-			/>
-
+			<#if validator.isNotNull(src)>
+				<@liferay_aui.input
+					name="${namespacedFieldName}URL"
+					type="hidden"
+					value="${src}"
+				/>
+			<#else>
+				<@liferay_aui.input
+					name="${namespacedFieldName}URL"
+					type="hidden"
+					value="${getFileEntryURL(fileEntry)}"
+				/>
+			</#if>
 			<@liferay_aui.input
 				label="image-description"
 				name="${namespacedFieldName}Alt"

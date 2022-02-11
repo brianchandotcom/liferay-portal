@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TextExtractor;
-import com.liferay.portal.util.PortalClassPathUtil;
+import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class TextExtractorImpl implements TextExtractor {
 
 				ProcessChannel<String> processChannel =
 					_processExecutor.execute(
-						PortalClassPathUtil.getPortalProcessConfig(),
+						ProcessConfigUtil.getProcessConfig(),
 						new ExtractTextProcessCallable(
 							StreamUtil.toByteArray(finalInputStream)));
 

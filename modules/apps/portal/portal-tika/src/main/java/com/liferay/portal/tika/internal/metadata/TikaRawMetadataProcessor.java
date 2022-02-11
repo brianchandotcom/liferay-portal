@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PortalClassPathUtil;
+import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -228,7 +228,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 				ProcessChannel<Metadata> processChannel =
 					_processExecutor.execute(
-						PortalClassPathUtil.getPortalProcessConfig(),
+						ProcessConfigUtil.getProcessConfig(),
 						extractMetadataProcessCallable);
 
 				Future<Metadata> future =

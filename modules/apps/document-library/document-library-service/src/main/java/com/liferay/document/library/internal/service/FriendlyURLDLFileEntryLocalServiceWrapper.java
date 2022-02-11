@@ -83,7 +83,16 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 	public DLFileEntry deleteFileEntry(long fileEntryId)
 		throws PortalException {
 
-		return super.deleteFileEntry(fileEntryId);
+		DLFileEntry dlFileEntry = super.deleteFileEntry(fileEntryId);
+
+		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
+			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				dlFileEntry.getGroupId(),
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				dlFileEntry.getFileEntryId());
+		}
+
+		return dlFileEntry;
 	}
 
 	@Override

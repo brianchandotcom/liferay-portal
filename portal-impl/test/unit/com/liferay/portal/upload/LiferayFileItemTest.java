@@ -14,20 +14,26 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.MimeTypesImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -51,9 +57,62 @@ public class LiferayFileItemTest {
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
 
-		MimeTypesUtil mimeTypesUtil = new MimeTypesUtil();
+		ReflectionTestUtil.setFieldValue(
+			MimeTypesUtil.class, "_mimeTypes",
+			new MimeTypes() {
 
-		mimeTypesUtil.setMimeTypes(new MimeTypesImpl());
+				@Override
+				public String getContentType(File file) {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getContentType(File file, String fileName) {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getContentType(
+					InputStream inputStream, String fileName) {
+
+					try {
+						Path path = Files.createTempFile(null, null);
+
+						Files.copy(
+							inputStream, path,
+							StandardCopyOption.REPLACE_EXISTING);
+
+						String contentType = Files.probeContentType(path);
+
+						if (contentType == null) {
+							contentType = ContentTypes.APPLICATION_OCTET_STREAM;
+						}
+
+						Files.delete(path);
+
+						return contentType;
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+				}
+
+				@Override
+				public String getContentType(String fileName) {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getExtensionContentType(String extension) {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public Set<String> getExtensions(String contentType) {
+					throw new UnsupportedOperationException();
+				}
+
+			});
 
 		_liferayFileItemFactory = new LiferayFileItemFactory(
 			FileUtil.createTempFolder());
@@ -83,8 +142,7 @@ public class LiferayFileItemTest {
 		liferayFileItem.getOutputStream();
 
 		Assert.assertEquals(
-			ContentTypes.APPLICATION_OCTET_STREAM,
-			liferayFileItem.getContentType());
+			ContentTypes.TEXT_PLAIN, liferayFileItem.getContentType());
 	}
 
 	@Test

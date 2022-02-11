@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.tika.internal.mime;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -46,6 +47,9 @@ import org.apache.tika.detect.Detector;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MimeTypesReaderMetKeys;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -57,27 +61,8 @@ import org.xml.sax.InputSource;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
+@Component(service = MimeTypes.class)
 public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
-
-	public void afterPropertiesSet() throws Exception {
-		read(
-			org.apache.tika.mime.MimeTypes.class.getResourceAsStream(
-				"tika-mimetypes.xml"),
-			_extensionsMap);
-
-		Map<String, Set<String>> extensionsMap = new HashMap<>();
-
-		read(
-			MimeTypesImpl.class.getResourceAsStream(
-				"/tika/custom-mimetypes.xml"),
-			extensionsMap);
-
-		for (Map.Entry<String, Set<String>> entry : extensionsMap.entrySet()) {
-			for (String mimeType : entry.getValue()) {
-				_contentTypes.put(mimeType, entry.getKey());
-			}
-		}
-	}
 
 	@Override
 	public String getContentType(File file) {
@@ -153,12 +138,33 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return extensions;
 	}
 
+	@Activate
+	protected void activate() throws Exception {
+		read(
+			org.apache.tika.mime.MimeTypes.class.getResourceAsStream(
+				"tika-mimetypes.xml"),
+			_extensionsMap);
+
+		Map<String, Set<String>> extensionsMap = new HashMap<>();
+
+		read(
+			MimeTypesImpl.class.getResourceAsStream(
+				"/tika/custom-mimetypes.xml"),
+			extensionsMap);
+
+		for (Map.Entry<String, Set<String>> entry : extensionsMap.entrySet()) {
+			for (String mimeType : entry.getValue()) {
+				_contentTypes.put(mimeType, entry.getKey());
+			}
+		}
+	}
+
 	protected void read(
 			InputStream inputStream, Map<String, Set<String>> extensionsMap)
 		throws Exception {
 
 		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
+			SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();

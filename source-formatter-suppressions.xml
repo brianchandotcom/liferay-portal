@@ -97,7 +97,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/security/xml/SecureXMLFactoryProviderImpl\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/ToolDependencies\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/util/InitUtil.java" />
-		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/util/MimeTypesImpl\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/xml/SAXReaderFactory\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/XMLMergerRunner\.java" />
 		<suppress checks="JSPIllegalSyntaxCheck" files="portal-web/docroot/html/portal/api/jsonws/action\.jsp" />

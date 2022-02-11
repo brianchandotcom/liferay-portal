@@ -12,37 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.tika.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypes;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  * @see    FileImplExtractTest
  */
+@RunWith(Arquillian.class)
 public class MimeTypesImplTest {
 
 	@ClassRule
-	public static LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		MimeTypesImpl mimeTypesImpl = new MimeTypesImpl();
-
-		mimeTypesImpl.afterPropertiesSet();
-
-		_mimeTypes = mimeTypesImpl;
-	}
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testDoc() {
@@ -213,6 +210,7 @@ public class MimeTypesImplTest {
 		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
 
+	@Inject
 	private MimeTypes _mimeTypes;
 
 }

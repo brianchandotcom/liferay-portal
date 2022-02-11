@@ -110,10 +110,8 @@ public class MimeTypesUtil {
 		return _mimeTypes;
 	}
 
-	public void setMimeTypes(MimeTypes mimeTypes) {
-		_mimeTypes = mimeTypes;
-	}
-
-	private static MimeTypes _mimeTypes;
+	private static volatile MimeTypes _mimeTypes =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MimeTypes.class, MimeTypesUtil.class, "_mimeTypes", true);
 
 }

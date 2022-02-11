@@ -13,67 +13,79 @@
  */
 
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
-export type TableProps = {
+type Column<T = any> = {
+	clickable?: boolean;
+	key: string;
+	render?: (itemValue: any, item: T) => String | React.ReactNode;
+	value: string;
+};
+
+export type TableProps<T = any> = {
 	actions?: any[];
 	className?: string;
-	columns: any[];
-	items: any[];
+	columns: Column[];
+	items: T[];
+	navigateTo?: (item: T) => string;
 };
 
-type CellWrapperProps = {
-	colSpan?: number;
-	index: number;
-};
+const Table: React.FC<TableProps> = ({
+	actions,
+	className,
+	columns,
+	items,
+	navigateTo,
+}) => {
+	const navigate = useNavigate();
 
-const CellWrapper: React.FC<CellWrapperProps> = ({
-	children,
-	colSpan = 1,
-	index,
-}) => (
-	<Cell
-		colSpan={colSpan}
-		expanded={index === 0}
-		headingTitle={index === 0}
-		key={index}
-	>
-		{children}
-	</Cell>
-);
-
-const Table: React.FC<TableProps> = ({actions, className, columns, items}) => (
-	<ClayTable borderless className={className} hover={false}>
-		<Head>
-			<Row>
-				{columns.map((column, index) => (
-					<Cell headingTitle key={index}>
-						{column.value}
-					</Cell>
-				))}
-
-				{actions && <Cell headingCell></Cell>}
-			</Row>
-		</Head>
-
-		<Body>
-			{items.map((item, index) => (
-				<Row key={index}>
-					{columns.map((column, columnIndex) => (
-						<CellWrapper index={columnIndex} key={columnIndex}>
-							{column.render
-								? column.render(item[column.key], item)
-								: item[column.key]}
-						</CellWrapper>
+	return (
+		<ClayTable borderless className={className} hover={false}>
+			<Head>
+				<Row>
+					{columns.map((column, index) => (
+						<Cell headingTitle key={index}>
+							{column.value}
+						</Cell>
 					))}
 
-					{actions && <Cell>Dropdown</Cell>}
+					{actions && <Cell headingCell></Cell>}
 				</Row>
-			))}
-		</Body>
-	</ClayTable>
-);
+			</Head>
+
+			<Body>
+				{items.map((item, index) => (
+					<Row key={index}>
+						{columns.map((column, columnIndex) => (
+							<Cell
+								className={classNames({
+									'cursor-pointer': column.clickable,
+								})}
+								expanded={columnIndex === 0}
+								headingCell={columnIndex === 0}
+								key={columnIndex}
+								onClick={() => {
+									if (navigateTo && column.clickable) {
+										navigate(navigateTo(item));
+									}
+								}}
+							>
+								{column.render
+									? column.render(item[column.key], item)
+									: item[column.key]}
+							</Cell>
+						))}
+
+						{actions && <Cell>Dropdown</Cell>}
+					</Row>
+				))}
+			</Body>
+		</ClayTable>
+	);
+};
 
 export default Table;

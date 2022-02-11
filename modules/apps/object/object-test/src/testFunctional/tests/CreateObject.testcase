@@ -2674,7 +2674,7 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
 	@priority = "5"
 	test CanRelateManyOtherEntriesBothObjects {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2707,8 +2707,6 @@ definition {
 			relationshipType = "manyToMany");
 
 		for (var letter : list "A,B") {
-			Navigator.openURL();
-
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter}");
@@ -2738,6 +2736,8 @@ definition {
 				tabName = "Relationship Tab");
 
 			Button.clickSave();
+
+			Navigator.openURL();
 		}
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
@@ -2750,12 +2750,16 @@ definition {
 			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
 		}
 
+		Navigator.openURL();
+
 		for (var letter : list "D,E,F") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
 
 			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
 		}
 
+		Navigator.openURL();
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
@@ -2766,18 +2770,14 @@ definition {
 			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
 
 			Refresh();
-		}
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+			WaitForPageLoad();
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry A");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		for (var letter : list "D,E") {
 			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
 		}
 
+		Navigator.openURL();
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry F");
@@ -2788,15 +2788,9 @@ definition {
 			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
 
 			Refresh();
-		}
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+			WaitForPageLoad();
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry F");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		for (var letter : list "B,C") {
 			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
 		}
 	}

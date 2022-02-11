@@ -38,6 +38,23 @@ public class RemoteAppEntryServiceWrapper
 
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry
+			addBundledAppRemoteAppEntry(
+				String externalReferenceCode, String bundledAppURL,
+				String description, String friendlyURLMapping,
+				boolean instanceable,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String portletCategoryName, String properties,
+				String sourceCodeURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryService.addBundledAppRemoteAppEntry(
+			externalReferenceCode, bundledAppURL, description,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
+	}
+
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry
 			addCustomElementRemoteAppEntry(
 				String externalReferenceCode, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,

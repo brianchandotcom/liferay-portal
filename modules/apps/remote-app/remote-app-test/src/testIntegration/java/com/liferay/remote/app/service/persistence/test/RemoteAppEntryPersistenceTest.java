@@ -141,6 +141,10 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newRemoteAppEntry.setBundledAppType(RandomTestUtil.randomString());
+
+		newRemoteAppEntry.setBundledAppURL(RandomTestUtil.randomString());
+
 		newRemoteAppEntry.setCustomElementCSSURLs(
 			RandomTestUtil.randomString());
 
@@ -205,6 +209,12 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingRemoteAppEntry.getModifiedDate()),
 			Time.getShortTimestamp(newRemoteAppEntry.getModifiedDate()));
+		Assert.assertEquals(
+			existingRemoteAppEntry.getBundledAppType(),
+			newRemoteAppEntry.getBundledAppType());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getBundledAppURL(),
+			newRemoteAppEntry.getBundledAppURL());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getCustomElementCSSURLs(),
 			newRemoteAppEntry.getCustomElementCSSURLs());
@@ -307,11 +317,12 @@ public class RemoteAppEntryPersistenceTest {
 			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "remoteAppEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "customElementHTMLElementName", true,
-			"friendlyURLMapping", true, "iFrameURL", true, "instanceable", true,
-			"name", true, "portletCategoryName", true, "sourceCodeURL", true,
-			"type", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			true, "modifiedDate", true, "bundledAppType", true, "bundledAppURL",
+			true, "customElementHTMLElementName", true, "friendlyURLMapping",
+			true, "iFrameURL", true, "instanceable", true, "name", true,
+			"portletCategoryName", true, "sourceCodeURL", true, "type", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -611,6 +622,10 @@ public class RemoteAppEntryPersistenceTest {
 		remoteAppEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		remoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		remoteAppEntry.setBundledAppType(RandomTestUtil.randomString());
+
+		remoteAppEntry.setBundledAppURL(RandomTestUtil.randomString());
 
 		remoteAppEntry.setCustomElementCSSURLs(RandomTestUtil.randomString());
 

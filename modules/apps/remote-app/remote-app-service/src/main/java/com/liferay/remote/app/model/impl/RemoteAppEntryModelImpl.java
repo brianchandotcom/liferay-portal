@@ -87,6 +87,7 @@ public class RemoteAppEntryModelImpl
 		{"remoteAppEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"bundledAppType", Types.VARCHAR}, {"bundledAppURL", Types.VARCHAR},
 		{"customElementCSSURLs", Types.CLOB},
 		{"customElementHTMLElementName", Types.VARCHAR},
 		{"customElementURLs", Types.CLOB}, {"description", Types.CLOB},
@@ -111,6 +112,8 @@ public class RemoteAppEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("bundledAppType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("bundledAppURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
@@ -130,7 +133,7 @@ public class RemoteAppEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bundledAppType VARCHAR(75) null,bundledAppURL VARCHAR(75) null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
@@ -352,6 +355,18 @@ public class RemoteAppEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<RemoteAppEntry, Date>)RemoteAppEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"bundledAppType", RemoteAppEntry::getBundledAppType);
+		attributeSetterBiConsumers.put(
+			"bundledAppType",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setBundledAppType);
+		attributeGetterFunctions.put(
+			"bundledAppURL", RemoteAppEntry::getBundledAppURL);
+		attributeSetterBiConsumers.put(
+			"bundledAppURL",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setBundledAppURL);
 		attributeGetterFunctions.put(
 			"customElementCSSURLs", RemoteAppEntry::getCustomElementCSSURLs);
 		attributeSetterBiConsumers.put(
@@ -643,6 +658,46 @@ public class RemoteAppEntryModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getBundledAppType() {
+		if (_bundledAppType == null) {
+			return "";
+		}
+		else {
+			return _bundledAppType;
+		}
+	}
+
+	@Override
+	public void setBundledAppType(String bundledAppType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_bundledAppType = bundledAppType;
+	}
+
+	@JSON
+	@Override
+	public String getBundledAppURL() {
+		if (_bundledAppURL == null) {
+			return "";
+		}
+		else {
+			return _bundledAppURL;
+		}
+	}
+
+	@Override
+	public void setBundledAppURL(String bundledAppURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_bundledAppURL = bundledAppURL;
 	}
 
 	@JSON
@@ -1297,6 +1352,8 @@ public class RemoteAppEntryModelImpl
 		remoteAppEntryImpl.setUserName(getUserName());
 		remoteAppEntryImpl.setCreateDate(getCreateDate());
 		remoteAppEntryImpl.setModifiedDate(getModifiedDate());
+		remoteAppEntryImpl.setBundledAppType(getBundledAppType());
+		remoteAppEntryImpl.setBundledAppURL(getBundledAppURL());
 		remoteAppEntryImpl.setCustomElementCSSURLs(getCustomElementCSSURLs());
 		remoteAppEntryImpl.setCustomElementHTMLElementName(
 			getCustomElementHTMLElementName());
@@ -1342,6 +1399,10 @@ public class RemoteAppEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		remoteAppEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		remoteAppEntryImpl.setBundledAppType(
+			this.<String>getColumnOriginalValue("bundledAppType"));
+		remoteAppEntryImpl.setBundledAppURL(
+			this.<String>getColumnOriginalValue("bundledAppURL"));
 		remoteAppEntryImpl.setCustomElementCSSURLs(
 			this.<String>getColumnOriginalValue("customElementCSSURLs"));
 		remoteAppEntryImpl.setCustomElementHTMLElementName(
@@ -1504,6 +1565,22 @@ public class RemoteAppEntryModelImpl
 		}
 		else {
 			remoteAppEntryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		remoteAppEntryCacheModel.bundledAppType = getBundledAppType();
+
+		String bundledAppType = remoteAppEntryCacheModel.bundledAppType;
+
+		if ((bundledAppType != null) && (bundledAppType.length() == 0)) {
+			remoteAppEntryCacheModel.bundledAppType = null;
+		}
+
+		remoteAppEntryCacheModel.bundledAppURL = getBundledAppURL();
+
+		String bundledAppURL = remoteAppEntryCacheModel.bundledAppURL;
+
+		if ((bundledAppURL != null) && (bundledAppURL.length() == 0)) {
+			remoteAppEntryCacheModel.bundledAppURL = null;
 		}
 
 		remoteAppEntryCacheModel.customElementCSSURLs =
@@ -1730,6 +1807,8 @@ public class RemoteAppEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _bundledAppType;
+	private String _bundledAppURL;
 	private String _customElementCSSURLs;
 	private String _customElementHTMLElementName;
 	private String _customElementURLs;
@@ -1787,6 +1866,8 @@ public class RemoteAppEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("bundledAppType", _bundledAppType);
+		_columnOriginalValues.put("bundledAppURL", _bundledAppURL);
 		_columnOriginalValues.put(
 			"customElementCSSURLs", _customElementCSSURLs);
 		_columnOriginalValues.put(
@@ -1847,37 +1928,41 @@ public class RemoteAppEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("customElementCSSURLs", 512L);
+		columnBitmasks.put("bundledAppType", 512L);
 
-		columnBitmasks.put("customElementHTMLElementName", 1024L);
+		columnBitmasks.put("bundledAppURL", 1024L);
 
-		columnBitmasks.put("customElementURLs", 2048L);
+		columnBitmasks.put("customElementCSSURLs", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("customElementHTMLElementName", 4096L);
 
-		columnBitmasks.put("friendlyURLMapping", 8192L);
+		columnBitmasks.put("customElementURLs", 8192L);
 
-		columnBitmasks.put("iFrameURL", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("instanceable", 32768L);
+		columnBitmasks.put("friendlyURLMapping", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("iFrameURL", 65536L);
 
-		columnBitmasks.put("portletCategoryName", 131072L);
+		columnBitmasks.put("instanceable", 131072L);
 
-		columnBitmasks.put("properties", 262144L);
+		columnBitmasks.put("name", 262144L);
 
-		columnBitmasks.put("sourceCodeURL", 524288L);
+		columnBitmasks.put("portletCategoryName", 524288L);
 
-		columnBitmasks.put("type_", 1048576L);
+		columnBitmasks.put("properties", 1048576L);
 
-		columnBitmasks.put("status", 2097152L);
+		columnBitmasks.put("sourceCodeURL", 2097152L);
 
-		columnBitmasks.put("statusByUserId", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
 
-		columnBitmasks.put("statusByUserName", 8388608L);
+		columnBitmasks.put("status", 8388608L);
 
-		columnBitmasks.put("statusDate", 16777216L);
+		columnBitmasks.put("statusByUserId", 16777216L);
+
+		columnBitmasks.put("statusByUserName", 33554432L);
+
+		columnBitmasks.put("statusDate", 67108864L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

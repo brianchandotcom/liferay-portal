@@ -226,6 +226,36 @@ public interface RemoteAppEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the bundled app type of this remote app entry.
+	 *
+	 * @return the bundled app type of this remote app entry
+	 */
+	@AutoEscape
+	public String getBundledAppType();
+
+	/**
+	 * Sets the bundled app type of this remote app entry.
+	 *
+	 * @param bundledAppType the bundled app type of this remote app entry
+	 */
+	public void setBundledAppType(String bundledAppType);
+
+	/**
+	 * Returns the bundled app url of this remote app entry.
+	 *
+	 * @return the bundled app url of this remote app entry
+	 */
+	@AutoEscape
+	public String getBundledAppURL();
+
+	/**
+	 * Sets the bundled app url of this remote app entry.
+	 *
+	 * @param bundledAppURL the bundled app url of this remote app entry
+	 */
+	public void setBundledAppURL(String bundledAppURL);
+
+	/**
 	 * Returns the custom element cssur ls of this remote app entry.
 	 *
 	 * @return the custom element cssur ls of this remote app entry

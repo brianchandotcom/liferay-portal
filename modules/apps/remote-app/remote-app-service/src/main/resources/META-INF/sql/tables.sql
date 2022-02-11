@@ -8,6 +8,8 @@ create table RemoteAppEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	bundledAppType VARCHAR(75) null,
+	bundledAppURL VARCHAR(75) null,
 	customElementCSSURLs TEXT null,
 	customElementHTMLElementName VARCHAR(255) null,
 	customElementURLs TEXT null,

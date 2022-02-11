@@ -52,6 +52,8 @@ public class RemoteAppEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("bundledAppType", getBundledAppType());
+		attributes.put("bundledAppURL", getBundledAppURL());
 		attributes.put("customElementCSSURLs", getCustomElementCSSURLs());
 		attributes.put(
 			"customElementHTMLElementName", getCustomElementHTMLElementName());
@@ -128,6 +130,18 @@ public class RemoteAppEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String bundledAppType = (String)attributes.get("bundledAppType");
+
+		if (bundledAppType != null) {
+			setBundledAppType(bundledAppType);
+		}
+
+		String bundledAppURL = (String)attributes.get("bundledAppURL");
+
+		if (bundledAppURL != null) {
+			setBundledAppURL(bundledAppURL);
 		}
 
 		String customElementCSSURLs = (String)attributes.get(
@@ -239,6 +253,26 @@ public class RemoteAppEntryWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the bundled app type of this remote app entry.
+	 *
+	 * @return the bundled app type of this remote app entry
+	 */
+	@Override
+	public String getBundledAppType() {
+		return model.getBundledAppType();
+	}
+
+	/**
+	 * Returns the bundled app url of this remote app entry.
+	 *
+	 * @return the bundled app url of this remote app entry
+	 */
+	@Override
+	public String getBundledAppURL() {
+		return model.getBundledAppURL();
 	}
 
 	/**
@@ -730,6 +764,26 @@ public class RemoteAppEntryWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets the bundled app type of this remote app entry.
+	 *
+	 * @param bundledAppType the bundled app type of this remote app entry
+	 */
+	@Override
+	public void setBundledAppType(String bundledAppType) {
+		model.setBundledAppType(bundledAppType);
+	}
+
+	/**
+	 * Sets the bundled app url of this remote app entry.
+	 *
+	 * @param bundledAppURL the bundled app url of this remote app entry
+	 */
+	@Override
+	public void setBundledAppURL(String bundledAppURL) {
+		model.setBundledAppURL(bundledAppURL);
 	}
 
 	/**

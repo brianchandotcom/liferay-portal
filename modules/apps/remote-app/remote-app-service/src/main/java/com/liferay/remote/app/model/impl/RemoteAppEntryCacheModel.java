@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,10 @@ public class RemoteAppEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", bundledAppType=");
+		sb.append(bundledAppType);
+		sb.append(", bundledAppURL=");
+		sb.append(bundledAppURL);
 		sb.append(", customElementCSSURLs=");
 		sb.append(customElementCSSURLs);
 		sb.append(", customElementHTMLElementName=");
@@ -177,6 +181,20 @@ public class RemoteAppEntryCacheModel
 		}
 		else {
 			remoteAppEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (bundledAppType == null) {
+			remoteAppEntryImpl.setBundledAppType("");
+		}
+		else {
+			remoteAppEntryImpl.setBundledAppType(bundledAppType);
+		}
+
+		if (bundledAppURL == null) {
+			remoteAppEntryImpl.setBundledAppURL("");
+		}
+		else {
+			remoteAppEntryImpl.setBundledAppURL(bundledAppURL);
 		}
 
 		if (customElementCSSURLs == null) {
@@ -297,6 +315,8 @@ public class RemoteAppEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		bundledAppType = objectInput.readUTF();
+		bundledAppURL = objectInput.readUTF();
 		customElementCSSURLs = (String)objectInput.readObject();
 		customElementHTMLElementName = objectInput.readUTF();
 		customElementURLs = (String)objectInput.readObject();
@@ -351,6 +371,20 @@ public class RemoteAppEntryCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (bundledAppType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(bundledAppType);
+		}
+
+		if (bundledAppURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(bundledAppURL);
+		}
 
 		if (customElementCSSURLs == null) {
 			objectOutput.writeObject("");
@@ -454,6 +488,8 @@ public class RemoteAppEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String bundledAppType;
+	public String bundledAppURL;
 	public String customElementCSSURLs;
 	public String customElementHTMLElementName;
 	public String customElementURLs;

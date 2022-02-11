@@ -11,6 +11,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="bundledAppType" type="String" />
+		<field name="bundledAppURL" type="String" />
 		<field name="customElementCSSURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>

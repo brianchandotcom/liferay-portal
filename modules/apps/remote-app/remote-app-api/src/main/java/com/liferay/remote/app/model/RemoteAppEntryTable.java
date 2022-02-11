@@ -55,6 +55,12 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String> bundledAppType =
+		createColumn(
+			"bundledAppType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String> bundledAppURL =
+		createColumn(
+			"bundledAppURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Clob> customElementCSSURLs =
 		createColumn(
 			"customElementCSSURLs", Clob.class, Types.CLOB,

@@ -45,6 +45,11 @@
 	<td>//span[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'Delete')]</td>
+	<td></td>
+</tr>
 <!-- CLOSE MODAL -->
 <tr>
 	<td>MODAL_CLOSE_BUTTON</td>

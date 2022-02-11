@@ -126,6 +126,12 @@ definition {
 		Button.click(button = "Submit for Publication");
 	}
 
+	macro clickTrash {
+		ScrollWebElementIntoView(locator1 = "Button#TRASH_ENABLED");
+
+		Click(locator1 = "Button#TRASH_ENABLED");
+	}
+
 	macro clickUpdate {
 		ScrollWebElementIntoView(
 			key_text = "Update",

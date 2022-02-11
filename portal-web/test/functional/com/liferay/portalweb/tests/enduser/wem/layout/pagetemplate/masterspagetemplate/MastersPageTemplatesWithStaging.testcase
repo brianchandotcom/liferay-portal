@@ -258,7 +258,7 @@ definition {
 		AssertElementNotPresent(
 			index = "2",
 			key_fragmentName = "Container",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			locator1 = "Fragment#FRAGMENT_LABEL");
 
 		PageEditor.viewFragment(fragmentName = "Container");
 

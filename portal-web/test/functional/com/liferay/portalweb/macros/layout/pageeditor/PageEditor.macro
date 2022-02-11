@@ -979,7 +979,7 @@ definition {
 		Click.javaScriptClick(
 			index = "${index}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
 	macro clickDiscardDraft {
@@ -3814,7 +3814,7 @@ definition {
 		AssertElementPresent(
 			index = "2",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
 	macro viewEditorEmpty {
@@ -3880,7 +3880,7 @@ definition {
 		AssertElementPresent(
 			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
 	macro viewFragmentEditableImage {
@@ -4009,7 +4009,7 @@ definition {
 		AssertElementNotPresent(
 			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
 	macro viewFragmentOrder {

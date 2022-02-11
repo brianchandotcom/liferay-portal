@@ -14,15 +14,21 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -30,13 +36,16 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
  */
 @Component(
+	configurationPid = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration",
 	service = ServiceWrapper.class
 )
 public class FriendlyURLDLFileEntryLocalServiceWrapper
@@ -52,11 +61,17 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.addFileEntry(
+		DLFileEntry dlFileEntry = super.addFileEntry(
 			externalReferenceCode, userId, groupId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
+
+		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
+			_addFriendlyURLEntry(dlFileEntry);
+		}
+
+		return dlFileEntry;
 	}
 
 	@Override
@@ -64,7 +79,6 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 		throws PortalException {
 
 		return super.deleteFileEntry(fileEntryId);
-
 	}
 
 	@Override
@@ -84,8 +98,35 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			reviewDate, serviceContext);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffFriendlyURLEntryFileEntryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFFriendlyURLEntryFileEntryConfiguration.class, properties);
+	}
+
+	private void _addFriendlyURLEntry(DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			dlFileEntry.getGroupId(),
+			_classNameLocalService.getClassNameId(FileEntry.class),
+			dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
+			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			dlFileEntry.getGroupId(),
+			_classNameLocalService.getClassNameId(FileEntry.class),
+			dlFileEntry.getFileEntryId(), urlTitle,
+			ServiceContextThreadLocal.getServiceContext());
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	private volatile FFFriendlyURLEntryFileEntryConfiguration
+		_ffFriendlyURLEntryFileEntryConfiguration;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

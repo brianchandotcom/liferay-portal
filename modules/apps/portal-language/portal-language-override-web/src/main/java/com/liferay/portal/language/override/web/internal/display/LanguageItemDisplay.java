@@ -14,8 +14,7 @@
 
 package com.liferay.portal.language.override.web.internal.display;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Drew Brokke
@@ -27,16 +26,12 @@ public class LanguageItemDisplay {
 		_value = value;
 	}
 
-	public void addOverrideLanguageId(String languageId) {
-		_overrideLanguageIds.add(languageId);
-	}
-
 	public String getKey() {
 		return _key;
 	}
 
-	public List<String> getOverrideLanguageIds() {
-		return _overrideLanguageIds;
+	public String getOverrideLanguageIdsString() {
+		return _overrideLanguageIdsString;
 	}
 
 	public String getValue() {
@@ -55,6 +50,10 @@ public class LanguageItemDisplay {
 		_override = override;
 	}
 
+	public void setOverrideLanguageIdsString(String overrideLanguageIdsString) {
+		_overrideLanguageIdsString = overrideLanguageIdsString;
+	}
+
 	public void setOverrideSelectedLanguageId(
 		boolean overrideSelectedLanguageId) {
 
@@ -63,7 +62,7 @@ public class LanguageItemDisplay {
 
 	private final String _key;
 	private boolean _override;
-	private final List<String> _overrideLanguageIds = new ArrayList<>();
+	private String _overrideLanguageIdsString = StringPool.BLANK;
 	private boolean _overrideSelectedLanguageId;
 	private final String _value;
 

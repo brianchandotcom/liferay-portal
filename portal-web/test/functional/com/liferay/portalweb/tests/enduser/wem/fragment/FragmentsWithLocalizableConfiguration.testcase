@@ -69,6 +69,15 @@ definition {
 				key_navItem = "General",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON");
 
+			AssertVisible(
+				key_fieldSetLabel = "Tamaño",
+				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Desbordamiento",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
+
 			AssertSelectedLabel(
 				key_fieldLabel = "Nivel de título",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -78,7 +87,7 @@ definition {
 				key_navItem = "Estilos",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON");
 
-			for (var fieldSetLabel : list "Margen,Margen interno (padding),Tamaño,Texto,Fondo,Bordes,Efectos") {
+			for (var fieldSetLabel : list "Margen,Margen interno (padding),Texto,Fondo,Bordes,Efectos") {
 				AssertVisible(
 					key_fieldSetLabel = "${fieldSetLabel}",
 					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
@@ -90,11 +99,6 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "0");
 			}
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Desbordamiento",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Familia de fuentes",

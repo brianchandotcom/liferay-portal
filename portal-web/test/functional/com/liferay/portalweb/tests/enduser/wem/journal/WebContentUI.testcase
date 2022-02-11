@@ -298,9 +298,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-146458. View the status filters."
+	@description = "This is a test for LPS-146458. View the available status filters of Web Content admin."
 	@priority = "5"
-	test ViewStatusFiltersOfWebContentActions {
+	test ViewStatusFiltersOfWebContentAdmin {
 		property portal.acceptance = "true";
 
 		task ("Add a published web content based on Basic Web Content") {

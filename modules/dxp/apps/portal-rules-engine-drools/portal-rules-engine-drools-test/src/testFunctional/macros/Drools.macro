@@ -8,10 +8,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
 			value1 = "${droolsContent}");
-
-		if (isSet(screenshotFileName)) {
-			SikuliAssertElementPresent(locator1 = "Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG");
-		}
 	}
 
 	macro viewDefaultPG {

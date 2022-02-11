@@ -65,12 +65,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addViaDayViewDragAndDrop {
-		SikuliDragAndDrop(
-			locator1 = "Calendar#SCHEDULER_DAY_VIEW_PNG",
-			value1 = "0,200");
-	}
-
 	macro changeCalendar {
 		CalendarNavigator.gotoView(viewType = "Week");
 

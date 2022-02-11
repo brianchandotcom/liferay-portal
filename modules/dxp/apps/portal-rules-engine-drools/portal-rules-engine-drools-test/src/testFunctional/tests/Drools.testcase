@@ -77,6 +77,8 @@ definition {
 		Drools.viewContentPG(
 			droolsContent = "Web Content Title",
 			welcomeMessage = "Welcome Test Test!");
+
+		takeScreenshot();
 	}
 
 }

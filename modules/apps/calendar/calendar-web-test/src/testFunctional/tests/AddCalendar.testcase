@@ -370,6 +370,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45062."
+	@ignore = "true"
 	@priority = "5"
 	test ResizeAddedEventsViaEventBlock {
 		property portal.acceptance = "true";
@@ -378,9 +379,7 @@ definition {
 
 		CalendarNavigator.gotoPreviousDay();
 
-		CalendarEvent.addViaDayView(
-			eventBlock = "true",
-			eventTitle = "Calendar Event Title1");
+		CalendarEvent.addViaDayView(eventTitle = "Calendar Event Title1");
 
 		Alert.viewSuccessMessage();
 

@@ -526,12 +526,7 @@ definition {
 	}
 
 	macro addViaDayView {
-		if (isSet(eventBlock)) {
-			CalendarScheduler.addViaDayViewDragAndDrop();
-		}
-		else {
-			CalendarScheduler.gotoAddViaDayView();
-		}
+		CalendarScheduler.gotoAddViaDayView();
 
 		CalendarScheduler.editTitle(eventTitle = "${eventTitle}");
 
@@ -1010,10 +1005,6 @@ definition {
 		}
 
 		MouseOver.mouseOverNotVisible(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC");
-
-		SikuliDragAndDrop(
-			locator1 = "Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON",
-			value1 = "0,100");
 	}
 
 	macro saveEventUserInvite {

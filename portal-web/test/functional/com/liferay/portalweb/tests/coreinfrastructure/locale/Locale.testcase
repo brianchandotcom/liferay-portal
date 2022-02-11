@@ -84,7 +84,7 @@ definition {
 
 		task ("Assert preferred locale persists by asserting Widget name.") {
 			AssertElementPresent(
-				key_portletName = "Menu de Navigation",
+				key_portletName = "Menu Affichage",
 				locator1 = "Portlet#TITLE");
 		}
 
@@ -187,7 +187,7 @@ definition {
 
 		task ("Assert preferred locale persists by asserting Widget name.") {
 			AssertElementPresent(
-				key_portletName = "Menu de Navigation",
+				key_portletName = "Menu Affichage",
 				locator1 = "Portlet#TITLE");
 		}
 

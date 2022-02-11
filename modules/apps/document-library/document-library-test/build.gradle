@@ -18,6 +18,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:friendly-url:friendly-url-api")
 	testIntegrationCompile project(":apps:frontend-editor:frontend-editor-api")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")

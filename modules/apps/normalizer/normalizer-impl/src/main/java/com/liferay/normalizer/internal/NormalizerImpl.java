@@ -18,10 +18,13 @@ import com.liferay.ibm.icu.text.Transliterator;
 import com.liferay.normalizer.Normalizer;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@Component(immediate = true, service = Normalizer.class)
 public class NormalizerImpl implements Normalizer {
 
 	@Override

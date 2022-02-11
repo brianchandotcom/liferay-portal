@@ -23,12 +23,39 @@ definition {
 	}
 
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDateEntry {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-146863 CanViewDateEntry pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "2022-01-01");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Jan 1, 2022");
+
+		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Custom Field");
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "01/01/2022");
 	}
 
 }

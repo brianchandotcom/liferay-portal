@@ -152,9 +152,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 						templateEntry, infoItemFieldValues,
 						_templateNodeFactory);
 
-			String content = templateDisplayTemplateTransformer.transform();
-
-			writer.write(content);
+			writer.write(templateDisplayTemplateTransformer.transform());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

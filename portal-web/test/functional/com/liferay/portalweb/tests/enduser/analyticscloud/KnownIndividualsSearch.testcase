@@ -185,9 +185,8 @@ definition {
 	test AssertNoIndividualsInterestsResults {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: After going to a specific individual details page and switch tab to "Interests" the message "An unexpected error occurred" appears.
+		// AC Refactor: The interest list data takes a long time to appear.
 		// AC Refactor ticket: LRAC-9645
-		// AC Bug ticket: LRAC-9646
 
 		task ("Add web contents to Site as interest topics") {
 			ACUtils.createWCAndAddToPage();
@@ -225,7 +224,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Navigate to Individule Interests") {
+		task ("Navigate to Individual Interests") {
 			ACNavigation.goToIndividuals();
 
 			ACNavigation.switchTab(tabName = "Known Individuals");
@@ -237,9 +236,6 @@ definition {
 
 		task ("Search non-existent interest") {
 			ACUtils.searchBar(searchItem = "sport");
-
-			// In the interests tab the message "An unexpected error occurred" appears.
-
 		}
 
 		task ("Assert there are no interests found") {

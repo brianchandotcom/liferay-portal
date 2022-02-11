@@ -318,4 +318,96 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
+	@priority = "4"
+	test CheckCannotPutExistingNameInAnalysisReport {
+		var defaultEventName = "webContentViewed";
+		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventName : list "${customEventName},${defaultEventName}") {
+			task ("Add the custom event to analysis by the all tab") {
+				ACEventAnalysis.addEvent(customEventName = "${eventName}");
+			}
+
+        	task ("Name the report") {
+            	ACUtils.fileName(fileName = "Save Analysis 1");
+        	}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
+			}
+
+        	task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+		}
+
+		task ("Assert that the warning pop-up appears") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:This analysis name is currently in use. Please try a different one.");
+		}
+
+		task ("Name the report and save") {
+            ACUtils.fileName(fileName = "Save Analysis 2");
+
+			ACUtils.saveButton();
+        }
+
+		task ("Assert the analysis is saved and show up on event analysis list") {
+			ACUtils.viewNameList(nameList = "${eventAnalysisNameList}");
+		}
+
+		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
+		var list2 = ListUtil.newListFromString("${customEventName},${defaultEventName}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var eventAnalysisName = ListUtil.get("${list1}", "${i}");
+			var eventName = ListUtil.get("${list2}", "${i}");
+
+			task ("Click on newly created analysis") {
+            	ACNavigation.openItem(itemName = "${eventAnalysisName}");
+        	}
+
+        	task ("Check that the analysis dashboard contains the event,attribute and filter") {
+				ACEventAnalysis.viewAnalysisDashboard(eventName = "${eventName}");
+			}
+
+        	task ("Check the analysis result appears") {
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
+			}
+
+			task ("Go to event analysis") {
+				ACNavigation.goToEventAnalysis();
+			}
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
 }

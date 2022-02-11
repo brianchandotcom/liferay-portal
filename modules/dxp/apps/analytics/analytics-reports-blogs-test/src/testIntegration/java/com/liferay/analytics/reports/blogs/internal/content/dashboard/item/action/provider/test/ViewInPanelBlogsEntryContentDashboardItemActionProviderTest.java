@@ -226,14 +226,14 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY,
-			_assetEntryLocalService.getEntry(
-				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
-		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					BlogsEntry.class.getName(), _blogsEntry.getEntryId())));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY,
+			_assetEntryLocalService.getEntry(
+				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(mockHttpServletRequest, user));

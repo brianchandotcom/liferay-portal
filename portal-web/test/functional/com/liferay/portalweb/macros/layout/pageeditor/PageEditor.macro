@@ -3390,7 +3390,7 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
 
-		Navigator.gotoNavTab(navTab = "Styles");
+		Navigator.gotoNavTab(navTab = "General");
 
 		Click(locator1 = "Button#RESTORE_DEFAULT");
 

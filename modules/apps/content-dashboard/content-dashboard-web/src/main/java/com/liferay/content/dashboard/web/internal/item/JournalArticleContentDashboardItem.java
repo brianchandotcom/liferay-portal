@@ -267,7 +267,8 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public String getDescription(Locale locale) {
 		return InfoItemFieldValuesProviderUtil.getStringValue(
-			_journalArticle, _infoItemFieldValuesProvider, "description");
+			_journalArticle, _infoItemFieldValuesProvider, "description",
+			locale);
 	}
 
 	@Override
@@ -297,6 +298,8 @@ public class JournalArticleContentDashboardItem
 	public JSONObject getSpecificInformationJSONObject(Locale locale) {
 		return JSONUtil.put(
 			"creationDate", _journalArticle.getCreateDate()
+		).put(
+			"description", getDescription(locale)
 		).put(
 			"displayDate", _journalArticle.getDisplayDate()
 		).put(

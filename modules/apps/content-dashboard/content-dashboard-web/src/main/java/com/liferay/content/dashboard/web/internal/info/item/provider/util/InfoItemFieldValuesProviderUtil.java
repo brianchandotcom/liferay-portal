@@ -19,6 +19,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -37,6 +38,22 @@ public class InfoItemFieldValuesProviderUtil {
 			infoItemFieldValues.getInfoFieldValue(infoFieldName)
 		).map(
 			InfoFieldValue::getValue
+		).orElse(
+			StringPool.BLANK
+		).toString();
+	}
+
+	public static <T> String getStringValue(
+		T infoItem, InfoItemFieldValuesProvider<T> infoItemFieldValuesProvider,
+		String infoFieldName, Locale locale) {
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(infoItem);
+
+		return Optional.ofNullable(
+			infoItemFieldValues.getInfoFieldValue(infoFieldName)
+		).map(
+			infoFieldValue -> infoFieldValue.getValue(locale)
 		).orElse(
 			StringPool.BLANK
 		).toString();

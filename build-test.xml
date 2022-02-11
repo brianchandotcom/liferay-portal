@@ -8595,6 +8595,8 @@ ${update.properties}</echo>
 
 		<Logger level="DEBUG" name="com.liferay.portal.equinox.log.bridge.internal" />
 
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
+
 		<Logger level="${release.local.service.impl.log.level}" name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
 
 		<Logger level="${dialect.detector.log.level}" name="com.liferay.portal.spring.hibernate.DialectDetector" />

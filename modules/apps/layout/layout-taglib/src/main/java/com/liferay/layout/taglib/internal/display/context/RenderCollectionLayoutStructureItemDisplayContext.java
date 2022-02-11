@@ -270,12 +270,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (Validator.isNotNull(
-				_collectionStyledLayoutStructureItem.getPaginationType()) &&
-			!Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				"none")) {
-
+		if (_isPaginationEnabled()) {
 			numberOfItemsToDisplay = Math.min(
 				numberOfItemsToDisplay,
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
@@ -317,12 +312,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (Validator.isNotNull(
-				_collectionStyledLayoutStructureItem.getPaginationType()) &&
-			!Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				"none")) {
-
+		if (_isPaginationEnabled()) {
 			numberOfItemsToDisplay = Math.min(
 				numberOfItemsToDisplay,
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());

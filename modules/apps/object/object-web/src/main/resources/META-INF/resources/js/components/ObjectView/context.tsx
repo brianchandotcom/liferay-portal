@@ -273,6 +273,8 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			const newState = {...state};
 
+			const objectFields = newState.objectFields;
+
 			const viewColumn = newState.objectView?.objectViewColumns.filter(
 				(viewColumn) => viewColumn.objectFieldName !== objectFieldName
 			);
@@ -284,6 +286,12 @@ const viewReducer = (state: TState, action: TAction) => {
 				};
 			});
 
+			objectFields.forEach((field) => {
+				if (objectFieldName === field.name) {
+					field.checked = false;
+				}
+			});
+
 			const newObjectView = {
 				...state.objectView,
 				objectViewColumns: newViewColumn,
@@ -291,6 +299,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			return {
 				...state,
+				objectFields,
 				objectView: newObjectView,
 			};
 		}

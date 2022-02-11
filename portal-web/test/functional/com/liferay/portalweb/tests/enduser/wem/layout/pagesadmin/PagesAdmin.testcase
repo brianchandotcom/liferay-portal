@@ -282,6 +282,89 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145215. View alert message when delete a page with scoped content."
+	@priority = "4"
+	test DeletePageWithScopedContent {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Web Content Display widget to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+		}
+
+		task ("Select the page as scope for Web Content Display") {
+			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View alert message when delete a page with scoped content") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.deletePage(
+				hasScopeGroup = "true",
+				pageName = "Test Page Name");
+
+			AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
+	}
+
+	@description = "This is a test for LPS-145215. View alert message when delete a page with scoped content and child page."
+	@priority = "4"
+	test DeletePageWithScopedContentAndChildPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a child content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Test Page",
+				parentLayoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Web Content Display widget to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+		}
+
+		task ("Select the page as scope for Web Content Display") {
+			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View alert message when delete a page with scoped content and child page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.deletePage(
+				hasChidren = "true",
+				hasScopeGroup = "true",
+				pageName = "Test Page Name");
+
+			AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
+	}
+
 	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
 	@priority = "4"
 	test GoToCollectionItemEditModeViaViewCollectionItemsModal {
@@ -912,91 +995,6 @@ definition {
 			for (var pageName : list "Page One,Page Two") {
 				AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'${pageName}')]");
 			}
-		}
-	}
-
-	@description = "This is a test for LPS-145215. View alert message when delete a content page with scoped content."
-	@priority = "4"
-	test ViewAlertMessageWhenDeleteContentPageWithScopedContent {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Add a web content display widget to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addWidget(portletName = "Web Content Display");
-		}
-
-		task ("Select the page as scope for Web Content Display") {
-			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name");
-
-			IFrame.closeFrame();
-
-			PageEditor.clickPublish();
-		}
-
-		task ("View alert message when delete a page with scoped content") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.deletePage(
-				hasScopedContent = "true",
-				pageName = "Test Page Name");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-				value1 = "No Pages yet.");
-		}
-	}
-
-	@description = "This is a test for LPS-145215. View alert message when delete a content page with scoped content and children."
-	@priority = "4"
-	test ViewAlertMessageWhenDeleteContentPageWithScopedContentAndChild {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Add a child content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Child Test Page",
-				parentLayoutName = "Test Page Name");
-		}
-
-		task ("Add a web content display widget to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addWidget(portletName = "Web Content Display");
-		}
-
-		task ("Select the page as scope for Web Content Display") {
-			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name");
-
-			IFrame.closeFrame();
-
-			PageEditor.clickPublish();
-		}
-
-		task ("View alert message when delete a page with scoped content and child") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.deletePage(
-				hasChidrenAndScopedContent = "true",
-				pageName = "Test Page Name");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-				value1 = "No Pages yet.");
 		}
 	}
 

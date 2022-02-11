@@ -596,6 +596,20 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _segmentsEntryIds;
 	}
 
+	private boolean _isPaginationEnabled() {
+		if (Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				PAGINATION_TYPE_NUMERIC) ||
+			Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				PAGINATION_TYPE_SIMPLE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private Integer _activePage;
 	private Integer _collectionCount;
 	private String _collectionItemType;

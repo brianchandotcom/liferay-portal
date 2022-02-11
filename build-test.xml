@@ -1751,7 +1751,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<contains string="${patch.requirements}" substring="base-" />
 					</not>
 					<not>
-						<matches pattern="sp\d+" string="${patch.requirements}" />
+						<matches pattern="(sp|u)\d+" string="${patch.requirements}" />
 					</not>
 				</and>
 				<then>
@@ -9112,7 +9112,7 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 				<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
 
 				<if>
-					<matches pattern="sp\d+" string="${patch.requirements}" />
+					<matches pattern="(sp|u)\d+" string="${patch.requirements}" />
 					<then>
 						<echo append="true" file="portal-impl/src/portal-ext.properties">
 							verify.patch.levels.disabled=true

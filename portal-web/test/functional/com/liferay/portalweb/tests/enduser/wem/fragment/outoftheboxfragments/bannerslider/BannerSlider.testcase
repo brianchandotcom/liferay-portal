@@ -58,18 +58,18 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				className = "slider",
 				field = "Title",
-				fragmentName = "Slider",
+				fragmentName = "Banner Slider",
 				id = "01-02-title");
 
 			PageEditorMapping.mapEditableTextToField(
 				className = "slider",
 				field = "Author Name",
-				fragmentName = "Slider",
+				fragmentName = "Banner Slider",
 				id = "01-03-subtitle");
 		}
 
 		task ("Change the Number of Slides to 2") {
-			PageEditor.gotoConfiguration(fragmentName = "Slider");
+			PageEditor.gotoConfiguration(fragmentName = "Banner Slider");
 
 			PageEditor.configureFragment(numberOfSlides = "2");
 		}
@@ -80,13 +80,13 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				className = "slider",
 				field = "Content",
-				fragmentName = "Slider",
+				fragmentName = "Banner Slider",
 				id = "02-02-title");
 
 			PageEditorMapping.mapEditableTextToField(
 				className = "slider",
 				field = "Display Page URL",
-				fragmentName = "Slider",
+				fragmentName = "Banner Slider",
 				id = "02-03-subtitle");
 		}
 

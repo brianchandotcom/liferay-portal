@@ -9,8 +9,28 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if (!(isSet(productDescription))) {
-			var productDescription = "";
+		if (!(isSet(cost))) {
+			var cost = "0";
+		}
+
+		if (!(isSet(depth))) {
+			var depth = "0";
+		}
+
+		if (!(isSet(discontinued))) {
+			var discontinued = "false";
+		}
+
+		if (!(isSet(gtin))) {
+			var gtin = "";
+		}
+
+		if (!(isSet(height))) {
+			var height = "0";
+		}
+
+		if (!(isSet(manufacturerPartNumber))) {
+			var manufacturerPartNumber = "";
 		}
 
 		if (!(isSet(metaDescription))) {
@@ -25,12 +45,47 @@ definition {
 			var metaTitle = "";
 		}
 
+		if (!(isSet(price))) {
+			var price = "0";
+		}
+
+		if (!(isSet(productDescription))) {
+			var productDescription = "";
+		}
+
+		if (!(isSet(promoPrice))) {
+			var promoPrice = "0";
+		}
+
+		if (!(isSet(purchasable))) {
+			var purchasable = "true";
+		}
+
+		if (!(isSet(replacementSKU))) {
+			var replacementSkuId = "";
+		}
+		else {
+			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${replacementSKU}");
+		}
+
 		if (!(isSet(shortDescription))) {
 			var shortDescription = "";
 		}
 
 		if (!(isSet(sku))) {
 			var sku = "default";
+		}
+
+		if (!(isSet(unspc))) {
+			var unspc = "";
+		}
+
+		if (!(isSet(weight))) {
+			var weight = "0";
+		}
+
+		if (!(isSet(width))) {
+			var width = "0";
 		}
 
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
@@ -45,7 +100,6 @@ definition {
 					"catalogId": "${catalogId}",
 					"categories": [],
 					"customFields": [],
-					"defaultSku": "${sku}",
 					"description": {
 					  "en_US": "${productDescription}"
 					},
@@ -70,6 +124,24 @@ definition {
 					"shortDescription": {
 					  "en_US": "${shortDescription}"
 					},
+					"skus": [
+				    {
+				      "cost": "${cost}",
+				      "depth": "${depth}",
+				      "discontinued": "${discontinued}",
+				      "gtin": "${gtin}",
+				      "height": "${height}",
+				      "manufacturerPartNumber": "${manufacturerPartNumber}",
+				      "neverExpire": true,
+				      "published": true,
+				      "purchasable": "${purchasable}",
+				      "replacementSkuId": "${replacementSkuId}",
+				      "sku": "${sku}",
+				      "unspsc": "${unspc}",
+				      "weight": "${weight}",
+				      "width": "${width}"
+				    }
+				  ],
 					"tags": [],
 					"workflowStatusInfo": {
 					  "code": 0,

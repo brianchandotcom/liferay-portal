@@ -63,18 +63,36 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="please-enter-a-file-with-a-valid-xliff-file-extension" />
 
 				<div>
-					<react:component
-						module="js/ImportTranslation.es"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
-							).put(
-								"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
-							).put(
-								"workflowPending", importTranslationDisplayContext.isPending()
-							).build()
-						%>'
-					/>
+					<c:choose>
+						<c:when test="<%= importTranslationDisplayContext.isBulkTranslationEnabled() %>">
+							<react:component
+								module="js/ImportTranslationMultipleFiles"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
+									).put(
+										"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
+									).put(
+										"workflowPending", importTranslationDisplayContext.isPending()
+									).build()
+								%>'
+							/>
+						</c:when>
+						<c:otherwise>
+							<react:component
+								module="js/ImportTranslation.es"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
+									).put(
+										"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
+									).put(
+										"workflowPending", importTranslationDisplayContext.isPending()
+									).build()
+								%>'
+							/>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</clay:sheet>
 		</clay:container-fluid>

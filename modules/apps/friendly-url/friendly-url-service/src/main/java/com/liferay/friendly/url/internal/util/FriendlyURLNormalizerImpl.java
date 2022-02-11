@@ -14,6 +14,7 @@
 
 package com.liferay.friendly.url.internal.util;
 
+import com.liferay.normalizer.Normalizer;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -169,7 +170,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			return friendlyURL;
 		}
 
-		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
+		friendlyURL = _normalizer.normalizeToAscii(friendlyURL);
 
 		StringBuilder sb = new StringBuilder(friendlyURL.length());
 
@@ -231,5 +232,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		_REPLACE_CHARS = replaceChars;
 	}
+
+	@Reference
+	private Normalizer _normalizer;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.rss.internal.export;
 
+import com.liferay.normalizer.Normalizer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,7 @@ import java.util.List;
 import org.jdom2.IllegalDataException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -77,8 +79,8 @@ public class RSSExporterImpl implements RSSExporter {
 		}
 	}
 
-	private static String _regexpStrip(String text) {
-		text = Normalizer.normalizeToAscii(text);
+	private String _regexpStrip(String text) {
+		text = _normalizer.normalizeToAscii(text);
 
 		char[] array = text.toCharArray();
 
@@ -93,9 +95,7 @@ public class RSSExporterImpl implements RSSExporter {
 		return new String(array);
 	}
 
-	private static void _regexpStrip(
-		com.rometools.rome.feed.synd.SyndFeed syndFeed) {
-
+	private void _regexpStrip(com.rometools.rome.feed.synd.SyndFeed syndFeed) {
 		syndFeed.setTitle(_regexpStrip(syndFeed.getTitle()));
 		syndFeed.setDescription(_regexpStrip(syndFeed.getDescription()));
 
@@ -226,5 +226,8 @@ public class RSSExporterImpl implements RSSExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RSSExporterImpl.class);
+
+	@Reference
+	private Normalizer _normalizer;
 
 }

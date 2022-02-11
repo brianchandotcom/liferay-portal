@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_POSITION</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper')][@draggable='true'])[${key_position}][@aria-label='${key_fragmentName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[@aria-label='${key_fragmentName}']//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
 	<td></td>

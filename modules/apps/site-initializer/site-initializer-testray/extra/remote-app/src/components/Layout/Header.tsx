@@ -26,7 +26,7 @@ const Header = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="d-flex flex-column header-container pb-2 pt-4">
+		<div className="d-flex flex-column header-container pt-4">
 			<div className="d-flex">
 				<div className="align-items-center d-flex justify-content-center mx-3">
 					<DropDown data={[]}></DropDown>
@@ -56,22 +56,20 @@ const Header = () => {
 				</div>
 			</div>
 
-			<div>
-				<ClayTabs className="header-container-tabs" modern>
-					{tabs.map((tab, index) => (
-						<ClayTabs.Item
-							active={tab.active}
-							innerProps={{
-								'aria-controls': `tabpanel-${index}`,
-							}}
-							key={index}
-							onClick={() => navigate(tab.path)}
-						>
-							{tab.title}
-						</ClayTabs.Item>
-					))}
-				</ClayTabs>
-			</div>
+			<ClayTabs className="header-container-tabs ml-3" modern>
+				{tabs.map((tab, index) => (
+					<ClayTabs.Item
+						active={tab.active}
+						innerProps={{
+							'aria-controls': `tabpanel-${index}`,
+						}}
+						key={index}
+						onClick={() => navigate(tab.path)}
+					>
+						{tab.title}
+					</ClayTabs.Item>
+				))}
+			</ClayTabs>
 		</div>
 	);
 };

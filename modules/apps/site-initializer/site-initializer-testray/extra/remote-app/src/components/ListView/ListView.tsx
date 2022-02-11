@@ -19,18 +19,18 @@ import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
 import Table, {TableProps} from '../Table';
 
-type LiferayQueryResponse = {
-	items: any[];
+type LiferayQueryResponse<T = any> = {
+	items: T[];
 	lastPage: number;
 	page: number;
 	pageSize: number;
 	totalCount: number;
 };
 
-type ListViewProps = {
+type ListViewProps<T = any> = {
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
-	transformData: (data: any) => LiferayQueryResponse;
+	transformData: (data: T) => LiferayQueryResponse<T>;
 	variables: any;
 };
 

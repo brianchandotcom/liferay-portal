@@ -149,12 +149,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, boolean.class,
-				String.class
+				boolean.class, boolean.class, String.class, String.class,
+				String.class, String.class, String.class, int.class, int.class,
+				int.class, boolean.class, boolean.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			LocaleUtil.toLanguageId(LocaleUtil.US),
+			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(
@@ -162,8 +162,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20,
-			"regular", false, StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20, 0,
+			true, false, StringPool.BLANK);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -237,12 +237,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, boolean.class,
-				String.class
+				boolean.class, boolean.class, String.class, String.class,
+				String.class, String.class, String.class, int.class, int.class,
+				int.class, boolean.class, boolean.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			LocaleUtil.toLanguageId(LocaleUtil.US),
+			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -254,8 +254,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 2, 20,
-			"regular", false, StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 2, 20, 0,
+			true, false, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -291,12 +291,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, boolean.class,
-				String.class
+				boolean.class, boolean.class, String.class, String.class,
+				String.class, String.class, String.class, int.class, int.class,
+				int.class, boolean.class, boolean.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			LocaleUtil.toLanguageId(LocaleUtil.US),
+			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -308,8 +308,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20,
-			"regular", false, StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20, 0,
+			true, false, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 

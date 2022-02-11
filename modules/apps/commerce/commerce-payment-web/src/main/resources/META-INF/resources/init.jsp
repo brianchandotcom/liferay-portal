@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.payment.constants.CommercePaymentScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRelNameException" %><%@
+page import="com.liferay.commerce.payment.exception.DuplicateCommercePaymentMethodGroupRelQualifierException" %><%@
 page import="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel" %><%@
 page import="com.liferay.commerce.payment.web.internal.constants.CommercePaymentMethodGroupRelClayDataSetDisplayNames" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelQualifiersDisplayContext" %><%@

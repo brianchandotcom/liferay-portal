@@ -37,6 +37,8 @@ boolean hasPermission = commerceShippingFixedOptionQualifiersDisplayContext.hasP
 	<aui:input name="orderTypeQualifiers" type="hidden" value="<%= orderTypeQualifiers %>" />
 	<aui:input name="termEntryQualifiers" type="hidden" value="<%= termEntryQualifiers %>" />
 
+	<liferay-ui:error exception="<%= DuplicateCommerceShippingFixedOptionQualifierException.class %>" message="that-qualifier-is-already-linked" />
+
 	<aui:model-context bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" />
 
 	<commerce-ui:panel

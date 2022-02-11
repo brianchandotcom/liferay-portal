@@ -15,14 +15,17 @@
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.payment.exception.DuplicateCommercePaymentMethodGroupRelQualifierException;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
 
@@ -59,9 +62,26 @@ public class EditCommercePaymentMethodGroupRelQualifiersMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
+			if (exception instanceof
+					DuplicateCommercePaymentMethodGroupRelQualifierException) {
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				SessionMessages.add(
+					actionRequest,
+					_portal.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+				SessionMessages.add(
+					actionRequest,
+					_portal.getPortletId(actionRequest) +
+						SessionMessages.
+							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			}
+			else {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
 		}
 	}
 
@@ -96,5 +116,8 @@ public class EditCommercePaymentMethodGroupRelQualifiersMVCActionCommand
 	@Reference
 	private CommercePaymentMethodGroupRelQualifierService
 		_commercePaymentMethodGroupRelQualifierService;
+
+	@Reference
+	private Portal _portal;
 
 }

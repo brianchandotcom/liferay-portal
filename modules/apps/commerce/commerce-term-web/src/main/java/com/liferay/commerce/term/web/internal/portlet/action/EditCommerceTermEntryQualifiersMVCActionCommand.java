@@ -16,6 +16,7 @@ package com.liferay.commerce.term.web.internal.portlet.action;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
+import com.liferay.commerce.term.exception.DuplicateCommerceTermEntryRelException;
 import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -47,7 +48,8 @@ public class EditCommerceTermEntryQualifiersMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -57,9 +59,22 @@ public class EditCommerceTermEntryQualifiersMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
+			if (exception instanceof DuplicateCommerceTermEntryRelException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
 		}
 	}
 

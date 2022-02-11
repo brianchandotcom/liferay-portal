@@ -16,6 +16,7 @@ package com.liferay.commerce.term.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.term.exception.DuplicateCommerceTermEntryRelException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.model.CommerceTermEntryRelTable;
@@ -63,6 +64,10 @@ public class CommerceTermEntryRelLocalServiceImpl
 			long commerceTermEntryId)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		_validate(classNameId, classPK, commerceTermEntryId);
+
 		CommerceTermEntryRel commerceTermEntryRel =
 			commerceTermEntryRelPersistence.create(
 				counterLocalService.increment());
@@ -73,8 +78,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 		commerceTermEntryRel.setUserId(user.getUserId());
 		commerceTermEntryRel.setUserName(user.getFullName());
 
-		commerceTermEntryRel.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+		commerceTermEntryRel.setClassNameId(classNameId);
 		commerceTermEntryRel.setClassPK(classPK);
 		commerceTermEntryRel.setCommerceTermEntryId(commerceTermEntryId);
 
@@ -254,6 +258,19 @@ public class CommerceTermEntryRelLocalServiceImpl
 					return null;
 				}
 			));
+	}
+
+	private void _validate(
+			long classNameId, long classPK, long commerceTermEntryId)
+		throws PortalException {
+
+		CommerceTermEntryRel commerceTermEntryRel =
+			commerceTermEntryRelPersistence.fetchByC_C_C(
+				classNameId, classPK, commerceTermEntryId);
+
+		if (commerceTermEntryRel != null) {
+			throw new DuplicateCommerceTermEntryRelException();
+		}
 	}
 
 	@Reference

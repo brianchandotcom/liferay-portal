@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.shipping.engine.fixed.exception.DuplicateCommerceShippingFixedOptionQualifierException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifier;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifierTable;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionTable;
@@ -52,6 +53,10 @@ public class CommerceShippingFixedOptionQualifierLocalServiceImpl
 				long commerceShippingFixedOptionId)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		_validate(classNameId, classPK, commerceShippingFixedOptionId);
+
 		CommerceShippingFixedOptionQualifier
 			commerceShippingFixedOptionQualifier =
 				commerceShippingFixedOptionQualifierPersistence.create(
@@ -63,8 +68,7 @@ public class CommerceShippingFixedOptionQualifierLocalServiceImpl
 		commerceShippingFixedOptionQualifier.setUserId(user.getUserId());
 		commerceShippingFixedOptionQualifier.setUserName(user.getFullName());
 
-		commerceShippingFixedOptionQualifier.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+		commerceShippingFixedOptionQualifier.setClassNameId(classNameId);
 		commerceShippingFixedOptionQualifier.setClassPK(classPK);
 		commerceShippingFixedOptionQualifier.setCommerceShippingFixedOptionId(
 			commerceShippingFixedOptionId);
@@ -270,6 +274,20 @@ public class CommerceShippingFixedOptionQualifierLocalServiceImpl
 							return null;
 						}
 					));
+	}
+
+	private void _validate(
+			long classNameId, long classPK, long commerceShippingFixedOptionId)
+		throws PortalException {
+
+		CommerceShippingFixedOptionQualifier
+			commerceShippingFixedOptionQualifier =
+				commerceShippingFixedOptionQualifierPersistence.fetchByC_C_C(
+					classNameId, classPK, commerceShippingFixedOptionId);
+
+		if (commerceShippingFixedOptionQualifier != null) {
+			throw new DuplicateCommerceShippingFixedOptionQualifierException();
+		}
 	}
 
 	@ServiceReference(type = CustomSQL.class)

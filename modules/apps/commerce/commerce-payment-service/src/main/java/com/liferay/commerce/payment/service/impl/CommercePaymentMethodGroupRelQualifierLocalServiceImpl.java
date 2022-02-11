@@ -16,6 +16,7 @@ package com.liferay.commerce.payment.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.payment.exception.DuplicateCommercePaymentMethodGroupRelQualifierException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifierTable;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelTable;
@@ -43,6 +44,7 @@ import java.util.List;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 	extends CommercePaymentMethodGroupRelQualifierLocalServiceBaseImpl {
@@ -53,6 +55,10 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 				long userId, String className, long classPK,
 				long commercePaymentMethodGroupRelId)
 		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		_validate(classNameId, classPK, commercePaymentMethodGroupRelId);
 
 		CommercePaymentMethodGroupRelQualifier
 			commercePaymentMethodGroupRelQualifier =
@@ -66,8 +72,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 		commercePaymentMethodGroupRelQualifier.setUserId(user.getUserId());
 		commercePaymentMethodGroupRelQualifier.setUserName(user.getFullName());
 
-		commercePaymentMethodGroupRelQualifier.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+		commercePaymentMethodGroupRelQualifier.setClassNameId(classNameId);
 		commercePaymentMethodGroupRelQualifier.setClassPK(classPK);
 		commercePaymentMethodGroupRelQualifier.
 			setCommercePaymentMethodGroupRelId(commercePaymentMethodGroupRelId);
@@ -309,6 +314,21 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 							return null;
 						}
 					));
+	}
+
+	private void _validate(
+			long classNameId, long classPK,
+			long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		CommercePaymentMethodGroupRelQualifier
+			commercePaymentMethodGroupRelQualifier =
+				commercePaymentMethodGroupRelQualifierPersistence.fetchByC_C_C(
+					classNameId, classPK, commercePaymentMethodGroupRelId);
+
+		if (commercePaymentMethodGroupRelQualifier != null) {
+			throw new DuplicateCommercePaymentMethodGroupRelQualifierException();
+		}
 	}
 
 	@ServiceReference(type = CustomSQL.class)

@@ -471,6 +471,15 @@ definition {
 				value1 = "${webContentDate}");
 		}
 
+		if (isSet(webContentGeolocation)) {
+			var lat = StringUtil.extractFirst("${webContentGeolocation}", ",");
+			var lng = StringUtil.extractLast("${webContentGeolocation}", ",");
+
+			Geolocation.setMarkerPosition(
+				lat = "${lat}",
+				lng = "${lng}");
+		}
+
 		if (isSet(webContentGrid)) {
 			if (!(isSet(webContentGridFieldLabel))) {
 				var webContentGridFieldLabel = "Grid";
@@ -2524,6 +2533,15 @@ definition {
 			AssertElementPresent(
 				key_fieldFieldLabel = "${webContentGeolocationFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+			if (isSet(location)) {
+				var lat = StringUtil.extractFirst("${location}", ",");
+				var lng = StringUtil.extractLast("${location}", ",");
+
+				Geolocation.assertMarkerPosition(
+					lat = "${lat}",
+					lng = "${lng}");
+			}
 		}
 
 		if (isSet(webContentGrid)) {

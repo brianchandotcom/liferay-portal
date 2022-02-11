@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,12 +28,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julien Castelain
@@ -62,7 +58,7 @@ public class FrontendComponentsTopHeadDynamicInclude
 		sb.append(_ffFrontendJSComponentsConfiguration.enableClayTreeView());
 		sb.append(";</script>");
 
-		printWriter.println(sb.toString());
+		printWriter.println(sb);
 	}
 
 	@Override
@@ -72,11 +68,7 @@ public class FrontendComponentsTopHeadDynamicInclude
 
 	@Activate
 	@Modified
-	protected void activate(
-			BundleContext bundleContext, ComponentContext componentContext,
-			Map<String, Object> properties)
-		throws Exception {
-
+	protected void activate(Map<String, Object> properties) {
 		_ffFrontendJSComponentsConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFFrontendJSComponentsConfiguration.class, properties);
@@ -84,8 +76,5 @@ public class FrontendComponentsTopHeadDynamicInclude
 
 	private volatile FFFrontendJSComponentsConfiguration
 		_ffFrontendJSComponentsConfiguration;
-
-	@Reference
-	private Portal _portal;
 
 }

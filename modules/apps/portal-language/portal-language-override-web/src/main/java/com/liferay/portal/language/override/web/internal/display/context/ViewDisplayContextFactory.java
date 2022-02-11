@@ -16,6 +16,7 @@ package com.liferay.portal.language.override.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -146,6 +148,32 @@ public class ViewDisplayContextFactory {
 		_setResults(renderRequest, searchContainer);
 
 		return searchContainer;
+	}
+
+	private String _getLanguageIdsString(
+		List<String> languageIds, String selectedLanguageId) {
+
+		StringBundler sb = new StringBundler(languageIds.size());
+
+		Iterator<String> iterator = languageIds.iterator();
+
+		while (iterator.hasNext()) {
+			String overrideLanguageId = iterator.next();
+
+			if (Objects.equals(selectedLanguageId, overrideLanguageId)) {
+				sb.append(
+					String.format("<strong>%s</strong>", overrideLanguageId));
+			}
+			else {
+				sb.append(overrideLanguageId);
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private List<DropdownItem> _getTranslationLanguageDropdownItems(
@@ -249,8 +277,8 @@ public class ViewDisplayContextFactory {
 					}
 
 					languageItemDisplay.setOverrideLanguageIdsString(
-						StringUtil.merge(
-							overrideLanguageIds, StringPool.COMMA_AND_SPACE));
+						_getLanguageIdsString(
+							overrideLanguageIds, selectedLanguageId));
 
 					languageItemDisplays.add(languageItemDisplay);
 				}
@@ -288,9 +316,8 @@ public class ViewDisplayContextFactory {
 						}
 
 						languageItemDisplay.setOverrideLanguageIdsString(
-							StringUtil.merge(
-								overrideLanguageIds,
-								StringPool.COMMA_AND_SPACE));
+							_getLanguageIdsString(
+								overrideLanguageIds, selectedLanguageId));
 					}
 
 					languageItemDisplays.add(languageItemDisplay);

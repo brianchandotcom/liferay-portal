@@ -305,9 +305,9 @@ definition {
 
 		task ("Add a published web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
+				content = "Web Content Content",
 				groupName = "Test Site Name",
-				title = "Published WebContent Title");
+				title = "Web Content Title");
 		}
 
 		task ("Assert the filters of pending and denied with workflow disabled") {

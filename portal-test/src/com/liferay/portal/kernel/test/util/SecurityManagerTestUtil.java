@@ -37,7 +37,7 @@ public class SecurityManagerTestUtil {
 				@Override
 				public void checkPermission(Permission permission) {
 					if (!Objects.equals(
-							permission.getName(), _SUPPRESS_ACCESS_CHECKS)) {
+							permission.getName(), "suppressAccessChecks")) {
 						return;
 					}
 
@@ -54,8 +54,5 @@ public class SecurityManagerTestUtil {
 
 		return swappableSecurityManager;
 	}
-
-	private static final String _SUPPRESS_ACCESS_CHECKS =
-		"suppressAccessChecks";
 
 }

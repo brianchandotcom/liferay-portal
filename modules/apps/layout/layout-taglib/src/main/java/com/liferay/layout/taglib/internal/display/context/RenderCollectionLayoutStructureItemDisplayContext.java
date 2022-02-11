@@ -257,8 +257,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		_maxNumberOfItemsPerPage = Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+			getCollectionCount(), _getNumberOfItemsPerPage());
 
 		return _maxNumberOfItemsPerPage;
 	}
@@ -272,8 +271,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		if (_isPaginationEnabled()) {
 			numberOfItemsToDisplay = Math.min(
-				numberOfItemsToDisplay,
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+				numberOfItemsToDisplay, _getNumberOfItemsPerPage());
 		}
 
 		_numberOfItemsToDisplay = numberOfItemsToDisplay;
@@ -314,8 +312,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		if (_isPaginationEnabled()) {
 			numberOfItemsToDisplay = Math.min(
-				numberOfItemsToDisplay,
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+				numberOfItemsToDisplay, _getNumberOfItemsPerPage());
 		}
 
 		_numberOfRows = (int)Math.ceil(

@@ -115,16 +115,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		Properties poshiProperties = _getPoshiProperties(poshiRunnerExtension);
 
-		final Copy downloadChromeDriverTask;
-
-		try {
-			downloadChromeDriverTask = _addTaskDownloadChromeDriver(
+		final Copy downloadChromeDriverTask = _addTaskDownloadChromeDriver(
 				project, poshiProperties);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		final Test runPoshiTask = _addTaskRunPoshi(project);
 		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
 		final JavaExec writePoshiPropertiesTask = _addTaskWritePoshiProperties(
@@ -257,41 +249,47 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDownloadChromeDriver(
-			final Project project, Properties poshiProperties)
-		throws IOException {
+		final Project project, Properties poshiProperties) {
 
 		Copy copy = GradleUtil.addTask(
 			project, DOWNLOAD_CHROME_DRIVER_TASK_NAME, Copy.class);
 
-		File webDriverDir = _getWebDriverDir(project);
-		final File chromeDriverFile = FileUtil.get(
-			project,
-			_getChromeDriverUrl(
-				_getChromeDriverVersion(
-					project,
-					poshiProperties.getProperty("browser.chrome.bin.file"))),
-			null);
+		try {
+			File webDriverDir = _getWebDriverDir(project);
+			final File chromeDriverFile = FileUtil.get(
+				project,
+				_getChromeDriverUrl(
+					_getChromeDriverVersion(
+						project,
+						poshiProperties.getProperty(
+							"browser.chrome.bin.file"))),
+				null);
 
-		project.delete(webDriverDir);
+			project.delete(webDriverDir);
 
-		Closure<Void> closure = new Closure<Void>(project) {
+			Closure<Void> closure = new Closure<Void>(project) {
 
-			@SuppressWarnings("unused")
-			public FileTree doCall() {
-				String chromeDriverFileName = chromeDriverFile.getName();
+				@SuppressWarnings("unused")
+				public FileTree doCall() {
+					String chromeDriverFileName = chromeDriverFile.getName();
 
-				if (chromeDriverFileName.endsWith(".zip")) {
-					return project.zipTree(chromeDriverFile);
+					if (chromeDriverFileName.endsWith(".zip")) {
+						return project.zipTree(chromeDriverFile);
+					}
+
+					return null;
 				}
 
-				return null;
-			}
+			};
 
-		};
+			copy.from(closure);
 
-		copy.from(closure);
-
-		copy.into(webDriverDir);
+			copy.into(webDriverDir);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to download ChromeDriver binary", ioException);
+		}
 
 		return copy;
 	}

@@ -49,9 +49,10 @@ public class JournalFolderModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				journalFolderLocalService.getIndexableActionableDynamicQuery());
+				_journalFolderLocalService.
+					getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -60,10 +61,10 @@ public class JournalFolderModelIndexerWriterContributor
 	}
 
 	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
-	protected JournalFolderLocalService journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

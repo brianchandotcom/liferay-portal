@@ -117,7 +117,7 @@ components:
                     readOnly: true
                     type: object
                 businessType:
-                    enum: [Boolean, Date, Decimal, Integer, LongInteger, LongText, Picklist, PrecisionDecimal, Relationship, Text]
+                    enum: [Attachment, Boolean, Date, Decimal, Integer, LongInteger, LongText, Picklist, PrecisionDecimal, Relationship, Text]
                     type: string
                 id:
                     format: int64
@@ -341,7 +341,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.object.admin.rest.client', and version '1.0.12'."
+        'com.liferay.object.admin.rest.client', and version '1.0.13'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

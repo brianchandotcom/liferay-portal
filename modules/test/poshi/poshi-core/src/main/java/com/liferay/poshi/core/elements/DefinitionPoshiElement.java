@@ -75,13 +75,13 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
-	public int getPoshiScriptLineNumber() {
-		return getPoshiScriptLineNumber(false);
+	public URL getFilePathURL() {
+		return _filePathURL;
 	}
 
 	@Override
-	public URL getFilePathURL() {
-		return _filePathURL;
+	public int getPoshiScriptLineNumber() {
+		return getPoshiScriptLineNumber(false);
 	}
 
 	@Override

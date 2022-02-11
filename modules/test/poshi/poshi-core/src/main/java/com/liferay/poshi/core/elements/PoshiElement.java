@@ -277,7 +277,8 @@ public abstract class PoshiElement
 			parsePoshiScript(poshiScript.trim());
 
 			if (PropsValues.TEST_POSHI_SCRIPT_VALIDATION &&
-				!PoshiNodeFactory.validationInitialized.contains(getFilePathURL())) {
+				!PoshiNodeFactory.validationInitialized.contains(
+					getFilePathURL())) {
 
 				PoshiNodeFactory.validationInitialized.add(getFilePathURL());
 
@@ -924,7 +925,7 @@ public abstract class PoshiElement
 		return sb.toString();
 	}
 
-	protected void setFilePathURL(URL filePathUrl) {
+	protected void setFilePathURL(URL filePathURL) {
 	}
 
 	protected String singleQuoteContent(String content) {

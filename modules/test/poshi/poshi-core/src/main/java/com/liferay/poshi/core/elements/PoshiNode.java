@@ -42,6 +42,12 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 		return parentPoshiNode.getFileExtension();
 	}
 
+	public default URL getFilePathURL() {
+		PoshiNode<?, ?> parentPoshiNode = (PoshiNode<?, ?>)getParent();
+
+		return parentPoshiNode.getFilePathURL();
+	}
+
 	public String getPoshiScript();
 
 	public default int getPoshiScriptLineNumber() {
@@ -118,12 +124,6 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 
 		return previousPoshiNode.getPoshiScriptLineNumber() +
 			StringUtil.count(previousPoshiNode.getPoshiScript(), "\n");
-	}
-
-	public default URL getFilePathURL() {
-		PoshiNode<?, ?> parentPoshiNode = (PoshiNode<?, ?>)getParent();
-
-		return parentPoshiNode.getFilePathURL();
 	}
 
 	public default boolean isValidPoshiXML() throws PoshiScriptParserException {

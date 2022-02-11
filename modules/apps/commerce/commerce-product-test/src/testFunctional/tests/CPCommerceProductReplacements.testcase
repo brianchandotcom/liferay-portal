@@ -25,6 +25,51 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "Verify a replacement product can be removed"
+	@priority = "3"
+	test RemoveReplacementProduct {
+		task ("Given a simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product Replacement",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("And given a simple product with a SKU marked as discontinued with a replacement product set") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "simple",
+				replacementSKU = "SKU1001",
+				sku = "SKU1002");
+		}
+
+		task ("When the product specialist clicks on the trash icon on the right side of the Replacement field") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SKU1002");
+
+			SelectFrame(
+				key_title = "",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Button.clickTrash();
+
+			Button.clickPublish();
+		}
+
+		task ("Then the Replacement field should become empty") {
+			AssertTextEquals(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "");
+		}
+	}
+
 	@description = "Verify a product can be set as discontinued"
 	@priority = "3"
 	test SetProductAsDiscontinued {

@@ -12,8 +12,9 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
 import Role from './Role';
@@ -44,7 +45,7 @@ const notificationsTypeOptions = [
 	},
 ];
 
-const recipientTypeOptions = [
+let recipientTypeOptions = [
 	{
 		label: Liferay.Language.get('asset-creator'),
 		value: 'assetCreator',
@@ -66,10 +67,6 @@ const recipientTypeOptions = [
 		disabled: true,
 		label: Liferay.Language.get('user'),
 		value: 'user',
-	},
-	{
-		label: Liferay.Language.get('task-assignees'),
-		value: 'taskAssignees',
 	},
 ];
 
@@ -102,6 +99,8 @@ const NotificationsInfo = ({
 	const [template, setTemplate] = useState('');
 	const [templateLanguage, setTemplateLanguage] = useState('');
 
+	const {selectedItem} = useContext(DiagramBuilderContext);
+
 	const deleteSection = () => {
 		setSections((prevSections) => {
 			const newSections = prevSections.filter(
@@ -124,6 +123,23 @@ const NotificationsInfo = ({
 
 		setRecipientType(item.recipientType);
 	};
+
+	if (
+		selectedItem?.type === 'task' &&
+		!recipientTypeOptions
+			.map((option) => option.value)
+			.includes('taskAssignees')
+	) {
+		recipientTypeOptions.push({
+			label: Liferay.Language.get('task-assignees'),
+			value: 'taskAssignees',
+		});
+	}
+	else if (selectedItem?.type !== 'task') {
+		recipientTypeOptions = recipientTypeOptions.filter(({value}) => {
+			return value !== 'taskAssignees';
+		});
+	}
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>

@@ -44,6 +44,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
 			).put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 			).put(
+				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
+			).put(
 				"locale", themeDisplay.getLanguageId()
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()

@@ -73,6 +73,8 @@ const transformToSXPElementExportFormat = (
 
 export default function ({
 	defaultLocale,
+	learnMessages,
+	locale,
 	namespace,
 	redirectURL,
 	sxpElementId,
@@ -111,6 +113,8 @@ export default function ({
 			value={{
 				availableLanguages: Liferay.Language.available,
 				defaultLocale,
+				learnMessages,
+				locale,
 				namespace,
 				redirectURL,
 			}}

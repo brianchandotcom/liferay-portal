@@ -552,4 +552,85 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10564 | Test Summary: Sorting analysis report by name and order of creation"
+	@priority = "3"
+	test CanSortAnalysisReport {
+		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2,Save Analysis 3";
+		var defaultEventName = "webContentViewed";
+		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
+		var list2 = ListUtil.newListFromString("3,2,1");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+			task ("Add the event to analysis") {
+				ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+			}
+
+        	task ("Name the report") {
+            	ACUtils.fileName(fileName = "${eventAnalysisName}");
+        	}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${defaultEventName},1");
+			}
+
+        	task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+		}
+
+		task ("Order the list by Name and check if the positions are correct") {
+			ACUtils.orderAnyTable(columnName = "Name");
+
+			while ("${i}" != "${size}") {
+				var eventAnalysisName = ListUtil.get("${list1}", "${i}");
+				var position = ListUtil.get("${list2}", "${i}");
+
+				ACUtils.viewNameListInOrder(
+					index = "${position}",
+					name = "${eventAnalysisName}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+		}
+
+		task ("Order the list by Name and check if the positions are correct") {
+			ACUtils.orderAnyTable(columnName = "Name");
+
+			for (var n : list "1,2,3") {
+				ACUtils.viewNameListInOrder(
+					index = "${n}",
+					name = "Save Analysis ${n}");
+			}
+		}
+
+		task ("Order the list by Created by and check if the positions are correct") {
+			ACUtils.orderAnyTable(columnName = "Created by");
+
+			for (var n : list "1,2,3") {
+				ACUtils.viewNameListInOrder(
+					index = "${n}",
+					name = "Save Analysis ${n}");
+			}
+		}
+	}
+
 }

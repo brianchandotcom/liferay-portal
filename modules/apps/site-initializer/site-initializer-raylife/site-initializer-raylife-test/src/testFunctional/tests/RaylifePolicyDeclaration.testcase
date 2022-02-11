@@ -1,0 +1,117 @@
+@component-name = "portal-solutions"
+definition {
+
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Raylife";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Raylife.createRaylifeSite(siteName = "Raylife");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            Raylife.tearDownCP();
+
+            User.logoutPG();
+        }
+    }
+
+    @description = "Verify that the Policy Declaration Page is reached by the get a quote form"
+    @priority = "5"
+    test CanReachPolicyDeclarationPageByTheForm {
+
+        RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        Raylife.formsFlow();
+
+        RaylifeCreateAccount.createAccount();
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.pdf",
+            title = "Business");
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.jpg",
+            title = "Build");
+
+        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+        RaylifePaymentMethod.payPalFlow();
+
+        AssertElementPresent(locator1 = "RaylifePolicyDeclaration#CONGRATS_PAGE_POLICY_DECLARATION");
+    }
+
+    @description = "Verify if the policy number is generated"
+    @priority = "5"
+    test IsPolicyNumberGenerated {
+        RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        Raylife.formsFlow();
+
+        RaylifeCreateAccount.createAccount();
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.pdf",
+            title = "Business");
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.jpg",
+            title = "Build");
+
+        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+        RaylifePaymentMethod.payPalFlow();
+
+        AssertElementPresent(
+            locator1 = "RaylifePolicyDeclaration#POLICY_NUMBER",
+            policy = "Policy");
+    }
+
+    @description = "Verify if the product is the same as the one chosen at the beginning of the form"
+    @priority = "5"
+    test IsProductTheSameAsTheForm {
+        RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        Raylife.formsFlow();
+
+        RaylifeCreateAccount.createAccount();
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.pdf",
+            title = "Business");
+
+        RaylifeUploadDocuments.uploadDocuments(
+            dmDocumentFileList = "Document_1.jpg",
+            title = "Build");
+
+        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+        RaylifePaymentMethod.payPalFlow();
+
+        AssertTextEquals(
+            locator1 = "RaylifePolicyDeclaration#POLICY_DECLARATION_PRODUCT",
+            value1 = "Business Owners Policy");
+    }
+}

@@ -17,7 +17,7 @@ definition {
 		Refresh();
 	}
 
-	macro PayPalFlow {
+	macro payPalFlow {
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
 		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");

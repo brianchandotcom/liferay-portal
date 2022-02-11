@@ -11,19 +11,19 @@
 
 <tbody>
 <tr>
-    <td>CONGRATS_PAGE_POLICY_DECLARATION</td>
-    <td>//h1[contains(text(),'Congrats!')]</td>
-    <td></td>
+	<td>CONGRATS_PAGE_POLICY_DECLARATION</td>
+	<td>//h1[contains(text(),'Congrats!')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>POLICY_NUMBER</td>
-    <td>//h2[contains(text(), '${policy}')]</td>
-    <td></td>
+	<td>POLICY_NUMBER</td>
+	<td>//h2[contains(text(), '${policy}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>POLICY_DECLARATION_PRODUCT</td>
-    <td>//h1[contains(@id, 'congrats')]</td>
-    <td></td>
+	<td>POLICY_DECLARATION_PRODUCT</td>
+	<td>//h1[contains(@id, 'congrats')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -92,7 +92,7 @@
 	<parameter class="java.util.Date" name="orderDate" />
 	<parameter class="java.lang.String" name="printedNote" />
 	<parameter class="java.lang.String" name="purchaseOrderNumber" />
-	<parameter class="java.util.Date" name="requestedDeliveryDate" />
+	<parameter class="java.lang.String" name="requestedDeliveryDate" />
 	<parameter class="java.lang.String" name="shippingAddressCity" />
 	<parameter class="java.lang.String" name="shippingAddressName" />
 	<parameter class="java.lang.String" name="shippingAddressPhoneNumber" />

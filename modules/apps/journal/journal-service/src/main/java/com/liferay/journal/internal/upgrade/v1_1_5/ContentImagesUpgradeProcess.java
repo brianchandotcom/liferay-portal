@@ -102,6 +102,12 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 						fileEntry =
 							_journalArticleImageUpgradeHelper.
 								getFileEntryFromURL(data);
+
+						if (fileEntry == null) {
+							fileEntry =
+								_journalArticleImageUpgradeHelper.
+									getFileEntryFromData(data);
+						}
 					}
 				}
 

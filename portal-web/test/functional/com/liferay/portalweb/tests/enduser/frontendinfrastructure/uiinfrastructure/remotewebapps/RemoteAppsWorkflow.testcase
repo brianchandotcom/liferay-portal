@@ -1,0 +1,47 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Remote Apps";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-147198. Verify remote app entry can be configured at instance level"
+	@priority = "5"
+	test CanConfigureWorkflowInstanceLevel {
+		property portal.acceptance = "true";
+
+		task ("Navigate to workflow configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+		}
+
+		task ("Search for Remote App Entry") {
+			Search.searchCP(searchTerm = "Remote App Entry");
+		}
+
+		task ("Assert Remote App Entry is listed") {
+			AssertElementPresent(
+				key_workflowResourceValue = "No Workflow",
+				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
+		}
+	}
+
+}

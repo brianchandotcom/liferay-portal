@@ -92,6 +92,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARKER</td>
+	<td>//img[contains(@class,'marker-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKER_POSITION</td>
+	<td>//img[contains(@class,'marker-icon')][contains(@style,'translate3d("${position}")')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_BUTTON_2</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='Select'])[2]</td>
 	<td></td>

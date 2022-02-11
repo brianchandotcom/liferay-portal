@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.dynamic.data.mapping.internal.form.field.type;
+package com.liferay.object.dynamic.data.mapping.form.field.type.internal.object.relationship;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;

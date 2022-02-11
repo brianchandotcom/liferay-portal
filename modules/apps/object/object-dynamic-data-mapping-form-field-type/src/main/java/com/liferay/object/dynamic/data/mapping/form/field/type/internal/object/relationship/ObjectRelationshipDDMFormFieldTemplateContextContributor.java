@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.object.dynamic.data.mapping.internal.form.field.type;
+package com.liferay.object.dynamic.data.mapping.form.field.type.internal.object.relationship;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -55,7 +56,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=object-relationship",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + ObjectDDMFormFieldTypeConstants.OBJECT_RELATIONSHIP,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		ObjectRelationshipDDMFormFieldTemplateContextContributor.class

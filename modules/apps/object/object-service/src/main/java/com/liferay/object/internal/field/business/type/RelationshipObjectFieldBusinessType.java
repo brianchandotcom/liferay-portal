@@ -15,6 +15,7 @@
 package com.liferay.object.internal.field.business.type;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -43,7 +44,7 @@ public class RelationshipObjectFieldBusinessType
 
 	@Override
 	public String getDDMFormFieldTypeName() {
-		return "object-relationship";
+		return ObjectDDMFormFieldTypeConstants.OBJECT_RELATIONSHIP;
 	}
 
 	@Override

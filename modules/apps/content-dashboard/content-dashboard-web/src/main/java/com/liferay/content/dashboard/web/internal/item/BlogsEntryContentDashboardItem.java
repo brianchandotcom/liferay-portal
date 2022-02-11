@@ -118,7 +118,7 @@ public class BlogsEntryContentDashboardItem
 	public List<Locale> getAvailableLocales() {
 		try {
 			return Arrays.asList(
-				_portal.getSiteDefaultLocale(_blogsEntry.getGroupId()));
+				_portal.getSiteDefaultLocale(_group.getGroupId()));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

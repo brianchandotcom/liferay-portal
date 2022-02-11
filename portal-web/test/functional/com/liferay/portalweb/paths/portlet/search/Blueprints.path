@@ -147,7 +147,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_CONFIGURATION_EDITOR</td>
-	<td>//label[text()='${configurationField}']/following-sibling::div//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td>//div[contains(@class,'form-group')][./label[text()='${configurationField}']]//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR</td>
+	<td>//div[contains(@class,'form-group')][./label[text()='${configurationField}']]//div[contains(.,'Unable to apply changes due to invalid JSON')]</td>
 	<td></td>
 </tr>
 <tr>

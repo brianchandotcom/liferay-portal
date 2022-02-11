@@ -1845,6 +1845,73 @@ definition {
 			value1 = "${currentDate}");
 	}
 
+	test ViewBlueprintsConfigurationValidation {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Aggregation Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "invalid");
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Highlight Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "invalid");
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Sort Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "invalid");
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Parameter Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "invalid");
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Advanced Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "invalid");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Unable to save due to invalid or missing configuration values.");
+
+		AssertElementPresent(
+			configurationField = "Aggregation Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
+
+		AssertElementPresent(
+			configurationField = "Highlight Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
+
+		AssertElementPresent(
+			configurationField = "Sort Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
+
+		AssertElementPresent(
+			configurationField = "Parameter Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
+
+		AssertElementPresent(
+			configurationField = "Advanced Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
+
+		Click(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		AssertTextNotPresent(value1 = "invalid");
+	}
+
 	test ViewBlueprintsPreviewLocalizedResults {
 		Blueprints.openBlueprintsAdmin();
 

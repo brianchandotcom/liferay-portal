@@ -243,6 +243,8 @@ definition {
 	macro addObjectStringFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 
+		WaitForSPARefresh();
+
 		Type(
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = "${entryValue}");

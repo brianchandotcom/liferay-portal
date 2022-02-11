@@ -1350,7 +1350,7 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
 	@priority = "5"
 	test CanDeleteRelationOnRelationshipTab {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141661",
@@ -1405,6 +1405,8 @@ definition {
 			tabName = "Relationship Tab");
 
 		Button.clickSave();
+
+		Navigator.openURL();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141661");
 

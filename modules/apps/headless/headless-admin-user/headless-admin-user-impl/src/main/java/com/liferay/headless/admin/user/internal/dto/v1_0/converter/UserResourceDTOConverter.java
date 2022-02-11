@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountRole;
@@ -242,6 +243,12 @@ public class UserResourceDTOConverter
 			AccountEntryUserRel accountEntryUserRel,
 			DTOConverterContext dtoConverterContext, User user)
 		throws PortalException {
+
+		if (accountEntryUserRel.getAccountEntryId() ==
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+
+			return null;
+		}
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			accountEntryUserRel.getAccountEntryId());

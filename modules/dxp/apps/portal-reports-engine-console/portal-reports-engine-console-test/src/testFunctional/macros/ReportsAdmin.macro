@@ -259,8 +259,6 @@ definition {
 		Pause(locator1 = "2000");
 
 		takeScreenshot();
-
-		
 	}
 
 	macro gotoConfiguration {

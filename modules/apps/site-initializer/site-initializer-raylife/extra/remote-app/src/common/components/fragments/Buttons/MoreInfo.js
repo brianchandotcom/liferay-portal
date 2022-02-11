@@ -41,7 +41,7 @@ export function MoreInfoButton({
 	return (
 		<ClayLabel
 			className={classNames(
-				'btn-info-panel rounded-sm m-0 p-0 justify-content-center ms-auto',
+				'btn-info-panel flex-shrink-0 rounded-sm m-0 p-0 justify-content-center ms-auto',
 				{
 					'label-inverse-primary': selected,
 					'label-tonal-primary': !selected,
@@ -49,7 +49,7 @@ export function MoreInfoButton({
 			)}
 			onClick={updateState}
 		>
-			<div className="align-items-center d-flex justify-content-center m-0 more-info-container px-1 px-lg-2 px-sm-2 py-1 py-lg-1 py-sm-1">
+			<div className="align-items-center d-flex justify-content-center m-0 px-1 px-lg-2 px-sm-2 py-1 py-lg-1 py-sm-1">
 				<span className="flex-shrink-0 p-0 text-center text-paragraph-sm">
 					{label}
 				</span>

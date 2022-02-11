@@ -36,7 +36,6 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.model.TemplateEntry;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -53,7 +52,7 @@ public class TemplateDisplayTemplateTransformer {
 		_templateNodeFactory = templateNodeFactory;
 	}
 
-	public String transform(Locale locale) throws Exception {
+	public String transform() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

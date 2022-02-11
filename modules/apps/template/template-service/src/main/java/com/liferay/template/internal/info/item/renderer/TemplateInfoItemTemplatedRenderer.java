@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
@@ -153,8 +152,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 						templateEntry, infoItemFieldValues,
 						_templateNodeFactory);
 
-			String content = templateDisplayTemplateTransformer.transform(
-				LocaleThreadLocal.getThemeDisplayLocale());
+			String content = templateDisplayTemplateTransformer.transform();
 
 			writer.write(content);
 		}

@@ -320,11 +320,8 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Pending");
 		}
 
-		task ("Enable Workflow at site level") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Site Administration",
-				portlet = "Workflow");
+		task ("Enable Single Approver Workflow for Web Content Article at site level") {
+			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",

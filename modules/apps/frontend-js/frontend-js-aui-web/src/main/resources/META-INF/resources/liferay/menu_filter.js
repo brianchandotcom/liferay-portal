@@ -39,6 +39,11 @@ AUI.add(
 					value: '.menu-item-filter',
 				},
 
+				menu: {
+					validator: Lang.isObject,
+					value: {},
+				},
+
 				strings: {
 					validator: Lang.isObject,
 					value: {
@@ -56,12 +61,17 @@ AUI.add(
 			prototype: {
 				_filterMenu(event) {
 					var instance = this;
+					var menuInstance = instance.get('menu');
 
 					instance._menuItems.addClass(CSS_HIDE);
 
 					event.results.forEach((result) => {
 						result.raw.node.removeClass(CSS_HIDE);
 					});
+
+					if (menuInstance) {
+						menuInstance._focusManager.refresh();
+					}
 				},
 
 				_renderUI() {

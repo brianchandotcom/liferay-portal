@@ -608,6 +608,7 @@ AUI.add(
 
 					liveSearch = new Liferay.MenuFilter({
 						content: listNode,
+						menu: Menu._INSTANCE,
 						minQueryLength: 0,
 						queryDelay: 0,
 						resultFilters: 'phraseMatch',

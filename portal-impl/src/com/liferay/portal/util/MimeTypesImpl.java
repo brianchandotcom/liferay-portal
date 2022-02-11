@@ -91,7 +91,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
@@ -122,7 +122,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 				_detector.detect(inputStream, metadata));
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			_log.error(ioException);
 		}
 
 		return contentType;

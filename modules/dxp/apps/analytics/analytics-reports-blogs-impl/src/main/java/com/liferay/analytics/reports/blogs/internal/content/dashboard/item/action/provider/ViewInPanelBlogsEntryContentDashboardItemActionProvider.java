@@ -78,7 +78,7 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProvider
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			_log.error(portalException);
 
 			return false;
 		}

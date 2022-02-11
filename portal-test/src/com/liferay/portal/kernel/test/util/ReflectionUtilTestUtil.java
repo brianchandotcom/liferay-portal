@@ -18,14 +18,15 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
 
 import java.security.Permission;
+
 import java.util.Objects;
 
 /**
  * @author Janis Zhang
  */
-public class SecurityManagerTestUtil {
+public class ReflectionUtilTestUtil {
 
-	public static SwappableSecurityManager installForSuppressAccessChecks(
+	public static SwappableSecurityManager throwForSuppressAccessChecks(
 			Class<?> callerClass, SecurityException securityException)
 		throws ClassNotFoundException {
 
@@ -38,6 +39,7 @@ public class SecurityManagerTestUtil {
 				public void checkPermission(Permission permission) {
 					if (!Objects.equals(
 							permission.getName(), "suppressAccessChecks")) {
+
 						return;
 					}
 

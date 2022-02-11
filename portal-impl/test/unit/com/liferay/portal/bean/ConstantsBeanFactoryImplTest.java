@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.util.SecurityManagerTestUtil;
+import com.liferay.portal.kernel.test.util.ReflectionUtilTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
@@ -59,7 +59,7 @@ public class ConstantsBeanFactoryImplTest {
 		SecurityException securityException = new SecurityException();
 
 		try (SwappableSecurityManager swappableSecurityManager =
-				SecurityManagerTestUtil.installForSuppressAccessChecks(
+				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
 					ReflectionUtil.class, securityException)) {
 
 			Class.forName(ConstantsBeanFactoryImpl.class.getName());

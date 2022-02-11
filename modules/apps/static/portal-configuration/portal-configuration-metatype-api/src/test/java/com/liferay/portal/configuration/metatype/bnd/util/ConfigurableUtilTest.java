@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.util.SecurityManagerTestUtil;
+import com.liferay.portal.kernel.test.util.ReflectionUtilTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.AdviseWith;
@@ -73,7 +73,7 @@ public class ConfigurableUtilTest {
 		SecurityException securityException = new SecurityException();
 
 		try (SwappableSecurityManager swappableSecurityManager =
-				SecurityManagerTestUtil.installForSuppressAccessChecks(
+				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
 					ReflectionUtil.class, securityException)) {
 
 			Class.forName(ConfigurableUtil.class.getName());

@@ -4014,9 +4014,9 @@ definition {
 
 	macro viewFragmentOrder {
 		AssertElementPresent(
-			index = "${position}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_CONTENT");
+			key_position = "${position}",
+			locator1 = "Fragment#FRAGMENT_POSITION");
 	}
 
 	macro viewFragmentStyle {

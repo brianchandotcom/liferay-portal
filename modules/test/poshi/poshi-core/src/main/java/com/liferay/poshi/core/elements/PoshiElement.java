@@ -232,7 +232,7 @@ public abstract class PoshiElement
 	protected PoshiElement(String name, Element element, URL url) {
 		this(name, element);
 
-		setFilePath(url);
+		setFilePathURL(url);
 	}
 
 	protected PoshiElement(
@@ -267,7 +267,7 @@ public abstract class PoshiElement
 
 		super(name);
 
-		setFilePath(url);
+		setFilePathURL(url);
 
 		setParent(parentPoshiElement);
 
@@ -277,9 +277,9 @@ public abstract class PoshiElement
 			parsePoshiScript(poshiScript.trim());
 
 			if (PropsValues.TEST_POSHI_SCRIPT_VALIDATION &&
-				!PoshiNodeFactory.validationInitialized.contains(getURL())) {
+				!PoshiNodeFactory.validationInitialized.contains(getFilePathURL())) {
 
-				PoshiNodeFactory.validationInitialized.add(getURL());
+				PoshiNodeFactory.validationInitialized.add(getFilePathURL());
 
 				validatePoshiScript();
 			}
@@ -924,7 +924,7 @@ public abstract class PoshiElement
 		return sb.toString();
 	}
 
-	protected void setFilePath(URL url) {
+	protected void setFilePathURL(URL filePathUrl) {
 	}
 
 	protected String singleQuoteContent(String content) {

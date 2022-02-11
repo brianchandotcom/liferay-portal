@@ -91,9 +91,9 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
 
-		URL url = poshiNode.getURL();
+		URL filePathURL = poshiNode.getFilePathURL();
 
-		setFilePath(url.getPath());
+		setFilePath(filePathURL.getPath());
 
 		setPoshiNode(poshiNode);
 	}
@@ -124,9 +124,9 @@ public class PoshiScriptParserException extends PoshiElementException {
 			startingLineNumber +
 				StringUtil.count(parentPoshiScript, "\n", index));
 
-		URL url = parentPoshiNode.getURL();
+		URL filePathURL = parentPoshiNode.getFilePathURL();
 
-		setFilePath(url.getPath());
+		setFilePath(filePathURL.getPath());
 	}
 
 	private static final Set<PoshiScriptParserException>

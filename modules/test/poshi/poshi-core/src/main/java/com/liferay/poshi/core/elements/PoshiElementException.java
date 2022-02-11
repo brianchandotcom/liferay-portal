@@ -60,9 +60,9 @@ public class PoshiElementException extends Exception {
 
 		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
 
-		URL url = poshiNode.getURL();
+		URL filePathURL = poshiNode.getFilePathURL();
 
-		setFilePath(url.getPath());
+		setFilePath(filePathURL.getPath());
 
 		setPoshiNode(poshiNode);
 	}

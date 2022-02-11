@@ -120,10 +120,10 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 			StringUtil.count(previousPoshiNode.getPoshiScript(), "\n");
 	}
 
-	public default URL getURL() {
+	public default URL getFilePathURL() {
 		PoshiNode<?, ?> parentPoshiNode = (PoshiNode<?, ?>)getParent();
 
-		return parentPoshiNode.getURL();
+		return parentPoshiNode.getFilePathURL();
 	}
 
 	public default boolean isValidPoshiXML() throws PoshiScriptParserException {

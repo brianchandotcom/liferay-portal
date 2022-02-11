@@ -65,9 +65,9 @@ public class DefinitionPoshiElement extends PoshiElement {
 
 	@Override
 	public String getFileExtension() {
-		URL url = getURL();
+		URL filePathURL = getFilePathURL();
 
-		String filePath = url.getPath();
+		String filePath = filePathURL.getPath();
 
 		int index = filePath.lastIndexOf(".");
 
@@ -80,8 +80,8 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
-	public URL getURL() {
-		return _url;
+	public URL getFilePathURL() {
+		return _filePathURL;
 	}
 
 	@Override
@@ -89,15 +89,15 @@ public class DefinitionPoshiElement extends PoshiElement {
 		if (_validPoshiXML == null) {
 			_validPoshiXML = false;
 
-			URL url = getURL();
+			URL filePathURL = getFilePathURL();
 
 			PoshiNode<?, ?> poshiNode = PoshiNodeFactory.newPoshiNodeFromFile(
-				url);
+				filePathURL);
 
 			String poshiScript = poshiNode.toPoshiScript();
 
 			PoshiNode<?, ?> generatedPoshiNode = PoshiNodeFactory.newPoshiNode(
-				poshiScript, url);
+				poshiScript, filePathURL);
 
 			if (Dom4JUtil.elementsEqual(poshiNode, generatedPoshiNode)) {
 				_validPoshiXML = true;
@@ -206,8 +206,8 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
-	protected void setFilePath(URL url) {
-		_url = url;
+	protected void setFilePathURL(URL filePathURL) {
+		_filePathURL = filePathURL;
 	}
 
 	private static final String _ELEMENT_NAME = "definition";
@@ -218,7 +218,7 @@ public class DefinitionPoshiElement extends PoshiElement {
 		"^" + BLOCK_NAME_ANNOTATION_REGEX + _POSHI_SCRIPT_KEYWORD,
 		Pattern.DOTALL);
 
-	private URL _url;
+	private URL _filePathURL;
 	private Boolean _validPoshiXML;
 
 }

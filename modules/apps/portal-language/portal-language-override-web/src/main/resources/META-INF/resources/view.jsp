@@ -103,7 +103,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 					<liferay-ui:search-container-column-text
 						href="<%= editPLOEntryURL %>"
 						name="languages-with-override"
-						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguageIds(), StringPool.COMMA_AND_SPACE) %>"
+						value="<%= languageItemDisplay.getOverrideLanguageIdsString() %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

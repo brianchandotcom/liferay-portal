@@ -410,4 +410,91 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10562 | Test Summary: Pagination for analysis report"
+	@priority = "4"
+	test CanPaginationAnalysisReportList {
+		var eventAnalysisNameList1 = "Save Analysis 0,Save Analysis 1,Save Analysis 2,Save Analysis 3,Save Analysis 4";
+		var eventAnalysisNameList2 = "Save Analysis 5,Save Analysis 6,Save Analysis 7,Save Analysis 8,Save Analysis 9";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventAnalysisName : list "${eventAnalysisNameList1},${eventAnalysisNameList2}") {
+			task ("Add the custom event to analysis by the all tab") {
+				ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			}
+
+        	task ("Name the report") {
+            	ACUtils.fileName(fileName = "${eventAnalysisName}");
+        	}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName},1");
+			}
+
+        	task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+
+        	task ("Assert the analysis is saved and show up on event analysis list") {
+				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			}
+		}
+
+		task ("Check pagination for "20" item filter") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 10 of 10 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+		}
+
+		task ("Change the pagination to "5" and Check pagination for "5" item filter") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 10 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+
+			ACUtils.viewResultsPages(pageNumber = "2");
+		}
+
+		task ("Assert the analysis is saved and show up on event analysis list") {
+			for (var eventAnalysisName : list "${eventAnalysisNameList1}") {
+				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			}
+		}
+
+		task ("Navigate to the next page and check the pagination") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 10 entries.");
+		}
+
+		task ("Assert the analysis is saved and show up on event analysis list") {
+			for (var eventAnalysisName : list "${eventAnalysisNameList2}") {
+				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			}
+		}
+	}
+
 }

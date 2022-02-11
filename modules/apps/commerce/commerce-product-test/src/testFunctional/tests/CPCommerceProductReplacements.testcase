@@ -165,4 +165,39 @@ definition {
 		}
 	}
 
+	@description = "Verify a product SKU cannot be set as its own replacement"
+	@priority = "3"
+	test SKUCannotBeItsOwnReplacement {
+		task ("Given a simple product with a SKU marked as discontinued") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("When the SKU is set as its own replacement") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SKU1001");
+
+			SelectFrame(
+				key_title = "",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1001");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the error 'Please enter a valid replacement' should be shown") {
+			Alert.viewErrorMessage(errorMessage = "Please enter a valid replacement.");
+		}
+	}
+
 }

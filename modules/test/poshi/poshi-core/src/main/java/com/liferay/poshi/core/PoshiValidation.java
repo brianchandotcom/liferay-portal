@@ -769,17 +769,7 @@ public class PoshiValidation {
 		List<Element> childElements = element.elements();
 
 		if (childElements.isEmpty()) {
-			if (element instanceof PoshiElement) {
-				_exceptions.add(
-					new PoshiElementException(
-						element, "Missing child elements"));
-
-				return;
-			}
-
-			_exceptions.add(
-				new ValidationException(
-					element, "Missing child elements", filePath));
+			_addException(element, "Missing child elements", filePath);
 		}
 	}
 
@@ -1179,37 +1169,13 @@ public class PoshiValidation {
 		List<Element> childElements = element.elements();
 
 		if (childElements.isEmpty()) {
-			if (element instanceof PoshiElement) {
-				_exceptions.add(
-					new PoshiElementException(
-						element, "Missing child elements"));
-			}
-
-			_exceptions.add(
-				new ValidationException(
-					element, "Missing child elements", filePath));
+			_addException(element, "Missing child elements", filePath);
 		}
 		else if (childElements.size() > number) {
-			if (element instanceof PoshiElement) {
-				_exceptions.add(
-					new PoshiElementException(
-						element, "Too many child elements"));
-			}
-
-			_exceptions.add(
-				new ValidationException(
-					element, "Too many child elements", filePath));
+			_addException(element, "Too many child elements", filePath);
 		}
 		else if (childElements.size() < number) {
-			if (element instanceof PoshiElement) {
-				_exceptions.add(
-					new PoshiElementException(
-						element, "Too few child elements"));
-			}
-
-			_exceptions.add(
-				new ValidationException(
-					element, "Too few child elements", filePath));
+			_addException(element, "Too few child elements", filePath);
 		}
 	}
 
@@ -1443,17 +1409,9 @@ public class PoshiValidation {
 			}
 
 			if (element.attributeValue(requiredAttributeName) == null) {
-				if (element instanceof PoshiElement) {
-					_exceptions.add(
-						new PoshiElementException(
-							element, "Missing ", requiredAttributeName,
-							" attribute"));
-				}
-
-				_exceptions.add(
-					new ValidationException(
-						element, "Missing ", requiredAttributeName,
-						" attribute", filePath));
+				_addException(
+					element, "Missing " + requiredAttributeName + " attribute",
+					filePath);
 			}
 		}
 	}
@@ -1474,17 +1432,10 @@ public class PoshiValidation {
 		}
 
 		if (!found) {
-			if (element instanceof PoshiElement) {
-				_exceptions.add(
-					new PoshiElementException(
-						element, "Missing required ", requiredElementName,
-						" child element"));
-			}
-
-			_exceptions.add(
-				new ValidationException(
-					element, "Missing required ", requiredElementName,
-					" child element", filePath));
+			_addException(
+				element,
+				"Missing required " + requiredElementName + " child element",
+				filePath);
 		}
 	}
 
@@ -1872,6 +1823,19 @@ public class PoshiValidation {
 	protected static final String[] UTIL_PACKAGE_NAMES = {
 		"com.liferay.poshi.core.util", "com.liferay.poshi.runner.util"
 	};
+
+	private static void _addException(
+		Element element, String message, String filePath) {
+
+		if (element instanceof PoshiElement) {
+			_exceptions.add(
+				new PoshiElementException((PoshiElement)element, message));
+
+			return;
+		}
+
+		_exceptions.add(new ValidationException(element, message, filePath));
+	}
 
 	private static String _getFilePath(PoshiElement poshiElement) {
 		URL filePathURL = poshiElement.getFilePathURL();

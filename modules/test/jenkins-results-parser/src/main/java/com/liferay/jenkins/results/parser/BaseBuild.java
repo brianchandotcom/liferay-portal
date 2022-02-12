@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Bucket;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 
 import java.io.File;
 import java.io.IOException;
@@ -1392,6 +1394,61 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return new ArrayList<>(_testClassResults.values());
+	}
+
+	@Override
+	public List<URL> getTestrayAttachmentURLs() {
+		if (_testrayAttachmentURLs != null) {
+			return _testrayAttachmentURLs;
+		}
+
+		_testrayAttachmentURLs = new ArrayList<>();
+
+		String consoleText = getConsoleText();
+
+		for (String line : consoleText.split("\\n")) {
+			Matcher matcher = _testrayAttachmentURLPattern.matcher(line);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			try {
+				_testrayAttachmentURLs.add(
+					new URL(matcher.group("testrayAttachmentURL")));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
+		return _testrayAttachmentURLs;
+	}
+
+	@Override
+	public List<TestrayS3Object> getTestrayS3Objects() {
+		if (_testrayS3Objects != null) {
+			return _testrayS3Objects;
+		}
+
+		_testrayS3Objects = new ArrayList<>();
+
+		String consoleText = getConsoleText();
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		for (String line : consoleText.split("\\n")) {
+			Matcher matcher = _testrayS3ObjectURLPattern.matcher(line);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			_testrayS3Objects.add(
+				testrayS3Bucket.getTestrayS3Object(matcher.group("key")));
+		}
+
+		return _testrayS3Objects;
 	}
 
 	@Override
@@ -3862,6 +3919,12 @@ public abstract class BaseBuild implements Build {
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
 			"\\d+)/?"));
+	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
+		"\\[beanshell\\] Uploaded (?<testrayAttachmentURL>" +
+			"https://testray.liferay.com/[^\\s]+)");
+	private static final TestrayS3Bucket _testrayS3Bucket =
+		TestrayS3Bucket.getInstance();
+	private static final Pattern _testrayS3ObjectURLPattern;
 
 	static {
 		Properties properties = null;
@@ -3876,6 +3939,11 @@ public abstract class BaseBuild implements Build {
 
 		_NAME_JENKINS_REPORT_TIME_ZONE = properties.getProperty(
 			"jenkins.report.time.zone");
+
+		_testrayS3ObjectURLPattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"\\[beanshell\\] Created S3 Object ",
+				_testrayS3Bucket.getTestrayS3BaseURL(), "/(?<key>[^\\s?]+).+"));
 	}
 
 	private String _archiveName;
@@ -3896,5 +3964,7 @@ public abstract class BaseBuild implements Build {
 	private String _result;
 	private String _status;
 	private Map<String, TestClassResult> _testClassResults;
+	private List<URL> _testrayAttachmentURLs;
+	private List<TestrayS3Object> _testrayS3Objects;
 
 }

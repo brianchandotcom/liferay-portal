@@ -177,12 +177,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
+		sb.append("/");
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				new Date(topLevelBuild.getStartTime()), "yyyy-MM",
+				"America/Los_Angeles"));
+
 		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
 
 		sb.append("/");
 		sb.append(jenkinsMaster.getName());
-		sb.append("/");
-		sb.append(topLevelBuild.getStartTime());
 		sb.append("/");
 		sb.append(topLevelBuild.getJobName());
 		sb.append("/");

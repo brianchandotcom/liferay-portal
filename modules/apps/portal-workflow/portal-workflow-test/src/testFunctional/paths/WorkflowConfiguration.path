@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>PROCESS_BUILDER_TABLE_FIELD_NAME</td>
-	<td>//tbody//tr[${key_order}]//td//span//span[contains(text(),"${key_fieldName}")]</td>
+	<td>//tbody//tr[${key_order}]//td//span[contains(text(),"${key_fieldName}")]</td>
 	<td></td>
 </tr>
 <tr>

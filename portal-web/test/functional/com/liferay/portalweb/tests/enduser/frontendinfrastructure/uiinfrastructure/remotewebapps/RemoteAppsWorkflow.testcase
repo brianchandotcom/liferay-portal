@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147198. Verify remote app entry can be configured at instance level"
+	@description = "LPS-147198. Verify remote app entry workflow can be configured at instance level"
 	@priority = "5"
 	test CanConfigureWorkflowInstanceLevel {
 		property portal.acceptance = "true";
@@ -38,6 +38,11 @@ definition {
 		}
 
 		task ("Assert Remote App Entry is listed") {
+			AssertElementPresent(
+				key_fieldName = "Remote App Entry",
+				key_order = "1",
+				locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
+
 			AssertElementPresent(
 				key_workflowResourceValue = "No Workflow",
 				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");

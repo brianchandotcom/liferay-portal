@@ -54,36 +54,25 @@ SearchContainer<BaseModel<?>> searchContainer = new SearchContainer(renderReques
 searchContainer.setDelta(pageDelta);
 searchContainer.setDeltaConfigurable(false);
 
-int total = 0;
-List<BaseModel<?>> results = new ArrayList<>();
-
 int notPublishedEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), new int[] {WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING, WorkflowConstants.STATUS_SCHEDULED});
 
 if (useAssetEntryQuery) {
 	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(searchContainer);
 
-	searchContainer.setTotal(searchContainerResults.getTotal());
-
-	results.addAll(searchContainerResults.getResults());
+	searchContainer.setResultsAndTotal(() -> new ArrayList<>(searchContainerResults.getResults()), searchContainerResults.getTotal());
 }
 else if ((notPublishedEntriesCount > 0) && mvcRenderCommandName.equals("/blogs/view_not_published_entries")) {
-	total = notPublishedEntriesCount;
+	long blogsScopeGroupId = scopeGroupId;
+	long blogsUserId = themeDisplay.getUserId();
 
-	searchContainer.setTotal(total);
-
-	results.addAll(BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), new int[] {WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING, WorkflowConstants.STATUS_SCHEDULED}, searchContainer.getStart(), searchContainer.getEnd(), new EntryModifiedDateComparator()));
+	searchContainer.setResultsAndTotal(() -> new ArrayList<>(BlogsEntryServiceUtil.getGroupUserEntries(blogsScopeGroupId, blogsUserId, new int[] {WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING, WorkflowConstants.STATUS_SCHEDULED}, searchContainer.getStart(), searchContainer.getEnd(), new EntryModifiedDateComparator())), notPublishedEntriesCount);
 }
 else {
+	long blogsScopeGroupId = scopeGroupId;
 	int status = WorkflowConstants.STATUS_APPROVED;
 
-	total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, status);
-
-	searchContainer.setTotal(total);
-
-	results.addAll(BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd()));
+	searchContainer.setResultsAndTotal(() -> new ArrayList<>(BlogsEntryServiceUtil.getGroupEntries(blogsScopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd())), BlogsEntryServiceUtil.getGroupEntriesCount(blogsScopeGroupId, status));
 }
-
-searchContainer.setResults(results);
 %>
 
 <c:if test="<%= notPublishedEntriesCount > 0 %>">

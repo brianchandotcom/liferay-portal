@@ -21,7 +21,7 @@
 	/>
 </c:if>
 
-<c:if test="<%= results.isEmpty() %>">
+<c:if test="<%= ListUtil.isEmpty(searchContainer.getResults()) %>">
 	<liferay-ui:empty-result-message
 		message="no-entries-were-found"
 	/>
@@ -46,7 +46,7 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 	"blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper
 ).build();
 
-List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
+List<BlogsEntry> blogsEntries = _convertToBlogEntries(searchContainer.getResults());
 %>
 
 <liferay-ddm:template-renderer
@@ -73,7 +73,7 @@ List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 
 		int index = 0;
 
-		for (Object result : results) {
+		for (Object result : searchContainer.getResults()) {
 			BlogsEntry entry = blogsEntries.get(index);
 
 			AssetEntry assetEntry = null;

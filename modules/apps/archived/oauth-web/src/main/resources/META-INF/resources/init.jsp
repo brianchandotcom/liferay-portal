@@ -42,6 +42,7 @@ page import="com.liferay.oauth.web.internal.search.OAuthApplicationSearch" %><%@
 page import="com.liferay.oauth.web.internal.util.OAuthUtil" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.ImageTypeException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredFieldException" %><%@
 page import="com.liferay.portal.kernel.oauth.OAuthException" %><%@

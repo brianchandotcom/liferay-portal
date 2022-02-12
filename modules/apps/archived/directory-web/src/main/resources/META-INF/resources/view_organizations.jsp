@@ -101,6 +101,9 @@ if (parentOrganizationId > 0) {
 			organizationParams.put("organizationsTree", ListUtil.fromArray(parentOrganization));
 		}
 
+		long companyId = company.getCompanyId();
+		long organizationParenOrganizationId = parentOrganizationId;
+
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 		%>
 
@@ -116,33 +119,27 @@ if (parentOrganizationId > 0) {
 					BaseModelSearchResult<Organization> baseModelSearchResult = null;
 
 					if (searchTerms.isAdvancedSearch()) {
-						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
+						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
 					}
 					else {
-						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
+						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
 					}
 
-					organizationSearchContainer.setResults(baseModelSearchResult.getBaseModels());
-					organizationSearchContainer.setTotal(baseModelSearchResult.getLength());
+					organizationSearchContainer.setResultsAndTotal(baseModelSearchResult);
 					%>
 
 				</c:when>
 				<c:otherwise>
 
 					<%
-					if (searchTerms.isAdvancedSearch()) {
-						total = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator());
+					SearchContainer<Organization> searchContainer = organizationSearchContainer;
 
-						results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), organizationSearchContainer.getOrderByComparator());
+					if (searchTerms.isAdvancedSearch()) {
+						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator()));
 					}
 					else {
-						total = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams);
-
-						results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), organizationSearchContainer.getOrderByComparator());
+						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams));
 					}
-
-					organizationSearchContainer.setTotal(total);
-					organizationSearchContainer.setResults(results);
 					%>
 
 				</c:otherwise>

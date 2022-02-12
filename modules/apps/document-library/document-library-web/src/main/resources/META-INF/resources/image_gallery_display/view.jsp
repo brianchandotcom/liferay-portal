@@ -79,6 +79,10 @@ String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLA
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
+
+long dlAppRepositoryId = repositoryId;
+long dlAppRootFolderId = rootFolderId;
+int dlAppStatus = status;
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -150,14 +154,10 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 			assetEntryQuery.setEnablePermissions(true);
 			assetEntryQuery.setExcludeZeroViewCount(false);
 
-			igSearchContainer.setTotal(AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
-
-			igSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
-
-			mediaGalleryMimeTypes = null;
+			igSearchContainer.setResultsAndTotal(() -> AssetEntryServiceUtil.getEntries(assetEntryQuery), AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 
 			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
-			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", null);
 			%>
 
 			<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
@@ -173,17 +173,15 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 			<%
 			SearchContainer<Object> igSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-			int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
+			long dlAppFolderId = folderId;
 
-			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
+			int foldersCount = DLAppServiceUtil.getFoldersCount(dlAppRepositoryId, dlAppFolderId, true);
+
+			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(dlAppRepositoryId, dlAppFolderId, dlAppStatus, mediaGalleryMimeTypes, true);
 
 			int imagesCount = total - foldersCount;
 
-			igSearchContainer.setTotal(total);
-
-			List<Object> results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
-
-			igSearchContainer.setResults(results);
+			igSearchContainer.setResultsAndTotal(() -> DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(dlAppRepositoryId, dlAppFolderId, dlAppStatus, mediaGalleryMimeTypes, true, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator()), total);
 
 			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
 			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
@@ -263,13 +261,11 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 				groupImagesUserId = user.getUserId();
 			}
 
+			long dlAppGroupImagesUserId = groupImagesUserId;
+
 			SearchContainer<FileEntry> igSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-			igSearchContainer.setTotal(DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, rootFolderId, mediaGalleryMimeTypes, status));
-
-			List<FileEntry> results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, rootFolderId, mediaGalleryMimeTypes, status, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
-
-			igSearchContainer.setResults(results);
+			igSearchContainer.setResultsAndTotal(() -> DLAppServiceUtil.getGroupFileEntries(dlAppRepositoryId, dlAppGroupImagesUserId, dlAppRootFolderId, mediaGalleryMimeTypes, dlAppStatus, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator()), DLAppServiceUtil.getGroupFileEntriesCount(dlAppRepositoryId, dlAppGroupImagesUserId, dlAppRootFolderId, mediaGalleryMimeTypes, dlAppStatus));
 
 			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
 

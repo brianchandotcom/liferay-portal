@@ -35,8 +35,11 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = new Se
 
 announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(liferayPortletRequest, liferayPortletResponse));
 
-announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts")));
-announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
+long announcementsClassNameId = classNameId;
+long announcementsClassPK = classPK;
+long companyId = themeDisplay.getCompanyId();
+
+announcementsEntriesSearchContainer.setResultsAndTotal(() -> AnnouncementsEntryLocalServiceUtil.getEntries(companyId, announcementsClassNameId, announcementsClassPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()), AnnouncementsEntryLocalServiceUtil.getEntriesCount(companyId, announcementsClassNameId, announcementsClassPK, navigation.equals("alerts")));
 
 AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, announcementsEntriesSearchContainer);
 %>

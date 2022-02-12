@@ -145,7 +145,7 @@ definition {
 	}
 
 	macro gotoEntryMenuItem {
-		if (IsElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_OPEN_DROPDOWN_MENU")) {
+		if (IsElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DROPDOWN_MENU_OPEN")) {
 			Blueprints.openEntryMenu(title = "${title}");
 		}
 

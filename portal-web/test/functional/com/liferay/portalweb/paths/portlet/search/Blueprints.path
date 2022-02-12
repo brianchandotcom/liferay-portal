@@ -106,7 +106,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BLUEPRINTS_ADMIN_ENTRY_OPEN_DROPDOWN_MENU</td>
+	<td>BLUEPRINTS_ADMIN_ENTRY_DROPDOWN_MENU_OPEN</td>
 	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
 	<td></td>
 </tr>

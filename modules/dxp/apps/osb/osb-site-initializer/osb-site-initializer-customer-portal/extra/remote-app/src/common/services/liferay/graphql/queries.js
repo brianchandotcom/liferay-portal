@@ -325,7 +325,7 @@ export const getListTypeDefinitions = gql`
 `;
 
 export const getAccounts = gql`
-	query getAccounts($pageSize: Int) {
+	query getAccounts($pageSize: Int = 20) {
 		accounts(pageSize: $pageSize) {
 			items {
 				externalReferenceCode

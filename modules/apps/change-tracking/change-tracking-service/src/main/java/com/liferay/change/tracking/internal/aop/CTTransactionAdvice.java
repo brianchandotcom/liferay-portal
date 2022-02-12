@@ -54,7 +54,7 @@ public class CTTransactionAdvice extends ChainableMethodAdvice {
 
 		if (ctAware != null) {
 			if (ctAware.onProduction()) {
-				return CTMode.READ_ONLY;
+				return CTMode.REQUIRES_NEW;
 			}
 
 			return null;

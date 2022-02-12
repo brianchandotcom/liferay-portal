@@ -88,24 +88,6 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 			);
 			if (items) {
 				setActivationKeys(items);
-				setStatusBar({
-					activatedTotalCount: items.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.activated(
-							activationKey
-						)
-					).length,
-					allTotalCount: items.length,
-					expiredTotalCount: items.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(
-							activationKey
-						)
-					).length,
-					notActiveTotalCount: items.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
-							activationKey
-						)
-					).length,
-				});
 			}
 
 			setIsLoadingActivationKeys(false);
@@ -113,6 +95,27 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 
 		fetchActivationKeysData();
 	}, [licenseKeyDownloadURL, project, sessionId]);
+
+	useEffect(() => {
+		if (activationKeys.length) {
+			setStatusBar({
+				activatedTotalCount: activationKeys.filter((activationKey) =>
+					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.activated(
+						activationKey
+					)
+				).length,
+				allTotalCount: activationKeys.length,
+				expiredTotalCount: activationKeys.filter((activationKey) =>
+					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(activationKey)
+				).length,
+				notActiveTotalCount: activationKeys.filter((activationKey) =>
+					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
+						activationKey
+					)
+				).length,
+			});
+		}
+	}, [activationKeys]);
 
 	useEffect(() => {
 		if (activationKeys.length) {
@@ -208,6 +211,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							licenseKeyDownloadURL={licenseKeyDownloadURL}
 							selectedKeys={activationKeysChecked}
 							sessionId={sessionId}
+							setActivationKeys={setActivationKeys}
 						/>
 					</div>
 

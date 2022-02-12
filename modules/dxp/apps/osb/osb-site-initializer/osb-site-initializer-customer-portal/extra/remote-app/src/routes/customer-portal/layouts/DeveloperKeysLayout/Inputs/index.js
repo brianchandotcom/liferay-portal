@@ -21,7 +21,7 @@ import {getDevelopmentLicenseKey} from '../../../../../common/services/liferay/r
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import {
 	ALERT_DOWNLOAD_TYPE,
-	AUTO_CLOSE_DOWNLOAD_ALERT_TIME,
+	AUTO_CLOSE_ALERT_TIME,
 	EXTENSION_FILE_TYPES,
 	LIST_TYPES,
 	STATUS_CODE,
@@ -167,9 +167,7 @@ const DeveloperKeysInputs = ({
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={
-							AUTO_CLOSE_DOWNLOAD_ALERT_TIME[
-								developerKeysDownloadStatus
-							]
+							AUTO_CLOSE_ALERT_TIME[developerKeysDownloadStatus]
 						}
 						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
 						displayType={

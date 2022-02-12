@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
-import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestClassResult;
@@ -30,7 +29,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.WordUtils;
@@ -216,19 +214,8 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments =
 			super.getTestrayAttachments();
 
-		List<TestrayAttachment> liferayLogTestrayAttachments =
-			_getLiferayLogTestrayAttachments();
-
-		if (liferayLogTestrayAttachments != null) {
-			testrayAttachments.addAll(liferayLogTestrayAttachments);
-		}
-
-		List<TestrayAttachment> liferayOSGiLogAttachments =
-			_getLiferayOSGiLogTestrayAttachments();
-
-		if (liferayOSGiLogAttachments != null) {
-			testrayAttachments.addAll(liferayOSGiLogAttachments);
-		}
+		testrayAttachments.addAll(_getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(_getLiferayOSGiLogTestrayAttachments());
 
 		testrayAttachments.add(_getPoshiReportTestrayAttachment());
 		testrayAttachments.add(_getPoshiSummaryTestrayAttachment());
@@ -257,39 +244,11 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	@Override
 	public String[] getWarnings() {
-		StringBuilder sb = new StringBuilder();
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getAxisBuild(), "Poshi Warnings",
+			getAxisBuildURLPath() + "/poshi-warnings.xml.gz");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Date topLevelStartDate = new Date(topLevelBuild.getStartTime());
-
-		sb.append(
-			JenkinsResultsParserUtil.toDateString(
-				topLevelStartDate, "yyyy-MM", "America/Los_Angeles"));
-
-		sb.append("/");
-
-		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
-		sb.append(jenkinsMaster.getName());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-		sb.append("/");
-
-		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
-
-		sb.append(axisTestClassGroup.getAxisName());
-
-		sb.append("/poshi-warnings.xml");
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Poshi Warnings", sb.toString());
-
-		if (!testrayAttachment.exists()) {
+		if (testrayAttachment == null) {
 			return null;
 		}
 
@@ -323,41 +282,38 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			}
 		}
 		catch (DocumentException documentException) {
+			throw new RuntimeException(documentException);
 		}
 
 		return null;
 	}
 
 	private List<TestrayAttachment> _getLiferayLogTestrayAttachments() {
-		if (getTestResult() == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Liferay Log",
-				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/liferay-log.txt.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		if (getTestResult() == null) {
+			return testrayAttachments;
+		}
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getAxisBuild(), "Liferay Log",
+			getAxisBuildURLPath() + "/liferay-log.txt.gz");
+
+		if (testrayAttachment == null) {
+			return testrayAttachments;
+		}
 
 		testrayAttachments.add(testrayAttachment);
 
 		for (int i = 1; i <= 5; i++) {
 			TestrayAttachment liferayLogTestrayAttachment =
-				TestrayFactory.newTestrayAttachment(
-					this,
-					JenkinsResultsParserUtil.combine(
-						"Liferay Log (", String.valueOf(i), ")"),
+				getTestrayAttachment(
+					getAxisBuild(), "Liferay Log (" + i + ")",
 					JenkinsResultsParserUtil.combine(
 						getAxisBuildURLPath(), "/liferay-log-",
 						String.valueOf(i), ".txt.gz"));
 
-			if (!liferayLogTestrayAttachment.exists()) {
+			if (liferayLogTestrayAttachment == null) {
 				break;
 			}
 
@@ -368,35 +324,31 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	private List<TestrayAttachment> _getLiferayOSGiLogTestrayAttachments() {
-		if (getTestResult() == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Liferay OSGi Log",
-				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/liferay-osgi-log.txt.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		if (getTestResult() == null) {
+			return testrayAttachments;
+		}
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getAxisBuild(), "Liferay OSGi Log",
+			getAxisBuildURLPath() + "/liferay-osgi-log.txt.gz");
+
+		if (testrayAttachment == null) {
+			return testrayAttachments;
+		}
 
 		testrayAttachments.add(testrayAttachment);
 
 		for (int i = 1; i <= 5; i++) {
 			TestrayAttachment liferayOSGiLogTestrayAttachment =
-				TestrayFactory.newTestrayAttachment(
-					this,
-					JenkinsResultsParserUtil.combine(
-						"Liferay OSGi Log (", String.valueOf(i), ")"),
+				getTestrayAttachment(
+					getAxisBuild(), "Liferay OSGi Log (" + i + ")",
 					JenkinsResultsParserUtil.combine(
 						getAxisBuildURLPath(), "/liferay-log-osgi-",
 						String.valueOf(i), ".txt.gz"));
 
-			if (!liferayOSGiLogTestrayAttachment.exists()) {
+			if (liferayOSGiLogTestrayAttachment == null) {
 				break;
 			}
 
@@ -415,18 +367,11 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		name = name.replace("#", "_");
 
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Poshi Report",
-				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/",
-					JenkinsResultsParserUtil.fixURL(name), "/index.html.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getAxisBuild(), "Poshi Report",
+			JenkinsResultsParserUtil.combine(
+				getAxisBuildURLPath(), "/",
+				JenkinsResultsParserUtil.fixURL(name), "/index.html.gz"));
 	}
 
 	private TestrayAttachment _getPoshiSummaryTestrayAttachment() {
@@ -438,18 +383,11 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		name = name.replace("#", "_");
 
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Poshi Summary",
-				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/",
-					JenkinsResultsParserUtil.fixURL(name), "/summary.html.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getAxisBuild(), "Poshi Summary",
+			JenkinsResultsParserUtil.combine(
+				getAxisBuildURLPath(), "/",
+				JenkinsResultsParserUtil.fixURL(name), "/summary.html.gz"));
 	}
 
 	private final FunctionalTestClass _functionalTestClass;

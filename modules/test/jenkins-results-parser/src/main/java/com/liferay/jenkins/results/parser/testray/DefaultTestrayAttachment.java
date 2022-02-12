@@ -14,37 +14,23 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * @author Michael Hashimoto
  */
-public class RsyncTestrayAttachment extends BaseTestrayAttachment {
+public class DefaultTestrayAttachment extends BaseTestrayAttachment {
 
-	public RsyncTestrayAttachment(
+	public DefaultTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 
-		super(testrayCaseResult, name, key);
+		this(testrayCaseResult, name, key, null);
 	}
 
-	@Override
-	public URL getURL() {
-		TestrayCaseResult testrayCaseResult = getTestrayCaseResult();
+	public DefaultTestrayAttachment(
+		TestrayCaseResult testrayCaseResult, String name, String key, URL url) {
 
-		TestrayServer testrayServer = testrayCaseResult.getTestrayServer();
-
-		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(testrayServer.getURL()),
-					"/reports/production/logs/", getKey()));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
+		super(testrayCaseResult, name, key, url);
 	}
 
 }

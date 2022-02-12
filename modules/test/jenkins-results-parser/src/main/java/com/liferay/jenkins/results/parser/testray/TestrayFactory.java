@@ -36,13 +36,7 @@ public class TestrayFactory {
 	public static TestrayAttachment newTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 
-		TestrayServer testrayServer = testrayCaseResult.getTestrayServer();
-
-		if (testrayServer instanceof RsyncTestrayServer) {
-			return new RsyncTestrayAttachment(testrayCaseResult, name, key);
-		}
-
-		return new S3TestrayAttachment(testrayCaseResult, name, key);
+		return new DefaultTestrayAttachment(testrayCaseResult, name, key);
 	}
 
 	public static TestrayAttachmentRecorder newTestrayAttachmentRecorder(

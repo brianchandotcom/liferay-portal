@@ -23,6 +23,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -218,84 +220,60 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return _axisTestClassGroup;
 	}
 
+	protected TestrayAttachment getTestrayAttachment(
+		Build build, String name, String key) {
+
+		if ((build == null) || JenkinsResultsParserUtil.isNullOrEmpty(key) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+
+			return null;
+		}
+
+		for (TestrayS3Object testrayS3Object : build.getTestrayS3Objects()) {
+			if (!key.equals(testrayS3Object.getKey())) {
+				continue;
+			}
+
+			return new S3TestrayAttachment(this, name, key);
+		}
+
+		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
+			String testrayAttachmentURLString = String.valueOf(
+				testrayAttachmentURL);
+
+			if (!testrayAttachmentURLString.contains(key)) {
+				continue;
+			}
+
+			return new DefaultTestrayAttachment(
+				this, name, key, testrayAttachmentURL);
+		}
+
+		return null;
+	}
+
 	private TestrayAttachment _getBuildResultTopLevelTestrayAttachment() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Build Result (Top Level)",
-				JenkinsResultsParserUtil.combine(
-					_getTopLevelBuildURLPath(), "/build-result.json.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Build Result (Top Level)",
+			_getTopLevelBuildURLPath() + "/build-result.json.gz");
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
-		AxisBuild axisBuild = getAxisBuild();
-
-		if (axisBuild == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Jenkins Console",
-				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/jenkins-console.txt.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getAxisBuild(), "Jenkins Console",
+			getAxisBuildURLPath() + "/jenkins-console.txt.gz");
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTopLevelTestrayAttachment() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Jenkins Console (Top Level)",
-				JenkinsResultsParserUtil.combine(
-					_getTopLevelBuildURLPath(), "/jenkins-console.txt.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Jenkins Console (Top Level)",
+			_getTopLevelBuildURLPath() + "/jenkins-console.txt.gz");
 	}
 
 	private TestrayAttachment _getJenkinsReportTestrayAttachment() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild == null) {
-			return null;
-		}
-
-		TestrayAttachment testrayAttachment =
-			TestrayFactory.newTestrayAttachment(
-				this, "Jenkins Report (Top Level)",
-				JenkinsResultsParserUtil.combine(
-					_getTopLevelBuildURLPath(), "/jenkins-report.html.gz"));
-
-		if (!testrayAttachment.exists()) {
-			return null;
-		}
-
-		return testrayAttachment;
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Jenkins Report (Top Level)",
+			_getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
 	}
 
 	private String _getTopLevelBuildURLPath() {

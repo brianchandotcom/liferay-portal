@@ -11,16 +11,16 @@
 
 import ClayAlert from '@clayui/alert';
 
-import classNames from 'classnames';
 import {useMemo, useState} from 'react';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
+import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
-import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants/autoCloseAlertTime';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
+import DeactivateButton from '../Deactivate';
 
 const DXPActivationKeysTableHeader = ({
 	accountKey,
@@ -28,6 +28,7 @@ const DXPActivationKeysTableHeader = ({
 	licenseKeyDownloadURL,
 	selectedKeys,
 	sessionId,
+	setActivationKeys,
 }) => {
 	const [
 		activationKeysDownloadStatus,
@@ -129,23 +130,21 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				{!!selectedKeys.length && (
-					<>
-						<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-							{`${selectedKeys.length} Keys Selected`}
-						</p>
+				<div className="align-items-center d-flex ml-auto">
+					{!!selectedKeys.length && (
+						<>
+							<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
+								{`${selectedKeys.length} Keys Selected`}
+							</p>
 
-						<Button className="btn-outline-danger cp-deactivate-button mx-2">
-							Deactivate
-						</Button>
-					</>
-				)}
+							<DeactivateButton
+								selectedKeys={selectedKeys}
+								sessionId={sessionId}
+								setActivationKeys={setActivationKeys}
+							/>
+						</>
+					)}
 
-				<div
-					className={classNames({
-						'ml-auto': !selectedKeys.length,
-					})}
-				>
 					{getCurrentButton()}
 				</div>
 			</div>

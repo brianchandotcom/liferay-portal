@@ -12,8 +12,8 @@
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import Button from '../../../../../../common/components/Button';
-import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
+import Button from '../../../../../../../common/components/Button';
+import {ALERT_DOWNLOAD_TYPE} from '../../../../../utils/constants';
 
 const DeactivateKeysModal = ({
 	deactivateKeysConfirm,
@@ -45,14 +45,26 @@ const DeactivateKeysModal = ({
 					</Button>
 
 					<Button
-						className={classNames('bg-danger d-flex ml-2', {
-							'cp-deactivate-loading': isDeactivating,
-						})}
+						className={classNames(
+							'align-items-center bg-danger d-flex ml-2',
+							{
+								'cp-deactivate-loading': isDeactivating,
+							}
+						)}
 						onClick={deactivateKeysConfirm}
 					>
-						{isDeactivating
-							? 'Deactivating......'
-							: 'Confirm & Deactivate Keys'}
+						{isDeactivating ? (
+							<>
+								<span
+									aria-hidden="true"
+									className="cp-spinner mr-2 spinner-border spinner-border-sm"
+									role="status"
+								></span>
+								Deactivating...
+							</>
+						) : (
+							'Confirm & Deactivate Keys'
+						)}
 					</Button>
 				</div>
 			</div>

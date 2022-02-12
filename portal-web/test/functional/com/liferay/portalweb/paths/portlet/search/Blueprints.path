@@ -121,6 +121,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADMIN_FIELD</td>
+	<td>//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-th') and contains(.,'${fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ADMIN_FIELDS_MENU</td>
+	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'Open Fields Menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADMIN_NTH_ENTRY</td>
 	<td>xpath=(//div[contains(@class,'table-list-title')])[${index}]</td>
 	<td></td>

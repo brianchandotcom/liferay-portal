@@ -331,6 +331,31 @@ definition {
 		Alert.viewRequiredField();
 	}
 
+	test AssertNonAdminsCannotAccessBlueprintsPortlet {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertElementNotPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Portlet.viewNoPermissionPG();
+	}
+
 	test BoostCustomLiferayObjectType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

@@ -342,6 +342,71 @@ public class Order implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
+	public String getDeliveryTermDescription() {
+		return deliveryTermDescription;
+	}
+
+	public void setDeliveryTermDescription(String deliveryTermDescription) {
+		this.deliveryTermDescription = deliveryTermDescription;
+	}
+
+	public void setDeliveryTermDescription(
+		UnsafeSupplier<String, Exception>
+			deliveryTermDescriptionUnsafeSupplier) {
+
+		try {
+			deliveryTermDescription =
+				deliveryTermDescriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String deliveryTermDescription;
+
+	public Long getDeliveryTermId() {
+		return deliveryTermId;
+	}
+
+	public void setDeliveryTermId(Long deliveryTermId) {
+		this.deliveryTermId = deliveryTermId;
+	}
+
+	public void setDeliveryTermId(
+		UnsafeSupplier<Long, Exception> deliveryTermIdUnsafeSupplier) {
+
+		try {
+			deliveryTermId = deliveryTermIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long deliveryTermId;
+
+	public String getDeliveryTermName() {
+		return deliveryTermName;
+	}
+
+	public void setDeliveryTermName(String deliveryTermName) {
+		this.deliveryTermName = deliveryTermName;
+	}
+
+	public void setDeliveryTermName(
+		UnsafeSupplier<String, Exception> deliveryTermNameUnsafeSupplier) {
+
+		try {
+			deliveryTermName = deliveryTermNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String deliveryTermName;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -616,6 +681,70 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected Status paymentStatusInfo;
+
+	public String getPaymentTermDescription() {
+		return paymentTermDescription;
+	}
+
+	public void setPaymentTermDescription(String paymentTermDescription) {
+		this.paymentTermDescription = paymentTermDescription;
+	}
+
+	public void setPaymentTermDescription(
+		UnsafeSupplier<String, Exception>
+			paymentTermDescriptionUnsafeSupplier) {
+
+		try {
+			paymentTermDescription = paymentTermDescriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String paymentTermDescription;
+
+	public Long getPaymentTermId() {
+		return paymentTermId;
+	}
+
+	public void setPaymentTermId(Long paymentTermId) {
+		this.paymentTermId = paymentTermId;
+	}
+
+	public void setPaymentTermId(
+		UnsafeSupplier<Long, Exception> paymentTermIdUnsafeSupplier) {
+
+		try {
+			paymentTermId = paymentTermIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long paymentTermId;
+
+	public String getPaymentTermName() {
+		return paymentTermName;
+	}
+
+	public void setPaymentTermName(String paymentTermName) {
+		this.paymentTermName = paymentTermName;
+	}
+
+	public void setPaymentTermName(
+		UnsafeSupplier<String, Exception> paymentTermNameUnsafeSupplier) {
+
+		try {
+			paymentTermName = paymentTermNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String paymentTermName;
 
 	public String getPrintedNote() {
 		return printedNote;

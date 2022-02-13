@@ -481,6 +481,93 @@ public class Order implements Serializable {
 	protected Map<String, ?> customFields;
 
 	@Schema
+	public String getDeliveryTermDescription() {
+		return deliveryTermDescription;
+	}
+
+	public void setDeliveryTermDescription(String deliveryTermDescription) {
+		this.deliveryTermDescription = deliveryTermDescription;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermDescription(
+		UnsafeSupplier<String, Exception>
+			deliveryTermDescriptionUnsafeSupplier) {
+
+		try {
+			deliveryTermDescription =
+				deliveryTermDescriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String deliveryTermDescription;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getDeliveryTermId() {
+		return deliveryTermId;
+	}
+
+	public void setDeliveryTermId(Long deliveryTermId) {
+		this.deliveryTermId = deliveryTermId;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermId(
+		UnsafeSupplier<Long, Exception> deliveryTermIdUnsafeSupplier) {
+
+		try {
+			deliveryTermId = deliveryTermIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long deliveryTermId;
+
+	@Schema
+	public String getDeliveryTermName() {
+		return deliveryTermName;
+	}
+
+	public void setDeliveryTermName(String deliveryTermName) {
+		this.deliveryTermName = deliveryTermName;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermName(
+		UnsafeSupplier<String, Exception> deliveryTermNameUnsafeSupplier) {
+
+		try {
+			deliveryTermName = deliveryTermNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String deliveryTermName;
+
+	@Schema
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -852,6 +939,92 @@ public class Order implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status paymentStatusInfo;
+
+	@Schema
+	public String getPaymentTermDescription() {
+		return paymentTermDescription;
+	}
+
+	public void setPaymentTermDescription(String paymentTermDescription) {
+		this.paymentTermDescription = paymentTermDescription;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermDescription(
+		UnsafeSupplier<String, Exception>
+			paymentTermDescriptionUnsafeSupplier) {
+
+		try {
+			paymentTermDescription = paymentTermDescriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String paymentTermDescription;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getPaymentTermId() {
+		return paymentTermId;
+	}
+
+	public void setPaymentTermId(Long paymentTermId) {
+		this.paymentTermId = paymentTermId;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermId(
+		UnsafeSupplier<Long, Exception> paymentTermIdUnsafeSupplier) {
+
+		try {
+			paymentTermId = paymentTermIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long paymentTermId;
+
+	@Schema
+	public String getPaymentTermName() {
+		return paymentTermName;
+	}
+
+	public void setPaymentTermName(String paymentTermName) {
+		this.paymentTermName = paymentTermName;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermName(
+		UnsafeSupplier<String, Exception> paymentTermNameUnsafeSupplier) {
+
+		try {
+			paymentTermName = paymentTermNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String paymentTermName;
 
 	@Schema
 	public String getPrintedNote() {
@@ -3134,6 +3307,44 @@ public class Order implements Serializable {
 			sb.append(_toJSON(customFields));
 		}
 
+		if (deliveryTermDescription != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryTermDescription));
+
+			sb.append("\"");
+		}
+
+		if (deliveryTermId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermId\": ");
+
+			sb.append(deliveryTermId);
+		}
+
+		if (deliveryTermName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryTermName));
+
+			sb.append("\"");
+		}
+
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3296,6 +3507,44 @@ public class Order implements Serializable {
 			sb.append("\"paymentStatusInfo\": ");
 
 			sb.append(String.valueOf(paymentStatusInfo));
+		}
+
+		if (paymentTermDescription != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paymentTermDescription));
+
+			sb.append("\"");
+		}
+
+		if (paymentTermId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermId\": ");
+
+			sb.append(paymentTermId);
+		}
+
+		if (paymentTermName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paymentTermName));
+
+			sb.append("\"");
 		}
 
 		if (printedNote != null) {

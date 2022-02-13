@@ -227,6 +227,44 @@ public class OrderSerDes {
 			sb.append(_toJSON(order.getCustomFields()));
 		}
 
+		if (order.getDeliveryTermDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getDeliveryTermDescription()));
+
+			sb.append("\"");
+		}
+
+		if (order.getDeliveryTermId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermId\": ");
+
+			sb.append(order.getDeliveryTermId());
+		}
+
+		if (order.getDeliveryTermName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getDeliveryTermName()));
+
+			sb.append("\"");
+		}
+
 		if (order.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -390,6 +428,44 @@ public class OrderSerDes {
 			sb.append("\"paymentStatusInfo\": ");
 
 			sb.append(String.valueOf(order.getPaymentStatusInfo()));
+		}
+
+		if (order.getPaymentTermDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getPaymentTermDescription()));
+
+			sb.append("\"");
+		}
+
+		if (order.getPaymentTermId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermId\": ");
+
+			sb.append(order.getPaymentTermId());
+		}
+
+		if (order.getPaymentTermName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getPaymentTermName()));
+
+			sb.append("\"");
 		}
 
 		if (order.getPrintedNote() != null) {
@@ -1260,6 +1336,32 @@ public class OrderSerDes {
 			map.put("customFields", String.valueOf(order.getCustomFields()));
 		}
 
+		if (order.getDeliveryTermDescription() == null) {
+			map.put("deliveryTermDescription", null);
+		}
+		else {
+			map.put(
+				"deliveryTermDescription",
+				String.valueOf(order.getDeliveryTermDescription()));
+		}
+
+		if (order.getDeliveryTermId() == null) {
+			map.put("deliveryTermId", null);
+		}
+		else {
+			map.put(
+				"deliveryTermId", String.valueOf(order.getDeliveryTermId()));
+		}
+
+		if (order.getDeliveryTermName() == null) {
+			map.put("deliveryTermName", null);
+		}
+		else {
+			map.put(
+				"deliveryTermName",
+				String.valueOf(order.getDeliveryTermName()));
+		}
+
 		if (order.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -1362,6 +1464,30 @@ public class OrderSerDes {
 			map.put(
 				"paymentStatusInfo",
 				String.valueOf(order.getPaymentStatusInfo()));
+		}
+
+		if (order.getPaymentTermDescription() == null) {
+			map.put("paymentTermDescription", null);
+		}
+		else {
+			map.put(
+				"paymentTermDescription",
+				String.valueOf(order.getPaymentTermDescription()));
+		}
+
+		if (order.getPaymentTermId() == null) {
+			map.put("paymentTermId", null);
+		}
+		else {
+			map.put("paymentTermId", String.valueOf(order.getPaymentTermId()));
+		}
+
+		if (order.getPaymentTermName() == null) {
+			map.put("paymentTermName", null);
+		}
+		else {
+			map.put(
+				"paymentTermName", String.valueOf(order.getPaymentTermName()));
 		}
 
 		if (order.getPrintedNote() == null) {
@@ -2060,6 +2186,25 @@ public class OrderSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "deliveryTermDescription")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setDeliveryTermDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermId")) {
+				if (jsonParserFieldValue != null) {
+					order.setDeliveryTermId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermName")) {
+				if (jsonParserFieldValue != null) {
+					order.setDeliveryTermName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
@@ -2144,6 +2289,25 @@ public class OrderSerDes {
 				if (jsonParserFieldValue != null) {
 					order.setPaymentStatusInfo(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "paymentTermDescription")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setPaymentTermDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermId")) {
+				if (jsonParserFieldValue != null) {
+					order.setPaymentTermId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermName")) {
+				if (jsonParserFieldValue != null) {
+					order.setPaymentTermName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "printedNote")) {

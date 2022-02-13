@@ -372,6 +372,10 @@ public class OrderResourceImpl
 					order.getPrintedNote(), commerceOrder.getPrintedNote()));
 		}
 
+		// Terms and Conditions
+
+
+
 		// Expando
 
 		Map<String, ?> customFields = order.getCustomFields();

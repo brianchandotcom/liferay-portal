@@ -198,6 +198,12 @@
 		<column name="purchaseOrderNumber" type="String" />
 		<column name="couponCode" type="String" />
 		<column name="lastPriceUpdateDate" type="Date" />
+		<column name="deliveryCommerceTermEntryId" type="long" />
+		<column db-name="deliveryCTermEntryDescription" name="deliveryCommerceTermEntryDescription" type="String" />
+		<column name="deliveryCommerceTermEntryName" type="String" />
+		<column name="paymentCommerceTermEntryId" type="long" />
+		<column db-name="paymentCTermEntryDescription" name="paymentCommerceTermEntryDescription" type="String" />
+		<column name="paymentCommerceTermEntryName" type="String" />
 		<column name="subtotal" type="BigDecimal" />
 		<column name="subtotalDiscountAmount" type="BigDecimal" />
 		<column db-name="subtotalDiscountPercentLevel1" name="subtotalDiscountPercentageLevel1" type="BigDecimal" />

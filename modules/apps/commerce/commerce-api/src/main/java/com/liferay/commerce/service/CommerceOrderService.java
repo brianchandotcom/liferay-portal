@@ -430,6 +430,11 @@ public interface CommerceOrderService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrder updateTermsAndConditions(
+			long commerceOrderId, long deliveryCommerceTermEntryId,
+			long paymentCommerceTermEntryId, String languageId)
+		throws PortalException;
+
 	public CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
 		throws PortalException;

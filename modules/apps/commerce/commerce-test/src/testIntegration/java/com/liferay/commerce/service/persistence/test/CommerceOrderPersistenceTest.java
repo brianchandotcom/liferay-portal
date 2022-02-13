@@ -170,6 +170,24 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setLastPriceUpdateDate(RandomTestUtil.nextDate());
 
+		newCommerceOrder.setDeliveryCommerceTermEntryId(
+			RandomTestUtil.nextLong());
+
+		newCommerceOrder.setDeliveryCommerceTermEntryDescription(
+			RandomTestUtil.randomString());
+
+		newCommerceOrder.setDeliveryCommerceTermEntryName(
+			RandomTestUtil.randomString());
+
+		newCommerceOrder.setPaymentCommerceTermEntryId(
+			RandomTestUtil.nextLong());
+
+		newCommerceOrder.setPaymentCommerceTermEntryDescription(
+			RandomTestUtil.randomString());
+
+		newCommerceOrder.setPaymentCommerceTermEntryName(
+			RandomTestUtil.randomString());
+
 		newCommerceOrder.setSubtotal(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -371,6 +389,24 @@ public class CommerceOrderPersistenceTest {
 			Time.getShortTimestamp(
 				existingCommerceOrder.getLastPriceUpdateDate()),
 			Time.getShortTimestamp(newCommerceOrder.getLastPriceUpdateDate()));
+		Assert.assertEquals(
+			existingCommerceOrder.getDeliveryCommerceTermEntryId(),
+			newCommerceOrder.getDeliveryCommerceTermEntryId());
+		Assert.assertEquals(
+			existingCommerceOrder.getDeliveryCommerceTermEntryDescription(),
+			newCommerceOrder.getDeliveryCommerceTermEntryDescription());
+		Assert.assertEquals(
+			existingCommerceOrder.getDeliveryCommerceTermEntryName(),
+			newCommerceOrder.getDeliveryCommerceTermEntryName());
+		Assert.assertEquals(
+			existingCommerceOrder.getPaymentCommerceTermEntryId(),
+			newCommerceOrder.getPaymentCommerceTermEntryId());
+		Assert.assertEquals(
+			existingCommerceOrder.getPaymentCommerceTermEntryDescription(),
+			newCommerceOrder.getPaymentCommerceTermEntryDescription());
+		Assert.assertEquals(
+			existingCommerceOrder.getPaymentCommerceTermEntryName(),
+			newCommerceOrder.getPaymentCommerceTermEntryName());
 		Assert.assertEquals(
 			existingCommerceOrder.getSubtotal(),
 			newCommerceOrder.getSubtotal());
@@ -694,7 +730,10 @@ public class CommerceOrderPersistenceTest {
 			"billingAddressId", true, "shippingAddressId", true,
 			"commercePaymentMethodKey", true, "commerceShippingMethodId", true,
 			"shippingOptionName", true, "purchaseOrderNumber", true,
-			"couponCode", true, "lastPriceUpdateDate", true, "subtotal", true,
+			"couponCode", true, "lastPriceUpdateDate", true,
+			"deliveryCommerceTermEntryId", true,
+			"deliveryCommerceTermEntryName", true, "paymentCommerceTermEntryId",
+			true, "paymentCommerceTermEntryName", true, "subtotal", true,
 			"subtotalDiscountAmount", true, "subtotalDiscountPercentageLevel1",
 			true, "subtotalDiscountPercentageLevel2", true,
 			"subtotalDiscountPercentageLevel3", true,
@@ -1063,6 +1102,22 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setCouponCode(RandomTestUtil.randomString());
 
 		commerceOrder.setLastPriceUpdateDate(RandomTestUtil.nextDate());
+
+		commerceOrder.setDeliveryCommerceTermEntryId(RandomTestUtil.nextLong());
+
+		commerceOrder.setDeliveryCommerceTermEntryDescription(
+			RandomTestUtil.randomString());
+
+		commerceOrder.setDeliveryCommerceTermEntryName(
+			RandomTestUtil.randomString());
+
+		commerceOrder.setPaymentCommerceTermEntryId(RandomTestUtil.nextLong());
+
+		commerceOrder.setPaymentCommerceTermEntryDescription(
+			RandomTestUtil.randomString());
+
+		commerceOrder.setPaymentCommerceTermEntryName(
+			RandomTestUtil.randomString());
 
 		commerceOrder.setSubtotal(new BigDecimal(RandomTestUtil.nextDouble()));
 

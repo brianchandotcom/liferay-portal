@@ -69,6 +69,21 @@ public class CommerceOrderWrapper
 		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
 		attributes.put("couponCode", getCouponCode());
 		attributes.put("lastPriceUpdateDate", getLastPriceUpdateDate());
+		attributes.put(
+			"deliveryCommerceTermEntryId", getDeliveryCommerceTermEntryId());
+		attributes.put(
+			"deliveryCommerceTermEntryDescription",
+			getDeliveryCommerceTermEntryDescription());
+		attributes.put(
+			"deliveryCommerceTermEntryName",
+			getDeliveryCommerceTermEntryName());
+		attributes.put(
+			"paymentCommerceTermEntryId", getPaymentCommerceTermEntryId());
+		attributes.put(
+			"paymentCommerceTermEntryDescription",
+			getPaymentCommerceTermEntryDescription());
+		attributes.put(
+			"paymentCommerceTermEntryName", getPaymentCommerceTermEntryName());
 		attributes.put("subtotal", getSubtotal());
 		attributes.put("subtotalDiscountAmount", getSubtotalDiscountAmount());
 		attributes.put(
@@ -311,6 +326,50 @@ public class CommerceOrderWrapper
 
 		if (lastPriceUpdateDate != null) {
 			setLastPriceUpdateDate(lastPriceUpdateDate);
+		}
+
+		Long deliveryCommerceTermEntryId = (Long)attributes.get(
+			"deliveryCommerceTermEntryId");
+
+		if (deliveryCommerceTermEntryId != null) {
+			setDeliveryCommerceTermEntryId(deliveryCommerceTermEntryId);
+		}
+
+		String deliveryCommerceTermEntryDescription = (String)attributes.get(
+			"deliveryCommerceTermEntryDescription");
+
+		if (deliveryCommerceTermEntryDescription != null) {
+			setDeliveryCommerceTermEntryDescription(
+				deliveryCommerceTermEntryDescription);
+		}
+
+		String deliveryCommerceTermEntryName = (String)attributes.get(
+			"deliveryCommerceTermEntryName");
+
+		if (deliveryCommerceTermEntryName != null) {
+			setDeliveryCommerceTermEntryName(deliveryCommerceTermEntryName);
+		}
+
+		Long paymentCommerceTermEntryId = (Long)attributes.get(
+			"paymentCommerceTermEntryId");
+
+		if (paymentCommerceTermEntryId != null) {
+			setPaymentCommerceTermEntryId(paymentCommerceTermEntryId);
+		}
+
+		String paymentCommerceTermEntryDescription = (String)attributes.get(
+			"paymentCommerceTermEntryDescription");
+
+		if (paymentCommerceTermEntryDescription != null) {
+			setPaymentCommerceTermEntryDescription(
+				paymentCommerceTermEntryDescription);
+		}
+
+		String paymentCommerceTermEntryName = (String)attributes.get(
+			"paymentCommerceTermEntryName");
+
+		if (paymentCommerceTermEntryName != null) {
+			setPaymentCommerceTermEntryName(paymentCommerceTermEntryName);
 		}
 
 		BigDecimal subtotal = (BigDecimal)attributes.get("subtotal");
@@ -839,6 +898,36 @@ public class CommerceOrderWrapper
 	}
 
 	/**
+	 * Returns the delivery commerce term entry description of this commerce order.
+	 *
+	 * @return the delivery commerce term entry description of this commerce order
+	 */
+	@Override
+	public String getDeliveryCommerceTermEntryDescription() {
+		return model.getDeliveryCommerceTermEntryDescription();
+	}
+
+	/**
+	 * Returns the delivery commerce term entry ID of this commerce order.
+	 *
+	 * @return the delivery commerce term entry ID of this commerce order
+	 */
+	@Override
+	public long getDeliveryCommerceTermEntryId() {
+		return model.getDeliveryCommerceTermEntryId();
+	}
+
+	/**
+	 * Returns the delivery commerce term entry name of this commerce order.
+	 *
+	 * @return the delivery commerce term entry name of this commerce order
+	 */
+	@Override
+	public String getDeliveryCommerceTermEntryName() {
+		return model.getDeliveryCommerceTermEntryName();
+	}
+
+	/**
 	 * Returns the external reference code of this commerce order.
 	 *
 	 * @return the external reference code of this commerce order
@@ -916,6 +1005,36 @@ public class CommerceOrderWrapper
 	@Override
 	public int getOrderStatus() {
 		return model.getOrderStatus();
+	}
+
+	/**
+	 * Returns the payment commerce term entry description of this commerce order.
+	 *
+	 * @return the payment commerce term entry description of this commerce order
+	 */
+	@Override
+	public String getPaymentCommerceTermEntryDescription() {
+		return model.getPaymentCommerceTermEntryDescription();
+	}
+
+	/**
+	 * Returns the payment commerce term entry ID of this commerce order.
+	 *
+	 * @return the payment commerce term entry ID of this commerce order
+	 */
+	@Override
+	public long getPaymentCommerceTermEntryId() {
+		return model.getPaymentCommerceTermEntryId();
+	}
+
+	/**
+	 * Returns the payment commerce term entry name of this commerce order.
+	 *
+	 * @return the payment commerce term entry name of this commerce order
+	 */
+	@Override
+	public String getPaymentCommerceTermEntryName() {
+		return model.getPaymentCommerceTermEntryName();
 	}
 
 	/**
@@ -1757,6 +1876,43 @@ public class CommerceOrderWrapper
 	}
 
 	/**
+	 * Sets the delivery commerce term entry description of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryDescription the delivery commerce term entry description of this commerce order
+	 */
+	@Override
+	public void setDeliveryCommerceTermEntryDescription(
+		String deliveryCommerceTermEntryDescription) {
+
+		model.setDeliveryCommerceTermEntryDescription(
+			deliveryCommerceTermEntryDescription);
+	}
+
+	/**
+	 * Sets the delivery commerce term entry ID of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryId the delivery commerce term entry ID of this commerce order
+	 */
+	@Override
+	public void setDeliveryCommerceTermEntryId(
+		long deliveryCommerceTermEntryId) {
+
+		model.setDeliveryCommerceTermEntryId(deliveryCommerceTermEntryId);
+	}
+
+	/**
+	 * Sets the delivery commerce term entry name of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryName the delivery commerce term entry name of this commerce order
+	 */
+	@Override
+	public void setDeliveryCommerceTermEntryName(
+		String deliveryCommerceTermEntryName) {
+
+		model.setDeliveryCommerceTermEntryName(deliveryCommerceTermEntryName);
+	}
+
+	/**
 	 * Sets the external reference code of this commerce order.
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce order
@@ -1834,6 +1990,41 @@ public class CommerceOrderWrapper
 	@Override
 	public void setOrderStatus(int orderStatus) {
 		model.setOrderStatus(orderStatus);
+	}
+
+	/**
+	 * Sets the payment commerce term entry description of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryDescription the payment commerce term entry description of this commerce order
+	 */
+	@Override
+	public void setPaymentCommerceTermEntryDescription(
+		String paymentCommerceTermEntryDescription) {
+
+		model.setPaymentCommerceTermEntryDescription(
+			paymentCommerceTermEntryDescription);
+	}
+
+	/**
+	 * Sets the payment commerce term entry ID of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryId the payment commerce term entry ID of this commerce order
+	 */
+	@Override
+	public void setPaymentCommerceTermEntryId(long paymentCommerceTermEntryId) {
+		model.setPaymentCommerceTermEntryId(paymentCommerceTermEntryId);
+	}
+
+	/**
+	 * Sets the payment commerce term entry name of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryName the payment commerce term entry name of this commerce order
+	 */
+	@Override
+	public void setPaymentCommerceTermEntryName(
+		String paymentCommerceTermEntryName) {
+
+		model.setPaymentCommerceTermEntryName(paymentCommerceTermEntryName);
 	}
 
 	/**

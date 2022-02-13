@@ -7762,6 +7762,12 @@ public class CommerceOrderPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
+			"deliveryCommerceTermEntryDescription",
+			"deliveryCTermEntryDescription");
+		dbColumnNames.put(
+			"paymentCommerceTermEntryDescription",
+			"paymentCTermEntryDescription");
+		dbColumnNames.put(
 			"subtotalDiscountPercentageLevel1",
 			"subtotalDiscountPercentLevel1");
 		dbColumnNames.put(
@@ -8750,7 +8756,9 @@ public class CommerceOrderPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
-			"uuid", "subtotalDiscountPercentageLevel1",
+			"uuid", "deliveryCommerceTermEntryDescription",
+			"paymentCommerceTermEntryDescription",
+			"subtotalDiscountPercentageLevel1",
 			"subtotalDiscountPercentageLevel2",
 			"subtotalDiscountPercentageLevel3",
 			"subtotalDiscountPercentageLevel4",

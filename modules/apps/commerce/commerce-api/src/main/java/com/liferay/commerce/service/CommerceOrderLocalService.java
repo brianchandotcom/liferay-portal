@@ -775,6 +775,11 @@ public interface CommerceOrderLocalService
 			Map<String, Serializable> workflowContext)
 		throws PortalException;
 
+	public CommerceOrder updateTermsAndConditions(
+			long commerceOrderId, long deliveryCommerceTermEntryId,
+			long paymentCommerceTermEntryId, String languageId)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)

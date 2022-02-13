@@ -39,6 +39,12 @@ public class CommerceOrderFinderBaseImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
+			"deliveryCommerceTermEntryDescription",
+			"deliveryCTermEntryDescription");
+		dbColumnNames.put(
+			"paymentCommerceTermEntryDescription",
+			"paymentCTermEntryDescription");
+		dbColumnNames.put(
 			"subtotalDiscountPercentageLevel1",
 			"subtotalDiscountPercentLevel1");
 		dbColumnNames.put(

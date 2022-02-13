@@ -79,7 +79,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(141);
+		StringBundler sb = new StringBundler(153);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -125,6 +125,18 @@ public class CommerceOrderCacheModel
 		sb.append(couponCode);
 		sb.append(", lastPriceUpdateDate=");
 		sb.append(lastPriceUpdateDate);
+		sb.append(", deliveryCommerceTermEntryId=");
+		sb.append(deliveryCommerceTermEntryId);
+		sb.append(", deliveryCommerceTermEntryDescription=");
+		sb.append(deliveryCommerceTermEntryDescription);
+		sb.append(", deliveryCommerceTermEntryName=");
+		sb.append(deliveryCommerceTermEntryName);
+		sb.append(", paymentCommerceTermEntryId=");
+		sb.append(paymentCommerceTermEntryId);
+		sb.append(", paymentCommerceTermEntryDescription=");
+		sb.append(paymentCommerceTermEntryDescription);
+		sb.append(", paymentCommerceTermEntryName=");
+		sb.append(paymentCommerceTermEntryName);
 		sb.append(", subtotal=");
 		sb.append(subtotal);
 		sb.append(", subtotalDiscountAmount=");
@@ -324,6 +336,44 @@ public class CommerceOrderCacheModel
 				new Date(lastPriceUpdateDate));
 		}
 
+		commerceOrderImpl.setDeliveryCommerceTermEntryId(
+			deliveryCommerceTermEntryId);
+
+		if (deliveryCommerceTermEntryDescription == null) {
+			commerceOrderImpl.setDeliveryCommerceTermEntryDescription("");
+		}
+		else {
+			commerceOrderImpl.setDeliveryCommerceTermEntryDescription(
+				deliveryCommerceTermEntryDescription);
+		}
+
+		if (deliveryCommerceTermEntryName == null) {
+			commerceOrderImpl.setDeliveryCommerceTermEntryName("");
+		}
+		else {
+			commerceOrderImpl.setDeliveryCommerceTermEntryName(
+				deliveryCommerceTermEntryName);
+		}
+
+		commerceOrderImpl.setPaymentCommerceTermEntryId(
+			paymentCommerceTermEntryId);
+
+		if (paymentCommerceTermEntryDescription == null) {
+			commerceOrderImpl.setPaymentCommerceTermEntryDescription("");
+		}
+		else {
+			commerceOrderImpl.setPaymentCommerceTermEntryDescription(
+				paymentCommerceTermEntryDescription);
+		}
+
+		if (paymentCommerceTermEntryName == null) {
+			commerceOrderImpl.setPaymentCommerceTermEntryName("");
+		}
+		else {
+			commerceOrderImpl.setPaymentCommerceTermEntryName(
+				paymentCommerceTermEntryName);
+		}
+
 		commerceOrderImpl.setSubtotal(subtotal);
 		commerceOrderImpl.setSubtotalDiscountAmount(subtotalDiscountAmount);
 		commerceOrderImpl.setSubtotalDiscountPercentageLevel1(
@@ -481,6 +531,14 @@ public class CommerceOrderCacheModel
 		purchaseOrderNumber = objectInput.readUTF();
 		couponCode = objectInput.readUTF();
 		lastPriceUpdateDate = objectInput.readLong();
+
+		deliveryCommerceTermEntryId = objectInput.readLong();
+		deliveryCommerceTermEntryDescription = (String)objectInput.readObject();
+		deliveryCommerceTermEntryName = objectInput.readUTF();
+
+		paymentCommerceTermEntryId = objectInput.readLong();
+		paymentCommerceTermEntryDescription = (String)objectInput.readObject();
+		paymentCommerceTermEntryName = objectInput.readUTF();
 		subtotal = (BigDecimal)objectInput.readObject();
 		subtotalDiscountAmount = (BigDecimal)objectInput.readObject();
 		subtotalDiscountPercentageLevel1 = (BigDecimal)objectInput.readObject();
@@ -632,6 +690,39 @@ public class CommerceOrderCacheModel
 		}
 
 		objectOutput.writeLong(lastPriceUpdateDate);
+
+		objectOutput.writeLong(deliveryCommerceTermEntryId);
+
+		if (deliveryCommerceTermEntryDescription == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(deliveryCommerceTermEntryDescription);
+		}
+
+		if (deliveryCommerceTermEntryName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliveryCommerceTermEntryName);
+		}
+
+		objectOutput.writeLong(paymentCommerceTermEntryId);
+
+		if (paymentCommerceTermEntryDescription == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(paymentCommerceTermEntryDescription);
+		}
+
+		if (paymentCommerceTermEntryName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(paymentCommerceTermEntryName);
+		}
+
 		objectOutput.writeObject(subtotal);
 		objectOutput.writeObject(subtotalDiscountAmount);
 		objectOutput.writeObject(subtotalDiscountPercentageLevel1);
@@ -729,6 +820,12 @@ public class CommerceOrderCacheModel
 	public String purchaseOrderNumber;
 	public String couponCode;
 	public long lastPriceUpdateDate;
+	public long deliveryCommerceTermEntryId;
+	public String deliveryCommerceTermEntryDescription;
+	public String deliveryCommerceTermEntryName;
+	public long paymentCommerceTermEntryId;
+	public String paymentCommerceTermEntryDescription;
+	public String paymentCommerceTermEntryName;
 	public BigDecimal subtotal;
 	public BigDecimal subtotalDiscountAmount;
 	public BigDecimal subtotalDiscountPercentageLevel1;

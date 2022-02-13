@@ -99,6 +99,30 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		createColumn(
 			"lastPriceUpdateDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> deliveryCommerceTermEntryId =
+		createColumn(
+			"deliveryCommerceTermEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Clob>
+		deliveryCommerceTermEntryDescription = createColumn(
+			"deliveryCTermEntryDescription", Clob.class, Types.CLOB,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String>
+		deliveryCommerceTermEntryName = createColumn(
+			"deliveryCommerceTermEntryName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> paymentCommerceTermEntryId =
+		createColumn(
+			"paymentCommerceTermEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Clob>
+		paymentCommerceTermEntryDescription = createColumn(
+			"paymentCTermEntryDescription", Clob.class, Types.CLOB,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String>
+		paymentCommerceTermEntryName = createColumn(
+			"paymentCommerceTermEntryName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal> subtotal = createColumn(
 		"subtotal", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal> subtotalDiscountAmount =

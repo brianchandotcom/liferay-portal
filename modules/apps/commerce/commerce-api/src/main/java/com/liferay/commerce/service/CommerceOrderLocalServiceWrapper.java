@@ -1227,6 +1227,17 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder updateTermsAndConditions(
+			long commerceOrderId, long deliveryCommerceTermEntryId,
+			long paymentCommerceTermEntryId, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.updateTermsAndConditions(
+			commerceOrderId, deliveryCommerceTermEntryId,
+			paymentCommerceTermEntryId, languageId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

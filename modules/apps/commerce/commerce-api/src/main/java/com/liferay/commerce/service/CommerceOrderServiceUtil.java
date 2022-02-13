@@ -671,6 +671,16 @@ public class CommerceOrderServiceUtil {
 			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
+	public static CommerceOrder updateTermsAndConditions(
+			long commerceOrderId, long deliveryCommerceTermEntryId,
+			long paymentCommerceTermEntryId, String languageId)
+		throws PortalException {
+
+		return getService().updateTermsAndConditions(
+			commerceOrderId, deliveryCommerceTermEntryId,
+			paymentCommerceTermEntryId, languageId);
+	}
+
 	public static CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
 		throws PortalException {

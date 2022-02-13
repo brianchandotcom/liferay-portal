@@ -413,6 +413,99 @@ public interface CommerceOrderModel
 	public void setLastPriceUpdateDate(Date lastPriceUpdateDate);
 
 	/**
+	 * Returns the delivery commerce term entry ID of this commerce order.
+	 *
+	 * @return the delivery commerce term entry ID of this commerce order
+	 */
+	public long getDeliveryCommerceTermEntryId();
+
+	/**
+	 * Sets the delivery commerce term entry ID of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryId the delivery commerce term entry ID of this commerce order
+	 */
+	public void setDeliveryCommerceTermEntryId(
+		long deliveryCommerceTermEntryId);
+
+	/**
+	 * Returns the delivery commerce term entry description of this commerce order.
+	 *
+	 * @return the delivery commerce term entry description of this commerce order
+	 */
+	@AutoEscape
+	public String getDeliveryCommerceTermEntryDescription();
+
+	/**
+	 * Sets the delivery commerce term entry description of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryDescription the delivery commerce term entry description of this commerce order
+	 */
+	public void setDeliveryCommerceTermEntryDescription(
+		String deliveryCommerceTermEntryDescription);
+
+	/**
+	 * Returns the delivery commerce term entry name of this commerce order.
+	 *
+	 * @return the delivery commerce term entry name of this commerce order
+	 */
+	@AutoEscape
+	public String getDeliveryCommerceTermEntryName();
+
+	/**
+	 * Sets the delivery commerce term entry name of this commerce order.
+	 *
+	 * @param deliveryCommerceTermEntryName the delivery commerce term entry name of this commerce order
+	 */
+	public void setDeliveryCommerceTermEntryName(
+		String deliveryCommerceTermEntryName);
+
+	/**
+	 * Returns the payment commerce term entry ID of this commerce order.
+	 *
+	 * @return the payment commerce term entry ID of this commerce order
+	 */
+	public long getPaymentCommerceTermEntryId();
+
+	/**
+	 * Sets the payment commerce term entry ID of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryId the payment commerce term entry ID of this commerce order
+	 */
+	public void setPaymentCommerceTermEntryId(long paymentCommerceTermEntryId);
+
+	/**
+	 * Returns the payment commerce term entry description of this commerce order.
+	 *
+	 * @return the payment commerce term entry description of this commerce order
+	 */
+	@AutoEscape
+	public String getPaymentCommerceTermEntryDescription();
+
+	/**
+	 * Sets the payment commerce term entry description of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryDescription the payment commerce term entry description of this commerce order
+	 */
+	public void setPaymentCommerceTermEntryDescription(
+		String paymentCommerceTermEntryDescription);
+
+	/**
+	 * Returns the payment commerce term entry name of this commerce order.
+	 *
+	 * @return the payment commerce term entry name of this commerce order
+	 */
+	@AutoEscape
+	public String getPaymentCommerceTermEntryName();
+
+	/**
+	 * Sets the payment commerce term entry name of this commerce order.
+	 *
+	 * @param paymentCommerceTermEntryName the payment commerce term entry name of this commerce order
+	 */
+	public void setPaymentCommerceTermEntryName(
+		String paymentCommerceTermEntryName);
+
+	/**
 	 * Returns the subtotal of this commerce order.
 	 *
 	 * @return the subtotal of this commerce order

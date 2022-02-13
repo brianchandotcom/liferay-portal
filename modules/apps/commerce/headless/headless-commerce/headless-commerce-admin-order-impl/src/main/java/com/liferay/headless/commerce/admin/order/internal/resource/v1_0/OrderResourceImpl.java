@@ -374,7 +374,15 @@ public class OrderResourceImpl
 
 		// Terms and Conditions
 
+		if ((order.getDeliveryTermId() != null) ||
+			(order.getPaymentTermId() != null)) {
 
+			_commerceOrderService.updateTermsAndConditions(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getLong(order.getDeliveryTermId()),
+				GetterUtil.getLong(order.getPaymentTermId()),
+				contextAcceptLanguage.getPreferredLanguageId());
+		}
 
 		// Expando
 

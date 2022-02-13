@@ -102,6 +102,16 @@
 		<field name="purchaseOrderNumber" type="String" />
 		<field name="couponCode" type="String" />
 		<field name="lastPriceUpdateDate" type="Date" />
+		<field name="deliveryCommerceTermEntryId" type="long" />
+		<field name="deliveryCommerceTermEntryDescription" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="deliveryCommerceTermEntryName" type="String" />
+		<field name="paymentCommerceTermEntryId" type="long" />
+		<field name="paymentCommerceTermEntryDescription" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="paymentCommerceTermEntryName" type="String" />
 		<field name="subtotal" type="BigDecimal" />
 		<field name="subtotalDiscountAmount" type="BigDecimal" />
 		<field name="subtotalDiscountPercentageLevel1" type="BigDecimal" />

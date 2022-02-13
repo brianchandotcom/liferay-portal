@@ -19,9 +19,6 @@
 <%
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 if (Validator.isNotNull(viewUsersRedirect)) {
@@ -49,8 +46,8 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol='<%= ParamUtil.getString(request, "orderByCol", "first-name") %>'
+			orderByType='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name", "job-title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
@@ -74,13 +71,14 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
 		long organizationId = searchTerms.getOrganizationId();
-		long userGroupId = searchTerms.getUserGroupId();
 
 		Organization organization = null;
 
 		if (organizationId > 0) {
 			organization = OrganizationLocalServiceUtil.fetchOrganization(organizationId);
 		}
+
+		long userGroupId = searchTerms.getUserGroupId();
 
 		UserGroup userGroup = null;
 

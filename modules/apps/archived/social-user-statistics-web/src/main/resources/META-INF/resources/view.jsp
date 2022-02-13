@@ -38,17 +38,18 @@ String[] rankingNames = rankingNamesList.toArray(new String[0]);
 		<%
 		SearchContainer<Tuple> searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 5, portletURL, null, null);
 
-		List<String> selectedNamesList = new ArrayList<String>();
-
-		selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
-		selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
+		List<String> selectedNamesList =
+			new ArrayList<String>() {
+				{
+					add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
+					add(SocialActivityCounterConstants.NAME_PARTICIPATION);
+				}
+			};
 
 		if (socialUserStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters()) {
 			String[] displayActivityCounterName = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
-			int displayActivityCounterNameCount = displayActivityCounterName.length;
-
-			for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
+			for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterName.length; displayActivityCounterNameIndex++) {
 				selectedNamesList.add(displayActivityCounterName[displayActivityCounterNameIndex]);
 			}
 		}

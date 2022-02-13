@@ -19,29 +19,9 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "announcements");
 
-String distributionScope = ParamUtil.getString(request, "distributionScope");
+AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
 
-long classNameId = 0;
-long classPK = 0;
-
-String[] distributionScopeArray = StringUtil.split(distributionScope);
-
-if (distributionScopeArray.length == 2) {
-	classNameId = GetterUtil.getLong(distributionScopeArray[0]);
-	classPK = GetterUtil.getLong(distributionScopeArray[1]);
-}
-
-SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "no-entries-were-found");
-
-announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(liferayPortletRequest, liferayPortletResponse));
-
-long announcementsClassNameId = classNameId;
-long announcementsClassPK = classPK;
-long companyId = themeDisplay.getCompanyId();
-
-announcementsEntriesSearchContainer.setResultsAndTotal(() -> AnnouncementsEntryLocalServiceUtil.getEntries(companyId, announcementsClassNameId, announcementsClassPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()), AnnouncementsEntryLocalServiceUtil.getEntriesCount(companyId, announcementsClassNameId, announcementsClassPK, navigation.equals("alerts")));
-
-AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, announcementsEntriesSearchContainer);
+SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announcementsAdminViewManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
@@ -83,7 +63,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= announcementsAdminViewManagementToolbarDisplayContext.getTotal() %>"
+	itemsTotal="<%= announcementsEntriesSearchContainer.getTotal() %>"
 	propsTransformer="announcements_admin/js/AnnouncementsManagementToolbarPropsTransformer"
 	searchContainerId="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
 	selectable="<%= true %>"

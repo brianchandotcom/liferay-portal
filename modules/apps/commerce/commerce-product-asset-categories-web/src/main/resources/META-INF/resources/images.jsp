@@ -17,30 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
-
-CPAttachmentFileEntryService cpAttachmentFileEntryService = (CPAttachmentFileEntryService)request.getAttribute("cpAttachmentFileEntryService");
-
 PortletURL portletURL = PortletURLBuilder.create(
 	currentURLObj
 ).setParameter(
 	"historyKey", liferayPortletResponse.getNamespace() + "images"
 ).buildPortletURL();
 
-SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = new SearchContainer<>(liferayPortletRequest, portletURL, null, null);
-
-cpAttachmentFileEntrySearchContainer.setResultsAndTotal(() -> cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY, cpAttachmentFileEntrySearchContainer.getStart(), cpAttachmentFileEntrySearchContainer.getEnd()), cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY));
+CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext categoryCPAttachmentFileEntriesManagementToolbarDisplayContext = new CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletURL);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpAttachmentFileEntrySearchContainer) %>"
+	managementToolbarDisplayContext="<%= categoryCPAttachmentFileEntriesManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid>
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-images"
 		id="cpAttachmentFileEntries"
-		searchContainer="<%= cpAttachmentFileEntrySearchContainer %>"
+		searchContainer="<%= categoryCPAttachmentFileEntriesManagementToolbarDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.product.model.CPAttachmentFileEntry"

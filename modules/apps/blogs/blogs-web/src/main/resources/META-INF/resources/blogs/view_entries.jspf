@@ -14,10 +14,10 @@
  */
 --%>
 
-<c:if test="<%= useAssetEntryQuery %>">
+<c:if test="<%= blogsDisplayContext.isAssetEntryQuery() %>">
 	<liferay-asset:categorization-filter
 		assetType="entries"
-		portletURL="<%= portletURL %>"
+		portletURL="<%= blogsDisplayContext.getPortletURL() %>"
 	/>
 </c:if>
 

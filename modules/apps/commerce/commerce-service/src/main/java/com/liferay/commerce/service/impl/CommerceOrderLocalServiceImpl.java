@@ -54,6 +54,8 @@ import com.liferay.commerce.price.CommerceOrderPriceCalculationFactory;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -1671,6 +1673,49 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
+	public CommerceOrder updateTermsAndConditions(
+			long commerceOrderId, long deliveryCommerceTermEntryId,
+			long paymentCommerceTermEntryId, String languageId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		CommerceTermEntry deliveryCommerceTermEntry =
+			_commerceTermEntryLocalService.fetchCommerceTermEntry(
+				deliveryCommerceTermEntryId);
+
+		CommerceTermEntry paymentCommerceTermEntry =
+			_commerceTermEntryLocalService.fetchCommerceTermEntry(
+				paymentCommerceTermEntryId);
+
+		if ((deliveryCommerceTermEntry == null) &&
+			(paymentCommerceTermEntry == null)) {
+
+			return commerceOrder;
+		}
+
+		if (deliveryCommerceTermEntry != null) {
+			commerceOrder.setDeliveryCommerceTermEntryId(
+				deliveryCommerceTermEntry.getCommerceTermEntryId());
+			commerceOrder.setDeliveryCommerceTermEntryDescription(
+				deliveryCommerceTermEntry.getDescription(languageId));
+			commerceOrder.setDeliveryCommerceTermEntryName(
+				deliveryCommerceTermEntry.getLabel(languageId));
+		}
+
+		if (paymentCommerceTermEntry != null) {
+			commerceOrder.setPaymentCommerceTermEntryId(
+				paymentCommerceTermEntry.getCommerceTermEntryId());
+			commerceOrder.setPaymentCommerceTermEntryDescription(
+				paymentCommerceTermEntry.getDescription(languageId));
+			commerceOrder.setPaymentCommerceTermEntryName(
+				paymentCommerceTermEntry.getLabel(languageId));
+		}
+
+		return commerceOrderPersistence.update(commerceOrder);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateTransactionId(
@@ -2336,6 +2381,9 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@ServiceReference(type = CommerceTermEntryLocalService.class)
+	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	private ConfigurationProvider _configurationProvider;

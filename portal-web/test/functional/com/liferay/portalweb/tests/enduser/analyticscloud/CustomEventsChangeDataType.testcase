@@ -78,6 +78,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10200 | Test Summary: Change data type from description"
 	@priority = "5"
 	test CanChangeDataTypeFromDescription {
+		property portal.upstream = "quarantine";
+
 		var attributeName = "animal";
 		var attributeValue = "dog";
 
@@ -128,6 +130,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10201 | Test Summary: Change data type from filter"
 	@priority = "5"
 	test CanChangeDataTypeFromFilter {
+		property portal.upstream = "quarantine";
+
 		var attributeName = "animal";
 		var attributeValue = "dog";
 
@@ -180,6 +184,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10205 | Test Summary: Change data type to Boolean"
 	@priority = "4"
 	test CanChangeDataTypeToBoolean {
+		property portal.upstream = "quarantine";
+
 		var attributeName = "job";
 		var attributeValue = "QA";
 
@@ -230,6 +236,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10203 | Test Summary: Change data type to Time"
 	@priority = "4"
 	test CanChangeDataTypeToTime {
+		property portal.upstream = "quarantine";
+
 		var attributeName = "portal";
 		var attributeValue = "ac";
 
@@ -282,6 +290,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10206 | Test Summary: Undefined for results cannot be interpreted"
 	@priority = "3"
 	test ViewUndefinedResultsIsDisplayedWhenChangeDataTypeThatCannotBeInterpreted {
+		property portal.upstream = "quarantine";
+		
 		var attributeName = "company";
 		var attributeValue = "liferay";
 

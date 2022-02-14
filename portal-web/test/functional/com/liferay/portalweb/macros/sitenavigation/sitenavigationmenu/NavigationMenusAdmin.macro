@@ -196,6 +196,30 @@ definition {
 		Modal.save();
 	}
 
+	macro addPage {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Page");
+
+		Pause(locator1 = "1000");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.expandTree();
+
+		for (var pageName : list "${pageNames}") {
+			Portlet.selectTreeNode(nodeName = "${pageName}");
+		}
+
+		Button.click(button = "Select");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.selectTopFrame();
+	}
+
 	macro addTranslation {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 
@@ -451,6 +475,13 @@ definition {
 			key_index = "${index}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_N",
 			value1 = "${itemName}");
+	}
+
+	macro viewItemStatus {
+		AssertTextEquals(
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY_STATUS",
+			value1 = "${itemStatus}");
 	}
 
 	macro viewItemWarningIcon {

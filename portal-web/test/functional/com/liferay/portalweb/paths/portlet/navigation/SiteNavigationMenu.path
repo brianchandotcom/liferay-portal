@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_ENTRY_STATUS</td>
+	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']/..//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USE_CUSTOM_NAME_CHECKBOX</td>
 	<td>//label[contains(.,'Use Custom Name')]/input[@type='checkbox']</td>
 	<td></td>

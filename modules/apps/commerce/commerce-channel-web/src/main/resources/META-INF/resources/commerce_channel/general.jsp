@@ -134,6 +134,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				<aui:button name="selectFileButton" value="select-file" />
 
 				<liferay-ui:error exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
+				<liferay-ui:error exception="<%= InvalidFileException.class %>" message="please-select-a-valid-jrxml-file" />
 			</commerce-ui:panel>
 		</div>
 

@@ -44,6 +44,7 @@ page import="com.liferay.commerce.product.exception.NoSuchChannelException" %><%
 page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.document.library.kernel.exception.FileExtensionException" %><%@
+page import="com.liferay.document.library.kernel.exception.InvalidFileException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

@@ -333,6 +333,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-140253. View no private page in navigation menu."
+	@priority = "5"
+	@uitest
+	test AddPageToNavigationMenuAndViewPageStatus {
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Navigate to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add a page item") {
+			NavigationMenusAdmin.addPage(pageNames = "Test Page Name");
+		}
+
+		task ("Assert the page item was added") {
+			NavigationMenusAdmin.viewItem(itemName = "Test Page Name");
+		}
+
+		task ("View page status is Page") {
+			NavigationMenusAdmin.viewItemStatus(
+				itemName = "Test Page Name",
+				itemStatus = "Page");
+		}
+	}
+
 	@description = "This is a test for LPS-120277. When add an URL type item, the blank target is set up after checking Open in a new tab."
 	@priority = "5"
 	@uitest

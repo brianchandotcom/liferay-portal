@@ -4408,12 +4408,10 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 141614",
-			objectName = "CustomObject141614",
-			pluralLabelName = "Custom Objects 141614");
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Decimal",
@@ -4421,31 +4419,35 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Double",
 			isRequired = "false",
-			objectName = "CustomObject141614");
+			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject141614",
-			objectName_2 = "CustomObject141614",
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141614");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 141614");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectTitleField(fieldLabel = "Double");
 
 		Button.clickSave();
 
+		WaitForPageLoad();
+
+		Navigator.openURL();
+
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject141614",
+			objectName = "CustomObject",
 			value = "12.34");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject141614");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12.34");
 	}

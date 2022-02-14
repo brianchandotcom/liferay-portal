@@ -27,6 +27,8 @@ definition {
 
 		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 
+		WaitForSPARefresh();
+
 		AssertElementPresent(
 			key_entry = "${entry}",
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");

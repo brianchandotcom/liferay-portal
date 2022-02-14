@@ -158,7 +158,7 @@ public class ViewDisplayContextFactory {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(languageIds.size());
+		StringBundler sb = new StringBundler((2 * languageIds.size()) - 1);
 
 		Iterator<String> iterator = languageIds.iterator();
 

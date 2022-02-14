@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -51,7 +53,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	configurationPid = {
+		"com.liferay.document.library.configuration.DLConfiguration",
+		"com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration"
+	},
 	service = DLValidator.class
 )
 public final class DLValidatorImpl implements DLValidator {
@@ -75,7 +80,7 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public long getMaxAllowableSize() {
+	public long getMaxAllowableSize(String mimeType) {
 		long dlFileMaxSize = _dlConfiguration.fileMaxSize();
 		long uploadServletRequestFileMaxSize =
 			_uploadServletRequestConfigurationHelper.getMaxSize();
@@ -184,29 +189,30 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public void validateFileSize(String fileName, byte[] bytes)
+	public void validateFileSize(String fileName, String mimeType, byte[] bytes)
 		throws FileSizeException {
 
 		if (bytes == null) {
 			throw new FileSizeException("File size is zero for " + fileName);
 		}
 
-		validateFileSize(fileName, bytes.length);
+		validateFileSize(fileName, mimeType, bytes.length);
 	}
 
 	@Override
-	public void validateFileSize(String fileName, File file)
+	public void validateFileSize(String fileName, String mimeType, File file)
 		throws FileSizeException {
 
 		if (file == null) {
 			throw new FileSizeException("File is null for " + fileName);
 		}
 
-		validateFileSize(fileName, file.length());
+		validateFileSize(fileName, mimeType, file.length());
 	}
 
 	@Override
-	public void validateFileSize(String fileName, InputStream inputStream)
+	public void validateFileSize(
+			String fileName, String mimeType, InputStream inputStream)
 		throws FileSizeException {
 
 		try {
@@ -215,7 +221,7 @@ public final class DLValidatorImpl implements DLValidator {
 					"Input stream is null for " + fileName);
 			}
 
-			validateFileSize(fileName, inputStream.available());
+			validateFileSize(fileName, mimeType, inputStream.available());
 		}
 		catch (IOException ioException) {
 			throw new FileSizeException(ioException);
@@ -223,10 +229,10 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public void validateFileSize(String fileName, long size)
+	public void validateFileSize(String fileName, String mimeType, long size)
 		throws FileSizeException {
 
-		long maxSize = getMaxAllowableSize();
+		long maxSize = getMaxAllowableSize(mimeType);
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(
@@ -273,6 +279,21 @@ public final class DLValidatorImpl implements DLValidator {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+
+		MimeTypeSizeLimitConfiguration mimeTypeSizeLimitConfiguration =
+			ConfigurableUtil.createConfigurable(
+				MimeTypeSizeLimitConfiguration.class, properties);
+
+		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
+
+		for (String mimeTypeSizeLimit :
+				mimeTypeSizeLimitConfiguration.contentTypeSizeLimit()) {
+
+			MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
+				mimeTypeSizeLimit, mimeTypeSizeLimits::put);
+		}
+
+		_mimeTypeSizeLimits = mimeTypeSizeLimits;
 	}
 
 	protected void setDLConfiguration(DLConfiguration dlConfiguration) {
@@ -333,6 +354,7 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	private volatile DLConfiguration _dlConfiguration;
+	private volatile Map<String, Long> _mimeTypeSizeLimits;
 
 	@Reference
 	private UploadServletRequestConfigurationHelper

@@ -12,17 +12,23 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
+import {
+	getLocalizedLearnMessageObject,
+	sub,
+} from '../../../sxp_blueprint_admin/js/utils/language';
 import SelectSXPBlueprintModal from './SelectSXPBlueprintModal';
 
 const Configuration = ({
 	initialFederatedSearchKey = '',
 	initialSXPBlueprintId = '',
 	initialSXPBlueprintTitle = '',
+	learnMessages,
 	portletNamespace,
 	preferenceKeyFederatedSearchKey,
 	preferenceKeySXPBlueprintId,
@@ -39,6 +45,11 @@ const Configuration = ({
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
+
+	const learnMessageObject = getLocalizedLearnMessageObject(
+		'search-blueprint-on-search-page',
+		learnMessages
+	);
 
 	const _handleChangeFederatedSearchKey = (event) => {
 		setFederatedSearchKey(event.target.value);
@@ -108,6 +119,26 @@ const Configuration = ({
 						</ClayButton>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
+
+				{learnMessageObject.url && (
+					<div className="form-text">
+						{sub(
+							Liferay.Language.get(
+								'x-to-setup-blueprint-options'
+							),
+							[
+								<ClayLink
+									className="learn-message"
+									href={learnMessageObject.url}
+									key="learn-how"
+								>
+									{learnMessageObject.message}
+								</ClayLink>,
+							],
+							false
+						)}
+					</div>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group>

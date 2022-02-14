@@ -69,6 +69,45 @@ export function sub(langKey, args, join = true) {
 }
 
 /**
+ * Returns localized information used to link to a resource, like Liferay Learn
+ * articles. The json object `learnMessages` contains the messages and urls.
+ *
+ * Example:
+ * getLocalizedLearnMessageObject("general", {
+ *	"general": {
+ *		"en_US": {
+ *			"message": "Tell me more",
+ *			"url": "https://learn.liferay.com/"
+ *		}
+ *	}
+ * })
+ * => {
+ *			"message": "Tell me more",
+ *			"url": "https://learn.liferay.com/"
+ *		}
+ *
+ * @param {string} resourceKey Identifies which resource to render
+ * @param {Object} learnMessages Contains the messages and urls
+ * @param {string} locale
+ * @param {string} defaultLocale
+ * @return {Object}
+ */
+export function getLocalizedLearnMessageObject(
+	resourceKey,
+	learnMessages = {},
+	locale = Liferay.ThemeDisplay.getLanguageId(),
+	defaultLocale = Liferay.ThemeDisplay.getDefaultLanguageId()
+) {
+	const keyObject = learnMessages[resourceKey] || {en_US: {}};
+
+	return (
+		keyObject[locale] ||
+		keyObject[defaultLocale] ||
+		keyObject[Object.keys(keyObject)[0]]
+	);
+}
+
+/**
  * Used for getting the element title and description. Titles and descriptions
  * handle both string `'title'` and a localized object `{'en_US': 'Title'}`.
  * @param {string|Object} value

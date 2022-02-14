@@ -50,6 +50,8 @@
 							).put(
 								"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
 							).put(
+								"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
+							).put(
 								"portletNamespace", liferayPortletResponse.getNamespace()
 							).put(
 								"preferenceKeyFederatedSearchKey", _getInputName("federatedSearchKey")

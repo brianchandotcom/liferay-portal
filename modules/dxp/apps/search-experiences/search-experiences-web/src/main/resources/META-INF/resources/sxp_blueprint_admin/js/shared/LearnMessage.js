@@ -12,6 +12,7 @@
 import ClayLink from '@clayui/link';
 import React, {useContext} from 'react';
 
+import {getLocalizedLearnMessageObject} from '../utils/language';
 import ThemeContext from './ThemeContext';
 
 /**
@@ -34,16 +35,20 @@ import ThemeContext from './ThemeContext';
 export default function LearnMessage({resourceKey}) {
 	const {defaultLocale, learnMessages, locale} = useContext(ThemeContext);
 
-	const keyLink = learnMessages?.[resourceKey] || {en_US: {}};
-
-	const link =
-		keyLink[locale] ||
-		keyLink[defaultLocale] ||
-		keyLink[Object.keys(keyLink)[0]];
-
-	return (
-		<ClayLink className="learn-message" href={link.url}>
-			{!!link.url && link.message}
-		</ClayLink>
+	const learnMessageObject = getLocalizedLearnMessageObject(
+		resourceKey,
+		learnMessages,
+		locale,
+		defaultLocale
 	);
+
+	if (learnMessageObject.url) {
+		return (
+			<ClayLink className="learn-message" href={learnMessageObject.url}>
+				{learnMessageObject.message}
+			</ClayLink>
+		);
+	}
+
+	return <></>;
 }

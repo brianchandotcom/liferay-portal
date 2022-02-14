@@ -301,12 +301,32 @@ definition {
 			}
 		}
 
+		task ("Click on newly created analysis and get the URL link") {
+            ACNavigation.openItem(itemName = "Save Analysis 1");
+
+			var currentURL = Navigator.getCurrentURL();
+
+			ACNavigation.goToEventAnalysis();
+        }
+
         task ("Delete one of the analysis from the list") {
             ACUtils.deleteItemFromList(itemName = "Save Analysis 1");
         }
 
 		task ("Assert analysis not present in event analysis list") {
 			ACUtils.viewNameListIsNotPresent(nameList = "Save Analysis 1");
+		}
+
+		task ("Navigate to the URL of the deleted analysis") {
+			Navigator.openSpecificURL(url = "${currentURL}");
+		}
+
+		task ("Check that the deleted analysis cannot be accessed via the URL") {
+			ACUtils.viewGenericText(textValueList = "404,Analysis Not Found,The analysis you are looking for does not exist.");
+		}
+
+		task ("Navigate to the event analysis list") {
+			ACUtils.clickAnyButton(button = "Go to Event Analysis");
 		}
 
         task ("Delete all analysis from the list") {

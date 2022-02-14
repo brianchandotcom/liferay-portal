@@ -24,8 +24,10 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -98,8 +100,12 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 				_selectSite(actionRequest);
 			}
 		}
-		catch (FileExtensionException | PrincipalException exception) {
-			if (exception instanceof FileExtensionException) {
+		catch (FileExtensionException | InvalidFileException |
+			   PrincipalException exception) {
+
+			if (exception instanceof FileExtensionException ||
+				exception instanceof InvalidFileException) {
+
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(
@@ -372,6 +378,12 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			throw new FileExtensionException();
 		}
 
+		if (!_commerceReportExporter.isValidJRXMLTemplate(
+				newFileEntry.getContentStream())) {
+
+			throw new InvalidFileException();
+		}
+
 		if (existingFileEntry == null) {
 			String fileName = newFileEntry.getFileName();
 
@@ -415,6 +427,9 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceReportExporter _commerceReportExporter;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

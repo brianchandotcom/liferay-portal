@@ -384,13 +384,21 @@ definition {
 	}
 
 	@description = "Verify that user can Save workflow as Draft"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSaveAsDraft {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72945 CanSaveAsDraft pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		Workflow.saveDefinition();
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 
 	}
 

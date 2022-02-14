@@ -117,7 +117,7 @@ describe('PageDesignOptionsSidebar', () => {
 		);
 	});
 
-	it.skip('renders Styles from Theme card when page does not have a master layout and there is not a default style book', () => {
+	it('renders Styles from Theme card when page does not have a master layout and there is not a default style book', () => {
 		mockConfigGetter.mockReturnValue({
 			...DEFAULT_CONFIG,
 			defaultStyleBookEntryName: null,
@@ -128,7 +128,7 @@ describe('PageDesignOptionsSidebar', () => {
 		expect(screen.getByLabelText('styles-from-theme')).toBeInTheDocument();
 	});
 
-	it.skip('renders Styles from Master card when page have a master layout with a stylebook associated', () => {
+	it('renders Styles from Master card when page have a master layout with a stylebook associated', () => {
 		mockConfigGetter.mockReturnValue({
 			...DEFAULT_CONFIG,
 			defaultStyleBookEntryName: 'Master Page Style Book',
@@ -140,7 +140,7 @@ describe('PageDesignOptionsSidebar', () => {
 		expect(screen.getByText('Master Page Style Book')).toBeInTheDocument();
 	});
 
-	it.skip('renders Styles by Default card when there is a default style book', () => {
+	it('renders Styles by Default card when there is a default style book', () => {
 		mockConfigGetter.mockReturnValue({
 			...DEFAULT_CONFIG,
 			defaultStyleBookEntryName: 'Master Page Style Book',

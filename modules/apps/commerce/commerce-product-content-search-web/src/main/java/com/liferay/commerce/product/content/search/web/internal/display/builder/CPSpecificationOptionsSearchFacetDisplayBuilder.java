@@ -67,32 +67,29 @@ public class CPSpecificationOptionsSearchFacetDisplayBuilder
 				_createCPSpecificationOptionsSearchFacetDisplayContext();
 
 		cpSpecificationOptionsSearchFacetDisplayContext.setCloud(_isCloud());
+		cpSpecificationOptionsSearchFacetDisplayContext.setFacet(_facet);
+		cpSpecificationOptionsSearchFacetDisplayContext.setLocale(_locale);
 		cpSpecificationOptionsSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
+		cpSpecificationOptionsSearchFacetDisplayContext.setParameterName(
+			CPSpecificationOptionFacetsUtil.
+				getCPSpecificationOptionKeyFromIndexFieldName(
+					_facet.getFieldName()));
 		cpSpecificationOptionsSearchFacetDisplayContext.
 			setPaginationStartParameterName(_paginationStartParameterName);
-
 		cpSpecificationOptionsSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
 		cpSpecificationOptionsSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
-		cpSpecificationOptionsSearchFacetDisplayContext.setRenderRequest(
-			_renderRequest);
 		cpSpecificationOptionsSearchFacetDisplayContext.setRenderNothing(
 			isRenderNothing());
+		cpSpecificationOptionsSearchFacetDisplayContext.setRenderRequest(
+			_renderRequest);
 		cpSpecificationOptionsSearchFacetDisplayContext.setTermDisplayContexts(
 			buildTermDisplayContexts());
 		cpSpecificationOptionsSearchFacetDisplayContext.
 			setCpSpecificationOptionLocalService(
 				_cpSpecificationOptionLocalService);
-		cpSpecificationOptionsSearchFacetDisplayContext.setLocale(_locale);
-
-		cpSpecificationOptionsSearchFacetDisplayContext.setFacet(_facet);
-
-		cpSpecificationOptionsSearchFacetDisplayContext.setParameterName(
-			CPSpecificationOptionFacetsUtil.
-				getCPSpecificationOptionKeyFromIndexFieldName(
-					_facet.getFieldName()));
 
 		return cpSpecificationOptionsSearchFacetDisplayContext;
 	}
@@ -134,20 +131,8 @@ public class CPSpecificationOptionsSearchFacetDisplayBuilder
 		_cpSpecificationOptionLocalService = cpSpecificationOptionLocalService;
 	}
 
-	public void setCPSpecificationOptionPermissionChecker(
-		CPSpecificationOptionPermissionChecker
-			cpSpecificationOptionPermissionChecker) {
-
-		_cpSpecificationOptionPermissionChecker =
-			cpSpecificationOptionPermissionChecker;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
-	}
-
-	public void setExcludedGroupId(long excludedGroupId) {
-		_excludedGroupId = excludedGroupId;
 	}
 
 	public void setFacet(Facet facet) {
@@ -210,6 +195,8 @@ public class CPSpecificationOptionsSearchFacetDisplayBuilder
 		cpSpecificationOptionsSearchFacetTermDisplayContext.
 			setCPSpecificationOptionId(
 				cpSpecificationOption.getCPSpecificationOptionId());
+		cpSpecificationOptionsSearchFacetTermDisplayContext.setDisplayName(
+			term);
 		cpSpecificationOptionsSearchFacetTermDisplayContext.setFrequency(
 			frequency);
 		cpSpecificationOptionsSearchFacetTermDisplayContext.setFrequencyVisible(
@@ -218,8 +205,6 @@ public class CPSpecificationOptionsSearchFacetDisplayBuilder
 			popularity);
 		cpSpecificationOptionsSearchFacetTermDisplayContext.setSelected(
 			selected);
-		cpSpecificationOptionsSearchFacetTermDisplayContext.setDisplayName(
-			term);
 
 		return cpSpecificationOptionsSearchFacetTermDisplayContext;
 	}
@@ -391,10 +376,7 @@ public class CPSpecificationOptionsSearchFacetDisplayBuilder
 	private List<Tuple> _buckets;
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
-	private CPSpecificationOptionPermissionChecker
-		_cpSpecificationOptionPermissionChecker;
 	private String _displayStyle;
-	private long _excludedGroupId;
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;

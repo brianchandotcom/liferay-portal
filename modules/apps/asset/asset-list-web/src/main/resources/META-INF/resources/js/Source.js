@@ -186,7 +186,6 @@ export default function ({classTypes, namespace}) {
 		if (classTypeSelected) {
 			selectedSubtype = subtypeSelector[classTypeSelected.className];
 		}
-
 		toggleSaveButton(
 			assetSelector.value === '' || selectedSubtype?.value === ''
 		);
@@ -355,6 +354,13 @@ export default function ({classTypes, namespace}) {
 
 		if (fromBox.attr('id') === id || toBox.attr('id') === id) {
 			toggleSubclasses();
+
+			if (document.getElementById(id).options.length === 0) {
+				toggleSaveButton(true);
+			}
+			else {
+				toggleSaveButton(false);
+			}
 		}
 	});
 

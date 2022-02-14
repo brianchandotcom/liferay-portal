@@ -21,9 +21,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8129 | Test Summary: Show data source lists"
+	@ignore = "true"
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
 		var dataSourceList = "";
+
+		// AC Bug ticket: LRAC-10534
 
 		for (var n : list "1,2,3") {
 			ACSettings.takeTokenFromAnalyticsCloud();

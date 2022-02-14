@@ -315,7 +315,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -349,7 +349,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACUtils.fileName(fileName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 

@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectViewColumn;
+import com.liferay.object.model.ObjectViewSortColumn;
 
 import java.util.List;
 
@@ -28,11 +29,22 @@ public class ObjectViewImpl extends ObjectViewBaseImpl {
 		return _objectViewColumns;
 	}
 
+	public List<ObjectViewSortColumn> getObjectViewSortColumns() {
+		return _objectViewSortColumns;
+	}
+
 	@Override
 	public void setObjectViewColumns(List<ObjectViewColumn> objectViewColumns) {
 		_objectViewColumns = objectViewColumns;
 	}
 
+	public void setObjectViewSortColumns(
+		List<ObjectViewSortColumn> objectViewSortColumns) {
+
+		_objectViewSortColumns = objectViewSortColumns;
+	}
+
 	private List<ObjectViewColumn> _objectViewColumns;
+	private List<ObjectViewSortColumn> _objectViewSortColumns;
 
 }

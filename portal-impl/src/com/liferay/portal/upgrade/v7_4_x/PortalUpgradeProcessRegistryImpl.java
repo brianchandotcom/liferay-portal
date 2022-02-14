@@ -81,6 +81,9 @@ public class PortalUpgradeProcessRegistryImpl
 			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
 		upgradeProcesses.put(new Version(13, 3, 1), new UpgradeRepository());
+
+		upgradeProcesses.put(
+			new Version(14, 0, 0), new UpgradeExternalReferenceCode());
 	}
 
 }

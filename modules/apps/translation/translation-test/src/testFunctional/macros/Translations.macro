@@ -82,6 +82,54 @@ definition {
 			rowEntry = "${translationEntry}");
 	}
 
+	macro enableAwsTranslation {
+		var accessKey = PropsUtil.get("aws.translation.access.key.id");
+		var secretKey = PropsUtil.get("aws.translation.secret.access.key");
+
+		Type(
+			key_text = "accessKey",
+			locator1 = "TextArea#ANY",
+			value1 = "${accessKey}");
+
+		Type(
+			key_text = "secretKey",
+			locator1 = "TextArea#ANY",
+			value1 = "${secretKey}");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
+	macro enableAzureTranslation {
+		var subscriptionKey = PropsUtil.get("azure.translation.subscription.key");
+		var resourceLocation = PropsUtil.get("azure.translation.resource.location");
+
+		Type(
+			key_text = "subscriptionKey",
+			locator1 = "TextArea#ANY",
+			value1 = "${subscriptionKey}");
+
+		Type(
+			key_text = "resourceLocation",
+			locator1 = "TextArea#ANY",
+			value1 = "${resourceLocation}");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro exportTranslation {
 		AssertElementPresent(
 			key_defaultLanguage = "English (United States)",
@@ -695,6 +743,27 @@ definition {
 	}
 
 	macro viewTargetFields {
+		if (isSet(contentPageName)) {
+			AssertElementPresent(
+				key_fieldName = "Name",
+				key_fieldValue = "${contentPageName}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(elementText)) {
+			AssertElementPresent(
+				key_fieldName = "element-text",
+				key_fieldValue = "${elementText}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(link)) {
+			AssertElementPresent(
+				key_fieldName = "link",
+				key_fieldValue = "${link}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(
 				key_fieldName = "Title",

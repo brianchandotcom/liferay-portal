@@ -4456,9 +4456,9 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleIntegerOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 141615",
-			objectName = "CustomObject141615",
-			pluralLabelName = "Custom Objects 141615");
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
@@ -4466,20 +4466,20 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Integer",
 			isRequired = "false",
-			objectName = "CustomObject141615");
+			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject141615",
-			objectName_2 = "CustomObject141615",
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141615");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 141615");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectTitleField(fieldLabel = "Integer");
 
@@ -4487,12 +4487,14 @@ definition {
 
 		WaitForPageLoad();
 
+		Navigator.openURL();
+
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject141615",
+			objectName = "CustomObject",
 			value = "123");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject141615");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "123");
 	}

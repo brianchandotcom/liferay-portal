@@ -35,6 +35,8 @@ const DXPActivationKeysTableHeader = ({
 		setActivationKeysDownloadStatus,
 	] = useState('');
 
+	const [deactivateKeysStatus, setDeactivateKeysStatus] = useState('');
+
 	const selectedKeysIDs = selectedKeys
 		.map((selectedKey) => `licenseKeyIds=${selectedKey}`)
 		.join('&');
@@ -138,9 +140,13 @@ const DXPActivationKeysTableHeader = ({
 							</p>
 
 							<DeactivateButton
+								deactivateKeysStatus={deactivateKeysStatus}
 								selectedKeys={selectedKeys}
 								sessionId={sessionId}
 								setActivationKeys={setActivationKeys}
+								setDeactivateKeysStatus={
+									setDeactivateKeysStatus
+								}
 							/>
 						</>
 					)}
@@ -166,6 +172,19 @@ const DXPActivationKeysTableHeader = ({
 								activationKeysDownloadStatus
 							]
 						}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
+
+			{deactivateKeysStatus === ALERT_DOWNLOAD_TYPE.success && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={AUTO_CLOSE_ALERT_TIME.success}
+						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
+						displayType={ALERT_DOWNLOAD_TYPE[deactivateKeysStatus]}
+						onClose={() => setDeactivateKeysStatus('')}
+					>
+						Activation Key(s) were deactivated successfully.
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
 			)}

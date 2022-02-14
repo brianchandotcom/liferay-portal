@@ -9,22 +9,22 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
 import {Button as ClayButton} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 import {putDeactivateKeys} from '../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {
-	ALERT_DOWNLOAD_TYPE,
-	AUTO_CLOSE_ALERT_TIME,
-	STATUS_CODE,
-} from '../../../../utils/constants';
+import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../../utils/constants';
 import DeactivateKeysModal from './Modal';
 
-const DeactivateButton = ({selectedKeys, sessionId, setActivationKeys}) => {
+const DeactivateButton = ({
+	deactivateKeysStatus,
+	selectedKeys,
+	sessionId,
+	setActivationKeys,
+	setDeactivateKeysStatus,
+}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
-	const [deactivateKeysStatus, setDeactivateKeysStatus] = useState('');
 	const [isDeactivating, setIsDeactivating] = useState(false);
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
@@ -65,18 +65,6 @@ const DeactivateButton = ({selectedKeys, sessionId, setActivationKeys}) => {
 
 	return (
 		<>
-			{deactivateKeysStatus === ALERT_DOWNLOAD_TYPE.success && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={AUTO_CLOSE_ALERT_TIME.success}
-						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
-						displayType={ALERT_DOWNLOAD_TYPE[deactivateKeysStatus]}
-						onClose={() => setDeactivateKeysStatus('')}
-					>
-						Activation Key(s) were deactivated successfully.
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
-			)}
 			{isVisibleModal && (
 				<DeactivateKeysModal
 					deactivateKeysConfirm={deactivateKeysConfirm}

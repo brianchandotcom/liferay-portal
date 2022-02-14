@@ -26,9 +26,19 @@ const DeactivateKeysModal = ({
 		<ClayModal center observer={observer}>
 			<div className="pt-4 px-4">
 				<div className="flex-row mb-1">
-					<h2 className="text-neutral-10">
-						Confirm Deactivation Terms
-					</h2>
+					<div className="d-flex justify-content-between">
+						<h2 className="text-neutral-10">
+							Confirm Deactivation Terms
+						</h2>
+
+						<Button
+							appendIcon="times"
+							aria-label="close"
+							className="align-self-start"
+							displayType="unstyled"
+							onClick={onClose}
+						/>
+					</div>
 
 					<p className="mb-6 mt-5 text-neutral-10">
 						I certify that the instance(s) activated with the
@@ -45,26 +55,14 @@ const DeactivateKeysModal = ({
 					</Button>
 
 					<Button
-						className={classNames(
-							'align-items-center bg-danger d-flex ml-2',
-							{
-								'cp-deactivate-loading': isDeactivating,
-							}
-						)}
+						className={classNames('bg-danger d-flex ml-2', {
+							'cp-deactivate-loading': isDeactivating,
+						})}
 						onClick={deactivateKeysConfirm}
 					>
-						{isDeactivating ? (
-							<>
-								<span
-									aria-hidden="true"
-									className="cp-spinner mr-2 spinner-border spinner-border-sm"
-									role="status"
-								></span>
-								Deactivating...
-							</>
-						) : (
-							'Confirm & Deactivate Keys'
-						)}
+						{isDeactivating
+							? 'Deactivating......'
+							: 'Confirm & Deactivate Keys'}
 					</Button>
 				</div>
 			</div>

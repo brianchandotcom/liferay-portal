@@ -8187,13 +8187,11 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the child object is inactivated (One to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedOneToMany {
-		property portal.upstream = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 140872 ${letter}",
-				objectName = "CustomObject140872${letter}",
-				pluralLabelName = "Custom Objects 140872 ${letter}");
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
 		}
 
 		for (var letter : list "A,B") {
@@ -8203,23 +8201,29 @@ definition {
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject140872${letter}");
+				objectName = "CustomObject${letter}");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject140872A",
-			objectName_2 = "CustomObject140872B",
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout",
-			objectName = "CustomObject140872A");
+			objectName = "CustomObjectA");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 A");
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -8241,24 +8245,20 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140872A");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140872B");
+		Navigator.openURL();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectFieldA",
-			objectName = "CustomObject140872A",
+			objectName = "CustomObjectA",
 			value = "Entry 1");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 B");
+		CreateObject.inactiveCustomObject(objectName = "Custom Object B");
 
-		CreateObject.checkToggleInactive();
+		Navigator.openURL();
 
-		CreateObject.saveObject();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 140872 A");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 

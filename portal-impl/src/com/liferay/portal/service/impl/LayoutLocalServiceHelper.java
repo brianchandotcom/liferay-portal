@@ -120,6 +120,11 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 								groupId, privateLayout, layout.getPlid(),
 								friendlyURL);
 					}
+					else {
+						_layoutFriendlyURLEntryValidator.
+							validateFriendlyURLEntry(
+								groupId, privateLayout, 0, friendlyURL);
+					}
 				}
 
 				break;

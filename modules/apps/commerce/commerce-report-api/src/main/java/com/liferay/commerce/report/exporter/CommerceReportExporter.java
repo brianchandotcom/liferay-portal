@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.Map;
@@ -34,5 +35,7 @@ public interface CommerceReportExporter {
 			Collection<?> beanCollection, FileEntry fileEntry,
 			Map<String, Object> parameters)
 		throws IOException;
+
+	public boolean isValidJRXMLTemplate(InputStream templateInputStream);
 
 }

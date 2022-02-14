@@ -220,6 +220,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForNewThreadInCategory {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",

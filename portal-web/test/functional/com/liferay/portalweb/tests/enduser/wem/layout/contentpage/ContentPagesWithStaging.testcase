@@ -1591,7 +1591,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor in staging site."
+	@description = "This is a test for LPS-141773 and LPS-142348. Able to land in the experience selected at view mode in page editor in staging site."
 	@priority = "4"
 	test ViewExperienceInViewMode {
 		task ("Add a content page") {
@@ -1645,6 +1645,20 @@ definition {
 			PageEditor.openPreviewMode();
 
 			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("View the Heading and Button fragments are shown in preview modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 		}
 
 		task ("Back to view page mode and view the new experience still selected in experience selector") {

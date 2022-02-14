@@ -21,7 +21,7 @@ import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/contexts/ControlsContext';
 import {
@@ -70,11 +70,10 @@ export function ColorPicker({
 	);
 	const colorButtonRef = useRef(null);
 	const [customColors, setCustomColors] = useState([value || '']);
-	const [error, setError] = useState(
-		styleErrors[activeItemId]?.[field.name]
-			? styleErrors[activeItemId]?.[field.name].error
-			: null
-	);
+	const [error, setError] = useState({
+		label: styleErrors[activeItemId]?.[field.name]?.error,
+		value: styleErrors[activeItemId]?.[field.name]?.value,
+	});
 	const inputRef = useRef(null);
 	const listboxRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = useControlledState(
@@ -123,23 +122,6 @@ export function ColorPicker({
 		}
 	);
 
-	useLayoutEffect(() => {
-		if (config.tokenReuseEnabled) {
-			const activeStyleError = styleErrors[activeItemId]?.[field.name];
-
-			if (activeStyleError) {
-				setColor(activeStyleError.value);
-				setError(activeStyleError.error);
-			}
-		}
-	}, [
-		activeItemId,
-		config.tokenReuseEnabled,
-		field.name,
-		setColor,
-		styleErrors,
-	]);
-
 	const onSetValue = (value, label, name) => {
 		setColor(value);
 		setTokenLabel(label);
@@ -167,7 +149,7 @@ export function ColorPicker({
 			});
 
 			if (nextValue.error) {
-				setError(nextValue.error);
+				setError({label: nextValue.error, value: target.value});
 				setCustomColors(['FFFFFF']);
 				setStyleError(
 					field.name,
@@ -198,8 +180,8 @@ export function ColorPicker({
 	};
 
 	const onChangeAutocompleteInput = ({target: {value}}) => {
-		if (error) {
-			setError(null);
+		if (error.value) {
+			setError({label: null, value: null});
 			deleteStyleError(field.name, activeItemId);
 		}
 
@@ -249,7 +231,7 @@ export function ColorPicker({
 
 			<ClayInput.Group
 				className={classNames('page-editor__color-picker', {
-					'has-error': error,
+					'has-error': error.value,
 					'hovered':
 						!config.tokenReuseEnabled ||
 						activeAutocomplete ||
@@ -297,15 +279,20 @@ export function ColorPicker({
 											);
 											setColor(`#${color}`);
 
-											if (error) {
-												setError(null);
+											if (error.value) {
+												setError({
+													label: null,
+													value: null,
+												});
 												deleteStyleError(field.name);
 											}
 										}}
 										showHex={false}
 										showPalette={false}
 										value={
-											error ? '' : color?.replace('#', '')
+											error.value
+												? ''
+												: color?.replace('#', '')
 										}
 									/>
 								</ClayInput.GroupItem>
@@ -317,7 +304,7 @@ export function ColorPicker({
 												aria-expanded={
 													activeAutocomplete
 												}
-												aria-invalid={error}
+												aria-invalid={error.label}
 												aria-owns={`${id}_listbox`}
 												className="page-editor__color-picker__autocomplete__input"
 												id={id}
@@ -337,9 +324,10 @@ export function ColorPicker({
 												ref={inputRef}
 												role="combobox"
 												value={
-													color.startsWith('#')
+													error.value ||
+													(color.startsWith('#')
 														? color.toUpperCase()
-														: color
+														: color)
 												}
 											/>
 
@@ -473,8 +461,11 @@ export function ColorPicker({
 										}) => {
 											onSetValue(value, label, name);
 
-											if (error) {
-												setError(null);
+											if (error.value) {
+												setError({
+													label: null,
+													value: null,
+												});
 												deleteStyleError(field.name);
 											}
 										}}
@@ -515,7 +506,7 @@ export function ColorPicker({
 				)}
 			</ClayInput.Group>
 
-			{config.tokenReuseEnabled && error && (
+			{config.tokenReuseEnabled && error.label && (
 				<div className="autofit-row mt-2 small text-danger">
 					<div className="autofit-col">
 						<div className="autofit-section mr-2">
@@ -524,7 +515,7 @@ export function ColorPicker({
 					</div>
 
 					<div className="autofit-col autofit-col-expand">
-						<div className="autofit-section">{error}</div>
+						<div className="autofit-section">{error.label}</div>
 					</div>
 				</div>
 			)}

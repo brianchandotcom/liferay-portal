@@ -673,9 +673,7 @@ definition {
 				SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");
 			}
 
-			for (var textValue : list "Documentation,Events Analysis") {
-				ACUtils.viewGenericText(textValue = "${textValue}");
-			}
+			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
 		}
 	}
 

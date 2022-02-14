@@ -800,17 +800,19 @@ definition {
 	}
 
 	macro viewGenericText {
-		var key_textValue = "${textValue}";
+		for (var textValue : list "${textValueList}") {
+			var key_textValue = "${textValue}";
 
-		WaitForPageLoad();
+			WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
+			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
+			AssertTextEquals(
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "${textValue}");
 		}
-
-		AssertTextEquals(
-			locator1 = "ACUtils#GENERIC_TEXT",
-			value1 = "${textValue}");
 	}
 
 	macro viewNameList {

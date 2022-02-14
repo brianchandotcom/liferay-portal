@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -48,6 +49,9 @@ import java.lang.reflect.Field;
 
 import java.sql.Connection;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -404,8 +408,8 @@ public abstract class UpgradeProcess
 	protected abstract void doUpgrade() throws Exception;
 
 	protected void ensureTableExists(
-			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
-			String tableName)
+		DatabaseMetaData databaseMetaData, DBInspector dbInspector,
+		String tableName)
 		throws SQLException {
 
 		try (ResultSet resultSet = databaseMetaData.getTables(

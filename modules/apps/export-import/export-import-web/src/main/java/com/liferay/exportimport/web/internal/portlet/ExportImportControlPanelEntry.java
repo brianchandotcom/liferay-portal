@@ -55,7 +55,7 @@ public class ExportImportControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws PortalException {
 
-		if (_groupPermission.contains(
+		if (groupPermission.contains(
 				permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS)) {
 
 			return true;
@@ -66,6 +66,6 @@ public class ExportImportControlPanelEntry extends BaseControlPanelEntry {
 	}
 
 	@Reference
-	private GroupPermission _groupPermission;
+	protected GroupPermission groupPermission;
 
 }

@@ -481,7 +481,7 @@ definition {
 		task ("Check if the type has been changed") {
 			ACCustomEvents.viewDataTypeList(
 				attributeName = "${attributeName}",
-				typeValue = "NUMBER");
+				typeValue = "Number");
 		}
 	}
 

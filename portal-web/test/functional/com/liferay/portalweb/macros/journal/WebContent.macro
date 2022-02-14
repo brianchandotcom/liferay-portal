@@ -1294,6 +1294,13 @@ definition {
 					locator1 = "TextInput#INPUT_ID",
 					value1 = "Public Pages > ${pageName}");
 			}
+
+			if ("${pageType}" == "Pages") {
+				AssertTextEquals(
+					inputFieldId = "specificDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
+					value1 = "Pages > ${pageName}");
+			}
 			else {
 				AssertTextEquals(
 					inputFieldId = "specificDisplayPageNameInput",

@@ -75,9 +75,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.logging.Level;
 
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -1731,33 +1728,6 @@ public class ClusterSchedulerEngineTest {
 				"Unable to update trigger for memory clustered job",
 				schedulerException.getMessage());
 		}
-	}
-
-	@Aspect
-	public static class ClusterableContextThreadLocalAdvice {
-
-		public static Map<String, Serializable> getAndClearThreadLocals() {
-			Map<String, Serializable> threadLocal = new HashMap<>(
-				_threadLocals);
-
-			_threadLocals.clear();
-
-			return threadLocal;
-		}
-
-		@Around(
-			"execution(void com.liferay.portal.kernel.cluster." +
-				"ClusterableContextThreadLocal.putThreadLocalContext(" +
-					"java.lang.String, java.io.Serializable)) && args(key, " +
-						"value)"
-		)
-		public void loadIndexesFromCluster(String key, Serializable value) {
-			_threadLocals.put(key, value);
-		}
-
-		private static final Map<String, Serializable> _threadLocals =
-			new HashMap<>();
-
 	}
 
 	protected static Trigger getTrigger(

@@ -633,4 +633,79 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10311 | Test Summary: Events are in alphabetical order and attributes are in alphabetical order"
+	@priority = "4"
+	test ViewEventsAreListedInAlphabeticalOrder {
+		var attributeName = "assetId";
+		var defaultEventName = "assetClicked";
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to access the event list and check the event position in the list") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "ACEventAnalysis#LIST_ORDER",
+				value1 = "${defaultEventName}");
+		}
+
+		task ("Change the event display name") {
+			ACEventAnalysis.changeCustomEventDisplayName(
+				editOption = "Description",
+				elementName = "${defaultEventName}",
+				newDisplayName = "Z${defaultEventName}");
+		}
+
+		task ("Click to access the event list and check the new event position in the list") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			AssertTextEquals(
+				index = "15",
+				locator1 = "ACEventAnalysis#LIST_ORDER",
+				value1 = "Z${defaultEventName}");
+		}
+
+		task ("Add the default event to analysis") {
+			Click(
+				key_buttonName = "Z${defaultEventName}",
+				locator1 = "ACUtils#GENERIC_BUTTON");
+		}
+
+		task ("Click to access the attribute list and check the attribute position in the list") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+			AssertTextEquals(
+				index = "16",
+				locator1 = "ACEventAnalysis#LIST_ORDER",
+				value1 = "${attributeName}");
+		}
+
+		task ("Change the attribute display name") {
+			ACEventAnalysis.changeCustomEventDisplayName(
+				editOption = "Description",
+				elementName = "${attributeName}",
+				newDisplayName = "Z${attributeName}");
+		}
+
+		task ("Click to access the attribute list and check the new attribute position in the list") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+			AssertTextEquals(
+				index = "27",
+				locator1 = "ACEventAnalysis#LIST_ORDER",
+				value1 = "Z${attributeName}");
+		}
+	}
+
 }

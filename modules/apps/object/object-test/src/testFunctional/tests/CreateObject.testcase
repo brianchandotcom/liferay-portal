@@ -5312,8 +5312,6 @@ definition {
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
 	@priority = "4"
 	test ChoosingAlreadyRelatedEntryWillKeepOnBothEntries {
-		property portal.upstream = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
@@ -5372,6 +5370,8 @@ definition {
 			Button.clickSave();
 		}
 
+		Navigator.openURL();
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
@@ -5400,6 +5400,8 @@ definition {
 			Refresh();
 
 			ObjectPortlet.viewEntry(entry = "Entry C");
+
+			Navigator.openURL();
 		}
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");

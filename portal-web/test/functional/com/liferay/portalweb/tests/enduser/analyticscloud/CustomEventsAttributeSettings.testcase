@@ -163,7 +163,7 @@ definition {
 		task ("Check the data related to attribute appears") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "wetsuit");
 
-			ACCustomEvents.viewDataType(typeValue = "STRING");
+			ACCustomEvents.viewDataType(typeValue = "String");
 		}
 
 		task ("Back to Event Attributes and Navigation to attributes tab") {
@@ -181,7 +181,7 @@ definition {
 		task ("Check the data related to attribute appears") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "259.95");
 
-			ACCustomEvents.viewDataType(typeValue = "NUMBER");
+			ACCustomEvents.viewDataType(typeValue = "Number");
 		}
 
 		task ("Back to Event Attributes and Navigation to attributes tab") {
@@ -199,7 +199,7 @@ definition {
 		task ("Check the data related to attribute appears") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "11");
 
-			ACCustomEvents.viewDataType(typeValue = "NUMBER");
+			ACCustomEvents.viewDataType(typeValue = "Number");
 		}
 
 		task ("Back to Event Attributes and Navigation to attributes tab") {
@@ -217,7 +217,7 @@ definition {
 		task ("Check the data related to attribute appears") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "2021-11-25T14:36:30.685Z");
 
-			ACCustomEvents.viewDataType(typeValue = "DATE");
+			ACCustomEvents.viewDataType(typeValue = "Date");
 		}
 
 		task ("Back to Event Attributes and Navigation to attributes tab") {
@@ -235,7 +235,7 @@ definition {
 		task ("Check the data related to attribute appears") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "true");
 
-			ACCustomEvents.viewDataType(typeValue = "BOOLEAN");
+			ACCustomEvents.viewDataType(typeValue = "Boolean");
 		}
 	}
 

@@ -1,21 +1,19 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
-package com.liferay.search.experiences.internal.search;
+package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.model.WikiPage;
 
 import java.util.Locale;
 
@@ -33,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Petteri Karttunen
+ * @author Gustavo Lima
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"indexer.class.name=com.liferay.journal.model.JournalArticle",
@@ -45,17 +42,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = IndexerPostProcessor.class
 )
-public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
+public class ContentLengthIndexerPostProcessor
+	extends BaseIndexerPostProcessor {
 
 	@Override
 	public void postProcessDocument(Document document, Object object)
 		throws Exception {
 
-		_addContentLengths(document);
-		_addVersionCount(document, object);
-	}
-
-	private void _addContentLengths(Document document) {
 		String content = document.get(Field.CONTENT);
 
 		if (!Validator.isBlank(content)) {
@@ -77,31 +70,6 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 			document.addNumber(
 				"contentLength_" + _language.getLanguageId(locale),
 				localizedContent.length());
-		}
-	}
-
-	private void _addVersionCount(Document document, double versionCount) {
-		document.addNumber("versionCount", versionCount);
-	}
-
-	private void _addVersionCount(Document document, Object object) {
-		Class<?> clazz = object.getClass();
-
-		if (DLFileEntry.class.isAssignableFrom(clazz)) {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-			_addVersionCount(
-				document, GetterUtil.getDouble(dlFileEntry.getVersion()));
-		}
-		else if (JournalArticle.class.isAssignableFrom(clazz)) {
-			JournalArticle journalArticle = (JournalArticle)object;
-
-			_addVersionCount(document, journalArticle.getVersion());
-		}
-		else if (WikiPage.class.isAssignableFrom(clazz)) {
-			WikiPage wikiPage = (WikiPage)object;
-
-			_addVersionCount(document, wikiPage.getVersion());
 		}
 	}
 

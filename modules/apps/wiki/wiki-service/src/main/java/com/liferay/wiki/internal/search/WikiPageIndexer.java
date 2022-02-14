@@ -286,6 +286,9 @@ public class WikiPageIndexer
 				title);
 		}
 
+		document.addNumber(
+			"versionCount", GetterUtil.getDouble(wikiPage.getVersion()));
+
 		return document;
 	}
 

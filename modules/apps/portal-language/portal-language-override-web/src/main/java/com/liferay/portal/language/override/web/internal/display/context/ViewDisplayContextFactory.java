@@ -151,6 +151,53 @@ public class ViewDisplayContextFactory {
 		return searchContainer;
 	}
 
+	private List<LanguageItemDisplay> _getAllLanguageItemDisplays(
+		Predicate<String> keyMatchPredicate, Locale locale,
+		Map<String, List<PLOEntry>> ploEntryMap, String selectedLanguageId,
+		Predicate<String> valueMatchPredicate) {
+
+		List<LanguageItemDisplay> languageItemDisplays = new ArrayList<>();
+
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			locale);
+
+		for (String key : resourceBundle.keySet()) {
+			String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+			if (keyMatchPredicate.test(key) ||
+				valueMatchPredicate.test(value)) {
+
+				LanguageItemDisplay languageItemDisplay =
+					new LanguageItemDisplay(key, value);
+
+				if (ploEntryMap.containsKey(key)) {
+					languageItemDisplay.setOverride(true);
+
+					List<String> overrideLanguageIds = new ArrayList<>();
+
+					for (PLOEntry ploEntry : ploEntryMap.get(key)) {
+						overrideLanguageIds.add(ploEntry.getLanguageId());
+
+						if (Objects.equals(
+								selectedLanguageId, ploEntry.getLanguageId())) {
+
+							languageItemDisplay.setOverrideSelectedLanguageId(
+								true);
+						}
+					}
+
+					languageItemDisplay.setOverrideLanguageIdsString(
+						_getLanguageIdsString(
+							overrideLanguageIds, selectedLanguageId));
+				}
+
+				languageItemDisplays.add(languageItemDisplay);
+			}
+		}
+
+		return languageItemDisplays;
+	}
+
 	private String _getLanguageIdsString(
 		List<String> languageIds, String selectedLanguageId) {
 
@@ -179,6 +226,49 @@ public class ViewDisplayContextFactory {
 		}
 
 		return sb.toString();
+	}
+
+	private List<LanguageItemDisplay> _getOverrideLanguageItemDisplays(
+		Predicate<String> keyMatchPredicate, Locale locale,
+		Map<String, List<PLOEntry>> ploEntryMap, String selectedLanguageId,
+		Predicate<String> valueMatchPredicate) {
+
+		List<LanguageItemDisplay> languageItemDisplays = new ArrayList<>();
+
+		for (Map.Entry<String, List<PLOEntry>> entry : ploEntryMap.entrySet()) {
+			String key = entry.getKey();
+
+			String value = LanguageUtil.get(locale, key, StringPool.BLANK);
+
+			if (keyMatchPredicate.test(key) ||
+				valueMatchPredicate.test(value)) {
+
+				LanguageItemDisplay languageItemDisplay =
+					new LanguageItemDisplay(key, value);
+
+				languageItemDisplay.setOverride(true);
+
+				List<String> overrideLanguageIds = new ArrayList<>();
+
+				for (PLOEntry ploEntry : entry.getValue()) {
+					overrideLanguageIds.add(ploEntry.getLanguageId());
+
+					if (Objects.equals(
+							selectedLanguageId, ploEntry.getLanguageId())) {
+
+						languageItemDisplay.setOverrideSelectedLanguageId(true);
+					}
+				}
+
+				languageItemDisplay.setOverrideLanguageIdsString(
+					_getLanguageIdsString(
+						overrideLanguageIds, selectedLanguageId));
+
+				languageItemDisplays.add(languageItemDisplay);
+			}
+		}
+
+		return languageItemDisplays;
 	}
 
 	private List<DropdownItem> _getTranslationLanguageDropdownItems(
@@ -215,7 +305,7 @@ public class ViewDisplayContextFactory {
 		RenderRequest renderRequest,
 		SearchContainer<LanguageItemDisplay> searchContainer) {
 
-		List<LanguageItemDisplay> languageItemDisplays = new ArrayList<>();
+		List<LanguageItemDisplay> languageItemDisplays;
 
 		List<PLOEntry> ploEntries = _ploEntryLocalService.getPLOEntries(
 			_portal.getCompanyId(renderRequest));
@@ -253,82 +343,28 @@ public class ViewDisplayContextFactory {
 
 		String filter = ParamUtil.getString(renderRequest, "navigation", "all");
 
-		if (filter.equals("override")) {
-			for (Map.Entry<String, List<PLOEntry>> entry :
-					ploEntryMap.entrySet()) {
+		if (filter.equals("override-any-language")) {
+			languageItemDisplays = _getOverrideLanguageItemDisplays(
+				keyMatchPredicate, locale, ploEntryMap, selectedLanguageId,
+				valueMatchPredicate);
+		}
+		else if (filter.equals("override-selected-langauge")) {
+			List<PLOEntry> ploEntries1 = _ploEntryLocalService.getPLOEntries(
+				_portal.getCompanyId(renderRequest), selectedLanguageId);
 
-				String key = entry.getKey();
+			Stream<PLOEntry> ploEntryStream1 = ploEntries1.stream();
 
-				String value = LanguageUtil.get(locale, key, StringPool.BLANK);
+			Map<String, List<PLOEntry>> ploEntryMap1 = ploEntryStream1.collect(
+				Collectors.groupingBy(PLOEntry::getKey));
 
-				if (keyMatchPredicate.test(key) ||
-					valueMatchPredicate.test(value)) {
-
-					LanguageItemDisplay languageItemDisplay =
-						new LanguageItemDisplay(key, value);
-
-					languageItemDisplay.setOverride(true);
-
-					List<String> overrideLanguageIds = new ArrayList<>();
-
-					for (PLOEntry ploEntry : entry.getValue()) {
-						overrideLanguageIds.add(ploEntry.getLanguageId());
-
-						if (Objects.equals(
-								selectedLanguageId, ploEntry.getLanguageId())) {
-
-							languageItemDisplay.setOverrideSelectedLanguageId(
-								true);
-						}
-					}
-
-					languageItemDisplay.setOverrideLanguageIdsString(
-						_getLanguageIdsString(
-							overrideLanguageIds, selectedLanguageId));
-
-					languageItemDisplays.add(languageItemDisplay);
-				}
-			}
+			languageItemDisplays = _getOverrideLanguageItemDisplays(
+				keyMatchPredicate, locale, ploEntryMap1, selectedLanguageId,
+				valueMatchPredicate);
 		}
 		else {
-			ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-				locale);
-
-			for (String key : resourceBundle.keySet()) {
-				String value = ResourceBundleUtil.getString(
-					resourceBundle, key);
-
-				if (keyMatchPredicate.test(key) ||
-					valueMatchPredicate.test(value)) {
-
-					LanguageItemDisplay languageItemDisplay =
-						new LanguageItemDisplay(key, value);
-
-					if (ploEntryMap.containsKey(key)) {
-						languageItemDisplay.setOverride(true);
-
-						List<String> overrideLanguageIds = new ArrayList<>();
-
-						for (PLOEntry ploEntry : ploEntryMap.get(key)) {
-							overrideLanguageIds.add(ploEntry.getLanguageId());
-
-							if (Objects.equals(
-									selectedLanguageId,
-									ploEntry.getLanguageId())) {
-
-								languageItemDisplay.
-									setOverrideSelectedLanguageId(true);
-							}
-						}
-
-						languageItemDisplay.setOverrideLanguageIdsString(
-							_getLanguageIdsString(
-								overrideLanguageIds, selectedLanguageId));
-					}
-
-					languageItemDisplays.add(languageItemDisplay);
-				}
-			}
+			languageItemDisplays = _getAllLanguageItemDisplays(
+				keyMatchPredicate, locale, ploEntryMap, selectedLanguageId,
+				valueMatchPredicate);
 		}
 
 		// Sorting

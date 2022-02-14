@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -85,8 +85,15 @@ public class ViewManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		return LabelItemListBuilder.add(
-			() -> Objects.equals(getNavigation(), "override"),
+		LabelItemList labelItems = new LabelItemList();
+
+		String navigation = getNavigation();
+
+		if (Objects.equals("all", navigation)) {
+			return labelItems;
+		}
+
+		labelItems.add(
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
@@ -97,9 +104,10 @@ public class ViewManagementToolbarDisplayContext
 					).buildString());
 				labelItem.setDismissible(true);
 				labelItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "override"));
-			}
-		).build();
+					LanguageUtil.get(httpServletRequest, navigation));
+			});
+
+		return labelItems;
 	}
 
 	@Override
@@ -134,7 +142,9 @@ public class ViewManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"override"};
+		return new String[] {
+			"override-any-language", "override-selected-language"
+		};
 	}
 
 	private final String _displayStyle;

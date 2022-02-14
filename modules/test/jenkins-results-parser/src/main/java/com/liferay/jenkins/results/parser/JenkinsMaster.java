@@ -271,10 +271,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				_AVAILABLE_TIMEOUT)) {
 
 			try {
-				JenkinsResultsParserUtil.toString(
-					"http://" + getName(), false, 0, 0, 0);
+				if (!isBlackListed()) {
+					JenkinsResultsParserUtil.toString(
+						"http://" + getName(), false, 0, 0, 0);
 
-				_available = true;
+					_available = true;
+				}
 			}
 			catch (IOException ioException) {
 				System.out.println(getName() + " is unreachable.");
@@ -287,6 +289,14 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		return _available;
+	}
+
+	public boolean isBlackListed() {
+		if (_jenkinsMastersBlacklist.contains(getName())) {
+			_blacklisted = true;
+		}
+
+		return _blacklisted;
 	}
 
 	@Override
@@ -544,10 +554,26 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	private static final Map<String, JenkinsMaster> _jenkinsMasters =
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
+	private static final List<String> _jenkinsMastersBlacklist =
+		new ArrayList<>();
+
+	static {
+		try {
+			String jenkinsMastersBlacklist =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.load.balancer.blacklist");
+
+			Collections.addAll(
+				_jenkinsMastersBlacklist, jenkinsMastersBlacklist.split(","));
+		}
+		catch (IOException ioException) {
+		}
+	}
 
 	private boolean _available;
 	private long _availableTimestamp = -1;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
+	private boolean _blacklisted;
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());

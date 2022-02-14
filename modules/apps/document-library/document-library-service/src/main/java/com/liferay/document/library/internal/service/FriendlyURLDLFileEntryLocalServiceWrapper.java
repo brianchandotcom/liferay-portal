@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceWrappe
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,13 +31,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.InputStream;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -143,32 +140,6 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private Map<String, String> _getUniqueUrlTitleMap(
-		long groupId, long fileEntryId, String title,
-		Map<String, String> urlTitleMap) {
-
-		Map<String, String> newUrlTitleMap = new HashMap<>();
-
-		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String languageId = entry.getKey();
-
-			String urlTitle = urlTitleMap.get(languageId);
-
-			if (Validator.isNotNull(urlTitle) ||
-				((urlTitle != null) && urlTitle.equals(StringPool.BLANK))) {
-
-				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
-					groupId,
-					_classNameLocalService.getClassNameId(FileEntry.class),
-					fileEntryId, title, languageId);
-
-				newUrlTitleMap.put(languageId, urlTitle);
-			}
-		}
-
-		return newUrlTitleMap;
-	}
-
 	private void _updateFriendlyURL(DLFileEntry dlFileEntry, String urlTitle)
 		throws PortalException {
 
@@ -179,14 +150,19 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 					dlFileEntry.getFileEntryId());
 
 			if (!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
-				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-					friendlyURLEntry.getFriendlyURLEntryId(),
-					friendlyURLEntry.getClassNameId(),
-					friendlyURLEntry.getClassPK(),
-					friendlyURLEntry.getDefaultLanguageId(),
-					_getUniqueUrlTitleMap(
-						dlFileEntry.getGroupId(), dlFileEntry.getFileEntryId(),
-						urlTitle, friendlyURLEntry.getLanguageIdToUrlTitleMap()));
+				String uniqueUrlTitle =
+					_friendlyURLEntryLocalService.getUniqueUrlTitle(
+						dlFileEntry.getGroupId(),
+						_classNameLocalService.getClassNameId(FileEntry.class),
+						dlFileEntry.getFileEntryId(), urlTitle,
+						LanguageUtil.getLanguageId(
+							LocaleUtil.getSiteDefault()));
+
+				_friendlyURLEntryLocalService.
+					updateFriendlyURLEntryLocalization(
+						friendlyURLEntry,
+						LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()),
+						uniqueUrlTitle);
 			}
 		}
 		catch (NoSuchModelException noSuchModelException) {

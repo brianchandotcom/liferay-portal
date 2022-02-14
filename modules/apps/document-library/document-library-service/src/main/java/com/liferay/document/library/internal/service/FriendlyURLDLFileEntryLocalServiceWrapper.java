@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -168,7 +169,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 		return newUrlTitleMap;
 	}
 
-	private void _updateFriendlyURL(DLFileEntry dlFileEntry, String title)
+	private void _updateFriendlyURL(DLFileEntry dlFileEntry, String urlTitle)
 		throws PortalException {
 
 		try {
@@ -177,17 +178,19 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 					_classNameLocalService.getClassNameId(FileEntry.class),
 					dlFileEntry.getFileEntryId());
 
-			_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-				friendlyURLEntry.getFriendlyURLEntryId(),
-				friendlyURLEntry.getClassNameId(),
-				friendlyURLEntry.getClassPK(),
-				friendlyURLEntry.getDefaultLanguageId(),
-				_getUniqueUrlTitleMap(
-					dlFileEntry.getGroupId(), dlFileEntry.getFileEntryId(),
-					title, friendlyURLEntry.getLanguageIdToUrlTitleMap()));
+			if (!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
+				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
+					friendlyURLEntry.getFriendlyURLEntryId(),
+					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getClassPK(),
+					friendlyURLEntry.getDefaultLanguageId(),
+					_getUniqueUrlTitleMap(
+						dlFileEntry.getGroupId(), dlFileEntry.getFileEntryId(),
+						urlTitle, friendlyURLEntry.getLanguageIdToUrlTitleMap()));
+			}
 		}
 		catch (NoSuchModelException noSuchModelException) {
-			_addFriendlyURLEntry(dlFileEntry, title);
+			_addFriendlyURLEntry(dlFileEntry, urlTitle);
 		}
 	}
 

@@ -141,9 +141,9 @@ definition {
 
         task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName}",
+				attributeNameList = "${attributeName}",
 				eventName = "${customEventName}",
-				filterName = "${filterName}");
+				filterNameList = "${filterName}");
 		}
 
         task ("Check the analysis result appears") {
@@ -237,12 +237,9 @@ definition {
 
         task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName1}",
+				attributeNameList = "${attributeName1},${attributeName2}",
 				eventName = "${customEventName}",
-				filterName = "${filterName}");
-
-            ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName2}");
+				filterNameList = "${filterName}");
 		}
 
         task ("Check the analysis result appears") {
@@ -842,9 +839,9 @@ definition {
 
         task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName}",
+				attributeNameList = "${attributeName}",
 				eventName = "${customEventName}",
-				filterName = "${filterName}");
+				filterNameList = "${filterName}");
 		}
 
         task ("Check the analysis result appears") {

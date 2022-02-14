@@ -197,16 +197,20 @@ definition {
 				locator1 = "ACUtils#GENERIC_BUTTON");
 		}
 
-		if (isSet(attributeName)) {
-			AssertElementPresent(
-				key_attributeName = "${attributeName}",
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		if (isSet(attributeNameList)) {
+			for (var attributeName : list "${attributeNameList}") {
+				AssertElementPresent(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+			}
 		}
 
-		if (isSet(filterName)) {
-			AssertElementPresent(
-				key_attributeName = "${filterName}",
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		if (isSet(filterNameList)) {
+			for (var filterName : list "${filterNameList}") {
+				AssertElementPresent(
+					key_attributeName = "${filterName}",
+					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+			}
 		}
 	}
 

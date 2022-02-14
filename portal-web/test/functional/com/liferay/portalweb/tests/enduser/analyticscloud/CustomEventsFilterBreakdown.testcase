@@ -122,9 +122,9 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName}",
+				attributeNameList = "${attributeName}",
 				eventName = "${customEventName}",
-				filterName = "${filterName}");
+				filterNameList = "${filterName}");
 		}
 	}
 
@@ -162,9 +162,7 @@ definition {
 		}
 
 		task ("Check that the analysis dashboard contains the 3 attributes") {
-			for (var attributeName : list "${attributeNameList}") {
-				ACEventAnalysis.viewAnalysisDashboard(attributeName = "${attributeName}");
-			}
+			ACEventAnalysis.viewAnalysisDashboard(attributeNameList = "${attributeNameList}");
 		}
 
 		task ("Assert there is no “+” after having 3 breakdown") {
@@ -422,9 +420,9 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeName = "${attributeName}",
+				attributeNameList = "${attributeName}",
 				eventName = "${customEventName}",
-				filterName = "${filterName}");
+				filterNameList = "${filterName}");
 		}
 
 		task ("Remove the custom event from the analysis") {

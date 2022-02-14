@@ -16,8 +16,8 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.templat
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.result.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet;
+import com.liferay.commerce.product.content.search.web.internal.result.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.petra.string.StringBundler;

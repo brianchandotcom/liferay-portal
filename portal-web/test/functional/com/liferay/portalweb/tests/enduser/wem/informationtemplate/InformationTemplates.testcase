@@ -211,6 +211,7 @@ definition {
 				pluralLabelName = "Additional Orders");
 
 			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
 				fieldLabelName = "Order Number",
 				fieldName = "orderNumber",
 				fieldType = "String",

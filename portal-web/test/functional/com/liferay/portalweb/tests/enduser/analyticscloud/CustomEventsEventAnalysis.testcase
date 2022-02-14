@@ -636,6 +636,8 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10311 | Test Summary: Events are in alphabetical order and attributes are in alphabetical order"
 	@priority = "4"
 	test ViewEventsAreListedInAlphabeticalOrder {
+		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#ViewEventsAreListedInAlphabeticalOrder";
+
 		var attributeName = "assetId";
 		var defaultEventName = "assetClicked";
 

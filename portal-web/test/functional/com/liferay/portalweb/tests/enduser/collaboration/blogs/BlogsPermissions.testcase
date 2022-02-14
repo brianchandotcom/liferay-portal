@@ -40,7 +40,6 @@ definition {
 	@refactordone
 	test CanAccessAdminWithRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -108,8 +107,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CannotAddEntryAsGuestByDefault {
-		property portal.acceptance = "true";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -289,7 +286,6 @@ definition {
 	@refactorneeded
 	test CannotAddEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -816,7 +812,6 @@ definition {
 	@refactorneeded
 	test CannotDeleteEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -998,8 +993,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CannotDeleteEntryWithOrgRoleByDefault {
-		property portal.acceptance = "true";
-
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
 			orgType = "Organization",
@@ -1123,7 +1116,6 @@ definition {
 	@priority = "3"
 	test CannotEditEntryWhenUserHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1166,7 +1158,6 @@ definition {
 	test CannotEditOwnComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Comment";
-		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1351,7 +1342,6 @@ definition {
 	@refactorneeded
 	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsPermissions#CannotSubscribeToEntryWhenRegRoleHasNoPermissions";
 
 		Permissions.setUpRegRoleLoginUserCP(

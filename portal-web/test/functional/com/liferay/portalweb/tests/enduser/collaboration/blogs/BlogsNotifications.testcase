@@ -266,6 +266,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForNewEntry {
+		property portal.acceptance = "false";
+
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();

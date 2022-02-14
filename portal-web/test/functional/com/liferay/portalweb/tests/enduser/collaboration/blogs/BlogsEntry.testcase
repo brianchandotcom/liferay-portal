@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -351,7 +352,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddWithEmbeddedVideo {
-		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		JSONLayout.addPublicLayout(
@@ -647,8 +647,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteMultipleEntriesSequentially {
-		property portal.acceptance = "true";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
@@ -812,8 +810,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanManuallySaveAsDraft {
-		property portal.acceptance = "true";
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addDraft(

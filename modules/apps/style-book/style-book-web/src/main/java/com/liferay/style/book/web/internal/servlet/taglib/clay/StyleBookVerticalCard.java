@@ -82,7 +82,8 @@ public class StyleBookVerticalCard
 		if (!StyleBookPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(),
-				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES) ||
+			(_styleBookEntry.getStyleBookEntryId() <= 0)) {
 
 			return null;
 		}

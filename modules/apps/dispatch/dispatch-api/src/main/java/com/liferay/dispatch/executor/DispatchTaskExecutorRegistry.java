@@ -30,4 +30,6 @@ public interface DispatchTaskExecutorRegistry {
 
 	public Set<String> getDispatchTaskExecutorTypes();
 
+	public boolean isHiddenInUI(String type);
+
 }

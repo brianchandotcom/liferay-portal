@@ -274,11 +274,11 @@ definition {
 	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
-		task("Connect the DXP to AC") {
+		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task("Add a new user") {
+		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
 				userFirstName = "ac",
@@ -286,23 +286,23 @@ definition {
 				userScreenName = "ac");
 		}
 
-		task("Sync the Contact Data") {
+		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task("Sign in as new user") {
+		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 		}
 
-		task("View the site page") {
+		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
-		task("Close sessions") {
+		task ("Close sessions") {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
@@ -340,7 +340,7 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task("Search for user") {
+		task ("Search for user") {
 			ACUtils.searchBar(searchItem = "ac ac");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");

@@ -308,7 +308,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					_httpServletRequest,
 					"do-you-want-to-replace-x-for-x-as-the-default-style-book",
 					new String[] {
-						_styleBookEntry.getName(), defaultStyleBookEntryName
+						defaultStyleBookEntryName, _styleBookEntry.getName()
 					}));
 
 			dropdownItem.setLabel(

@@ -1,11 +1,17 @@
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+configurations.all {
+	resolutionStrategy.force 'com.liferay:com.liferay.portal.tools.rest.builder:1.0.93'
+}
+#end
 dependencies {
 	compile project("${apiPath}")
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.odata.api"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "commons-collections", name: "commons-collections"
@@ -24,7 +30,17 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 
+	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.93") {force = true}
+#else
+	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
+#if (${liferayVersion.startsWith("7.3")})
+	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.212") {force = true}
+#else
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+
 	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "@com.liferay.portal.tools.rest.builder.version@"
+#end
+#end
 }
 
 group = "${package}"

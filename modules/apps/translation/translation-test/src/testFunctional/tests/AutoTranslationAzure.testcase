@@ -1,0 +1,200 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Translations Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Azure Translator");
+
+		Translations.enableAzureTranslation();
+	}
+
+	tearDown {
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+	}
+
+	@description = "This ensures that Azure translation can be used to auto-translate a content page."
+	@priority = "5"
+	test CanTranslateContentPage {
+		property test.name.skip.portal.instance = "AutoTranslationAzure#CanTranslateContentPage";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Content Page Name");
+
+		Translations.autoTranslate();
+
+		Translations.viewTargetFields(contentPageName = "اسم صفحة المحتوى");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "ar/web/site-name/content-page-name");
+
+		Page.viewSpecificPG(pageNameList = "اسم صفحة المحتوى");
+	}
+
+	@description = "This ensures that the fragment filed on content page can be translated independently."
+	@priority = "5"
+	test CanTranslateContentPageFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslationAzure#CanTranslateContentPageFieldIndependently";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Button",
+			id = "link",
+			text = "Title");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "de-DE");
+
+		Translations.translateSpecificField(fieldName = "link");
+
+		Translations.viewTargetFields(
+			contentPageName = "Content Page Name",
+			link = "Titel");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "de-DE");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Titel",
+			fragmentName = "Button",
+			id = "link");
+	}
+
+	@description = "This ensures that Azure translation can be used to auto-translate a web content."
+	@priority = "5"
+	test CanTranslateWC {
+		property test.name.skip.portal.instance = "AutoTranslationAzure#CanTranslateWC";
+
+		JSONWebcontent.addWebContent(
+			content = "WC content",
+			groupName = "Site Name",
+			title = "WC title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "WC title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.autoTranslate();
+
+		Translations.viewTargetFields(
+			webContentContent = "Contenido de WC",
+			webContentDescription = "",
+			webContentTitle = "Título WC");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "WC title");
+
+		Translations.viewTargetFields(
+			webContentContent = "Contenido de WC",
+			webContentDescription = "",
+			webContentTitle = "Título WC");
+	}
+
+	@description = "This ensures that the web content title and content filed can be translated independently"
+	@priority = "5"
+	test CanTranslateWCFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslationAzure#CanTranslateWCFieldIndependently";
+
+		JSONWebcontent.addWebContent(
+			content = "WC content",
+			description = "WC description",
+			groupName = "Site Name",
+			title = "WC title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "WC title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateSpecificField(fieldName = "Content");
+
+		Translations.viewTargetFields(
+			webContentContent = "WC コンテンツ",
+			webContentDescription = "WC description",
+			webContentTitle = "WC title");
+
+		Translations.translateSpecificField(fieldName = "Title");
+
+		Translations.viewTargetFields(
+			webContentContent = "WC コンテンツ",
+			webContentDescription = "WC description",
+			webContentTitle = "トイレタイトル");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "WC title");
+
+		Translations.viewTargetFields(
+			webContentContent = "WC コンテンツ",
+			webContentDescription = "WC description",
+			webContentTitle = "トイレタイトル");
+	}
+
+}

@@ -1,0 +1,216 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Translations Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "AWS Translator");
+
+		Translations.enableAwsTranslation();
+	}
+
+	tearDown {
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+	}
+
+	@description = "This ensures that AWS translation can be used to auto-translate a content page."
+	@priority = "5"
+	test CanTranslateContentPage {
+		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateContentPage";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "zh-CN");
+
+		Translations.autoTranslate();
+
+		Translations.viewTargetFields(
+			contentPageName = "内容页面名称",
+			elementText = "标题");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "zh-CN");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "标题",
+			fragmentName = "Heading",
+			id = "element-text");
+	}
+
+	@description = "This ensures that the fragment filed on content page can be translated independently."
+	@priority = "5"
+	test CanTranslateContentPageFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateContentPageFieldIndependently";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Button",
+			id = "link",
+			text = "Title");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "de-DE");
+
+		Translations.translateSpecificField(fieldName = "link");
+
+		Translations.viewTargetFields(
+			contentPageName = "Content Page Name",
+			link = "Titel");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "de-DE");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Titel",
+			fragmentName = "Button",
+			id = "link");
+	}
+
+	@description = "This ensures that AWS translation can be used to auto-translate a web content."
+	@priority = "5"
+	test CanTranslateWC {
+		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateWC";
+
+		JSONWebcontent.addWebContent(
+			content = "WC content",
+			description = "WC description",
+			groupName = "Site Name",
+			title = "WC title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "WC title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.autoTranslate();
+
+		Translations.viewTargetFields(
+			webContentContent = "Contenido de WC",
+			webContentDescription = "Descripción de WC",
+			webContentTitle = "Título WC");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "WC title");
+
+		Translations.viewTargetFields(
+			webContentContent = "Contenido de WC",
+			webContentDescription = "Descripción de WC",
+			webContentTitle = "Título WC");
+	}
+
+	@description = "This ensures that the web content title can be translated independently"
+	@priority = "5"
+	test CanTranslateWCFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateWCFieldIndependently";
+
+		JSONWebcontent.addWebContent(
+			content = "WC content",
+			description = "WC description",
+			groupName = "Site Name",
+			title = "WC title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "WC title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateSpecificField(fieldName = "Title");
+
+		Translations.viewTargetFields(
+			webContentContent = "WC content",
+			webContentDescription = "WC description",
+			webContentTitle = "トイレタイトル");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "WC title");
+
+		Translations.viewTargetFields(
+			webContentContent = "WC content",
+			webContentDescription = "WC description",
+			webContentTitle = "トイレタイトル");
+	}
+
+}

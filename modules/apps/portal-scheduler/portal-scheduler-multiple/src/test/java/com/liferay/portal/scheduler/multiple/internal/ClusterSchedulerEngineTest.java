@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
@@ -117,7 +117,6 @@ public class ClusterSchedulerEngineTest {
 		_serviceRegistration.unregister();
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testDeleteOnMaster() throws SchedulerException {
 
@@ -154,7 +153,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED jobs by groupName
 
@@ -173,7 +172,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 3, PERSISTED job by jobName and groupName
 
@@ -201,7 +200,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 4, PERSISTED jobs by groupName
 
@@ -220,10 +219,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testDeleteOnSlave() throws SchedulerException {
 
@@ -262,7 +260,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, not existed group
 
@@ -295,7 +293,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 3, MEMORY_CLUSTERED jobs by groupName
 
@@ -314,7 +312,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
 	@Test
@@ -445,7 +443,6 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testPauseAndResumeOnMaster() throws SchedulerException {
 
@@ -482,7 +479,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -500,7 +497,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED jobs by groupName
 
@@ -530,7 +527,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
@@ -548,7 +545,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 3, PERSISTED job by jobName and groupName
 
@@ -576,7 +573,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
@@ -594,7 +591,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 4, PERSISTED jobs by groupName
 
@@ -623,7 +620,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
@@ -641,10 +638,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testPauseAndResumeOnSlave() throws SchedulerException {
 
@@ -684,7 +680,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -704,7 +700,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED jobs by groupName
 
@@ -742,7 +738,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.resume(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
@@ -764,7 +760,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 3, not existed job
 
@@ -790,7 +786,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 4, not existed group
 
@@ -823,10 +819,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testScheduleOnMaster() throws SchedulerException {
 
@@ -890,7 +885,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, PERSISTED job
 
@@ -922,10 +917,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testScheduleOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -967,7 +961,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
 	@Test
@@ -1100,7 +1094,6 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testSuppressErrorOnMaster() throws SchedulerException {
 
@@ -1137,7 +1130,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, PERSISTED job by jobName and groupName
 
@@ -1165,10 +1158,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testSuppressErrorOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -1205,10 +1197,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testThreadLocal() throws SchedulerException {
 
@@ -1224,7 +1215,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED when portal is starting
 
@@ -1238,7 +1229,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		_clusterSchedulerEngine.start();
 
@@ -1254,7 +1245,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 4, MEMORY_CLUSTERED when portal is started
 
@@ -1268,7 +1259,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 5, PERSISTED when plugin is starting
 
@@ -1282,7 +1273,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 6, MEMORY_CLUSTERED when plugin is starting
 
@@ -1296,7 +1287,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 7, PERSISTED when plugin is destroying
 
@@ -1310,7 +1301,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 8, MEMORY_CLUSTERED when plugin is destroying
 
@@ -1324,7 +1315,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 9, PERSISTED when cluster invoke is disabled
 
@@ -1338,7 +1329,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 10, PERSISTED when cluster invoke is enabled
 
@@ -1352,7 +1343,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 11, MEMORY_CLUSTERED when cluster invoke is disabled
 
@@ -1366,7 +1357,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 12, MEMORY_CLUSTERED when cluster invoke is enabled
 
@@ -1380,10 +1371,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testUnscheduleOnMaster() throws SchedulerException {
 
@@ -1420,7 +1410,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED jobs by groupName
 
@@ -1458,7 +1448,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 3, PERSISTED job by jobName and groupName
 
@@ -1486,7 +1476,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 4, PERSISTED jobs by groupName
 
@@ -1523,10 +1513,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testUnscheduleOnSlave() throws SchedulerException {
 
@@ -1564,7 +1553,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, MEMORY_CLUSTERED jobs by groupName
 
@@ -1597,10 +1586,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testUpdateOnMaster() throws SchedulerException {
 
@@ -1639,7 +1627,7 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
 		// Test 2, PERSISTED job by jobName and groupName
 
@@ -1669,10 +1657,9 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertFalse(
 			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
+				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
 	@Test
 	public void testUpdateOnSlave() throws SchedulerException {
 

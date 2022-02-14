@@ -229,7 +229,7 @@ definition {
 	@priority = "4"
 	test CanCreateSessionAttributeUsingURL {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}

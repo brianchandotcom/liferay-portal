@@ -607,7 +607,7 @@ definition {
 	test OwnerCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
-		
+
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 

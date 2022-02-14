@@ -569,7 +569,7 @@ definition {
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Add a new organization and assign to the user") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 

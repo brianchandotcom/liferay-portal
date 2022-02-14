@@ -291,7 +291,7 @@ definition {
 	@priority = "3"
 	test ViewUndefinedResultsIsDisplayedWhenChangeDataTypeThatCannotBeInterpreted {
 		property portal.upstream = "quarantine";
-		
+
 		var attributeName = "company";
 		var attributeValue = "liferay";
 

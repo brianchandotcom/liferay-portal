@@ -58,6 +58,11 @@
 	<td>//input[contains(@class,'input-root') and @id='endValue']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LIST_ORDER</td>
+	<td>xpath=(//span[@aria-haspopup='true'])[${index}]</td>
+	<td></td>
+</tr>
 <!-- REMOVE_BUTTON -->
 <tr>
 	<td>REMOVE_BUTTON</td>

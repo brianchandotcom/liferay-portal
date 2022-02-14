@@ -97,12 +97,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_CELL</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][${cellPosition}]</td>
+	<td>//tr[.//*[normalize-space(text())='${entryTitle}']]//td[${cellPosition}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][2]</td>
+	<td>//tr[.//*[normalize-space(text())='${entryTitle}']]//td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,17 +112,17 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${title}']</td>
+	<td>//*[contains(@class,'table-list-title')]//*[normalize-space(text())='${title}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//*[contains(@class,'dnd-tr') and contains(.,'${title}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//tr[.//*[normalize-space(text())='${entryTitle}']]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_FIELD</td>
-	<td>//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-th') and contains(.,'${fieldName}')]</td>
+	<td>//tr/th[contains(.,'${fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_NTH_ENTRY</td>
-	<td>xpath=(//div[contains(@class,'table-list-title')])[${index}]</td>
+	<td>xpath=(//*[contains(@class,'table-list-title')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

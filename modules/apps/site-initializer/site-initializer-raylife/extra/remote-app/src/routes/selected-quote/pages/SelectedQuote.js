@@ -39,7 +39,7 @@ const SelectedQuote = () => {
 	}, [sections]);
 
 	return (
-		<div className="container d-flex flex-row mb-10 w-100">
+		<div className="container d-flex flex-column flex-lg-row mb-10 w-100">
 			<QuoteInfo />
 
 			<div className="ml-0 ml-lg-5 w-100">

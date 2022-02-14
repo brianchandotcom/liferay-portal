@@ -26,7 +26,7 @@ const QuoteInfo = () => {
 	const [{product}] = useContext(SelectedQuoteContext);
 
 	return (
-		<div className="pt-0 quote-info">
+		<div className="mt-4 mt-md-0 pt-0 quote-info">
 			{product.id && (
 				<ProductComparison
 					highlightMostPopularText="Great Coverage"
@@ -36,7 +36,7 @@ const QuoteInfo = () => {
 				/>
 			)}
 
-			<div className="font-weight-bolder mt-5 text-uppercase">
+			<div className="font-weight-bolder mt-2 mt-lg-5 text-center text-lg-left text-uppercase">
 				Application {`#${applicationId}`}
 			</div>
 		</div>

@@ -120,7 +120,9 @@ const ProductComparison = ({
 
 	return (
 		<div
-			className={classNames('ml-auto rounded bg-neutral-0', {
+			className={classNames('rounded bg-neutral-0', {
+				'col-12 mx-auto p-0': !purchasable,
+				'ml-auto': purchasable,
 				'mt-4': !mostPopular,
 			})}
 			id="quote-comparison"
@@ -170,11 +172,19 @@ const ProductComparison = ({
 					</div>
 				</div>
 
-				<div className="quote-body">
+				<div
+					className={classNames('quote-body', {
+						'select-quote-mobile': !purchasable,
+					})}
+				>
 					<ListItems {...productDetails} />
 				</div>
 
-				<div className="border-0 p-0">
+				<div
+					className={classNames('border-0 p-0', {
+						'select-quote-mobile': !purchasable,
+					})}
+				>
 					{purchasable && (
 						<div className="bg-transparent d-flex justify-content-center">
 							<ClayButton

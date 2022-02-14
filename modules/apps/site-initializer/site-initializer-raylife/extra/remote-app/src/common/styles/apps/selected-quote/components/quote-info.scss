@@ -8,9 +8,23 @@
 			margin-bottom: 18px;
 			padding-top: 0 !important;
 		}
+
+		@media screen and (max-width: 991px) {
+			height: 188px;
+		}
+
+		@media screen and (min-width: $breakpoint-phone) and (max-width: 991px) {
+			width: 480px;
+		}
+
+		@media screen and (max-width: 767px) {
+			width: 366px;
+		}
 	}
 
 	@media screen and (max-width: 991px) {
-		display: none;
+		.select-quote-mobile {
+			display: none;
+		}
 	}
 }

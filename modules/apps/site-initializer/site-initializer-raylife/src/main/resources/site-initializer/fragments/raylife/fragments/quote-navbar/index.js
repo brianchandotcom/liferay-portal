@@ -21,6 +21,25 @@ const menuIcon = fragmentElement.querySelector('#button-menu-icon');
 const backgroundIconDisplay = ['background-icon-close', 'background-icon-grid'];
 const menuDisplay = ['show-menu', 'hidden-menu'];
 
+const pages = [
+	'hang-tight',
+	'quote-comparison',
+	'selected-quote',
+	'get-in-touch',
+];
+const logoElement = document.querySelector('.logo-desktop');
+const pathName = window.location.pathname;
+const menuElements = document.querySelectorAll('.raylife-quote-menu');
+
+pages.forEach((page) => {
+	if (pathName.includes(page)) {
+		menuElements.forEach((menuElement) =>
+			menuElement.classList.add('menu-button-style')
+		);
+		logoElement.classList.add('white-background');
+	}
+});
+
 menuButton.addEventListener('click', () => {
 	menuDisplay.forEach((cssClass) => {
 		myDropdown.classList.toggle(cssClass);

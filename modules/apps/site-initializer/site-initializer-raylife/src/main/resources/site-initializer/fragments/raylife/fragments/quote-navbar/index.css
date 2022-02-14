@@ -92,7 +92,7 @@
 		display: none;
 	}
 
-	.quote-site-navbar .background-icon-close {
+	.quote-site-navbar .background-icon-close:not(.menu-button-style) {
 		background: url('[resources:close_menu_white.svg]');
 		background-repeat: no-repeat;
 		background-size: contain;
@@ -101,7 +101,7 @@
 		width: 16px;
 	}
 
-	.quote-site-navbar .background-icon-grid {
+	.quote-site-navbar .background-icon-grid:not(.menu-button-style) {
 		background: url('[resources:grid_icon_white.svg]');
 		background-repeat: no-repeat;
 		background-size: contain;
@@ -118,7 +118,7 @@
 		z-index: 1;
 	}
 
-	.quote-site-navbar .logo-desktop {
+	.quote-site-navbar .logo-desktop:not(.white-background) {
 		background: url('[resources:raylife_logo_mobile.svg]');
 		background-repeat: no-repeat;
 		height: 36px;
@@ -130,9 +130,11 @@
 		padding-left: 0;
 	}
 
-	.quote-site-navbar .raylife-navbar-button {
+	.quote-site-navbar .raylife-navbar-button:not(.menu-button-style) {
 		border: 1px solid var(--color-neutral-0) !important;
 		color: var(--color-neutral-0) !important;
 		font-size: 15px;
+		height: 48px;
+		width: 90px;
 	}
 }

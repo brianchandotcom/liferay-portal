@@ -720,6 +720,82 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-8425. DuplicateAProductAndVerifyIfSkuPriceIsUnique"
+	@priority = "3"
+	test DuplicateAProductAndVerifyIfSkuPriceIsUnique {
+		property portal.acceptance = "false";
+
+		task ("Given a minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When I duplicate ABS Sensor") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			Click(
+				key_optionValue = "Duplicate",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+			CommerceEntry.addProductsEntry(
+				productCatalog = "Minium",
+				productFullDescription = "",
+				productName = "Copy of ABS Sensor",
+				productShortDescription = "");
+
+			Button.clickPublish();
+		}
+
+		task ("And if I change the SKU price of the original product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.addPriceToSKU(price = "60.00");
+
+			Button.clickPublish();
+
+			Refresh();
+		}
+
+		task ("Then if I go back to the duplicate product the price hasn't changed") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Copy of ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "Copy of ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#PRICE_FIELD",
+				value1 = "50.00");
+
+			echo("The price hasn't changed");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
 	@priority = "3"
 	test EditAProduct {

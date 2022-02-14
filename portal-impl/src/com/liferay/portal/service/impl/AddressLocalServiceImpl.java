@@ -148,12 +148,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
 		return addressLocalService.addAddress(
-			address.getExternalReferenceCode(), serviceContext.getUserId(),
-			className, classPK, address.getName(), address.getDescription(),
-			address.getStreet1(), address.getStreet2(), address.getStreet3(),
-			address.getCity(), address.getZip(), address.getRegionId(),
-			address.getCountryId(), address.getTypeId(), address.isMailing(),
-			address.isPrimary(), address.getPhoneNumber(), serviceContext);
+			null, serviceContext.getUserId(), className, classPK,
+			address.getName(), address.getDescription(), address.getStreet1(),
+			address.getStreet2(), address.getStreet3(), address.getCity(),
+			address.getZip(), address.getRegionId(), address.getCountryId(),
+			address.getTypeId(), address.isMailing(), address.isPrimary(),
+			address.getPhoneNumber(), serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

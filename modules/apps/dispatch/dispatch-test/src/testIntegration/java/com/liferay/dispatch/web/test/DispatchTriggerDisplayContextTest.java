@@ -15,6 +15,7 @@
 package com.liferay.dispatch.web.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.internal.messaging.test.UIInvisibleTestDispatchTaskExecutor;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -71,6 +72,14 @@ public class DispatchTriggerDisplayContextTest {
 	public void testDispatchTriggerDisplayContextCheckHidden()
 		throws Exception {
 
+		Set<String> dispatchTaskExecutorTypes =
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
+
+		Assert.assertTrue(
+			dispatchTaskExecutorTypes.contains(
+				UIInvisibleTestDispatchTaskExecutor.
+					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
+
 		Group group = GroupTestUtil.addGroup();
 
 		Company company = _companyLocalService.getCompany(group.getCompanyId());
@@ -84,19 +93,15 @@ public class DispatchTriggerDisplayContextTest {
 
 		Assert.assertNotNull(dispatchTriggerDisplayContext);
 
-		try {
-			Set<String> executorTypes = ReflectionTestUtil.invoke(
-				dispatchTriggerDisplayContext, "getDispatchTaskExecutorTypes",
-				new Class<?>[0], null);
+		Set<String> executorTypes = ReflectionTestUtil.invoke(
+			dispatchTriggerDisplayContext, "getDispatchTaskExecutorTypes",
+			new Class<?>[0], null);
 
-			Assert.assertFalse(
-				"Executor not hidden!",
-				executorTypes.contains(
-					UIInvisibleTestDispatchTaskExecutor.
-						DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN));
-		}
-		catch (Exception exception) {
-		}
+		Assert.assertFalse(
+			"Executor not hidden!",
+			executorTypes.contains(
+				UIInvisibleTestDispatchTaskExecutor.
+					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
 	}
 
 	private Object _getDispatchTriggerDisplayContext(
@@ -146,6 +151,9 @@ public class DispatchTriggerDisplayContextTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

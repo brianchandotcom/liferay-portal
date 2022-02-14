@@ -267,6 +267,7 @@ definition {
 	@refactordone
 	test CanViewWebsiteNotificationForNewEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

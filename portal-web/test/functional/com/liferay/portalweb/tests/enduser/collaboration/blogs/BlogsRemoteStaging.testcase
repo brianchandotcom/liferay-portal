@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -42,7 +43,6 @@ definition {
 	test CanPublishApprovedEntry {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishApprovedEntry";
-		property portal.acceptance = "true";
 
 		SearchAdministration.executeReindex();
 
@@ -120,7 +120,6 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishEntry";
-		property portal.acceptance = "true";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",

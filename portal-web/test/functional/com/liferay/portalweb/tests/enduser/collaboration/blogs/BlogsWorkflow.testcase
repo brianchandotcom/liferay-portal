@@ -25,6 +25,8 @@ definition {
 	@description = "This is a test for LPS-136813. It checks that a Blog entry can be resubmitted after it is rejected."
 	@priority = "4"
 	test CanResubmitRejectedEntry {
+		property portal.acceptance = "true";
+
 		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
 		Workflow.configureWorkflow(

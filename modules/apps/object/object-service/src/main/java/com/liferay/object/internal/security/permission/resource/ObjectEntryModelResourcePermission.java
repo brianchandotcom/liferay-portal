@@ -85,7 +85,6 @@ public class ObjectEntryModelResourcePermission
 				permissionChecker.getCompanyId(), _modelName,
 				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
 				actionId) ||
-			(permissionChecker.getUserId() == objectEntry.getUserId()) ||
 			permissionChecker.hasPermission(
 				objectEntry.getGroupId(), _modelName,
 				objectEntry.getObjectEntryId(), actionId)) {

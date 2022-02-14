@@ -73,7 +73,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			expirationDate, reviewDate, serviceContext);
 
 		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_addFriendlyURLEntry(dlFileEntry);
+			_addFriendlyURLEntry(dlFileEntry, title);
 		}
 
 		return dlFileEntry;
@@ -126,19 +126,19 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 				FFFriendlyURLEntryFileEntryConfiguration.class, properties);
 	}
 
-	private void _addFriendlyURLEntry(DLFileEntry dlFileEntry)
+	private void _addFriendlyURLEntry(DLFileEntry dlFileEntry, String urlTitle)
 		throws PortalException {
 
-		String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+		String uniqueUrlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 			dlFileEntry.getGroupId(),
 			_classNameLocalService.getClassNameId(FileEntry.class),
-			dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
+			dlFileEntry.getFileEntryId(), urlTitle,
 			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			dlFileEntry.getGroupId(),
 			_classNameLocalService.getClassNameId(FileEntry.class),
-			dlFileEntry.getFileEntryId(), urlTitle,
+			dlFileEntry.getFileEntryId(), uniqueUrlTitle,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
@@ -187,7 +187,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 					title, friendlyURLEntry.getLanguageIdToUrlTitleMap()));
 		}
 		catch (NoSuchModelException noSuchModelException) {
-			_addFriendlyURLEntry(dlFileEntry);
+			_addFriendlyURLEntry(dlFileEntry, title);
 		}
 	}
 

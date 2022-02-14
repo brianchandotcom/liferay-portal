@@ -52,8 +52,9 @@ export function TopperLabel({children, itemElement}) {
 
 			const updatePosition = () => {
 				const languageDirection =
-					Liferay.Language.direction[themeDisplay?.getLanguageId()] ||
-					'ltr';
+					Liferay.Language.direction?.[
+						themeDisplay?.getLanguageId()
+					] || 'ltr';
 
 				const left =
 					itemElementLeft -

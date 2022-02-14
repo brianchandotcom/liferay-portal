@@ -177,7 +177,7 @@ definition {
 				attributeName = "${attributeName}",
 				newDataType = "Date");
 
-			ACCustomEvents.viewDataType(typeValue = "DATE");
+			ACCustomEvents.viewDataType(typeValue = "Date");
 		}
 	}
 
@@ -283,7 +283,7 @@ definition {
 				attributeName = "${attributeName}",
 				newDataType = "Duration");
 
-			ACCustomEvents.viewDataType(typeValue = "DURATION");
+			ACCustomEvents.viewDataType(typeValue = "Duration");
 		}
 	}
 

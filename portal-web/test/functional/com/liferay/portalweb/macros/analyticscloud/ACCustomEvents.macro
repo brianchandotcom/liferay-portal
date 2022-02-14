@@ -311,6 +311,8 @@ definition {
 	}
 
 	macro viewDataType {
+		var typeValue = StringUtil.upperCase("${typeValue}");
+
 		AssertTextEquals(
 			locator1 = "ACSegments#EDITOR_LABEL",
 			value1 = "${typeValue}");

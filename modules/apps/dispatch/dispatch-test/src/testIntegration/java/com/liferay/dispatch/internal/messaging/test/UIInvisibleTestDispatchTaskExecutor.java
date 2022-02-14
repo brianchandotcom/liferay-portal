@@ -30,37 +30,28 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"dispatch.task.executor.hidden-in-ui=true",
-		"dispatch.task.executor.type=" + UIInvisibleTestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN
+		"dispatch.task.executor.type=" + UIInvisibleTestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI
 	},
 	service = DispatchTaskExecutor.class
 )
 public class UIInvisibleTestDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
-	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN =
-		"hidden-test";
+	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI =
+		"test-hidden-in-ui";
 
 	@Override
 	public void doExecute(
 		DispatchTrigger dispatchTrigger,
 		DispatchTaskExecutorOutput dispatchTaskExecutorOutput) {
 
-		try {
-			Thread.sleep(SLEEP_MILLIS);
-
-			executionCounter.incrementAndGet();
-		}
-		catch (InterruptedException interruptedException) {
-			interruptedException.printStackTrace();
-		}
+		executionCounter.incrementAndGet();
 	}
 
 	@Override
 	public String getName() {
-		return DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN;
+		return DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI;
 	}
-
-	protected static final int SLEEP_MILLIS = 1500;
 
 	protected static final AtomicInteger executionCounter = new AtomicInteger(
 		0);

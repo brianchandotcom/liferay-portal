@@ -555,11 +555,40 @@ definition {
 			siteName = "Site Name");
 	}
 
+	macro deleteItemFromList {
+		var key_actionButton = "Delete";
+		var key_nameList = "${itemName}";
+
+		WaitForPageLoad();
+
+		ACUtils.searchBar(searchItem = "${itemName}");
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACUtils#DELETE_BUTTON");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clearSearchBar();
+	}
+
 	@summary = "Dismiss Onboarding Modal if it appears when launching AC"
 	macro dismissOnboardingModal {
 		if (IsElementPresent(locator1 = "ACSettings#MODAL_SCREEN")) {
 			Click(locator1 = "ACSettings#CLOSE_ONBOARDING_MODAL");
 		}
+	}
+
+	macro fileName {
+		WaitForPageLoad();
+
+		if ((IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL")) || (IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT"))) {
+			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
+		}
+
+		Type.sendKeys(
+			locator1 = "ACUtils#NAME_FIELD",
+			value1 = "${fileName}");
 	}
 
 	macro getEventPropertyValue {
@@ -750,6 +779,12 @@ definition {
 		}
 	}
 
+	macro saveButton {
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro searchBar {
 		if (isSet(cardTitle)) {
 			Type(
@@ -833,16 +868,6 @@ definition {
 		}
 	}
 
-	macro viewNameListIsNotPresent {
-		for (var name : list "${nameList}") {
-			var key_nameList = "${name}";
-
-			WaitForPageLoad();
-
-			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
-		}
-	}
-
 	macro viewNameListInOrder {
 		var key_userName = "${name}";
 		var index = "${index}";
@@ -856,6 +881,22 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE",
 			value1 = "${name}");
+	}
+
+	macro viewNameListIsNotPresent {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			WaitForPageLoad();
+
+			while (IsElementPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+				ACSegments.searchSegment(findSegment = "${name}");
+
+				ACUtils.clearSearchBar();
+			}
+
+			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
+		}
 	}
 
 	macro viewNoResultsMessage {
@@ -947,41 +988,6 @@ definition {
 
 	macro waitForLoading {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
-	}
-
-	macro saveButton {
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro fileName {
-		WaitForPageLoad();
-
-		if (IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL") || IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT")) {
-			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
-		}
-
-		Type.sendKeys(
-			locator1 = "ACUtils#NAME_FIELD",
-			value1 = "${fileName}");
-	}
-
-	macro deleteItemFromList {
-		var key_actionButton = "Delete";
-		var key_nameList = "${itemName}";
-
-		WaitForPageLoad();
-
-		ACUtils.searchBar(searchItem = "${itemName}");
-
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-		Click(locator1 = "ACUtils#DELETE_BUTTON");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-
-		ACUtils.clearSearchBar();
 	}
 
 }

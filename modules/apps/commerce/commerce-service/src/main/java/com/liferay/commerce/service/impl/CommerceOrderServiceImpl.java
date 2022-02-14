@@ -968,8 +968,17 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long paymentCommerceTermEntryId, String languageId)
 		throws PortalException {
 
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+		if (deliveryCommerceTermEntryId > 0) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderId,
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS);
+		}
+
+		if (paymentCommerceTermEntryId > 0) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderId,
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
+		}
 
 		return commerceOrderLocalService.updateTermsAndConditions(
 			commerceOrderId, deliveryCommerceTermEntryId,

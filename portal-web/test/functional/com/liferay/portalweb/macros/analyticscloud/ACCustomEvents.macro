@@ -318,6 +318,7 @@ definition {
 
 	macro viewDataTypeList {
 		var key_attributeName = "${attributeName}";
+		var typeValue = StringUtil.upperCase("${typeValue}");
 
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#DATA_TYPE_LIST",

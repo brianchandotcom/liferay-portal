@@ -1492,15 +1492,9 @@ definition {
 			fieldFieldLabel = "Boolean Required",
 			fieldName = "Boolean");
 
-		PortletEntry.publish();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLNavigator.gotoListRecords();
+		DoubleClick(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
 
 		DDLRecord.viewFirstFieldCP(
 			ddlRecordFieldData = "True",

@@ -274,7 +274,7 @@ definition {
 	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
-		task("Connect the DXP to AC"){
+		task("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 

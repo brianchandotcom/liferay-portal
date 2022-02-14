@@ -619,34 +619,11 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long[] fragmentEntryIds,
-			String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, fragmentEntryIds, editableValues,
-			serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, name);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name,
-			long[] fragmentEntryIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, name, fragmentEntryIds, serviceContext);
 	}
 
 	@Override

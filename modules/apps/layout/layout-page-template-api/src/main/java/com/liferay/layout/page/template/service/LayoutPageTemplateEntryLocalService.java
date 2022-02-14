@@ -506,12 +506,6 @@ public interface LayoutPageTemplateEntryLocalService
 			long layoutPageTemplateEntryId, String name)
 		throws PortalException;
 
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name,
-			long[] fragmentEntryIds, String editableValues,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public LayoutPageTemplateEntry updateStatus(
 			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException;

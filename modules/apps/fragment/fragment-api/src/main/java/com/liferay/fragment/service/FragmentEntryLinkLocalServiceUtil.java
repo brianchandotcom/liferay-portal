@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the local service utility for FragmentEntryLink. This utility wraps
@@ -620,25 +619,6 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 		return getService().updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
-	}
-
-	public static void updateFragmentEntryLinks(
-			long userId, long groupId, long plid, long[] fragmentEntryIds,
-			String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().updateFragmentEntryLinks(
-			userId, groupId, plid, fragmentEntryIds, editableValues,
-			serviceContext);
-	}
-
-	public static void updateFragmentEntryLinks(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws PortalException {
-
-		getService().updateFragmentEntryLinks(
-			fragmentEntryLinksEditableValuesMap);
 	}
 
 	public static void updateLatestChanges(long fragmentEntryLinkId)

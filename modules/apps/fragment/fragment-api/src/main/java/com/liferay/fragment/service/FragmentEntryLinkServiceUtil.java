@@ -17,8 +17,6 @@ package com.liferay.fragment.service;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Map;
-
 /**
  * Provides the remote service utility for FragmentEntryLink. This utility wraps
  * <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and is an
@@ -84,24 +82,6 @@ public class FragmentEntryLinkServiceUtil {
 
 		return getService().updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
-	}
-
-	public static void updateFragmentEntryLinks(
-			long groupId, long plid, long[] fragmentEntryIds,
-			String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().updateFragmentEntryLinks(
-			groupId, plid, fragmentEntryIds, editableValues, serviceContext);
-	}
-
-	public static void updateFragmentEntryLinks(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws PortalException {
-
-		getService().updateFragmentEntryLinks(
-			fragmentEntryLinksEditableValuesMap);
 	}
 
 	public static FragmentEntryLinkService getService() {

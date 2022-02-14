@@ -537,32 +537,11 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long[] fragmentEntryIds,
-			String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, fragmentEntryIds, editableValues,
-			serviceContext);
-	}
-
-	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
 		throws PortalException {
 
 		return getService().updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, name);
-	}
-
-	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name,
-			long[] fragmentEntryIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, name, fragmentEntryIds, serviceContext);
 	}
 
 	public static LayoutPageTemplateEntry updateStatus(

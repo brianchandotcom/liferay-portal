@@ -225,82 +225,6 @@ public class FragmentEntryLinkServiceHttp {
 		}
 	}
 
-	public static void updateFragmentEntryLinks(
-			HttpPrincipal httpPrincipal, long groupId, long plid,
-			long[] fragmentEntryIds, String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLinks",
-				_updateFragmentEntryLinksParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, plid, fragmentEntryIds, editableValues,
-				serviceContext);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void updateFragmentEntryLinks(
-			HttpPrincipal httpPrincipal,
-			java.util.Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLinks",
-				_updateFragmentEntryLinksParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fragmentEntryLinksEditableValuesMap);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkServiceHttp.class);
 
@@ -317,12 +241,5 @@ public class FragmentEntryLinkServiceHttp {
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes3 =
 		new Class[] {long.class, String.class, boolean.class};
-	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes4 =
-		new Class[] {
-			long.class, long.class, long[].class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes5 =
-		new Class[] {java.util.Map.class};
 
 }

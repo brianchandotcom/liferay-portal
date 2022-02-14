@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -474,15 +473,6 @@ public interface FragmentEntryLinkLocalService
 	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
-		throws PortalException;
-
-	public void updateFragmentEntryLinks(
-			long userId, long groupId, long plid, long[] fragmentEntryIds,
-			String editableValues, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFragmentEntryLinks(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
 		throws PortalException;
 
 	public void updateLatestChanges(long fragmentEntryLinkId)

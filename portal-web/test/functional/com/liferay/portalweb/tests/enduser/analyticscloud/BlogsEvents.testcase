@@ -549,7 +549,6 @@ definition {
 	@priority = "5"
 	test CheckBlogViewedWhenVisitingDXPBlogAndCheckProperties {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
 
 		// AC Refactor ticket: LRAC-9599
 

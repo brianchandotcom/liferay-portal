@@ -210,8 +210,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
 	@priority = "3"
 	test AssertSitesAcquisitionCardChannelsHighestSession {
-		property portal.upstream = "quarantine";
-
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",

@@ -153,7 +153,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"
 	@priority = "5"
 	test CheckWebContentViewedProperties {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get articleId of web content") {

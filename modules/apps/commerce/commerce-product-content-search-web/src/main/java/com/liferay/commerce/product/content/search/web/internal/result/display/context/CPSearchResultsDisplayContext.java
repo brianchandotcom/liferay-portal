@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.display.context;
+package com.liferay.commerce.product.content.search.web.internal.result.display.context;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -23,6 +23,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.search.web.internal.display.context.NullPortletURL;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;

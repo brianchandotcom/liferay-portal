@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.display.builder;
+package com.liferay.commerce.product.content.search.web.internal.facet.display.builder;
 
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.facet.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.facet.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;

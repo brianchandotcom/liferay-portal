@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.display.builder;
+package com.liferay.commerce.product.content.search.web.internal.facet.display.builder;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.permission.CPSpecificationOptionPermission;

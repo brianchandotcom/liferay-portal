@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.configuration;
+package com.liferay.commerce.product.content.search.web.internal.specification.facet.configuration;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;

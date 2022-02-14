@@ -16,7 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.facet.display.context.CPSpecificationOptionFacetsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;

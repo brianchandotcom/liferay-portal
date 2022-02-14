@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.display.context;
+package com.liferay.commerce.product.content.search.web.internal.facet.display.context;
 
 import java.io.Serializable;
 

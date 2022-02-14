@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.display.context;
+package com.liferay.commerce.product.content.search.web.internal.facet.display.context;
 
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.search.web.internal.specification.facet.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;

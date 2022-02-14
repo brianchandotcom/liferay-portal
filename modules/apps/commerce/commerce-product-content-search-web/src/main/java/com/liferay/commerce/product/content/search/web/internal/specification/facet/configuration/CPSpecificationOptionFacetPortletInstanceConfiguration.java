@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.configuration;
+package com.liferay.commerce.product.content.search.web.internal.specification.facet.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration",
+	id = "com.liferay.commerce.product.content.search.web.internal.specification.facet.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "cp-specification-option-facet-portlet-instance-configuration-name"
 )

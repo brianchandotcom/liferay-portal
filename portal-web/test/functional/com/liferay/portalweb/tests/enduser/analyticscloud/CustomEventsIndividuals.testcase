@@ -207,9 +207,7 @@ definition {
 		}
 
 		task ("Assert empty state") {
-			for (var textValue : list "No Events Found,Try a different date range or search term.") {
-				ACUtils.viewGenericText(textValue = "${textValue}");
-			}
+			ACUtils.viewGenericText(textValueList = "No Events Found,Try a different date range or search term.");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -221,9 +219,7 @@ definition {
 		task ("Assert empty state") {
 			ACUtils.searchBar(searchItem = "${customEventName2}");
 
-			for (var textValue : list "No Events Found,Try a different date range or search term.") {
-				ACUtils.viewGenericText(textValue = "${textValue}");
-			}
+			ACUtils.viewGenericText(textValueList = "No Events Found,Try a different date range or search term.");
 		}
 	}
 

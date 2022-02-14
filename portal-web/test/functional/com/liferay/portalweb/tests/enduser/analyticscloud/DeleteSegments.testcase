@@ -271,7 +271,7 @@ definition {
 		ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
 	}
 
-	@description = "Feature ID: Bug | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
+	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

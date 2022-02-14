@@ -37,8 +37,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -81,7 +79,7 @@ public class DiscountSkuResourceImpl
 
 	@Override
 	public DiscountSku postDiscountIdDiscountSku(
-			@NotNull Long id, DiscountSku discountSku)
+			Long id, DiscountSku discountSku)
 		throws Exception {
 
 		CommerceDiscountRel commerceDiscountRel =

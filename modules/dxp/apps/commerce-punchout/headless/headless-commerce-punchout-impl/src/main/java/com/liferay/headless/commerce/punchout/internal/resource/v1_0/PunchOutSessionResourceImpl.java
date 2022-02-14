@@ -65,8 +65,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.InternalServerErrorException;
@@ -88,7 +86,7 @@ public class PunchOutSessionResourceImpl
 
 	@Override
 	public PunchOutSession postPunchOutSessionRequest(
-			@NotNull PunchOutSession punchOutSession)
+			PunchOutSession punchOutSession)
 		throws Exception {
 
 		com.liferay.portal.kernel.model.Group buyerGroup = _fetchGroup(

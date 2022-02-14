@@ -41,8 +41,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Collections;
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -83,8 +81,8 @@ public class BlogPostingImageResourceImpl
 
 	@Override
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-			@NotNull Long siteId, String search, Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Long siteId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Folder folder = _blogsEntryService.addAttachmentsFolder(siteId);

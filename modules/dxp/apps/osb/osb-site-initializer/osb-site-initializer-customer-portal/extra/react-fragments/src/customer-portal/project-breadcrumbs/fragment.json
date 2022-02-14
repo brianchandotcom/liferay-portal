@@ -1,8 +1,8 @@
 {
-  "cssPath": "styles.css",
-  "configurationPath": "configuration.json",
-  "htmlPath": "index.html",
-  "jsPath": "main.js",
-  "name": "Sample fragment with react",
-  "type": "react"
+	"cssPath": "styles.css",
+	"configurationPath": "configuration.json",
+	"htmlPath": "index.html",
+	"jsPath": "main.js",
+	"name": "Project Breadcrumbs",
+	"type": "react"
 }

@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-107017. Creater user via JSONWSAPUI"
+	@description = "This is a use case for LPS-107017. Create user via JSONWSAPUI."
 	@priority = "4"
 	test CreateUserViaJSONWSAPIUI {
 		var portalURL = PropsUtil.get("portal.url");
@@ -40,7 +40,7 @@ definition {
 				userLastName = "${userln}");
 		}
 
-		task ("Assert message present in HTLM source") {
+		task ("Assert message present in HTML source") {
 			Pause(locator1 = "3000");
 
 			User.viewWelcomeMEssageHTML(
@@ -60,7 +60,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-83566. Escape url redirect with groovy script"
+	@description = "This is a use case for LPS-83566. Escape url redirect with groovy script."
 	@priority = "5"
 	test EscapeUrlRedirectWithGroovyScript {
 		property portal.acceptance = "true";
@@ -83,7 +83,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-87768. No permission from unauthorized url as power user"
+	@description = "This is a use case for LPS-87768. No permission from unauthorized url as power user."
 	@priority = "5"
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property portal.acceptance = "true";
@@ -137,7 +137,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin"
+	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin."
 	@priority = "5"
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
@@ -205,7 +205,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-68070. Validate cannot overwrite OSGi service identifier"
+	@description = "This is a use case for LPS-68070. Validate cannot overwrite OSGi service identifier."
 	@priority = "5"
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
@@ -255,7 +255,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors"
+	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
 	@priority = "5"
 	test ValidateCraftedOrCorruptedFilesCannotCauseOutOfMemoryErrors {
 		task ("Add new document") {
@@ -267,7 +267,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 				sourceFileName = "tika.mp3");
 		}
 
-		task ("Assert out of memmory error message") {
+		task ("Assert out of memory error message") {
 			AssertConsoleTextPresent(value1 = "java.io.IOException: Record size");
 
 			AssertConsoleTextPresent(value1 = "is larger than the allowed record size");
@@ -276,7 +276,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LRQA-14382. Validate forward url PG"
+	@description = "This is a use case for LRQA-14382. Validate forward url PG."
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";
@@ -307,7 +307,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution"
+	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution."
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
@@ -325,7 +325,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-85112. Validate view permission cannot update other users password"
+	@description = "This is a use case for LPS-85112. Validate view permission cannot update other users password."
 	@priority = "5"
 	test ValidateViewPermissionCanNotUpdateOtherUsersPassword {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
@@ -369,7 +369,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki"
+	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki."
 	@priority = "5"
 	test ViewJSLoaderModulesURLNoWiki {
 		task ("View JS loader modules") {
@@ -387,7 +387,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-55622. View no invoked portlet via URL"
+	@description = "This is a use case for LPS-55622. View no invoked portlet via URL."
 	@priority = "5"
 	test ViewNoInvokedPortletViaURL {
 		property portal.acceptance = "true";

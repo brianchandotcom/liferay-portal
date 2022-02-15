@@ -769,7 +769,7 @@ definition {
 				description = "Registering a new application");
 		}
 
-		task ("Check OAuth application informations") {
+		task ("Check OAuth application information correctness") {
 			OAuth2.viewApplication(
 				applicationName = "OAuth Application",
 				callbackUri = "http://www.liferay.com",

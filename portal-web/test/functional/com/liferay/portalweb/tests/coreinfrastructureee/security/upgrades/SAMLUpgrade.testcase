@@ -15,7 +15,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10"
+	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-	@description = "View SAML configuration after upgrade 7.1.10.3"
+	@description = "View SAML configuration after upgrade 7.1.10.3."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
@@ -56,7 +56,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.2.10.1"
+	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.2.10.1."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
@@ -69,7 +69,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-136367. View SAML configuration after upgrade 7.3.10.1"
+	@description = "This is a use case for LPS-136367. View SAML configuration after upgrade 7.3.10.1."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml";
@@ -83,7 +83,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-132679. View SAML configuration after upgrade 7.0.10.10"
+	@description = "This is a use case for LPS-132679. View SAML configuration after upgrade 7.0.10.10."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade701016 {
 		property data.archive.type = "data-archive-saml";
@@ -96,7 +96,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-64613. View SAML with encryption configuration after upgrade 7.3.10"
+	@description = "This is a use case for LRQA-64613. View SAML with encryption configuration after upgrade 7.3.10."
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
@@ -125,7 +125,7 @@ definition {
 		}
 	}
 
-	@description = "View SAML configuration after upgrade 7.2.10.1"
+	@description = "View SAML configuration after upgrade 7.2.10.1."
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-encryption";

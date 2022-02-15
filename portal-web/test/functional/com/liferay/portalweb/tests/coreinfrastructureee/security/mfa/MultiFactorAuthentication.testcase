@@ -63,7 +63,7 @@ definition {
 				value1 = "You can only have one time-based one-time password configured for your account. Remove your existing time-based one-time password to generate a new time-based one-time password.");
 		}
 
-		task ("Signout and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -106,7 +106,7 @@ definition {
 				emailOtpSentSubject = "[$PORTAL_URL$]: Your One-Time Password for test");
 		}
 
-		task ("Sign Out") {
+		task ("Sign out") {
 			SignOut.signOut();
 		}
 
@@ -175,7 +175,7 @@ definition {
 			MultiFactorAuthentication.configureTOTP(enableTotp = "true");
 		}
 
-		task ("Signout and login at able.com") {
+		task ("Sign out and Login at able.com") {
 			UserBar.signOut();
 
 			User.firstLoginUI(
@@ -194,7 +194,7 @@ definition {
 				enableIp = "true");
 		}
 
-		task ("Signout and login at able.com") {
+		task ("Sign out and Login at able.com") {
 			UserBar.signOut();
 
 			User.firstLoginUI(
@@ -203,7 +203,7 @@ definition {
 				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Send OTP email and assert informations for test test") {
+		task ("Send OTP email and assert information correctness for test test") {
 			MultiFactorAuthentication.viewOTPSendEmailButtonPresent();
 
 			MultiFactorAuthentication.sendOTPEmailPG();
@@ -303,7 +303,7 @@ definition {
 				retryTimeout = "10");
 		}
 
-		task ("Sign out and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -377,7 +377,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-102468 TC-4: Instance admin can enable and disable MFA for instance. "
+	@description = "LPS-102468 TC-4: Instance admin can enable and disable MFA for instance."
 	@priority = "5"
 	test CanDisableOTPForInstanceOnSystemLevel {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanDisableOTPForInstanceOnSystemLevel";
@@ -577,7 +577,7 @@ definition {
 			MultiFactorAuthentication.sendOTPEmailPG();
 		}
 
-		task ("Check OTP informations") {
+		task ("Check OTP information") {
 			MultiFactorAuthentication.verifyOTP(
 				portalURL = "http://www.able.com:8080",
 				recipient = "test test",
@@ -736,7 +736,7 @@ definition {
 				retryTimeout = "5");
 		}
 
-		task ("Sign out and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -791,7 +791,7 @@ definition {
 				value1 = "127.0.0.1/255.0.0.0");
 		}
 
-		task ("Logou and login") {
+		task ("Log Out and Login") {
 			User.logoutPG();
 
 			User.firstLoginUI(
@@ -825,7 +825,7 @@ definition {
 				enableIp = "true");
 		}
 
-		task ("Signout and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -895,7 +895,7 @@ definition {
 			MultiFactorAuthentication.configureOTP(enableOtp = "true");
 		}
 
-		task ("Sign out and login with new user") {
+		task ("Sign out and Login with new user") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -903,7 +903,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Send OTP email and check informations for userfn userln") {
+		task ("Send OTP email and check information correctness for userfn userln") {
 			MultiFactorAuthentication.sendOTPEmailPG();
 
 			MultiFactorAuthentication.verifyOTP(
@@ -948,7 +948,7 @@ definition {
 			MultiFactorAuthentication.configureTOTP(enableTotp = "true");
 		}
 
-		task ("Sign out and login with userea@liferay.com") {
+		task ("Sign out and Login with userea@liferay.com") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -956,7 +956,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Send OTP email and check informations for userfn userln") {
+		task ("Send OTP email and check information correctness for userfn userln") {
 			MultiFactorAuthentication.sendOTPEmailPG();
 
 			MultiFactorAuthentication.verifyOTP(
@@ -976,7 +976,7 @@ definition {
 			MultiFactorAuthentication.getTOTP();
 		}
 
-		task ("Sign out and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -1063,7 +1063,7 @@ definition {
 			MultiFactorAuthentication.getTOTP();
 		}
 
-		task ("Sign out and login as new user") {
+		task ("Sign out and Login as new user") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -1096,7 +1096,7 @@ definition {
 				value1 = "Remove Configured Time-Based One-Time Password");
 		}
 
-		task ("Sign out and login as test@liferay.com") {
+		task ("Sign out and Login as test@liferay.com") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -1136,7 +1136,7 @@ definition {
 				order = "50");
 		}
 
-		task ("Signout and check custom OTP verification text") {
+		task ("Sign out and check custom OTP verification text") {
 			SignOut.signOut();
 
 			MultiFactorAuthentication.verifyCustomOTP(verificationText = "test_text");
@@ -1158,7 +1158,7 @@ definition {
 			SystemSettings.viewSettingsText(settingsText = "Disable multi-factor authentication system-wide.");
 		}
 
-		task ("Assert default descriptions at multifactor authentication") {
+		task ("Assert default descriptions at multi-factor authentication") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.assertDescriptions();
@@ -1190,7 +1190,7 @@ definition {
 			MultiFactorAuthentication.configureOTP(enableOtp = "true");
 		}
 
-		task ("Diable MFA") {
+		task ("Disable MFA") {
 			Navigator.openURL();
 
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMfa = "true");
@@ -1259,7 +1259,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-89360. View configurion for Email OTP verifier's order."
+	@description = "This is a use case for LPS-89360. View configuration for Email OTP verifier's order."
 	@priority = "4"
 	test ViewOrderOfOTPVerifier {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewOrderOfOTPVerifier";
@@ -1304,7 +1304,7 @@ definition {
 			MultiFactorAuthentication.configureOTP(enableOtp = "true");
 		}
 
-		task ("Sign out and login") {
+		task ("Sign out and Login") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -1312,7 +1312,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("Send OTP email and check informations for test test and Test Test") {
+		task ("Send OTP email and check information correctness for test test and Test Test") {
 			MultiFactorAuthentication.sendOTPEmailPG();
 
 			MultiFactorAuthentication.verifyOTP(
@@ -1347,7 +1347,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-86515. Instance level admin is able to see successfull/unsuccessfull login attempts with the configured TOTP verifier."
+	@description = "This is a use case for LPS-86515. Instance level admin is able to see successful/unsuccessful login attempts with the configured TOTP verifier."
 	@priority = "5"
 	test ViewResourceActionsOfTOTPVerificationAttempts {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfTOTPVerificationAttempts";
@@ -1388,7 +1388,7 @@ definition {
 			MultiFactorAuthentication.configureTOTP(enableTotp = "true");
 		}
 
-		task ("Sign out and login at able.com") {
+		task ("Sign out and Login at able.com") {
 			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginUI(
@@ -1397,7 +1397,7 @@ definition {
 				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Send OTP email and check informations for test test") {
+		task ("Send OTP email and check information correctness for test test") {
 			MultiFactorAuthentication.sendOTPEmailPG();
 
 			MultiFactorAuthentication.verifyOTP(
@@ -1418,7 +1418,7 @@ definition {
 			MultiFactorAuthentication.getTOTP();
 		}
 
-		task ("Sign out and login at able.com") {
+		task ("Sign out and Login at able.com") {
 			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginUI(

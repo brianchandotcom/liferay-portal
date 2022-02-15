@@ -25,10 +25,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-45254. View URL validate"
+	@description = "This is a use case for LPS-45254. View URL validate."
 	@priority = "4"
 	test MaliciousURLScriptsAreNotValidated {
-		property test.name.skip.portal.instance = "XSSUsecase#ViewURLValidate";
+		property test.name.skip.portal.instance = "XSS#MaliciousURLScriptsAreNotValidated";
 
 		task ("Access malicious url and assert script was not validated") {
 			var maliciousUrl1 = '''
@@ -63,7 +63,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-7595. Validate XSS vulnerabilities"
+	@description = "This is a use case for LRQA-7595. Validate XSS vulnerabilities."
 	@priority = "4"
 	test MaliciousURLScriptsDoNotExecute {
 		task ("Visit malicious urls and request error message") {
@@ -88,9 +88,9 @@ definition {
 			var maliciousUrl5 = '''
 					${portalURL}/web/guest/search?p_p_id=113&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_113_tabs1=background-styles
 				''';
-			var malicioursUrLsList = "${maliciousUrl1},${maliciousUrl2},${maliciousUrl3},${maliciousUrl4}";
+			var maliciousUrLsList = "${maliciousUrl1},${maliciousUrl2},${maliciousUrl3},${maliciousUrl4}";
 
-			for (var maliciousURL : list "${malicioursUrLsList}") {
+			for (var maliciousURL : list "${maliciousUrLsList}") {
 				Navigator.openSpecificURL(url = "${maliciousURL}");
 
 				AssertTextEquals(
@@ -112,7 +112,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content"
+	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content."
 	@priority = "5"
 	test NoXSSVulnerabilityInAssetPublisherContent {
 		task ("Add web content") {
@@ -160,7 +160,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract"
+	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract."
 	@priority = "5"
 	test NoXSSVulnerabilityInBlogsEntryCustomAbstract {
 		var entryAbstractDescription = '''<script>alert(123)</script>''';
@@ -195,7 +195,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
+	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel."
 	@priority = "5"
 	test NoXSSVulnerabilityInControlPanel {
 		property portal.acceptance = "true";
@@ -219,7 +219,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-83273. View forms entry with XSS"
+	@description = "This is a use case for LPS-83273. View forms entry with XSS."
 	@priority = "5"
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
@@ -286,7 +286,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-72807. View google analytics ID"
+	@description = "This is a use case for LPS-72807. View google analytics ID."
 	@priority = "3"
 	test NoXSSVulnerabilityInGoogleAnalyticsID {
 		task ("Edit google analytics Id successfully") {
@@ -300,7 +300,19 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-59198. View LDAP"
+	@description = "This is a use case for LRQA-10563. View JSONWS."
+	@priority = "3"
+	test NoXSSVulnerabilityInJSONWS {
+		task ("Access JSONWS successfully") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
+
+			AssertAlertNotPresent();
+		}
+	}
+
+	@description = "This is a use case for LPS-59198. View LDAP."
 	@priority = "3"
 	test NoXSSVulnerabilityInLDAP {
 		task ("Add LDAP server successfully") {
@@ -325,7 +337,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-10563. View liferay portlet list"
+	@description = "This is a use case for LRQA-10563. View liferay portlet list."
 	@priority = "4"
 	test NoXSSVulnerabilityInLiferayPortletList {
 		task ("Add public page") {
@@ -360,7 +372,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-10472. View, look and feel"
+	@description = "This is a use case for LRQA-10472. View, look and feel."
 	@priority = "4"
 	test NoXSSVulnerabilityInLookAndFeel {
 		task ("Add public page") {
@@ -397,7 +409,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Piwik"
+	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Piwik."
 	@priority = "3"
 	test NoXSSVulnerabilityInPiwik {
 		property test.name.skip.portal.instance = "XSS#ViewPiwik";
@@ -419,9 +431,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-10472. View Recycle bin"
+	@description = "This is a use case for LRQA-10472. View Recycle bin."
 	@priority = "4"
-	test NoXSSVulnerabilityInRecyleBin {
+	test NoXSSVulnerabilityInRecycleBin {
 		var entryTitle = '''<script>alert(123);</script>''';
 
 		task ("Add Blog entry") {
@@ -436,7 +448,7 @@ definition {
 			BlogsNavigator.moveToRecycleBinCP(entryTitle = "${entryTitle}");
 		}
 
-		task ("Restory blogs entry from recycle bin") {
+		task ("Restore blogs entry from recycle bin") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 			RecycleBin.restoreCP(
@@ -460,7 +472,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-48990. View roles"
+	@description = "This is a use case for LPS-48990. View roles."
 	@priority = "4"
 	test NoXSSVulnerabilityInRoles {
 		task ("Add role") {
@@ -503,7 +515,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-30154. View search results"
+	@description = "This is a use case for LRQA-30154. View search results."
 	@priority = "5"
 	test NoXSSVulnerabilityInSearchResults {
 		property portal.acceptance = "true";
@@ -537,7 +549,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-71236 and LPS-71307. View web content"
+	@description = "This is a use case for LPS-71236 and LPS-71307. View web content."
 	@priority = "5"
 	test NoXSSVulnerabilityInWebContent {
 		task ("Add CP") {
@@ -588,7 +600,7 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title");
 		}
 
-		task ("Publish a non-existant image URL") {
+		task ("Publish a non-existing image URL") {
 			WebContent.addFeaturedImageFromURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
 
 			PortletEntry.publish();
@@ -601,7 +613,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-45254. View wiki"
+	@description = "This is a use case for LPS-45254. View wiki."
 	@priority = "5"
 	test NoXSSVulnerabilityInWiki {
 		task ("Edit user information") {
@@ -642,18 +654,6 @@ definition {
 			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-		}
-	}
-
-	@description = "This is a use case for LRQA-10563. View JSONWS"
-	@priority = "3"
-	test NoXSSVulnerabitlityInJSONWS {
-		task ("Access jsonws successfully") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
-
-			AssertAlertNotPresent();
 		}
 	}
 

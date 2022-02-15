@@ -26,7 +26,7 @@ definition {
 		AssertElementNotPresent(locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET");
 	}
 
-	@description = "This is a use case for LPS-124900 TC-4: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal. "
+	@description = "This is a use case for LPS-124900 TC-4: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal."
 	@priority = "4"
 	test AssertUserIsLoggedOutWithHigherRefreshToken {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -89,7 +89,7 @@ definition {
 				virtualHost = "www.baker.com");
 		}
 
-		task ("Add SSO openID connect provider") {
+		task ("Add SSO OpenID Connect provider") {
 			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
@@ -103,7 +103,7 @@ definition {
 				providerName = "Google");
 		}
 
-		task ("Login at www.able.com and add SSO openID connect provider") {
+		task ("Login at www.able.com and add SSO OpenID Connect provider") {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
@@ -128,7 +128,7 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/");
 		}
 
-		task ("View provider and assert openID connect login option") {
+		task ("View provider and assert OpenID Connect login option") {
 			OpenIDConnect.viewProvider();
 
 			AssertElementPresent(
@@ -174,7 +174,7 @@ definition {
 			OpenIDConnect.viewNoProvider();
 		}
 
-		task ("Enable openID connect CP") {
+		task ("Enable OpenID Connect CP") {
 			Navigator.openURL();
 
 			SystemSettings.openSystemSettingsAdmin();
@@ -242,7 +242,7 @@ definition {
 			PortalSettings.enableOpenIDConnectCP();
 		}
 
-		task ("Add SSO openID connect provider") {
+		task ("Add SSO OpenID Connect provider") {
 			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
@@ -256,7 +256,7 @@ definition {
 				providerName = "Google");
 		}
 
-		task ("Sign out and login at able.com with openID connect enabled") {
+		task ("Sign out and Login at able.com with OpenID Connect enabled") {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
@@ -265,7 +265,7 @@ definition {
 				userPassword = "${userPassword}");
 		}
 
-		task ("Sign out and login") {
+		task ("Sign out and Login") {
 			UserBar.signOut();
 
 			User.firstLoginUI(
@@ -287,7 +287,7 @@ definition {
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
-		task ("Add SSO openID connect provider") {
+		task ("Add SSO OpenID Connect provider") {
 			PortalSettings.gotoConfiguration(
 				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
@@ -309,7 +309,7 @@ definition {
 				providerName = "Google");
 		}
 
-		task ("Logout and login with openID connect") {
+		task ("Logout and login with OpenID Connect") {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
@@ -458,7 +458,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-124898 TC-5: Verify Token Refresh Offset cannot be saved with a value under 30 second. Blocked by LPS-138193"
+	@description = "This is a use case for LPS-124898 TC-5: Verify Token Refresh Offset cannot be saved with a value under 30 second. Blocked by LPS-138193."
 	@priority = "4"
 	test VerifyTokenRefreshOffsetMinimum {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config";

@@ -451,7 +451,7 @@ definition {
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
 
-		task ("Sign out and login at localhost:9080") {
+		task ("Sign out and Login at localhost:9080") {
 			UserBar.signOut();
 
 			User.firstLoginUI(
@@ -696,7 +696,7 @@ definition {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
 		}
 
-		task ("Assert ds:Signature present in HTMK source text") {
+		task ("Assert ds:Signature present in HTML source text") {
 			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			AssertHTMLSourceTextPresent(value1 = "ds:Signature");
@@ -712,7 +712,7 @@ definition {
 			SAMLPortlet.configureIdentityProvider(signMetadata = "disable");
 		}
 
-		task ("Assert ds:Signature not present in HTMK source text") {
+		task ("Assert ds:Signature not present in HTML source text") {
 			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			AssertHTMLSourceTextNotPresent(value1 = "ds:Signature");
@@ -762,7 +762,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes predence over IdP session time out."
+	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes precedence over IdP session time out."
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
@@ -947,7 +947,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35784. Assert SSO session existis after SP session timeout."
+	@description = "This is a use case for LRQA-35784. Assert SSO session exists after SP session timeout."
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
@@ -1105,7 +1105,7 @@ definition {
 				userResolution = "dynamic");
 		}
 
-		task ("Enalble SP roles and SP configurations to IdP") {
+		task ("Enable SP roles and SP configurations to IdP") {
 			SAML.enableSPRoles(
 				samlEntityId = "samlsp",
 				spURL = "http://www.able.com:8080",
@@ -1794,7 +1794,7 @@ definition {
 
 	@description = "This is a use case for LPS-105170 TC-1: User creation and sync after SAML setup, using screenName field both for User Matching and IdP Identifier - Using virtual instances."
 	@priority = "5"
-	test CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute {
+	test CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute";
@@ -1892,7 +1892,7 @@ definition {
 			SAML.enableSAMLDebugLogs();
 		}
 
-		task ("Add vitual instance able.com and baker.com") {
+		task ("Add virtual instance able.com and baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -1989,7 +1989,7 @@ definition {
 				userEmailAddress = "test@www.baker.com");
 		}
 
-		task ("Add and syns users at localhost:8080 and able.com:8080") {
+		task ("Add and sync users at localhost:8080 and able.com:8080") {
 			SAML.addAndSyncNewUser(
 				creatorEmailAddress = "test@liferay.com",
 				creatorPassword = "test",
@@ -2036,7 +2036,7 @@ definition {
 			SAML.enableSAMLDebugLogs();
 		}
 
-		task ("Add virtul instance able.com") {
+		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -3362,7 +3362,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-50687. Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
+	@description = "This is a use case for LPS-50687. Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the top menu on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
 	@priority = "4"
 	test ViewSPInitiatedSSO {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -3824,7 +3824,7 @@ definition {
 				userLastName = "1_changed");
 		}
 
-		task ("Execute SP intiated SSO and confirm user information") {
+		task ("Execute SP initiated SSO and confirm user information") {
 			SAML.executeSPInitiatedSSO(
 				password = "test",
 				spURL = "http://www.able.com:8080",

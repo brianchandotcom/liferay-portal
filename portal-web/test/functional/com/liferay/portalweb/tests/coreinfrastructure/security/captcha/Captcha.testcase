@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-29540. Verify CAPTCHA is enabled when creating an account"
+	@description = "This is a use case for LRQA-29540. Verify CAPTCHA is enabled when creating an account."
 	@priority = "4"
 	test AssertCaptchaEnabled {
 		property captcha.enabled = "true";

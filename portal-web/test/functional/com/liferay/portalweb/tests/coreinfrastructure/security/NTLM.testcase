@@ -12,7 +12,7 @@ definition {
 		User.firstLoginPG();
 	}
 
-	@description = "LPS-126598 TC-2: Validate there is no NTLM option under SSO category in Instance Settings"
+	@description = "LPS-126598 TC-2: Validate there is no NTLM option under SSO category in Instance Settings."
 	@priority = "4"
 	test AssertNTLMNotAvailableUnderInstanceSettings {
 		task ("Go to SSO under instance settings") {
@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-126598 TC-1: Validate there is no NTLM option under SSO category in System Settings"
+	@description = "LPS-126598 TC-1: Validate there is no NTLM option under SSO category in System Settings."
 	@priority = "4"
 	test AssertNTLMNotAvailableUnderSystemSettings {
 		task ("Go to SSO under instance settings") {

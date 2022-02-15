@@ -64,7 +64,7 @@ definition {
 			PortalSettings.testLDAPConnection();
 		}
 
-		task ("Configure LDAP settigs") {
+		task ("Configure LDAP settings") {
 			var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
 			PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
@@ -78,7 +78,7 @@ definition {
 			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
-		task ("Login and reindex sarch indexes") {
+		task ("Login and reindex search indexes") {
 			User.firstLoginPG();
 
 			SearchAdministration.executeReindex();

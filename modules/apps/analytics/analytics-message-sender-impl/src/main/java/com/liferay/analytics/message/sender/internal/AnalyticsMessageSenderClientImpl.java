@@ -17,6 +17,7 @@ package com.liferay.analytics.message.sender.internal;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
+import com.liferay.analytics.message.sender.client.BaseAnalyticsClientImpl;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.sender.internal;
 
 import com.liferay.analytics.message.sender.client.AnalyticsBatchClient;
+import com.liferay.analytics.message.sender.client.BaseAnalyticsClientImpl;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

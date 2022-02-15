@@ -16,26 +16,35 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-const ModalImportObjectDefinition = ({
+interface IProps {
+	importObjectDefinitionURL: string;
+	nameMaxLength: string;
+	portletNamespace: string;
+}
+
+interface IFile {
+	fileName?: string;
+	inputFile?: File | null;
+	inputFileValue?: string;
+}
+
+const ModalImportObjectDefinition: React.FC<IProps> = ({
 	importObjectDefinitionURL,
 	nameMaxLength,
 	portletNamespace,
 }) => {
 	const [visible, setVisible] = useState(false);
-	const inputFileRef = useRef();
+	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [name, setName] = useState('');
 	const importObjectDefinitionModalComponentId = `${portletNamespace}importObjectDefinitionModal`;
 	const importObjectDefinitionFormId = `${portletNamespace}importObjectDefinitionForm`;
 	const nameInputId = `${portletNamespace}name`;
 	const objectDefinitionJSONInputId = `${portletNamespace}objectDefinitionJSON`;
-	const [{fileName, inputFile, inputFileValue}, setFile] = useState({
-		fileName: '',
-		inputFile: null,
-		inputFileValue: '',
-	});
+	const [{fileName, inputFile, inputFileValue}, setFile] = useState<IFile>(
+		{}
+	);
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setVisible(false);
@@ -66,13 +75,16 @@ const ModalImportObjectDefinition = ({
 	}, [importObjectDefinitionModalComponentId, setVisible]);
 
 	return visible ? (
-		<ClayModal observer={observer} size="md">
+		<ClayModal observer={observer}>
 			<ClayModal.Header>
 				{Liferay.Language.get('import-object')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayForm
+
+					// @ts-ignore
+
 					action={importObjectDefinitionURL}
 					encType="multipart/form-data"
 					id={importObjectDefinitionFormId}
@@ -89,12 +101,12 @@ const ModalImportObjectDefinition = ({
 
 					<ClayForm.Group>
 						<label htmlFor={nameInputId}>
-							{Liferay.Language.get('object-name')}
+							{Liferay.Language.get('name')}
 						</label>
 
 						<ClayInput
 							id={nameInputId}
-							maxLength={nameMaxLength}
+							maxLength={Number(nameMaxLength)}
 							name={nameInputId}
 							onChange={(event) => setName(event.target.value)}
 							type="text"
@@ -149,9 +161,10 @@ const ModalImportObjectDefinition = ({
 						className="d-none"
 						name={objectDefinitionJSONInputId}
 						onChange={({target}) => {
-							const [inputFile] = target.files;
+							const inputFile = target.files?.item(0);
+
 							setFile({
-								fileName: inputFile.name,
+								fileName: inputFile?.name,
 								inputFile,
 								inputFileValue: target.value,
 							});
@@ -182,12 +195,6 @@ const ModalImportObjectDefinition = ({
 			/>
 		</ClayModal>
 	) : null;
-};
-
-ModalImportObjectDefinition.propTypes = {
-	importObjectDefinitionURL: PropTypes.string,
-	nameMaxLength: PropTypes.string,
-	portletNamespace: PropTypes.string,
 };
 
 export default ModalImportObjectDefinition;

@@ -35,6 +35,11 @@
 	<td>//span[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_COLUMN_NUMBERS</td>
+	<td>//a[contains(text(),'${key_nameList}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and contains(text(),'${key_numberValue}')]</td>
+	<td></td>
+</tr>
 <!-- CLOSE MODAL -->
 <tr>
 	<td>MODAL_CLOSE_BUTTON</td>

@@ -914,4 +914,27 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro viewTableColumnNumbers {
+		var list1 = ListUtil.newListFromString("${nameList}");
+		var list2 = ListUtil.newListFromString("${numberValueList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var key_nameList = ListUtil.get("${list1}", "${i}");
+			var key_numberValue = ListUtil.get("${list2}", "${i}");
+
+			WaitForPageLoad();
+
+			while (IsElementNotPresent(locator1 = "ACUtils#TABLE_COLUMN_NUMBERS") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
+			AssertElementPresent(locator1 = "ACUtils#TABLE_COLUMN_NUMBERS");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
 }

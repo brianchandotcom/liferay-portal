@@ -258,17 +258,17 @@ public class CommerceTermEntryRelLocalServiceUtil {
 
 	public static List<CommerceTermEntryRel>
 		getCommerceOrderTypeCommerceTermEntryRels(
-			long corEntryId, String keywords, int start, int end) {
+			long commerceTermEntryId, String keywords, int start, int end) {
 
 		return getService().getCommerceOrderTypeCommerceTermEntryRels(
-			corEntryId, keywords, start, end);
+			commerceTermEntryId, keywords, start, end);
 	}
 
 	public static int getCommerceOrderTypeCommerceTermEntryRelsCount(
-		long corEntryId, String keywords) {
+		long commerceTermEntryId, String keywords) {
 
 		return getService().getCommerceOrderTypeCommerceTermEntryRelsCount(
-			corEntryId, keywords);
+			commerceTermEntryId, keywords);
 	}
 
 	/**

@@ -296,20 +296,20 @@ public class CommerceTermEntryRelLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntryRel>
 		getCommerceOrderTypeCommerceTermEntryRels(
-			long corEntryId, String keywords, int start, int end) {
+			long commerceTermEntryId, String keywords, int start, int end) {
 
 		return _commerceTermEntryRelLocalService.
 			getCommerceOrderTypeCommerceTermEntryRels(
-				corEntryId, keywords, start, end);
+				commerceTermEntryId, keywords, start, end);
 	}
 
 	@Override
 	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
-		long corEntryId, String keywords) {
+		long commerceTermEntryId, String keywords) {
 
 		return _commerceTermEntryRelLocalService.
 			getCommerceOrderTypeCommerceTermEntryRelsCount(
-				corEntryId, keywords);
+				commerceTermEntryId, keywords);
 	}
 
 	/**

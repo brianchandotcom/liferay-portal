@@ -17,7 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 function findSiteNavigationMenuItem(
 	siteNavigationMenuItemId,
@@ -58,33 +58,29 @@ const nodeByName = (items, name) => {
 
 const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	const [filter, setFilter] = useState('');
-
-	const handleQueryChange = useCallback(
-		(event) => {
-			const value = event.target.value;
-
-			if (!window.Liferay.__FF__.enableClayTreeView) {
-				setFilter(value);
-			}
-			else {
-				if (!value) {
-					setItems(initialItemsRef.current);
-
-					return;
-				}
-
-				const newItems = nodeByName(items, value);
-
-				if (newItems.length) {
-					setItems(newItems);
-				}
-			}
-		},
-		[items]
-	);
-
 	const [items, setItems] = useState(nodes);
 	const initialItemsRef = useRef(items);
+
+	const handleQueryChange = (event) => {
+		const value = event.target.value;
+
+		if (!window.Liferay.__FF__.enableClayTreeView) {
+			setFilter(value);
+		}
+		else {
+			if (!value) {
+				setItems(initialItemsRef.current);
+
+				return;
+			}
+
+			const newItems = nodeByName(initialItemsRef.current, value);
+
+			if (newItems.length) {
+				setItems(newItems);
+			}
+		}
+	};
 
 	const handleSelectionChange = (selectedNodeIds) => {
 		const selectedNodeId = [...selectedNodeIds][0];

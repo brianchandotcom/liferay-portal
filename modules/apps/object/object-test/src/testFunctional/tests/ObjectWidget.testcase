@@ -137,7 +137,6 @@ definition {
 	@description = "LPS-143122 - Verify that by default the widget button is disabled"
 	@priority = "3"
 	test WidgetButtonDisabledByDefault {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153256",
 			objectName = "CustomObject153256",
@@ -148,7 +147,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153256");
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
-
 	}
 
 }

@@ -316,32 +316,4 @@ definition {
 			actionName = "Update Action Name");
 	}
 
-	@description = "LPS-139008 - Verify that Webhook action works with On After Add"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test WebhookOnAfterAdd {
-		property portal.acceptance = "true";
-
-		// TODO LPS-145720 WebhookOnAfterAdd pending implementation
-
-	}
-
-	@description = "LPS-139008 - Verify that Webhook action works with On After Delete"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test WebhookOnAfterDelete {
-
-		// TODO LPS-145721 WebhookOnAfterDelete pending implementation
-
-	}
-
-	@description = "LPS-139008 - Verify that Webhook action works with On After Update"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test WebhookOnAfterUpdate {
-
-		// TODO LPS-145722 WebhookOnAfterUpdate pending implementation
-
-	}
-
 }

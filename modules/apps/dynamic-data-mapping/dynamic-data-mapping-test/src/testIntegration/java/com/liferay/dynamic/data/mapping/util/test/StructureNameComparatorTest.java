@@ -82,41 +82,41 @@ public class StructureNameComparatorTest {
 
 	@Test
 	public void testComparatorWithDefaultLocale() {
-		List<DDMStructure> structureList = new ArrayList<>();
+		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		structureList.add(_ddmStructure2);
-		structureList.add(_ddmStructure1);
-		structureList.add(_ddmStructure3);
-		structureList.add(_ddmStructure4);
+		ddmStructures.add(_ddmStructure2);
+		ddmStructures.add(_ddmStructure1);
+		ddmStructures.add(_ddmStructure3);
+		ddmStructures.add(_ddmStructure4);
 
 		_structureNameComparator = new StructureNameComparator(true);
 
-		Collections.sort(structureList, _structureNameComparator);
+		Collections.sort(ddmStructures, _structureNameComparator);
 
-		Assert.assertEquals(_ddmStructure1, structureList.get(0));
-		Assert.assertEquals(_ddmStructure2, structureList.get(1));
-		Assert.assertEquals(_ddmStructure3, structureList.get(2));
-		Assert.assertEquals(_ddmStructure4, structureList.get(3));
+		Assert.assertEquals(_ddmStructure1, ddmStructures.get(0));
+		Assert.assertEquals(_ddmStructure2, ddmStructures.get(1));
+		Assert.assertEquals(_ddmStructure3, ddmStructures.get(2));
+		Assert.assertEquals(_ddmStructure4, ddmStructures.get(3));
 	}
 
 	@Test
 	public void testComparatorWithLocale() {
-		List<DDMStructure> structureList = new ArrayList<>();
+		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		structureList.add(_ddmStructure2);
-		structureList.add(_ddmStructure1);
-		structureList.add(_ddmStructure3);
-		structureList.add(_ddmStructure4);
+		ddmStructures.add(_ddmStructure2);
+		ddmStructures.add(_ddmStructure1);
+		ddmStructures.add(_ddmStructure3);
+		ddmStructures.add(_ddmStructure4);
 
 		_structureNameComparator = new StructureNameComparator(
 			true, _otherLocale);
 
-		Collections.sort(structureList, _structureNameComparator);
+		Collections.sort(ddmStructures, _structureNameComparator);
 
-		Assert.assertEquals(_ddmStructure4, structureList.get(0));
-		Assert.assertEquals(_ddmStructure1, structureList.get(1));
-		Assert.assertEquals(_ddmStructure2, structureList.get(2));
-		Assert.assertEquals(_ddmStructure3, structureList.get(3));
+		Assert.assertEquals(_ddmStructure4, ddmStructures.get(0));
+		Assert.assertEquals(_ddmStructure1, ddmStructures.get(1));
+		Assert.assertEquals(_ddmStructure2, ddmStructures.get(2));
+		Assert.assertEquals(_ddmStructure3, ddmStructures.get(3));
 	}
 
 	private DDMStructure _ddmStructure1;

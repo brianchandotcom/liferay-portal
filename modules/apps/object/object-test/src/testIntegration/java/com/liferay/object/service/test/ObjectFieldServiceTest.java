@@ -193,7 +193,7 @@ public class ObjectFieldServiceTest {
 			user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
 			"Text", "String", false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true);
+			StringUtil.randomId(), true, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -214,7 +214,7 @@ public class ObjectFieldServiceTest {
 			objectField = _objectFieldService.addCustomObjectField(
 				0, objectDefinitionId, "Text", "String", false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), true);
+				StringUtil.randomId(), true, Collections.emptyList());
 		}
 		finally {
 			if (objectField != null) {
@@ -270,7 +270,8 @@ public class ObjectFieldServiceTest {
 			objectField = _objectFieldService.updateCustomObjectField(
 				objectField.getObjectFieldId(), 0, "Text", "String", true,
 				false, LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
-				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true);
+				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
+				Collections.emptyList());
 		}
 		finally {
 			if (objectField != null) {

@@ -42,6 +42,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -545,7 +546,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta",
-			false);
+			false, Collections.emptyList());
 
 		return objectField.getObjectFieldId();
 	}

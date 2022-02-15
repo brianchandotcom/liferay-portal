@@ -229,8 +229,11 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		for (TestrayS3Object testrayS3Object : build.getTestrayS3Objects()) {
-			if (!key.equals(testrayS3Object.getKey())) {
+		for (URL testrayS3AttachmentURL : build.getTestrayS3AttachmentURLs()) {
+			String testrayS3AttachmentURLString = String.valueOf(
+				testrayS3AttachmentURL);
+
+			if (!testrayS3AttachmentURLString.contains(key)) {
 				continue;
 			}
 

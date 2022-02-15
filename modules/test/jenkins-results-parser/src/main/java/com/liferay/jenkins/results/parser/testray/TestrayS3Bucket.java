@@ -51,7 +51,7 @@ public class TestrayS3Bucket {
 	public TestrayS3Object createTestrayS3Object(String key, File file) {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		BlobId blobId = BlobId.of(_bucket.getName(), key);
+		BlobId blobId = BlobId.of(getName(), key);
 
 		String fileName = file.getName();
 
@@ -87,7 +87,9 @@ public class TestrayS3Bucket {
 		BlobInfo blobInfo = blobInfoBuilder.build();
 
 		try {
-			Blob blob = _storage.create(
+			Storage storage = _getStorage();
+
+			Blob blob = storage.create(
 				blobInfo, FileUtils.readFileToByteArray(file));
 
 			TestrayS3Object testrayS3Object =
@@ -111,13 +113,15 @@ public class TestrayS3Bucket {
 	public TestrayS3Object createTestrayS3Object(String key, String value) {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		BlobId blobId = BlobId.of(_bucket.getName(), key);
+		BlobId blobId = BlobId.of(getName(), key);
 
 		BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
 
 		BlobInfo blobInfo = blobInfoBuilder.build();
 
-		Blob blob = _storage.create(
+		Storage storage = _getStorage();
+
+		Blob blob = storage.create(
 			blobInfo, value.getBytes(StandardCharsets.UTF_8));
 
 		TestrayS3Object testrayS3Object =
@@ -164,16 +168,24 @@ public class TestrayS3Bucket {
 	}
 
 	public String getName() {
-		return _bucket.getName();
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"testray.s3.bucket");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public String getTestrayS3BaseURL() {
 		return JenkinsResultsParserUtil.combine(
-			"https://storage.cloud.google.com/", _bucket.getName());
+			"https://storage.cloud.google.com/", getName());
 	}
 
 	public TestrayS3Object getTestrayS3Object(String key) {
-		Blob blob = _bucket.get(key);
+		Bucket bucket = _getBucket();
+
+		Blob blob = bucket.get(key);
 
 		if (blob == null) {
 			return null;
@@ -185,7 +197,9 @@ public class TestrayS3Bucket {
 	public List<TestrayS3Object> getTestrayS3Objects() {
 		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
 
-		Page<Blob> blobPage = _storage.list(_bucket.getName());
+		Storage storage = _getStorage();
+
+		Page<Blob> blobPage = storage.list(getName());
 
 		for (Blob blob : blobPage.iterateAll()) {
 			testrayS3Objects.add(
@@ -200,7 +214,7 @@ public class TestrayS3Bucket {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					"https://console.cloud.google.com/storage/browser/",
-					_bucket.getName(), "?authuser=0"));
+					getName(), "?authuser=0"));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -218,26 +232,23 @@ public class TestrayS3Bucket {
 				"Please set the environment variable " +
 					"\"GOOGLE_APPLICATION_CREDENTIALS\"");
 		}
+	}
 
+	private Bucket _getBucket() {
+		Storage storage = _getStorage();
+
+		return storage.get(getName());
+	}
+
+	private Storage _getStorage() {
 		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
 
-		_storage = storageOptions.getService();
-
-		try {
-			_bucket = _storage.get(
-				JenkinsResultsParserUtil.getBuildProperty("testray.s3.bucket"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return storageOptions.getService();
 	}
 
 	private static final Pattern _fileNamePattern = Pattern.compile(
 		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
 	private static final TestrayS3Bucket _testrayS3Bucket =
 		new TestrayS3Bucket();
-
-	private final Bucket _bucket;
-	private final Storage _storage;
 
 }

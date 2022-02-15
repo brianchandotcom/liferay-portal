@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -171,7 +169,7 @@ public interface Build {
 
 	public List<URL> getTestrayAttachmentURLs();
 
-	public List<TestrayS3Object> getTestrayS3Objects();
+	public List<URL> getTestrayS3AttachmentURLs();
 
 	public JSONObject getTestReportJSONObject(boolean checkCache);
 

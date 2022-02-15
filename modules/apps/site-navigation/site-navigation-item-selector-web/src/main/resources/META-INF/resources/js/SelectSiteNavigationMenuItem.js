@@ -151,9 +151,14 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 					{(item) => (
 						<ClayTreeView.Item>
 							<ClayTreeView.ItemStack
-								onClick={(event) =>
-									handleTreeViewSelectionChange(event, item)
-								}
+								onClick={(event) => {
+									if (!item.disabled) {
+										handleTreeViewSelectionChange(
+											event,
+											item
+										);
+									}
+								}}
 							>
 								<ClayIcon symbol="folder" />
 

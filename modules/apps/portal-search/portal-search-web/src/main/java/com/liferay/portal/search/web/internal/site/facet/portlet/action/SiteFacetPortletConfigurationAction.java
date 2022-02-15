@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.builder.ScopeSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
 
 import javax.portlet.PortletConfig;

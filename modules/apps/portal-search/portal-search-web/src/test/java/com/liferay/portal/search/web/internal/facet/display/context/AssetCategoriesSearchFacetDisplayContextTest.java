@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
-import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionChecker;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;

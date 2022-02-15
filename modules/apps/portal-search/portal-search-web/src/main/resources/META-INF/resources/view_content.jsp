@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.search.web.internal.result.display.builder.SearchResultContentDisplayBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultContentDisplayBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext" %>
 
 <liferay-theme:defineObjects />

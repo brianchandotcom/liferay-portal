@@ -61,7 +61,7 @@ Hits hits = searchDisplayContext.getHits();
 			>
 
 				<%
-				com.liferay.portal.search.web.internal.result.display.builder.SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder = new com.liferay.portal.search.web.internal.result.display.builder.SearchResultSummaryDisplayBuilder();
+				com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder = new com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayBuilder();
 
 				searchResultSummaryDisplayBuilder.setAssetEntryLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
 				searchResultSummaryDisplayBuilder.setCurrentURL(currentURL);

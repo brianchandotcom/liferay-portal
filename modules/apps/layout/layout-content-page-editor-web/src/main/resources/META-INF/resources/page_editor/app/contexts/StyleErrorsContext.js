@@ -14,6 +14,8 @@
 
 import React, {useCallback, useContext, useState} from 'react';
 
+const DEFAULT_ID = 'defaultId';
+
 const StyleErrorsStateContext = React.createContext({});
 
 export function StyleErrorsContextProvider({children, initialState = {}}) {
@@ -30,7 +32,7 @@ export function useDeleteStyleError() {
 	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
-		(fieldName, itemId = 'defaultId') => {
+		(fieldName, itemId = DEFAULT_ID) => {
 			if (state[itemId]?.[fieldName]) {
 				const filteredErrors = {};
 				const {[itemId]: itemErrors, ...rest} = state;
@@ -65,7 +67,7 @@ export function useSetStyleError() {
 	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
-		(fieldName, value, itemId = 'defaultId') => {
+		(fieldName, value, itemId = DEFAULT_ID) => {
 			let nextState;
 
 			if (state[itemId]) {

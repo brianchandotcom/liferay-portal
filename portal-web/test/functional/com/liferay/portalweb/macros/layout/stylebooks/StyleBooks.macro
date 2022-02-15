@@ -27,6 +27,24 @@ definition {
 		MenuItem.click(menuItem = "${pageName}");
 	}
 
+	macro linkValueFromStyleBook {
+		Click.clickNoWaitForVisible(
+			key_fieldLabel = "${fieldLabel}",
+			key_text = "theme",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		Click(
+			key_colorSwatchItem = "${colorSwatchItem}",
+			locator1 = "Button#COLOR_SWATCH_ITEM");
+
+		StyleBooks.waitForAutoSave();
+
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_text = "chain-broken",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+	}
+
 	macro selectForm {
 		Click(locator1 = "StyleBookEditor#FORM_CONTROL_SELECT_BUTTON");
 

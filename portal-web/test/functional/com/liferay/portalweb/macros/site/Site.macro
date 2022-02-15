@@ -209,6 +209,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Site URL");
 
+		if (isSet(pageVirtualHosts)) {
+			Type(
+				key_text = "Virtual Host",
+				locator1 = "TextInput#ANY",
+				value1 = "${pageVirtualHostURL}");
+		}
+
 		if (isSet(publicVirtualHosts)) {
 			Type(
 				key_text = "Public Pages Virtual Host",

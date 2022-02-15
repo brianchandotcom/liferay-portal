@@ -12,18 +12,32 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
-
 import ProductComparison from '../../../common/components/product-comparison';
+import useWindowDimensions from '../../../common/hooks/useWindowDimensions';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {RAYLIFE_PAGES} from '../../../common/utils/constants';
 import {redirectTo} from '../../../common/utils/liferay';
+import Carousel from '../components/Carousel';
 import {getQuoteComparisons} from '../service/QuoteComparison';
 
 const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
 
+	const {
+		device: {isMobile, isTablet},
+	} = useWindowDimensions();
+
+	const isMobileDevice = isMobile || isTablet;
+
 	useEffect(() => {
+		const quoteElements = document.querySelector(
+			'section#content #main-content .container-fluid'
+		);
+
+		quoteElements.classList.add('quote-comparison-content');
+
 		getQuoteComparisons()
 			.then((data) => setQuotes(data.items))
 			.catch((error) => console.error(error.message));
@@ -37,17 +51,38 @@ const QuoteComparison = () => {
 
 	const onClickPolicyDetails = () => {};
 
+	const quoteComparisonItems = document.querySelectorAll(
+		'#quote-comparison-item'
+	);
+	const quoteComparisonContainer = document.getElementById(
+		'quote-comparison-container'
+	);
+
 	return (
-		<div className="d-flex flex-wrap mb-7 quote-comparison">
-			{quotes.map((quote, index) => (
-				<ProductComparison
-					key={index}
-					onClickPolicyDetails={onClickPolicyDetails}
-					onClickPurchase={onClickPurchase}
-					product={quote}
-				/>
-			))}
-		</div>
+		<Carousel
+			cardElements={quoteComparisonItems}
+			isMobileDevice={isMobileDevice}
+			items={quotes}
+			scrollableContainer={quoteComparisonContainer}
+		>
+			<div
+				className={classNames('d-flex quote-comparison', {
+					'mb-4': isMobile,
+					'mb-7': !isMobile,
+				})}
+				id="quote-comparison-container"
+			>
+				{quotes.map((quote, index) => (
+					<ProductComparison
+						isMobileDevice={isMobileDevice}
+						key={index}
+						onClickPolicyDetails={onClickPolicyDetails}
+						onClickPurchase={onClickPurchase}
+						product={quote}
+					/>
+				))}
+			</div>
+		</Carousel>
 	);
 };
 

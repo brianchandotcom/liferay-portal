@@ -15,8 +15,6 @@
 import '../../types';
 import {Loader} from '@googlemaps/js-api-loader';
 
-const google = window.google;
-
 /**
  * @description Load google global variable asynchronously
  * @returns {void} Google Maps Autocomplete Instance
@@ -40,6 +38,8 @@ const setup = (GOOGLE_API) => {
  * @returns {any} Google Maps Autocomplete Instance
  */
 const autocomplete = (input) => {
+	const google = window.google;
+
 	if (!google) {
 		throw new Error(
 			'google is not defined. Please check the Google Maps API key within System Settings and ensure a valid API key is entered'
@@ -70,6 +70,8 @@ const autocomplete = (input) => {
  * @returns {any} Google Maps InfoWindow Instance
  */
 const InfoWindow = () => {
+	const google = window.google;
+
 	if (!google) {
 		throw new Error(
 			'google is not defined. Please check the Google Maps API key within System Settings and ensure a valid API key is entered'

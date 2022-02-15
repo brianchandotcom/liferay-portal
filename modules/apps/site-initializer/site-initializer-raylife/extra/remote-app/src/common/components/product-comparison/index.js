@@ -110,6 +110,7 @@ const ListItems = ({
 
 const ProductComparison = ({
 	highlightMostPopularText = 'Most Popular',
+	isMobileDevice = false,
 	onClickPolicyDetails,
 	onClickPurchase,
 	product,
@@ -120,12 +121,13 @@ const ProductComparison = ({
 
 	return (
 		<div
-			className={classNames('rounded bg-neutral-0', {
+			className={classNames('flex-shrink-0 rounded bg-neutral-0', {
 				'col-12 mx-auto p-0': !purchasable,
-				'ml-auto': purchasable,
-				'mt-4': !mostPopular,
+				'ml-auto': purchasable && !isMobileDevice,
+				'mt-4': !mostPopular && !isMobileDevice,
+				'mx-2': isMobileDevice,
 			})}
-			id="quote-comparison"
+			id="quote-comparison-item"
 		>
 			<div
 				className={classNames(

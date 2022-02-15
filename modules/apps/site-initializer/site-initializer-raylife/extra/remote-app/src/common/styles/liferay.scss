@@ -1,5 +1,14 @@
 @import 'variables';
 
+section#content {
+	#main-content {
+		.quote-comparison-content {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+	}
+}
+
 @media screen and (max-width: $breakpoint-phone) {
 	section#content.raylife-mobile {
 		background-color: $color-brand-primary-darken-5;

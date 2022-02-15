@@ -111,12 +111,10 @@ const ViewBuilderListItem: React.FC<Iprops> = ({index, objectViewColumn}) => {
 				</ClayList.ItemField>
 
 				<ClayList.ItemField>
-					<ClayList.QuickActionMenu>
-						<ClayList.QuickActionMenu.Item
-							onClick={() => handleDeleteColumn(objectFieldName)}
-							symbol="times"
-						/>
-					</ClayList.QuickActionMenu>
+					<ClayList.QuickActionMenu.Item
+						onClick={() => handleDeleteColumn(objectFieldName)}
+						symbol="times"
+					/>
 				</ClayList.ItemField>
 			</ClayList.Item>
 		</>

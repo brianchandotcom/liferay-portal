@@ -2658,9 +2658,6 @@ public class PropsValues {
 	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(
 		PropsKeys.USERS_EXPORT_CSV_FIELDS);
 
-	public static final String[] USERS_LIST_VIEWS = PropsUtil.getArray(
-		PropsKeys.USERS_LIST_VIEWS);
-
 	public static final String USERS_PROFILE_FRIENDLY_URL = PropsUtil.get(
 		PropsKeys.USERS_PROFILE_FRIENDLY_URL);
 

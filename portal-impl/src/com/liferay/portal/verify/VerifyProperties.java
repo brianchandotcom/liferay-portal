@@ -1891,7 +1891,7 @@ public class VerifyProperties extends VerifyProcess {
 		"users.form.update.identification", "users.form.update.main",
 		"users.form.update.miscellaneous", "users.image.check.token",
 		"users.image.default.use.initials", "users.image.max.height",
-		"users.image.max.size", "users.image.max.width",
+		"users.image.max.size", "users.image.max.width", "users.list.views",
 		"vaadin.resources.path", "vaadin.theme", "vaadin.widgetset",
 		"value.object.entity.blocking.cache",
 		"value.object.finder.blocking.cache", "verify.database.transactions",

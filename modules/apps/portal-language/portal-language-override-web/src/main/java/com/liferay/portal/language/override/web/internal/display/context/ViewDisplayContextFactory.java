@@ -206,8 +206,9 @@ public class ViewDisplayContextFactory {
 		return languageItemDisplays;
 	}
 
-	private Map<String, List<PLOEntry>> _getKeyPLOEntriesMap(
-		List<PLOEntry> ploEntries) {
+	private Map<String, List<PLOEntry>> _getKeyPLOEntriesMap(long companyId) {
+		List<PLOEntry> ploEntries = _ploEntryLocalService.getPLOEntries(
+			companyId);
 
 		Stream<PLOEntry> ploEntryStream = ploEntries.stream();
 
@@ -250,37 +251,33 @@ public class ViewDisplayContextFactory {
 
 		Predicate<String> keyMatchPredicate = _getPredicate(
 			keywords, _keyMatchPatternFunction);
+		Map<String, List<PLOEntry>> keyPLOEntriesMap = _getKeyPLOEntriesMap(
+			companyId);
 		Predicate<String> valueMatchPredicate = _getPredicate(
 			keywords, _valueMatchPatternFunction);
 
 		if (filter.equals("override-any-language")) {
 			return _getOverrideLanguageItemDisplays(
-				keyMatchPredicate,
-				_getKeyPLOEntriesMap(
-					_ploEntryLocalService.getPLOEntries(companyId)),
-				selectedLanguageId, valueMatchPredicate);
+				keyMatchPredicate, keyPLOEntriesMap, selectedLanguageId,
+				valueMatchPredicate, false);
 		}
 		else if (filter.equals("override-selected-language")) {
 			return _getOverrideLanguageItemDisplays(
-				keyMatchPredicate,
-				_getKeyPLOEntriesMap(
-					_ploEntryLocalService.getPLOEntries(
-						companyId, selectedLanguageId)),
-				selectedLanguageId, valueMatchPredicate);
+				keyMatchPredicate, keyPLOEntriesMap, selectedLanguageId,
+				valueMatchPredicate, true);
 		}
 		else {
 			return _getAllLanguageItemDisplays(
-				keyMatchPredicate,
-				_getKeyPLOEntriesMap(
-					_ploEntryLocalService.getPLOEntries(companyId)),
-				selectedLanguageId, valueMatchPredicate);
+				keyMatchPredicate, keyPLOEntriesMap, selectedLanguageId,
+				valueMatchPredicate);
 		}
 	}
 
 	private List<LanguageItemDisplay> _getOverrideLanguageItemDisplays(
 		Predicate<String> keyMatchPredicate,
 		Map<String, List<PLOEntry>> keyPLOEntriesMap, String selectedLanguageId,
-		Predicate<String> valueMatchPredicate) {
+		Predicate<String> valueMatchPredicate,
+		boolean limitToSelectedLanguage) {
 
 		List<LanguageItemDisplay> languageItemDisplays = new ArrayList<>();
 
@@ -312,6 +309,12 @@ public class ViewDisplayContextFactory {
 
 						languageItemDisplay.setOverrideSelectedLanguageId(true);
 					}
+				}
+
+				if (limitToSelectedLanguage &&
+					!languageItemDisplay.isOverrideSelectedLanguageId()) {
+
+					continue;
 				}
 
 				languageItemDisplay.setOverrideLanguageIdsString(

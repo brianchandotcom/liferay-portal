@@ -702,6 +702,50 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test ViewTimeZoneIDInNonEnglishLocale {
+		property test.name.skip.portal.instance = "Locale#ViewTimeZoneIDInNonDefaultLocale";
+
+		User.firstLoginPG();
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Assert time zone id America/Phoenix always displays in English") {
+			Navigator.openSpecificURL(url = "${baseURL}/ja/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "ローカライズ",
+				configurationName = "標準時",
+				configurationScope = "仮想インスタンススコープ");
+
+			AssertElementPresent(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -07:00) 山地標準時 (America/Phoenix)");
+
+			Navigator.openSpecificURL(url = "${baseURL}/es/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Localización",
+				configurationName = "Zona horaria",
+				configurationScope = "Ámbito de instancia virtual");
+
+			AssertElementPresent(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -07:00) Hora estándar de las Rocosas (America/Phoenix)");
+
+			Navigator.openSpecificURL(url = "${baseURL}/zh/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "本地化",
+				configurationName = "时区",
+				configurationScope = "虚拟实例范围");
+
+			AssertElementPresent(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -07:00) Mountain 标准时间 (America/Phoenix)");
+		}
+	}
+
 	@priority = "5"
 	test ViewUserPreferredLocale {
 		property portal.acceptance = "true";

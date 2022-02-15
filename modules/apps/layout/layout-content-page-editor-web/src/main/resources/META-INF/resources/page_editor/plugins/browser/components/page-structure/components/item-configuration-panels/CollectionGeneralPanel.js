@@ -445,13 +445,13 @@ function NoPaginationOptions({
 		});
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
-		const nextValue = Number(event.target.value) || 1;
+		const nextValue = Math.abs(Number(event.target.value)) || 1;
 
-		if (!numberOfItems) {
+		if (!numberOfItems || numberOfItems < 0) {
 			setNumberOfItems(nextValue);
 		}
 
-		if (numberOfItems !== initialNumberOfItems) {
+		if (nextValue !== initialNumberOfItems) {
 			handleConfigurationChanged({
 				numberOfItems: nextValue,
 			});
@@ -565,13 +565,13 @@ function PaginationOptions({
 	}, [isMaximumValuePerPageError, initialNumberOfItemsPerPage]);
 
 	const handleCollectionNumberOfItemsPerPageBlurred = (event) => {
-		const nextValue = Number(event.target.value) || 1;
+		const nextValue = Math.abs(Number(event.target.value)) || 1;
 
-		if (!numberOfItemsPerPage) {
+		if (!numberOfItemsPerPage || numberOfItemsPerPage < 0) {
 			setNumberOfItemsPerPage(nextValue);
 		}
 
-		if (numberOfItemsPerPage !== initialNumberOfItemsPerPage) {
+		if (nextValue !== initialNumberOfItemsPerPage) {
 			handleConfigurationChanged({
 				numberOfItemsPerPage: nextValue,
 			});
@@ -579,13 +579,13 @@ function PaginationOptions({
 	};
 
 	const handleCollectionNumberOfPagesBlurred = (event) => {
-		const nextValue = Number(event.target.value) || 1;
+		const nextValue = Math.abs(Number(event.target.value)) || 1;
 
-		if (!numberOfPages) {
+		if (!numberOfPages || numberOfPages < 0) {
 			setNumberOfPages(nextValue);
 		}
 
-		if (numberOfPages !== initialNumberOfPages) {
+		if (nextValue !== initialNumberOfPages) {
 			handleConfigurationChanged({
 				numberOfPages: nextValue,
 			});

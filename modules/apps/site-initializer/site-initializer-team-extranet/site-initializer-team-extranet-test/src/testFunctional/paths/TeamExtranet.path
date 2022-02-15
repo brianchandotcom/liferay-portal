@@ -16,6 +16,16 @@
 	<td>//*[contains(@class,'home-header') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_HEADING</td>
+	<td>//*[contains(@class,'heading') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_TEXT_BLOCK</td>
+	<td>//*[contains(@class,'text-block') and contains(.,'${key_description}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

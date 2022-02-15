@@ -1236,6 +1236,10 @@ definition {
 	test ModifyBlueprintsAdminTableFields {
 		Blueprints.openBlueprintsAdmin();
 
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		PortletEntry.save();
+
 		Click(locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU");
 
 		for (var field : list "Description,ID,Author,Created,Modified") {

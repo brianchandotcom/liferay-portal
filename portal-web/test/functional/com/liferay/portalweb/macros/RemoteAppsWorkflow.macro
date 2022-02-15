@@ -1,0 +1,55 @@
+definition { 
+
+	macro addApp {
+		LexiconEntry.gotoAdd();
+
+		RemoteAppsEntry.addEntry(
+			entryName = "${entryName}",
+			entryURL = "${entryURL}");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+	}
+
+	macro applyWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Remote App Entry");
+	}
+
+	macro addUserPermissions {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "New Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet",
+			roleTitle = "New Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.remote.app",
+			roleTitle = "New Regular Role");
+	}
+
+	macro assertTableStatus{
+		AssertElementPresent(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		AssertElementPresent(
+			key_tableEntryStatus = "${entryStatus}",
+			locator1 = "RemoteApps#TABLE_ENTRY_STATUS_REMOTE_TABLE");
+	}
+
+}

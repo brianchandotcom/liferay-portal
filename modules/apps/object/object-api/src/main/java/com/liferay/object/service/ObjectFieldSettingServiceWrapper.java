@@ -37,6 +37,33 @@ public class ObjectFieldSettingServiceWrapper
 		_objectFieldSettingService = objectFieldSettingService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting addObjectFieldSetting(
+			long objectFieldId, String name, boolean required, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingService.addObjectFieldSetting(
+			objectFieldId, name, required, value);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting deleteObjectFieldSetting(
+			long objectFieldSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingService.deleteObjectFieldSetting(
+			objectFieldSettingId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting getObjectFieldSetting(
+			long objectFieldSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingService.getObjectFieldSetting(
+			objectFieldSettingId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -45,6 +72,15 @@ public class ObjectFieldSettingServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectFieldSettingService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingService.updateObjectFieldSetting(
+			objectFieldSettingId, value);
 	}
 
 	@Override

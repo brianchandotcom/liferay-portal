@@ -12,22 +12,16 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
-import {
-	StyleErrorsModal,
-	useHasStyleErrors,
-} from '@liferay/layout-content-page-editor-web';
 import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 
 import PreviewSelector from './PreviewSelector';
+import PublishButton from './PublishButton';
 import {StyleBookContext} from './StyleBookContext';
-import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
@@ -132,128 +126,5 @@ function HelpInformation() {
 				</ClayPopover>
 			)}
 		</span>
-	);
-}
-
-function PublishButton() {
-	const formRef = useRef();
-	const hasStyleErrors = useHasStyleErrors();
-	const [openPublishModal, setOpenPublishModal] = useState(false);
-	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
-
-	const {
-		observer: observerPublishModal,
-		onClose: onClosePublishModal,
-	} = useModal({
-		onClose: () => setOpenPublishModal(false),
-	});
-
-	const handleSubmit = (event) => {
-		if (config.tokenReuseEnabled) {
-			if (formRef.current) {
-				formRef.current.submit();
-			}
-
-			return;
-		}
-
-		if (
-			!confirm(
-				Liferay.Language.get(
-					'once-published,-these-changes-will-affect-all-instances-of-the-site-using-these-properties'
-				)
-			)
-		) {
-			event.preventDefault();
-		}
-	};
-
-	return (
-		<>
-			<form action={config.publishURL} method="POST" ref={formRef}>
-				<input
-					name={`${config.namespace}redirect`}
-					type="hidden"
-					value={config.redirectURL}
-				/>
-
-				<input
-					name={`${config.namespace}styleBookEntryId`}
-					type="hidden"
-					value={config.styleBookEntryId}
-				/>
-
-				<ClayButton
-					disabled={config.pending}
-					displayType="primary"
-					onClick={
-						config.tokenReuseEnabled
-							? hasStyleErrors
-								? () => setOpenStyleErrorsModal(true)
-								: () => setOpenPublishModal(true)
-							: handleSubmit
-					}
-					small
-					type={config.tokenReuseEnabled ? 'button' : 'submit'}
-				>
-					{Liferay.Language.get('publish')}
-				</ClayButton>
-			</form>
-
-			{config.tokenReuseEnabled && (
-				<>
-					{openStyleErrorsModal && hasStyleErrors && (
-						<StyleErrorsModal
-							onCloseModal={() => setOpenStyleErrorsModal(false)}
-							onSubmit={() => {
-								setOpenStyleErrorsModal(false);
-								setOpenPublishModal(true);
-							}}
-						/>
-					)}
-
-					{openPublishModal && (
-						<ClayModal
-							observer={observerPublishModal}
-							size="lg"
-							status="info"
-						>
-							<ClayModal.Header>
-								{Liferay.Language.get('publishing-info')}
-							</ClayModal.Header>
-
-							<ClayModal.Body>
-								<p>
-									{Liferay.Language.get(
-										'once-published-these-changes-will-affect-all-instances-of-the-site-using-these-properties-do-you-want-to-publish-now'
-									)}
-								</p>
-							</ClayModal.Body>
-
-							<ClayModal.Footer
-								last={
-									<ClayButton.Group spaced>
-										<ClayButton
-											displayType="secondary"
-											onClick={onClosePublishModal}
-										>
-											{Liferay.Language.get('cancel')}
-										</ClayButton>
-
-										<ClayButton
-											displayType="info"
-											onClick={handleSubmit}
-											type="submit"
-										>
-											{Liferay.Language.get('continue')}
-										</ClayButton>
-									</ClayButton.Group>
-								}
-							/>
-						</ClayModal>
-					)}
-				</>
-			)}
-		</>
 	);
 }

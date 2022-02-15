@@ -98,6 +98,7 @@ function FrontendTokenCategories() {
 				<ClayDropDown
 					active={active}
 					alignmentPosition={Align.BottomLeft}
+					className="mb-4"
 					menuElementAttrs={{
 						containerProps: {
 							className: 'cadmin',

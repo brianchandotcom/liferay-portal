@@ -12,11 +12,11 @@
  * details.
  */
 
+import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {config} from '../style-book-editor/config';
-import Collapse from './Collapse';
 import {StyleBookContext} from './StyleBookContext';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
 import BooleanFrontendToken from './frontend_tokens/BooleanFrontendToken';
@@ -89,7 +89,7 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 	};
 
 	return (
-		<Collapse label={label}>
+		<Collapse label={label} open>
 			{frontendTokens.map((frontendToken) => {
 				const FrontendTokenComponent = getFrontendTokenComponent(
 					frontendToken

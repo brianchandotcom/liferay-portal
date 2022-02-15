@@ -105,6 +105,8 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				<aui:input checked="<%= commerceChannelDisplayContext.isGuestCheckoutEnabled() %>" helpMessage="configures-whether-a-guest-may-checkout-by-providing-an-email-address-or-if-they-must-sign-in" label="guest-checkout" labelOff="disabled" labelOn="enabled" name="settings--guestCheckoutEnabled--" type="toggle-switch" />
 
+				<aui:input checked="<%= commerceChannelDisplayContext.isViewPaymentTermCheckoutStepEnabled() %>" helpMessage="configures-whether-payment-terms-checkout-step-is-shown-during-checkout" label="view-payment-term-checkout-step" labelOff="disabled" labelOn="enabled" name="settings--viewPaymentTermCheckoutStepEnabled--" type="toggle-switch" />
+
 				<aui:input label="maximum-number-of-open-orders-per-account" name="orderSettings--accountCartMaxAllowed--" type="number" value="<%= commerceChannelDisplayContext.getAccountCartMaxAllowed() %>">
 					<aui:validator name="number" />
 					<aui:validator name="min">0</aui:validator>

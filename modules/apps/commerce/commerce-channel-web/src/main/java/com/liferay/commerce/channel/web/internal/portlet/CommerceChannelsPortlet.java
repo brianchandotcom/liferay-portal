@@ -16,7 +16,6 @@ package com.liferay.commerce.channel.web.internal.portlet;
 
 import com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -97,9 +96,8 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 				_commerceChannelHealthStatusRegistry,
 				_commerceChannelModelResourcePermission,
 				_commerceChannelService, _commerceChannelTypeRegistry,
-				_commerceCurrencyService, _commercePaymentMethodRegistry,
-				_configurationProvider, _cpTaxCategoryLocalService,
-				_dlAppLocalService,
+				_commerceCurrencyService, _configurationProvider,
+				_cpTaxCategoryLocalService, _dlAppLocalService,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
 				_portal, _workflowDefinitionLinkLocalService,
 				_workflowDefinitionManager);
@@ -128,9 +126,6 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -20,8 +20,6 @@ import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.resources.ResourceHandler;
-import org.gradle.api.resources.TextResourceFactory;
 
 /**
  * @author Andrea Di Giorgi

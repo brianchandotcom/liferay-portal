@@ -116,7 +116,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Properties poshiProperties = _getPoshiProperties(poshiRunnerExtension);
 
 		final Copy downloadChromeDriverTask = _addTaskDownloadChromeDriver(
-				project, poshiProperties);
+			project, poshiProperties);
+
 		final Test runPoshiTask = _addTaskRunPoshi(project);
 		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
 		final JavaExec writePoshiPropertiesTask = _addTaskWritePoshiProperties(

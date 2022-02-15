@@ -81,19 +81,19 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize(String mimeType) {
-		long dlFileMaxSize = _dlConfiguration.fileMaxSize();
-		long uploadServletRequestFileMaxSize =
-			_uploadServletRequestConfigurationHelper.getMaxSize();
+		long globalMaxAllowableSize = _getGlobalMaxAllowableSize();
+		long mimeTypeFileMaxSize = _mimeTypeSizeLimits.getOrDefault(
+			mimeType, 0L);
 
-		if (dlFileMaxSize == 0) {
-			return uploadServletRequestFileMaxSize;
+		if (mimeTypeFileMaxSize == 0) {
+			return globalMaxAllowableSize;
 		}
 
-		if (uploadServletRequestFileMaxSize == 0) {
-			return dlFileMaxSize;
+		if (globalMaxAllowableSize == 0) {
+			return mimeTypeFileMaxSize;
 		}
 
-		return Math.min(dlFileMaxSize, uploadServletRequestFileMaxSize);
+		return Math.min(mimeTypeFileMaxSize, globalMaxAllowableSize);
 	}
 
 	@Override
@@ -298,6 +298,34 @@ public final class DLValidatorImpl implements DLValidator {
 
 	protected void setDLConfiguration(DLConfiguration dlConfiguration) {
 		_dlConfiguration = dlConfiguration;
+	}
+
+	protected void setMimeTypeSizeLimits(Map<String, Long> mimeTypeSizeLimits) {
+		_mimeTypeSizeLimits = mimeTypeSizeLimits;
+	}
+
+	protected void setUploadServletRequestConfigurationHelper(
+		UploadServletRequestConfigurationHelper
+			uploadServletRequestConfigurationHelper) {
+
+		_uploadServletRequestConfigurationHelper =
+			uploadServletRequestConfigurationHelper;
+	}
+
+	private long _getGlobalMaxAllowableSize() {
+		long dlFileMaxSize = _dlConfiguration.fileMaxSize();
+		long uploadServletRequestFileMaxSize =
+			_uploadServletRequestConfigurationHelper.getMaxSize();
+
+		if (dlFileMaxSize == 0) {
+			return uploadServletRequestFileMaxSize;
+		}
+
+		if (uploadServletRequestFileMaxSize == 0) {
+			return dlFileMaxSize;
+		}
+
+		return Math.min(dlFileMaxSize, uploadServletRequestFileMaxSize);
 	}
 
 	private String _replaceDLCharLastBlacklist(String title) {

@@ -15,7 +15,9 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
+
+import {AssetCategoryTree as NewAssetCategoryTree} from './AssetCategoryTree.es';
 
 function getFilter(filterQuery) {
 	if (!filterQuery) {
@@ -39,27 +41,16 @@ function visit(nodes, callback) {
 	});
 }
 
-function SelectAssetCategory({
-	categoriesMultipleSelectionEnabled,
+function AssetCategoryTree({
+	filterQuery,
 	itemSelectedEventName,
+	items,
 	multiSelection,
-	namespace,
-	nodes,
+	onSelectedItemsCount,
 }) {
-	const flattenedNodes = useMemo(() => {
-		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
-			return nodes[0].children;
-		}
-
-		return nodes;
-	}, [nodes]);
-
-	const [filterQuery, setFilterQuery] = useState('');
-	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
-
 	const handleSelectionChange = (selectedNodeIds) => {
-		if (categoriesMultipleSelectionEnabled && multiSelection) {
-			setSelectedItemsCount(selectedNodeIds.size);
+		if (multiSelection) {
+			onSelectedItemsCount(selectedNodeIds.size);
 		}
 
 		if (!selectedNodeIds.size) {
@@ -68,7 +59,7 @@ function SelectAssetCategory({
 
 		let data = [];
 
-		visit(nodes, (node) => {
+		visit(items, (node) => {
 			if (selectedNodeIds.has(node.id)) {
 				data.push({
 					className: node.className,
@@ -87,6 +78,39 @@ function SelectAssetCategory({
 			data,
 		});
 	};
+
+	return (
+		<Treeview
+			NodeComponent={Treeview.Card}
+			filter={getFilter(filterQuery)}
+			multiSelection={multiSelection}
+			nodes={items}
+			onSelectedNodesChange={handleSelectionChange}
+		/>
+	);
+}
+
+const Tree = Liferay.__FF__.enableClayTreeView
+	? NewAssetCategoryTree
+	: AssetCategoryTree;
+
+function SelectAssetCategory({
+	categoriesMultipleSelectionEnabled,
+	itemSelectedEventName,
+	multiSelection,
+	namespace,
+	nodes,
+}) {
+	const [items, setItems] = useState(() => {
+		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
+			return nodes[0].children;
+		}
+
+		return nodes;
+	});
+
+	const [filterQuery, setFilterQuery] = useState('');
+	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	return (
 		<div className="select-category">
@@ -141,16 +165,17 @@ function SelectAssetCategory({
 						className="category-tree mt-3"
 						id={`${namespace}categoryContainer`}
 					>
-						{flattenedNodes.length > 0 ? (
-							<Treeview
-								NodeComponent={Treeview.Card}
-								filter={getFilter(filterQuery)}
+						{items.length > 0 ? (
+							<Tree
+								filterQuery={filterQuery}
+								itemSelectedEventName={itemSelectedEventName}
+								items={items}
 								multiSelection={
 									categoriesMultipleSelectionEnabled &&
 									multiSelection
 								}
-								nodes={flattenedNodes}
-								onSelectedNodesChange={handleSelectionChange}
+								onItems={setItems}
+								onSelectedItemsCount={setSelectedItemsCount}
 							/>
 						) : (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">

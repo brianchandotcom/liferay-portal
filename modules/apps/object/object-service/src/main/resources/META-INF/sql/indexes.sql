@@ -41,6 +41,9 @@ create index IX_DE3EBEF8 on ObjectRelationship (objectDefinitionId2);
 create index IX_F1DC092D on ObjectRelationship (objectFieldId2);
 create index IX_11DAE1F1 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_C476B36E on ObjectValidationRule (objectDefinitionId, active_);
+create index IX_40F1E68E on ObjectValidationRule (uuid_[$COLUMN_LENGTH:75$], companyId);
+
 create index IX_6AF6C9EA on ObjectView (objectDefinitionId, defaultObjectView);
 create index IX_C771CDE on ObjectView (uuid_[$COLUMN_LENGTH:75$], companyId);
 

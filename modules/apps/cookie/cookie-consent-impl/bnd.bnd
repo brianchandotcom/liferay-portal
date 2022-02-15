@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Cookie Consent Implementation
+Bundle-SymbolicName: com.liferay.cookie.consent.impl
+Bundle-Version: 1.0.0

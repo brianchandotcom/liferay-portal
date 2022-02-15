@@ -85,7 +85,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 						group.getGroupId(), parentFolder.getFolderId(),
 						RandomTestUtil.randomString(),
 						ContentTypes.APPLICATION_OCTET_STREAM, "title",
-						StringPool.BLANK, StringPool.BLANK,
+						"urltitle", StringPool.BLANK, StringPool.BLANK,
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 						null, null, inputStream, bytes.length, null, null,
@@ -98,7 +98,8 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 
 				Assert.assertNotNull(friendlyURLEntry1);
 
-				Assert.assertEquals("title", friendlyURLEntry1.getUrlTitle());
+				Assert.assertEquals(
+					"urltitle", friendlyURLEntry1.getUrlTitle());
 
 				Folder folder = _dlAppService.addFolder(
 					group.getGroupId(), parentFolder.getFolderId(),
@@ -111,7 +112,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 						group.getGroupId(), folder.getFolderId(),
 						RandomTestUtil.randomString(),
 						ContentTypes.APPLICATION_OCTET_STREAM, "title",
-						StringPool.BLANK, StringPool.BLANK,
+						"urltitle", StringPool.BLANK, StringPool.BLANK,
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 						null, null, inputStream, bytes.length, null, null,
@@ -124,7 +125,8 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 
 				Assert.assertNotNull(friendlyURLEntry2);
 
-				Assert.assertEquals("title-1", friendlyURLEntry2.getUrlTitle());
+				Assert.assertEquals(
+					"urltitle-1", friendlyURLEntry2.getUrlTitle());
 			},
 			true);
 	}
@@ -145,7 +147,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 					null, TestPropsValues.getUserId(), group.getGroupId(),
 					group.getGroupId(), parentFolder.getFolderId(),
 					RandomTestUtil.randomString(),
-					ContentTypes.APPLICATION_OCTET_STREAM, "title",
+					ContentTypes.APPLICATION_OCTET_STREAM, "title", "urltitle",
 					StringPool.BLANK, StringPool.BLANK,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					null, null, inputStream, bytes.length, null, null,
@@ -158,7 +160,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 
 				Assert.assertNotNull(friendlyURLEntry);
 
-				Assert.assertEquals("title", friendlyURLEntry.getUrlTitle());
+				Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 			},
 			true);
 	}
@@ -180,6 +182,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 					group.getGroupId(), parentFolder.getFolderId(),
 					RandomTestUtil.randomString(),
 					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.BLANK,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
@@ -224,6 +227,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 					group.getGroupId(), parentFolder.getFolderId(),
 					RandomTestUtil.randomString(),
 					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.BLANK,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
@@ -246,9 +250,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 				_dlFileEntryLocalService.updateFileEntry(
 					group.getCreatorUserId(), fileEntryId.get(),
 					StringUtil.randomString(),
-					ContentTypes.APPLICATION_OCTET_STREAM, "update",
-					StringPool.BLANK, StringPool.BLANK,
-					DLVersionNumberIncrease.MAJOR,
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					StringUtil.randomString(), "urltitle", StringPool.BLANK,
+					StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					Collections.emptyMap(), null, inputStream, 0, null, null,
 					serviceContext);
@@ -260,7 +264,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 
 				Assert.assertNotNull(friendlyURLEntry);
 
-				Assert.assertEquals("update", friendlyURLEntry.getUrlTitle());
+				Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 			},
 			true);
 	}
@@ -282,6 +286,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 					group.getGroupId(), parentFolder.getFolderId(),
 					RandomTestUtil.randomString(),
 					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.BLANK,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
@@ -291,9 +296,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 				dlFileEntry = _dlFileEntryLocalService.updateFileEntry(
 					group.getCreatorUserId(), dlFileEntry.getFileEntryId(),
 					StringUtil.randomString(),
-					ContentTypes.APPLICATION_OCTET_STREAM, "update",
-					StringPool.BLANK, StringPool.BLANK,
-					DLVersionNumberIncrease.MAJOR,
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+					StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					Collections.emptyMap(), null, inputStream, 0, null, null,
 					serviceContext);
@@ -303,7 +308,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 						_portal.getClassNameId(FileEntry.class),
 						dlFileEntry.getFileEntryId());
 
-				Assert.assertEquals("update", friendlyURLEntry.getUrlTitle());
+				Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 			},
 			true);
 	}

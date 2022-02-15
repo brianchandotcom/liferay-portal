@@ -112,8 +112,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			null, null, _dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
-			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			RandomTestUtil.randomString(), null, null,
+			_dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap, null,
+			new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
 			TestDataConstants.TEST_BYTE_ARRAY.length, null, null,
 			serviceContext);
 	}
@@ -145,7 +146,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			null, null, dlFileEntryType.getFileEntryTypeId(),
+			RandomTestUtil.randomString(), null, null,
+			dlFileEntryType.getFileEntryTypeId(),
 			setUpDDMFormValuesMap(
 				ddmStructure.getStructureKey(), user.getLocale()),
 			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),

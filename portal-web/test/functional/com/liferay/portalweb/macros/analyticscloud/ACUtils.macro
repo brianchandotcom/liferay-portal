@@ -910,10 +910,6 @@ definition {
 			value1 = "${count} Results for ${searchTerm}");
 	}
 
-	macro waitForLoading {
-		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
-	}
-
 	macro viewTableColumnNumbers {
 		var list1 = ListUtil.newListFromString("${nameList}");
 		var list2 = ListUtil.newListFromString("${numberValueList}");
@@ -935,6 +931,10 @@ definition {
 			var i = ${i} + 1;
 			var i = StringUtil.valueOf("${i}");
 		}
+	}
+
+	macro waitForLoading {
+		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
 }

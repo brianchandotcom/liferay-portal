@@ -301,9 +301,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.BROWSER_CACHE_SIGNED_IN_DISABLED));
 
-	public static final String BROWSER_COMPATIBILITY_IE_VERSIONS =
-		PropsUtil.get(PropsKeys.BROWSER_COMPATIBILITY_IE_VERSIONS);
-
 	public static final String BROWSER_LAUNCHER_URL = PropsUtil.get(
 		PropsKeys.BROWSER_LAUNCHER_URL);
 

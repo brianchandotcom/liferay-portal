@@ -88,7 +88,12 @@ public class ImportObjectDefinitionMVCActionCommand
 
 			if (exception instanceof
 					ObjectDefinitionNameException.
-						MustBeginWithUpperCaseLetter) {
+						MustBeginWithUpperCaseLetter ||
+				exception instanceof
+					ObjectDefinitionNameException.MustNotBeDuplicate ||
+				exception instanceof
+					ObjectDefinitionNameException.
+						MustOnlyContainLettersAndDigits) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 			}

@@ -262,6 +262,19 @@ $productMenuWidth: 320px;
 		}
 
 		.sidebar-body {
+			.collapse-icon {
+				border-bottom: 1px solid $light;
+				color: $secondary;
+
+				&:hover {
+					color: $dark;
+				}
+
+				.collapse-icon-open {
+					color: $dark;
+				}
+			}
+
 			.panel {
 				margin-bottom: 0;
 			}

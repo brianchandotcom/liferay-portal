@@ -25,7 +25,6 @@ import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selec
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
-import {CollectionStylesPanel} from '../components/item-configuration-panels/CollectionStylesPanel';
 import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
@@ -40,7 +39,6 @@ export const PANEL_IDS = {
 	collectionAppliedFiltersGeneral: 'collectionAppliedFiltersGeneral',
 	collectionFilterGeneral: 'collectionFilterGeneral',
 	collectionGeneral: 'collectionGeneral',
-	collectionStyles: 'collectionStyles',
 	containerGeneral: 'containerGeneral',
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
@@ -66,11 +64,6 @@ export const PANELS = {
 	[PANEL_IDS.collectionGeneral]: {
 		component: CollectionGeneralPanel,
 		label: Liferay.Language.get('general'),
-		priority: 0,
-	},
-	[PANEL_IDS.collectionStyles]: {
-		component: CollectionStylesPanel,
-		label: Liferay.Language.get('styles'),
 		priority: 0,
 	},
 	[PANEL_IDS.containerGeneral]: {
@@ -177,7 +170,6 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.collectionGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration,
-			[PANEL_IDS.collectionStyles]: canUpdateItemConfiguration,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {

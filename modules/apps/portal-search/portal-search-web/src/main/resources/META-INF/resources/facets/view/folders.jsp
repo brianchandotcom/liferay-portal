@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,17 +18,17 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder = new FolderSearchFacetDisplayBuilder(renderRequest);
+FolderSearchFacetDisplayContextBuilder folderSearchFacetDisplayContextBuilder = new FolderSearchFacetDisplayContextBuilder(renderRequest);
 
-folderSearchFacetDisplayBuilder.setFacet(facet);
-folderSearchFacetDisplayBuilder.setFolderTitleLookup(new FolderTitleLookupImpl(new FolderSearcher(), request));
-folderSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
-folderSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
-folderSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
-folderSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
-folderSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+folderSearchFacetDisplayContextBuilder.setFacet(facet);
+folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(new FolderTitleLookupImpl(new FolderSearcher(), request));
+folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
+folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+folderSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
+folderSearchFacetDisplayContextBuilder.setParameterName(facet.getFieldId());
+folderSearchFacetDisplayContextBuilder.setParameterValue(fieldParam);
 
-FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFacetDisplayBuilder.build();
+FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFacetDisplayContextBuilder.build();
 %>
 
 <c:choose>

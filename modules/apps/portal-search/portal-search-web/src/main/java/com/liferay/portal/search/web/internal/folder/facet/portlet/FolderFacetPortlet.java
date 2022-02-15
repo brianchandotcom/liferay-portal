@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearcher;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -117,37 +117,38 @@ public class FolderFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			_createFolderSearchFacetDisplayBuilder(renderRequest);
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+			_createFolderSearchFacetDisplayContextBuilder(renderRequest);
 
-		folderSearchFacetDisplayBuilder.setFacet(facet);
-		folderSearchFacetDisplayBuilder.setFolderTitleLookup(folderTitleLookup);
-		folderSearchFacetDisplayBuilder.setFrequenciesVisible(
+		folderSearchFacetDisplayContextBuilder.setFacet(facet);
+		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(folderTitleLookup);
+		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			folderFacetPortletPreferences.isFrequenciesVisible());
-		folderSearchFacetDisplayBuilder.setFrequencyThreshold(
+		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			folderFacetConfiguration.getFrequencyThreshold());
-		folderSearchFacetDisplayBuilder.setMaxTerms(
+		folderSearchFacetDisplayContextBuilder.setMaxTerms(
 			folderFacetConfiguration.getMaxTerms());
-		folderSearchFacetDisplayBuilder.setPaginationStartParameterName(
+		folderSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = folderFacetPortletPreferences.getParameterName();
 
-		folderSearchFacetDisplayBuilder.setParameterName(parameterName);
+		folderSearchFacetDisplayContextBuilder.setParameterName(parameterName);
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest),
-			folderSearchFacetDisplayBuilder::setParameterValues);
+			folderSearchFacetDisplayContextBuilder::setParameterValues);
 
-		return folderSearchFacetDisplayBuilder.build();
+		return folderSearchFacetDisplayContextBuilder.build();
 	}
 
-	private FolderSearchFacetDisplayBuilder
-		_createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private FolderSearchFacetDisplayContextBuilder
+		_createFolderSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new FolderSearchFacetDisplayBuilder(renderRequest);
+			return new FolderSearchFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

@@ -32,17 +32,18 @@ if (dataJSONObject.has("values")) {
 	}
 }
 
-AssetEntriesSearchFacetDisplayBuilder assetEntriesSearchFacetDisplayBuilder = new AssetEntriesSearchFacetDisplayBuilder(renderRequest);
+AssetEntriesSearchFacetDisplayContextBuilder
+	assetEntriesSearchFacetDisplayContextBuilder = new AssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
 
-assetEntriesSearchFacetDisplayBuilder.setClassNames(values);
-assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
-assetEntriesSearchFacetDisplayBuilder.setFrequenciesVisible(showAssetCount);
-assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(frequencyThreshold);
-assetEntriesSearchFacetDisplayBuilder.setLocale(locale);
-assetEntriesSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
-assetEntriesSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+assetEntriesSearchFacetDisplayContextBuilder.setClassNames(values);
+assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);
+assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(showAssetCount);
+assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(frequencyThreshold);
+assetEntriesSearchFacetDisplayContextBuilder.setLocale(locale);
+assetEntriesSearchFacetDisplayContextBuilder.setParameterName(facet.getFieldId());
+assetEntriesSearchFacetDisplayContextBuilder.setParameterValue(fieldParam);
 
-AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayBuilder.build();
+AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayContextBuilder.build();
 %>
 
 <div class="panel panel-secondary">

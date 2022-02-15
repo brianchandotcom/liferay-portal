@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -212,15 +212,16 @@ public class ScopeSearchFacetDisplayContextTest {
 			String parameterValue)
 		throws ConfigurationException {
 
-		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
-			new ScopeSearchFacetDisplayBuilder(getRenderRequest());
+		ScopeSearchFacetDisplayContextBuilder
+			scopeSearchFacetDisplayContextBuilder =
+			new ScopeSearchFacetDisplayContextBuilder(getRenderRequest());
 
-		scopeSearchFacetDisplayBuilder.setFacet(_facet);
-		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(true);
-		scopeSearchFacetDisplayBuilder.setGroupLocalService(_groupLocalService);
-		scopeSearchFacetDisplayBuilder.setParameterValue(parameterValue);
+		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
+		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(_groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setParameterValue(parameterValue);
 
-		return scopeSearchFacetDisplayBuilder.build();
+		return scopeSearchFacetDisplayContextBuilder.build();
 	}
 
 	protected Group createGroup(long groupId, String name) throws Exception {

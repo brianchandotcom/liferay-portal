@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -352,31 +352,31 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
-		AssetCategoriesSearchFacetDisplayBuilder
-			assetCategoriesSearchFacetDisplayBuilder =
-				new AssetCategoriesSearchFacetDisplayBuilder(renderRequest);
+		AssetCategoriesSearchFacetDisplayContextBuilder
+			assetCategoriesSearchFacetDisplayContextBuilder =
+				new AssetCategoriesSearchFacetDisplayContextBuilder(renderRequest);
 
-		assetCategoriesSearchFacetDisplayBuilder.setAssetCategoryLocalService(
+		assetCategoriesSearchFacetDisplayContextBuilder.setAssetCategoryLocalService(
 			_assetCategoryLocalService);
-		assetCategoriesSearchFacetDisplayBuilder.
+		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetCategoryPermissionChecker(_assetCategoryPermissionChecker);
-		assetCategoriesSearchFacetDisplayBuilder.setDisplayStyle("cloud");
-		assetCategoriesSearchFacetDisplayBuilder.setFacet(_facet);
-		assetCategoriesSearchFacetDisplayBuilder.setFrequenciesVisible(true);
-		assetCategoriesSearchFacetDisplayBuilder.setFrequencyThreshold(0);
-		assetCategoriesSearchFacetDisplayBuilder.setMaxTerms(0);
-		assetCategoriesSearchFacetDisplayBuilder.setParameterName(
+		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
+		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		assetCategoriesSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		assetCategoriesSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
-		assetCategoriesSearchFacetDisplayBuilder.setParameterValue(
+		assetCategoriesSearchFacetDisplayContextBuilder.setParameterValue(
 			parameterValue);
-		assetCategoriesSearchFacetDisplayBuilder.setPortal(_getPortal());
+		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(_getPortal());
 
 		if (_excludedGroupId > 0) {
-			assetCategoriesSearchFacetDisplayBuilder.setExcludedGroupId(
+			assetCategoriesSearchFacetDisplayContextBuilder.setExcludedGroupId(
 				_excludedGroupId);
 		}
 
-		return assetCategoriesSearchFacetDisplayBuilder.build();
+		return assetCategoriesSearchFacetDisplayContextBuilder.build();
 	}
 
 	protected Group createGroup(long groupId, long stagingGroupId) {

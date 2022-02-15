@@ -302,7 +302,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		SearchResultSummaryDisplayContextBuilder
 			searchResultSummaryDisplayContextBuilder =
-			_createSearchResultSummaryDisplayBuilder();
+			_createSearchResultSummaryDisplayContextBuilder();
 
 		searchResultSummaryDisplayContextBuilder.setDocument(document);
 
@@ -504,7 +504,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private SearchResultSummaryDisplayContextBuilder
-		_createSearchResultSummaryDisplayBuilder() {
+		_createSearchResultSummaryDisplayContextBuilder() {
 
 		SearchResultSummaryDisplayContextBuilder
 			searchResultSummaryDisplayContextBuilder =

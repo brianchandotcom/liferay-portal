@@ -23,24 +23,24 @@ if (Validator.isNull(fieldParam)) {
 	fieldParam = String.valueOf(searchScopeGroupId);
 }
 
-ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder = new ScopeSearchFacetDisplayBuilder(renderRequest);
+ScopeSearchFacetDisplayContextBuilder scopeSearchFacetDisplayContextBuilder = new ScopeSearchFacetDisplayContextBuilder(renderRequest);
 
-scopeSearchFacetDisplayBuilder.setFacet(facet);
+scopeSearchFacetDisplayContextBuilder.setFacet(facet);
 
 if (searchScopeGroupId != 0) {
-	scopeSearchFacetDisplayBuilder.setFilteredGroupIds(new long[] {searchScopeGroupId});
+	scopeSearchFacetDisplayContextBuilder.setFilteredGroupIds(new long[] {searchScopeGroupId});
 }
 
-scopeSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
-scopeSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
-scopeSearchFacetDisplayBuilder.setGroupLocalService(GroupLocalServiceUtil.getService());
-scopeSearchFacetDisplayBuilder.setLanguage(LanguageUtil.getLanguage());
-scopeSearchFacetDisplayBuilder.setLocale(locale);
-scopeSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms"));
-scopeSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
-scopeSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
+scopeSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+scopeSearchFacetDisplayContextBuilder.setGroupLocalService(GroupLocalServiceUtil.getService());
+scopeSearchFacetDisplayContextBuilder.setLanguage(LanguageUtil.getLanguage());
+scopeSearchFacetDisplayContextBuilder.setLocale(locale);
+scopeSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms"));
+scopeSearchFacetDisplayContextBuilder.setParameterName(facet.getFieldId());
+scopeSearchFacetDisplayContextBuilder.setParameterValue(fieldParam);
 
-ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacetDisplayBuilder.build();
+ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacetDisplayContextBuilder.build();
 %>
 
 <c:choose>

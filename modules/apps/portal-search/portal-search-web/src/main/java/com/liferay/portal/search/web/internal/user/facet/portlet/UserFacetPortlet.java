@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
@@ -115,36 +115,37 @@ public class UserFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder =
-			_createUserSearchFacetDisplayBuilder(renderRequest);
+		UserSearchFacetDisplayContextBuilder
+			userSearchFacetDisplayContextBuilder =
+			_createUserSearchFacetDisplayContextBuilder(renderRequest);
 
-		userSearchFacetDisplayBuilder.setFacet(facet);
-		userSearchFacetDisplayBuilder.setFrequenciesVisible(
+		userSearchFacetDisplayContextBuilder.setFacet(facet);
+		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			userFacetPortletPreferences.isFrequenciesVisible());
-		userSearchFacetDisplayBuilder.setFrequencyThreshold(
+		userSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			userFacetConfiguration.getFrequencyThreshold());
-		userSearchFacetDisplayBuilder.setMaxTerms(
+		userSearchFacetDisplayContextBuilder.setMaxTerms(
 			userFacetConfiguration.getMaxTerms());
-		userSearchFacetDisplayBuilder.setPaginationStartParameterName(
+		userSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = userFacetPortletPreferences.getParameterName();
 
-		userSearchFacetDisplayBuilder.setParamName(parameterName);
+		userSearchFacetDisplayContextBuilder.setParamName(parameterName);
 
 		SearchOptionalUtil.copy(
 			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
-			userSearchFacetDisplayBuilder::setParamValues);
+			userSearchFacetDisplayContextBuilder::setParamValues);
 
-		return userSearchFacetDisplayBuilder.build();
+		return userSearchFacetDisplayContextBuilder.build();
 	}
 
-	private UserSearchFacetDisplayBuilder _createUserSearchFacetDisplayBuilder(
+	private UserSearchFacetDisplayContextBuilder _createUserSearchFacetDisplayContextBuilder(
 		RenderRequest renderRequest) {
 
 		try {
-			return new UserSearchFacetDisplayBuilder(renderRequest);
+			return new UserSearchFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

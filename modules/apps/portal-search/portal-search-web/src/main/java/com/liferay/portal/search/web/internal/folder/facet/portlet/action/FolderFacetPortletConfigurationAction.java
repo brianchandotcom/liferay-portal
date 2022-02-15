@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
 
 import javax.portlet.PortletConfig;
@@ -56,21 +56,22 @@ public class FolderFacetPortletConfigurationAction
 			(RenderRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			_createFolderSearchFacetDisplayBuilder(renderRequest);
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+			_createFolderSearchFacetDisplayContextBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			folderSearchFacetDisplayBuilder.build());
+			folderSearchFacetDisplayContextBuilder.build());
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	private FolderSearchFacetDisplayBuilder
-		_createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private FolderSearchFacetDisplayContextBuilder
+		_createFolderSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new FolderSearchFacetDisplayBuilder(renderRequest);
+			return new FolderSearchFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

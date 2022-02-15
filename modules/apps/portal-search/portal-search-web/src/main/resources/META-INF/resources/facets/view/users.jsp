@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,16 +18,17 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = new UserSearchFacetDisplayBuilder(renderRequest);
+UserSearchFacetDisplayContextBuilder
+	userSearchFacetDisplayContextBuilder = new UserSearchFacetDisplayContextBuilder(renderRequest);
 
-userSearchFacetDisplayBuilder.setFacet(facet);
-userSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
-userSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
-userSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
-userSearchFacetDisplayBuilder.setParamName(facet.getFieldId());
-userSearchFacetDisplayBuilder.setParamValue(fieldParam);
+userSearchFacetDisplayContextBuilder.setFacet(facet);
+userSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
+userSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+userSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
+userSearchFacetDisplayContextBuilder.setParamName(facet.getFieldId());
+userSearchFacetDisplayContextBuilder.setParamValue(fieldParam);
 
-UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayBuilder.build();
+UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayContextBuilder.build();
 %>
 
 <c:choose>

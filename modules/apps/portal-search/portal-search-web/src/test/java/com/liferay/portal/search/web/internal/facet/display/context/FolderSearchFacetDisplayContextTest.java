@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -292,19 +292,20 @@ public class FolderSearchFacetDisplayContextTest {
 			String facetParam)
 		throws Exception {
 
-		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			new FolderSearchFacetDisplayBuilder(getRenderRequest());
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+			new FolderSearchFacetDisplayContextBuilder(getRenderRequest());
 
-		folderSearchFacetDisplayBuilder.setFacet(_facet);
-		folderSearchFacetDisplayBuilder.setFolderTitleLookup(
+		folderSearchFacetDisplayContextBuilder.setFacet(_facet);
+		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
 			_folderTitleLookup);
-		folderSearchFacetDisplayBuilder.setFrequenciesVisible(true);
-		folderSearchFacetDisplayBuilder.setFrequencyThreshold(0);
-		folderSearchFacetDisplayBuilder.setMaxTerms(0);
-		folderSearchFacetDisplayBuilder.setParameterName(_facet.getFieldId());
-		folderSearchFacetDisplayBuilder.setParameterValue(facetParam);
+		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		folderSearchFacetDisplayContextBuilder.setParameterName(_facet.getFieldId());
+		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
 
-		return folderSearchFacetDisplayBuilder.build();
+		return folderSearchFacetDisplayContextBuilder.build();
 	}
 
 	protected TermCollector createTermCollector(long folderId, int count) {

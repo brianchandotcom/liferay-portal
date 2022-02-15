@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -213,19 +213,20 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			String facetParam)
 		throws ConfigurationException {
 
-		AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder =
-			new AssetTagsSearchFacetDisplayBuilder(getRenderRequest());
+		AssetTagsSearchFacetDisplayContextBuilder
+			assetTagsSearchFacetDisplayContextBuilder =
+			new AssetTagsSearchFacetDisplayContextBuilder(getRenderRequest());
 
-		assetTagsSearchFacetDisplayBuilder.setDisplayStyle("cloud");
-		assetTagsSearchFacetDisplayBuilder.setFacet(_facet);
-		assetTagsSearchFacetDisplayBuilder.setFrequenciesVisible(true);
-		assetTagsSearchFacetDisplayBuilder.setFrequencyThreshold(0);
-		assetTagsSearchFacetDisplayBuilder.setMaxTerms(0);
-		assetTagsSearchFacetDisplayBuilder.setParameterName(
+		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
+		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		assetTagsSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
-		assetTagsSearchFacetDisplayBuilder.setParameterValue(facetParam);
+		assetTagsSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
 
-		return assetTagsSearchFacetDisplayBuilder.build();
+		return assetTagsSearchFacetDisplayContextBuilder.build();
 	}
 
 	protected TermCollector createTermCollector(String term, int frequency) {

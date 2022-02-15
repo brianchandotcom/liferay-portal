@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
@@ -130,48 +130,49 @@ public class SiteFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
-			_createScopeSearchFacetDisplayBuilder(renderRequest);
+		ScopeSearchFacetDisplayContextBuilder
+			scopeSearchFacetDisplayContextBuilder =
+			_createScopeSearchFacetDisplayContextBuilder(renderRequest);
 
-		scopeSearchFacetDisplayBuilder.setFacet(facet);
+		scopeSearchFacetDisplayContextBuilder.setFacet(facet);
 
 		SearchOptionalUtil.copy(
 			() -> _getFilteredGroupIdsOptional(portletSharedSearchResponse),
-			scopeSearchFacetDisplayBuilder::setFilteredGroupIds);
+			scopeSearchFacetDisplayContextBuilder::setFilteredGroupIds);
 
-		scopeSearchFacetDisplayBuilder.setFrequencyThreshold(
+		scopeSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			siteFacetConfiguration.getFrequencyThreshold());
-		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(
+		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			siteFacetPortletPreferences.isFrequenciesVisible());
-		scopeSearchFacetDisplayBuilder.setGroupLocalService(groupLocalService);
-		scopeSearchFacetDisplayBuilder.setLanguage(language);
-		scopeSearchFacetDisplayBuilder.setLocale(
+		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setLanguage(language);
+		scopeSearchFacetDisplayContextBuilder.setLocale(
 			_getLocale(portletSharedSearchResponse, renderRequest));
-		scopeSearchFacetDisplayBuilder.setMaxTerms(
+		scopeSearchFacetDisplayContextBuilder.setMaxTerms(
 			siteFacetConfiguration.getMaxTerms());
-		scopeSearchFacetDisplayBuilder.setPaginationStartParameterName(
+		scopeSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = siteFacetPortletPreferences.getParameterName();
 
-		scopeSearchFacetDisplayBuilder.setParameterName(parameterName);
+		scopeSearchFacetDisplayContextBuilder.setParameterName(parameterName);
 
 		SearchOptionalUtil.copy(
 			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
-			scopeSearchFacetDisplayBuilder::setParameterValues);
+			scopeSearchFacetDisplayContextBuilder::setParameterValues);
 
-		scopeSearchFacetDisplayBuilder.setRequest(
+		scopeSearchFacetDisplayContextBuilder.setRequest(
 			_getHttpServletRequest(renderRequest));
 
-		return scopeSearchFacetDisplayBuilder.build();
+		return scopeSearchFacetDisplayContextBuilder.build();
 	}
 
-	private ScopeSearchFacetDisplayBuilder
-		_createScopeSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private ScopeSearchFacetDisplayContextBuilder
+		_createScopeSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new ScopeSearchFacetDisplayBuilder(renderRequest);
+			return new ScopeSearchFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

@@ -45,7 +45,7 @@ import com.liferay.portal.search.web.internal.display.context.SearchResultPrefer
 import com.liferay.portal.search.web.internal.document.DocumentFormPermissionCheckerImpl;
 import com.liferay.portal.search.web.internal.portlet.shared.search.NullPortletURL;
 import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
-import com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayBuilder;
+import com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -368,10 +368,11 @@ public class SearchResultsPortlet extends MVCPortlet {
 			SearchResultPreferences searchResultPreferences)
 		throws Exception {
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			new SearchResultSummaryDisplayBuilder();
+		SearchResultSummaryDisplayContextBuilder
+			searchResultSummaryDisplayContextBuilder =
+			new SearchResultSummaryDisplayContextBuilder();
 
-		searchResultSummaryDisplayBuilder.setAssetEntryLocalService(
+		searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(
 			assetEntryLocalService
 		).setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup
@@ -419,7 +420,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 			userLocalService
 		);
 
-		return searchResultSummaryDisplayBuilder.build();
+		return searchResultSummaryDisplayContextBuilder.build();
 	}
 
 	private SearchResultsPortletDisplayContext

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
@@ -135,48 +135,48 @@ public class TypeFacetPortlet extends MVCPortlet {
 					renderRequest),
 				searchableAssetClassNamesProvider);
 
-		AssetEntriesSearchFacetDisplayBuilder
-			assetEntriesSearchFacetDisplayBuilder =
-				_createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
+		AssetEntriesSearchFacetDisplayContextBuilder
+			assetEntriesSearchFacetDisplayContextBuilder =
+				_createAssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
 
-		assetEntriesSearchFacetDisplayBuilder.setClassNames(
+		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(
 			_getAssetTypesClassNames(
 				typeFacetPortletPreferences, themeDisplay));
 
-		assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
-		assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(
+		assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);
+		assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			assetEntriesFacetConfiguration.getFrequencyThreshold());
-		assetEntriesSearchFacetDisplayBuilder.setFrequenciesVisible(
+		assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			typeFacetPortletPreferences.isFrequenciesVisible());
-		assetEntriesSearchFacetDisplayBuilder.setLocale(
+		assetEntriesSearchFacetDisplayContextBuilder.setLocale(
 			themeDisplay.getLocale());
-		assetEntriesSearchFacetDisplayBuilder.setPaginationStartParameterName(
+		assetEntriesSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = typeFacetPortletPreferences.getParameterName();
 
-		assetEntriesSearchFacetDisplayBuilder.setParameterName(parameterName);
+		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(parameterName);
 
-		assetEntriesSearchFacetDisplayBuilder.setTypeNames(
+		assetEntriesSearchFacetDisplayContextBuilder.setTypeNames(
 			_getAssetTypesTypeNames(typeFacetPortletPreferences, themeDisplay));
 
 		SearchOptionalUtil.copy(
 			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
-			assetEntriesSearchFacetDisplayBuilder::setParameterValues);
+			assetEntriesSearchFacetDisplayContextBuilder::setParameterValues);
 
-		return assetEntriesSearchFacetDisplayBuilder.build();
+		return assetEntriesSearchFacetDisplayContextBuilder.build();
 	}
 
-	private AssetEntriesSearchFacetDisplayBuilder
-		_createAssetEntriesSearchFacetDisplayBuilder(
+	private AssetEntriesSearchFacetDisplayContextBuilder
+		_createAssetEntriesSearchFacetDisplayContextBuilder(
 			RenderRequest renderRequest) {
 
 		try {
-			return new AssetEntriesSearchFacetDisplayBuilder(renderRequest);
+			return new AssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

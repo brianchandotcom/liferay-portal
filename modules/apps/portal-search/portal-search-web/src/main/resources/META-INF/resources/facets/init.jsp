@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionCheckerImpl" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@

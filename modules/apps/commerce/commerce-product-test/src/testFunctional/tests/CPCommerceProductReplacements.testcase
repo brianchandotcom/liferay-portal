@@ -70,6 +70,56 @@ definition {
 		}
 	}
 
+	@description = "Verify a replacement product can be set between different catalogs"
+	@priority = "3"
+	test ReplacementCanBeSetBetweenDifferentCatalogs {
+		task ("Given a Test Catalog") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+		}
+
+		task ("And given a product on the catalog marked as discontinued") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Test Catalog",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("When a product from a different catalog than the "Discontinued" product is set as the replacement product") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product Replacement",
+				productType = "simple",
+				sku = "SKU1002");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SKU1001");
+
+			SelectFrame(
+				key_title = "",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1002");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the product is successfully set as the replacement product") {
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1002");
+		}
+	}
+
 	@description = "Verify a product can be set as discontinued"
 	@priority = "3"
 	test SetProductAsDiscontinued {

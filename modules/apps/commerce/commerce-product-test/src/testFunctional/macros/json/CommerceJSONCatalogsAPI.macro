@@ -1,5 +1,30 @@
 definition {
 
+	macro _addCatalog {
+		Variables.assertDefined(parameterList = "${catalogName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(catalogCurrency))) {
+			var catalogCurrency = "USD";
+		}
+
+		if (!(isSet(catalogLanguage))) {
+			var catalogLanguage = "en_US";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/commerce.commercecatalog/add-commerce-catalog \
+				-u test@liferay.com:test \
+				-d externalReferenceCode='' \
+				-d name=${catalogName} \
+				-d commerceCurrencyCode=${catalogCurrency} \
+				-d catalogDefaultLanguageId=${catalogLanguage}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllNoSystemCommerceCatalogs {
 		var baseURL = "${baseURL}";
 

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_STATUS_REMOTE_TABLE</td>
+	<td>//div[contains(@class,'dnd-td')]//*[contains(@class,'workflow-status') and contains(.,'${key_tableEntryStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_URL</td>
 	<td>//table//tbody//td[contains(text(),'${key_tableEntryURL}')]</td>
 	<td></td>

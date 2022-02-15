@@ -14,6 +14,7 @@ export const PRODUCT_TYPES = {
 	commerce: 'Commerce',
 	dxp: 'DXP',
 	dxpCloud: 'DXP Cloud',
+	enterpriseSearch: 'Enterprise Search',
 	partnership: 'Partnership',
 	portal: 'Portal',
 };

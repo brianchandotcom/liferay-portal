@@ -59,7 +59,7 @@ const ActivationStatus = ({
 	});
 
 	const subscriptionGroupActivationStatus =
-		subscriptionGroupDXPCloud.activationStatus;
+		subscriptionGroupDXPCloud?.activationStatus;
 
 	const onCloseModal = async (isSuccess) => {
 		setVisible(false);

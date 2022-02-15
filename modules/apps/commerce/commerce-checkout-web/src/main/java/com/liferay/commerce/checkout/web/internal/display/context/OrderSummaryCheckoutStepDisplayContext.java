@@ -41,10 +41,13 @@ import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -76,6 +79,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 		CommercePaymentEngine commercePaymentEngine,
+		CommerceTermEntryLocalService commerceTermEntryLocalService,
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		CommerceOptionValueHelper commerceOptionValueHelper,
 		CPInstanceHelper cpInstanceHelper,
@@ -87,6 +91,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePaymentEngine = commercePaymentEngine;
+		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceOptionValueHelper = commerceOptionValueHelper;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -192,6 +197,18 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		return _commercePaymentEngine.getPaymentMethodName(
 			paymentMethodKey, locale);
+	}
+
+	public String getPaymentTermEntryName(Locale locale) {
+		CommerceTermEntry commerceTermEntry =
+			_commerceTermEntryLocalService.fetchCommerceTermEntry(
+				_commerceOrder.getPaymentCommerceTermEntryId());
+
+		if (commerceTermEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale));
 	}
 
 	public boolean isCheckoutRequestedDeliveryDateEnabled()
@@ -396,6 +413,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommercePaymentEngine _commercePaymentEngine;
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;
+	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final PercentageFormatter _percentageFormatter;

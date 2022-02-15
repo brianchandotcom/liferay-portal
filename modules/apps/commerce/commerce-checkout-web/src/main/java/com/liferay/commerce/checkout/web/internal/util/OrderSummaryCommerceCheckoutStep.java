@@ -42,6 +42,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -148,6 +149,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 					_commerceChannelLocalService, _commerceOrderHttpHelper,
 					_commerceOrderPriceCalculation,
 					_commerceOrderValidatorRegistry, _commercePaymentEngine,
+					_commerceTermEntryLocalService,
 					_commerceProductPriceCalculation,
 					_commerceOptionValueHelper, _cpInstanceHelper,
 					httpServletRequest, _percentageFormatter, _portal);
@@ -416,6 +418,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

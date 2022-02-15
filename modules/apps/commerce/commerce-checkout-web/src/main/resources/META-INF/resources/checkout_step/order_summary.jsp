@@ -52,6 +52,8 @@ if (commercePaymentMethodKey != null) {
 
 String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 
+String paymentTermEntryName = orderSummaryCheckoutStepDisplayContext.getPaymentTermEntryName(locale);
+
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
 
@@ -483,6 +485,18 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 					<div class="shipping-description">
 						<%= HtmlUtil.escape(commercePaymentMethodName) %>
+					</div>
+				</div>
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(paymentTermEntryName) %>">
+				<div class="panel-body payment-method">
+					<h5>
+						<liferay-ui:message key="payment-terms" />
+					</h5>
+
+					<div class="shipping-description">
+						<%= HtmlUtil.escape(paymentTermEntryName) %>
 					</div>
 				</div>
 			</c:if>

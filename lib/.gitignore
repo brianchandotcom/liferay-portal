@@ -203,13 +203,9 @@
 /portal/stax.jar
 /portal/streambuffer.jar
 /portal/tagsoup.jar
-/portal/tika-core.jar
-/portal/tika-parsers.jar
 /portal/tomcat-jdbc.jar
 /portal/tomcat-juli.jar
 /portal/transaction.jar
-/portal/vorbis-java-core.jar
-/portal/vorbis-java-tika.jar
 /portal/wstx.jar
 /portal/xbean-spring.jar
 /portal/xbean.jar

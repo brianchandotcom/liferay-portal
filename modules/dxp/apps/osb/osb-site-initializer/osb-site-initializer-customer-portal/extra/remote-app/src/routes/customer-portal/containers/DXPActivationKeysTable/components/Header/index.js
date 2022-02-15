@@ -10,7 +10,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-
 import {useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
@@ -22,6 +21,7 @@ import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
+import Search from '../Search';
 
 const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
 
@@ -33,6 +33,7 @@ const DXPActivationKeysTableHeader = ({
 	selectedKeys,
 	sessionId,
 	setActivationKeys,
+	setSearchTerm,
 }) => {
 	const navigate = useNavigate();
 
@@ -149,6 +150,8 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
+				<Search setSearchTerm={setSearchTerm} />
+
 				<div className="align-items-center d-flex ml-auto">
 					{!!selectedKeys.length && (
 						<>

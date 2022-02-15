@@ -48,6 +48,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 
 	const [activationKeys, setActivationKeys] = useState([]);
 	const [statusBar, setStatusBar] = useState({});
+	const [searchTerm, setSearchTerm] = useState('');
 
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
@@ -87,7 +88,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		setIsLoadingActivationKeys(true);
 		const fetchActivationKeysData = async () => {
 			const {items} = await getActivationLicenseKey(
-				project.accountKey,
+				'KOR-3809080',
 				licenseKeyDownloadURL,
 				encodeURI('active eq true'),
 				PAGE,
@@ -125,16 +126,54 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		}
 	}, [activationKeys]);
 
+	const searchTermToLowerCase = searchTerm.toLowerCase();
+
 	useEffect(() => {
+		const activationKeysSearchedByConditions = activationKeys.filter(
+			(activationKey) =>
+				activationKey.name
+					.toLowerCase()
+					.includes(searchTermToLowerCase) ||
+				activationKey.description
+					.toLowerCase()
+					.includes(searchTermToLowerCase) ||
+				activationKey.macAddresses
+					.toLowerCase()
+					.includes(searchTermToLowerCase) ||
+				activationKey.ipAddresses
+					.toLowerCase()
+					.includes(searchTermToLowerCase) ||
+				activationKey.hostName
+					.toLowerCase()
+					.includes(searchTermToLowerCase)
+		);
+
+		// eslint-disable-next-line no-console
+		console.log('searchTermToLowerCase:', searchTermToLowerCase);
+		// eslint-disable-next-line no-console
+		console.log('activationKeys:', activationKeys);
+		// eslint-disable-next-line no-console
+		console.log(
+			('activationKeysSearchedByConditions:',
+			activationKeysSearchedByConditions)
+		);
+
 		if (activationKeys.length) {
-			const activationKeysFilterData = activationKeys.filter(
-				(activationKey) =>
-					ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
-						? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar](
-								activationKey
-						  )
-						: Boolean
-			);
+			const activationKeysFilterData = searchTerm
+				? activationKeysSearchedByConditions.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
+							? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[
+									filterStatusBar
+							  ](activationKey)
+							: Boolean
+				  )
+				: activationKeys.filter((activationKey) =>
+						ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
+							? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[
+									filterStatusBar
+							  ](activationKey)
+							: Boolean
+				  );
 
 			setTotalCount(activationKeysFilterData?.length || 0);
 
@@ -149,7 +188,14 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					: activationKeysFilterData
 			);
 		}
-	}, [activationKeys, activePage, filterStatusBar, itemsPerPage]);
+	}, [
+		activationKeys,
+		activePage,
+		filterStatusBar,
+		itemsPerPage,
+		searchTerm,
+		searchTermToLowerCase,
+	]);
 
 	const groupButtons = [
 		getGroupButtons(ACTIVATION_STATUS.all, statusBar?.allTotalCount),
@@ -225,11 +271,16 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 						<DXPActivationKeysTableHeader
 							accountKey={project.accountKey}
 							activationKeys={activationKeysFiltered}
+							allActivationsKeys={activationKeys}
 							licenseKeyDownloadURL={licenseKeyDownloadURL}
 							project={project}
 							selectedKeys={activationKeysChecked}
 							sessionId={sessionId}
 							setActivationKeys={setActivationKeys}
+							setActivationKeysFiltered={
+								setActivationKeysFiltered
+							}
+							setSearchTerm={setSearchTerm}
 						/>
 					</div>
 

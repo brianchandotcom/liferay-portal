@@ -1,5 +1,5 @@
-<definition>
-	<command name="testAssertStatusCode">
-		<execute macro="HttpRequester#getGoogleResponse" />
-	</command>
-</definition>
+definition {
+	test TestAssertStatusCode{
+		HttpRequester.getGoogleResponse();
+	}
+}

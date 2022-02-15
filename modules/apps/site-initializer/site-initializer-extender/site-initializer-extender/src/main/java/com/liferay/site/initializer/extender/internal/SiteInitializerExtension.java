@@ -18,6 +18,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.initializer.util.PortletSettingsImporter;
+import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -84,7 +85,7 @@ public class SiteInitializerExtension {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		BundleContext bundleContext,
+		BundleContext bundleContext, DDMFormImporter ddmFormImporter,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -138,7 +139,7 @@ public class SiteInitializerExtension {
 			new BundleSiteInitializer(
 				accountResourceFactory, accountRoleLocalService,
 				accountRoleResourceFactory, assetCategoryLocalService,
-				assetListEntryLocalService, bundle, ddmStructureLocalService,
+				assetListEntryLocalService, bundle, ddmFormImporter, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,

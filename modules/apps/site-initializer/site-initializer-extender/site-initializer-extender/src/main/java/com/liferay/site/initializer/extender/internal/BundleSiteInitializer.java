@@ -28,8 +28,11 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -187,6 +190,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		DDMFormImporter ddmFormImporter,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -238,6 +242,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
+		_ddmFormImporter = ddmFormImporter;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -3045,6 +3050,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
 	private CommerceSiteInitializer _commerceSiteInitializer;
+	private final DDMFormImporter _ddmFormImporter;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

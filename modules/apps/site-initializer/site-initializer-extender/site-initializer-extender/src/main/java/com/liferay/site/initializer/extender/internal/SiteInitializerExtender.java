@@ -18,6 +18,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.initializer.util.PortletSettingsImporter;
+import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -102,12 +103,13 @@ public class SiteInitializerExtender
 				_accountResourceFactory, _accountRoleLocalService,
 				_accountRoleResourceFactory, _assetCategoryLocalService,
 				_assetListEntryLocalService, bundle, _bundleContext,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_ddmFormImporter, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
@@ -179,6 +181,9 @@ public class SiteInitializerExtender
 
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
+
+	@Reference
+	private DDMFormImporter _ddmFormImporter;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

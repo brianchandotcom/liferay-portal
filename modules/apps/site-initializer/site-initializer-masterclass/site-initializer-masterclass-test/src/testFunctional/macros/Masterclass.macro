@@ -130,4 +130,25 @@ definition {
 		}
 	}
 
+	macro goToLink {
+		Click(
+			key_buttonName = "${key_buttonName}",
+			key_href = "${key_href}",
+			locator1 = "Masterclass#FRAGMENT_LINK");
+
+		WaitForPageLoad();
+
+		if (isSet(key_description)) {
+			AssertElementPresent(
+				key_description = "${key_description}",
+				locator1 = "TeamExtranet#FRAGMENT_TEXT_BLOCK");
+		}
+
+		if (isSet(key_title)) {
+			AssertElementPresent(
+				key_title = "${key_title}",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+		}
+	}
+
 }

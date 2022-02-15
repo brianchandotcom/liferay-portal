@@ -375,7 +375,8 @@ public class ObjectFieldLocalServiceTest {
 		ableObjectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false);
+			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false,
+			Collections.emptyList());
 
 		Assert.assertNotNull(ableObjectField);
 
@@ -392,8 +393,8 @@ public class ObjectFieldLocalServiceTest {
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker",
-			false);
+			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker", false,
+			Collections.emptyList());
 
 		ObjectField bakerObjectField =
 			_objectFieldLocalService.fetchObjectField(
@@ -463,8 +464,8 @@ public class ObjectFieldLocalServiceTest {
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker",
-			false);
+			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker", false,
+			Collections.emptyList());
 
 		ObjectField bakerObjectField =
 			_objectFieldLocalService.fetchObjectField(
@@ -499,7 +500,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "LongInteger", "Long",
 			false, true, "", LocalizedMapUtil.getLocalizedMap("able"), "able",
-			false);
+			false, Collections.emptyList());
 
 		Assert.assertEquals("able_", objectField.getDBColumnName());
 		Assert.assertEquals("Long", objectField.getDBType());
@@ -514,7 +515,8 @@ public class ObjectFieldLocalServiceTest {
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "LongInteger", "Long", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false);
+			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false,
+			Collections.emptyList());
 
 		Assert.assertEquals("able_", objectField.getDBColumnName());
 		Assert.assertEquals("Long", objectField.getDBType());
@@ -533,7 +535,7 @@ public class ObjectFieldLocalServiceTest {
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
 			indexedLanguageId, LocalizedMapUtil.getLocalizedMap("baker"),
-			"baker", true);
+			"baker", true, Collections.emptyList());
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -554,7 +556,7 @@ public class ObjectFieldLocalServiceTest {
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Integer", "Integer", false,
 			true, "", LocalizedMapUtil.getLocalizedMap("charlie"), "charlie",
-			false);
+			false, Collections.emptyList());
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -659,7 +661,7 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getBusinessType(), "String",
 				objectField.isIndexed(), objectField.isIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getLabelMap(),
-				"able", objectField.isRequired());
+				"able", objectField.isRequired(), Collections.emptyList());
 
 			Assert.fail();
 		}

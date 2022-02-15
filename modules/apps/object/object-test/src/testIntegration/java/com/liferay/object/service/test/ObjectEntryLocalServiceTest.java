@@ -224,12 +224,13 @@ public class ObjectEntryLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "PrecisionDecimal",
 			"BigDecimal", true, false, null,
-			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false);
+			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false,
+			Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Decimal", "Double",
 			true, false, null, LocalizedMapUtil.getLocalizedMap("Weight"),
-			"weight", false);
+			"weight", false, Collections.emptyList());
 	}
 
 	@After

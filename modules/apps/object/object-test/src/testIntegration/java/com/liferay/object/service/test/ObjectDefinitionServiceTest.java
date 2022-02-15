@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -403,7 +404,7 @@ public class ObjectDefinitionServiceTest {
 					false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					StringUtil.randomId(), false);
+					StringUtil.randomId(), false, Collections.emptyList());
 
 			objectDefinition =
 				_objectDefinitionService.updateTitleObjectFieldId(

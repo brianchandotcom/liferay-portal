@@ -205,8 +205,8 @@ public class DLFileEntryLocalServiceImpl
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, long, String, String,
-	 *             String, String, String, long, Map, File, InputStream, long,
-	 *             Date, Date, ServiceContext)}
+	 *             String, String, String, String, long, Map, File, InputStream,
+	 *             long, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -220,7 +220,7 @@ public class DLFileEntryLocalServiceImpl
 
 		return addFileEntry(
 			null, userId, groupId, repositoryId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, fileEntryTypeId,
+			mimeType, title, title, description, changeLog, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, null, null,
 			serviceContext);
 	}
@@ -229,9 +229,10 @@ public class DLFileEntryLocalServiceImpl
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long repositoryId, long folderId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			File file, InputStream inputStream, long size, Date expirationDate,
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream inputStream, long size, Date expirationDate,
 			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -635,7 +636,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry newDLFileEntry = addFileEntry(
 			null, userId, groupId, repositoryId, destFolderId, sourceFileName,
 			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
-			dlFileEntry.getDescription(), null,
+			dlFileEntry.getTitle(), dlFileEntry.getDescription(), null,
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
 			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
 			dlFileEntry.getReviewDate(), serviceContext);
@@ -1762,11 +1763,36 @@ public class DLFileEntryLocalServiceImpl
 		LockManagerUtil.unlock(DLFileEntry.class.getName(), fileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.document.library.kernel.service.DLFileEntryLocalService#updateFileEntry(
+	 *             long, long, String, String, String, String, String, String,
+	 *             DLVersionNumberIncrease, long, Map, File, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, title,
+			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, null, null,
+			serviceContext);
+	}
+
+	@Override
+	public DLFileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
 			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
 			File file, InputStream inputStream, long size, Date expirationDate,
 			Date reviewDate, ServiceContext serviceContext)
@@ -1821,27 +1847,6 @@ public class DLFileEntryLocalServiceImpl
 			description, changeLog, dlVersionNumberIncrease, extraSettings,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, long, Map, File, InputStream, long, Date, Date, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			File file, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, file, inputStream, size, null, null,
-			serviceContext);
 	}
 
 	@Override

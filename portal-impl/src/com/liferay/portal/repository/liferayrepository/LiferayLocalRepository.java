@@ -117,9 +117,9 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
-			toFolderId(folderId), sourceFileName, mimeType, title, description,
-			changeLog, fileEntryTypeId, ddmFormValuesMap, file, null, size,
-			null, null, serviceContext);
+			toFolderId(folderId), sourceFileName, mimeType, title, title,
+			description, changeLog, fileEntryTypeId, ddmFormValuesMap, file,
+			null, size, null, null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -142,9 +142,9 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
-			toFolderId(folderId), sourceFileName, mimeType, title, description,
-			changeLog, fileEntryTypeId, ddmFormValuesMap, null, inputStream,
-			size, null, null, serviceContext);
+			toFolderId(folderId), sourceFileName, mimeType, title, title,
+			description, changeLog, fileEntryTypeId, ddmFormValuesMap, null,
+			inputStream, size, null, null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -604,8 +604,8 @@ public class LiferayLocalRepository
 		}
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			userId, fileEntryId, sourceFileName, mimeType, title, title,
+			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, null, size, expirationDate, reviewDate,
 			serviceContext);
 
@@ -628,8 +628,8 @@ public class LiferayLocalRepository
 			serviceContext, fileEntryTypeId);
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			userId, fileEntryId, sourceFileName, mimeType, title, title,
+			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, null, inputStream, size, expirationDate,
 			reviewDate, serviceContext);
 

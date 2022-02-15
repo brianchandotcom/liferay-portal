@@ -10805,6 +10805,60 @@ tokenLocation="REQUEST"</echo>
 		</if>
 
 		<if>
+			<isset property="openid.provider.auth0.test.account.email.address" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.auth0.test.account.email.address=${openid.provider.auth0.test.account.email.address}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="openid.provider.auth0.test.account.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.auth0.test.account.password=${openid.provider.auth0.test.account.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="openid.provider.okta.test.account.email.address" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.okta.test.account.email.address=${openid.provider.okta.test.account.email.address}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="openid.provider.okta.test.account.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.okta.test.account.password=${openid.provider.okta.test.account.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="openid.provider.pingone.test.account.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.pingone.test.account.password=${openid.provider.pingone.test.account.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="openid.provider.pingone.test.account.username" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					openid.provider.pingone.test.account.username=${openid.provider.pingone.test.account.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="openid.username" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

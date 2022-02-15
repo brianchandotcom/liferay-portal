@@ -360,6 +360,8 @@ definition {
 	}
 
 	macro viewEntry {
+		WaitForSPARefresh();
+
 		AssertElementPresent(
 			key_entry = "${entry}",
 			locator1 = "ObjectPortlet#ENTRY_VALUE");

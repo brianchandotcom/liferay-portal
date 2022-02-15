@@ -193,7 +193,9 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FileSizeException {
 
 		if (bytes == null) {
-			throw new FileSizeException("File size is zero for " + fileName);
+			throw new FileSizeException(
+				"File size is zero for " + fileName,
+				getMaxAllowableSize(mimeType));
 		}
 
 		validateFileSize(fileName, mimeType, bytes.length);
@@ -204,7 +206,8 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FileSizeException {
 
 		if (file == null) {
-			throw new FileSizeException("File is null for " + fileName);
+			throw new FileSizeException(
+				"File is null for " + fileName, getMaxAllowableSize(mimeType));
 		}
 
 		validateFileSize(fileName, mimeType, file.length());
@@ -218,7 +221,8 @@ public final class DLValidatorImpl implements DLValidator {
 		try {
 			if (inputStream == null) {
 				throw new FileSizeException(
-					"Input stream is null for " + fileName);
+					"Input stream is null for " + fileName,
+					getMaxAllowableSize(mimeType));
 			}
 
 			validateFileSize(fileName, mimeType, inputStream.available());
@@ -238,7 +242,8 @@ public final class DLValidatorImpl implements DLValidator {
 			throw new FileSizeException(
 				StringBundler.concat(
 					size, " exceeds the maximum permitted size of ", maxSize,
-					" for file ", fileName));
+					" for file ", fileName),
+				maxSize);
 		}
 	}
 

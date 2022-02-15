@@ -157,7 +157,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					fileEntry = _saveTempImageFileEntry(actionRequest);
 
 					if (fileEntry.getSize() > maxFileSize) {
-						throw new FileSizeException();
+						throw new FileSizeException(maxFileSize);
 					}
 				}
 

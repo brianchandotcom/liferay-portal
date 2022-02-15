@@ -410,6 +410,38 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="ObjectValidationRule" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectValidationRuleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectDefinitionId" type="long" />
+		<column name="active" type="boolean" />
+		<column name="errorLabel" type="String" />
+		<column name="engine" type="String" />
+		<column name="script" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectDefinitionId" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+		</finder>
+		<finder name="O_A" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="ObjectView" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -494,6 +526,7 @@
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipReverse</exception>
 		<exception>ObjectRelationshipType</exception>
+		<exception>ObjectValidation</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>

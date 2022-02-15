@@ -567,6 +567,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				_jenkinsMastersBlacklist, jenkinsMastersBlacklist.split(","));
 		}
 		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

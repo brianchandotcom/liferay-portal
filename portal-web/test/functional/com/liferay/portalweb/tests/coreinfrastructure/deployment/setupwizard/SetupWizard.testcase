@@ -30,6 +30,8 @@ definition {
 			User._clickSignInButton();
 
 			SignIn.agreeToTermsOfUse();
+
+			User.answerPasswordReminder();
 		}
 
 		task ("Then the admin is still required to reset its password") {

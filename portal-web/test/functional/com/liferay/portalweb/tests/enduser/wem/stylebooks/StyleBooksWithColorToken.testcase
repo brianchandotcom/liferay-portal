@@ -30,6 +30,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141568. The reference will be autocompleted as 6 digit characters, if the user fill out 3 digit characters when clicking on the tab, intro or outside the output."
+	@priority = "4"
+	test AutocompleteColorReference {
+		task ("Add a Container to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Change the Background Color to Info") {
+			PageEditor.editLayoutContainer(
+				backgroundColor = "Info",
+				panel = "Styles");
+		}
+
+		task ("Detach the linked token") {
+			PageEditor.detachToken(fieldLabel = "Background Color");
+		}
+
+		task ("Type a 3 digits color reference") {
+			Type(
+				key_text = "Background Color",
+				locator1 = "TextInput#ANY",
+				value1 = "#03C");
+		}
+
+		task ("View the color reference is autocompleted after trigger auto save") {
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_text = "Background Color",
+				locator1 = "TextInput#ANY",
+				value1 = "#0033CC");
+		}
+
+		task ("View the background color of Container") {
+			AssertCssValue(
+				locator1 = "//div[@aria-label='Container']//div[contains(@class,'container')]",
+				locator2 = "background-color",
+				value1 = "rgba(0, 51, 204, 1)");
+		}
+	}
+
 	@description = "This is a test for LPS-136199. The user could detach the linked token."
 	@priority = "5"
 	test DetachLinkedColorTokenInPageEditor {

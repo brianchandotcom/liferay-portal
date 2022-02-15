@@ -1,5 +1,6 @@
 import com.liferay.gradle.util.FileUtil
 
+task processBlogsSanitizerConfiguration(type: Copy)
 task processDefaultSanitizerConfiguration(type: Copy)
 task processKnowledgeBaseSanitizerConfiguration(type: Copy)
 
@@ -55,6 +56,34 @@ processDefaultSanitizerConfiguration {
 	}
 }
 
+processBlogsSanitizerConfiguration {
+	dependsOn processDefaultSanitizerConfiguration
+
+	File blogsSanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/blogs-sanitizer-configuration.xml")
+
+	ext {
+		autoClean = false
+	}
+
+	filter {
+		return _filterBlogsSanitizer(it)
+	}
+
+	from {
+		sanitizerConfigurationFile
+	}
+
+	into blogsSanitizerConfigurationFile.parentFile
+
+	onlyIf {
+		!blogsSanitizerConfigurationFile.exists()
+	}
+
+	rename {
+		blogsSanitizerConfigurationFile.name
+	}
+}
+
 processKnowledgeBaseSanitizerConfiguration {
 	dependsOn processDefaultSanitizerConfiguration
 
@@ -84,8 +113,94 @@ processKnowledgeBaseSanitizerConfiguration {
 }
 
 processResources {
+	dependsOn processBlogsSanitizerConfiguration
 	dependsOn processDefaultSanitizerConfiguration
 	dependsOn processKnowledgeBaseSanitizerConfiguration
+}
+
+private String _filterBlogsSanitizer(String line) {
+	if (line.contains('<directive name="embedStyleSheets" value="false"/>')) {
+		line = """\
+			|	${line}
+			|	<directive name="allowDynamicAttributes" value="true"/>""".stripMargin()
+	}
+
+	if (line.contains('</global-tag-attributes>')) {
+		line = """\
+			|	${line}
+			|	<dynamic-tag-attributes>
+			|		<attribute name="data-"/>
+			|	</dynamic-tag-attributes>""".stripMargin()
+	}
+
+	if (line.contains('<common-attributes>')) {
+		line = """\
+			|	${line}
+			|		<attribute name="data-" description="Allows the HTML5 'data-' attribute to be added to elements">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>""".stripMargin()
+	}
+
+	if (line.contains('<literal value="hr"/>')) {
+		line = """\
+			|	${line}
+			|	<literal value="iframe"/>""".stripMargin()
+	}
+	else if (line.contains('<tag name="iframe" action="remove"/>')) {
+		line = """\
+		|	<tag name="iframe" action="validate">
+		|		<attribute name="allow">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="allowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="allowTransparency">
+		|			<regexp-list>
+		|				<regexp name="boolean"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="frameborder">
+		|			<regexp-list>
+		|				<regexp name="integer"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="height"/>
+		|		<attribute name="mozallowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="scrolling">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="src">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="style">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="webkitallowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="boolean"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="width"/>
+		|	</tag>""".stripMargin()
+	}
+	return line
 }
 
 private String _filterDefaultSanitizer(String line) {

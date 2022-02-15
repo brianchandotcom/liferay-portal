@@ -68,25 +68,13 @@ export function useSetStyleError() {
 
 	return useCallback(
 		(fieldName, value, itemId = DEFAULT_ID) => {
-			let nextState;
-
-			if (state[itemId]) {
-				nextState = {
-					...state,
-					[itemId]: {
-						...state[itemId],
-						[fieldName]: value,
-					},
-				};
-			}
-			else {
-				nextState = {
-					...state,
-					[itemId]: {[fieldName]: value},
-				};
-			}
-
-			setState(nextState);
+			setState({
+				...state,
+				[itemId]: {
+					...state[itemId],
+					[fieldName]: value,
+				},
+			});
 		},
 		[setState, state]
 	);

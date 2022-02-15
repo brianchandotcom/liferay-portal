@@ -114,7 +114,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_addTaskExpandPoshiRunner(project);
 
-		Properties poshiProperties = _getPoshiProperties(poshiRunnerExtension);
+		final Properties poshiProperties = _getPoshiProperties(
+			poshiRunnerExtension);
 
 		final Copy downloadChromeDriverTask = _addTaskDownloadChromeDriver(
 			project, poshiProperties);
@@ -484,10 +485,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_configureTaskRunPoshiBinResultsDir(test);
 		_configureTaskRunPoshiReports(test);
-		_setWebDriverSystemProperties(test, poshiProperties);
 		_populateSystemProperties(
 			test.getSystemProperties(), poshiProperties, test.getProject(),
 			poshiRunnerExtension);
+		_populateWebDriverSystemProperties(test, poshiProperties);
 	}
 
 	private void _configureTaskRunPoshiBinResultsDir(Test test) {
@@ -582,7 +583,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 			if (!chromeBinaryFile.exists()) {
 				throw new IllegalArgumentException(
-					"Could not find Google Chrome binary, set " +
+					"Could not find Google Chrome binary, please set " +
 						"\"browser.chrome.bin.file\" in \"poshi.properties\"" +
 							" to a Google Chrome or Chromium binary");
 			}
@@ -763,7 +764,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _setWebDriverSystemProperties(
+	private void _populateWebDriverSystemProperties(
 		Test test, Properties poshiProperties) {
 
 		Map<String, Object> systemProperties = test.getSystemProperties();

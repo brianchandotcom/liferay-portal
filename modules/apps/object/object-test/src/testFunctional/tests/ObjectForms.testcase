@@ -306,12 +306,89 @@ definition {
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanRetrieveDataProvidersOnTextField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145727 CanRetrieveDataProvidersOnTextField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProvider(
+			name = "Object Entries",
+			outputParameterLabel = "Entry",
+			outputParameterName = "Object Name",
+			outputParameterPath = "$.items..customField",
+			outputParameterType = "List",
+			password = "test",
+			url = "http://localhost:8080/o/c/customobjects",
+			username = "test@liferay.com");
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
+
+		Navigator.openURL();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.gotoAutocompleteTab();
+
+		Form.enableAutocompleteConfiguration();
+
+		Form.editTextFieldDataProvider(
+			dataProvider = "Object Entries",
+			dataProviderOutput = "Entry");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Entry");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewEntriesTitle(key_entriesTitle = "Entry");
 	}
 
 	@description = "LPS-139692 - Verify that 'Select Object' field is required"

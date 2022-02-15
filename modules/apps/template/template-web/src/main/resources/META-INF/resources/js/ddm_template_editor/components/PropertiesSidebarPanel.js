@@ -50,7 +50,7 @@ export default function PropertiesSidebarPanel({className}) {
 
 	return (
 		<div className={classNames(className, 'px-3')}>
-			<h1 className="ddm_template_editor__App-sidebar-title my-3">
+			<h1 className="ddm_template_editor__App-sidebar-title mb-4 mt-3">
 				{Liferay.Language.get('properties')}
 			</h1>
 

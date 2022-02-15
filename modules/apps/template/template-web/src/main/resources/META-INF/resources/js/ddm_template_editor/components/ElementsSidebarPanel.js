@@ -68,7 +68,7 @@ export function ElementsSidebarPanel({className}) {
 				{Liferay.Language.get('elements')}
 			</h1>
 
-			<ClayForm.Group small>
+			<ClayForm.Group className="mb-4" small>
 				<label className="sr-only" htmlFor={SEARCH_INPUT_ID}>
 					{Liferay.Language.get('search')}
 				</label>

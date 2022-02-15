@@ -144,7 +144,7 @@ definition {
 			actionName = "Action Name");
 	}
 
-	@description = "LPS-139008 - Verify that Actions will stop to work when inactivated"
+	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanInactivateAction {
@@ -241,7 +241,7 @@ definition {
 		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
 	}
 
-	@description = "LPS-139008 - Verify that Actions will work again after reactivated"
+	@description = "LPS-139008 - Verify that it is possible to reactivate an Action"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanReactivateAction {

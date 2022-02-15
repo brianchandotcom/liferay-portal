@@ -95,6 +95,12 @@ public class CookieKeys {
 			return;
 		}
 
+		if ((cookie.getMaxAge() != 0) &&
+			!CookieConsentUtil.hasCookieTypeConsent(httpServletRequest, type)) {
+
+			return;
+		}
+
 		// LEP-5175
 
 		String name = cookie.getName();

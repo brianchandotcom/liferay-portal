@@ -1,8 +1,8 @@
 @component-name = "portal-wcm"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-	property osgi.module.configurations = "tokenReuseEnabled=&quot;true&quot;";
+	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config:com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+	property osgi.module.configurations = "tokenReuseEnabled=&quot;true&quot;:tokenReuseEnabled=&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Style Books";
@@ -83,6 +83,43 @@ definition {
 				locator1 = "//div[@aria-label='Container']//div[contains(@class,'container')]",
 				locator2 = "background-color",
 				value1 = "rgba(0, 51, 204, 1)");
+		}
+	}
+
+	@description = "This is a test for LPS-141568. The user cannot refer two tokens mutually."
+	@priority = "4"
+	test CannotReferTwoTokensMutually {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("Navigate to the Color System form") {
+			StyleBooks.selectForm(formName = "Color System");
+		}
+
+		task ("Refer Brand Color 1 to Branch Color 2") {
+			StyleBooks.linkValueFromStyleBook(
+				colorSwatchItem = "Brand Color 2",
+				fieldLabel = "Brand Color 1");
+		}
+
+		task ("Cannot refer Brand Color 2 to Brand Color 1") {
+			Click.clickNoWaitForVisible(
+				key_fieldLabel = "Brand Color 2",
+				key_text = "theme",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			AssertVisible(
+				key_text = "Brand Color 1",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 

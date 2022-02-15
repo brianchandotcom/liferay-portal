@@ -10,89 +10,26 @@
  */
 
 import {useCustomerPortal} from '../context';
-import Layout from '../layouts/BaseLayout';
 import {PAGE_TYPES} from '../utils/constants';
-import ActivationKeys from './ActivationKeys';
-import DXP from './DXP';
-import DXPCloud from './DXPCloud';
 import Home from './Home';
-import Overview from './Overview';
-import TeamMembers from './TeamMembers';
+import Overview from './Project/Overview';
+import ProjectRoutes from './Project/project.routes';
 
 const Pages = () => {
-	const [
-		{page, project, sessionId, subscriptionGroups, userAccount},
-	] = useCustomerPortal();
-
+	const [{page, userAccount}] = useCustomerPortal();
 	const PageLayout = {
-		[PAGE_TYPES.commerce]: {
-			Component: (
-				<ActivationKeys.Commerce
-					accountKey={project?.accountKey}
-					sessionId={sessionId}
-				/>
-			),
-			Skeleton: <ActivationKeys.Skeleton />,
-		},
-		[PAGE_TYPES.dxp]: {
-			Component: <DXP project={project} sessionId={sessionId} />,
-			Skeleton: <ActivationKeys.Skeleton />,
-		},
-		[PAGE_TYPES.dxpCloud]: {
-			Component: (
-				<DXPCloud
-					project={project}
-					sessionId={sessionId}
-					subscriptionGroups={subscriptionGroups}
-					userAccount={userAccount}
-				/>
-			),
-			Skeleton: <ActivationKeys.Skeleton />,
-		},
-		[PAGE_TYPES.enterpriseSearch]: {
-			Component: (
-				<ActivationKeys.EnterpriseSearch
-					accountKey={project?.accountKey}
-					sessionId={sessionId}
-				/>
-			),
-			Skeleton: <ActivationKeys.Skeleton />,
-		},
 		[PAGE_TYPES.home]: {
 			Component: <Home userAccount={userAccount} />,
 			Skeleton: <Home.Skeleton />,
 		},
 		[PAGE_TYPES.overview]: {
-			Component: (
-				<Overview
-					project={project}
-					subscriptionGroups={subscriptionGroups}
-				/>
-			),
+			Component: <ProjectRoutes />,
 			Skeleton: <Overview.Skeleton />,
-		},
-		[PAGE_TYPES.teamMembers]: {
-			Component: <TeamMembers project={project} sessionId={sessionId} />,
-			Skeleton: <ActivationKeys.Skeleton />,
 		},
 	};
 
-	if (
-		((project && subscriptionGroups && sessionId) ||
-			page === PAGE_TYPES.home) &&
-		userAccount
-	) {
-		return (
-			<Layout
-				hasProjectContact={page === PAGE_TYPES.overview}
-				hasQuickLinks={
-					page !== PAGE_TYPES.teamMembers && page !== PAGE_TYPES.home
-				}
-				project={project}
-			>
-				{PageLayout[page].Component}
-			</Layout>
-		);
+	if (userAccount) {
+		return PageLayout[page].Component;
 	}
 
 	return PageLayout[page].Skeleton;

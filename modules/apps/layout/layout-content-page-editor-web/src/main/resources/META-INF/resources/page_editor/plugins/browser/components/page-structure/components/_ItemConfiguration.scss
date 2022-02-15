@@ -40,12 +40,6 @@ html#{$cadmin-selector} {
 					}
 				}
 
-				.btn {
-					&:nth-last-child(2) {
-						margin: 0;
-					}
-				}
-
 				.form-group .btn {
 					border-color: $cadmin-gray-300;
 				}

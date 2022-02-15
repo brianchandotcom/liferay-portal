@@ -23,6 +23,7 @@ import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSiz
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import isNullOrUndefined from '../../../../../../app/utils/isNullOrUndefined';
+import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../../../prop-types/index';
 
@@ -55,56 +56,66 @@ export function FieldSet({
 						field.responsive || field.name === 'backgroundImage'
 			  );
 
+	return availableFields.length > 0 && label ? (
+		<Collapse label={label} open>
+			<FieldSetContent
+				fields={availableFields}
+				item={item}
+				languageId={languageId}
+				onValueSelect={onValueSelect}
+				values={values}
+			/>
+		</Collapse>
+	) : (
+		<FieldSetContent
+			fields={availableFields}
+			item={item}
+			languageId={languageId}
+			onValueSelect={onValueSelect}
+			values={values}
+		/>
+	);
+}
+
+function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 	return (
-		availableFields.length > 0 && (
-			<>
-				{label && (
-					<div className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset-label pt-2">
-						<p className="mb-3 text-uppercase">{label}</p>
+		<div className="page-editor__sidebar__fieldset">
+			{fields.map((field, index) => {
+				const FieldComponent =
+					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
+
+				return (
+					<div
+						className={classNames(
+							'autofit-row',
+							'page-editor__sidebar__fieldset__field align-items-end',
+							{
+								'page-editor__sidebar__fieldset__field-small':
+									field.displaySize === DISPLAY_SIZES.small,
+							}
+						)}
+						key={index}
+					>
+						<div className="autofit-col autofit-col-expand">
+							<FieldComponent
+								disabled={fieldIsDisabled(item, field)}
+								field={field}
+								onValueSelect={onValueSelect}
+								value={getFieldValue({
+									field,
+									languageId,
+									values,
+								})}
+							/>
+						</div>
+
+						{field.localizable && (
+							<CurrentLanguageFlag className="ml-2" />
+						)}
 					</div>
-				)}
-
-				<div className="page-editor__sidebar__fieldset">
-					{availableFields.map((field, index) => {
-						const FieldComponent =
-							field.type &&
-							FRAGMENT_CONFIGURATION_FIELDS[field.type];
-
-						return (
-							<div
-								className={classNames(
-									'autofit-row',
-									'page-editor__sidebar__fieldset__field align-items-end',
-									{
-										'page-editor__sidebar__fieldset__field-small':
-											field.displaySize ===
-											DISPLAY_SIZES.small,
-									}
-								)}
-								key={index}
-							>
-								<div className="autofit-col autofit-col-expand">
-									<FieldComponent
-										disabled={fieldIsDisabled(item, field)}
-										field={field}
-										onValueSelect={onValueSelect}
-										value={getFieldValue({
-											field,
-											languageId,
-											values,
-										})}
-									/>
-								</div>
-
-								{field.localizable && (
-									<CurrentLanguageFlag className="ml-2" />
-								)}
-							</div>
-						);
-					})}
-				</div>
-			</>
-		)
+				);
+			})}
+		</div>
 	);
 }
 

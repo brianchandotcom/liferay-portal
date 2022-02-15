@@ -15,14 +15,17 @@
 package com.liferay.document.library.internal.configuration.persistence.listener;
 
 import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
+import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitCompanyConfigurationCache;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -37,6 +40,9 @@ public class MimeTypeSizeLimitConfigurationModelListener
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
+
+		_mimeTypeSizeLimitCompanyConfigurationCache.clear(
+			GetterUtil.getLong(properties.get("companyId")));
 
 		String[] mimeTypeSizeLimit = (String[])properties.get(
 			"mimeTypeSizeLimit");
@@ -69,5 +75,17 @@ public class MimeTypeSizeLimitConfigurationModelListener
 				});
 		}
 	}
+
+	protected void setMimeTypeSizeLimitCompanyConfigurationCache(
+		MimeTypeSizeLimitCompanyConfigurationCache
+			mimeTypeSizeLimitCompanyConfigurationCache) {
+
+		_mimeTypeSizeLimitCompanyConfigurationCache =
+			mimeTypeSizeLimitCompanyConfigurationCache;
+	}
+
+	@Reference
+	private MimeTypeSizeLimitCompanyConfigurationCache
+		_mimeTypeSizeLimitCompanyConfigurationCache;
 
 }

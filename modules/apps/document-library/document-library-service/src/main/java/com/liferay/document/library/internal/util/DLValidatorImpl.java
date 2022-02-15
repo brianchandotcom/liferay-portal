@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
+import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitCompanyConfigurationCache;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -41,7 +41,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -82,8 +81,11 @@ public final class DLValidatorImpl implements DLValidator {
 	@Override
 	public long getMaxAllowableSize(String mimeType) {
 		long globalMaxAllowableSize = _getGlobalMaxAllowableSize();
-		long mimeTypeFileMaxSize = _mimeTypeSizeLimits.getOrDefault(
-			mimeType, 0L);
+
+		long mimeTypeFileMaxSize =
+			_mimeTypeSizeLimitCompanyConfigurationCache.
+				getCompanyMimeTypeSizeLimit(
+					CompanyThreadLocal.getCompanyId(), mimeType);
 
 		if (mimeTypeFileMaxSize == 0) {
 			return globalMaxAllowableSize;
@@ -284,29 +286,18 @@ public final class DLValidatorImpl implements DLValidator {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
-
-		MimeTypeSizeLimitConfiguration mimeTypeSizeLimitConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MimeTypeSizeLimitConfiguration.class, properties);
-
-		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
-
-		for (String mimeTypeSizeLimit :
-				mimeTypeSizeLimitConfiguration.contentTypeSizeLimit()) {
-
-			MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
-				mimeTypeSizeLimit, mimeTypeSizeLimits::put);
-		}
-
-		_mimeTypeSizeLimits = mimeTypeSizeLimits;
 	}
 
 	protected void setDLConfiguration(DLConfiguration dlConfiguration) {
 		_dlConfiguration = dlConfiguration;
 	}
 
-	protected void setMimeTypeSizeLimits(Map<String, Long> mimeTypeSizeLimits) {
-		_mimeTypeSizeLimits = mimeTypeSizeLimits;
+	protected void setMimeTypeSizeLimitCompanyConfigurationCache(
+		MimeTypeSizeLimitCompanyConfigurationCache
+			mimeTypeSizeLimitCompanyConfigurationCache) {
+
+		_mimeTypeSizeLimitCompanyConfigurationCache =
+			mimeTypeSizeLimitCompanyConfigurationCache;
 	}
 
 	protected void setUploadServletRequestConfigurationHelper(
@@ -387,7 +378,10 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	private volatile DLConfiguration _dlConfiguration;
-	private volatile Map<String, Long> _mimeTypeSizeLimits;
+
+	@Reference
+	private MimeTypeSizeLimitCompanyConfigurationCache
+		_mimeTypeSizeLimitCompanyConfigurationCache;
 
 	@Reference
 	private UploadServletRequestConfigurationHelper

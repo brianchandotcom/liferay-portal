@@ -15,14 +15,12 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitCompanyConfigurationCache;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,9 +46,11 @@ public class DLValidatorImplTest {
 
 		dlValidatorImpl.setDLConfiguration(_dlConfiguration);
 
-		_mimeTypeSizeLimits = new HashMap<>();
+		_mimeTypeSizeLimitCompanyConfigurationCache = Mockito.mock(
+			MimeTypeSizeLimitCompanyConfigurationCache.class);
 
-		dlValidatorImpl.setMimeTypeSizeLimits(_mimeTypeSizeLimits);
+		dlValidatorImpl.setMimeTypeSizeLimitCompanyConfigurationCache(
+			_mimeTypeSizeLimitCompanyConfigurationCache);
 
 		_uploadServletRequestConfigurationHelper = Mockito.mock(
 			UploadServletRequestConfigurationHelper.class);
@@ -74,7 +74,13 @@ public class DLValidatorImplTest {
 			10L
 		);
 
-		_mimeTypeSizeLimits.put("image/png", 15L);
+		Mockito.when(
+			_mimeTypeSizeLimitCompanyConfigurationCache.
+				getCompanyMimeTypeSizeLimit(
+					Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			15L
+		);
 
 		Assert.assertEquals(10, _dlValidator.getMaxAllowableSize("image/png"));
 	}
@@ -93,7 +99,13 @@ public class DLValidatorImplTest {
 			10L
 		);
 
-		_mimeTypeSizeLimits.put("image/png", 5L);
+		Mockito.when(
+			_mimeTypeSizeLimitCompanyConfigurationCache.
+				getCompanyMimeTypeSizeLimit(
+					Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			5L
+		);
 
 		Assert.assertEquals(5, _dlValidator.getMaxAllowableSize("image/png"));
 	}
@@ -152,7 +164,8 @@ public class DLValidatorImplTest {
 
 	private DLConfiguration _dlConfiguration;
 	private DLValidator _dlValidator;
-	private Map<String, Long> _mimeTypeSizeLimits;
+	private MimeTypeSizeLimitCompanyConfigurationCache
+		_mimeTypeSizeLimitCompanyConfigurationCache;
 	private UploadServletRequestConfigurationHelper
 		_uploadServletRequestConfigurationHelper;
 

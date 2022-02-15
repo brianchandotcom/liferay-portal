@@ -57,7 +57,8 @@ public class FieldMappingsDisplayContextTest {
 			new FieldMappingsDisplayContextBuilder(http);
 
 		fieldMappingsDisplayContextBuilder.setCurrentURL("/");
-		fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+		fieldMappingsDisplayContextBuilder.setIndexInformation(
+			indexInformation);
 		fieldMappingsDisplayContextBuilder.setNamespace("_namespace_");
 
 		FieldMappingsDisplayContext fieldMappingsDisplayContext =
@@ -102,7 +103,8 @@ public class FieldMappingsDisplayContextTest {
 			new FieldMappingsDisplayContextBuilder(http);
 
 		fieldMappingsDisplayContextBuilder.setCurrentURL("/");
-		fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+		fieldMappingsDisplayContextBuilder.setIndexInformation(
+			indexInformation);
 		fieldMappingsDisplayContextBuilder.setNamespace("_namespace_");
 		fieldMappingsDisplayContextBuilder.setSelectedIndexName("index2");
 
@@ -142,7 +144,8 @@ public class FieldMappingsDisplayContextTest {
 
 		fieldMappingsDisplayContextBuilder.setCompanyId(2);
 		fieldMappingsDisplayContextBuilder.setCurrentURL("/");
-		fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+		fieldMappingsDisplayContextBuilder.setIndexInformation(
+			indexInformation);
 		fieldMappingsDisplayContextBuilder.setNamespace("_namespace_");
 
 		FieldMappingsDisplayContext fieldMappingsDisplayContext =
@@ -180,7 +183,8 @@ public class FieldMappingsDisplayContextTest {
 			new FieldMappingsDisplayContextBuilder(http);
 
 		fieldMappingsDisplayContextBuilder.setCurrentURL("/");
-		fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+		fieldMappingsDisplayContextBuilder.setIndexInformation(
+			indexInformation);
 		fieldMappingsDisplayContextBuilder.setNamespace("_namespace_");
 
 		FieldMappingsDisplayContext fieldMappingsDisplayContext =

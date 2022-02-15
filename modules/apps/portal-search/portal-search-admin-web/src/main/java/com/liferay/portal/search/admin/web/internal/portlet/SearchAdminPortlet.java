@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys;
+import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.FieldMappingsDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
-import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
@@ -103,7 +103,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 		if (tab.equals("connections")) {
 			SearchEngineDisplayContextBuilder
 				searchEngineDisplayContextBuilder =
-				new SearchEngineDisplayContextBuilder();
+					new SearchEngineDisplayContextBuilder();
 
 			searchEngineDisplayContextBuilder.setSearchEngineInformation(
 				searchEngineInformation);
@@ -115,20 +115,22 @@ public class SearchAdminPortlet extends MVCPortlet {
 		else if (tab.equals("field-mappings")) {
 			FieldMappingsDisplayContextBuilder
 				fieldMappingsDisplayContextBuilder =
-				new FieldMappingsDisplayContextBuilder(_http);
+					new FieldMappingsDisplayContextBuilder(_http);
 
 			fieldMappingsDisplayContextBuilder.setCompanyId(
 				_portal.getCompanyId(renderRequest));
 			fieldMappingsDisplayContextBuilder.setCurrentURL(
 				_portal.getCurrentURL(renderRequest));
-			fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+			fieldMappingsDisplayContextBuilder.setIndexInformation(
+				indexInformation);
 			fieldMappingsDisplayContextBuilder.setNamespace(
 				renderResponse.getNamespace());
 
 			String selectedIndexName = ParamUtil.getString(
 				renderRequest, "selectedIndexName");
 
-			fieldMappingsDisplayContextBuilder.setSelectedIndexName(selectedIndexName);
+			fieldMappingsDisplayContextBuilder.setSelectedIndexName(
+				selectedIndexName);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.FIELD_MAPPINGS_DISPLAY_CONTEXT,
@@ -137,8 +139,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 		else {
 			IndexActionsDisplayContextBuilder
 				indexActionsDisplayContextBuilder =
-				new IndexActionsDisplayContextBuilder(
-					_http, _language, _portal, renderRequest, renderResponse);
+					new IndexActionsDisplayContextBuilder(
+						_http, _language, _portal, renderRequest,
+						renderResponse);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,

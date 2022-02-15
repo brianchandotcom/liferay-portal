@@ -1,195 +1,193 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        ApplicationsMenu.gotoPortlet(
-            category = "Configuration",
-            panel = "Control Panel",
-            portlet = "Instance Settings");
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
 
-        SystemSettings.gotoConfiguration(
-            configurationCategory = "Digital Signature",
-            configurationName = "Digital Signature Configuration",
-            configurationScope = "Virtual Instance Scope");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Digital Signature",
+			configurationName = "Digital Signature Configuration",
+			configurationScope = "Virtual Instance Scope");
 
-        FormFields.enableCheckbox(fieldName = "enabled");
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-        DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-        else {
-            
-            User.logoutPG();
-        }
-    }
+	@description = "Verify that after payment by PayPal, an email from Docusign is sent with the signature document"
+	@priority = "5"
+	test CanViewSentEmail {
+		RaylifePaymentMethod.enablePayPalPayment();
 
-    @description = "Verify that after payment by PayPal, an email from Docusign is sent with the signature document"
-    @priority = "5"
-    test CanViewSentEmail {
-        RaylifePaymentMethod.enablePayPalPayment();
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		RaylifeHomePage.startFlow();
 
-        RaylifeHomePage.startFlow();
+		Raylife.formsFlow();
 
-        Raylife.formsFlow();
+		RaylifeCreateAccount.createAccount();
 
-        RaylifeCreateAccount.createAccount();
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.pdf",
-            title = "Business");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.jpg",
-            title = "Build");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
-        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+		RaylifePaymentMethod.payPalFlow();
 
-        RaylifePaymentMethod.payPalFlow();
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Digital Signature");
+		Refresh();
 
-        Refresh();
+		AssertElementPresent(
+			envelopeName = "Raylife Insurance",
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
 
-        AssertElementPresent(
-            envelopeName = "Raylife Insurance",
-            locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
-            
-        DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");
-    }
+		DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");
+	}
 
-    @description = "Check that the first name on the envelope is the same as on the form"
-    @priority = "3"
-    test FirstNameOnEnvelopeSameAsForm {
-        RaylifePaymentMethod.enablePayPalPayment();
+	@description = "Check if the email address of the envelope is the same as the one on the form"
+	@priority = "3"
+	test EmailOnTheEnvelopeEqualOnTheForm {
+		RaylifePaymentMethod.enablePayPalPayment();
 
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.startFlow();
 
-        Raylife.formsFlow();
+		Raylife.formsFlow();
 
-        RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount();
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.pdf",
-            title = "Business");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.jpg",
-            title = "Build");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
 
-        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
-        RaylifePaymentMethod.payPalFlow();
+		RaylifePaymentMethod.payPalFlow();
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Digital Signature");
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
 
-        Refresh();
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
 
-        AssertElementPresent(
-            locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_NAME",
-            value = "FirstName");
+		Refresh();
 
-    }
+		AssertElementPresent(
+			locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_EMAIL",
+			value1 = "test@liferay.com");
 
-    @description = "Check that the last name on the envelope is the same as on the form"
-    @priority = "3"
-    test LastNameOnEnvelopeSameAsForm {
-        RaylifePaymentMethod.enablePayPalPayment();
+		DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");
+	}
 
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+	@description = "Check that the first name on the envelope is the same as on the form"
+	@priority = "3"
+	test FirstNameOnEnvelopeSameAsForm {
+		RaylifePaymentMethod.enablePayPalPayment();
 
-        RaylifeHomePage.startFlow();
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-        Raylife.formsFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeCreateAccount.createAccount();
+		Raylife.formsFlow();
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.pdf",
-            title = "Business");
+		RaylifeCreateAccount.createAccount();
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.jpg",
-            title = "Build");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
 
-        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
 
-        RaylifePaymentMethod.payPalFlow();
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Digital Signature");
+		RaylifePaymentMethod.payPalFlow();
 
-        Refresh();
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
 
-        AssertElementPresent(
-            locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_NAME",
-            value = "LastName");
-    }
+		Refresh();
 
-    @description = "Check if the email address of the envelope is the same as the one on the form"
-    @priority = "3"
-    test EmailOnTheEnvelopeEqualOnTheForm {
-        RaylifePaymentMethod.enablePayPalPayment();
+		AssertElementPresent(
+			locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_NAME",
+			value = "FirstName");
+	}
 
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+	@description = "Check that the last name on the envelope is the same as on the form"
+	@priority = "3"
+	test LastNameOnEnvelopeSameAsForm {
+		RaylifePaymentMethod.enablePayPalPayment();
 
-        RaylifeHomePage.startFlow();
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-        Raylife.formsFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeCreateAccount.createAccount();
+		Raylife.formsFlow();
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.pdf",
-            title = "Business");
+		RaylifeCreateAccount.createAccount();
 
-        RaylifeUploadDocuments.uploadDocuments(
-            dmDocumentFileList = "Document_1.jpg",
-            title = "Build");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
 
-        Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
 
-        RaylifePaymentMethod.payPalFlow();
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
-        AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+		RaylifePaymentMethod.payPalFlow();
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Digital Signature");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
 
-        Refresh();
+		Refresh();
 
-        AssertElementPresent(
-            locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_EMAIL",
-            value1 = "test@liferay.com");
+		AssertElementPresent(
+			locator1 = "RaylifeDocuSignIntegration#RECIPIENTS_NAME",
+			value = "LastName");
+	}
 
-        DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");        
-    }
 }

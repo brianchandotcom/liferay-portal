@@ -43,6 +43,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
@@ -255,23 +256,38 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Copy copy = GradleUtil.addTask(
 			project, DOWNLOAD_CHROME_DRIVER_TASK_NAME, Copy.class);
 
-		try {
-			File webDriverDir = _getWebDriverDir(project);
-			final File chromeDriverFile = FileUtil.get(
-				project,
-				_getChromeDriverUrl(
-					_getChromeDriverVersion(
-						project,
-						poshiProperties.getProperty(
-							"browser.chrome.bin.file"))),
-				null);
+		final File webDriverDir = _getWebDriverDir(project);
 
-			project.delete(webDriverDir);
+		copy.doFirst(
+			new Action<Task>() {
 
-			Closure<Void> closure = new Closure<Void>(project) {
+				@Override
+				public void execute(Task task) {
+					project.delete(webDriverDir);
+				}
+
+			});
+
+		copy.from(
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public FileTree doCall() {
+					File chromeDriverFile = null;
+
+					String chromeBinaryPath = poshiProperties.getProperty(
+						"browser.chrome.bin.file");
+
+					String url = _getChromeDriverUrl(
+						_getChromeDriverVersion(project, chromeBinaryPath));
+
+					try {
+						chromeDriverFile = FileUtil.get(project, url, null);
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+
 					String chromeDriverFileName = chromeDriverFile.getName();
 
 					if (chromeDriverFileName.endsWith(".zip")) {
@@ -281,16 +297,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					return null;
 				}
 
-			};
+			});
 
-			copy.from(closure);
-
-			copy.into(webDriverDir);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to download ChromeDriver binary", ioException);
-		}
+		copy.into(webDriverDir);
 
 		return copy;
 	}

@@ -307,7 +307,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public String[] getPrimaryKeyColumnNames(
-		Connection connection, String tableName)
+			Connection connection, String tableName)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -320,8 +320,8 @@ public abstract class BaseDB implements DB {
 		String[] columnNames = new String[0];
 
 		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
-			dbInspector.getCatalog(), dbInspector.getSchema(),
-			normalizedTableName)) {
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				normalizedTableName)) {
 
 			while (resultSet.next()) {
 				columnNames = ArrayUtil.append(
@@ -334,9 +334,14 @@ public abstract class BaseDB implements DB {
 		return columnNames;
 	}
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #getPrimaryKeyColumnNames(Connection, String)}
+	 */
+	@Deprecated
 	@Override
 	public ResultSet getPrimaryKeysResultSet(
-		Connection connection, String tableName)
+			Connection connection, String tableName)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();

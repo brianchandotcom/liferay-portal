@@ -101,6 +101,11 @@ public interface DB {
 			Connection connection, String tableName)
 		throws SQLException;
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #getPrimaryKeyColumnNames(Connection, String)}
+	 */
+	@Deprecated
 	public ResultSet getPrimaryKeysResultSet(
 			Connection connection, String tableName)
 		throws SQLException;

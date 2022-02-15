@@ -1597,6 +1597,7 @@ public class VerifyProperties extends VerifyProcess {
 		"captcha.engine.simplecaptcha.text.producers",
 		"captcha.engine.simplecaptcha.word.renderers", "cas.validate.url",
 		"cluster.executor.heartbeat.interval",
+		"cluster.link.node.bootup.response.timeout",
 		"com.liferay.filters.doubleclick.DoubleClickFilter",
 		"com.liferay.portal.servlet.filters.audit.AuditFilter",
 		"com.liferay.portal.servlet.filters.doubleclick.DoubleClickFilter",

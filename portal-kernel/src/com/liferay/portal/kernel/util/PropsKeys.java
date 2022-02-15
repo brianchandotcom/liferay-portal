@@ -458,9 +458,6 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 
-	public static final String CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
-		"cluster.link.node.bootup.response.timeout";
-
 	public static final String CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT =
 		"clusterable.advice.call.master.timeout";
 

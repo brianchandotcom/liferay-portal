@@ -138,6 +138,10 @@ components:
                     type: integer
                 name:
                     type: string
+                objectFieldSettings:
+                    items:
+                        $ref: "#/components/schemas/ObjectFieldSetting"
+                    type: array
                 relationshipType:
                     enum: [oneToMany, oneToOne]
                     readOnly: true

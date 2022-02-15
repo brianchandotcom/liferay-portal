@@ -65,6 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PLOPortlet extends MVCPortlet {
 
+	@SuppressWarnings("unused")
 	public void deletePLOEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
@@ -74,6 +75,7 @@ public class PLOPortlet extends MVCPortlet {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void deletePLOEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
@@ -85,6 +87,7 @@ public class PLOPortlet extends MVCPortlet {
 		_ploEntryService.deletePLOEntry(key, selectedLanguageId);
 	}
 
+	@SuppressWarnings("unused")
 	public void editPLOEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {

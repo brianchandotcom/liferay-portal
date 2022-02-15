@@ -64,10 +64,6 @@
 			<contains>No theme found for specified theme id userdashboard_WAR_userdashboardtheme</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="COMMERCE-5588 - temporarily ignore until fixed">
-			<contains>IX_1B108A04</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-22821">
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>
@@ -208,7 +204,7 @@
 			<contains></contains>
 			<matches>.*Unable to find class loader for com.liferay.portal.scheduler.quartz_.* class loader com.liferay.portal.scheduler.quartz_.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-88522 - temporarily ignore until fixed">
+		<ignore-error description="LPS-88522">
 			<contains>already has the column lastPublishDate</contains>
 			<matches></matches>
 		</ignore-error>
@@ -246,26 +242,6 @@
 		</ignore-error>
 		<ignore-error description="LPS-123610">
 			<contains>No default user was found for company</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-127275 - temporarily ignore until fixed">
-			<contains>com.liferay.analytics.message.sender.impl</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-127285 - temporarily ignore until fixed">
-			<contains>StyleBookEntryVersion</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
-			<contains></contains>
-			<matches>bundle com.liferay.portal.properties.swapper.*The activate method has thrown an exception</matches>
-		</ignore-error>
-		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
-			<contains>Store is not available</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
-			<contains>Unable to register portal instance</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-141256 - temporarily ignore until fixed">

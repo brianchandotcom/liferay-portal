@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.client.serdes.v1_0;
 
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -171,6 +173,29 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getObjectFieldSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectFieldSettings\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectField.getObjectFieldSettings().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(objectField.getObjectFieldSettings()[i]));
+
+				if ((i + 1) < objectField.getObjectFieldSettings().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (objectField.getRelationshipType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -305,6 +330,15 @@ public class ObjectFieldSerDes {
 			map.put("name", String.valueOf(objectField.getName()));
 		}
 
+		if (objectField.getObjectFieldSettings() == null) {
+			map.put("objectFieldSettings", null);
+		}
+		else {
+			map.put(
+				"objectFieldSettings",
+				String.valueOf(objectField.getObjectFieldSettings()));
+		}
+
 		if (objectField.getRelationshipType() == null) {
 			map.put("relationshipType", null);
 		}
@@ -411,6 +445,21 @@ public class ObjectFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					objectField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectFieldSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setObjectFieldSettings(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ObjectFieldSettingSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ObjectFieldSetting[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relationshipType")) {

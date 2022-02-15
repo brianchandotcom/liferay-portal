@@ -193,4 +193,55 @@ definition {
 		}
 	}
 
+	@description = "This test automates LPS-141243 and asserts a user cannot edit their permissions"
+	@priority = "4"
+	test UserCannotEditOwnPermissions {
+		task ("Given a new user is created with a role and permissions to view users and the Users Admin Portlet") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.addRegularRole(roleTitle = "New Regular Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.User",
+				roleTitle = "New Regular Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+				roleTitle = "New Regular Role");
+		}
+
+		task ("When accessing the menu of the user while signed in as that same user") {
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			User.openUsersAdmin();
+
+			Search.searchCP(searchTerm = "userfn userln");
+
+			LexiconEntry.openEntryMenu(rowEntry = "userfn userln");
+		}
+
+		task ("Then the option to edit permissions should not be available") {
+			AssertElementNotPresent(
+				key_menuItem = "Permissions",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
 }

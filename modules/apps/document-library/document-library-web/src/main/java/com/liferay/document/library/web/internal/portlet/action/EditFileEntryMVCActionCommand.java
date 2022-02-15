@@ -804,7 +804,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getLocale(),
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
 				_language.formatStorageSize(
-					_dlValidator.getMaxAllowableSize(),
+					_dlValidator.getMaxAllowableSize(null),
 					themeDisplay.getLocale()));
 		}
 		else if (exception instanceof InvalidFileEntryTypeException) {

@@ -45,6 +45,7 @@ public class TempAttachmentWikiUploadFileEntryHandler
 
 		_dlValidator.validateFileSize(
 			uploadPortletRequest.getFileName(_PARAMETER_NAME),
+			uploadPortletRequest.getContentType(_PARAMETER_NAME),
 			uploadPortletRequest.getSize(_PARAMETER_NAME));
 
 		long nodeId = ParamUtil.getLong(

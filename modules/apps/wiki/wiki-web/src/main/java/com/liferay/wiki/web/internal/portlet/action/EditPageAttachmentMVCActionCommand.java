@@ -354,7 +354,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
 						LanguageUtil.formatStorageSize(
-							_dlValidator.getMaxAllowableSize(),
+							_dlValidator.getMaxAllowableSize(null),
 							themeDisplay.getLocale()));
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}

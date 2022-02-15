@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -140,7 +141,9 @@ public class ImageJournalUploadFileEntryHandler
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		_validateFile(fileName, uploadPortletRequest.getSize(parameterName));
+		_validateFile(
+			fileName, uploadPortletRequest.getContentType(parameterName),
+			uploadPortletRequest.getSize(parameterName));
 
 		String contentType = uploadPortletRequest.getContentType(parameterName);
 
@@ -192,10 +195,10 @@ public class ImageJournalUploadFileEntryHandler
 		}
 	}
 
-	private void _validateFile(String fileName, long size)
+	private void _validateFile(String fileName, String mimeType, long size)
 		throws PortalException {
 
-		_dlValidator.validateFileSize(fileName, size);
+		_dlValidator.validateFileSize(fileName, mimeType, size);
 
 		String extension = FileUtil.getExtension(fileName);
 

@@ -92,7 +92,8 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		throws PortalException {
 
 		_dlValidator.validateFileSize(
-			fileName, uploadPortletRequest.getSize(parameterName));
+			fileName, uploadPortletRequest.getContentType(parameterName),
+			uploadPortletRequest.getSize(parameterName));
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(
 			fileName,

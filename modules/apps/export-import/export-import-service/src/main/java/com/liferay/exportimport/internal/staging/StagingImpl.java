@@ -1111,7 +1111,7 @@ public class StagingImpl implements Staging {
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
 					LanguageUtil.formatStorageSize(
-						_dlValidator.getMaxAllowableSize(), locale),
+						_dlValidator.getMaxAllowableSize(null), locale),
 					false);
 			}
 

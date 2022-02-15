@@ -72,7 +72,9 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
 
-		_dlValidator.validateFileSize(fileName, size);
+		_dlValidator.validateFileSize(
+			fileName, uploadPortletRequest.getContentType(_PARAMETER_NAME),
+			size);
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {

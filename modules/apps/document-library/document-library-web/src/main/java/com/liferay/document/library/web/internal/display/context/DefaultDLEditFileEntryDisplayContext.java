@@ -93,7 +93,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public long getMaximumUploadSize() {
-		return _dlValidator.getMaxAllowableSize();
+		return _dlValidator.getMaxAllowableSize(_getMimeType());
 	}
 
 	@Override
@@ -323,6 +323,14 @@ public class DefaultDLEditFileEntryDisplayContext
 					fileEntry,
 				portalException);
 		}
+	}
+
+	private String _getMimeType() {
+		if (_fileVersion == null) {
+			return null;
+		}
+
+		return _fileVersion.getMimeType();
 	}
 
 	private boolean _hasFolderWorkflowDefinitionLink() {

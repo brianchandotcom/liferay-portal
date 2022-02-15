@@ -121,7 +121,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
 					_language.formatStorageSize(
-						_dlValidator.getMaxAllowableSize(),
+						_dlValidator.getMaxAllowableSize(null),
 						themeDisplay.getLocale()));
 			}
 			else if (portalException instanceof UploadRequestSizeException) {

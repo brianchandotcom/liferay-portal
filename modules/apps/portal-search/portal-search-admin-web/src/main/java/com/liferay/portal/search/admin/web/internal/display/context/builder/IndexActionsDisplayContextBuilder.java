@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.admin.web.internal.display.context;
+package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext;
 
 import java.util.Map;
 
@@ -41,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Olivia Yu
  */
-public class IndexActionsDisplayBuilder {
+public class IndexActionsDisplayContextBuilder {
 
-	public IndexActionsDisplayBuilder(
+	public IndexActionsDisplayContextBuilder(
 		Http http, Language language, Portal portal,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -122,7 +123,7 @@ public class IndexActionsDisplayBuilder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		IndexActionsDisplayBuilder.class);
+		IndexActionsDisplayContextBuilder.class);
 
 	private final Http _http;
 	private final HttpServletRequest _httpServletRequest;

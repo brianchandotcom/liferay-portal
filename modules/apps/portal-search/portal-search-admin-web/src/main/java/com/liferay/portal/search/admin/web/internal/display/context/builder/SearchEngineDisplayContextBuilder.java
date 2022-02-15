@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.admin.web.internal.display.context;
+package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
+import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayContext;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
 /**
  * @author Adam Brandizzi
  */
-public class SearchEngineDisplayBuilder {
+public class SearchEngineDisplayContextBuilder {
 
 	public SearchEngineDisplayContext build() {
 		SearchEngineDisplayContext searchEngineDisplayContext =

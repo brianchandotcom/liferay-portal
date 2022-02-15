@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.admin.web.internal.display.context;
+package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.List;
@@ -29,9 +30,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Adam Brandizzi
  */
-public class SearchAdminDisplayBuilder {
+public class SearchAdminDisplayContextBuilder {
 
-	public SearchAdminDisplayBuilder(
+	public SearchAdminDisplayContextBuilder(
 		Language language, Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.admin.web.internal.display.context;
+package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingIndexDisplayContext;
+import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.Arrays;
@@ -29,9 +31,9 @@ import java.util.stream.Stream;
 /**
  * @author Adam Brandizzi
  */
-public class FieldMappingsDisplayBuilder {
+public class FieldMappingsDisplayContextBuilder {
 
-	public FieldMappingsDisplayBuilder(Http http) {
+	public FieldMappingsDisplayContextBuilder(Http http) {
 		_http = http;
 	}
 

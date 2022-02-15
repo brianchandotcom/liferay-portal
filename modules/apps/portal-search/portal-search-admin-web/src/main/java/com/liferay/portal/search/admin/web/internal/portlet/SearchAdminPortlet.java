@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys;
-import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayBuilder;
-import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayBuilder;
-import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayBuilder;
+import com.liferay.portal.search.admin.web.internal.display.context.builder.FieldMappingsDisplayContextBuilder;
+import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
+import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
-import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayBuilder;
+import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
@@ -81,19 +81,19 @@ public class SearchAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
-			new SearchAdminDisplayBuilder(
+		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
+			new SearchAdminDisplayContextBuilder(
 				_language, _portal, renderRequest, renderResponse);
 
-		searchAdminDisplayBuilder.setIndexInformation(indexInformation);
+		searchAdminDisplayContextBuilder.setIndexInformation(indexInformation);
 
 		Collections.sort(_indexReindexerClassNames);
 
-		searchAdminDisplayBuilder.setIndexReindexerClassNames(
+		searchAdminDisplayContextBuilder.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayBuilder.build();
+			searchAdminDisplayContextBuilder.build();
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchAdminDisplayContext);
@@ -101,45 +101,48 @@ public class SearchAdminPortlet extends MVCPortlet {
 		String tab = searchAdminDisplayContext.getSelectedTab();
 
 		if (tab.equals("connections")) {
-			SearchEngineDisplayBuilder searchEngineDisplayBuilder =
-				new SearchEngineDisplayBuilder();
+			SearchEngineDisplayContextBuilder
+				searchEngineDisplayContextBuilder =
+				new SearchEngineDisplayContextBuilder();
 
-			searchEngineDisplayBuilder.setSearchEngineInformation(
+			searchEngineDisplayContextBuilder.setSearchEngineInformation(
 				searchEngineInformation);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT,
-				searchEngineDisplayBuilder.build());
+				searchEngineDisplayContextBuilder.build());
 		}
 		else if (tab.equals("field-mappings")) {
-			FieldMappingsDisplayBuilder fieldMappingsDisplayBuilder =
-				new FieldMappingsDisplayBuilder(_http);
+			FieldMappingsDisplayContextBuilder
+				fieldMappingsDisplayContextBuilder =
+				new FieldMappingsDisplayContextBuilder(_http);
 
-			fieldMappingsDisplayBuilder.setCompanyId(
+			fieldMappingsDisplayContextBuilder.setCompanyId(
 				_portal.getCompanyId(renderRequest));
-			fieldMappingsDisplayBuilder.setCurrentURL(
+			fieldMappingsDisplayContextBuilder.setCurrentURL(
 				_portal.getCurrentURL(renderRequest));
-			fieldMappingsDisplayBuilder.setIndexInformation(indexInformation);
-			fieldMappingsDisplayBuilder.setNamespace(
+			fieldMappingsDisplayContextBuilder.setIndexInformation(indexInformation);
+			fieldMappingsDisplayContextBuilder.setNamespace(
 				renderResponse.getNamespace());
 
 			String selectedIndexName = ParamUtil.getString(
 				renderRequest, "selectedIndexName");
 
-			fieldMappingsDisplayBuilder.setSelectedIndexName(selectedIndexName);
+			fieldMappingsDisplayContextBuilder.setSelectedIndexName(selectedIndexName);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.FIELD_MAPPINGS_DISPLAY_CONTEXT,
-				fieldMappingsDisplayBuilder.build());
+				fieldMappingsDisplayContextBuilder.build());
 		}
 		else {
-			IndexActionsDisplayBuilder indexActionsDisplayBuilder =
-				new IndexActionsDisplayBuilder(
+			IndexActionsDisplayContextBuilder
+				indexActionsDisplayContextBuilder =
+				new IndexActionsDisplayContextBuilder(
 					_http, _language, _portal, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
-				indexActionsDisplayBuilder.build());
+				indexActionsDisplayContextBuilder.build());
 		}
 
 		super.render(renderRequest, renderResponse);

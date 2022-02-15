@@ -54,25 +54,24 @@ public class StructureNameComparatorTest {
 		_group = GroupTestUtil.addGroup();
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
-		_otherLocale = LocaleUtil.SPAIN;
 
 		_ddmStructure1 = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
 		_ddmStructure1.setName("default name A", defaultLocale);
-		_ddmStructure1.setName("spanish name A", _otherLocale);
+		_ddmStructure1.setName("spanish name A", _esLocale);
 
 		_ddmStructure2 = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
 		_ddmStructure2.setName("default name b", defaultLocale);
-		_ddmStructure2.setName("spanish name B", _otherLocale);
+		_ddmStructure2.setName("spanish name B", _esLocale);
 
 		_ddmStructure3 = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
 		_ddmStructure3.setName("default name c", defaultLocale);
-		_ddmStructure3.setName("spanish name C", _otherLocale);
+		_ddmStructure3.setName("spanish name C", _esLocale);
 
 		_ddmStructure4 = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
@@ -108,8 +107,7 @@ public class StructureNameComparatorTest {
 		ddmStructures.add(_ddmStructure3);
 		ddmStructures.add(_ddmStructure4);
 
-		_structureNameComparator = new StructureNameComparator(
-			true, _otherLocale);
+		_structureNameComparator = new StructureNameComparator(true, _esLocale);
 
 		Collections.sort(ddmStructures, _structureNameComparator);
 
@@ -123,11 +121,11 @@ public class StructureNameComparatorTest {
 	private DDMStructure _ddmStructure2;
 	private DDMStructure _ddmStructure3;
 	private DDMStructure _ddmStructure4;
+	private final Locale _esLocale = LocaleUtil.SPAIN;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Locale _otherLocale;
 	private StructureNameComparator _structureNameComparator;
 
 }

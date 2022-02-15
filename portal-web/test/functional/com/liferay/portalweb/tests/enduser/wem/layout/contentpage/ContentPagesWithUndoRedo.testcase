@@ -276,7 +276,7 @@ definition {
 		task ("Change the number of modules to 1") {
 			PageEditor.editLayoutGrid(
 				columnCount = "1",
-				panelList = "General");
+				panel = "General");
 
 			PageEditor.viewGridStyle(
 				columnCount = "1",
@@ -286,7 +286,7 @@ definition {
 		task ("Change the number of modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 
 			PageEditor.viewGridStyle(
 				columnCount = "2",

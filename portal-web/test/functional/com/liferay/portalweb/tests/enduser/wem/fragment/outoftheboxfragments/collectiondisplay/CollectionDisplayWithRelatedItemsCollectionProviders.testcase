@@ -108,7 +108,7 @@ definition {
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
@@ -336,7 +336,7 @@ definition {
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
@@ -522,7 +522,7 @@ definition {
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
@@ -717,7 +717,7 @@ definition {
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {

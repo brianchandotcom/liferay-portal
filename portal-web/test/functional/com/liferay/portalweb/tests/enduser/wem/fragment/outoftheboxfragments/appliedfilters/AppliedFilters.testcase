@@ -704,7 +704,7 @@ definition {
 		task ("Change Number of Modules to 4") {
 			PageEditor.editLayoutGrid(
 				columnCount = "4",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Filter to first three modules of Grid") {

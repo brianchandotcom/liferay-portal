@@ -261,7 +261,7 @@ definition {
 				columnCount = "2",
 				inverseOrder = "true",
 				layout = "1 Module per Row",
-				panelList = "General",
+				panel = "General",
 				spaceBetweenColumns = "false",
 				verticalAlignment = "Bottom");
 		}

@@ -101,7 +101,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add one Collection Display to each module of Grid") {
@@ -401,7 +401,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Filter to each module of Grid") {
@@ -986,7 +986,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Filter to each module of Grid") {
@@ -1205,7 +1205,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Filter to each module of Grid") {
@@ -2096,7 +2096,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add a Collection Filter to each module of Grid") {
@@ -3172,7 +3172,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add one Collection Filter to each module of Grid") {
@@ -3205,7 +3205,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General",
+				panel = "General",
 				position = "2");
 		}
 
@@ -3488,7 +3488,7 @@ definition {
 		task ("Change Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add the first Collection Filter to first module of Grid") {

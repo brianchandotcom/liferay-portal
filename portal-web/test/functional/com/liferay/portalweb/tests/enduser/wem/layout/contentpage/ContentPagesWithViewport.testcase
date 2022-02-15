@@ -52,13 +52,13 @@ definition {
 		task ("Change the Number of Modules to 6") {
 			PageEditor.editLayoutGrid(
 				columnCount = "6",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Select the 2 Modules per Row as Layout in Desktop viewport") {
 			PageEditor.editLayoutGrid(
 				layout = "2 Modules per Row",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Select the 3 Modules per Row as Layout in Tablet viewport") {

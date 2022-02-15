@@ -306,7 +306,7 @@ definition {
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("Add Vanilla Counter in each module") {

@@ -1,0 +1,273 @@
+[
+	{
+		"ddmFormSettings": {
+			"availableLanguageIds": [
+				"[$LOCALE$]"
+			],
+			"defaultLanguageId": "[$LOCALE$]",
+			"fieldValues": [
+				{
+					"fieldReference": "requireAuthentication",
+					"instanceId": "",
+					"name": "requireAuthentication",
+					"value": "false"
+				},
+				{
+					"fieldReference": "requireCaptcha",
+					"instanceId": "",
+					"name": "requireCaptcha",
+					"value": "false"
+				},
+				{
+					"fieldReference": "autosaveEnabled",
+					"instanceId": "",
+					"name": "autosaveEnabled",
+					"value": "true"
+				},
+				{
+					"fieldReference": "redirectURL",
+					"instanceId": "",
+					"name": "redirectURL",
+					"value": ""
+				},
+				{
+					"fieldReference": "storageType",
+					"instanceId": "",
+					"name": "storageType",
+					"value": "[\"default\"]"
+				},
+				{
+					"fieldReference": "objectDefinitionId",
+					"instanceId": "",
+					"name": "objectDefinitionId",
+					"value": "[]"
+				},
+				{
+					"fieldReference": "workflowDefinition",
+					"instanceId": "",
+					"name": "workflowDefinition",
+					"value": "[\"no-workflow\"]"
+				},
+				{
+					"fieldReference": "submitLabel",
+					"instanceId": "",
+					"name": "submitLabel",
+					"value": "{}"
+				},
+				{
+					"fieldReference": "sendEmailNotification",
+					"instanceId": "",
+					"name": "sendEmailNotification",
+					"value": "false"
+				},
+				{
+					"fieldReference": "emailFromName",
+					"instanceId": "",
+					"name": "emailFromName",
+					"value": ""
+				},
+				{
+					"fieldReference": "emailFromAddress",
+					"instanceId": "",
+					"name": "emailFromAddress",
+					"value": ""
+				},
+				{
+					"fieldReference": "emailToAddress",
+					"instanceId": "",
+					"name": "emailToAddress",
+					"value": ""
+				},
+				{
+					"fieldReference": "emailSubject",
+					"instanceId": "",
+					"name": "emailSubject",
+					"value": ""
+				},
+				{
+					"fieldReference": "published",
+					"instanceId": "",
+					"name": "published",
+					"value": "true"
+				},
+				{
+					"fieldReference": "showPartialResultsToRespondents",
+					"instanceId": "",
+					"name": "showPartialResultsToRespondents",
+					"value": "false"
+				},
+				{
+					"fieldReference": "limitToOneSubmissionPerUser",
+					"instanceId": "",
+					"name": "limitToOneSubmissionPerUser",
+					"value": "false"
+				}
+			]
+		},
+		"ddmStructure": {
+			"availableLanguageIds": [
+				"[$LOCALE$]"
+			],
+			"defaultLanguageId": "[$LOCALE$]",
+			"fields": [
+				{
+					"autocomplete": false,
+					"dataType": "string",
+					"displayStyle": "singleline",
+					"indexType": "keyword",
+					"label": {
+						"[$LOCALE$]": "Task Title"
+					},
+					"localizable": true,
+					"name": "taskTitle",
+					"objectFieldName": "[\"taskTitle\"]",
+					"options": [
+						{
+							"label": {
+								"[$LOCALE$]": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "text"
+				},
+				{
+					"dataSourceType": "manual",
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[$LOCALE$]": "Task Status"
+					},
+					"localizable": true,
+					"multiple": false,
+					"name": "taskStatus",
+					"objectFieldName": "[\"taskStatus\"]",
+					"options": [
+						{
+							"label": {
+								"[$LOCALE$]": "Done"
+							},
+							"reference": "done",
+							"value": "done"
+						},
+						{
+							"label": {
+								"[$LOCALE$]": "In Progress"
+							},
+							"reference": "inprogress",
+							"value": "inprogress"
+						},
+						{
+							"label": {
+								"[$LOCALE$]": "To Do"
+							},
+							"reference": "todo",
+							"value": "todo"
+						}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "select"
+				},
+				{
+					"dataType": "integer",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"[$LOCALE$]": "Progress"
+					},
+					"localizable": true,
+					"name": "progress",
+					"objectFieldName": "[\"progress\"]",
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "numeric"
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"displayStyle": "singleline",
+					"indexType": "keyword",
+					"label": {
+						"[$LOCALE$]": "Task Description"
+					},
+					"localizable": true,
+					"name": "taskDescription",
+					"objectFieldName": "[\"taskDescription\"]",
+					"options": [
+						{
+							"label": {
+								"[$LOCALE$]": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "text"
+				}
+			]
+		},
+		"ddmStructureLayout": {
+			"defaultLanguageId": "[$LOCALE$]",
+			"pages": [
+				{
+					"description": {
+						"[$LOCALE$]": ""
+					},
+					"rows": [
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"taskTitle"
+									],
+									"size": 4
+								},
+								{
+									"fieldNames": [
+										"taskStatus"
+									],
+									"size": 4
+								},
+								{
+									"fieldNames": [
+										"progress"
+									],
+									"size": 4
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"taskDescription"
+									],
+									"size": 12
+								}
+							]
+						}
+					],
+					"title": {
+						"[$LOCALE$]": "Add Detail"
+					}
+				}
+			],
+			"paginationMode": "multi-pages"
+		},
+		"description": "",
+		"name": "Test DDMForm 1"
+	}
+]

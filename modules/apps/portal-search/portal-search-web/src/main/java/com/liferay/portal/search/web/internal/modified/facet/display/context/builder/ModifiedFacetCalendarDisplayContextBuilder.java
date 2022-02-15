@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.modified.facet.display.context;
+package com.liferay.portal.search.web.internal.modified.facet.display.context.builder;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -29,9 +30,9 @@ import java.util.TimeZone;
 /**
  * @author André de Oliveira
  */
-public class ModifiedFacetCalendarDisplayBuilder {
+public class ModifiedFacetCalendarDisplayContextBuilder {
 
-	public ModifiedFacetCalendarDisplayBuilder(
+	public ModifiedFacetCalendarDisplayContextBuilder(
 		CalendarFactory calendarFactory) {
 
 		_calendarFactory = calendarFactory;

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.filter.constants.CustomFilterPortletKeys;
-import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayBuilder;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
+import com.liferay.portal.search.web.internal.custom.filter.display.context.builder.CustomFilterDisplayContextBuilder;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -74,7 +74,7 @@ public class CustomFilterPortletConfigurationAction
 			RenderRequest renderRequest)
 		throws ConfigurationException {
 
-		return CustomFilterDisplayBuilder.builder(
+		return CustomFilterDisplayContextBuilder.builder(
 		).themeDisplay(
 			(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).build();

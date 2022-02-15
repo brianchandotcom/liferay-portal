@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.custom.filter.display.context;
+package com.liferay.portal.search.web.internal.custom.filter.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 
 import java.util.Optional;
@@ -28,10 +29,10 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public class CustomFilterDisplayBuilder {
+public class CustomFilterDisplayContextBuilder {
 
-	public static CustomFilterDisplayBuilder builder() {
-		return new CustomFilterDisplayBuilder();
+	public static CustomFilterDisplayContextBuilder builder() {
+		return new CustomFilterDisplayContextBuilder();
 	}
 
 	public CustomFilterDisplayContext build() throws ConfigurationException {
@@ -52,7 +53,7 @@ public class CustomFilterDisplayBuilder {
 		return customFilterDisplayContext;
 	}
 
-	public CustomFilterDisplayBuilder customHeadingOptional(
+	public CustomFilterDisplayContextBuilder customHeadingOptional(
 		Optional<String> customHeadingOptional) {
 
 		_customHeadingOptional = customHeadingOptional;
@@ -60,13 +61,13 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder disabled(boolean disabled) {
+	public CustomFilterDisplayContextBuilder disabled(boolean disabled) {
 		_disabled = disabled;
 
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder filterFieldOptional(
+	public CustomFilterDisplayContextBuilder filterFieldOptional(
 		Optional<String> filterFieldOptional) {
 
 		_filterFieldOptional = filterFieldOptional;
@@ -74,7 +75,7 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder filterValueOptional(
+	public CustomFilterDisplayContextBuilder filterValueOptional(
 		Optional<String> filterValueOptional) {
 
 		_filterValueOptional = filterValueOptional;
@@ -82,25 +83,27 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder http(Http http) {
+	public CustomFilterDisplayContextBuilder http(Http http) {
 		_http = http;
 
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder immutable(boolean immutable) {
+	public CustomFilterDisplayContextBuilder immutable(boolean immutable) {
 		_immutable = immutable;
 
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder parameterName(String parameterName) {
+	public CustomFilterDisplayContextBuilder parameterName(
+		String parameterName) {
+
 		_parameterName = parameterName;
 
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder parameterValueOptional(
+	public CustomFilterDisplayContextBuilder parameterValueOptional(
 		Optional<String> parameterValueOptional) {
 
 		_parameterValueOptional = parameterValueOptional;
@@ -108,7 +111,7 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder queryNameOptional(
+	public CustomFilterDisplayContextBuilder queryNameOptional(
 		Optional<String> queryNameOptional) {
 
 		_queryNameOptional = queryNameOptional;
@@ -116,13 +119,17 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder renderNothing(boolean renderNothing) {
+	public CustomFilterDisplayContextBuilder renderNothing(
+		boolean renderNothing) {
+
 		_renderNothing = renderNothing;
 
 		return this;
 	}
 
-	public CustomFilterDisplayBuilder themeDisplay(ThemeDisplay themeDisplay) {
+	public CustomFilterDisplayContextBuilder themeDisplay(
+		ThemeDisplay themeDisplay) {
+
 		_themeDisplay = themeDisplay;
 
 		return this;

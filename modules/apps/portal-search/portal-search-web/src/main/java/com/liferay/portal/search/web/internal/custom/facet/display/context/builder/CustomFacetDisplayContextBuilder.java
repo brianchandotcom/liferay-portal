@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.custom.facet.display.context;
+package com.liferay.portal.search.web.internal.custom.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
+import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 
 import java.util.ArrayList;
@@ -34,9 +36,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Wade Cao
  */
-public class CustomFacetDisplayBuilder {
+public class CustomFacetDisplayContextBuilder {
 
-	public CustomFacetDisplayBuilder(HttpServletRequest httpServletRequest) {
+	public CustomFacetDisplayContextBuilder(
+		HttpServletRequest httpServletRequest) {
+
 		_httpServletRequest = httpServletRequest;
 	}
 
@@ -68,7 +72,7 @@ public class CustomFacetDisplayBuilder {
 		return customFacetDisplayContext;
 	}
 
-	public CustomFacetDisplayBuilder setCustomDisplayCaption(
+	public CustomFacetDisplayContextBuilder setCustomDisplayCaption(
 		Optional<String> customDisplayCaptionOptional) {
 
 		customDisplayCaptionOptional.ifPresent(
@@ -78,13 +82,13 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setFacet(Facet facet) {
+	public CustomFacetDisplayContextBuilder setFacet(Facet facet) {
 		_facet = facet;
 
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setFieldToAggregate(
+	public CustomFacetDisplayContextBuilder setFieldToAggregate(
 		String fieldToAggregate) {
 
 		_fieldToAggregate = fieldToAggregate;
@@ -92,7 +96,7 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setFrequenciesVisible(
+	public CustomFacetDisplayContextBuilder setFrequenciesVisible(
 		boolean frequenciesVisible) {
 
 		_frequenciesVisible = frequenciesVisible;
@@ -100,7 +104,7 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setFrequencyThreshold(
+	public CustomFacetDisplayContextBuilder setFrequencyThreshold(
 		int frequencyThreshold) {
 
 		_frequencyThreshold = frequencyThreshold;
@@ -108,13 +112,13 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setMaxTerms(int maxTerms) {
+	public CustomFacetDisplayContextBuilder setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
 
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setPaginationStartParameterName(
+	public CustomFacetDisplayContextBuilder setPaginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
@@ -122,13 +126,17 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setParameterName(String parameterName) {
+	public CustomFacetDisplayContextBuilder setParameterName(
+		String parameterName) {
+
 		_parameterName = parameterName;
 
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setParameterValue(String parameterValue) {
+	public CustomFacetDisplayContextBuilder setParameterValue(
+		String parameterValue) {
+
 		parameterValue = StringUtil.trim(
 			Objects.requireNonNull(parameterValue));
 
@@ -139,7 +147,7 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	public CustomFacetDisplayBuilder setParameterValues(
+	public CustomFacetDisplayContextBuilder setParameterValues(
 		Optional<List<String>> parameterValuesOptional) {
 
 		parameterValuesOptional.ifPresent(

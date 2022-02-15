@@ -31,8 +31,8 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
-import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -125,58 +125,62 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			_createModifiedFacetDisplayBuilder(
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			_createModifiedFacetDisplayContextBuilder(
 				_getCalendarFactory(), _getDateFormatFactory(), http,
 				renderRequest);
 
-		modifiedFacetDisplayBuilder.setCurrentURL(
+		modifiedFacetDisplayContextBuilder.setCurrentURL(
 			portal.getCurrentURL(renderRequest));
-		modifiedFacetDisplayBuilder.setFacet(
+		modifiedFacetDisplayContextBuilder.setFacet(
 			portletSharedSearchResponse.getFacet(_getFieldName()));
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(renderRequest);
 
-		modifiedFacetDisplayBuilder.setLocale(themeDisplay.getLocale());
+		modifiedFacetDisplayContextBuilder.setLocale(themeDisplay.getLocale());
 
-		modifiedFacetDisplayBuilder.setPaginationStartParameterName(
+		modifiedFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName =
 			modifiedFacetPortletPreferences.getParameterName();
 
-		modifiedFacetDisplayBuilder.setParameterName(parameterName);
+		modifiedFacetDisplayContextBuilder.setParameterName(parameterName);
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest),
-			modifiedFacetDisplayBuilder::setParameterValues);
+			modifiedFacetDisplayContextBuilder::setParameterValues);
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameter(
 				parameterName + "From", renderRequest),
-			modifiedFacetDisplayBuilder::setFromParameterValue);
+			modifiedFacetDisplayContextBuilder::setFromParameterValue);
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameter(
 				parameterName + "To", renderRequest),
-			modifiedFacetDisplayBuilder::setToParameterValue);
+			modifiedFacetDisplayContextBuilder::setToParameterValue);
 
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
-		modifiedFacetDisplayBuilder.setTimeZone(themeDisplay.getTimeZone());
-		modifiedFacetDisplayBuilder.setTotalHits(searchResponse.getTotalHits());
+		modifiedFacetDisplayContextBuilder.setTimeZone(
+			themeDisplay.getTimeZone());
+		modifiedFacetDisplayContextBuilder.setTotalHits(
+			searchResponse.getTotalHits());
 
-		return modifiedFacetDisplayBuilder.build();
+		return modifiedFacetDisplayContextBuilder.build();
 	}
 
-	private ModifiedFacetDisplayBuilder _createModifiedFacetDisplayBuilder(
-		CalendarFactory calendarFactory, DateFormatFactory dateFormatFactory,
-		Http http, RenderRequest renderRequest) {
+	private ModifiedFacetDisplayContextBuilder
+		_createModifiedFacetDisplayContextBuilder(
+			CalendarFactory calendarFactory,
+			DateFormatFactory dateFormatFactory, Http http,
+			RenderRequest renderRequest) {
 
 		try {
-			return new ModifiedFacetDisplayBuilder(
+			return new ModifiedFacetDisplayContextBuilder(
 				calendarFactory, dateFormatFactory, http, renderRequest);
 		}
 		catch (ConfigurationException configurationException) {

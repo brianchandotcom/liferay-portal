@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.sort.constants.SortPortletKeys;
-import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayBuilder;
 import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext;
+import com.liferay.portal.search.web.internal.sort.display.context.builder.SortDisplayContextBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -111,7 +111,7 @@ public class SortPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest);
 
-		return _createSortDisplayBuilder(
+		return _createSortDisplayContextBuilder(
 			renderRequest, sortPortletPreferences
 		).parameterName(
 			parameterName
@@ -122,12 +122,12 @@ public class SortPortlet extends MVCPortlet {
 		).build();
 	}
 
-	private SortDisplayBuilder _createSortDisplayBuilder(
+	private SortDisplayContextBuilder _createSortDisplayContextBuilder(
 		RenderRequest renderRequest,
 		SortPortletPreferences sortPortletPreferences) {
 
 		try {
-			return new SortDisplayBuilder(
+			return new SortDisplayContextBuilder(
 				language, portal, renderRequest, sortPortletPreferences);
 		}
 		catch (ConfigurationException configurationException) {

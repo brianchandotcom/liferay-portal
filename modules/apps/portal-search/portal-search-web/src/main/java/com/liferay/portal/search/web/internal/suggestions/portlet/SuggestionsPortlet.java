@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
-import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayBuilder;
 import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext;
+import com.liferay.portal.search.web.internal.suggestions.display.context.builder.SuggestionsPortletDisplayContextBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
@@ -121,35 +121,38 @@ public class SuggestionsPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		SuggestionsPortletDisplayBuilder suggestionsPortletDisplayBuilder =
-			new SuggestionsPortletDisplayBuilder(html, http);
+		SuggestionsPortletDisplayContextBuilder
+			suggestionsPortletDisplayContextBuilder =
+				new SuggestionsPortletDisplayContextBuilder(html, http);
 
 		_copy(
 			portletSharedSearchResponse::getKeywordsOptional,
-			suggestionsPortletDisplayBuilder::setKeywords);
+			suggestionsPortletDisplayContextBuilder::setKeywords);
 
 		SearchSettings searchSettings =
 			portletSharedSearchResponse.getSearchSettings();
 
 		_copy(
 			searchSettings::getKeywordsParameterName,
-			suggestionsPortletDisplayBuilder::setKeywordsParameterName);
+			suggestionsPortletDisplayContextBuilder::setKeywordsParameterName);
 
-		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestions(
+		suggestionsPortletDisplayContextBuilder.setRelatedQueriesSuggestions(
 			portletSharedSearchResponse.getRelatedQueriesSuggestions());
-		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestionsEnabled(
-			suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled());
-		suggestionsPortletDisplayBuilder.setSearchURL(
+		suggestionsPortletDisplayContextBuilder.
+			setRelatedQueriesSuggestionsEnabled(
+				suggestionsPortletPreferences.
+					isRelatedQueriesSuggestionsEnabled());
+		suggestionsPortletDisplayContextBuilder.setSearchURL(
 			portletSharedRequestHelper.getCompleteURL(renderRequest));
 
 		_copy(
 			portletSharedSearchResponse::getSpellCheckSuggestionOptional,
-			suggestionsPortletDisplayBuilder::setSpellCheckSuggestion);
+			suggestionsPortletDisplayContextBuilder::setSpellCheckSuggestion);
 
-		suggestionsPortletDisplayBuilder.setSpellCheckSuggestionEnabled(
+		suggestionsPortletDisplayContextBuilder.setSpellCheckSuggestionEnabled(
 			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
 
-		return suggestionsPortletDisplayBuilder.build();
+		return suggestionsPortletDisplayContextBuilder.build();
 	}
 
 	private <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {

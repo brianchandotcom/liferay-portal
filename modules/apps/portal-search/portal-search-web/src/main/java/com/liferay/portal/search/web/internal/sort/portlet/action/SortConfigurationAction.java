@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.sort.constants.SortPortletKeys;
-import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayBuilder;
+import com.liferay.portal.search.web.internal.sort.display.context.builder.SortDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferences;
 import com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -69,11 +69,12 @@ public class SortConfigurationAction extends DefaultConfigurationAction {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		SortDisplayBuilder sortDisplayBuilder = _createSortDisplayBuilder(
-			language, portal, renderRequest, sortPortletPreferences);
+		SortDisplayContextBuilder sortDisplayContextBuilder =
+			_createSortDisplayContextBuilder(
+				language, portal, renderRequest, sortPortletPreferences);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, sortDisplayBuilder.build());
+			WebKeys.PORTLET_DISPLAY_CONTEXT, sortDisplayContextBuilder.build());
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
@@ -84,12 +85,12 @@ public class SortConfigurationAction extends DefaultConfigurationAction {
 	@Reference
 	protected Portal portal;
 
-	private SortDisplayBuilder _createSortDisplayBuilder(
+	private SortDisplayContextBuilder _createSortDisplayContextBuilder(
 		Language language, Portal portal, RenderRequest renderRequest,
 		SortPortletPreferences sortPortletPreferences) {
 
 		try {
-			return new SortDisplayBuilder(
+			return new SortDisplayContextBuilder(
 				language, portal, renderRequest, sortPortletPreferences);
 		}
 		catch (ConfigurationException configurationException) {

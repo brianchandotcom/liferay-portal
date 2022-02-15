@@ -24,6 +24,8 @@ import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
+import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
+import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.builder.SearchBarPortletDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -196,9 +198,10 @@ public class SearchBarPortlet extends MVCPortlet {
 			SearchBarPortletPreferences searchBarPortletPreferences)
 		throws PortletException {
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			new SearchBarPortletDisplayBuilder(
-				http, layoutLocalService, portal, renderRequest);
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				new SearchBarPortletDisplayContextBuilder(
+					http, layoutLocalService, portal, renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
@@ -216,7 +219,7 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return searchBarPortletDisplayBuilder.setDestination(
+		return searchBarPortletDisplayContextBuilder.setDestination(
 			searchBarPortletPreferences.getDestinationString()
 		).setEmptySearchEnabled(
 			isEmptySearchEnabled(portletSharedSearchResponse)

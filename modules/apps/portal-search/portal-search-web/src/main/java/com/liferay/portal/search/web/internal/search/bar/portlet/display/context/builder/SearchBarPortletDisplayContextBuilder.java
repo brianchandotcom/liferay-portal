@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.bar.portlet;
+package com.liferay.portal.search.web.internal.search.bar.portlet.display.context.builder;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 
 import java.util.Optional;
 
@@ -44,9 +45,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author André de Oliveira
  */
-public class SearchBarPortletDisplayBuilder {
+public class SearchBarPortletDisplayContextBuilder {
 
-	public SearchBarPortletDisplayBuilder(
+	public SearchBarPortletDisplayContextBuilder(
 		Http http, LayoutLocalService layoutLocalService, Portal portal,
 		RenderRequest renderRequest) {
 
@@ -129,13 +130,15 @@ public class SearchBarPortletDisplayBuilder {
 		return searchBarPortletDisplayContext;
 	}
 
-	public SearchBarPortletDisplayBuilder setDestination(String destination) {
+	public SearchBarPortletDisplayContextBuilder setDestination(
+		String destination) {
+
 		_destination = destination;
 
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setEmptySearchEnabled(
+	public SearchBarPortletDisplayContextBuilder setEmptySearchEnabled(
 		boolean emptySearchEnabled) {
 
 		_emptySearchEnabled = emptySearchEnabled;
@@ -143,13 +146,15 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setInvisible(boolean invisible) {
+	public SearchBarPortletDisplayContextBuilder setInvisible(
+		boolean invisible) {
+
 		_invisible = invisible;
 
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setKeywords(
+	public SearchBarPortletDisplayContextBuilder setKeywords(
 		Optional<String> keywordsOptional) {
 
 		keywordsOptional.ifPresent(keywords -> _keywords = keywords);
@@ -157,7 +162,7 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setKeywordsParameterName(
+	public SearchBarPortletDisplayContextBuilder setKeywordsParameterName(
 		String keywordsParameterName) {
 
 		_keywordsParameterName = keywordsParameterName;
@@ -165,15 +170,15 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setPaginationStartParameterName(
-		String paginationStartParameterName) {
+	public SearchBarPortletDisplayContextBuilder
+		setPaginationStartParameterName(String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setScopeParameterName(
+	public SearchBarPortletDisplayContextBuilder setScopeParameterName(
 		String scopeParameterName) {
 
 		_scopeParameterName = scopeParameterName;
@@ -181,7 +186,7 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setScopeParameterValue(
+	public SearchBarPortletDisplayContextBuilder setScopeParameterValue(
 		Optional<String> scopeParameterValueOptional) {
 
 		scopeParameterValueOptional.ifPresent(
@@ -190,7 +195,7 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setSearchScopePreference(
+	public SearchBarPortletDisplayContextBuilder setSearchScopePreference(
 		SearchScopePreference searchScopePreference) {
 
 		_searchScopePreference = searchScopePreference;
@@ -198,7 +203,7 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayBuilder setThemeDisplay(
+	public SearchBarPortletDisplayContextBuilder setThemeDisplay(
 		ThemeDisplay themeDisplay) {
 
 		_themeDisplay = themeDisplay;
@@ -355,7 +360,7 @@ public class SearchBarPortletDisplayBuilder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SearchBarPortletDisplayBuilder.class);
+		SearchBarPortletDisplayContextBuilder.class);
 
 	private String _destination;
 	private boolean _emptySearchEnabled;

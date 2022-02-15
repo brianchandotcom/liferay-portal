@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.modified.facet.display.context;
+package com.liferay.portal.search.web.internal.modified.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext;
 
 import java.io.Serializable;
 
@@ -52,9 +55,9 @@ import javax.portlet.RenderRequest;
  * @author Lino Alves
  * @author Adam Brandizzi
  */
-public class ModifiedFacetDisplayBuilder implements Serializable {
+public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
-	public ModifiedFacetDisplayBuilder(
+	public ModifiedFacetDisplayContextBuilder(
 			CalendarFactory calendarFactory,
 			DateFormatFactory dateFormatFactory, Http http,
 			RenderRequest renderRequest)
@@ -204,9 +207,10 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 	}
 
 	private ModifiedFacetCalendarDisplayContext _buildCalendarDisplayContext() {
-		ModifiedFacetCalendarDisplayBuilder
-			modifiedFacetCalendarDisplayBuilder =
-				new ModifiedFacetCalendarDisplayBuilder(_calendarFactory);
+		ModifiedFacetCalendarDisplayContextBuilder
+			modifiedFacetCalendarDisplayContextBuilder =
+				new ModifiedFacetCalendarDisplayContextBuilder(
+					_calendarFactory);
 
 		Stream<String> selectedRangesStream = _selectedRanges.stream();
 
@@ -214,15 +218,15 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 			s -> s.startsWith(StringPool.OPEN_CURLY_BRACE)
 		).findAny(
 		).ifPresent(
-			modifiedFacetCalendarDisplayBuilder::setRangeString
+			modifiedFacetCalendarDisplayContextBuilder::setRangeString
 		);
 
-		modifiedFacetCalendarDisplayBuilder.setFrom(_from);
-		modifiedFacetCalendarDisplayBuilder.setLocale(_locale);
-		modifiedFacetCalendarDisplayBuilder.setTimeZone(_timeZone);
-		modifiedFacetCalendarDisplayBuilder.setTo(_to);
+		modifiedFacetCalendarDisplayContextBuilder.setFrom(_from);
+		modifiedFacetCalendarDisplayContextBuilder.setLocale(_locale);
+		modifiedFacetCalendarDisplayContextBuilder.setTimeZone(_timeZone);
+		modifiedFacetCalendarDisplayContextBuilder.setTo(_to);
 
-		return modifiedFacetCalendarDisplayBuilder.build();
+		return modifiedFacetCalendarDisplayContextBuilder.build();
 	}
 
 	private ModifiedFacetTermDisplayContext

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -192,22 +193,22 @@ public class CustomFacetDisplayContextTest {
 			String parameterValue)
 		throws Exception {
 
-		CustomFacetDisplayBuilder customFacetDisplayBuilder =
-			new CustomFacetDisplayBuilder(_getHttpServletRequest());
+		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
+			new CustomFacetDisplayContextBuilder(_getHttpServletRequest());
 
-		customFacetDisplayBuilder.setFacet(_facet);
-		customFacetDisplayBuilder.setParameterName("custom");
-		customFacetDisplayBuilder.setParameterValue(parameterValue);
-		customFacetDisplayBuilder.setFrequenciesVisible(true);
+		customFacetDisplayContextBuilder.setFacet(_facet);
+		customFacetDisplayContextBuilder.setParameterName("custom");
+		customFacetDisplayContextBuilder.setParameterValue(parameterValue);
+		customFacetDisplayContextBuilder.setFrequenciesVisible(true);
 
-		customFacetDisplayBuilder.setFrequencyThreshold(0);
-		customFacetDisplayBuilder.setMaxTerms(0);
+		customFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		customFacetDisplayContextBuilder.setMaxTerms(0);
 
-		customFacetDisplayBuilder.setCustomDisplayCaption(
+		customFacetDisplayContextBuilder.setCustomDisplayCaption(
 			Optional.ofNullable(customDisplayCaption));
-		customFacetDisplayBuilder.setFieldToAggregate(fieldToAggregate);
+		customFacetDisplayContextBuilder.setFieldToAggregate(fieldToAggregate);
 
-		return customFacetDisplayBuilder.build();
+		return customFacetDisplayContextBuilder.build();
 	}
 
 	private TermCollector _createTermCollector(String fieldName, int count) {

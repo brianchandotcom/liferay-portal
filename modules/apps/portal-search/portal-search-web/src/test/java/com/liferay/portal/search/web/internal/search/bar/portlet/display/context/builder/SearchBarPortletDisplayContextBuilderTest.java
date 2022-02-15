@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.bar.portlet;
+package com.liferay.portal.search.web.internal.search.bar.portlet.display.context.builder;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Optional;
@@ -57,7 +58,7 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Adam Brandizzi
  */
-public class SearchBarPortletDisplayBuilderTest {
+public class SearchBarPortletDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -76,13 +77,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 	@Test
 	public void testDestinationBlank() throws PortletException {
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setDestination(StringPool.BLANK);
+		searchBarPortletDisplayContextBuilder.setDestination(StringPool.BLANK);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -90,13 +92,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 	@Test
 	public void testDestinationNull() throws PortletException {
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setDestination(null);
+		searchBarPortletDisplayContextBuilder.setDestination(null);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -108,13 +111,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		_whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, null);
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setDestination(destination);
+		searchBarPortletDisplayContextBuilder.setDestination(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertTrue(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -132,14 +136,15 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setDestination(
+		searchBarPortletDisplayContextBuilder.setDestination(
 			StringPool.SLASH.concat(destination));
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertEquals(
 			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
@@ -160,13 +165,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setDestination(destination);
+		searchBarPortletDisplayContextBuilder.setDestination(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertEquals(
 			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
@@ -183,11 +189,12 @@ public class SearchBarPortletDisplayBuilderTest {
 			_themeDisplay
 		).getURLCurrent();
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayBuilder.build();
+			searchBarPortletDisplayContextBuilder.build();
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -198,15 +205,16 @@ public class SearchBarPortletDisplayBuilderTest {
 
 	@Test
 	public void testSearchScope() {
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			_createSearchBarPortletDisplayBuilder();
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				_createSearchBarPortletDisplayContextBuilder();
 
-		searchBarPortletDisplayBuilder.setScopeParameterValue(
+		searchBarPortletDisplayContextBuilder.setScopeParameterValue(
 			Optional.of(SearchScope.EVERYTHING.getParameterString()));
 
 		Assert.assertEquals(
 			SearchScope.EVERYTHING,
-			searchBarPortletDisplayBuilder.getSearchScope());
+			searchBarPortletDisplayContextBuilder.getSearchScope());
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -256,20 +264,21 @@ public class SearchBarPortletDisplayBuilderTest {
 		return liferayPortletRequest;
 	}
 
-	private SearchBarPortletDisplayBuilder
-		_createSearchBarPortletDisplayBuilder() {
+	private SearchBarPortletDisplayContextBuilder
+		_createSearchBarPortletDisplayContextBuilder() {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			new SearchBarPortletDisplayBuilder(
-				_http, _layoutLocalService, _portal, renderRequest);
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				new SearchBarPortletDisplayContextBuilder(
+					_http, _layoutLocalService, _portal, renderRequest);
 
-		searchBarPortletDisplayBuilder.setSearchScopePreference(
+		searchBarPortletDisplayContextBuilder.setSearchScopePreference(
 			SearchScopePreference.getSearchScopePreference("everything"));
-		searchBarPortletDisplayBuilder.setThemeDisplay(_themeDisplay);
+		searchBarPortletDisplayContextBuilder.setThemeDisplay(_themeDisplay);
 
-		return searchBarPortletDisplayBuilder;
+		return searchBarPortletDisplayContextBuilder;
 	}
 
 	private void _setUpHttp() {

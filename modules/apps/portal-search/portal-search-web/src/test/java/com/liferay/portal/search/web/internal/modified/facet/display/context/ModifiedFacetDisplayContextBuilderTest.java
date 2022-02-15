@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
@@ -60,7 +61,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Adam Brandizzi
  */
-public class ModifiedFacetDisplayBuilderTest {
+public class ModifiedFacetDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -107,14 +108,14 @@ public class ModifiedFacetDisplayBuilderTest {
 
 		_mockTermCollectorFrequency(termCollector, frequency);
 
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setFromParameterValue(from);
-		modifiedFacetDisplayBuilder.setToParameterValue(to);
+		modifiedFacetDisplayContextBuilder.setFromParameterValue(from);
+		modifiedFacetDisplayContextBuilder.setToParameterValue(to);
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		ModifiedFacetTermDisplayContext modifiedFacetTermDisplayContext =
 			modifiedFacetDisplayContext.
@@ -131,14 +132,14 @@ public class ModifiedFacetDisplayBuilderTest {
 
 		_mockTermCollectorFrequency(termCollector, frequency);
 
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setFromParameterValue("2018-01-01");
-		modifiedFacetDisplayBuilder.setToParameterValue("2018-01-31");
+		modifiedFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
+		modifiedFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		ModifiedFacetTermDisplayContext modifiedFacetTermDisplayContext =
 			modifiedFacetDisplayContext.
@@ -150,107 +151,107 @@ public class ModifiedFacetDisplayBuilderTest {
 
 	@Test
 	public void testIsNothingSelected() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertTrue(modifiedFacetDisplayContext.isNothingSelected());
 	}
 
 	@Test
 	public void testIsNothingSelectedWithFromAndToAttributes() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setFromParameterValue("2018-01-01");
-		modifiedFacetDisplayBuilder.setToParameterValue("2018-01-31");
+		modifiedFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
+		modifiedFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertFalse(modifiedFacetDisplayContext.isNothingSelected());
 	}
 
 	@Test
 	public void testIsNothingSelectedWithSelectedRange() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setParameterValues("past-24-hours");
+		modifiedFacetDisplayContextBuilder.setParameterValues("past-24-hours");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertFalse(modifiedFacetDisplayContext.isNothingSelected());
 	}
 
 	@Test
 	public void testIsRenderNothingFalseWithFromAndTo() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setFromParameterValue("2018-01-01");
-		modifiedFacetDisplayBuilder.setToParameterValue("2018-01-31");
-		modifiedFacetDisplayBuilder.setTotalHits(0);
+		modifiedFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
+		modifiedFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
+		modifiedFacetDisplayContextBuilder.setTotalHits(0);
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertFalse(modifiedFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
 	public void testIsRenderNothingFalseWithHits() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setTotalHits(1);
+		modifiedFacetDisplayContextBuilder.setTotalHits(1);
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertFalse(modifiedFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
 	public void testIsRenderNothingFalseWithSelectedRange() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setParameterValues("past-24-hours");
-		modifiedFacetDisplayBuilder.setTotalHits(0);
+		modifiedFacetDisplayContextBuilder.setParameterValues("past-24-hours");
+		modifiedFacetDisplayContextBuilder.setTotalHits(0);
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertFalse(modifiedFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
 	public void testIsRenderNothingTrueWithNoHits() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setTotalHits(0);
+		modifiedFacetDisplayContextBuilder.setTotalHits(0);
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		Assert.assertTrue(modifiedFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
 	public void testMissingFromAndToParameters() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
-		modifiedFacetDisplayBuilder.setCurrentURL(
+		modifiedFacetDisplayContextBuilder.setCurrentURL(
 			"/?modifiedFrom=2018-01-01&modifiedTo=2018-01-31");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		_assertTermDisplayContextsDoNotHaveFromAndToParameters(
 			modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts());
@@ -258,15 +259,15 @@ public class ModifiedFacetDisplayBuilderTest {
 
 	@Test
 	public void testModifiedFacetTermDisplayContexts() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createDisplayBuilder();
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
 
 		_mockFacetConfiguration(
 			"past-hour=[20180515225959 TO 20180515235959]",
 			"some-time-ago=[20180508235959 TO 20180514235959]");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-			modifiedFacetDisplayBuilder.build();
+			modifiedFacetDisplayContextBuilder.build();
 
 		List<ModifiedFacetTermDisplayContext> modifiedFacetTermDisplayContexts =
 			modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts();
@@ -294,17 +295,18 @@ public class ModifiedFacetDisplayBuilderTest {
 			modifiedFacetTermDisplayContext.getRange());
 	}
 
-	protected ModifiedFacetDisplayBuilder createDisplayBuilder() {
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			_createModifiedFacetDisplayBuilder();
+	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder() {
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			_createModifiedFacetDisplayContextBuilder();
 
 		_mockFacetConfiguration();
 
-		modifiedFacetDisplayBuilder.setFacet(_facet);
-		modifiedFacetDisplayBuilder.setLocale(LocaleUtil.getDefault());
-		modifiedFacetDisplayBuilder.setTimeZone(TimeZoneUtil.getDefault());
+		modifiedFacetDisplayContextBuilder.setFacet(_facet);
+		modifiedFacetDisplayContextBuilder.setLocale(LocaleUtil.getDefault());
+		modifiedFacetDisplayContextBuilder.setTimeZone(
+			TimeZoneUtil.getDefault());
 
-		return modifiedFacetDisplayBuilder;
+		return modifiedFacetDisplayContextBuilder;
 	}
 
 	protected FacetConfiguration getFacetConfiguration() {
@@ -392,9 +394,11 @@ public class ModifiedFacetDisplayBuilderTest {
 		return dataJSONObject;
 	}
 
-	private ModifiedFacetDisplayBuilder _createModifiedFacetDisplayBuilder() {
+	private ModifiedFacetDisplayContextBuilder
+		_createModifiedFacetDisplayContextBuilder() {
+
 		try {
-			return new ModifiedFacetDisplayBuilder(
+			return new ModifiedFacetDisplayContextBuilder(
 				_calendarFactory, _dateFormatFactory, _httpImpl,
 				_getRenderRequest());
 		}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.sort.display.context;
+package com.liferay.portal.search.web.internal.sort.display.context.builder;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext;
+import com.liferay.portal.search.web.internal.sort.display.context.SortTermDisplayContext;
 import com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferences;
 
 import java.util.ArrayList;
@@ -36,9 +38,9 @@ import javax.portlet.RenderRequest;
  * @author Wade Cao
  * @author André de Oliveira
  */
-public class SortDisplayBuilder {
+public class SortDisplayContextBuilder {
 
-	public SortDisplayBuilder(
+	public SortDisplayContextBuilder(
 			Language language, Portal portal, RenderRequest renderRequest,
 			SortPortletPreferences sortPortletPreferences)
 		throws ConfigurationException {
@@ -78,13 +80,15 @@ public class SortDisplayBuilder {
 		return sortDisplayContext;
 	}
 
-	public SortDisplayBuilder parameterName(String parameterName) {
+	public SortDisplayContextBuilder parameterName(String parameterName) {
 		_parameterName = parameterName;
 
 		return this;
 	}
 
-	public SortDisplayBuilder parameterValues(String... parameterValues) {
+	public SortDisplayContextBuilder parameterValues(
+		String... parameterValues) {
+
 		if (parameterValues == null) {
 			_selectedFields = Collections.emptyList();
 
@@ -96,7 +100,7 @@ public class SortDisplayBuilder {
 		return this;
 	}
 
-	public SortDisplayBuilder renderNothing(boolean renderNothing) {
+	public SortDisplayContextBuilder renderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 
 		return this;

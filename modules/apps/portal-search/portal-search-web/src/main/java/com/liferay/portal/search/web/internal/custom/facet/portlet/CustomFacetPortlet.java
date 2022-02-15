@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
-import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
+import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -106,8 +106,8 @@ public class CustomFacetPortlet extends MVCPortlet {
 			RenderRequest renderRequest)
 		throws ConfigurationException {
 
-		CustomFacetDisplayBuilder customFacetDisplayBuilder =
-			new CustomFacetDisplayBuilder(
+		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
+			new CustomFacetDisplayContextBuilder(
 				_getHttpServletRequest(renderRequest));
 
 		CustomFacetPortletPreferences customFacetPortletPreferences =
@@ -125,7 +125,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 			_getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest);
 
-		return customFacetDisplayBuilder.setCustomDisplayCaption(
+		return customFacetDisplayContextBuilder.setCustomDisplayCaption(
 			customFacetPortletPreferences.getCustomHeadingOptional()
 		).setFacet(
 			facet

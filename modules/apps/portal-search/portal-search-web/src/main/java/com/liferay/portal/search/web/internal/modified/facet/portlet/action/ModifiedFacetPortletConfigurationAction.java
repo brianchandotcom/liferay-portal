@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
-import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 
 import java.text.ParseException;
 
@@ -68,12 +68,12 @@ public class ModifiedFacetPortletConfigurationAction
 			(RenderRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			_createModifiedFacetDisplayBuilder(renderRequest);
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			_createModifiedFacetDisplayContextBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			modifiedFacetDisplayBuilder.build());
+			modifiedFacetDisplayContextBuilder.build());
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
@@ -106,11 +106,11 @@ public class ModifiedFacetPortletConfigurationAction
 		}
 	}
 
-	private ModifiedFacetDisplayBuilder _createModifiedFacetDisplayBuilder(
-		RenderRequest renderRequest) {
+	private ModifiedFacetDisplayContextBuilder
+		_createModifiedFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new ModifiedFacetDisplayBuilder(
+			return new ModifiedFacetDisplayContextBuilder(
 				null, null, null, renderRequest);
 		}
 		catch (ConfigurationException configurationException) {

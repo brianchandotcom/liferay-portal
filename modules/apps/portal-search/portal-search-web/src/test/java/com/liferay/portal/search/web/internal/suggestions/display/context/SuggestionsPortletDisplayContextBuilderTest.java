@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.web.internal.suggestions.display.context.builder.SuggestionsPortletDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -44,7 +45,7 @@ import org.mockito.MockitoAnnotations;
  * @author Adam Brandizzi
  * @author André de Oliveira
  */
-public class SuggestionsPortletDisplayBuilderTest {
+public class SuggestionsPortletDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -58,7 +59,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 		_setUpHtml();
 		_setUpHttp();
 
-		_setUpDisplayBuilder();
+		_setUpDisplayContextBuilder();
 	}
 
 	@Test
@@ -73,7 +74,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testGetRelatedQueriesSuggestionsEmptyByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			suggestionsPortletDisplayContext.getRelatedQueriesSuggestions();
@@ -167,7 +168,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testGetSpellCheckSuggestionsNullByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertNull(
 			suggestionsPortletDisplayContext.getSpellCheckSuggestion());
@@ -190,7 +191,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testHasRelatedQueriesSuggestionsFalseByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions());
@@ -198,12 +199,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasRelatedSuggestionsFalseWithDisabledAndNonemptyList() {
-		_displayBuilder.setRelatedQueriesSuggestions(
+		_displayContextBuilder.setRelatedQueriesSuggestions(
 			Arrays.asList(RandomTestUtil.randomString()));
-		_displayBuilder.setRelatedQueriesSuggestionsEnabled(false);
+		_displayContextBuilder.setRelatedQueriesSuggestionsEnabled(false);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions());
@@ -211,11 +212,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasRelatedSuggestionsFalseWithEnabledAndEmptyList() {
-		_displayBuilder.setRelatedQueriesSuggestions(Collections.emptyList());
-		_displayBuilder.setRelatedQueriesSuggestionsEnabled(true);
+		_displayContextBuilder.setRelatedQueriesSuggestions(
+			Collections.emptyList());
+		_displayContextBuilder.setRelatedQueriesSuggestionsEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions());
@@ -223,12 +225,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasRelatedSuggestionsTrueWithEnabledAndNonemptyList() {
-		_displayBuilder.setRelatedQueriesSuggestions(
+		_displayContextBuilder.setRelatedQueriesSuggestions(
 			Arrays.asList(RandomTestUtil.randomString()));
-		_displayBuilder.setRelatedQueriesSuggestionsEnabled(true);
+		_displayContextBuilder.setRelatedQueriesSuggestionsEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertTrue(
 			suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions());
@@ -237,7 +239,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testHasSpellCheckSuggestionFalseByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasSpellCheckSuggestion());
@@ -245,11 +247,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasSpellCheckSuggestionsFalseWithDisabledAndSuggestion() {
-		_displayBuilder.setSpellCheckSuggestion(RandomTestUtil.randomString());
-		_displayBuilder.setSpellCheckSuggestionEnabled(false);
+		_displayContextBuilder.setSpellCheckSuggestion(
+			RandomTestUtil.randomString());
+		_displayContextBuilder.setSpellCheckSuggestionEnabled(false);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasSpellCheckSuggestion());
@@ -257,11 +260,11 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasSpellCheckSuggestionsFalseWithEnabledAndNull() {
-		_displayBuilder.setSpellCheckSuggestion(null);
-		_displayBuilder.setSpellCheckSuggestionEnabled(true);
+		_displayContextBuilder.setSpellCheckSuggestion(null);
+		_displayContextBuilder.setSpellCheckSuggestionEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.hasSpellCheckSuggestion());
@@ -269,11 +272,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testHasSpellCheckSuggestionsTrueWithEnabledAndNonemptyList() {
-		_displayBuilder.setSpellCheckSuggestion(RandomTestUtil.randomString());
-		_displayBuilder.setSpellCheckSuggestionEnabled(true);
+		_displayContextBuilder.setSpellCheckSuggestion(
+			RandomTestUtil.randomString());
+		_displayContextBuilder.setSpellCheckSuggestionEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertTrue(
 			suggestionsPortletDisplayContext.hasSpellCheckSuggestion());
@@ -281,12 +285,12 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testIsRelatedSuggestions() {
-		_displayBuilder.setRelatedQueriesSuggestions(
+		_displayContextBuilder.setRelatedQueriesSuggestions(
 			Arrays.asList(RandomTestUtil.randomString()));
-		_displayBuilder.setRelatedQueriesSuggestionsEnabled(true);
+		_displayContextBuilder.setRelatedQueriesSuggestionsEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertTrue(
 			suggestionsPortletDisplayContext.
@@ -296,7 +300,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testIsRelatedSuggestionsFalseByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.
@@ -305,10 +309,10 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testIsSpellCheckSuggestionEnabled() {
-		_displayBuilder.setSpellCheckSuggestionEnabled(true);
+		_displayContextBuilder.setSpellCheckSuggestionEnabled(true);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertTrue(
 			suggestionsPortletDisplayContext.isSpellCheckSuggestionEnabled());
@@ -317,7 +321,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	@Test
 	public void testIsSpellCheckSuggestionEnabledFalseByDefault() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		Assert.assertFalse(
 			suggestionsPortletDisplayContext.isSpellCheckSuggestionEnabled());
@@ -326,11 +330,11 @@ public class SuggestionsPortletDisplayBuilderTest {
 	protected List<SuggestionDisplayContext> buildRelatedQueriesSuggestions(
 		List<String> suggestions) {
 
-		_displayBuilder.setRelatedQueriesSuggestions(suggestions);
-		_displayBuilder.setRelatedQueriesSuggestionsEnabled(true);
+		_displayContextBuilder.setRelatedQueriesSuggestions(suggestions);
+		_displayContextBuilder.setRelatedQueriesSuggestionsEnabled(true);
 
 		SuggestionsPortletDisplayContext displayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		return displayContext.getRelatedQueriesSuggestions();
 	}
@@ -338,11 +342,11 @@ public class SuggestionsPortletDisplayBuilderTest {
 	protected SuggestionDisplayContext buildSpellCheckSuggestion(
 		String spellCheckSuggestion) {
 
-		_displayBuilder.setSpellCheckSuggestion(spellCheckSuggestion);
-		_displayBuilder.setSpellCheckSuggestionEnabled(true);
+		_displayContextBuilder.setSpellCheckSuggestion(spellCheckSuggestion);
+		_displayContextBuilder.setSpellCheckSuggestionEnabled(true);
 
 		SuggestionsPortletDisplayContext displayContext =
-			_displayBuilder.build();
+			_displayContextBuilder.build();
 
 		return displayContext.getSpellCheckSuggestion();
 	}
@@ -388,8 +392,9 @@ public class SuggestionsPortletDisplayBuilderTest {
 		);
 	}
 
-	private void _setUpDisplayBuilder() {
-		_displayBuilder = new SuggestionsPortletDisplayBuilder(html, http);
+	private void _setUpDisplayContextBuilder() {
+		_displayContextBuilder = new SuggestionsPortletDisplayContextBuilder(
+			html, http);
 
 		_setUpSearchedKeywords("q", "X");
 	}
@@ -422,9 +427,9 @@ public class SuggestionsPortletDisplayBuilderTest {
 	private void _setUpSearchedKeywords(
 		String keywordsParameterName, String keywords) {
 
-		_displayBuilder.setKeywords(keywords);
-		_displayBuilder.setKeywordsParameterName(keywordsParameterName);
-		_displayBuilder.setSearchURL(
+		_displayContextBuilder.setKeywords(keywords);
+		_displayContextBuilder.setKeywordsParameterName(keywordsParameterName);
+		_displayContextBuilder.setSearchURL(
 			StringBundler.concat(
 				_URL_PREFIX, keywordsParameterName, StringPool.EQUAL,
 				keywords));
@@ -436,6 +441,6 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	private static final String _URL_PREFIX = "http://localhost:8080/?";
 
-	private SuggestionsPortletDisplayBuilder _displayBuilder;
+	private SuggestionsPortletDisplayContextBuilder _displayContextBuilder;
 
 }

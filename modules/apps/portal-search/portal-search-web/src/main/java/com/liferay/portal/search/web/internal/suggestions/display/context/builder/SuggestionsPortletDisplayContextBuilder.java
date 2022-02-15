@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.suggestions.display.context;
+package com.liferay.portal.search.web.internal.suggestions.display.context.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder;
+import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionDisplayContext;
+import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,9 +32,9 @@ import java.util.stream.Stream;
 /**
  * @author Adam Brandizzi
  */
-public class SuggestionsPortletDisplayBuilder {
+public class SuggestionsPortletDisplayContextBuilder {
 
-	public SuggestionsPortletDisplayBuilder(Html html, Http http) {
+	public SuggestionsPortletDisplayContextBuilder(Html html, Http http) {
 		_html = html;
 		_http = http;
 	}

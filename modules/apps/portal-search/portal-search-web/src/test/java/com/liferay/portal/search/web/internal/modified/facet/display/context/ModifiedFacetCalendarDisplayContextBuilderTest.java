@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetCalendarDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CalendarFactoryImpl;
 
@@ -34,7 +35,7 @@ import org.junit.Test;
 /**
  * @author Adam Brandizzi
  */
-public class ModifiedFacetCalendarDisplayBuilderTest {
+public class ModifiedFacetCalendarDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -48,23 +49,25 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 
 	@Test
 	public void testDoNotBreakWithoutSettingValues() {
-		ModifiedFacetCalendarDisplayBuilder
-			modifiedFacetCalendarDisplayBuilder = createDisplayBuilder();
+		ModifiedFacetCalendarDisplayContextBuilder
+			modifiedFacetCalendarDisplayContextBuilder =
+				createDisplayContextBuilder();
 
-		Assert.assertNotNull(modifiedFacetCalendarDisplayBuilder.build());
+		Assert.assertNotNull(
+			modifiedFacetCalendarDisplayContextBuilder.build());
 	}
 
 	@Test
 	public void testGetRangeFromCurrentDay() {
 		TimeZone timeZone = TimeZoneUtil.getDefault();
 
-		ModifiedFacetCalendarDisplayBuilder
-			modifiedFacetCalendarDisplayBuilder = createDisplayBuilder(
-				timeZone);
+		ModifiedFacetCalendarDisplayContextBuilder
+			modifiedFacetCalendarDisplayContextBuilder =
+				createDisplayContextBuilder(timeZone);
 
 		ModifiedFacetCalendarDisplayContext
 			modifiedFacetCalendarDisplayContext =
-				modifiedFacetCalendarDisplayBuilder.build();
+				modifiedFacetCalendarDisplayContextBuilder.build();
 
 		Calendar todayCalendar = _calendarFactory.getCalendar(timeZone);
 
@@ -86,15 +89,16 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 
 	@Test
 	public void testGetRangeFromLimitAttributes() {
-		ModifiedFacetCalendarDisplayBuilder
-			modifiedFacetCalendarDisplayBuilder = createDisplayBuilder();
+		ModifiedFacetCalendarDisplayContextBuilder
+			modifiedFacetCalendarDisplayContextBuilder =
+				createDisplayContextBuilder();
 
-		modifiedFacetCalendarDisplayBuilder.setFrom("2018-01-31");
-		modifiedFacetCalendarDisplayBuilder.setTo("2018-02-28");
+		modifiedFacetCalendarDisplayContextBuilder.setFrom("2018-01-31");
+		modifiedFacetCalendarDisplayContextBuilder.setTo("2018-02-28");
 
 		ModifiedFacetCalendarDisplayContext
 			modifiedFacetCalendarDisplayContext =
-				modifiedFacetCalendarDisplayBuilder.build();
+				modifiedFacetCalendarDisplayContextBuilder.build();
 
 		_assertFromDateValues(
 			2018, Calendar.JANUARY, 31, modifiedFacetCalendarDisplayContext);
@@ -109,16 +113,17 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 
 		timeZoneOptional.ifPresent(
 			timeZone -> {
-				ModifiedFacetCalendarDisplayBuilder
-					modifiedFacetCalendarDisplayBuilder = createDisplayBuilder(
-						timeZone);
+				ModifiedFacetCalendarDisplayContextBuilder
+					modifiedFacetCalendarDisplayContextBuilder =
+						createDisplayContextBuilder(timeZone);
 
-				modifiedFacetCalendarDisplayBuilder.setFrom("2018-01-31");
-				modifiedFacetCalendarDisplayBuilder.setTo("2018-02-28");
+				modifiedFacetCalendarDisplayContextBuilder.setFrom(
+					"2018-01-31");
+				modifiedFacetCalendarDisplayContextBuilder.setTo("2018-02-28");
 
 				ModifiedFacetCalendarDisplayContext
 					modifiedFacetCalendarDisplayContext =
-						modifiedFacetCalendarDisplayBuilder.build();
+						modifiedFacetCalendarDisplayContextBuilder.build();
 
 				_assertFromDateValues(
 					2018, Calendar.JANUARY, 31,
@@ -129,21 +134,25 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 			});
 	}
 
-	protected ModifiedFacetCalendarDisplayBuilder createDisplayBuilder() {
-		return createDisplayBuilder(TimeZoneUtil.getDefault());
+	protected ModifiedFacetCalendarDisplayContextBuilder
+		createDisplayContextBuilder() {
+
+		return createDisplayContextBuilder(TimeZoneUtil.getDefault());
 	}
 
-	protected ModifiedFacetCalendarDisplayBuilder createDisplayBuilder(
-		TimeZone timeZone) {
+	protected ModifiedFacetCalendarDisplayContextBuilder
+		createDisplayContextBuilder(TimeZone timeZone) {
 
-		ModifiedFacetCalendarDisplayBuilder
-			modifiedFacetCalendarDisplayBuilder =
-				new ModifiedFacetCalendarDisplayBuilder(_calendarFactory);
+		ModifiedFacetCalendarDisplayContextBuilder
+			modifiedFacetCalendarDisplayContextBuilder =
+				new ModifiedFacetCalendarDisplayContextBuilder(
+					_calendarFactory);
 
-		modifiedFacetCalendarDisplayBuilder.setLocale(LocaleUtil.getDefault());
-		modifiedFacetCalendarDisplayBuilder.setTimeZone(timeZone);
+		modifiedFacetCalendarDisplayContextBuilder.setLocale(
+			LocaleUtil.getDefault());
+		modifiedFacetCalendarDisplayContextBuilder.setTimeZone(timeZone);
 
-		return modifiedFacetCalendarDisplayBuilder;
+		return modifiedFacetCalendarDisplayContextBuilder;
 	}
 
 	private void _assertFromDateValues(

@@ -65,6 +65,23 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 				<div>
 					<c:choose>
 						<c:when test="<%= importTranslationDisplayContext.isBulkTranslationEnabled() %>">
+							<p class="h3"><liferay-ui:message key="import-files" /></p>
+
+							<p class="text-secondary">
+								<liferay-ui:message key="please-upload-your-translation-files" />
+							</p>
+
+							<div class="mt-4">
+								<p class="h5"><liferay-ui:message key="file-upload" /></p>
+
+								<clay:button
+									disabled="<%= true %>"
+									displayType="secondary"
+									label="select-files"
+									small="<%= true %>"
+								/>
+							</div>
+
 							<react:component
 								module="js/ImportTranslationMultipleFiles"
 								props='<%=

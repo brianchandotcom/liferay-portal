@@ -51,6 +51,7 @@ export default function Collapse({children, label, open}) {
 					}
 				)}
 				onClick={handleClick}
+				type="button"
 			>
 				<span className="c-inner text-truncate" tabIndex="-1">
 					{label}

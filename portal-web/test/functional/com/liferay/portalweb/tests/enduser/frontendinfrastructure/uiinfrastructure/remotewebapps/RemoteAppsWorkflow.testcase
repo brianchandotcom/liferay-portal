@@ -49,4 +49,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-147200. Verify pending remote app portlet cannot be added to page"
+	@priority = "4"
+	test PendingRemoteAppCannotBeAddedToPage {
+		property portal.acceptance = "true";
+
+		task ("Apply workflow approval process to remote apps") {
+			RemoteAppsWorkflow.applyWorkflow();
+		}
+
+		task ("Add user with permissions to create remote app") {
+			Permissions.setUpRegRoleLoginUserCP(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			RemoteAppsWorkflow.addUserPermissions();
+		}
+
+		task ("Create remote app as user with permissions") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.addApp(
+				entryName = "Test Remote App",
+				entryURL = "http://www.liferay.com");
+		}
+
+		task ("Verify remote app pending status as admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.assertTableStatus(
+				entryName = "Test Remote App",
+				entryStatus = "Pending");
+		}
+
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Assert remote app portlet cannot be added to page") {
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Test Remote App");
+
+			AssertElementPresent(
+				key_infoMessage = "There are no fragments or widgets on this page.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+	}
+
 }

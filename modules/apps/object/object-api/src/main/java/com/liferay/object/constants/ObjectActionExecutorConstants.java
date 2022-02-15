@@ -25,4 +25,6 @@ public class ObjectActionExecutorConstants {
 
 	public static final String KEY_WEBHOOK = "webhook";
 
+	public static final String KEY_GROOVY = "groovy";
+
 }

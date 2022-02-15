@@ -65,8 +65,8 @@ public class CollectionStyledLayoutStructureItem
 				_numberOfItemsPerPage,
 				collectionStyledLayoutStructureItem._numberOfItemsPerPage) ||
 			!Objects.equals(
-				_numberOfItemsPerPage,
-				collectionStyledLayoutStructureItem._numberOfItemsPerPage) ||
+				_numberOfPages,
+				collectionStyledLayoutStructureItem._numberOfPages) ||
 			!Objects.equals(
 				_paginationType,
 				collectionStyledLayoutStructureItem._paginationType) ||

@@ -156,7 +156,7 @@ public class DSEnvelopeManagerTest {
 	@Test
 	public void testGetDSEnvelope() throws Exception {
 		String expectedEmailSubject = RandomTestUtil.randomString();
-		
+
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {

@@ -45,7 +45,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			SignIn.setPasswordReminder();
+			User.answerPasswordReminder();
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}

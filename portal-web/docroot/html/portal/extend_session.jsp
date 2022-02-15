@@ -22,6 +22,10 @@ if (_log.isWarnEnabled()) {
 
 	if (Validator.isNotNull(requestedSessionId) && !StringUtil.equals(requestedSessionId, session.getId())) {
 		_log.warn("Unable to extend the HTTP session. Review the portal property \"session.timeout\" if this warning is displayed frequently.");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("The session from the request was " + requestedSessionId + " but current session is " + session.getId());
+		}
 	}
 }
 

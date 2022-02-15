@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents with longer content translation for the current language."
+		"en_US": "Boost contents with longer content in the user's current language."
 	},
 	"elementDefinition": {
 		"category": "boost",

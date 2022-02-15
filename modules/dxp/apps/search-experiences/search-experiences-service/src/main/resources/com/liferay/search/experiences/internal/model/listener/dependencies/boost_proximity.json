@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents tagged close to my location with a Gaussian function."
+		"en_US": "Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required."
 	},
 	"elementDefinition": {
 		"category": "boost",

@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents having the current session language as the default language."
+		"en_US": "Boost contents having a default language matching the current session language."
 	},
 	"elementDefinition": {
 		"category": "boost",

@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents on sites that I am a member of."
+		"en_US": "Boost contents on sites the user is a member of."
 	},
 	"elementDefinition": {
 		"category": "boost",

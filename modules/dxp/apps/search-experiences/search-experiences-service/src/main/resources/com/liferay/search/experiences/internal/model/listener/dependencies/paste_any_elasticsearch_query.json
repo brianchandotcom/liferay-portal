@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Paste any Elasticsearch query body in the element as is."
+		"en_US": "Paste any Elasticsearch DSL query body into the element as-is."
 	},
 	"elementDefinition": {
 		"category": "custom",

@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents in a category."
+		"en_US": "Hide contents in the given category."
 	},
 	"elementDefinition": {
 		"category": "hide",

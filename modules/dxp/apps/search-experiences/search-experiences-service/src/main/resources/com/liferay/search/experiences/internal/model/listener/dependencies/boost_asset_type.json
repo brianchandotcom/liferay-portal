@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost the given asset type over others."
+		"en_US": "Boost the given asset type."
 	},
 	"elementDefinition": {
 		"category": "boost",

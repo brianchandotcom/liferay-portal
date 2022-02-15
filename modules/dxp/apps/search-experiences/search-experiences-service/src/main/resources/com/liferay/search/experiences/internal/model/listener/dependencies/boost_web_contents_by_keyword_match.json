@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Show selected Web Contents higher in the results if given keywords exist in the search phrase."
+		"en_US": "Boost certain Web Content if the user's search keywords contain the given keywords."
 	},
 	"elementDefinition": {
 		"category": "conditional",

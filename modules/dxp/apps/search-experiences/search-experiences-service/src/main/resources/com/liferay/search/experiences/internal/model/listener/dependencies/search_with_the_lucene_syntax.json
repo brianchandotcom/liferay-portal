@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Enable searching using the Lucene syntax."
+		"en_US": "Use Query String query syntax to match one or more fields with a single operator (OR or AND)."
 	},
 	"elementDefinition": {
 		"category": "match",

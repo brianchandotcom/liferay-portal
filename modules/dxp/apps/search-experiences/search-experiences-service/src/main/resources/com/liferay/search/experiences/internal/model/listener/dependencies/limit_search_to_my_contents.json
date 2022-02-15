@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to contents that a user is an owner of."
+		"en_US": "Limit the search to contents the user is an owner of."
 	},
 	"elementDefinition": {
 		"category": "filter",

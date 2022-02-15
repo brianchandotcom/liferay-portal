@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide results by exact term match."
+		"en_US": "Hide contents with an exact term match on the given field."
 	},
 	"elementDefinition": {
 		"category": "hide",

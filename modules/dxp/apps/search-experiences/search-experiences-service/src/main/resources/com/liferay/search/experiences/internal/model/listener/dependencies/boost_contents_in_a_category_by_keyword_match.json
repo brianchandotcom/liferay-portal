@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Show contents in a category higher in the results if the search phrase contains any of the given keywords."
+		"en_US": "Boost contents in a category if the user's search keywords contain any of the given keywords."
 	},
 	"elementDefinition": {
 		"category": "conditional",

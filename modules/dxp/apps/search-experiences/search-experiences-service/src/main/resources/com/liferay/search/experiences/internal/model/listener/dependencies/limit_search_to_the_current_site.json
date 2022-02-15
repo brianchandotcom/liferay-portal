@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to the current site."
+		"en_US": "Limit the search to the current site."
 	},
 	"elementDefinition": {
 		"category": "filter",

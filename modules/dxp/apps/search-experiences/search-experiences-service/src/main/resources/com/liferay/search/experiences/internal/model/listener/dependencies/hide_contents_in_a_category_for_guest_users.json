@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents in a category if a user is not logged in."
+		"en_US": "Hide contents in a category if the user is not logged in."
 	},
 	"elementDefinition": {
 		"category": "conditional",

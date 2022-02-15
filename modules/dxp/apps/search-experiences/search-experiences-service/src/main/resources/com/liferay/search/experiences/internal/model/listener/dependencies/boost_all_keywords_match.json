@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents matching all the words in the search phrase."
+		"en_US": "Boost contents if the search keywords match in the given fields."
 	},
 	"elementDefinition": {
 		"category": "boost",

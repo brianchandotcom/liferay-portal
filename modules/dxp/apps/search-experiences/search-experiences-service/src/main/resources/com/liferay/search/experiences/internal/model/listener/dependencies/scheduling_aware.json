@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Show only contents with a valid display date."
+		"en_US": "Show only contents with a display date that's not in the future."
 	},
 	"elementDefinition": {
 		"category": "filter",

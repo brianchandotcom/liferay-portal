@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to contents created within the given time."
+		"en_US": "Limit search to contents created within the given time range."
 	},
 	"elementDefinition": {
 		"category": "filter",

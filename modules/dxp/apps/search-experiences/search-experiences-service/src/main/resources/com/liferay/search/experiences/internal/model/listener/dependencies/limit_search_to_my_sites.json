@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search scope to the sites that a user is a member of."
+		"en_US": "Limit the search scope to the sites that the user is a member of."
 	},
 	"elementDefinition": {
 		"category": "filter",

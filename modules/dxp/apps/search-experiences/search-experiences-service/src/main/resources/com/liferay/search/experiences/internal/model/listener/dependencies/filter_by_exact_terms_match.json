@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Filter results by one or multiple terms. At least one has to match."
+		"en_US": "Filter results by one or multiple terms. At least one must match."
 	},
 	"elementDefinition": {
 		"category": "filter",

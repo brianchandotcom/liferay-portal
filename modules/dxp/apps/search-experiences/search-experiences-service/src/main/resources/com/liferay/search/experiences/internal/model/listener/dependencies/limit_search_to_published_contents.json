@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to contents that have been published."
+		"en_US": "Limit the search to contents that are published."
 	},
 	"elementDefinition": {
 		"category": "filter",

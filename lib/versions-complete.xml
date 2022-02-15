@@ -7573,30 +7573,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.26</version>
-				<project-name>Tika</project-name>
-				<project-url>http://tika.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.26</version>
-				<project-name>Tika</project-name>
-				<project-url>http://tika.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/tomcat-jdbc.jar</file-name>
 				<version>9.0.56</version>
 				<project-name>Tomcat</project-name>
@@ -7628,30 +7604,6 @@
 				<licenses>
 					<license>CDDL 1.1</license>
 					<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/vorbis-java-core.jar</file-name>
-				<version>0.8</version>
-				<project-name>Vorbis</project-name>
-				<project-url>http://xiph.org/vorbis</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/vorbis-java-tika.jar</file-name>
-				<version>0.8.LIFERAY-PATCHED-1</version>
-				<project-name>Vorbis</project-name>
-				<project-url>http://xiph.org/vorbis</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
 				</licenses>
 			</library>
 			<library>

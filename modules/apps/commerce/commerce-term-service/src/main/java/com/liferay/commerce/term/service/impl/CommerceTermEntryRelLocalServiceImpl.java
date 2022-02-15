@@ -161,7 +161,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 	@Override
 	public List<CommerceTermEntryRel> getCommerceOrderTypeCommerceTermEntryRels(
-		long corEntryId, String keywords, int start, int end) {
+		long commerceTermEntryId, String keywords, int start, int end) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -170,8 +170,8 @@ public class CommerceTermEntryRelLocalServiceImpl
 				CommerceOrderTypeTable.INSTANCE,
 				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId.eq(
 					CommerceTermEntryRelTable.INSTANCE.classPK),
-				corEntryId, CommerceOrderType.class.getName(), keywords,
-				CommerceOrderTypeTable.INSTANCE.name
+				commerceTermEntryId, CommerceOrderType.class.getName(),
+				keywords, CommerceOrderTypeTable.INSTANCE.name
 			).limit(
 				start, end
 			));
@@ -179,7 +179,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 	@Override
 	public int getCommerceOrderTypeCommerceTermEntryRelsCount(
-		long corEntryId, String keywords) {
+		long commerceTermEntryId, String keywords) {
 
 		return dslQueryCount(
 			_getGroupByStep(
@@ -188,8 +188,8 @@ public class CommerceTermEntryRelLocalServiceImpl
 				CommerceOrderTypeTable.INSTANCE,
 				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId.eq(
 					CommerceTermEntryRelTable.INSTANCE.classPK),
-				corEntryId, CommerceOrderType.class.getName(), keywords,
-				CommerceOrderTypeTable.INSTANCE.name));
+				commerceTermEntryId, CommerceOrderType.class.getName(),
+				keywords, CommerceOrderTypeTable.INSTANCE.name));
 	}
 
 	@Override
@@ -226,7 +226,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Table innerJoinTable, Predicate innerJoinPredicate,
-		Long corEntryId, String className, String keywords,
+		Long commerceTermEntryId, String className, String keywords,
 		Expression<String> keywordsPredicateExpression) {
 
 		JoinStep joinStep = fromStep.from(
@@ -241,7 +241,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 		return joinStep.where(
 			() -> CommerceTermEntryRelTable.INSTANCE.commerceTermEntryId.eq(
-				corEntryId
+				commerceTermEntryId
 			).and(
 				CommerceTermEntryRelTable.INSTANCE.classNameId.eq(
 					classNameLocalService.getClassNameId(className))

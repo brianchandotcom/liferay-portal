@@ -729,7 +729,7 @@ definition {
 		Redirect.viewDefault();
 	}
 
-	@description = "This ensures that there's no new 404 tracking is performed when it is re-disabled at system settings."
+	@description = "This ensures that no new 404 tracking is performed when the option is manually disabled at system settings."
 	@priority = "4"
 	test CanDisable404InSystemSettings {
 		property test.name.skip.portal.instance = "Redirect#CanDisable404InSystemSettings";

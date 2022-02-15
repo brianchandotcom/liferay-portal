@@ -158,26 +158,6 @@ html#{$cadmin-selector} {
 				width: 320px;
 			}
 
-			&__sidebar-collapse {
-				cursor: pointer;
-
-				.collapse-icon {
-					background: none;
-					border: none;
-					color: $cadmin-gray-600;
-					font-size: 11.2px;
-					height: 32px;
-					margin-bottom: 4px;
-					padding-left: 0;
-					text-align: left;
-					width: 100%;
-				}
-
-				.sheet-subtitle {
-					line-height: inherit;
-				}
-			}
-
 			&__sidebar-content {
 				height: calc(
 					100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}

@@ -1271,52 +1271,6 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	test ModifyBlueprintsAdminTableFields {
-		Blueprints.openBlueprintsAdmin();
-
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		PortletEntry.save();
-
-		Click(locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU");
-
-		for (var field : list "Description,ID,Author,Created,Modified") {
-			Click(
-				fieldName = "${field}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-		}
-
-		for (var field : list "Description,ID,Author,Created,Modified") {
-			AssertElementNotPresent(
-				fieldName = "${field}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-		}
-
-		Click(
-			fieldName = "Title",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-
-		for (var field : list "Title,Description,ID,Author,Created,Modified") {
-			AssertElementPresent(
-				fieldName = "${field}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-		}
-
-		Click(
-			fieldName = "Description",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-
-		AssertElementPresent(
-			fieldName = "Description",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-
-		for (var field : list "Title,ID,Author,Created,Modified") {
-			AssertElementNotPresent(
-				fieldName = "${field}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-		}
-	}
-
 	test ModifyIndexerClausesToggle {
 		Blueprints.openBlueprintsAdmin();
 

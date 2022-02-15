@@ -11,10 +11,11 @@
 import {useQuery} from '@apollo/client';
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
-import {Table} from '../../../../../common/components';
-import {fetchHeadless} from '../../../../../common/services/liferay/api';
-import {getKoroneikiAccounts} from '../../../../../common/services/liferay/graphql/queries';
-import ActivationKeysLayout from '../../../layouts/ActivationKeysLayout';
+import {Table} from '../../../../../../common/components';
+import {fetchHeadless} from '../../../../../../common/services/liferay/api';
+import {getKoroneikiAccounts} from '../../../../../../common/services/liferay/graphql/queries';
+import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
+
 const Commerce = ({accountKey, sessionId}) => {
 	const [
 		ActivationInstructionsData,

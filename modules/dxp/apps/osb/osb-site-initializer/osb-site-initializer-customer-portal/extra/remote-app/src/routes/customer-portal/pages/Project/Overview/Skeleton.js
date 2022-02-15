@@ -9,14 +9,19 @@
  * distribution rights of the Software.
  */
 
-import ActivationKeysSkeleton from '../../layouts/ActivationKeysLayout/Skeleton';
-import Commerce from './Commerce';
-import EnterpriseSearch from './EnterpriseSearch';
+import ProjectSupport from '../../../components/ProjectSupport';
+import QuickLinksPanel from '../../../containers/QuickLinksPanel';
 
-const ActivationKey = {
-	Commerce,
-	EnterpriseSearch,
-	Skeleton: ActivationKeysSkeleton,
+const OverviewSkeleton = () => {
+	return (
+		<div className="d-flex position-relative w-100">
+			<div className="w-100">
+				<ProjectSupport.Skeleton />
+			</div>
+
+			<QuickLinksPanel.Skeleton />
+		</div>
+	);
 };
 
-export default ActivationKey;
+export default OverviewSkeleton;

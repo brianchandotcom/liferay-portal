@@ -11,18 +11,20 @@
 
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import client from '../../../../apolloClient';
-import {getAccountSubscriptions} from '../../../../common/services/liferay/graphql/queries';
-import CardSubscription from '../../components/CardSubscription';
-import SubscriptionsFilterByStatus from '../../components/SubscriptionsFilterByStatus';
-import SubscriptionsNavbar from '../../components/SubscriptionsNavbar';
-import {useCustomerPortal} from '../../context';
-import {actionTypes} from '../../context/reducer';
-import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
-import {getWebContents} from '../../utils/getWebContents';
+import {useOutletContext} from 'react-router-dom';
+import client from '../../../../../apolloClient';
+import {getAccountSubscriptions} from '../../../../../common/services/liferay/graphql/queries';
+import CardSubscription from '../../../components/CardSubscription';
+import SubscriptionsFilterByStatus from '../../../components/SubscriptionsFilterByStatus';
+import SubscriptionsNavbar from '../../../components/SubscriptionsNavbar';
+import {useCustomerPortal} from '../../../context';
+import {actionTypes} from '../../../context/reducer';
+import {SUBSCRIPTIONS_STATUS} from '../../../utils/constants';
+import {getWebContents} from '../../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
 
-const Overview = ({project, subscriptionGroups}) => {
+const Overview = () => {
+	const {project, subscriptionGroups} = useOutletContext();
 	const [, dispatch] = useCustomerPortal();
 	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(

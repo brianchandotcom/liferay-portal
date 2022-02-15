@@ -11,8 +11,9 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import {Button} from '../../../../common/components';
-import InviteTeamMembersForm from '../../../../common/containers/setup-forms/InviteTeamMembersForm';
+import {useOutletContext} from 'react-router-dom';
+import {Button} from '../../../../../common/components';
+import InviteTeamMembersForm from '../../../../../common/containers/setup-forms/InviteTeamMembersForm';
 
 const InvitesModal = ({observer, onClose, project}) => {
 	return (
@@ -26,7 +27,8 @@ const InvitesModal = ({observer, onClose, project}) => {
 	);
 };
 
-const TeamMembers = ({project}) => {
+const TeamMembers = () => {
+	const {project} = useOutletContext();
 	const [visible, setVisible] = useState(false);
 	const modalProps = useModal({
 		onClose: () => setVisible(false),

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ActivationKeysLayout from '../../../layouts/ActivationKeysLayout';
+import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
 const EnterpriseSearch = ({accountKey, sessionId}) => {
 	return (

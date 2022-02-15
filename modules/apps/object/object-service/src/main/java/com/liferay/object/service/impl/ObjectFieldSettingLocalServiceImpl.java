@@ -14,13 +14,25 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.RequiredObjectFieldSettingException;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Carolina Barbosa
  */
 @Component(
 	property = "model.class.name=com.liferay.object.model.ObjectFieldSetting",
@@ -28,4 +40,73 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectFieldSettingLocalServiceImpl
 	extends ObjectFieldSettingLocalServiceBaseImpl {
+
+	@Override
+	public ObjectFieldSetting addObjectFieldSetting(
+			long userId, long objectFieldId, String name, boolean required,
+			String value)
+		throws PortalException {
+
+		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		if (objectField == null) {
+			throw new NoSuchObjectFieldException();
+		}
+
+		_validateSettingValue(required, value);
+
+		ObjectFieldSetting objectFieldSetting =
+			objectFieldSettingPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectFieldSetting.setCompanyId(user.getCompanyId());
+		objectFieldSetting.setUserId(user.getUserId());
+		objectFieldSetting.setUserName(user.getFullName());
+
+		objectFieldSetting.setObjectFieldId(objectFieldId);
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setRequired(required);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSettingPersistence.update(objectFieldSetting);
+	}
+
+	@Override
+	public List<ObjectFieldSetting> getObjectFieldSettings(long objectFieldId) {
+		return objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+	}
+
+	@Override
+	public ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws PortalException {
+
+		ObjectFieldSetting objectFieldSetting =
+			objectFieldSettingPersistence.fetchByPrimaryKey(
+				objectFieldSettingId);
+
+		_validateSettingValue(objectFieldSetting.isRequired(), value);
+
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSettingPersistence.update(objectFieldSetting);
+	}
+
+	private void _validateSettingValue(boolean required, String value)
+		throws PortalException {
+
+		if (required && Validator.isNull(value)) {
+			throw new RequiredObjectFieldSettingException();
+		}
+	}
+
+	@Reference
+	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

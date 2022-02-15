@@ -472,7 +472,7 @@ function NoPaginationOptions({
 				<p className="mt-1 small text-secondary">
 					{Liferay.Util.sub(
 						Liferay.Language.get(
-							'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x-we-strongly-recommend-using-pagination-instead'
+							'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
 						),
 						config.searchContainerPageMaxDelta
 					)}

@@ -560,6 +560,7 @@
 		<exception>ObjectValidation</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
+		<exception>RequiredObjectFieldSetting</exception>
 		<exception>RequiredObjectRelationship</exception>
 	</exceptions>
 </service-builder>

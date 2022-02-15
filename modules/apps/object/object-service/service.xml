@@ -216,6 +216,37 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="ObjectFieldSetting" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectFieldSettingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectFieldId" type="long" />
+		<column name="name" type="String" />
+		<column name="required" type="boolean" />
+		<column name="value" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectFieldId" return-type="Collection">
+			<finder-column name="objectFieldId" />
+		</finder>
+		<finder name="OFI_N" return-type="ObjectFieldSetting" unique="true">
+			<finder-column name="objectFieldId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="ObjectLayout" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

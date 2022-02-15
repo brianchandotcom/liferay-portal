@@ -382,11 +382,11 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			ScrollBy(value1 = "0, 2500");
+			ScrollBy(value1 = "0, 2200");
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			Pause(locator1 = "40000");
+			Pause(locator1 = "5000");
 		}
 
 		task ("Get entryId of blog entry") {

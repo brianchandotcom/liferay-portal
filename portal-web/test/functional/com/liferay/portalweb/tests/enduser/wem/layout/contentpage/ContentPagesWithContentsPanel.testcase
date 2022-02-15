@@ -536,7 +536,7 @@ definition {
 				entryTitle = "Document Title",
 				fieldName = "Preview Image",
 				navItem = "Documents and Media",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Add the first Collection Display below the Banner Center") {
@@ -769,7 +769,7 @@ definition {
 				entryTitle = "analytics-cloud-hero-image.png",
 				fieldName = "Preview Image",
 				navItem = "Documents and Media",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "analytics-cloud-hero-image.png");
 		}
 
@@ -943,7 +943,7 @@ definition {
 				entryTitle = "Document Title",
 				fieldName = "Preview Image",
 				navItem = "Documents and Media",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Add the first Collection Display below the Banner Center") {
@@ -1312,7 +1312,7 @@ definition {
 				entryTitle = "Document Title",
 				fieldName = "Preview Image",
 				navItem = "Documents and Media",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickManagementBar();
 		}

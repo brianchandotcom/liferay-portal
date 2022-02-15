@@ -2274,288 +2274,286 @@ definition {
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-		for (var panel : list "${panelList}") {
-			if ("${panel}" == "Styles") {
-				Navigator.gotoNavTab(navTab = "Styles");
+		if ("${panel}" == "Styles") {
+			Navigator.gotoNavTab(navTab = "Styles");
 
-				if (isSet(backgroundColor)) {
-					PageEditor.selectColorSwatchItem(
-						colorSwatchItem = "${backgroundColor}",
-						fieldLabel = "Background Color");
+			if (isSet(backgroundColor)) {
+				PageEditor.selectColorSwatchItem(
+					colorSwatchItem = "${backgroundColor}",
+					fieldLabel = "Background Color");
 
-					PageEditor.waitForAutoSave();
-				}
+				PageEditor.waitForAutoSave();
+			}
 
-				if (isSet(backgroundImage)) {
-					Select(
-						key_fieldLabel = "Image Source",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${backgroundImage}");
+			if (isSet(backgroundImage)) {
+				Select(
+					key_fieldLabel = "Image Source",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${backgroundImage}");
 
-					if ("${backgroundImage}" == "Mapping") {
-						if (isSet(entryTitle)) {
-							PageEditorMapping.mapEditableFieldToAsset(
-								entryTitle = "${entryTitle}",
-								navItem = "${navItem}",
-								uploadFileName = "${uploadFileName}");
+				if ("${backgroundImage}" == "Mapping") {
+					if (isSet(entryTitle)) {
+						PageEditorMapping.mapEditableFieldToAsset(
+							entryTitle = "${entryTitle}",
+							navItem = "${navItem}",
+							uploadFileName = "${uploadFileName}");
 
-							if ("${navItem}" == "Documents and Media") {
-								Select(
-									locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-									value1 = "${fieldName}");
-							}
-							else {
-								Select(
-									locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-									value1 = "Image");
-							}
-
-							PageEditor.waitForAutoSave();
-						}
-						else {
-							if (isSet(source)) {
-								Select(
-									key_fieldLabel = "Source",
-									locator1 = "Select#GENERIC_SELECT_FIELD",
-									value1 = "${source}");
-							}
-
-							Pause(locator1 = "3000");
-
+						if ("${navItem}" == "Documents and Media") {
 							Select(
-								key_fieldLabel = "Field",
-								locator1 = "Select#GENERIC_SELECT_FIELD",
+								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
 								value1 = "${fieldName}");
+						}
+						else {
+							Select(
+								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+								value1 = "Image");
+						}
 
-							PageEditor.waitForAutoSave();
+						PageEditor.waitForAutoSave();
+					}
+					else {
+						if (isSet(source)) {
+							Select(
+								key_fieldLabel = "Source",
+								locator1 = "Select#GENERIC_SELECT_FIELD",
+								value1 = "${source}");
+						}
+
+						Pause(locator1 = "3000");
+
+						Select(
+							key_fieldLabel = "Field",
+							locator1 = "Select#GENERIC_SELECT_FIELD",
+							value1 = "${fieldName}");
+
+						PageEditor.waitForAutoSave();
+					}
+				}
+
+				if ("${backgroundImage}" == "Direct") {
+					if (IsTextEqual(key_fieldLabel = "Background Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
+						Click(
+							key_fieldLabel = "Background Image",
+							key_text = "plus",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
+					else {
+						Click(
+							key_fieldLabel = "Background Image",
+							key_text = "change",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
+
+					if (isSet(depotName)) {
+						ItemSelector.selectRepositoryImage(
+							depotName = "${depotName}",
+							imageFileName = "${imageFileName}",
+							navTab = "Documents and Media");
+					}
+					else {
+						if (isSet(uploadFileName)) {
+							ItemSelector.uploadFile(
+								navTab = "Documents and Media",
+								uploadFileName = "${uploadFileName}");
+						}
+						else if (isSet(imageSourceURL)) {
+							ItemSelector.addImageFromURL(
+								imageSourceURL = "${imageSourceURL}",
+								navTab = "URL");
+						}
+						else {
+							SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+							Click(
+								key_card = "${entryTitle}",
+								locator1 = "Card#CARD_TITLE");
 						}
 					}
 
-					if ("${backgroundImage}" == "Direct") {
-						if (IsTextEqual(key_fieldLabel = "Background Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
-							Click(
-								key_fieldLabel = "Background Image",
-								key_text = "plus",
-								locator1 = "Icon#ANY_ITEM_SELECTOR");
-						}
-						else {
-							Click(
-								key_fieldLabel = "Background Image",
-								key_text = "change",
-								locator1 = "Icon#ANY_ITEM_SELECTOR");
-						}
+					SelectFrame(value1 = "relative=top");
+				}
 
-						if (isSet(depotName)) {
-							ItemSelector.selectRepositoryImage(
-								depotName = "${depotName}",
-								imageFileName = "${imageFileName}",
-								navTab = "Documents and Media");
-						}
-						else {
-							if (isSet(uploadFileName)) {
-								ItemSelector.uploadFile(
-									navTab = "Documents and Media",
-									uploadFileName = "${uploadFileName}");
-							}
-							else if (isSet(imageSourceURL)) {
-								ItemSelector.addImageFromURL(
-									imageSourceURL = "${imageSourceURL}",
-									navTab = "URL");
-							}
-							else {
-								SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+				PageEditor.waitForAutoSave();
+			}
 
-								Click(
-									key_card = "${entryTitle}",
-									locator1 = "Card#CARD_TITLE");
-							}
-						}
+			if (isSet(borderColor)) {
+				PageEditor.selectColorSwatchItem(
+					colorSwatchItem = "${borderColor}",
+					fieldLabel = "Border Color");
 
-						SelectFrame(value1 = "relative=top");
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(borderRadius)) {
+				Select(
+					key_fieldLabel = "Border Radius",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${borderRadius}");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(borderWidth)) {
+				Type(
+					key_fieldLabel = "Border Width",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${borderWidth}");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
+
+				AssertTextEquals(
+					key_fieldLabel = "Border Width",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${borderWidth}");
+			}
+
+			if (isSet(boxShadow)) {
+				Select(
+					key_fieldLabel = "Shadow",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${boxShadow}");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			PageEditor.configureFragment(
+				marginBottom = "${marginBottom}",
+				marginLeft = "${marginLeft}",
+				marginRight = "${marginRight}",
+				marginTop = "${marginTop}",
+				paddingBottom = "${paddingBottom}",
+				paddingLeft = "${paddingLeft}",
+				paddingRight = "${paddingRight}",
+				paddingTop = "${paddingTop}");
+
+			if (isSet(opacity)) {
+				Type(
+					key_fieldLabel = "Opacity",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${opacity}");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
+
+				AssertTextEquals(
+					key_fieldLabel = "Opacity",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${opacity}");
+			}
+		}
+
+		if ("${panel}" == "General") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			if (isSet(containerWidth)) {
+				Select(
+					key_fieldLabel = "Container Width",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${containerWidth}");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(contentDisplay)) {
+				Select(
+					key_fieldLabel = "Content Display",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${contentDisplay}");
+
+				PageEditor.waitForAutoSave();
+
+				if ("${contentDisplay}" != "Block") {
+					if (isSet(alignItems)) {
+						Select(
+							key_fieldLabel = "Align Items",
+							locator1 = "Select#GENERIC_SELECT_FIELD",
+							value1 = "${alignItems}");
+
+						PageEditor.waitForAutoSave();
 					}
 
-					PageEditor.waitForAutoSave();
-				}
+					if (isSet(justifyContent)) {
+						Select(
+							key_fieldLabel = "Justify Content",
+							locator1 = "Select#GENERIC_SELECT_FIELD",
+							value1 = "${justifyContent}");
 
-				if (isSet(borderColor)) {
-					PageEditor.selectColorSwatchItem(
-						colorSwatchItem = "${borderColor}",
-						fieldLabel = "Border Color");
-
-					PageEditor.waitForAutoSave();
-				}
-
-				if (isSet(borderRadius)) {
-					Select(
-						key_fieldLabel = "Border Radius",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${borderRadius}");
-
-					PageEditor.waitForAutoSave();
-				}
-
-				if (isSet(borderWidth)) {
-					Type(
-						key_fieldLabel = "Border Width",
-						locator1 = "FormFields#NUMBER_FIELD",
-						value1 = "${borderWidth}");
-
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-					PageEditor.waitForAutoSave();
-
-					AssertTextEquals(
-						key_fieldLabel = "Border Width",
-						locator1 = "FormFields#NUMBER_FIELD",
-						value1 = "${borderWidth}");
-				}
-
-				if (isSet(boxShadow)) {
-					Select(
-						key_fieldLabel = "Shadow",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${boxShadow}");
-
-					PageEditor.waitForAutoSave();
-				}
-
-				PageEditor.configureFragment(
-					marginBottom = "${marginBottom}",
-					marginLeft = "${marginLeft}",
-					marginRight = "${marginRight}",
-					marginTop = "${marginTop}",
-					paddingBottom = "${paddingBottom}",
-					paddingLeft = "${paddingLeft}",
-					paddingRight = "${paddingRight}",
-					paddingTop = "${paddingTop}");
-
-				if (isSet(opacity)) {
-					Type(
-						key_fieldLabel = "Opacity",
-						locator1 = "FormFields#NUMBER_FIELD",
-						value1 = "${opacity}");
-
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-					PageEditor.waitForAutoSave();
-
-					AssertTextEquals(
-						key_fieldLabel = "Opacity",
-						locator1 = "FormFields#NUMBER_FIELD",
-						value1 = "${opacity}");
+						PageEditor.waitForAutoSave();
+					}
 				}
 			}
 
-			if ("${panel}" == "General") {
-				Navigator.gotoNavTab(navTab = "General");
+			if (isSet(height)) {
+				Type(
+					key_borderBottom = "Size",
+					key_fieldLabel = "Height",
+					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+					value1 = "${height}");
 
-				if (isSet(containerWidth)) {
-					Select(
-						key_fieldLabel = "Container Width",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${containerWidth}");
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-					PageEditor.waitForAutoSave();
-				}
+				PageEditor.waitForAutoSave();
+			}
 
-				if (isSet(contentDisplay)) {
-					Select(
-						key_fieldLabel = "Content Display",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${contentDisplay}");
+			if ("${link}" == "Mapped URL") {
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${link}");
 
-					PageEditor.waitForAutoSave();
+				PageEditor.waitForAutoSave();
 
-					if ("${contentDisplay}" != "Block") {
-						if (isSet(alignItems)) {
-							Select(
-								key_fieldLabel = "Align Items",
-								locator1 = "Select#GENERIC_SELECT_FIELD",
-								value1 = "${alignItems}");
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "${entryTitle}",
+					navItem = "${navItem}");
 
-							PageEditor.waitForAutoSave();
-						}
+				Select(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
 
-						if (isSet(justifyContent)) {
-							Select(
-								key_fieldLabel = "Justify Content",
-								locator1 = "Select#GENERIC_SELECT_FIELD",
-								value1 = "${justifyContent}");
+				PageEditor.waitForAutoSave();
 
-							PageEditor.waitForAutoSave();
-						}
-					}
-				}
+				AssertSelectedLabel(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
+			}
+			else if (isSet(url)) {
+				Type(
+					key_text = "URL",
+					locator1 = "TextInput#ANY",
+					value1 = "${url}");
 
-				if (isSet(height)) {
-					Type(
-						key_borderBottom = "Size",
-						key_fieldLabel = "Height",
-						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
-						value1 = "${height}");
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+				PageEditor.waitForAutoSave();
+			}
 
-					PageEditor.waitForAutoSave();
-				}
+			if ("${target}" == "Blank") {
+				Check.checkNotVisible(
+					checkboxName = "Open in a new tab.",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
-				if ("${link}" == "Mapped URL") {
-					Select(
-						key_fieldLabel = "Link",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${link}");
+				PageEditor.waitForAutoSave();
+			}
+			else if ("${target}" == "Self") {
+				Uncheck.uncheckToggleSwitch(
+					checkboxName = "Open in a new tab.",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
-					PageEditor.waitForAutoSave();
-
-					PageEditorMapping.mapEditableFieldToAsset(
-						entryTitle = "${entryTitle}",
-						navItem = "${navItem}");
-
-					Select(
-						key_fieldLabel = "Field",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${field}");
-
-					PageEditor.waitForAutoSave();
-
-					AssertSelectedLabel(
-						key_fieldLabel = "Field",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${field}");
-				}
-				else if (isSet(url)) {
-					Type(
-						key_text = "URL",
-						locator1 = "TextInput#ANY",
-						value1 = "${url}");
-
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-					PageEditor.waitForAutoSave();
-				}
-
-				if ("${target}" == "Blank") {
-					Check.checkNotVisible(
-						checkboxName = "Open in a new tab.",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-
-					PageEditor.waitForAutoSave();
-				}
-				else if ("${target}" == "Self") {
-					Uncheck.uncheckToggleSwitch(
-						checkboxName = "Open in a new tab.",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-
-					PageEditor.waitForAutoSave();
-				}
+				PageEditor.waitForAutoSave();
 			}
 		}
 	}

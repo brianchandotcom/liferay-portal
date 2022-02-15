@@ -596,7 +596,7 @@ definition {
 				entryTitle = "Web Content Title",
 				fieldName = "Image",
 				navItem = "Web Content",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
@@ -666,7 +666,7 @@ definition {
 		task ("Change the background color of Container") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Remove the Container") {
@@ -1325,7 +1325,7 @@ definition {
 				entryTitle = "analytics-cloud-hero-image.png",
 				fieldName = "Preview Image",
 				navItem = "Documents and Media",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "analytics-cloud-hero-image.png");
 		}
 

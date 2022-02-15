@@ -3643,7 +3643,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Danger",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 
@@ -3657,7 +3657,7 @@ definition {
 		task ("Change the background color of the default experience") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -3699,7 +3699,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.clickPublish();
@@ -3712,7 +3712,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "Document_4.jpg");
 
 			PageEditor.clickPublish();

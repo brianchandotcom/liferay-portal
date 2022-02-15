@@ -811,7 +811,7 @@ definition {
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media",
 			paddingTop = "2",
-			panelList = "Styles");
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 

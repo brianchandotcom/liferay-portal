@@ -1334,7 +1334,7 @@ definition {
 				entryTitle = "WC WebContent Title",
 				fieldName = "Image",
 				navItem = "Web Content",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}

@@ -1123,7 +1123,7 @@ definition {
 		task ("Change the background color of Container and publish the page") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Danger",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}

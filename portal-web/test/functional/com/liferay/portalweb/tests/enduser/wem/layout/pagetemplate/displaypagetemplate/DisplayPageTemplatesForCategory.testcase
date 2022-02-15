@@ -689,7 +689,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Main Image",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}

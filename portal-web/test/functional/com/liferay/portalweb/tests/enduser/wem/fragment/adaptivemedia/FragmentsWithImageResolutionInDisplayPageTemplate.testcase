@@ -72,7 +72,7 @@ definition {
 		task ("Directly select an image with width greater than 2000px as background image of Banner Center") {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
@@ -233,7 +233,7 @@ definition {
 				backgroundImage = "Direct",
 				paddingBottom = "3",
 				paddingTop = "3",
-				panelList = "Styles",
+				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
@@ -576,7 +576,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Image",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert Resolution field is not shown") {
@@ -700,7 +700,7 @@ definition {
 				fieldName = "Image",
 				paddingBottom = "3",
 				paddingTop = "3",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert Resolution field is not shown") {

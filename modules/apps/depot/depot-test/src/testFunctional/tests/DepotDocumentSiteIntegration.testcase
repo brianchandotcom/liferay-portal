@@ -98,7 +98,7 @@ definition {
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg",
 			paddingTop = "2",
-			panelList = "Styles");
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 

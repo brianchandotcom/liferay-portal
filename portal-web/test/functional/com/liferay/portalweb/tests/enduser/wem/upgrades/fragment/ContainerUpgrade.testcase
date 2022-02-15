@@ -57,7 +57,7 @@ definition {
 				alignItems = "Center",
 				contentDisplay = "Flex Row",
 				justifyContent = "Center",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the outer Container styles") {
@@ -74,7 +74,7 @@ definition {
 				alignItems = "End",
 				contentDisplay = "Flex Column",
 				justifyContent = "Between",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the outer Container styles") {
@@ -102,7 +102,7 @@ definition {
 				alignItems = "Start",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panelList = "General",
+				panel = "General",
 				position = "2");
 		}
 
@@ -120,7 +120,7 @@ definition {
 				alignItems = "Baseline",
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
-				panelList = "General",
+				panel = "General",
 				position = "2");
 		}
 
@@ -175,7 +175,7 @@ definition {
 				alignItems = "Center",
 				contentDisplay = "Flex Row",
 				justifyContent = "Center",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -192,7 +192,7 @@ definition {
 				alignItems = "End",
 				contentDisplay = "Flex Column",
 				justifyContent = "Between",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -210,7 +210,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the inner Container styles") {
@@ -227,7 +227,7 @@ definition {
 				alignItems = "Baseline",
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -281,7 +281,7 @@ definition {
 				alignItems = "Center",
 				contentDisplay = "Flex Row",
 				justifyContent = "Center",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the outer Container styles") {
@@ -298,7 +298,7 @@ definition {
 				alignItems = "End",
 				contentDisplay = "Flex Column",
 				justifyContent = "Between",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the outer Container styles") {
@@ -326,7 +326,7 @@ definition {
 				alignItems = "Start",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panelList = "General",
+				panel = "General",
 				position = "2");
 		}
 
@@ -344,7 +344,7 @@ definition {
 				alignItems = "Baseline",
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
-				panelList = "General",
+				panel = "General",
 				position = "2");
 		}
 
@@ -399,7 +399,7 @@ definition {
 				alignItems = "Center",
 				contentDisplay = "Flex Row",
 				justifyContent = "Center",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -416,7 +416,7 @@ definition {
 				alignItems = "End",
 				contentDisplay = "Flex Column",
 				justifyContent = "Between",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -434,7 +434,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panelList = "General");
+				panel = "Styles");
 		}
 
 		task ("View the inner Container styles") {
@@ -451,7 +451,7 @@ definition {
 				alignItems = "Baseline",
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {

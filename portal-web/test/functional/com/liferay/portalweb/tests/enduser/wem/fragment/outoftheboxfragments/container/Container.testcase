@@ -140,14 +140,17 @@ definition {
 		task ("Configure the Container styles") {
 			PageEditor.editLayoutContainer(
 				alignItems = "Baseline",
-				backgroundColor = "Success",
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Column",
 				height = "600px",
 				justifyContent = "Around",
+				panel = "General");
+
+			PageEditor.editLayoutContainer(
+				backgroundColor = "Success",
 				paddingBottom = "4",
 				paddingTop = "2",
-				panelList = "General,Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert the Margin Left and Margin Right fields are disabled") {
@@ -255,7 +258,7 @@ definition {
 				contentDisplay = "Flex Column",
 				height = "1000px",
 				justifyContent = "Between",
-				panelList = "General,Styles");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -324,7 +327,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panelList = "General");
+				panel = "General");
 		}
 
 		task ("View the Container styles") {
@@ -382,13 +385,16 @@ definition {
 		task ("Configure the Container styles") {
 			PageEditor.editLayoutContainer(
 				alignItems = "Center",
+				contentDisplay = "Flex Row",
+				justifyContent = "Center",
+				panel = "General");
+
+			PageEditor.editLayoutContainer(
 				backgroundColor = "Warning",
 				borderColor = "Danger",
 				borderRadius = "Border Radius Large",
 				borderWidth = "5",
 				boxShadow = "Box Shadow Large",
-				contentDisplay = "Flex Row",
-				justifyContent = "Center",
 				marginBottom = "2",
 				marginLeft = "2",
 				marginRight = "2",
@@ -398,7 +404,7 @@ definition {
 				paddingLeft = "2",
 				paddingRight = "2",
 				paddingTop = "2",
-				panelList = "General,Styles");
+				panel = "Styles");
 		}
 
 		task ("View the Container styles") {
@@ -531,7 +537,7 @@ definition {
 				field = "Display Page URL",
 				link = "Mapped URL",
 				navItem = "Web Content",
-				panelList = "General");
+				panel = "General");
 
 			var baseURL = PropsUtil.get("portal.url");
 
@@ -600,7 +606,7 @@ definition {
 				fieldName = "File URL",
 				navItem = "Documents and Media",
 				paddingTop = "2",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -638,7 +644,7 @@ definition {
 
 		task ("Map Manual URL to Container") {
 			PageEditor.editLayoutContainer(
-				panelList = "General",
+				panel = "General",
 				url = "https://liferay.com");
 
 			AssertVisible(
@@ -731,7 +737,7 @@ definition {
 				backgroundImage = "Mapping",
 				entryTitle = "WC WebContent Title",
 				navItem = "Web Content",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -812,7 +818,7 @@ definition {
 				backgroundImage = "Mapping",
 				entryTitle = "WC WebContent Title",
 				navItem = "Web Content",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
@@ -881,7 +887,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Image",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -946,7 +952,7 @@ definition {
 		task ("Configure the Container") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
-				panelList = "Styles");
+				panel = "Styles");
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",

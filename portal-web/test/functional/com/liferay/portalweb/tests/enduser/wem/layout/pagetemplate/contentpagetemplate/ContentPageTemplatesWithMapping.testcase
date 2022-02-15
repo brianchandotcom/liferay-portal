@@ -571,7 +571,7 @@ definition {
 				entryTitle = "WC WebContent Title",
 				fieldName = "Image",
 				navItem = "Web Content",
-				panelList = "Styles");
+				panel = "Styles");
 		}
 
 		task ("Assert the mapped image is shown in background image field") {

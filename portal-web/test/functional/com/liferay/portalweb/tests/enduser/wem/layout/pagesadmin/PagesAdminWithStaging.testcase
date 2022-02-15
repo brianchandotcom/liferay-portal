@@ -228,4 +228,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-140253. View no private page in staging."
+	@priority = "4"
+	test ViewNoPrivatePageInStaging {
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+
+		task ("Go to Publishing > Staging, enable page versioning, assert no public and private page inside to select") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
+
+			Check.checkToggleSwitch(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
+
+			AssertElementNotPresent(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
+
+			Button.clickSave();
+		}
+
+		task ("Add 2 content pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name 1",
+				site = "false",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name 2",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Publish to live from Publishing > Staging, assert no Pages > Public Pages displayed, only Pages displayed") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconEntry.gotoAdd();
+
+			AssertElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+
+			Click(
+				key_pageName = "Pages",
+				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
+		}
+
+		task ("Go to page versioning, assert no private page settings") {
+			AssertElementNotPresent(
+				key_text = "Change to Private Pages",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+	}
+
 }

@@ -28,17 +28,22 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -147,6 +152,48 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			_updateCommerceOrder(
 				httpServletRequest, commerceOrder,
 				commercePaymentMethod.getKey());
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isActivePaymentTermCommerceCheckoutStep(
+			CommerceOrder commerceOrder, String languageId, boolean visible)
+		throws PortalException {
+
+		String commercePaymentMethodKey =
+			commerceOrder.getCommercePaymentMethodKey();
+
+		if (Validator.isNull(commercePaymentMethodKey)) {
+			return false;
+		}
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelLocalService.
+				getCommercePaymentMethodGroupRel(
+					commerceOrder.getGroupId(), commercePaymentMethodKey);
+
+		List<CommerceTermEntry> paymentCommerceTermEntries =
+			_commerceTermEntryLocalService.getPaymentCommerceTermEntries(
+				commerceOrder.getCompanyId(),
+				commerceOrder.getCommerceOrderTypeId(),
+				commercePaymentMethodGroupRel.
+					getCommercePaymentMethodGroupRelId());
+
+		if (paymentCommerceTermEntries.isEmpty()) {
+			return false;
+		}
+
+		if ((paymentCommerceTermEntries.size() == 1) || !visible) {
+			CommerceTermEntry commerceTermEntry =
+				paymentCommerceTermEntries.get(0);
+
+			_commerceOrderService.updateTermsAndConditions(
+				commerceOrder.getCommerceOrderId(), 0,
+				commerceTermEntry.getCommerceTermEntryId(), languageId);
 
 			return false;
 		}
@@ -286,6 +333,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
@@ -294,6 +345,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -165,7 +165,7 @@ public class PaymentMethodCommerceCheckoutStep
 			return;
 		}
 
-		_commerceOrderLocalService.updateCommerceOrder(
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(), commercePaymentMethodKey,
@@ -174,6 +174,9 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
 			commerceOrder.getAdvanceStatus(), commerceContext);
+
+		actionRequest.setAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 	}
 
 	@Reference

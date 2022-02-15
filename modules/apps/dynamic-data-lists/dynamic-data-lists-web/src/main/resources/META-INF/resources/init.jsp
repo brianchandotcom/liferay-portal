@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
-page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.dynamic.data.lists.constants.DDLActionKeys" %><%@
 page import="com.liferay.dynamic.data.lists.constants.DDLPortletKeys" %><%@
 page import="com.liferay.dynamic.data.lists.constants.DDLRecordConstants" %><%@

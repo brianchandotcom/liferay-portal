@@ -78,7 +78,7 @@ function DraftStatus() {
 	return (
 		<div>
 			<span
-				className={classNames('ml-1 style-book-editor__status-text', {
+				className={classNames('mx-1 style-book-editor__status-text', {
 					'text-success': draftStatus === DRAFT_STATUS.draftSaved,
 				})}
 			>
@@ -87,7 +87,7 @@ function DraftStatus() {
 
 			{draftStatus === DRAFT_STATUS.draftSaved && (
 				<ClayIcon
-					className="mt-0 style-book-editor__status-icon"
+					className="mx-1 style-book-editor__status-icon"
 					symbol="check-circle"
 				/>
 			)}

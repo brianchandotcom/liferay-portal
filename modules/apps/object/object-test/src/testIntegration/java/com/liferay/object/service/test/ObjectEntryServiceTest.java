@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -67,11 +68,7 @@ public class ObjectEntryServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
-			TestPropsValues.getCompanyId());
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		_user = TestPropsValues.getUser();
+		_adminUser = TestPropsValues.getUser();
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -92,6 +89,10 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -102,7 +103,7 @@ public class ObjectEntryServiceTest {
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		try {
-			_testAddObjectEntry(_defaultUser);
+			_testAddObjectEntry(_user);
 
 			Assert.fail();
 		}
@@ -111,17 +112,17 @@ public class ObjectEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have ADD_OBJECT_ENTRY permission for"));
 		}
 
-		_testAddObjectEntry(_user);
+		_testAddObjectEntry(_adminUser);
 	}
 
 	@Test
 	public void testDeleteObjectEntry() throws Exception {
 		try {
-			_testDeleteObjectEntry(_user, _defaultUser);
+			_testDeleteObjectEntry(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -130,18 +131,18 @@ public class ObjectEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteObjectEntry(_defaultUser, _defaultUser);
 		_testDeleteObjectEntry(_user, _user);
+		_testDeleteObjectEntry(_adminUser, _adminUser);
 	}
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
 		try {
-			_testGetObjectEntry(_user, _defaultUser);
+			_testGetObjectEntry(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -150,20 +151,20 @@ public class ObjectEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have VIEW permission for"));
 		}
 
-		_testGetObjectEntry(_defaultUser, _defaultUser);
 		_testGetObjectEntry(_user, _user);
+		_testGetObjectEntry(_adminUser, _adminUser);
 	}
 
 	@Test
 	public void testSearchObjectEntries() throws Exception {
-		_setUser(_user);
+		_setUser(_adminUser);
 
-		ObjectEntry objectEntry1 = _addObjectEntry(_user);
-		ObjectEntry objectEntry2 = _addObjectEntry(_user);
+		ObjectEntry objectEntry1 = _addObjectEntry(_adminUser);
+		ObjectEntry objectEntry2 = _addObjectEntry(_adminUser);
 
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			_objectEntryLocalService.searchObjectEntries(
@@ -171,7 +172,7 @@ public class ObjectEntryServiceTest {
 
 		Assert.assertEquals(2, baseModelSearchResult.getLength());
 
-		_setUser(_defaultUser);
+		_setUser(_user);
 
 		baseModelSearchResult = _objectEntryLocalService.searchObjectEntries(
 			0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
@@ -264,7 +265,7 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _adminUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

@@ -37,7 +37,7 @@ export default function TabsPanel({
 	return (
 		<>
 			<ClayTabs
-				className="page-editor__sidebar__fragments-widgets-panel__tabs"
+				className="mb-4 page-editor__sidebar__fragments-widgets-panel__tabs"
 				modern
 			>
 				{tabs.map((tab, index) => (

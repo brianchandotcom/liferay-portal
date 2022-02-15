@@ -6,13 +6,6 @@ html#{$cadmin-selector} {
 			&__page-contents {
 				padding: 0 16px;
 
-				.sheet-subtitle {
-					border: 0;
-					color: $cadmin-gray-600;
-					font-size: 11.008px;
-					margin-bottom: 2px;
-				}
-
 				&__page-content {
 					font-size: 12px;
 					margin-bottom: 4px;
@@ -50,7 +43,7 @@ html#{$cadmin-selector} {
 				}
 
 				&__content-filter {
-					margin-bottom: 20px;
+					margin-bottom: 24px;
 
 					&__help {
 						color: $cadmin-gray-600;

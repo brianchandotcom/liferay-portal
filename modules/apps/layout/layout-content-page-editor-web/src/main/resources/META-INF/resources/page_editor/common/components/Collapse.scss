@@ -1,32 +1,38 @@
 @import 'cadmin-variables';
 
-@import '../../app/components/variables';
-
-$collapseMarginBottom: $pageEditorSpacing * 2;
-
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__collapse {
 			cursor: pointer;
 
-			.ellipsis {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
+			.collapse-icon {
+				border-bottom: 1px solid $cadmin-light;
+				border-radius: 0;
+				color: $cadmin-secondary;
+				font-size: 0.75rem;
+				height: 32px;
+				margin-bottom: 16px;
+				width: 100%;
+
+				&:hover {
+					color: $cadmin-dark;
+				}
+
+				.collapse-icon-open {
+					color: $cadmin-dark;
+				}
 			}
 
-			.collapse-icon {
-				background: none;
-				border-color: $cadmin-secondary-l3;
-				font-size: 12px;
-				margin-bottom: $collapseMarginBottom;
-				padding-left: 0;
-				text-align: left;
-				width: 100%;
+			.sheet-subtitle {
+				line-height: inherit;
 			}
 
 			.page-editor__collapse {
 				margin-left: 16px;
+
+				.collapse-icon {
+					border-bottom: none;
+				}
 
 				> .page-editor__collapse-content {
 					margin-left: 16px;

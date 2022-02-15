@@ -1,4 +1,4 @@
-definition { 
+definition {
 
 	macro addApp {
 		LexiconEntry.gotoAdd();
@@ -10,19 +10,6 @@ definition {
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
-	}
-
-	macro applyWorkflow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Remote App Entry");
 	}
 
 	macro addUserPermissions {
@@ -42,7 +29,20 @@ definition {
 			roleTitle = "New Regular Role");
 	}
 
-	macro assertTableStatus{
+	macro applyWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Remote App Entry");
+	}
+
+	macro assertTableStatus {
 		AssertElementPresent(
 			key_tableEntryName = "${entryName}",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");

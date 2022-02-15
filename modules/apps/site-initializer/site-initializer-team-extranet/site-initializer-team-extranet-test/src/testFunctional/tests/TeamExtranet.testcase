@@ -901,4 +901,198 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143303. Verify the 'View More' links redirect to their respective pages"
+	@priority = "4"
+	test VerifyTheViewMoreRedirectsToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on 'View more' in Careers card and assert it is redirected to Careers Page") {
+			Masterclass.goToLink(
+				key_buttonName = "View more",
+				key_href = "careers",
+				key_description = "Careers");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on 'View more' in Team card and assert it is redirected to Team Page") {
+			Masterclass.goToLink(
+				key_buttonName = "View more",
+				key_href = "/web/test-site-team-extranet/team",
+				key_description = "Team");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on 'View more' in Blog card and assert it is redirected to Blog Page") {
+			Masterclass.goToLink(
+				key_buttonName = "View more",
+				key_href = "blog",
+				key_title = "20 gifts you can give to your marketing boss");
+		}
+	}
+
+	@description = "This is a test for LPS-143303. Verify the Page Titles redirect to their respective pages"
+	@priority = "4"
+	test VerifyThePageTitlesRedirectsToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on the Careers Card Title and Assert it is redirected to Careers Page") {
+			Click(
+				key_title = "Browse all the open job positions",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+
+			AssertElementPresent(
+				key_description = "Careers",
+				locator1 = "TeamExtranet#FRAGMENT_TEXT_BLOCK");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on the Team Card Title and Assert it is redirected to Team Page") {
+			Click(
+				key_title = "Meet the members of the team",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+
+			AssertElementPresent(
+				key_description = "Team",
+				locator1 = "TeamExtranet#FRAGMENT_TEXT_BLOCK");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click on the Blog Card Title and Assert it is redirected to Blog Page") {
+			Click(
+				key_title = "Stay on top of the latest news",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+
+			AssertElementPresent(
+				key_title = "20 gifts you can give to your marketing boss",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+		}
+	}
+
+	@description = "This is a test for LPS-143303. Verify all the links present in the Home Page redirect to their respective pages"
+	@priority = "4"
+	test VerifyTheLinksRedirectsToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click in The 'All blog articles' link and assert it redirects to Blog Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All blog articles",
+				key_href = "blog",
+				key_title = "20 gifts you can give to your marketing boss");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click in The 'All job positions' link and assert it redirects to Careers Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All job positions",
+				key_href = "careers",
+				key_description = "Careers");
+		}
+
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Click in The 'All team members' link and assert it redirects to Team Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All team members",
+				key_href = "team",
+				key_description = "Team");
+		}
+	}
+
+	@description = "This is a test for LPS-143303. Verify the 'All articles' in Blog Entry link to Blog page"
+	@priority = "3"
+	test VerifyTheAllArticlesLinkInBlogEntryLinkToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Blog and Open a Blog Entry") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Blog",
+				url = "http://localhost:8080/web/test-site-team-extranet");
+
+			Masterclass.goToLink(
+				key_buttonName = "Read More",
+				key_href = "00-20-gifts-you-can-give-to-your-marketing-boss");
+		}
+
+		task ("Click on 'All articles' and assert it redirects to Blog Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All articles",
+				key_href = "blog",
+				key_title = "20 gifts you can give to your marketing boss");
+		}
+	}
+
+	@description = "This is a test for LPS-143303. Verify the 'All open positions' link to Careers page"
+	@priority = "3"
+	test VerifyTheAllOpenPositionsLinkRedirectsToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Blog and Open a Blog Entry") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Careers",
+				url = "http://localhost:8080/web/test-site-team-extranet");
+
+			Click(
+				key_entryTitle = "Growth Product Manager",
+				locator1 = "BlogsEntry#TITLE_CARD");
+		}
+
+		task ("Click on 'All open positions' and assert it redirects to Careers Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All open positions",
+				key_href = "careers",
+				key_description = "Careers");
+		}
+	}
+
+	@description = "This is a test for LPS-143303. Verify the 'All articles' in Team Member Page link to Blog Page"
+	@priority = "3"
+	test VerifyTheAllArticlesLinkInTeamMemberLinkToItsPage {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+
+		task ("Go to Blog and Open a Blog Entry") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Team",
+				url = "http://localhost:8080/web/test-site-team-extranet");
+
+			Click(
+				key_imageName = "member",
+				locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
+		}
+
+		task ("Click on 'All articles' and assert it redirects to Blog Page") {
+			Masterclass.goToLink(
+				key_buttonName = "All articles",
+				key_href = "blog",
+				key_title = "20 gifts you can give to your marketing boss");
+		}
+	}
 }

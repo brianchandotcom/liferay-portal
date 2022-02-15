@@ -21,15 +21,17 @@
 		margin-bottom: 1rem;
 	}
 
-	.sheet-subtitle {
-		border: none;
-		color: $gray-600;
-		font-size: 0.7rem;
-		height: 2rem;
-		margin-bottom: 8px;
+	.collapse-icon {
+		border-bottom: 1px solid $light;
+		color: $secondary;
+		font-size: 0.75rem;
 
-		.lexicon-icon {
-			width: 8px;
+		&:hover {
+			color: $dark;
+		}
+
+		.collapse-icon-open {
+			color: $dark;
 		}
 	}
 

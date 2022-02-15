@@ -1607,6 +1607,84 @@ definition {
 		WebContent.viewCategorizationVocabularyCP(vocabularyNameList = "Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5");
 	}
 
+	@description = "This is a use case for LPS-140253. View no private page in web content."
+	@priority = "4"
+	test ViewNoPrivatePageInWebContent {
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+
+		task ("Add a content page and add Asset Publisher in it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Set Asset Publisher in created page as the Default Asset Publisher") {
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content and select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Content Page Name",
+				pageType = "Pages");
+		}
+
+		task ("Assert no public pages displayed in ckeditor link > Broswer Server") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			Click(locator1 = "CKEditor#BODY");
+
+			RobotType.robotTypeShortcut(locator1 = "Ctrl + k");
+
+			SelectFrameTop();
+
+			Click(
+				key_text = "Browse Server",
+				locator1 = "Link#ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.viewNoNavTab(navTab = "Public Pages");
+
+			Navigator.gotoNavTab(navTab = "Pages");
+
+			Portlet.expandTree();
+
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "Content Page Name",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "Content Page Name");
+
+			Click(locator1 = "CKEditor#OK_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			AssertTextEquals(
+				key_text = "/web/test-site-name/content-page-name",
+				locator1 = "Link#ANY",
+				value1 = "/web/test-site-name/content-page-name");
+		}
+	}
+
 	@description = "This is a use case for LPS-103344. View the same name categorization of web content."
 	@priority = "4"
 	test ViewSameNameCategoriesViaWebContent {

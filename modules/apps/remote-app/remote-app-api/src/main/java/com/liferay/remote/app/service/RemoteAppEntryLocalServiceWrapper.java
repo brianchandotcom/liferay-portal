@@ -43,8 +43,8 @@ public class RemoteAppEntryLocalServiceWrapper
 				String externalReferenceCode, long userId,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -52,9 +52,9 @@ public class RemoteAppEntryLocalServiceWrapper
 
 		return _remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			externalReferenceCode, userId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class RemoteAppEntryLocalServiceWrapper
 				String externalReferenceCode, long userId,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -86,9 +86,10 @@ public class RemoteAppEntryLocalServiceWrapper
 		return _remoteAppEntryLocalService.
 			addOrUpdateCustomElementRemoteAppEntry(
 				externalReferenceCode, userId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs, description,
-				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-				properties, sourceCodeURL);
+				customElementHTMLElementName, customElementURLs,
+				customElementUseESM, description, friendlyURLMapping,
+				instanceable, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 	}
 
 	/**
@@ -499,7 +500,8 @@ public class RemoteAppEntryLocalServiceWrapper
 			updateCustomElementRemoteAppEntry(
 				long userId, long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -507,9 +509,9 @@ public class RemoteAppEntryLocalServiceWrapper
 
 		return _remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 			userId, remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, nameMap, portletCategoryName, properties,
-			sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override

@@ -272,6 +272,27 @@ public interface RemoteAppEntryModel
 	public void setCustomElementURLs(String customElementURLs);
 
 	/**
+	 * Returns the custom element use esm of this remote app entry.
+	 *
+	 * @return the custom element use esm of this remote app entry
+	 */
+	public boolean getCustomElementUseESM();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is custom element use esm.
+	 *
+	 * @return <code>true</code> if this remote app entry is custom element use esm; <code>false</code> otherwise
+	 */
+	public boolean isCustomElementUseESM();
+
+	/**
+	 * Sets whether this remote app entry is custom element use esm.
+	 *
+	 * @param customElementUseESM the custom element use esm of this remote app entry
+	 */
+	public void setCustomElementUseESM(boolean customElementUseESM);
+
+	/**
 	 * Returns the description of this remote app entry.
 	 *
 	 * @return the description of this remote app entry

@@ -41,8 +41,8 @@ public class RemoteAppEntryServiceWrapper
 			addCustomElementRemoteAppEntry(
 				String externalReferenceCode, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -50,9 +50,9 @@ public class RemoteAppEntryServiceWrapper
 
 		return _remoteAppEntryService.addCustomElementRemoteAppEntry(
 			externalReferenceCode, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -99,7 +99,8 @@ public class RemoteAppEntryServiceWrapper
 			updateCustomElementRemoteAppEntry(
 				long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -107,9 +108,9 @@ public class RemoteAppEntryServiceWrapper
 
 		return _remoteAppEntryService.updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, nameMap, portletCategoryName, properties,
-			sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override

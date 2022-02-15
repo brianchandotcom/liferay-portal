@@ -20,6 +20,7 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="customElementUseESM" type="boolean" />
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />

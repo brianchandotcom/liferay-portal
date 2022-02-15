@@ -55,8 +55,8 @@ public class RemoteAppEntryServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -70,9 +70,10 @@ public class RemoteAppEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs, description,
-				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-				properties, sourceCodeURL);
+				customElementHTMLElementName, customElementURLs,
+				customElementUseESM, description, friendlyURLMapping,
+				instanceable, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 
 			Object returnObj = null;
 
@@ -236,7 +237,8 @@ public class RemoteAppEntryServiceHttp {
 				HttpPrincipal httpPrincipal, long remoteAppEntryId,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
+				boolean customElementUseESM, String description,
+				String friendlyURLMapping,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -250,9 +252,9 @@ public class RemoteAppEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, remoteAppEntryId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs, description,
-				friendlyURLMapping, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+				customElementHTMLElementName, customElementURLs,
+				customElementUseESM, description, friendlyURLMapping, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
 
 			Object returnObj = null;
 
@@ -335,8 +337,8 @@ public class RemoteAppEntryServiceHttp {
 	private static final Class<?>[]
 		_addCustomElementRemoteAppEntryParameterTypes0 = new Class[] {
 			String.class, String.class, String.class, String.class,
-			String.class, String.class, boolean.class, java.util.Map.class,
-			String.class, String.class, String.class
+			boolean.class, String.class, String.class, boolean.class,
+			java.util.Map.class, String.class, String.class, String.class
 		};
 	private static final Class<?>[] _addIFrameRemoteAppEntryParameterTypes1 =
 		new Class[] {
@@ -349,9 +351,9 @@ public class RemoteAppEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_updateCustomElementRemoteAppEntryParameterTypes4 = new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, java.util.Map.class, String.class, String.class,
-			String.class
+			long.class, String.class, String.class, String.class, boolean.class,
+			String.class, String.class, java.util.Map.class, String.class,
+			String.class, String.class
 		};
 	private static final Class<?>[] _updateIFrameRemoteAppEntryParameterTypes5 =
 		new Class[] {

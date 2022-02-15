@@ -58,7 +58,7 @@ public class UserFacetPortletConfigurationAction
 
 		UserSearchFacetDisplayContextBuilder
 			userSearchFacetDisplayContextBuilder =
-			_createUserSearchFacetDisplayContextBuilder(renderRequest);
+				_createUserSearchFacetDisplayContextBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -67,8 +67,9 @@ public class UserFacetPortletConfigurationAction
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	private UserSearchFacetDisplayContextBuilder _createUserSearchFacetDisplayContextBuilder(
-		RenderRequest renderRequest) {
+	private UserSearchFacetDisplayContextBuilder
+		_createUserSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new UserSearchFacetDisplayContextBuilder(renderRequest);

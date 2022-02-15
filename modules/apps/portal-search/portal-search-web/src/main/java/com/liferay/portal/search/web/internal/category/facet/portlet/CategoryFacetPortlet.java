@@ -26,9 +26,9 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfiguration;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionCheckerImpl;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -124,10 +124,11 @@ public class CategoryFacetPortlet extends MVCPortlet {
 
 		AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetDisplayContextBuilder =
-				new AssetCategoriesSearchFacetDisplayContextBuilder(renderRequest);
+				new AssetCategoriesSearchFacetDisplayContextBuilder(
+					renderRequest);
 
-		assetCategoriesSearchFacetDisplayContextBuilder.setAssetCategoryLocalService(
-			assetCategoryLocalService);
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetCategoryLocalService(assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
 			categoryFacetPortletPreferences.getDisplayStyle());
 		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(facet);
@@ -170,7 +171,8 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest),
-			assetCategoriesSearchFacetDisplayContextBuilder::setParameterValues);
+			assetCategoriesSearchFacetDisplayContextBuilder::
+				setParameterValues);
 
 		return assetCategoriesSearchFacetDisplayContextBuilder.build();
 	}

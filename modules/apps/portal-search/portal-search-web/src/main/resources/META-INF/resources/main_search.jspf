@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -62,8 +61,7 @@ Hits hits = searchDisplayContext.getHits();
 			>
 
 				<%
-				SearchResultSummaryDisplayContextBuilder
-					searchResultSummaryDisplayContextBuilder = new SearchResultSummaryDisplayContextBuilder();
+				com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder searchResultSummaryDisplayContextBuilder = new com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder();
 
 				searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
 				searchResultSummaryDisplayContextBuilder.setCurrentURL(currentURL);

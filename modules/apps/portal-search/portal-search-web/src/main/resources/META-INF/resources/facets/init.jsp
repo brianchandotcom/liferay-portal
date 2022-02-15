@@ -17,13 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionCheckerImpl" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@
@@ -37,7 +30,14 @@ page import="com.liferay.portal.search.web.internal.facet.display.context.Folder
 page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext" %>
+page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionCheckerImpl" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, _RANDOM_KEY_INPUT) + StringPool.UNDERLINE;

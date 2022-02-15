@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,8 +17,7 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-AssetTagsSearchFacetDisplayContextBuilder
-	assetTagsSearchFacetDisplayContextBuilder = new AssetTagsSearchFacetDisplayContextBuilder(renderRequest);
+AssetTagsSearchFacetDisplayContextBuilder assetTagsSearchFacetDisplayContextBuilder = new AssetTagsSearchFacetDisplayContextBuilder(renderRequest);
 
 assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle(dataJSONObject.getString("displayStyle", "cloud"));
 assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);

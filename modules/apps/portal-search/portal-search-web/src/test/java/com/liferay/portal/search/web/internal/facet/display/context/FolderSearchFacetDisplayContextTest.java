@@ -294,7 +294,7 @@ public class FolderSearchFacetDisplayContextTest {
 
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
-			new FolderSearchFacetDisplayContextBuilder(getRenderRequest());
+				new FolderSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		folderSearchFacetDisplayContextBuilder.setFacet(_facet);
 		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
@@ -302,7 +302,8 @@ public class FolderSearchFacetDisplayContextTest {
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
-		folderSearchFacetDisplayContextBuilder.setParameterName(_facet.getFieldId());
+		folderSearchFacetDisplayContextBuilder.setParameterName(
+			_facet.getFieldId());
 		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
 
 		return folderSearchFacetDisplayContextBuilder.build();

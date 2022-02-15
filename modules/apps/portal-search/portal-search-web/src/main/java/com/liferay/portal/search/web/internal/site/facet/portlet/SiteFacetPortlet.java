@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -132,7 +132,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
-			_createScopeSearchFacetDisplayContextBuilder(renderRequest);
+				_createScopeSearchFacetDisplayContextBuilder(renderRequest);
 
 		scopeSearchFacetDisplayContextBuilder.setFacet(facet);
 
@@ -144,7 +144,8 @@ public class SiteFacetPortlet extends MVCPortlet {
 			siteFacetConfiguration.getFrequencyThreshold());
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			siteFacetPortletPreferences.isFrequenciesVisible());
-		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
+			groupLocalService);
 		scopeSearchFacetDisplayContextBuilder.setLanguage(language);
 		scopeSearchFacetDisplayContextBuilder.setLocale(
 			_getLocale(portletSharedSearchResponse, renderRequest));
@@ -169,7 +170,8 @@ public class SiteFacetPortlet extends MVCPortlet {
 	}
 
 	private ScopeSearchFacetDisplayContextBuilder
-		_createScopeSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
+		_createScopeSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new ScopeSearchFacetDisplayContextBuilder(renderRequest);

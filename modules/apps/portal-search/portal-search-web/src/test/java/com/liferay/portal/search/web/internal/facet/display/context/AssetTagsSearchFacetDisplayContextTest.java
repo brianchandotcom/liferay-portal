@@ -215,7 +215,8 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
-			new AssetTagsSearchFacetDisplayContextBuilder(getRenderRequest());
+				new AssetTagsSearchFacetDisplayContextBuilder(
+					getRenderRequest());
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
 		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);

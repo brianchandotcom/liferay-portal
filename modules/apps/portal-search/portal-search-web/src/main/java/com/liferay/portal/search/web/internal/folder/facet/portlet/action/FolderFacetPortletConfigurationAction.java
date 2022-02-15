@@ -58,7 +58,7 @@ public class FolderFacetPortletConfigurationAction
 
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
-			_createFolderSearchFacetDisplayContextBuilder(renderRequest);
+				_createFolderSearchFacetDisplayContextBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -68,7 +68,8 @@ public class FolderFacetPortletConfigurationAction
 	}
 
 	private FolderSearchFacetDisplayContextBuilder
-		_createFolderSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
+		_createFolderSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new FolderSearchFacetDisplayContextBuilder(renderRequest);

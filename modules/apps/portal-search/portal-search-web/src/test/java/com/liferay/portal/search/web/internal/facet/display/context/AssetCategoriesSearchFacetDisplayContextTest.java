@@ -354,16 +354,20 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 
 		AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetDisplayContextBuilder =
-				new AssetCategoriesSearchFacetDisplayContextBuilder(renderRequest);
+				new AssetCategoriesSearchFacetDisplayContextBuilder(
+					renderRequest);
 
-		assetCategoriesSearchFacetDisplayContextBuilder.setAssetCategoryLocalService(
-			_assetCategoryLocalService);
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetCategoryLocalService(_assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetCategoryPermissionChecker(_assetCategoryPermissionChecker);
-		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
+		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
+			"cloud");
 		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(_facet);
-		assetCategoriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
-		assetCategoriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
+			true);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
+			0);
 		assetCategoriesSearchFacetDisplayContextBuilder.setMaxTerms(0);
 		assetCategoriesSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());

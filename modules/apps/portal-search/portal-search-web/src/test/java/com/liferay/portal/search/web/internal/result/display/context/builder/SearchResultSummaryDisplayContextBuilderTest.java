@@ -302,7 +302,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		SearchResultSummaryDisplayContextBuilder
 			searchResultSummaryDisplayContextBuilder =
-			_createSearchResultSummaryDisplayContextBuilder();
+				_createSearchResultSummaryDisplayContextBuilder();
 
 		searchResultSummaryDisplayContextBuilder.setDocument(document);
 
@@ -508,7 +508,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		SearchResultSummaryDisplayContextBuilder
 			searchResultSummaryDisplayContextBuilder =
-			new SearchResultSummaryDisplayContextBuilder();
+				new SearchResultSummaryDisplayContextBuilder();
 
 		searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(
 			assetEntryLocalService);
@@ -518,7 +518,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			fastDateFormatFactory);
 		searchResultSummaryDisplayContextBuilder.setGroupLocalService(
 			groupLocalService);
-		searchResultSummaryDisplayContextBuilder.setIndexerRegistry(indexerRegistry);
+		searchResultSummaryDisplayContextBuilder.setIndexerRegistry(
+			indexerRegistry);
 		searchResultSummaryDisplayContextBuilder.setLanguage(language);
 		searchResultSummaryDisplayContextBuilder.setLocale(locale);
 		searchResultSummaryDisplayContextBuilder.setPortletURLFactory(
@@ -532,7 +533,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		searchResultSummaryDisplayContextBuilder.setSummaryBuilderFactory(
 			new SummaryBuilderFactoryImpl());
 		searchResultSummaryDisplayContextBuilder.setThemeDisplay(themeDisplay);
-		searchResultSummaryDisplayContextBuilder.setUserLocalService(userLocalService);
+		searchResultSummaryDisplayContextBuilder.setUserLocalService(
+			userLocalService);
 
 		return searchResultSummaryDisplayContextBuilder;
 	}

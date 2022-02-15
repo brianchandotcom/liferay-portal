@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -137,7 +137,8 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
-				_createAssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
+				_createAssetEntriesSearchFacetDisplayContextBuilder(
+					renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
@@ -153,12 +154,14 @@ public class TypeFacetPortlet extends MVCPortlet {
 			typeFacetPortletPreferences.isFrequenciesVisible());
 		assetEntriesSearchFacetDisplayContextBuilder.setLocale(
 			themeDisplay.getLocale());
-		assetEntriesSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
-			_getPaginationStartParameterName(portletSharedSearchResponse));
+		assetEntriesSearchFacetDisplayContextBuilder.
+			setPaginationStartParameterName(
+				_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = typeFacetPortletPreferences.getParameterName();
 
-		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(parameterName);
+		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(
+			parameterName);
 
 		assetEntriesSearchFacetDisplayContextBuilder.setTypeNames(
 			_getAssetTypesTypeNames(typeFacetPortletPreferences, themeDisplay));
@@ -176,7 +179,8 @@ public class TypeFacetPortlet extends MVCPortlet {
 			RenderRequest renderRequest) {
 
 		try {
-			return new AssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
+			return new AssetEntriesSearchFacetDisplayContextBuilder(
+				renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

@@ -200,7 +200,7 @@ public class UserSearchFacetDisplayContextTest {
 
 		UserSearchFacetDisplayContextBuilder
 			userSearchFacetDisplayContextBuilder =
-			new UserSearchFacetDisplayContextBuilder(getRenderRequest());
+				new UserSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		userSearchFacetDisplayContextBuilder.setFacet(_facet);
 		userSearchFacetDisplayContextBuilder.setParamValue(paramValue);

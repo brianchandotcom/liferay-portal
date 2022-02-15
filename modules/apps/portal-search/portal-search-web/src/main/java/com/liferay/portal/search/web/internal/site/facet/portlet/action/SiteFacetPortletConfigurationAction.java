@@ -58,7 +58,7 @@ public class SiteFacetPortletConfigurationAction
 
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
-			_createScopeSearchFacetDisplayContextBuilder(renderRequest);
+				_createScopeSearchFacetDisplayContextBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -68,7 +68,8 @@ public class SiteFacetPortletConfigurationAction
 	}
 
 	private ScopeSearchFacetDisplayContextBuilder
-		_createScopeSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
+		_createScopeSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new ScopeSearchFacetDisplayContextBuilder(renderRequest);

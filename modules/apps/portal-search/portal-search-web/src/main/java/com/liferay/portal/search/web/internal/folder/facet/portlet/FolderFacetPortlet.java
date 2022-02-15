@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearcher;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -119,10 +119,11 @@ public class FolderFacetPortlet extends MVCPortlet {
 
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
-			_createFolderSearchFacetDisplayContextBuilder(renderRequest);
+				_createFolderSearchFacetDisplayContextBuilder(renderRequest);
 
 		folderSearchFacetDisplayContextBuilder.setFacet(facet);
-		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(folderTitleLookup);
+		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
+			folderTitleLookup);
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			folderFacetPortletPreferences.isFrequenciesVisible());
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(
@@ -145,7 +146,8 @@ public class FolderFacetPortlet extends MVCPortlet {
 	}
 
 	private FolderSearchFacetDisplayContextBuilder
-		_createFolderSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
+		_createFolderSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new FolderSearchFacetDisplayContextBuilder(renderRequest);

@@ -228,7 +228,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 
 		SearchResultContentDisplayContextBuilder
 			searchResultContentDisplayContextBuilder =
-			new SearchResultContentDisplayContextBuilder();
+				new SearchResultContentDisplayContextBuilder();
 
 		searchResultContentDisplayContextBuilder.setAssetEntryId(
 			RandomTestUtil.randomLong());
@@ -238,8 +238,10 @@ public class SearchResultContentDisplayContextBuilderTest {
 		searchResultContentDisplayContextBuilder.setPermissionChecker(
 			_permissionChecker);
 		searchResultContentDisplayContextBuilder.setPortal(_portal);
-		searchResultContentDisplayContextBuilder.setRenderRequest(_renderRequest);
-		searchResultContentDisplayContextBuilder.setRenderResponse(_renderResponse);
+		searchResultContentDisplayContextBuilder.setRenderRequest(
+			_renderRequest);
+		searchResultContentDisplayContextBuilder.setRenderResponse(
+			_renderResponse);
 		searchResultContentDisplayContextBuilder.setType(
 			RandomTestUtil.randomString());
 

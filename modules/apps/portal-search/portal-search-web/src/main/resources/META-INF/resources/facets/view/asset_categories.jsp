@@ -17,8 +17,7 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-AssetCategoriesSearchFacetDisplayContextBuilder
-	assetCategoriesSearchFacetDisplayContextBuilder = new AssetCategoriesSearchFacetDisplayContextBuilder(renderRequest);
+AssetCategoriesSearchFacetDisplayContextBuilder assetCategoriesSearchFacetDisplayContextBuilder = new AssetCategoriesSearchFacetDisplayContextBuilder(renderRequest);
 
 assetCategoriesSearchFacetDisplayContextBuilder.setAssetCategoryLocalService(AssetCategoryLocalServiceUtil.getService());
 assetCategoriesSearchFacetDisplayContextBuilder.setAssetCategoryPermissionChecker(new AssetCategoryPermissionCheckerImpl(themeDisplay.getPermissionChecker()));

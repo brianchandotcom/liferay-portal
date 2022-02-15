@@ -26,8 +26,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultContentDisplayContextBuilder" %><%@
-page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext" %>
+page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultContentDisplayContextBuilder" %>
 
 <liferay-theme:defineObjects />
 
@@ -36,8 +36,7 @@ page import="com.liferay.portal.search.web.internal.result.display.context.Searc
 <%
 portletDisplay.setShowBackIcon(false);
 
-SearchResultContentDisplayContextBuilder
-	searchResultContentDisplayContextBuilder = new SearchResultContentDisplayContextBuilder();
+SearchResultContentDisplayContextBuilder searchResultContentDisplayContextBuilder = new SearchResultContentDisplayContextBuilder();
 
 searchResultContentDisplayContextBuilder.setAssetEntryId(ParamUtil.getLong(request, "assetEntryId"));
 searchResultContentDisplayContextBuilder.setLocale(locale);

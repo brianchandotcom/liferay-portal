@@ -214,11 +214,12 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
-			new ScopeSearchFacetDisplayContextBuilder(getRenderRequest());
+				new ScopeSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
-		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(_groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
+			_groupLocalService);
 		scopeSearchFacetDisplayContextBuilder.setParameterValue(parameterValue);
 
 		return scopeSearchFacetDisplayContextBuilder.build();

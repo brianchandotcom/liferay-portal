@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfiguration;
 import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
@@ -116,7 +116,7 @@ public class TagFacetPortlet extends MVCPortlet {
 
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
-			_createTagsSearchFacetDisplayContextBuilder(renderRequest);
+				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle(
 			tagFacetPortletPreferences.getDisplayStyle());
@@ -127,12 +127,14 @@ public class TagFacetPortlet extends MVCPortlet {
 			assetTagsFacetConfiguration.getFrequencyThreshold());
 		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(
 			assetTagsFacetConfiguration.getMaxTerms());
-		assetTagsSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
-			_getPaginationStartParameterName(portletSharedSearchResponse));
+		assetTagsSearchFacetDisplayContextBuilder.
+			setPaginationStartParameterName(
+				_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = tagFacetPortletPreferences.getParameterName();
 
-		assetTagsSearchFacetDisplayContextBuilder.setParameterName(parameterName);
+		assetTagsSearchFacetDisplayContextBuilder.setParameterName(
+			parameterName);
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameterValues(
@@ -143,7 +145,8 @@ public class TagFacetPortlet extends MVCPortlet {
 	}
 
 	private AssetTagsSearchFacetDisplayContextBuilder
-		_createTagsSearchFacetDisplayContextBuilder(RenderRequest renderRequest) {
+		_createTagsSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest) {
 
 		try {
 			return new AssetTagsSearchFacetDisplayContextBuilder(renderRequest);

@@ -41,7 +41,8 @@ import javax.portlet.RenderRequest;
  */
 public class AssetTagsSearchFacetDisplayContextBuilder {
 
-	public AssetTagsSearchFacetDisplayContextBuilder(RenderRequest renderRequest)
+	public AssetTagsSearchFacetDisplayContextBuilder(
+			RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

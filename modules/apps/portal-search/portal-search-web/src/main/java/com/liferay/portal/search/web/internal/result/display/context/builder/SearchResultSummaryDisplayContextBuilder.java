@@ -116,7 +116,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 		}
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setAbridged(boolean abridged) {
+	public SearchResultSummaryDisplayContextBuilder setAbridged(
+		boolean abridged) {
+
 		_abridged = abridged;
 
 		return this;
@@ -130,15 +132,18 @@ public class SearchResultSummaryDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setAssetRendererFactoryLookup(
-		AssetRendererFactoryLookup assetRendererFactoryLookup) {
+	public SearchResultSummaryDisplayContextBuilder
+		setAssetRendererFactoryLookup(
+			AssetRendererFactoryLookup assetRendererFactoryLookup) {
 
 		_assetRendererFactoryLookup = assetRendererFactoryLookup;
 
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setCurrentURL(String currentURL) {
+	public SearchResultSummaryDisplayContextBuilder setCurrentURL(
+		String currentURL) {
+
 		_currentURL = currentURL;
 
 		return this;
@@ -200,7 +205,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setLanguage(Language language) {
+	public SearchResultSummaryDisplayContextBuilder setLanguage(
+		Language language) {
+
 		_language = language;
 
 		return this;
@@ -212,8 +219,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setObjectDefinitionLocalService(
-		ObjectDefinitionLocalService objectDefinitionLocalService) {
+	public SearchResultSummaryDisplayContextBuilder
+		setObjectDefinitionLocalService(
+			ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 
@@ -279,8 +287,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setSearchResultViewURLSupplier(
-		SearchResultViewURLSupplier searchResultViewURLSupplier) {
+	public SearchResultSummaryDisplayContextBuilder
+		setSearchResultViewURLSupplier(
+			SearchResultViewURLSupplier searchResultViewURLSupplier) {
 
 		_searchResultViewURLSupplier = searchResultViewURLSupplier;
 

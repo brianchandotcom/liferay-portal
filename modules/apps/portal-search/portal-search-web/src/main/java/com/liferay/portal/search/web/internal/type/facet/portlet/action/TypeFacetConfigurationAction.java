@@ -67,7 +67,8 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
-				_createAssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
+				_createAssetEntriesSearchFacetDisplayContextBuilder(
+					renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,7 +89,8 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 			RenderRequest renderRequest) {
 
 		try {
-			return new AssetEntriesSearchFacetDisplayContextBuilder(renderRequest);
+			return new AssetEntriesSearchFacetDisplayContextBuilder(
+				renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

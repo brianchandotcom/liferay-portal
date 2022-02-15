@@ -43,7 +43,8 @@ import javax.portlet.RenderRequest;
 /**
  * @author Lino Alves
  */
-public class AssetCategoriesSearchFacetDisplayContextBuilder implements Serializable {
+public class AssetCategoriesSearchFacetDisplayContextBuilder
+	implements Serializable {
 
 	public AssetCategoriesSearchFacetDisplayContextBuilder(
 		RenderRequest renderRequest) {

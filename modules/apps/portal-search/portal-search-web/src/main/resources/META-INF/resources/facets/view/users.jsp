@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,8 +17,7 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-UserSearchFacetDisplayContextBuilder
-	userSearchFacetDisplayContextBuilder = new UserSearchFacetDisplayContextBuilder(renderRequest);
+UserSearchFacetDisplayContextBuilder userSearchFacetDisplayContextBuilder = new UserSearchFacetDisplayContextBuilder(renderRequest);
 
 userSearchFacetDisplayContextBuilder.setFacet(facet);
 userSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));

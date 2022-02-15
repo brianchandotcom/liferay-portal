@@ -27,6 +27,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
@@ -53,7 +54,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,6 +102,13 @@ public class ObjectFieldLocalServiceImpl
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), dbType));
+		}
+
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+			_objectFieldSettingLocalService.addObjectFieldSetting(
+				userId, objectField.getObjectFieldId(),
+				objectFieldSetting.getName(), objectFieldSetting.isRequired(),
+				objectFieldSetting.getValue());
 		}
 
 		return objectField;
@@ -264,6 +274,10 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setName(name);
 		objectField.setRequired(required);
 
+		_addObjectFieldSettings(
+			objectField.getUserId(), objectField.getObjectFieldId(),
+			objectFieldSettings);
+
 		return objectFieldPersistence.update(objectField);
 	}
 
@@ -306,6 +320,51 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 
 		return objectFieldPersistence.update(objectField);
+	}
+
+	private void _addObjectFieldSettings(
+			long userId, long objectFieldId,
+			List<ObjectFieldSetting> newObjectFieldSettings)
+		throws PortalException {
+
+		List<ObjectFieldSetting> oldObjectFieldSettings =
+			_objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+
+		for (ObjectFieldSetting oldObjectFieldSetting :
+				oldObjectFieldSettings) {
+
+			Stream<ObjectFieldSetting> stream = newObjectFieldSettings.stream();
+
+			Optional<ObjectFieldSetting> optional = stream.filter(
+				newObjectFieldSetting ->
+					newObjectFieldSetting.getName() ==
+						oldObjectFieldSetting.getName()
+			).findFirst();
+
+			if (!optional.isPresent()) {
+				_objectFieldSettingPersistence.remove(oldObjectFieldSetting);
+			}
+		}
+
+		for (ObjectFieldSetting newObjectFieldSetting :
+				newObjectFieldSettings) {
+
+			ObjectFieldSetting oldObjectFieldSetting =
+				_objectFieldSettingPersistence.fetchByOFI_N(
+					objectFieldId, newObjectFieldSetting.getName());
+
+			if (oldObjectFieldSetting == null) {
+				_objectFieldSettingLocalService.addObjectFieldSetting(
+					userId, objectFieldId, newObjectFieldSetting.getName(),
+					newObjectFieldSetting.isRequired(),
+					newObjectFieldSetting.getValue());
+			}
+			else {
+				_objectFieldSettingLocalService.updateObjectFieldSetting(
+					oldObjectFieldSetting.getObjectFieldSettingId(),
+					newObjectFieldSetting.getValue());
+			}
+		}
 	}
 
 	private ObjectField _deleteObjectField(ObjectField objectField)
@@ -472,6 +531,9 @@ public class ObjectFieldLocalServiceImpl
 	@Reference
 	private ObjectFieldBusinessTypeServicesTracker
 		_objectFieldBusinessTypeServicesTracker;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;

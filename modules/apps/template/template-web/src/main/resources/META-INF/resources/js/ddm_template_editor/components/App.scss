@@ -126,28 +126,6 @@ $toolbarHeight: 6.875rem;
 			font-size: 0.875rem;
 		}
 
-		&-collapse {
-			cursor: pointer;
-
-			.collapse-icon {
-				border: none;
-				color: $gray-600;
-				font-size: 0.7rem;
-				margin-bottom: 4px;
-				width: 100%;
-
-				&-closed {
-					.rtl & {
-						transform: rotate(-180deg);
-					}
-				}
-			}
-
-			.sheet-subtitle {
-				line-height: inherit;
-			}
-		}
-
 		&-button {
 			align-items: center;
 			display: flex;

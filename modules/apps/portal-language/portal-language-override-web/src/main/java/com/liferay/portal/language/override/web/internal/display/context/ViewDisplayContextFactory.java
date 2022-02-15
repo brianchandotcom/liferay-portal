@@ -55,7 +55,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -84,13 +83,6 @@ public class ViewDisplayContextFactory {
 
 		ViewDisplayContext viewDisplayContext = new ViewDisplayContext();
 
-		Set<Locale> companyAvailableLocales =
-			LanguageUtil.getCompanyAvailableLocales(
-				_portal.getCompanyId(renderRequest));
-
-		viewDisplayContext.setAvailableLocales(
-			companyAvailableLocales.toArray(new Locale[0]));
-
 		viewDisplayContext.setDisplayStyle(
 			ParamUtil.getString(renderRequest, "displayStyle", "descriptive"));
 
@@ -117,7 +109,8 @@ public class ViewDisplayContextFactory {
 			_getTranslationLanguageDropdownItems(
 				_portal.getCurrentURL(renderRequest),
 				renderResponse.getNamespace(), selectedLanguageId,
-				companyAvailableLocales));
+				LanguageUtil.getCompanyAvailableLocales(
+					_portal.getCompanyId(renderRequest))));
 
 		return viewDisplayContext;
 	}

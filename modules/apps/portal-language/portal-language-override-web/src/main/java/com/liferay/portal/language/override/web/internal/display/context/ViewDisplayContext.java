@@ -19,16 +19,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Drew Brokke
  */
 public class ViewDisplayContext {
-
-	public Locale[] getAvailableLocales() {
-		return _availableLocales;
-	}
 
 	public String getDisplayStyle() {
 		return _displayStyle;
@@ -48,10 +43,6 @@ public class ViewDisplayContext {
 
 	public boolean isHasManageLanguageOverridesPermission() {
 		return _hasManageLanguageOverridesPermission;
-	}
-
-	public void setAvailableLocales(Locale[] availableLocales) {
-		_availableLocales = availableLocales;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -81,7 +72,6 @@ public class ViewDisplayContext {
 		_translationLanguageDropdownItems = translationLanguageDropdownItems;
 	}
 
-	private Locale[] _availableLocales;
 	private String _displayStyle;
 	private boolean _hasManageLanguageOverridesPermission;
 	private SearchContainer<LanguageItemDisplay> _searchContainer;

@@ -1,0 +1,24 @@
+{
+	"name": "customer-portal-fragments",
+	"description": "Customer Portal Fragments",
+	"version": "1.0.0",
+	"keywords": [
+		"liferay",
+		"liferay-fragments"
+	],
+	"scripts": {
+		"add-fragment": "yo liferay-fragments:fragment",
+		"compress": "yo liferay-fragments:compress"
+	},
+	"engines": {
+		"node": ">= 10.0.0",
+		"yarn": "^1.22.5"
+	},
+	"dependencies": {
+		"react": "16.8.6",
+		"react-dom": "16.8.6"
+	},
+	"devDependencies": {
+		"generator-liferay-fragments": "1.10.0"
+	}
+}

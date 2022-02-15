@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.facet.display.builder;
+package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

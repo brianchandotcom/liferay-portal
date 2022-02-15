@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.result.display.builder;
+package com.liferay.portal.search.web.internal.result.display.context.builder;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;

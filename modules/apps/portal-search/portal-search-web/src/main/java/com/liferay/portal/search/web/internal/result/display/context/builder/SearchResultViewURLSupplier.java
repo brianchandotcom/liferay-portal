@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.facet.display.builder;
-
-import com.liferay.asset.kernel.model.AssetCategory;
+package com.liferay.portal.search.web.internal.result.display.context.builder;
 
 /**
  * @author André de Oliveira
  */
-public interface AssetCategoryPermissionChecker {
+public interface SearchResultViewURLSupplier {
 
-	public boolean hasPermission(AssetCategory assetCategory);
+	public String getSearchResultViewURL();
 
 }

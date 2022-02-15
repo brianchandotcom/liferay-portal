@@ -52,7 +52,7 @@ import org.mockito.MockitoAnnotations;
  * @author Wade Cao
  * @author André de Oliveira
  */
-public class SearchResultContentDisplayBuilderTest {
+public class SearchResultContentDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -226,23 +226,24 @@ public class SearchResultContentDisplayBuilderTest {
 	private SearchResultContentDisplayContext _buildDisplayContext()
 		throws Exception {
 
-		SearchResultContentDisplayBuilder searchResultContentDisplayBuilder =
-			new SearchResultContentDisplayBuilder();
+		SearchResultContentDisplayContextBuilder
+			searchResultContentDisplayContextBuilder =
+			new SearchResultContentDisplayContextBuilder();
 
-		searchResultContentDisplayBuilder.setAssetEntryId(
+		searchResultContentDisplayContextBuilder.setAssetEntryId(
 			RandomTestUtil.randomLong());
-		searchResultContentDisplayBuilder.setAssetRendererFactoryLookup(
+		searchResultContentDisplayContextBuilder.setAssetRendererFactoryLookup(
 			_assetRendererFactoryLookup);
-		searchResultContentDisplayBuilder.setLocale(LocaleUtil.US);
-		searchResultContentDisplayBuilder.setPermissionChecker(
+		searchResultContentDisplayContextBuilder.setLocale(LocaleUtil.US);
+		searchResultContentDisplayContextBuilder.setPermissionChecker(
 			_permissionChecker);
-		searchResultContentDisplayBuilder.setPortal(_portal);
-		searchResultContentDisplayBuilder.setRenderRequest(_renderRequest);
-		searchResultContentDisplayBuilder.setRenderResponse(_renderResponse);
-		searchResultContentDisplayBuilder.setType(
+		searchResultContentDisplayContextBuilder.setPortal(_portal);
+		searchResultContentDisplayContextBuilder.setRenderRequest(_renderRequest);
+		searchResultContentDisplayContextBuilder.setRenderResponse(_renderResponse);
+		searchResultContentDisplayContextBuilder.setType(
 			RandomTestUtil.randomString());
 
-		return searchResultContentDisplayBuilder.build();
+		return searchResultContentDisplayContextBuilder.build();
 	}
 
 	private void _setUpAssetEntry() {

@@ -45,9 +45,9 @@ import javax.portlet.RenderRequest;
 /**
  * @author Lino Alves
  */
-public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
+public class AssetEntriesSearchFacetDisplayContextBuilder implements Serializable {
 
-	public AssetEntriesSearchFacetDisplayBuilder(RenderRequest renderRequest)
+	public AssetEntriesSearchFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

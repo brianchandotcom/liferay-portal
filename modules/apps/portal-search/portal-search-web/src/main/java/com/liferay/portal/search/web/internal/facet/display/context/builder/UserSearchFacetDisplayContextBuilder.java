@@ -38,9 +38,9 @@ import javax.portlet.RenderRequest;
 /**
  * @author André de Oliveira
  */
-public class UserSearchFacetDisplayBuilder {
+public class UserSearchFacetDisplayContextBuilder {
 
-	public UserSearchFacetDisplayBuilder(RenderRequest renderRequest)
+	public UserSearchFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

@@ -36,7 +36,7 @@ import javax.portlet.RenderResponse;
  * @author Wade Cao
  * @author André de Oliveira
  */
-public class SearchResultContentDisplayBuilder {
+public class SearchResultContentDisplayContextBuilder {
 
 	public SearchResultContentDisplayContext build() throws Exception {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =

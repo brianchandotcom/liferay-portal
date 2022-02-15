@@ -69,7 +69,7 @@ import org.mockito.MockitoAnnotations;
  * @author Lino Alves
  * @author André de Oliveira
  */
-public class SearchResultSummaryDisplayBuilderTest {
+public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -300,12 +300,13 @@ public class SearchResultSummaryDisplayBuilderTest {
 	protected SearchResultSummaryDisplayContext build(Document document)
 		throws Exception {
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
+		SearchResultSummaryDisplayContextBuilder
+			searchResultSummaryDisplayContextBuilder =
 			_createSearchResultSummaryDisplayBuilder();
 
-		searchResultSummaryDisplayBuilder.setDocument(document);
+		searchResultSummaryDisplayContextBuilder.setDocument(document);
 
-		return searchResultSummaryDisplayBuilder.build();
+		return searchResultSummaryDisplayContextBuilder.build();
 	}
 
 	protected void setUpAssetRenderer() throws Exception {
@@ -502,37 +503,38 @@ public class SearchResultSummaryDisplayBuilderTest {
 		return indexer;
 	}
 
-	private SearchResultSummaryDisplayBuilder
+	private SearchResultSummaryDisplayContextBuilder
 		_createSearchResultSummaryDisplayBuilder() {
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			new SearchResultSummaryDisplayBuilder();
+		SearchResultSummaryDisplayContextBuilder
+			searchResultSummaryDisplayContextBuilder =
+			new SearchResultSummaryDisplayContextBuilder();
 
-		searchResultSummaryDisplayBuilder.setAssetEntryLocalService(
+		searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(
 			assetEntryLocalService);
-		searchResultSummaryDisplayBuilder.setAssetRendererFactoryLookup(
+		searchResultSummaryDisplayContextBuilder.setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup);
-		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
+		searchResultSummaryDisplayContextBuilder.setFastDateFormatFactory(
 			fastDateFormatFactory);
-		searchResultSummaryDisplayBuilder.setGroupLocalService(
+		searchResultSummaryDisplayContextBuilder.setGroupLocalService(
 			groupLocalService);
-		searchResultSummaryDisplayBuilder.setIndexerRegistry(indexerRegistry);
-		searchResultSummaryDisplayBuilder.setLanguage(language);
-		searchResultSummaryDisplayBuilder.setLocale(locale);
-		searchResultSummaryDisplayBuilder.setPortletURLFactory(
+		searchResultSummaryDisplayContextBuilder.setIndexerRegistry(indexerRegistry);
+		searchResultSummaryDisplayContextBuilder.setLanguage(language);
+		searchResultSummaryDisplayContextBuilder.setLocale(locale);
+		searchResultSummaryDisplayContextBuilder.setPortletURLFactory(
 			portletURLFactory);
-		searchResultSummaryDisplayBuilder.setResourceActions(
+		searchResultSummaryDisplayContextBuilder.setResourceActions(
 			Mockito.mock(ResourceActions.class));
-		searchResultSummaryDisplayBuilder.setSearchResultPreferences(
+		searchResultSummaryDisplayContextBuilder.setSearchResultPreferences(
 			Mockito.mock(SearchResultPreferences.class));
-		searchResultSummaryDisplayBuilder.setSearchResultViewURLSupplier(
+		searchResultSummaryDisplayContextBuilder.setSearchResultViewURLSupplier(
 			Mockito.mock(SearchResultViewURLSupplier.class));
-		searchResultSummaryDisplayBuilder.setSummaryBuilderFactory(
+		searchResultSummaryDisplayContextBuilder.setSummaryBuilderFactory(
 			new SummaryBuilderFactoryImpl());
-		searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
-		searchResultSummaryDisplayBuilder.setUserLocalService(userLocalService);
+		searchResultSummaryDisplayContextBuilder.setThemeDisplay(themeDisplay);
+		searchResultSummaryDisplayContextBuilder.setUserLocalService(userLocalService);
 
-		return searchResultSummaryDisplayBuilder;
+		return searchResultSummaryDisplayContextBuilder;
 	}
 
 	private ThemeDisplay _createThemeDisplay() throws Exception {

@@ -87,7 +87,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author André de Oliveira
  */
-public class SearchResultSummaryDisplayBuilder {
+public class SearchResultSummaryDisplayContextBuilder {
 
 	public SearchResultSummaryDisplayContext build() throws Exception {
 		try {
@@ -116,13 +116,13 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 	}
 
-	public SearchResultSummaryDisplayBuilder setAbridged(boolean abridged) {
+	public SearchResultSummaryDisplayContextBuilder setAbridged(boolean abridged) {
 		_abridged = abridged;
 
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setAssetEntryLocalService(
+	public SearchResultSummaryDisplayContextBuilder setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
@@ -130,7 +130,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setAssetRendererFactoryLookup(
+	public SearchResultSummaryDisplayContextBuilder setAssetRendererFactoryLookup(
 		AssetRendererFactoryLookup assetRendererFactoryLookup) {
 
 		_assetRendererFactoryLookup = assetRendererFactoryLookup;
@@ -138,13 +138,13 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setCurrentURL(String currentURL) {
+	public SearchResultSummaryDisplayContextBuilder setCurrentURL(String currentURL) {
 		_currentURL = currentURL;
 
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setDocument(
+	public SearchResultSummaryDisplayContextBuilder setDocument(
 		com.liferay.portal.kernel.search.Document document) {
 
 		_legacyDocument = document;
@@ -152,7 +152,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setDocumentBuilderFactory(
+	public SearchResultSummaryDisplayContextBuilder setDocumentBuilderFactory(
 		DocumentBuilderFactory documentBuilderFactory) {
 
 		_documentBuilderFactory = documentBuilderFactory;
@@ -160,7 +160,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setFastDateFormatFactory(
+	public SearchResultSummaryDisplayContextBuilder setFastDateFormatFactory(
 		FastDateFormatFactory fastDateFormatFactory) {
 
 		_fastDateFormatFactory = fastDateFormatFactory;
@@ -168,7 +168,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setGroupLocalService(
+	public SearchResultSummaryDisplayContextBuilder setGroupLocalService(
 		GroupLocalService groupLocalService) {
 
 		_groupLocalService = groupLocalService;
@@ -176,7 +176,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setHighlightEnabled(
+	public SearchResultSummaryDisplayContextBuilder setHighlightEnabled(
 		boolean highlightEnabled) {
 
 		_highlightEnabled = highlightEnabled;
@@ -184,7 +184,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setImageRequested(
+	public SearchResultSummaryDisplayContextBuilder setImageRequested(
 		boolean imageRequested) {
 
 		_imageRequested = imageRequested;
@@ -192,7 +192,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setIndexerRegistry(
+	public SearchResultSummaryDisplayContextBuilder setIndexerRegistry(
 		IndexerRegistry indexerRegistry) {
 
 		_indexerRegistry = indexerRegistry;
@@ -200,19 +200,19 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setLanguage(Language language) {
+	public SearchResultSummaryDisplayContextBuilder setLanguage(Language language) {
 		_language = language;
 
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setLocale(Locale locale) {
+	public SearchResultSummaryDisplayContextBuilder setLocale(Locale locale) {
 		_locale = locale;
 
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setObjectDefinitionLocalService(
+	public SearchResultSummaryDisplayContextBuilder setObjectDefinitionLocalService(
 		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -220,7 +220,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setPortletURLFactory(
+	public SearchResultSummaryDisplayContextBuilder setPortletURLFactory(
 		PortletURLFactory portletURLFactory) {
 
 		_portletURLFactory = portletURLFactory;
@@ -228,7 +228,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setRenderRequest(
+	public SearchResultSummaryDisplayContextBuilder setRenderRequest(
 		RenderRequest renderRequest) {
 
 		_renderRequest = renderRequest;
@@ -236,7 +236,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setRenderResponse(
+	public SearchResultSummaryDisplayContextBuilder setRenderResponse(
 		RenderResponse renderResponse) {
 
 		_renderResponse = renderResponse;
@@ -244,7 +244,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setRequest(
+	public SearchResultSummaryDisplayContextBuilder setRequest(
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
@@ -252,7 +252,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setResourceActions(
+	public SearchResultSummaryDisplayContextBuilder setResourceActions(
 		ResourceActions resourceActions) {
 
 		_resourceActions = resourceActions;
@@ -260,7 +260,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder
+	public SearchResultSummaryDisplayContextBuilder
 		setSearchResultImageContributorsStream(
 			Stream<SearchResultImageContributor>
 				searchResultImageContributorsStream) {
@@ -271,7 +271,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setSearchResultPreferences(
+	public SearchResultSummaryDisplayContextBuilder setSearchResultPreferences(
 		SearchResultPreferences searchResultPreferences) {
 
 		_searchResultPreferences = searchResultPreferences;
@@ -279,7 +279,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setSearchResultViewURLSupplier(
+	public SearchResultSummaryDisplayContextBuilder setSearchResultViewURLSupplier(
 		SearchResultViewURLSupplier searchResultViewURLSupplier) {
 
 		_searchResultViewURLSupplier = searchResultViewURLSupplier;
@@ -287,7 +287,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setSummaryBuilderFactory(
+	public SearchResultSummaryDisplayContextBuilder setSummaryBuilderFactory(
 		SummaryBuilderFactory summaryBuilderFactory) {
 
 		_summaryBuilderFactory = summaryBuilderFactory;
@@ -295,7 +295,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setThemeDisplay(
+	public SearchResultSummaryDisplayContextBuilder setThemeDisplay(
 		ThemeDisplay themeDisplay) {
 
 		_themeDisplay = themeDisplay;
@@ -303,7 +303,7 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayBuilder setUserLocalService(
+	public SearchResultSummaryDisplayContextBuilder setUserLocalService(
 		UserLocalService userLocalService) {
 
 		_userLocalService = userLocalService;
@@ -1018,7 +1018,7 @@ public class SearchResultSummaryDisplayBuilder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SearchResultSummaryDisplayBuilder.class);
+		SearchResultSummaryDisplayContextBuilder.class);
 
 	private boolean _abridged;
 	private AssetEntryLocalService _assetEntryLocalService;

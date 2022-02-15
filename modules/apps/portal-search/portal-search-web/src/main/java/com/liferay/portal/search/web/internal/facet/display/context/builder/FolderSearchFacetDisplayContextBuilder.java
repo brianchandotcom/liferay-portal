@@ -42,9 +42,9 @@ import javax.portlet.RenderRequest;
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetDisplayBuilder {
+public class FolderSearchFacetDisplayContextBuilder {
 
-	public FolderSearchFacetDisplayBuilder(RenderRequest renderRequest)
+	public FolderSearchFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author André de Oliveira
  */
-public class ScopeSearchFacetDisplayBuilder {
+public class ScopeSearchFacetDisplayContextBuilder {
 
-	public ScopeSearchFacetDisplayBuilder(RenderRequest renderRequest)
+	public ScopeSearchFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

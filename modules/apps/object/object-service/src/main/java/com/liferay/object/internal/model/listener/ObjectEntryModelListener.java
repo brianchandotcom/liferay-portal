@@ -17,6 +17,7 @@ package com.liferay.object.internal.model.listener;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -62,6 +63,34 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			originalObjectEntry, objectEntry);
+	}
+
+	@Override
+	public void onBeforeCreate(ObjectEntry model)
+		throws ModelListenerException {
+
+		try {
+			_objectValidationRuleLocalService.validate(
+				PrincipalThreadLocal.getUserId(), model.getObjectDefinitionId(),
+				null, model);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
+	@Override
+	public void onBeforeUpdate(ObjectEntry originalModel, ObjectEntry model)
+		throws ModelListenerException {
+
+		try {
+			_objectValidationRuleLocalService.validate(
+				PrincipalThreadLocal.getUserId(), model.getObjectDefinitionId(),
+				originalModel, model);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private void _executeObjectActions(
@@ -123,5 +152,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private ObjectActionEngine _objectActionEngine;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 }

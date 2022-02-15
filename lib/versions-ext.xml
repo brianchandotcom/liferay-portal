@@ -1351,18 +1351,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/hessian.jar</file-name>
-				<version>4.0.3</version>
-				<project-name>Hessian</project-name>
-				<project-url>http://www.caucho.com/hessian</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 1.1</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/hibernate-core.jar</file-name>
 				<version>3.6.10.LIFERAY-PATCHED-6</version>
 				<project-name>Hibernate</project-name>

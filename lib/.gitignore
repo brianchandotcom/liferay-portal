@@ -115,7 +115,6 @@
 /portal/crypt.jar
 /portal/dom4j.jar
 /portal/fontbox.jar
-/portal/hessian.jar
 /portal/hibernate-core.jar
 /portal/hikaricp.jar
 /portal/httpclient.jar

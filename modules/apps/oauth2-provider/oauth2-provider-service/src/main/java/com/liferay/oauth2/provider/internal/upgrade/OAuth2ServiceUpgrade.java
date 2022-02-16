@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2Applicatio
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2ApplicationTable;
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2ScopeGrantTable;
 import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
+import com.liferay.oauth2.provider.internal.upgrade.v4_0_1.OAuth2ApplicationAllowedGrantTypesUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -83,6 +84,10 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.1.0", "4.0.0", new OAuth2ApplicationFeatureUpgradeProcess());
+
+		registry.register(
+			"4.0.0", "4.0.1",
+			new OAuth2ApplicationAllowedGrantTypesUpgradeProcess());
 	}
 
 	@Reference

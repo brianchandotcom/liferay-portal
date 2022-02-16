@@ -9,17 +9,8 @@
  * distribution rights of the Software.
  */
 
-export * from './alertDownloadType';
-export * from './autoCloseAlertTime';
-export * from './contentTypes';
-export * from './customEventTypes';
-export * from './extensionFileTypes';
-export * from './listTypes';
-export * from './menuTypes';
-export * from './pageTypes';
-export * from './productTypes';
-export * from './slaNames';
-export * from './statusCode';
-export * from './statusTag';
-export * from './subscriptionsStatus';
-export * from './webContentDXPVersionTypes';
+export const MENU_TYPES = {
+	overview: 'Overview',
+	productActivation: 'Product Activation',
+	teamMembers: 'Team Members',
+};

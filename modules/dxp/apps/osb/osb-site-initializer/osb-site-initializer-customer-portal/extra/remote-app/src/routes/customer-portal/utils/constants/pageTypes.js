@@ -16,5 +16,6 @@ export const PAGE_TYPES = {
 	enterpriseSearch: 'enterprise_search',
 	home: 'home',
 	overview: 'overview',
+	partnership: 'partnership',
 	teamMembers: 'team_members',
 };

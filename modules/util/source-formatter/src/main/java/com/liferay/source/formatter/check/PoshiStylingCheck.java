@@ -37,7 +37,13 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (SourceUtil.isXML(content) || fileName.endsWith(".path")) {
+		if (fileName.endsWith(".path")) {
+			return content;
+		}
+
+		if (SourceUtil.isXML(content)) {
+			addMessage(fileName, "Use Poshi Script instead of Poshi XML");
+
 			return content;
 		}
 

@@ -1,0 +1,48 @@
+.cp-side-menu {
+	width: 240px;
+	min-width: 240px;
+	height: 100vh;
+
+	.cp-menu-btn-active {
+		background-color: var(--color-action-primary-active-lighten);
+		color: var(--color-action-primary-active) !important;
+	}
+
+	.cp-products-list {
+		max-height: 0;
+		transition: max-height 0.3s ease-out;
+	}
+
+	.cp-products-list-active {
+		transition: max-height 0.3s ease-in;
+		color: var(--color-action-primary-active) !important;
+	}
+	a {
+		text-decoration: none !important;
+	}
+
+	button {
+		&:hover {
+			background-color: var(--color-action-primary-hover-lighten);
+			border-color: var(--btn-default-border-color);
+			color: var(--color-action-primary-hover) !important;
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+
+		svg {
+			transform: rotate(0deg);
+			transition: transform 0.3s;
+		}
+
+		&.cp-product-activation-active {
+			svg {
+				transform: rotate(90deg);
+				transition: transform 0.3s;
+			}
+		}
+	}
+}

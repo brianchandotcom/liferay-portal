@@ -315,7 +315,7 @@ definition {
 
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-			for (var filterName : list "Draft,Scheduled,With Approved Versions,With Expired Versions") {
+			for (var filterName : list "Draft,With Scheduled Versions,With Approved Versions,With Expired Versions") {
 				MenuItem.viewVisible(menuItem = "${filterName}");
 			}
 
@@ -337,7 +337,7 @@ definition {
 
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-			for (var filterName : list "Draft,Denied,Pending,Scheduled,With Approved Versions,With Expired Versions") {
+			for (var filterName : list "Draft,Denied,Pending,With Scheduled Versions,With Approved Versions,With Expired Versions") {
 				MenuItem.viewVisible(menuItem = "${filterName}");
 			}
 		}

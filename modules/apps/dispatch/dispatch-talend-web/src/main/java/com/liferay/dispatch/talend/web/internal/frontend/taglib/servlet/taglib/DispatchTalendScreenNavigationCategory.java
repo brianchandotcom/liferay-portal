@@ -17,8 +17,10 @@ package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchWebKeys;
+import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.talend.web.internal.display.context.DispatchTalendDisplayContext;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -105,6 +108,10 @@ public class DispatchTalendScreenNavigationCategory
 			(DispatchTrigger)httpServletRequest.getAttribute(
 				DispatchWebKeys.DISPATCH_TRIGGER);
 
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new DispatchTalendDisplayContext(_dispatchTriggerMetadataProvider));
+
 		if (dispatchTrigger != null) {
 			String fileEntryName = _dispatchFileRepository.fetchFileEntryName(
 				dispatchTrigger.getDispatchTriggerId());
@@ -124,6 +131,9 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Reference
 	private DispatchFileRepository _dispatchFileRepository;
+
+	@Reference
+	private DispatchTriggerMetadataProvider _dispatchTriggerMetadataProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

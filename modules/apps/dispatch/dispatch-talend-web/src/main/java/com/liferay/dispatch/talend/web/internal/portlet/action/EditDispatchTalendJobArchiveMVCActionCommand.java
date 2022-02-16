@@ -20,6 +20,7 @@ import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.dispatch.talend.archive.exception.TalendArchiveException;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -94,13 +95,9 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 
 				_expandoValueLocalService.addValue(
 					_portal.getCompanyId(actionRequest),
-					DispatchTrigger.class.getName(), "DispatchArchiveFile",
-					"dispatchTriggerId", _portal.getUserId(actionRequest),
-					String.valueOf(dispatchTriggerId));
-				_expandoValueLocalService.addValue(
-					_portal.getCompanyId(actionRequest),
-					DispatchTrigger.class.getName(), "DispatchArchiveFile",
-					"fileName", _portal.getUserId(actionRequest),
+					DispatchTrigger.class.getName(),
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, "fileName",
+					dispatchTriggerId,
 					uploadPortletRequest.getFileName("jobArchive"));
 			}
 			finally {

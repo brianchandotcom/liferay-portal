@@ -21,8 +21,10 @@ import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
 import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
 import com.liferay.expando.kernel.exception.DuplicateTableNameException;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -56,6 +58,8 @@ public class TalendDispatchTriggerMetadataFactory
 		if (fileEntry != null) {
 			builder.ready(true);
 
+			_build(dispatchTrigger, builder);
+
 			return builder.build();
 		}
 
@@ -78,13 +82,24 @@ public class TalendDispatchTriggerMetadataFactory
 			});
 	}
 
+	private void _build(
+		DispatchTrigger dispatchTrigger,
+		TalendDispatchTriggerMetadata.Builder builder) {
+
+		ExpandoBridge expandoBridge = dispatchTrigger.getExpandoBridge();
+
+		builder.attribute(
+			"talend-job-design-archive-name",
+			String.valueOf(expandoBridge.getAttribute("fileName")));
+	}
+
 	private void _setupExpando(long companyId) throws Exception {
 		ExpandoTable expandoTable = null;
 
 		try {
 			expandoTable = _expandoTableLocalService.addTable(
 				companyId, DispatchTrigger.class.getName(),
-				"DispatchArchiveFile");
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 		catch (DuplicateTableNameException duplicateTableNameException) {
 			if (_log.isDebugEnabled()) {
@@ -93,13 +108,10 @@ public class TalendDispatchTriggerMetadataFactory
 
 			expandoTable = _expandoTableLocalService.getTable(
 				companyId, DispatchTrigger.class.getName(),
-				"DispatchArchiveFile");
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 
 		try {
-			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "dispatchTriggerId",
-				ExpandoColumnConstants.STRING);
 			_expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), "fileName",
 				ExpandoColumnConstants.STRING);

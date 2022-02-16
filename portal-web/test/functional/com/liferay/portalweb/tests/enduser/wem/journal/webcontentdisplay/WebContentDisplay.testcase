@@ -401,7 +401,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureCustomBorderStylesViaLookandfeelPG(
+			Portlet.configureBorderStylesViaLookAndFeelPG(
 				borderColorAttributeList = "Top-FF0D0D",
 				borderWidthAttributeList = "WidthTop-15",
 				borderWidthUnitList = "WidthTop-px",

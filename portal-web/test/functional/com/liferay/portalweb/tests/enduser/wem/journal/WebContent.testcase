@@ -696,7 +696,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomBorderStylesViaLookandfeelPG(
+		Portlet.configureBorderStylesViaLookAndFeelPG(
 			borderColorAttributeList = "Right-FF0D0D",
 			borderStyleAttributeList = "StyleRight-Solid",
 			borderWidthAttributeList = "WidthRight-100",
@@ -710,7 +710,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomBorderStylesViaLookandfeelPG(
+		Portlet.configureBorderStylesViaLookAndFeelPG(
 			borderColorAttributeList = "Left-2BA676",
 			borderStyleAttributeList = "StyleLeft-Solid",
 			borderWidthAttributeList = "WidthLeft-100",

@@ -187,7 +187,9 @@ definition {
 			value1 = "${applicationDecorator}");
 	}
 
-	macro configureCustomBorderStylesViaLookandfeelPG {
+
+
+	macro configureBorderStylesViaLookAndFeelPG {
 		Navigator.gotoNavTab(navTab = "Border Styles");
 
 		if (isSet(sameForAllFieldsetLabelList)) {

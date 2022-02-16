@@ -9,9 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {useCallback} from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 import ProjectSupport from '../../components/ProjectSupport';
 import QuickLinksPanel from '../../containers/QuickLinksPanel';
+import SideMenu from '../../containers/SideMenu';
 import {useCustomerPortal} from '../../context';
 import ActivationKeys from '../../pages/Project/ActivationKeys';
 import Overview from '../../pages/Project/Overview';
@@ -32,11 +34,13 @@ const Layout = () => {
 		{project, sessionId, subscriptionGroups, userAccount},
 	] = useCustomerPortal();
 
-	const getCurrentPage = () => {
+	const getCurrentPage = useCallback(() => {
 		const currentPath = pathname.split('/').filter(Boolean);
 
-		return currentPath.length ? currentPath[0] : PAGE_TYPES.overview;
-	};
+		return currentPath.length
+			? currentPath.slice(-1)[0]
+			: PAGE_TYPES.overview;
+	}, [pathname]);
 
 	const hasProjectContact = getCurrentPage() === PAGE_TYPES.overview;
 
@@ -51,6 +55,11 @@ const Layout = () => {
 
 	return (
 		<div className="d-flex position-relative w-100">
+			<SideMenu
+				getCurrentPage={getCurrentPage}
+				subscriptionGroups={subscriptionGroups}
+			/>
+
 			<div className="w-100">
 				{hasProjectContact && <ProjectSupport project={project} />}
 

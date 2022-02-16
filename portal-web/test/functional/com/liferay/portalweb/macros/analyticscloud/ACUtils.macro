@@ -910,7 +910,7 @@ definition {
 			value1 = "${count} Results for ${searchTerm}");
 	}
 
-	macro viewTableColumnNumbers {
+	macro viewTableInformation {
 		var list1 = ListUtil.newListFromString("${nameList}");
 		var list2 = ListUtil.newListFromString("${numberValueList}");
 		var size = ListUtil.size("${list1}");

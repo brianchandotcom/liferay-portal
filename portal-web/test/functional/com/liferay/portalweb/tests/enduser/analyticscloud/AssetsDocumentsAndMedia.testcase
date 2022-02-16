@@ -491,7 +491,7 @@ definition {
 		}
 
 		task ("Check DM rating") {
-			ACUtils.viewTableColumnNumbers(
+			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
 				numberValueList = "8.00/10");
 		}
@@ -537,7 +537,7 @@ definition {
 		}
 
 		task ("Check DM rating") {
-			ACUtils.viewTableColumnNumbers(
+			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
 				numberValueList = "0.00/10");
 		}

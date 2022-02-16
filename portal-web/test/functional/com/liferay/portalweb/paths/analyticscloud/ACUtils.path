@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>TABLE_CELL_INFORMATION</td>
-	<td>//a[contains(text(),'${key_nameList}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and contains(text(),'${key_numberValue}')]</td>
+	<td>//a[contains(text(),'${key_nameList}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and text()='${key_numberValue}']</td>
 	<td></td>
 </tr>
 <!-- CLOSE MODAL -->

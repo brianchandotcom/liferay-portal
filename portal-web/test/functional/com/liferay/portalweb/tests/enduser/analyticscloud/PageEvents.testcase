@@ -187,7 +187,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8807 | Test Summary: Check pageDepthReached trigggers ([depth] = 75) and check its properties (see reference document in comments)"
 	@priority = "5"
 	test CheckPageDepthReachedTo75 {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -247,7 +246,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8808 | Test Summary: Check pageDepthReached trigggers ([depth] = 100) and check its properties (see reference document in comments)"
 	@priority = "5"
 	test CheckPageDepthReachedTo100 {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -305,7 +303,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8871 | Test Summary: Check pageDepthReached events trigger when scrolling the page by hitting the Page Dn or the Down arrow keys"
 	@priority = "3"
 	test CheckPageDepthReachedWhenPressPageDownKey {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -365,7 +362,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8935 | Test Summary: Check all page events can be sent again if the page is refreshed/hard refreshed"
 	@priority = "4"
 	test CheckPageEventsTriggeredAgainAfterHardRefresh {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -453,7 +449,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8802 | Test Summary: Check all page events are triggered over again after a page refresh"
 	@priority = "4"
 	test CheckPageEventsTriggeredAgainAfterRefresh {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -768,9 +763,6 @@ definition {
 	@priority = "5"
 	test CheckTabBlurredWhenComesFromADifferentTab {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9599
 
 		task ("Get site assigned property name and get data source name") {
 			var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
@@ -834,9 +826,6 @@ definition {
 	@priority = "5"
 	test CheckTabFocusedOnceTabIsActive {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9599
 
 		task ("Get site assigned property name and get data source name") {
 			var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");

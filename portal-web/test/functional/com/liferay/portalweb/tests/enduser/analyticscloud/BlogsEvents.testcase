@@ -121,9 +121,6 @@ definition {
 	@priority = "5"
 	test CheckBlogClickedWhenBlogEntryTitleIsClickedAndCheckProperties {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9599
 
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();
@@ -348,7 +345,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8665 | Test Summary: Check blogDepthReached triggers (Level 3)"
 	@priority = "5"
 	test CheckBlogDepthReachedTo75AndCheckProperties {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -501,10 +497,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8669 | Test Summary: Check blogViewed does not trigger when the blog is visible as a widget in the front page"
 	@priority = "2"
 	test CheckBlogViewedDoesNotTriggerWhenBlogIsVisible {
-		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
-
-		// AC Refactor ticket: LRAC-9599
 
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();
@@ -556,9 +549,6 @@ definition {
 	@priority = "5"
 	test CheckBlogViewedWhenVisitingDXPBlogAndCheckProperties {
 		property proxy.server.enabled = "true";
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9599
 
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();

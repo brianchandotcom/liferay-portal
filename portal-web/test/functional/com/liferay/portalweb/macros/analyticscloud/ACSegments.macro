@@ -310,11 +310,9 @@ definition {
 	macro editSegment {
 		var key_segmentName = "${segmentName}";
 
-		if (IsElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT", value1 = "${segmentName}")) {
-			ACSegments.searchSegment(findSegment = "${segmentName}");
+		ACSegments.searchSegment(findSegment = "${segmentName}");
 
-			ACUtils.clickKebab();
-		}
+		ACUtils.clickKebab();
 
 		Click(locator1 = "ACSegments#EDIT_SEGMENT");
 	}

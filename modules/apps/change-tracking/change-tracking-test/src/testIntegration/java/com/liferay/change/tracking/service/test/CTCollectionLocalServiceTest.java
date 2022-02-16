@@ -203,7 +203,7 @@ public class CTCollectionLocalServiceTest {
 		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
 			_journalArticleClassNameId);
 
-		Assert.assertEquals(conflictInfos.toString(), 4, conflictInfos.size());
+		Assert.assertEquals(conflictInfos.toString(), 2, conflictInfos.size());
 
 		conflictInfos.sort(
 			Comparator.comparing(ConflictInfo::getTargetPrimaryKey));

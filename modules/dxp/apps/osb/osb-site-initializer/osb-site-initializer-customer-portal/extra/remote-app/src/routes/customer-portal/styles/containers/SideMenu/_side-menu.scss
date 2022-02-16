@@ -1,7 +1,7 @@
 .cp-side-menu {
-	width: 240px;
-	min-width: 240px;
 	height: 100vh;
+	min-width: 240px;
+	width: 240px;
 
 	.cp-menu-btn-active {
 		background-color: var(--color-action-primary-active-lighten);
@@ -14,8 +14,8 @@
 	}
 
 	.cp-products-list-active {
-		transition: max-height 0.3s ease-in;
 		color: var(--color-action-primary-active) !important;
+		transition: max-height 0.3s ease-in;
 	}
 	a {
 		text-decoration: none !important;
@@ -29,8 +29,8 @@
 		}
 
 		&:focus {
-			outline: none;
 			box-shadow: none;
+			outline: none;
 		}
 
 		svg {

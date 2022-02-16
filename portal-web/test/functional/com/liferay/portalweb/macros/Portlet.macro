@@ -320,6 +320,76 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureTextStylesViaLookAndFeelPG {
+		Navigator.gotoNavTab(navTab = "Text Styles");
+
+		if (isSet(textAlignmentAttribute)) {
+			Select(
+				key_selectFieldLabel = "Alignment",
+				locator1 = "Select#ANY",
+				value1 = "${textAlignmentAttribute}");
+		}
+
+		if (isSet(textColorAttribute)) {
+			PageEditor.selectColorSwatchItem(
+				colorSwatchItem = "${textColorAttribute}",
+				fieldLabel = "Color");
+		}
+
+		if (isSet(textDecorationAttribute)) {
+			Select(
+				key_selectFieldLabel = "Text Decoration",
+				locator1 = "Select#ANY",
+				value1 = "${textDecorationAttribute}");
+		}
+
+		if (isSet(textFontAttribute)) {
+			Select(
+				key_selectFieldLabel = "Font",
+				locator1 = "Select#ANY",
+				value1 = "${textFontAttribute}");
+		}
+
+		if (isSet(textLetterSpacingAttribute)) {
+			Select(
+				key_selectFieldLabel = "Letter Spacing",
+				locator1 = "Select#ANY",
+				value1 = "${textLetterSpacingAttribute}");
+		}
+
+		if (isSet(textLineHeightAttribute)) {
+			Select(
+				key_selectFieldLabel = "Line Height",
+				locator1 = "Select#ANY",
+				value1 = "${textLineHeightAttribute}");
+		}
+
+		if (isSet(textSizeAttribute)) {
+			Select(
+				key_selectFieldLabel = "Size",
+				locator1 = "Select#ANY",
+				value1 = "${textSizeAttribute}");
+		}
+
+		if (isSet(textToggleSwitchList)) {
+			for (var checkToggleSwitch : list "${textToggleSwitchList}") {
+				Check.checkToggleSwitch(
+					key_fieldLabel = "${checkToggleSwitch}",
+					key_fieldsetLabel = "Widget CSS",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+			}
+		}
+
+		if (isSet(textWordSpacingAttribute)) {
+			Select(
+				key_selectFieldLabel = "Word Spacing",
+				locator1 = "Select#ANY",
+				value1 = "${textWordSpacingAttribute}");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro deletePG {
 		var key_portletName = "${portletName}";
 

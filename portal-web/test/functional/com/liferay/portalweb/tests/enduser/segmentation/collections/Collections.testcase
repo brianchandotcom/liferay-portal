@@ -998,7 +998,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 		}
 
-		task ("Check that variation is listed at the botton") {
+		task ("Assert the deprioritize option is disable") {
 			AssetListsAdmin.assertDepriotirizeDisabled(variationTitle = "First Segment");
 		}
 	}
@@ -1038,7 +1038,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 		}
 
-		task ("Check that variation is listed at the botton") {
+		task ("Deprioritize the Anyone variation") {
 			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
 
 			AssertTextEquals(
@@ -1097,7 +1097,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 		}
 
-		task ("Check that variation is listed at the botton") {
+		task ("Deprioritize the Anyone variation") {
 			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
 
 			AssertTextEquals(

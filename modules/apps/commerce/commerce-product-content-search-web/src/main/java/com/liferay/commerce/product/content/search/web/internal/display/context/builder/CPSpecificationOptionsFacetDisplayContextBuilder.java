@@ -16,11 +16,10 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionsFacetConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.portlet.CPSpecificationOptionFacetPortletPreferences;
+import com.liferay.commerce.product.content.search.web.internal.facet.config.CPSpecificationOptionsFacetConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
@@ -33,8 +32,10 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -48,9 +49,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 /**
@@ -64,25 +68,23 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 		CPSpecificationOptionFacetsDisplayContext
 			cpSpecificationOptionFacetsDisplayContext =
-				new CPSpecificationOptionFacetsDisplayContext();
+				new CPSpecificationOptionFacetsDisplayContext(
+					_portal.getHttpServletRequest(_renderRequest));
 
 		cpSpecificationOptionFacetsDisplayContext.
 			setCpSpecificationOptionsSearchFacetDisplayContext(
 				_buildCPSpecificationOptionsSearchFacetDisplayContexts());
 
-		cpSpecificationOptionFacetsDisplayContext.setThemeDisplay(
-			_themeDisplay);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		cpSpecificationOptionFacetsDisplayContext.
 			setCpSpecificationOptionFacetPortletInstanceConfiguration(
 				portletDisplay.getPortletInstanceConfiguration(
 					CPSpecificationOptionFacetPortletInstanceConfiguration.
 						class));
-
-		cpSpecificationOptionFacetsDisplayContext.setRenderRequest(
-			_renderRequest);
 
 		return cpSpecificationOptionFacetsDisplayContext;
 	}
@@ -105,6 +107,10 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		);
 	}
 
+	public void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
 	public void setPortletSharedSearchRequest(
 		PortletSharedSearchRequest portletSharedSearchRequest) {
 
@@ -113,10 +119,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 	public void setRenderRequest(RenderRequest renderRequest) {
 		_renderRequest = renderRequest;
-	}
-
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
-		_themeDisplay = themeDisplay;
 	}
 
 	protected CPSpecificationOption getCPSpecificationOption(String fieldName) {
@@ -210,7 +212,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 		_facet = facet;
 
-		CPSpecificationOptionFacetsUtil.copy(
+		_copy(
 			() -> portletSharedSearchResponse.getParameterValues(
 				facet.getFieldName(), renderRequest),
 			this::setParameterValues);
@@ -232,17 +234,18 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
-		CPSpecificationOptionFacetPortletPreferences
-			cpSpecificationOptionFacetPortletPreferences =
-				new CPSpecificationOptionFacetPortletPreferences(
-					_portletSharedSearchResponse.getPortletPreferences(
-						_renderRequest));
+		Optional<PortletPreferences> portletPreferencesOptional =
+			_portletSharedSearchResponse.getPortletPreferences(_renderRequest);
 
-		_displayStyle =
-			cpSpecificationOptionFacetPortletPreferences.getDisplayStyle();
+		PortletPreferences portletPreferences =
+			portletPreferencesOptional.get();
 
-		_frequenciesVisible =
-			cpSpecificationOptionFacetPortletPreferences.isFrequenciesVisible();
+		_displayStyle = portletPreferences.getValue(
+			"cpSpecificationOptionFacetDisplayStyle", "cloud");
+
+		_frequenciesVisible = GetterUtil.getBoolean(
+			portletPreferences.getValue("frequenciesVisible", StringPool.BLANK),
+			true);
 
 		CPSpecificationOptionsFacetConfiguration
 			cpSpecificationOptionsFacetConfiguration =
@@ -254,17 +257,20 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 		_maxTerms = cpSpecificationOptionsFacetConfiguration.getMaxTerms();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
 			CPSpecificationOption cpSpecificationOption =
 				_cpSpecificationOptionLocalService.getCPSpecificationOption(
-					_themeDisplay.getCompanyId(), termCollector.getTerm());
+					themeDisplay.getCompanyId(), termCollector.getTerm());
 
 			if (cpSpecificationOption.isFacetable()) {
 				filledFacets.add(
 					_portletSharedSearchResponse.getFacet(
 						CPSpecificationOptionFacetsUtil.getIndexFieldName(
 							termCollector.getTerm(),
-							_themeDisplay.getLanguageId())));
+							themeDisplay.getLanguageId())));
 			}
 		}
 
@@ -275,7 +281,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		_paginationStartParameterName = getPaginationStartParameterName(
 			_portletSharedSearchResponse);
 
-		_locale = _themeDisplay.getLocale();
+		_locale = themeDisplay.getLocale();
 
 		for (Facet filledFacet : filledFacets) {
 			CPSpecificationOptionsSearchFacetDisplayContext
@@ -407,6 +413,12 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		return buckets;
 	}
 
+	private <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {
+		Optional<T> optional = from.get();
+
+		optional.ifPresent(to);
+	}
+
 	private List<Tuple> _buckets;
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
@@ -417,11 +429,11 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private Locale _locale;
 	private int _maxTerms;
 	private String _paginationStartParameterName;
+	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private PortletSharedSearchResponse _portletSharedSearchResponse;
 	private RenderRequest _renderRequest;
 	private List<Long> _selectedCPSpecificationOptionIds =
 		Collections.emptyList();
-	private ThemeDisplay _themeDisplay;
 
 }

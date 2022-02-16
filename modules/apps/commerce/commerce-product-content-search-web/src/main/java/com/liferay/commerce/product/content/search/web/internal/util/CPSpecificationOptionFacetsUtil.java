@@ -19,20 +19,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
 /**
  * @author Alessio Antonio Rendina
  */
 public class CPSpecificationOptionFacetsUtil {
-
-	public static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
-	}
 
 	public static String getCPSpecificationOptionKeyFromIndexFieldName(
 		String fieldName) {
@@ -50,16 +40,6 @@ public class CPSpecificationOptionFacetsUtil {
 	public static String getIndexFieldName(String key, String languageId) {
 		return StringBundler.concat(
 			languageId, "_SPECIFICATION_", key, "_VALUE_NAME");
-	}
-
-	public static Optional<String> maybe(String s) {
-		s = StringUtil.trim(s);
-
-		if (Validator.isBlank(s)) {
-			return Optional.empty();
-		}
-
-		return Optional.of(s);
 	}
 
 }

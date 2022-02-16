@@ -1,5 +1,7 @@
 definition {
-	test TestAssertStatusCode{
+
+	test TestAssertStatusCode {
 		HttpRequester.getGoogleResponse();
 	}
+
 }

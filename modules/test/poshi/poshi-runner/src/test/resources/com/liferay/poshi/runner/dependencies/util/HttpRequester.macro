@@ -1,33 +1,33 @@
-definition{
+definition {
+
+	macro assertResponseStatus {
+		var actualStatus = HttpRequestUtil.getStatusCode("${response}");
+
+		if ("${expectedStatus}" != "${actualStatus}") {
+			var body = HttpRequestUtil.getResponseBody("${response}");
+
+			echo("Expected ${expectedStatus} but got ${actualStatus}");
+
+			echo("Response: ${body}");
+		}
+	}
+
 	macro getGoogleResponse {
-		var response = HttpRequestUtil.get(
-			"Poshi.NULL",
-			"Poshi.NULL",
-			"http://www.google.com"
-		);
+		var response = HttpRequestUtil.get("Poshi.NULL", "Poshi.NULL", "http://www.google.com");
 
 		HttpRequester.getResponse(response = "${response}");
 	}
 
 	macro getResponse {
 		var status = HttpRequestUtil.getStatusCode("${response}");
-
 		var body = HttpRequestUtil.getResponseBody("${response}");
 		var errorMessage = HttpRequestUtil.getResponseErrorMessage("${response}");
 
 		echo("Response Code: ${status}");
+
 		echo("Response: ${body}");
+
 		echo("Error: ${errorMessage}");
 	}
 
-	macro assertResponseStatus {
-		var actualStatus = HttpRequestUtil.getStatusCode("${response}");
-
-		if (!("${expectedStatus}" == "${actualStatus}")) {
-			var body = HttpRequestUtil.getResponseBody("${response}");
-
-			echo("Expected ${expectedStatus} but got ${actualStatus}");
-			echo("Response: ${body}");
-		}
-	}
 }

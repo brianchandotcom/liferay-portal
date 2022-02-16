@@ -181,31 +181,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_EMPTY</td>
-	<td>//div[contains(@class,'preview-sidebar')]//span[contains(.,'No results found')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE</td>
-	<td>//div[contains(.,'${assetTitle}')]/preceding-sibling::div//button[contains(@class,'score')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE_EXPLANATION</td>
-	<td>xpath=(//span[contains(@class,'cm-variable') and contains(.,'${key_searchExplanation}')])</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING</td>
-	<td>//li[contains(@class,'result-list-item')][${resultRanking}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE</td>
-	<td>//li[contains(@class,'result-list-item')]//p[contains(.,'${resultTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLUEPRINTS_EDIT_PAGE_SIDE_NAV_LINK</td>
 	<td>//button[contains(@class,'nav-link') and contains(.,'${linkName}')]</td>
 	<td></td>
@@ -233,6 +208,31 @@
 <tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR_PORTUGUESE</td>
 	<td>//div[contains(@class,'preview-sidebar')]//input[contains(@placeholder,'Buscar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_EMPTY</td>
+	<td>//div[contains(@class,'preview-sidebar')]//span[contains(.,'No results found')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE</td>
+	<td>//div[contains(.,'${assetTitle}')]/preceding-sibling::div//button[contains(@class,'score')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE_EXPLANATION</td>
+	<td>//span[contains(@class,'cm-variable') and contains(.,'${key_searchExplanation}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING</td>
+	<td>//li[contains(@class,'result-list-item')][${resultRanking}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE</td>
+	<td>//li[contains(@class,'result-list-item')]//p[contains(.,'${resultTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

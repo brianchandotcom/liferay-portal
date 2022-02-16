@@ -325,7 +325,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "The configuration has missing or invalid values.");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "");
 
 		Alert.viewRequiredField();
@@ -444,7 +444,7 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "red apple");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "1",
 			value1 = "reddish apple");
 
@@ -635,7 +635,7 @@ definition {
 
 		Click(
 			assetTitle = "Test",
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE");
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 
 		SelectFrameTop();
 
@@ -922,7 +922,7 @@ definition {
 
 		Click(
 			assetTitle = "Test",
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE");
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 
 		SelectFrameTop();
 
@@ -1436,29 +1436,29 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "WC");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "WC Title 10");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "WC Title 11");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "11");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "WC Title 11");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "WC Title 10");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "2");
 	}
 
@@ -1642,7 +1642,7 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "1",
 			value1 = "gala");
 
@@ -1731,7 +1731,7 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "test");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "Test");
 	}
 
@@ -1803,7 +1803,7 @@ definition {
 			searchTerm = "apple");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "1",
 			value1 = "gala");
 	}
@@ -1815,7 +1815,7 @@ definition {
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "empty");
 
-		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_EMPTY");
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_EMPTY");
 	}
 
 	test SearchWithSelectedAssetType {
@@ -1859,11 +1859,11 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "red apple");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "green apple");
 	}
 
@@ -1883,7 +1883,7 @@ definition {
 		Blueprints.searchBlueprintsPreview(searchTerm = "Liferay");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "Liferay");
 	}
 
@@ -2050,7 +2050,7 @@ definition {
 			value1 = "\RETURN");
 
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "Título");
 	}
 
@@ -2072,7 +2072,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "The property &quot;elementDefinitionnnnnnn&quot; is not defined in SXPElement.");
 
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_TITLE",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
 			resultTitle = "");
 	}
 
@@ -2459,7 +2459,7 @@ definition {
 
 		Click(
 			assetTitle = "Test",
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE");
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 
 		AssertTextEquals(
 			locator1 = "Modal#HEADER",
@@ -2467,7 +2467,7 @@ definition {
 
 		AssertVisible(
 			key_searchExplanation = "PerFieldSimilarity",
-			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_PREVIEW_SEARCH_RESULT_SCORE_EXPLANATION");
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE_EXPLANATION");
 	}
 
 	test ViewSelectedAssetTypesUI {

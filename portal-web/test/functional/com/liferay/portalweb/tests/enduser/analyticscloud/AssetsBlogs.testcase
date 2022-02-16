@@ -674,6 +674,106 @@ definition {
 			locator1 = "ACUtils#NAME_LIST");
 	}
 
+	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10601 | Test Summary: Number of Blog ratings is not getting negative when we delete a vote"
+	@priority = "3"
+	test RatingsNotGettingNegativeWhenDeleteVote {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Change blog rating type to star") {
+			Ratings.configureRatingType(
+				applications = "Blogs",
+				portlet = "Ratings",
+				ratingType = "Stars",
+				siteName = "Site Name");
+		}
+
+		task ("View the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Choose a rating star for the blog") {
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to blog assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check blog rating") {
+			ACUtils.viewTableInformation(
+				nameList = "Blogs AC Title",
+				numberValueList = "8.00/10");
+		}
+
+		task ("Go to DXP") {
+			ACUtils.launchDXP();
+		}
+
+		task ("View the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Delete the rating star for the DM") {
+			Ratings.revokeStarsRating();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to blog assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check blog rating") {
+			ACUtils.viewTableInformation(
+				nameList = "Blogs AC Title",
+				numberValueList = "0.00/10");
+		}
+	}
+
 	@description = "View all blogs in the property in assets"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {

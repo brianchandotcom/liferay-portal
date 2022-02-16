@@ -12,6 +12,8 @@
  * details.
  */
 
+import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -31,6 +33,56 @@ function findCategory(categoryId, categories = []) {
 
 	return null;
 }
+
+const NewAssetCategoriesNavigationTreeView = ({
+	selectedCategoryId,
+	vocabularies,
+}) => {
+	const handleSelectionChange = (event, item) => {
+		event.preventDefault();
+
+		if (selectedCategoryId === item.id) {
+			return;
+		}
+
+		Liferay.Util.navigate(item.url);
+	};
+
+	return (
+		<ClayTreeView
+			items={vocabularies}
+			selectedKeys={
+				new Set(selectedCategoryId ? [selectedCategoryId] : [])
+			}
+		>
+			{(item) => (
+				<ClayTreeView.Item>
+					<ClayTreeView.ItemStack
+						onClick={(event) => handleSelectionChange(event, item)}
+					>
+						<ClayIcon symbol={item.icon} />
+
+						{item.name}
+					</ClayTreeView.ItemStack>
+
+					<ClayTreeView.Group items={item.children}>
+						{(item) => (
+							<ClayTreeView.Item
+								onClick={(event) =>
+									handleSelectionChange(event, item)
+								}
+							>
+								<ClayIcon symbol={item.icon} />
+
+								{item.name}
+							</ClayTreeView.Item>
+						)}
+					</ClayTreeView.Group>
+				</ClayTreeView.Item>
+			)}
+		</ClayTreeView>
+	);
+};
 
 const AssetCategoriesNavigationTreeView = ({
 	selectedCategoryId,
@@ -59,4 +111,6 @@ const AssetCategoriesNavigationTreeView = ({
 	);
 };
 
-export default AssetCategoriesNavigationTreeView;
+export default Liferay.__FF__.enableClayTreeView
+	? NewAssetCategoriesNavigationTreeView
+	: AssetCategoriesNavigationTreeView;

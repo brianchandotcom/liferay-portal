@@ -108,7 +108,6 @@ definition {
 		Workflow.clickRevertSortDirection();
 
 		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "Second template name,First template name");
-
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Name"

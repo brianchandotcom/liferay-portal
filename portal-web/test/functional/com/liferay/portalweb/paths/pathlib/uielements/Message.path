@@ -207,7 +207,7 @@
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS</td>
-	<td>//h4[contains(@class,'text-danger')]</td>
+	<td>//div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -402,7 +402,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS</td>
-	<td>//h4[contains(@class,'text-success')]</td>
+	<td>//div[contains(@class,'text-success')]</td>
 	<td></td>
 </tr>
 <tr>

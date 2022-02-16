@@ -4,6 +4,7 @@
 
 .customer-portal-side-bar > div {
 	width: 64px;
+	z-index: 1;
 }
 
 .customer-portal-side-bar img {

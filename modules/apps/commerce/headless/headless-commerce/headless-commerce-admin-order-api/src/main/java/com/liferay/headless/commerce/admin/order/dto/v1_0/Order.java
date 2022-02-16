@@ -1259,17 +1259,18 @@ public class Order implements Serializable {
 	protected Double shippingAmountValue;
 
 	@Schema
-	public Double getShippingDiscountAmount() {
+	@Valid
+	public BigDecimal getShippingDiscountAmount() {
 		return shippingDiscountAmount;
 	}
 
-	public void setShippingDiscountAmount(Double shippingDiscountAmount) {
+	public void setShippingDiscountAmount(BigDecimal shippingDiscountAmount) {
 		this.shippingDiscountAmount = shippingDiscountAmount;
 	}
 
 	@JsonIgnore
 	public void setShippingDiscountAmount(
-		UnsafeSupplier<Double, Exception>
+		UnsafeSupplier<BigDecimal, Exception>
 			shippingDiscountAmountUnsafeSupplier) {
 
 		try {
@@ -1285,7 +1286,7 @@ public class Order implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double shippingDiscountAmount;
+	protected BigDecimal shippingDiscountAmount;
 
 	@Schema
 	public String getShippingDiscountAmountFormatted() {
@@ -1318,6 +1319,38 @@ public class Order implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountAmountFormatted;
+
+	@Schema
+	public Double getShippingDiscountAmountValue() {
+		return shippingDiscountAmountValue;
+	}
+
+	public void setShippingDiscountAmountValue(
+		Double shippingDiscountAmountValue) {
+
+		this.shippingDiscountAmountValue = shippingDiscountAmountValue;
+	}
+
+	@JsonIgnore
+	public void setShippingDiscountAmountValue(
+		UnsafeSupplier<Double, Exception>
+			shippingDiscountAmountValueUnsafeSupplier) {
+
+		try {
+			shippingDiscountAmountValue =
+				shippingDiscountAmountValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double shippingDiscountAmountValue;
 
 	@DecimalMin("0")
 	@Schema
@@ -2541,17 +2574,19 @@ public class Order implements Serializable {
 
 	@DecimalMin("0")
 	@Schema
-	public Double getTotalDiscountAmount() {
+	@Valid
+	public BigDecimal getTotalDiscountAmount() {
 		return totalDiscountAmount;
 	}
 
-	public void setTotalDiscountAmount(Double totalDiscountAmount) {
+	public void setTotalDiscountAmount(BigDecimal totalDiscountAmount) {
 		this.totalDiscountAmount = totalDiscountAmount;
 	}
 
 	@JsonIgnore
 	public void setTotalDiscountAmount(
-		UnsafeSupplier<Double, Exception> totalDiscountAmountUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception>
+			totalDiscountAmountUnsafeSupplier) {
 
 		try {
 			totalDiscountAmount = totalDiscountAmountUnsafeSupplier.get();
@@ -2566,7 +2601,7 @@ public class Order implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double totalDiscountAmount;
+	protected BigDecimal totalDiscountAmount;
 
 	@Schema
 	public String getTotalDiscountAmountFormatted() {
@@ -2599,6 +2634,37 @@ public class Order implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountAmountFormatted;
+
+	@DecimalMin("0")
+	@Schema
+	public Double getTotalDiscountAmountValue() {
+		return totalDiscountAmountValue;
+	}
+
+	public void setTotalDiscountAmountValue(Double totalDiscountAmountValue) {
+		this.totalDiscountAmountValue = totalDiscountAmountValue;
+	}
+
+	@JsonIgnore
+	public void setTotalDiscountAmountValue(
+		UnsafeSupplier<Double, Exception>
+			totalDiscountAmountValueUnsafeSupplier) {
+
+		try {
+			totalDiscountAmountValue =
+				totalDiscountAmountValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double totalDiscountAmountValue;
 
 	@DecimalMin("0")
 	@Schema
@@ -2870,19 +2936,20 @@ public class Order implements Serializable {
 
 	@DecimalMin("0")
 	@Schema
-	public Double getTotalDiscountWithTaxAmount() {
+	@Valid
+	public BigDecimal getTotalDiscountWithTaxAmount() {
 		return totalDiscountWithTaxAmount;
 	}
 
 	public void setTotalDiscountWithTaxAmount(
-		Double totalDiscountWithTaxAmount) {
+		BigDecimal totalDiscountWithTaxAmount) {
 
 		this.totalDiscountWithTaxAmount = totalDiscountWithTaxAmount;
 	}
 
 	@JsonIgnore
 	public void setTotalDiscountWithTaxAmount(
-		UnsafeSupplier<Double, Exception>
+		UnsafeSupplier<BigDecimal, Exception>
 			totalDiscountWithTaxAmountUnsafeSupplier) {
 
 		try {
@@ -2899,7 +2966,7 @@ public class Order implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double totalDiscountWithTaxAmount;
+	protected BigDecimal totalDiscountWithTaxAmount;
 
 	@Schema
 	public String getTotalDiscountWithTaxAmountFormatted() {
@@ -2933,6 +3000,39 @@ public class Order implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountWithTaxAmountFormatted;
+
+	@DecimalMin("0")
+	@Schema
+	public Double getTotalDiscountWithTaxAmountValue() {
+		return totalDiscountWithTaxAmountValue;
+	}
+
+	public void setTotalDiscountWithTaxAmountValue(
+		Double totalDiscountWithTaxAmountValue) {
+
+		this.totalDiscountWithTaxAmountValue = totalDiscountWithTaxAmountValue;
+	}
+
+	@JsonIgnore
+	public void setTotalDiscountWithTaxAmountValue(
+		UnsafeSupplier<Double, Exception>
+			totalDiscountWithTaxAmountValueUnsafeSupplier) {
+
+		try {
+			totalDiscountWithTaxAmountValue =
+				totalDiscountWithTaxAmountValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double totalDiscountWithTaxAmountValue;
 
 	@Schema
 	public String getTotalFormatted() {
@@ -3667,6 +3767,16 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		if (shippingDiscountAmountValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountAmountValue\": ");
+
+			sb.append(shippingDiscountAmountValue);
+		}
+
 		if (shippingDiscountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -4107,6 +4217,16 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		if (totalDiscountAmountValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountAmountValue\": ");
+
+			sb.append(totalDiscountAmountValue);
+		}
+
 		if (totalDiscountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -4209,6 +4329,16 @@ public class Order implements Serializable {
 			sb.append(_escape(totalDiscountWithTaxAmountFormatted));
 
 			sb.append("\"");
+		}
+
+		if (totalDiscountWithTaxAmountValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountWithTaxAmountValue\": ");
+
+			sb.append(totalDiscountWithTaxAmountValue);
 		}
 
 		if (totalFormatted != null) {

@@ -849,7 +849,7 @@
 </tr>
 <tr>
 	<td>COMMON_STYLES_FIELDSET_LABEL</td>
-	<td>//div[contains(@class,'common-styles')]/div[contains(@class,'fieldset-label')][normalize-space()='${key_fieldSetLabel}']</td>
+	<td>//div[contains(@class,'common-styles')]//button[contains(@class,'collapse-icon')][normalize-space()='${key_fieldSetLabel}']</td>
 	<td></td>
 </tr>
 <tr>

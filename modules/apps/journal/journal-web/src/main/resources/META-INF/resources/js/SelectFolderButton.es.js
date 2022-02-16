@@ -67,7 +67,7 @@ class SelectFolderButton extends PortletBase {
 	 */
 	_handleSelectFolderButtonClick() {
 		openSelectionModal({
-			iframeBodyCssClass: 'cadmin',
+			iframeBodyCssClass: '',
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					var folderData = {

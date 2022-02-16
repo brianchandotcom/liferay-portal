@@ -16,47 +16,15 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import React, {useRef, useState} from 'react';
+import {Treeview} from 'frontend-js-components-web';
+import React, {useMemo, useState} from 'react';
 
 const noop = () => {};
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
-	const [items, setItems] = useState(nodes);
-	const initialItemsRef = useRef(nodes);
+	const [filterQuery, setFilterQuery] = useState('');
 
-	const nodeByName = (items, name) => {
-		return items.reduce(function reducer(acc, item) {
-			if (item.name.match(new RegExp(name, 'i'))) {
-				acc.push(item);
-			}
-
-			if (item.children) {
-				acc.concat(item.children.reduce(reducer, acc));
-			}
-
-			return acc;
-		}, []);
-	};
-
-	const handleQueryChange = (event) => {
-		const value = event.target.value;
-
-		if (!value) {
-			setItems(initialItemsRef.current);
-
-			return;
-		}
-
-		const newItems = nodeByName(items, value);
-
-		if (newItems.length) {
-			setItems(newItems);
-		}
-	};
-
-	const handleSelectionChange = (event, item) => {
-		event.preventDefault();
-
+	const handleSelectionChange = (item) => {
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data: {
 				folderId: item.id,
@@ -73,7 +41,9 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 						<ClayInput
 							aria-label={Liferay.Language.get('search')}
 							className="input-group-inset input-group-inset-after"
-							onChange={handleQueryChange}
+							onChange={(event) =>
+								setFilterQuery(event.target.value)
+							}
 							placeholder={`${Liferay.Language.get('search')}`}
 							type="text"
 						/>
@@ -87,41 +57,120 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<ClayTreeView
-				items={items}
-				onItemsChange={noop}
-				showExpanderOnHover={false}
-			>
-				{(item) => (
-					<ClayTreeView.Item>
-						<ClayTreeView.ItemStack
-							onClick={(event) =>
-								handleSelectionChange(event, item)
-							}
-						>
-							<ClayIcon symbol="folder" />
-
-							{item.name}
-						</ClayTreeView.ItemStack>
-
-						<ClayTreeView.Group items={item.children}>
-							{(item) => (
-								<ClayTreeView.Item
-									onClick={(event) =>
-										handleSelectionChange(event, item)
-									}
-								>
-									<ClayIcon symbol="folder" />
-
-									{item.name}
-								</ClayTreeView.Item>
-							)}
-						</ClayTreeView.Group>
-					</ClayTreeView.Item>
-				)}
-			</ClayTreeView>
+			{Liferay.__FF__.enableClayTreeView ? (
+				<FolderTree
+					filterQuery={filterQuery}
+					handleSelectionChange={handleSelectionChange}
+					items={nodes}
+				/>
+			) : (
+				<OldFolderTree
+					filterQuery={filterQuery}
+					handleSelectionChange={handleSelectionChange}
+					nodes={nodes}
+				/>
+			)}
 		</ClayLayout.ContainerFluid>
 	);
 };
+
+function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
+	const nodeByName = (items, name) => {
+		return items.reduce(function reducer(acc, item) {
+			if (item.name.match(new RegExp(name, 'i'))) {
+				acc.push(item);
+			}
+
+			if (item.children) {
+				acc.concat(item.children.reduce(reducer, acc));
+			}
+
+			return acc;
+		}, []);
+	};
+
+	const filteredItems = useMemo(() => {
+		if (!filterQuery) {
+			return initialItems;
+		}
+
+		return nodeByName(initialItems, filterQuery);
+	}, [initialItems, filterQuery]);
+
+	return (
+		<ClayTreeView
+			items={filteredItems}
+			onItemsChange={noop}
+			showExpanderOnHover={false}
+		>
+			{(item) => (
+				<ClayTreeView.Item>
+					<ClayTreeView.ItemStack
+						onClick={(event) => {
+							event.preventDefault();
+
+							handleSelectionChange(item);
+						}}
+					>
+						<ClayIcon symbol="folder" />
+
+						{item.name}
+					</ClayTreeView.ItemStack>
+
+					<ClayTreeView.Group items={item.children}>
+						{(item) => (
+							<ClayTreeView.Item
+								onClick={(event) => {
+									event.preventDefault();
+
+									handleSelectionChange(item);
+								}}
+							>
+								<ClayIcon symbol="folder" />
+
+								{item.name}
+							</ClayTreeView.Item>
+						)}
+					</ClayTreeView.Group>
+				</ClayTreeView.Item>
+			)}
+		</ClayTreeView>
+	);
+}
+
+function OldFolderTree({filterQuery, handleSelectionChange, nodes}) {
+	const nodesById = useMemo(() => {
+		const result = {};
+
+		function visit(node) {
+			result[node.id] = node;
+
+			if (node.children) {
+				node.children.forEach(visit);
+			}
+		}
+
+		nodes.forEach(visit);
+
+		return result;
+	}, [nodes]);
+
+	const onSelectedNodesChange = (selectedNodeIds) => {
+		const node = nodesById[[...selectedNodeIds][0]];
+
+		if (node) {
+			handleSelectionChange({id: node.id, name: node.name});
+		}
+	};
+
+	return (
+		<Treeview
+			NodeComponent={Treeview.Card}
+			filter={filterQuery}
+			nodes={nodes}
+			onSelectedNodesChange={onSelectedNodesChange}
+		/>
+	);
+}
 
 export default SelectFolder;

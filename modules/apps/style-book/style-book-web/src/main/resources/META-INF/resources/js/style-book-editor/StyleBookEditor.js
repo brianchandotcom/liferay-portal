@@ -183,6 +183,7 @@ function getMostRecentLayout(previewOptions) {
 		LAYOUT_TYPES.master,
 		LAYOUT_TYPES.pageTemplate,
 		LAYOUT_TYPES.displayPageTemplate,
+		LAYOUT_TYPES.fragmentCollection,
 	];
 
 	for (let i = 0; i < types.length; i++) {

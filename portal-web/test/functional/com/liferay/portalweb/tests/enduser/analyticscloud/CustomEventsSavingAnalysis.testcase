@@ -411,8 +411,8 @@ definition {
 			ACNavigation.openItem(itemName = "Save Analysis");
 		}
 
-		task ("Name the report") {
-			ACUtils.setItemName(itemName = "New Save Analysis");
+		task ("Edit the analysis name") {
+			ACUtils.setItemName(itemName = "Edited Analysis");
 		}
 
 		task ("Add the breakdown to analysis") {
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("Click on newly created analysis") {
-			ACNavigation.openItem(itemName = "New Save Analysis");
+			ACNavigation.openItem(itemName = "Edited Analysis");
 		}
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {

@@ -496,7 +496,7 @@ definition {
 		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
 			Translations.viewTargetFields(
 				webContentContent = "これはウェブ記事の内容です",
-				webContentDescription = "ここれはウェブ記事の説明です",
+				webContentDescription = "これはウェブ記事の説明です",
 				webContentTitle = "これはウェブ記事のタイトルです");
 
 			PortletEntry.publish();
@@ -554,7 +554,7 @@ definition {
 				newTargetLocale = "es-ES");
 
 			Translations.viewTargetFields(
-				webContentContent = "Este es el contenido de un artículo web",
+				webContentContent = "Este es el contenido de un artículo web.",
 				webContentDescription = "Esta es la descripción de un artículo web.",
 				webContentTitle = "Este es el título de un artículo web.");
 		}

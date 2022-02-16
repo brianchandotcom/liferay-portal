@@ -622,7 +622,7 @@ definition {
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
 	@priority = "4"
-	test CheckCannotPutExistingNameInAnalysisReport {
+	test CannotSaveAnalysisReportWithExistingName {
 		var defaultEventName = "webContentViewed";
 		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
 
@@ -714,7 +714,7 @@ definition {
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10557 | Test Summary: Change data type with event already in use"
 	@priority = "4"
-	test CheckChangeAttributeTypeInUseNotChangeAnalysisReport {
+	test CanChangeAttributeTypeInUseWithoutAffectingExistingAnalysisReports {
 		var attributeNameList = "temp,category,duration";
 		var attributeNameChangeList = "temp,duration";
 		var filterName = "temp";
@@ -896,7 +896,7 @@ definition {
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10569 | Test Summary: Viewing the newly created analysis report with member permission"
 	@priority = "4"
-	test CheckUseWithMemberPermissionCanUseAnalysisReport {
+	test UserWithMemberPermissionCanViewAndCreateAnalysisReport {
 		var attributeName = "category";
 		var filterName = "like";
 		var defaultEventName = "webContentViewed";

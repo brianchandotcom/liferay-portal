@@ -48,6 +48,19 @@ public class TestrayS3Bucket {
 		return _testrayS3Bucket;
 	}
 
+	public static boolean googleCredentialsAvailable() {
+		String googleApplicationCredentials = System.getenv(
+			"GOOGLE_APPLICATION_CREDENTIALS");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				googleApplicationCredentials)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public TestrayS3Object createTestrayS3Object(String key, File file) {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -222,12 +235,7 @@ public class TestrayS3Bucket {
 	}
 
 	private TestrayS3Bucket() {
-		String googleApplicationCredentials = System.getenv(
-			"GOOGLE_APPLICATION_CREDENTIALS");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				googleApplicationCredentials)) {
-
+		if (!googleCredentialsAvailable()) {
 			throw new RuntimeException(
 				"Please set the environment variable " +
 					"\"GOOGLE_APPLICATION_CREDENTIALS\"");

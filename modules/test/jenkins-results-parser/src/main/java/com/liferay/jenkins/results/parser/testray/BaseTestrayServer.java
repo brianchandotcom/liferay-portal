@@ -14,7 +14,10 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestrayResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,9 +26,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,6 +64,19 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	@Override
 	public URL getURL() {
 		return _url;
+	}
+
+	@Override
+	public void importCaseResults(TopLevelBuild topLevelBuild) {
+		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			_importCaseResultsFromCI(topLevelBuild);
+		}
+
+		if (TestrayS3Bucket.googleCredentialsAvailable()) {
+			_importCaseResultsToGCP(topLevelBuild);
+		}
 	}
 
 	@Override
@@ -96,6 +114,69 @@ public abstract class BaseTestrayServer implements TestrayServer {
 		}
 
 		return new File(workspace, "testray/results");
+	}
+
+	private void _importCaseResultsFromCI(TopLevelBuild topLevelBuild) {
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		String command = JenkinsResultsParserUtil.combine(
+			"rsync -aqz --chmod=go=rx \"",
+			JenkinsResultsParserUtil.getCanonicalPath(getResultsDir()),
+			"\"/* \"", jenkinsMaster.getName(),
+			"::testray-results/production/\"");
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(command);
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
+
+		for (File resultFile :
+				JenkinsResultsParserUtil.findFiles(getResultsDir(), ".*.xml")) {
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Uploaded ",
+					JenkinsResultsParserUtil.getCanonicalPath(resultFile),
+					" by Rsync"));
+		}
+	}
+
+	private void _importCaseResultsToGCP(TopLevelBuild topLevelBuild) {
+		File resultsDir = getResultsDir();
+
+		File resultsTarGzFile = new File(
+			resultsDir.getParentFile(), "results.tar.gz");
+
+		JenkinsResultsParserUtil.tarGzip(resultsDir, resultsTarGzFile);
+
+		StringBuilder sb = new StringBuilder();
+
+		Date date = new Date(topLevelBuild.getStartTime());
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				date, "yyyy-MM", "America/Los_Angeles"));
+
+		sb.append("/");
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		testrayS3Bucket.createTestrayS3Object(
+			sb + "/results.tar.gz", resultsTarGzFile);
+
+		testrayS3Bucket.createTestrayS3Object(
+			sb + "/.lfr-testray-completed", "");
 	}
 
 	private synchronized void _initTestrayProjects() {

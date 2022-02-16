@@ -823,26 +823,13 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayServerType = System.getenv("TESTRAY_SERVER_TYPE");
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
-				testrayServerType = _getBuildParameter("TESTRAY_SERVER_TYPE");
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					getJob(), "testray.server.type");
-
-				testrayServerType = jobProperty.getValue();
-			}
-
 			String testrayServerURL = System.getenv("TESTRAY_SERVER_URL");
 
 			if ((testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {
 
 				testrayServer = TestrayFactory.newTestrayServer(
-					testrayServerURL, testrayServerType);
+					testrayServerURL);
 			}
 
 			testrayServerURL = _getBuildParameter("TESTRAY_SERVER_URL");
@@ -851,7 +838,7 @@ public class TestrayImporter {
 				testrayServerURL.matches("https?://.*")) {
 
 				testrayServer = TestrayFactory.newTestrayServer(
-					testrayServerURL, testrayServerType);
+					testrayServerURL);
 			}
 
 			if (testrayServer == null) {
@@ -864,7 +851,7 @@ public class TestrayImporter {
 					testrayServerURL.matches("https?://.*")) {
 
 					testrayServer = TestrayFactory.newTestrayServer(
-						testrayServerURL, testrayServerType);
+						testrayServerURL);
 				}
 			}
 		}

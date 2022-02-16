@@ -19,13 +19,9 @@ import {
 	getKoroneikiAccounts,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {searchParams} from '../../../common/services/liferay/searchParams';
 import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
-import {
-	ROLE_TYPES,
-	ROUTE_TYPES,
-	SEARCH_PARAMS_KEYS,
-} from '../../../common/utils/constants';
+import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
+import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {PRODUCT_TYPES} from '../../customer-portal/utils/constants';
 import {ONBOARDING_STEP_TYPES} from '../utils/constants';
@@ -128,9 +124,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		const fetchData = async () => {
-			const projectExternalReferenceCode = searchParams.get(
-				SEARCH_PARAMS_KEYS.accountKey
-			);
+			const projectExternalReferenceCode = getAccountKey();
 
 			const user = await getUser(projectExternalReferenceCode);
 

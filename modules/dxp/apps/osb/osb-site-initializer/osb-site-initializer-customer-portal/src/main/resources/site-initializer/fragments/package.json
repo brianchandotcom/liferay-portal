@@ -1,19 +1,19 @@
 {
-	"name": "customer-portal-fragments",
-	"private": true,
-	"scripts": {
-		"add-fragment": "yo liferay-fragments:fragment",
-		"compress": "yo liferay-fragments:compress"
-	},
 	"dependencies": {
 		"@clayui/button": "^3.40.0",
 		"@clayui/css": "^3.46.0",
 		"@clayui/drop-down": "^3.45.0",
 		"classnames": "^2.3.1",
-		"react": "16.8.6",
-		"react-dom": "16.8.6"
+		"react-dom": "16.8.6",
+		"react": "16.8.6"
 	},
 	"devDependencies": {
 		"generator-liferay-fragments": "1.10.0"
-	}
+	},
+	"name": "@liferay/site-initializer-customer-portal-fragments",
+	"scripts": {
+		"add-fragment": "yo liferay-fragments:fragment",
+		"compress": "yo liferay-fragments:compress"
+	},
+	"version": "1.0.0"
 }

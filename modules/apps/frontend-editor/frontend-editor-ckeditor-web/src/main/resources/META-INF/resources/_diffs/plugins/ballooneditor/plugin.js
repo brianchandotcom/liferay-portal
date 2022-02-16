@@ -314,9 +314,9 @@
 				const target = event.data.getTarget();
 
 				if (
-					!target.$.closest('.lfr-balloon-editor') &&
-					!target.$.closest('.lfr-balloon-editor-insert-button') &&
-					!target.$.closest('.liferay-editable')
+					!target.$.closest(
+						'.cke_toolgroup, .lfr-balloon-editor, .lfr-balloon-editor-insert-button, .liferay-editable'
+					)
 				) {
 					for (const editorName in CKEDITOR.instances) {
 						const editor = CKEDITOR.instances[editorName];

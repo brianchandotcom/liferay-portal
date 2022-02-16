@@ -177,6 +177,110 @@ definition {
 		}
 	}
 
+	@description = "Add and edit web content via Asset Publisher in organization site with virtual host. This is a use case for LPS-140253. View no private page in  site settings's virtual host."
+	@priority = "4"
+	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHostFF {
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
+
+		task ("Add an organization with site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+		}
+
+		task ("Execute reindex all") {
+			SearchAdministration.executeReindex();
+		}
+
+		task ("Assign user to organization") {
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Define public virtual host and private virtual host") {
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+		}
+
+		task ("Sign in the public virtual host") {
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+		}
+
+		task ("Add a public page in organization site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Organization Name",
+				layoutName = "Web Content Page");
+		}
+
+		task ("Add an Asset Publisher to public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Organization Name",
+				layoutName = "Web Content Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Add a web content via Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
+
+			WebContent.addPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Edit the web content via Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
+
+			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the edited web content in Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+		}
+
+		task ("Sign in the localhost") {
+			User.logoutPG();
+
+			User.loginPG();
+		}
+
+		task ("View the edited web content in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Page",
+				siteName = "Organization Name");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+		}
+	}
+
 	@description = "Add a draft web content via Asset Publisher."
 	@priority = "4"
 	test AddDraftWebContentViaAssetPublisher {

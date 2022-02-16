@@ -23,12 +23,56 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that it is possible to add an Object portlet as a widget on a page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddObjectPortletWidget {
 		property portal.acceptance = "true";
 
-		// TODO LPS-145675 CanAddObjectPortletWidget pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 5280",
+			objectName = "CustomObject5280",
+			pluralLabelName = "Custom Objects 5280");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject5280");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject5280");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 5280");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.addPG(
+			pageName = "Object Page",
+			portletName = "Custom Objects 5280");
+
+		AppBuilderAdmin.validateWidgetApp(appName = "Custom Objects 5280");
+
+		AssertElementPresent(locator1 = "Button#PLUS");
+
+		ObjectAdmin.assertNoItemsWereFound();
 
 	}
 

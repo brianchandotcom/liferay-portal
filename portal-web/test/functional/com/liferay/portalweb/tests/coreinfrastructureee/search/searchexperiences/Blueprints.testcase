@@ -1467,19 +1467,15 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(
-			description = "Test Description",
-			title = "Test Blueprint");
+		Blueprints.createBlueprint(title = "Test Blueprint");
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "WC");
 
-		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
-			resultTitle = "WC Title 10");
+		Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
 
-		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
-			resultTitle = "WC Title 11");
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "10");
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
@@ -1487,17 +1483,35 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
-			resultTitle = "WC Title 11");
+		Pagination.viewResults(results = "Showing 11 to 11 of 11 entries.");
 
-		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
-			resultTitle = "WC Title 10");
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "1");
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
 			resultRanking = "2");
+
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+		Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "10");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "11");
+
+		Pagination.changePagination(itemsPerPage = "20");
+
+		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "11");
 	}
 
 	test PaginateElementsAdmin {

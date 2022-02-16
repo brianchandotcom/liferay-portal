@@ -46,7 +46,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
@@ -55,8 +54,8 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.layout.util.structure.CollectionPaginationUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -76,14 +75,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -94,16 +91,13 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
@@ -113,14 +107,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GetCollectionFieldMVCResourceCommand
 	extends BaseMVCResourceCommand {
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffLayoutContentPageEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFLayoutContentPageEditorConfiguration.class, properties);
-	}
 
 	@Override
 	protected void doServeResource(
@@ -147,25 +133,12 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, "listItemStyle");
 		int numberOfItems = ParamUtil.getInteger(
 			resourceRequest, "numberOfItems");
-
 		int numberOfItemsPerPage = ParamUtil.getInteger(
 			resourceRequest, "numberOfItemsPerPage");
-
-		if ((numberOfItemsPerPage <= 0) ||
-			(numberOfItemsPerPage >
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
-		}
-
 		int numberOfPages = ParamUtil.getInteger(
 			resourceRequest, "numberOfPages");
-
 		String paginationType = ParamUtil.getString(
 			resourceRequest, "paginationType");
-
-		boolean paginationEnabled = _isPaginationEnabled(paginationType);
-
 		boolean showAllItems = ParamUtil.getBoolean(
 			resourceRequest, "showAllItems");
 		String templateKey = ParamUtil.getString(
@@ -178,7 +151,7 @@ public class GetCollectionFieldMVCResourceCommand
 				displayAllItems, displayAllPages, languageId,
 				layoutObjectReference, listStyle, listItemStyle,
 				resourceResponse.getNamespace(), numberOfItems,
-				numberOfItemsPerPage, numberOfPages, paginationEnabled,
+				numberOfItemsPerPage, numberOfPages, paginationType,
 				showAllItems, templateKey);
 		}
 		catch (Exception exception) {
@@ -223,8 +196,8 @@ public class GetCollectionFieldMVCResourceCommand
 			boolean displayAllItems, boolean displayAllPages, String languageId,
 			String layoutObjectReference, String listStyle,
 			String listItemStyle, String namespace, int numberOfItems,
-			int numberOfItemsPerPage, int numberOfPages,
-			boolean paginationEnabled, boolean showAllItems, String templateKey)
+			int numberOfItemsPerPage, int numberOfPages, String paginationType,
+			boolean showAllItems, String templateKey)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -269,10 +242,10 @@ public class GetCollectionFieldMVCResourceCommand
 					activePage = 1;
 				}
 
-				Pagination pagination = _getPagination(
+				Pagination pagination = _collectionPaginationUtil.getPagination(
 					activePage, listCount, displayAllPages, displayAllItems,
 					numberOfItems, numberOfItemsPerPage, numberOfPages,
-					paginationEnabled, showAllItems);
+					paginationType, showAllItems);
 
 				defaultLayoutListRetrieverContext.setPagination(pagination);
 
@@ -378,10 +351,10 @@ public class GetCollectionFieldMVCResourceCommand
 						listObjectReference, defaultLayoutListRetrieverContext)
 				).put(
 					"totalNumberOfItems",
-					_getTotalNumberOfItems(
+					_collectionPaginationUtil.getTotalNumberOfItems(
 						listCount, displayAllPages, displayAllItems,
 						numberOfItems, numberOfItemsPerPage, numberOfPages,
-						paginationEnabled)
+						paginationType)
 				);
 			}
 		}
@@ -580,100 +553,14 @@ public class GetCollectionFieldMVCResourceCommand
 		return infoItemClassNames;
 	}
 
-	private Pagination _getPagination(
-		int activePage, int count, boolean displayAllPages,
-		boolean displayAllItems, int numberOfItems, int numberOfItemsPerPage,
-		int numberOfPages, boolean paginationEnabled, boolean showAllItems) {
-
-		int end = numberOfItems;
-		int start = 0;
-
-		if (_ffLayoutContentPageEditorConfiguration.
-				paginationImprovementsEnabled()) {
-
-			if (paginationEnabled) {
-				int maxNumberOfItems = count;
-
-				if (!displayAllPages && (numberOfPages > 0)) {
-					maxNumberOfItems = numberOfPages * numberOfItemsPerPage;
-				}
-
-				end = Math.min(
-					Math.min(
-						activePage * numberOfItemsPerPage, maxNumberOfItems),
-					count);
-
-				start = (activePage - 1) * numberOfItemsPerPage;
-			}
-			else if (displayAllItems) {
-				end = count;
-			}
-		}
-		else {
-			if (paginationEnabled) {
-				int maxNumberOfItems = numberOfItems;
-
-				if (showAllItems) {
-					maxNumberOfItems = count;
-				}
-
-				end = Math.min(
-					Math.min(
-						activePage * numberOfItemsPerPage, maxNumberOfItems),
-					count);
-
-				start = (activePage - 1) * numberOfItemsPerPage;
-			}
-		}
-
-		return Pagination.of(end, start);
-	}
-
-	private int _getTotalNumberOfItems(
-		int count, boolean displayAllPages, boolean displayAllItems,
-		int numberOfItems, int numberOfItemsPerPage, int numberOfPages,
-		boolean paginationEnabled) {
-
-		if (_ffLayoutContentPageEditorConfiguration.
-				paginationImprovementsEnabled()) {
-
-			if (!paginationEnabled) {
-				if (displayAllItems) {
-					return count;
-				}
-
-				return Math.min(count, numberOfItems);
-			}
-
-			if (displayAllPages || (numberOfPages <= 0)) {
-				return count;
-			}
-
-			return Math.min(count, numberOfPages * numberOfItemsPerPage);
-		}
-
-		return Math.min(count, numberOfItems);
-	}
-
-	private boolean _isPaginationEnabled(String paginationType) {
-		if (Objects.equals(paginationType, "numeric") ||
-			Objects.equals(paginationType, "regular") ||
-			Objects.equals(paginationType, "simple")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionFieldMVCResourceCommand.class);
 
-	private static volatile FFLayoutContentPageEditorConfiguration
-		_ffLayoutContentPageEditorConfiguration;
-
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private CollectionPaginationUtil _collectionPaginationUtil;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

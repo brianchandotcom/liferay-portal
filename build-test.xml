@@ -4514,8 +4514,18 @@ go</echo>
 			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -5480,8 +5490,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>

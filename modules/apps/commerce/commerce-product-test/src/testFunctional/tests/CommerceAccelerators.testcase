@@ -35,36 +35,37 @@ definition {
 
 		User.logoutPG();
 	}
+
 	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for admin user"
-    @priority = "4"
-    test AddToCartButtonAndQuantitySelectorAreDisabledForAdminUser {
-    	property portal.acceptance = "false";
+	@priority = "4"
+	test AddToCartButtonAndQuantitySelectorAreDisabledForAdminUser {
+		property portal.acceptance = "false";
 
-    	CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-    	ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium");
 
-    	Pagination.changePagination(itemsPerPage = "60");
+		Pagination.changePagination(itemsPerPage = "60");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 
-    	Click(
+		Click(
 			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 
-    	CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-    	CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-    	AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 	}
 
 	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for non-admin user"
@@ -123,8 +124,8 @@ definition {
 		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
 		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
-
 	}
+
 	@description = "COMMERCE-5725. New functional test for COMMERCE-5485"
 	@priority = "3"
 	test AssertCheckoutMinicart {

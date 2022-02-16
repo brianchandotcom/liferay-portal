@@ -282,7 +282,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			}
 		}
 		catch (DocumentException documentException) {
-			throw new RuntimeException(documentException);
+			return null;
 		}
 
 		return null;

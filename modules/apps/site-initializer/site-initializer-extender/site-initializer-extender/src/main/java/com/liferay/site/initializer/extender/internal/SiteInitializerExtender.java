@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -114,8 +115,8 @@ public class SiteInitializerExtender
 				_objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
 				_portal, _remoteAppEntryLocalService,
-				_resourcePermissionLocalService, _roleLocalService,
-				_sapEntryLocalService, _settingsFactory,
+				_resourceActionLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _sapEntryLocalService, _settingsFactory,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -259,6 +260,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -407,11 +407,9 @@ public class DXPCloudClientTestrayImporter {
 	private static void _initEnvironmentVariables() {
 		String projectDirPath = _getEnvVarValue("projectDir");
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(projectDirPath)) {
-			throw new RuntimeException("Please set 'projectDir'");
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(projectDirPath)) {
+			_projectDir = new File(projectDirPath);
 		}
-
-		_projectDir = new File(projectDirPath);
 
 		if (!_projectDir.exists()) {
 			throw new RuntimeException(
@@ -551,7 +549,7 @@ public class DXPCloudClientTestrayImporter {
 	private static final LocalDate _localDate = LocalDate.now();
 	private static final Pattern _pattern = Pattern.compile(
 		"test\\[(?<testName>[^\\]]{1,150})[^\\]]*\\]");
-	private static File _projectDir;
+	private static File _projectDir = new File(".");
 	private static String _relativeURLPath;
 	private static TestrayBuild _testrayBuild;
 	private static String _testrayBuildName =

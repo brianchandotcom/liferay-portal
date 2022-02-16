@@ -126,13 +126,14 @@ public class ImportResults {
 				"Root element :" +
 					doc.getDocumentElement(
 					).getNodeName());
-			NodeList a = doc.getElementsByTagName("testcase");
 
-			Node b = a.item(0);
+			NodeList nodeTestCase = doc.getElementsByTagName("testcase");
 
-			NodeList c = b.getChildNodes();
+			Node nodeItem = nodeTestCase.item(0);
 
-			NodeList nList = (NodeList)c.item(1);
+			NodeList childNode = nodeItem.getChildNodes();
+
+			NodeList nList = (NodeList)childNode.item(1);
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -216,8 +217,8 @@ public class ImportResults {
 			exception.printStackTrace();
 		}
 
-		addTestCase();
-		//addProject();
+		//addTestCase();
+		addProject();
 	}
 
 }

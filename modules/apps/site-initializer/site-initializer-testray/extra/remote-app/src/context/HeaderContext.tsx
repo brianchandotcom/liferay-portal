@@ -24,6 +24,7 @@ export type HeaderTabs = {
 
 export type HeaderTitle = {
 	category: string;
+	path?: string;
 	title: string;
 };
 

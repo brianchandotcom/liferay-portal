@@ -13,6 +13,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
@@ -34,24 +35,42 @@ const Header = () => {
 
 				<div className="d-flex flex-column">
 					<div className="d-flex flex-wrap">
-						{heading.map((header, index) => (
-							<span className="d-flex flex-column" key={index}>
-								<small className="text-paragraph-xs text-secondary">
-									{header.category}
-								</small>
+						{heading.map((header, index) => {
+							const isClickable =
+								header.path && index !== heading.length - 1;
 
-								<div className="d-flex flex-row">
-									<p className="text-paragraph-lg">
-										{header.title}
-									</p>
+							return (
+								<span
+									className={classNames(
+										'd-flex flex-column header-item',
+										{
+											'cursor-pointer': isClickable,
+										}
+									)}
+									key={index}
+									onClick={() => {
+										if (isClickable && header.path) {
+											navigate(header.path);
+										}
+									}}
+								>
+									<small className="text-paragraph-xs text-secondary">
+										{header.category}
+									</small>
 
-									{!!heading.length &&
-										heading.length !== index + 1 && (
-											<Divider />
-										)}
-								</div>
-							</span>
-						))}
+									<div className="d-flex flex-row">
+										<p className="header-title text-paragraph-lg">
+											{header.title}
+										</p>
+
+										{!!heading.length &&
+											heading.length !== index + 1 && (
+												<Divider />
+											)}
+									</div>
+								</span>
+							);
+						})}
 					</div>
 				</div>
 			</div>

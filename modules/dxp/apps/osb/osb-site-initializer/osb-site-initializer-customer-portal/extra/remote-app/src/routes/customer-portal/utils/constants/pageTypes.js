@@ -17,5 +17,6 @@ export const PAGE_TYPES = {
 	home: 'home',
 	overview: 'overview',
 	partnership: 'partnership',
+	portal: 'portal',
 	teamMembers: 'team_members',
 };

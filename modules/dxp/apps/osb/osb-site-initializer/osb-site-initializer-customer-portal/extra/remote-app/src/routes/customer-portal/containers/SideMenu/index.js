@@ -28,11 +28,11 @@ const getSubscriptionKey = (name) => {
 	return prefixPath.toLowerCase();
 };
 
-const PRODUCTS_PATH = '/products/';
+const ACTIVATION_PATH = 'activation/';
 
 const MenuItem = ({activeButton, menuKey, setActiveButton, ...props}) => {
 	const redirectPage =
-		MENU_TYPES[menuKey] === MENU_TYPES.overview ? '/' : PAGE_TYPES[menuKey];
+		MENU_TYPES[menuKey] === MENU_TYPES.overview ? '' : PAGE_TYPES[menuKey];
 
 	return (
 		<li {...props}>
@@ -153,7 +153,7 @@ const SideMenu = ({getCurrentPage, subscriptionGroups}) => {
 									return (
 										<li key={name}>
 											<Link
-												to={`${PRODUCTS_PATH}${redirectPage}`}
+												to={`${ACTIVATION_PATH}${redirectPage}`}
 											>
 												<Button
 													className={classNames(

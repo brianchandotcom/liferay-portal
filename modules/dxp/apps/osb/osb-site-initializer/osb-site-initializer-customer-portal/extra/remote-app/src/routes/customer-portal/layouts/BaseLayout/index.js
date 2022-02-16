@@ -30,18 +30,19 @@ const PAGE_SKELETON_LAYOUT = {
 };
 
 const Layout = () => {
-	const {pathname} = useLocation();
+	const location = useLocation();
+
 	const [
 		{project, sessionId, subscriptionGroups, userAccount},
 	] = useCustomerPortal();
 
 	const getCurrentPage = useCallback(() => {
-		const currentPath = pathname.split('/').filter(Boolean);
+		const [, ...currentPath] = location.pathname.split('/').filter(Boolean);
 
 		return currentPath.length
 			? currentPath.slice(-1)[0]
 			: PAGE_TYPES.overview;
-	}, [pathname]);
+	}, [location]);
 
 	const hasProjectContact = getCurrentPage() === PAGE_TYPES.overview;
 

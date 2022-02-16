@@ -13,7 +13,8 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useEffect} from 'react';
+import ClayChart from '@clayui/charts';
+import {useEffect, useRef} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -21,8 +22,6 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import BarChartComponent from '../../../../components/Charts/BarChart';
-import PieChartComponent from '../../../../components/Charts/PieChart';
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
 import {
@@ -32,13 +31,20 @@ import {
 } from '../../../../graphql/queries';
 import useHeader from '../../../../hooks/useHeader';
 import {DATA_COLORS} from '../../../../util/constants';
-import {runs} from '../../../../util/mock';
+import {getDonutLegend} from '../../../../util/graph';
+import {TotalTestCases, getRandomMaximumValue} from '../../../../util/mock';
 
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
+	const ref = useRef<any>();
+
+	const total = TotalTestCases.map(([, totalCase]) => totalCase).reduce(
+		(prevValue, currentValue) => Number(prevValue) + Number(currentValue)
+	);
+
 	return (
 		<>
 			<Container title="Details">
@@ -84,64 +90,120 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 			<Container className="mt-4" title="Total Test Cases">
 				<div className="row">
-					<div className="col-3">
-						<PieChartComponent
-							data={[
-								{
-									color: DATA_COLORS['metrics.passed'],
-									name: 'passed',
-									value: 30529,
+					<div className="col-2">
+						<ClayChart
+							data={{
+								colors: {
+									'BLOCKED': DATA_COLORS['metrics.blocked'],
+									'FAILED': DATA_COLORS['metrics.failed'],
+									'INCOMPLETE':
+										DATA_COLORS['metrics.incomplete'],
+									'PASSED': DATA_COLORS['metrics.passed'],
+									'TEST FIX': DATA_COLORS['metrics.test-fix'],
 								},
-								{
-									color: DATA_COLORS['metrics.failed'],
-									name: 'failed',
-									value: 5374,
+								columns: TotalTestCases,
+								type: 'donut',
+							}}
+							donut={{
+								expand: false,
+								label: {
+									show: false,
 								},
-								{
-									color: DATA_COLORS['metrics.blocked'],
-									name: 'blocked',
-									value: 0,
+								legend: {
+									show: false,
 								},
-								{
-									color: DATA_COLORS['metrics.test-fix'],
-									name: 'test fix',
-									value: 0,
-								},
-								{
-									color: DATA_COLORS['metrics.incomplete'],
-									name: 'incomplete',
-									value: 21,
-								},
-							]}
-							pieProps={{dataKey: 'value'}}
+								title: total.toString(),
+								width: 15,
+							}}
+							legend={{show: false}}
+							onafterinit={() => {
+								getDonutLegend(ref.current, {
+									data: TotalTestCases.map(([name]) => name),
+									elementId: 'testrayTotalMetricsGraphLegend',
+									total: total as number,
+								});
+							}}
+							ref={ref}
+							size={{
+								height: 200,
+							}}
 						/>
 					</div>
 
-					<div className="col-8 ml-6">
-						<BarChartComponent
-							bars={[
-								{
-									dataKey: 'failed',
-									fill: DATA_COLORS['metrics.failed'],
+					<div className="col-2">
+						<div id="testrayTotalMetricsGraphLegend" />
+					</div>
+
+					<div className="col-8">
+						<ClayChart
+							axis={{
+								y: {
+									label: {
+										position: 'outer-middle',
+										text: 'TESTS',
+									},
 								},
-								{
-									dataKey: 'incomplete',
-									fill: DATA_COLORS['metrics.incomplete'],
+							}}
+							bar={{
+								width: {
+									max: 30,
 								},
-								{
-									dataKey: 'test_fix',
-									fill: DATA_COLORS['metrics.test-fix'],
+							}}
+							data={{
+								colors: {
+									'BLOCKED': DATA_COLORS['metrics.blocked'],
+									'FAILED': DATA_COLORS['metrics.failed'],
+									'INCOMPLETE':
+										DATA_COLORS['metrics.incomplete'],
+									'PASSED': DATA_COLORS['metrics.passed'],
+									'TEST FIX': DATA_COLORS['metrics.test-fix'],
 								},
-								{
-									dataKey: 'blocked',
-									fill: DATA_COLORS['metrics.blocked'],
+								columns: [
+									[
+										'PASSED',
+										...getRandomMaximumValue(20, 1000),
+									],
+									[
+										'FAILED',
+										...getRandomMaximumValue(20, 500),
+									],
+									[
+										'BLOCKED',
+										...getRandomMaximumValue(20, 100),
+									],
+									[
+										'TEST FIX',
+										...getRandomMaximumValue(20, 100),
+									],
+									[
+										'INCOMPLETE',
+										...getRandomMaximumValue(20, 100),
+									],
+								],
+								groups: [
+									[
+										'PASSED',
+										'FAILED',
+										'BLOCKED',
+										'TEST FIX',
+										'INCOMPLETE',
+									],
+								],
+								type: 'bar',
+							}}
+							legend={{
+								inset: {
+									anchor: 'top-right',
+									step: 1,
+									x: 10,
+									y: -20,
 								},
-								{
-									dataKey: 'passed',
-									fill: DATA_COLORS['metrics.passed'],
-								},
-							]}
-							data={runs}
+								position: 'inset',
+							}}
+							padding={{
+								bottom: 5,
+								top: 20,
+							}}
 						/>
 					</div>
 				</div>

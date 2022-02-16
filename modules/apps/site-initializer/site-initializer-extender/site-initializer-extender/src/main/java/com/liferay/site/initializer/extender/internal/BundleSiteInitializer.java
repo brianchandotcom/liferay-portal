@@ -140,6 +140,7 @@ import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.extender.spi.CommerceSiteInitializerExtender;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -320,7 +321,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Commerce references holder " + _commerceReferencesHolder);
+				"Commerce site initializer extender " +
+					_commerceSiteInitializerExtender);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -463,10 +465,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceReferencesHolder(
-		CommerceReferencesHolder commerceReferencesHolder) {
+	protected void setCommerceSiteInitializerExtender(
+		CommerceSiteInitializerExtender commerceSiteInitializerExtender) {
 
-		_commerceReferencesHolder = commerceReferencesHolder;
+		_commerceSiteInitializerExtender = commerceSiteInitializerExtender;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -614,24 +616,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if ((_commerceReferencesHolder == null) ||
+		if ((_commerceSiteInitializerExtender == null) ||
 			!GetterUtil.getBoolean(
 				PropsUtil.get("enterprise.product.commerce.enabled"))) {
 
 			return;
 		}
 
-		Channel channel = _addCommerceChannel(serviceContext);
-
-		if (channel == null) {
-			return;
-		}
-
-		_addCommerceCatalogs(
-			channel, _addCommerceInventoryWarehouses(serviceContext),
-			serviceContext);
-		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues,
+		_commerceSiteInitializerExtender.addCPDefinitions(
+			documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
 	}
 
@@ -2973,7 +2966,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private CommerceReferencesHolder _commerceReferencesHolder;
+	private CommerceSiteInitializerExtender _commerceSiteInitializerExtender;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

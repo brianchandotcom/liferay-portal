@@ -31,4 +31,5 @@ dependencies {
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-spi")
 }

@@ -659,6 +659,9 @@ public class JournalManagementToolbarDisplayContext
 		else if (status == WorkflowConstants.STATUS_EXPIRED) {
 			label = "with-expired-versions";
 		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			label = "with-scheduled-versions";
+		}
 		else {
 			label = WorkflowConstants.getStatusLabel(status);
 		}

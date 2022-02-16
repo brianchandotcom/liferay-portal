@@ -364,6 +364,15 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public FriendlyURLEntry fetchMainFriendlyURLEntry(
+			long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+			classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -327,6 +327,13 @@ public class FriendlyURLEntryLocalServiceUtil {
 			friendlyURLEntryId, languageId);
 	}
 
+	public static FriendlyURLEntry fetchMainFriendlyURLEntry(
+			long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().fetchMainFriendlyURLEntry(classNameId, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

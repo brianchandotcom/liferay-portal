@@ -22,7 +22,7 @@ definition {
 
 		DynamicDataMapping.addFieldViaJSON(sourceJson = "${sourceJson}");
 
-		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt_BR");
+		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt-BR");
 
 		DDLDataDefinition.editName();
 
@@ -63,7 +63,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69325."
-	@ignore = "true"
 	@priority = "4"
 	test ViewFieldInputWhenSwitchingTranslations {
 		DDLRecord.addCP();

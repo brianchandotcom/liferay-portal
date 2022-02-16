@@ -78,7 +78,7 @@ definition {
 		task ("Create a segment and assert active and known individuals") {
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Test Segment");
+			ACUtils.setItemName(itemName = "Test Segment");
 
 			ACSegments.addStaticMember(tableMember = "Test Test");
 

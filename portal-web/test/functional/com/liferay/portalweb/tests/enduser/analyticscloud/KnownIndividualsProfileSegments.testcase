@@ -87,7 +87,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACUtils.fileName(fileName = "${segmentName}");
+				ACUtils.setItemName(itemName = "${segmentName}");
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
@@ -154,7 +154,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACUtils.fileName(fileName = "${segmentName}");
+				ACUtils.setItemName(itemName = "${segmentName}");
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
@@ -231,7 +231,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACUtils.fileName(fileName = "${segmentName}");
+				ACUtils.setItemName(itemName = "${segmentName}");
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3");
@@ -365,7 +365,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACUtils.fileName(fileName = "${segmentName}");
+				ACUtils.setItemName(itemName = "${segmentName}");
 
 				ACSegments.addStaticMember(tableMember = "user1 user1");
 
@@ -454,7 +454,7 @@ definition {
 
 				ACSegments.createStaticSegment();
 
-				ACUtils.fileName(fileName = "${segmentName}");
+				ACUtils.setItemName(itemName = "${segmentName}");
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");

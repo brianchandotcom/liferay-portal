@@ -71,7 +71,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Commented on Blog");
 
@@ -147,7 +147,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -238,7 +238,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Downloaded Document & Media");
 
@@ -310,7 +310,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -388,7 +388,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Submitted Form");
 
@@ -461,7 +461,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -538,7 +538,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -613,7 +613,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -694,7 +694,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -767,7 +767,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -844,7 +844,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
@@ -921,7 +921,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -1000,7 +1000,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -1075,7 +1075,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Document & Media");
 
@@ -1152,7 +1152,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Form");
 
@@ -1227,7 +1227,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Page");
 
@@ -1296,7 +1296,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 

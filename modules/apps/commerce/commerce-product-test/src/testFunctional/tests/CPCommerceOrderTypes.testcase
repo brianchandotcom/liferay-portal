@@ -345,6 +345,56 @@ definition {
 		}
 	}
 
+	@description = "Select order tpye when creating new order via account selector."
+	@priority = "3"
+	test SelectOrderTypeWhenCreatingNewOrderViaAccountSelector {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeName = "Test Order Type");
+
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeName = "Test Order Type 2");
+		}
+
+		task ("When I log in as the buyer user and go to the Minium site to create a new order from the account selector drop down.") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "ttest",
+				resetPassword = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+		}
+
+		task ("Then I should be able to select the Test Order Type for my new order.") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				locator1 = "Select#TYPE",
+				value1 = "Test Order Type");
+
+			Button.click(button = "Add Order");
+
+			AssertElementPresent(
+				key_orderType = "Test Order Type",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+
+		task ("Then verify that the order type was assigned to the order") {
+			AssertElementPresent(
+				key_orderType = "Test Order Type",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+	}
+
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {

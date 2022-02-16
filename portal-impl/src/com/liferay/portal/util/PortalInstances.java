@@ -528,13 +528,13 @@ public class PortalInstances {
 
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
-		String defaultVirtualHostName = "localhost";
+		String virtualHostname = company.getVirtualHostname();
 
-		if (Validator.isNotNull(company.getVirtualHostname())) {
-			defaultVirtualHostName = company.getVirtualHostname();
+		if (Validator.isNull(virtualHostname)) {
+			virtualHostname = "localhost";
 		}
 
-		if (Objects.equals(defaultVirtualHostName, serverName)) {
+		if (Objects.equals(virtualHostname, serverName)) {
 			return true;
 		}
 

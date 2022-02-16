@@ -17,7 +17,6 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.portlet.CPSpecificationOptionFacetPortletPreferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -53,26 +52,10 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			CPSpecificationOptionFacetPortletInstanceConfiguration
-				cpSpecificationOptionFacetPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPSpecificationOptionFacetPortletInstanceConfiguration.
-							class);
-
-			CPSpecificationOptionFacetsDisplayContext
-				cpSpecificationOptionFacetsDisplayContext =
-					new CPSpecificationOptionFacetsDisplayContext(
-						cpSpecificationOptionFacetPortletInstanceConfiguration);
-
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpSpecificationOptionFacetsDisplayContext);
+				new CPSpecificationOptionFacetsDisplayContext(
+					httpServletRequest));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -90,9 +73,7 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, _PARAMETER_NAME_PREFIX);
 
-		String maxTerms = unicodeProperties.getProperty(
-			CPSpecificationOptionFacetPortletPreferences.
-				PREFERENCE_KEY_MAX_TERMS);
+		String maxTerms = unicodeProperties.getProperty("maxTerms");
 
 		if (Validator.isNumber(maxTerms)) {
 			ThemeDisplay themeDisplay =

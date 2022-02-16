@@ -668,7 +668,7 @@ definition {
 			validateInvalidFile = "true");
 
 		Translations.viewErrorMessages(
-			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessage = "1 file could not be published.",
 			errorMessageItem = "The translation file does not correspond to this page.");
 	}
 
@@ -725,7 +725,7 @@ definition {
 			validateInvalidFile = "true");
 
 		Translations.viewErrorMessages(
-			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessage = "1 file could not be published.",
 			errorMessageItem = "The translation file does not correspond to this page.");
 	}
 
@@ -803,7 +803,7 @@ definition {
 		Translations.gotoBulkImportTranslation();
 
 		Translations.importTranslation(
-			errorMessage = "2 Errors: Some files could not be published, check them and upload another file.",
+			errorMessage = "2 files could not be published.",
 			errorMessageItem = "The XLIFF file contains a translation for an invalid model.",
 			failFileName = "TranslationContentPage1-en_US-ja_JP.xlf",
 			failFileName2 = "TranslationContentPage2-en_US-es_ES.xlf",
@@ -1249,7 +1249,7 @@ definition {
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
-			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessage = "1 file could not be published.",
 			errorMessageItem = "The translation file does not correspond to this page.",
 			failFileName = "ContentPage-en_US-es_ES.xlf",
 			fileName = "ContentPage-en_US_translated.zip",

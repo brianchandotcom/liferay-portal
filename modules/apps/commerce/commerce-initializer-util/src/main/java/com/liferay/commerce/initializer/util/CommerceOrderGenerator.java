@@ -209,7 +209,7 @@ public class CommerceOrderGenerator {
 		// Update commerce order
 
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder.getCommerceOrderId(),
+			null, commerceOrder.getCommerceOrderId(),
 			commerceAddress.getCommerceAddressId(),
 			commerceAddress.getCommerceAddressId(),
 			commerceOrder.getCommercePaymentMethodKey(),

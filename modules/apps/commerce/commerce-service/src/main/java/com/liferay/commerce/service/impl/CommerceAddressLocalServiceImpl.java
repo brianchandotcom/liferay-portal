@@ -624,7 +624,7 @@ public class CommerceAddressLocalServiceImpl
 			}
 
 			commerceOrderLocalService.updateCommerceOrder(
-				commerceOrder.getCommerceOrderId(), billingAddressId,
+				null, commerceOrder.getCommerceOrderId(), billingAddressId,
 				shippingAddressId, commerceOrder.getCommercePaymentMethodKey(),
 				commerceShippingMethodId, shippingOptionName,
 				commerceOrder.getPurchaseOrderNumber(),

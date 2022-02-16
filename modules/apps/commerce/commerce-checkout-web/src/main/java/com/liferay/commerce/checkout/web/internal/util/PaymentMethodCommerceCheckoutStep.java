@@ -166,7 +166,7 @@ public class PaymentMethodCommerceCheckoutStep
 		}
 
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder.getCommerceOrderId(),
+			null, commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(), commercePaymentMethodKey,
 			commerceOrder.getCommerceShippingMethodId(),

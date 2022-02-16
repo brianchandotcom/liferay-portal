@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,10 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class JUnitTestClass extends BaseTestClass {
+
+	public Properties getTestProperties() {
+		return _testProperties;
+	}
 
 	@Override
 	public boolean isIgnored() {
@@ -46,6 +51,13 @@ public class JUnitTestClass extends BaseTestClass {
 
 			return;
 		}
+
+		File filePath = JenkinsResultsParserUtil.getCanonicalFile(
+			getTestClassFile());
+
+		File canonicalFile = _getTestPropertiesDirectory(filePath);
+
+		_setTestProperties(canonicalFile);
 
 		try {
 			_fileContent = JenkinsResultsParserUtil.read(getTestClassFile());
@@ -172,13 +184,13 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 
 		if (!canonicalFile.isDirectory()) {
-			return _getWorkingDirectory(parentFile);
+			return _getTestPropertiesDirectory(parentFile);
 		}
 
 		File testPropertiesFile = new File(canonicalFile, "test.properties");
 
 		if (!testPropertiesFile.exists()) {
-			return _getWorkingDirectory(parentFile);
+			return _getTestPropertiesDirectory(parentFile);
 		}
 
 		return canonicalFile;
@@ -250,6 +262,15 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 	}
 
+	private void _setTestProperties(File canonicalFile) {
+		File propertiesFile = new File(canonicalFile + "/test.properties");
+
+		Properties properties = JenkinsResultsParserUtil.getProperties(
+			propertiesFile);
+
+		_testProperties = properties;
+	}
+
 	private static final Pattern _classHeaderPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\*/(?<annotations>[^/]*)public\\s+class\\s+",
@@ -261,5 +282,6 @@ public class JUnitTestClass extends BaseTestClass {
 
 	private boolean _classIgnored;
 	private final String _fileContent;
+	private Properties _testProperties;
 
 }

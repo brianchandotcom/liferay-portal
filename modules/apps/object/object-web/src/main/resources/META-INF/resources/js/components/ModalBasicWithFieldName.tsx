@@ -81,11 +81,11 @@ export function ModalBasicWithFieldName({
 		}
 	};
 
-	const validate = ({name}: TInitialValues) => {
-		const errors: {name?: string} = {};
+	const validate = ({name}: any) => {
+		const errors: any = {};
 
-		if (!name && typeof name !== 'string') {
-			errors.name = Liferay.Language.get('required');
+		if (name[defaultLanguageId] === '') {
+			errors.label = Liferay.Language.get('required');
 		}
 
 		return errors;
@@ -109,7 +109,7 @@ export function ModalBasicWithFieldName({
 						)}
 
 						<Input
-							error={errors.name}
+							error={errors.label}
 							id={inputId}
 							label={Liferay.Language.get('name')}
 							name="name"

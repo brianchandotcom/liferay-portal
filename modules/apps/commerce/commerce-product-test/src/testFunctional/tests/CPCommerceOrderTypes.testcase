@@ -345,7 +345,7 @@ definition {
 		}
 	}
 
-	@description = "Select order tpye when creating new order via account selector."
+	@description = "Verify user can select order type when creating a new order via the account selector."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaAccountSelector {
 		property portal.acceptance = "false";
@@ -383,12 +383,6 @@ definition {
 
 			Button.click(button = "Add Order");
 
-			AssertElementPresent(
-				key_orderType = "Test Order Type",
-				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
-		}
-
-		task ("Then verify that the order type was assigned to the order") {
 			AssertElementPresent(
 				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");

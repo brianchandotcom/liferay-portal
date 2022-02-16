@@ -130,6 +130,162 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10557 | Test Summary: Change data type with event already in use"
+	@priority = "4"
+	test CanChangeAttributeTypeInUseWithoutAffectingExistingAnalysisReports {
+		var attributeNameList = "temp,category,duration";
+		var attributeNameChangeList = "temp,duration";
+		var filterName = "temp";
+		var newDataTypeList = "Date,String";
+		var oldDataTypeList = "Number,Duration";
+		var list1 = ListUtil.newListFromString("${attributeNameChangeList}");
+		var list2 = ListUtil.newListFromString("${newDataTypeList}");
+		var list3 = ListUtil.newListFromString("${oldDataTypeList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "10",
+				optionValue = "is greater than");
+		}
+
+		task ("Name the report") {
+			ACUtils.setItemName(itemName = "Save Analysis");
+		}
+
+		task ("Check the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
+		}
+
+		task ("Save the newly created analysis") {
+			ACUtils.saveButton();
+		}
+
+		task ("Assert the analysis is saved and show up on event analysis list") {
+			ACUtils.viewNameList(nameList = "Save Analysis");
+		}
+
+		task ("Navigation to attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+		while ("${i}" != "${size}") {
+			var attributeName = ListUtil.get("${list1}", "${i}");
+			var newDataType = ListUtil.get("${list2}", "${i}");
+
+			task ("Edit the new attribute") {
+				ACUtils.searchBar(searchItem = "${attributeName}");
+
+				ACNavigation.openItem(itemName = "${attributeName}");
+
+				ACUtils.clickAnyButton(button = "Edit");
+			}
+
+			task ("Change the type of the attribute") {
+				ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
+			}
+
+			task ("Back to Event Attributes and Navigation to attributes tab") {
+				ACNavigation.backNavigation(pageName = "Event Attributes");
+
+				ACNavigation.openItem(itemName = "Attributes");
+			}
+
+			task ("Check if the type has been changed") {
+				ACUtils.searchBar(searchItem = "${attributeName}");
+
+				ACCustomEvents.viewDataTypeList(
+					attributeName = "${attributeName}",
+					typeValue = "${newDataType}");
+			}
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+
+		task ("Go to event analysis and click on newly created analysis") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToEventAnalysis();
+
+			ACNavigation.openItem(itemName = "Save Analysis");
+		}
+
+		task ("Check that the analysis dashboard contains the event,attribute and filter") {
+			ACEventAnalysis.viewAnalysisDashboard(
+				attributeNameList = "${attributeNameList}",
+				eventName = "${customEventName}",
+				filterNameList = "${filterName}");
+		}
+
+		task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
+		}
+
+		task ("Check that the attributes used have not had the attribute type changed") {
+			var size = ListUtil.size("${list1}");
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var attributeName = ListUtil.get("${list1}", "${i}");
+				var oldDataType = ListUtil.get("${list3}", "${i}");
+				var oldDataType = StringUtil.upperCase("${oldDataType}");
+
+				Click(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+
+				AssertTextEquals(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#EDITOR_LABEL",
+					value1 = "${oldDataType}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+		}
+	}
+
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10558 | Test Summary: Viewing newly created analysis report"
 	@priority = "5"
 	test CanCreateAnalysisReport {
@@ -452,6 +608,98 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
+	@priority = "4"
+	test CannotSaveAnalysisReportWithExistingName {
+		var defaultEventName = "webContentViewed";
+		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		for (var eventName : list "${customEventName},${defaultEventName}") {
+			task ("Add the custom event to analysis by the all tab") {
+				ACEventAnalysis.addEvent(customEventName = "${eventName}");
+			}
+
+			task ("Name the report") {
+				ACUtils.setItemName(itemName = "Save Analysis 1");
+			}
+
+			task ("Check the analysis result appears") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast24Hours();
+
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
+			}
+
+			task ("Save the newly created analysis") {
+				ACUtils.saveButton();
+			}
+		}
+
+		task ("Assert that the warning pop-up appears") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:This analysis name is currently in use. Please try a different one.");
+		}
+
+		task ("Name the report and save") {
+			ACUtils.setItemName(itemName = "Save Analysis 2");
+
+			ACUtils.saveButton();
+		}
+
+		task ("Assert the analysis is saved and show up on event analysis list") {
+			ACUtils.viewNameList(nameList = "${eventAnalysisNameList}");
+		}
+
+		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
+		var list2 = ListUtil.newListFromString("${customEventName},${defaultEventName}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var eventAnalysisName = ListUtil.get("${list1}", "${i}");
+			var eventName = ListUtil.get("${list2}", "${i}");
+
+			task ("Click on newly created analysis") {
+				ACNavigation.openItem(itemName = "${eventAnalysisName}");
+			}
+
+			task ("Check that the analysis dashboard contains the event,attribute and filter") {
+				ACEventAnalysis.viewAnalysisDashboard(eventName = "${eventName}");
+			}
+
+			task ("Check the analysis result appears") {
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
+			}
+
+			task ("Go to event analysis") {
+				ACNavigation.goToEventAnalysis();
+			}
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10562 | Test Summary: Pagination for analysis report"
 	@priority = "4"
 	test CanPaginationAnalysisReportList {
@@ -616,254 +864,6 @@ definition {
 				ACUtils.viewNameListInOrder(
 					index = "${n}",
 					name = "Save Analysis ${n}");
-			}
-		}
-	}
-
-	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
-	@priority = "4"
-	test CannotSaveAnalysisReportWithExistingName {
-		var defaultEventName = "webContentViewed";
-		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		for (var eventName : list "${customEventName},${defaultEventName}") {
-			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = "${eventName}");
-			}
-
-			task ("Name the report") {
-				ACUtils.setItemName(itemName = "Save Analysis 1");
-			}
-
-			task ("Check the analysis result appears") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLast24Hours();
-
-				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
-			}
-
-			task ("Save the newly created analysis") {
-				ACUtils.saveButton();
-			}
-		}
-
-		task ("Assert that the warning pop-up appears") {
-			Alert.viewWarningSpecific(warningMessage = "Warning:This analysis name is currently in use. Please try a different one.");
-		}
-
-		task ("Name the report and save") {
-			ACUtils.setItemName(itemName = "Save Analysis 2");
-
-			ACUtils.saveButton();
-		}
-
-		task ("Assert the analysis is saved and show up on event analysis list") {
-			ACUtils.viewNameList(nameList = "${eventAnalysisNameList}");
-		}
-
-		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
-		var list2 = ListUtil.newListFromString("${customEventName},${defaultEventName}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
-
-		while ("${i}" != "${size}") {
-			var eventAnalysisName = ListUtil.get("${list1}", "${i}");
-			var eventName = ListUtil.get("${list2}", "${i}");
-
-			task ("Click on newly created analysis") {
-				ACNavigation.openItem(itemName = "${eventAnalysisName}");
-			}
-
-			task ("Check that the analysis dashboard contains the event,attribute and filter") {
-				ACEventAnalysis.viewAnalysisDashboard(eventName = "${eventName}");
-			}
-
-			task ("Check the analysis result appears") {
-				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${eventName},1");
-			}
-
-			task ("Go to event analysis") {
-				ACNavigation.goToEventAnalysis();
-			}
-
-			var i = ${i} + 1;
-			var i = StringUtil.valueOf("${i}");
-		}
-	}
-
-	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10557 | Test Summary: Change data type with event already in use"
-	@priority = "4"
-	test CanChangeAttributeTypeInUseWithoutAffectingExistingAnalysisReports {
-		var attributeNameList = "temp,category,duration";
-		var attributeNameChangeList = "temp,duration";
-		var filterName = "temp";
-		var newDataTypeList = "Date,String";
-		var oldDataTypeList = "Number,Duration";
-		var list1 = ListUtil.newListFromString("${attributeNameChangeList}");
-		var list2 = ListUtil.newListFromString("${newDataTypeList}");
-		var list3 = ListUtil.newListFromString("${oldDataTypeList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
-		}
-
-		task ("Add the filter to analysis") {
-			ACEventAnalysis.addFilter(
-				filterName = "${filterName}",
-				inputValue = "10",
-				optionValue = "is greater than");
-		}
-
-		task ("Name the report") {
-			ACUtils.setItemName(itemName = "Save Analysis");
-		}
-
-		task ("Check the analysis result appears") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
-		}
-
-		task ("Save the newly created analysis") {
-			ACUtils.saveButton();
-		}
-
-		task ("Assert the analysis is saved and show up on event analysis list") {
-			ACUtils.viewNameList(nameList = "Save Analysis");
-		}
-
-		task ("Navigation to attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACNavigation.openItem(itemName = "Attributes");
-		}
-
-		while ("${i}" != "${size}") {
-			var attributeName = ListUtil.get("${list1}", "${i}");
-			var newDataType = ListUtil.get("${list2}", "${i}");
-
-			task ("Edit the new attribute") {
-				ACUtils.searchBar(searchItem = "${attributeName}");
-
-				ACNavigation.openItem(itemName = "${attributeName}");
-
-				ACUtils.clickAnyButton(button = "Edit");
-			}
-
-			task ("Change the type of the attribute") {
-				ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
-			}
-
-			task ("Back to Event Attributes and Navigation to attributes tab") {
-				ACNavigation.backNavigation(pageName = "Event Attributes");
-
-				ACNavigation.openItem(itemName = "Attributes");
-			}
-
-			task ("Check if the type has been changed") {
-				ACUtils.searchBar(searchItem = "${attributeName}");
-
-				ACCustomEvents.viewDataTypeList(
-					attributeName = "${attributeName}",
-					typeValue = "${newDataType}");
-			}
-
-			var i = ${i} + 1;
-			var i = StringUtil.valueOf("${i}");
-		}
-
-		task ("Go to event analysis and click on newly created analysis") {
-			ACNavigation.exitSettings();
-
-			ACNavigation.goToEventAnalysis();
-
-			ACNavigation.openItem(itemName = "Save Analysis");
-		}
-
-		task ("Check that the analysis dashboard contains the event,attribute and filter") {
-			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeNameList}",
-				eventName = "${customEventName}",
-				filterNameList = "${filterName}");
-		}
-
-		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
-		}
-
-		task ("Check that the attributes used have not had the attribute type changed") {
-			var size = ListUtil.size("${list1}");
-			var i = "0";
-
-			while ("${i}" != "${size}") {
-				var attributeName = ListUtil.get("${list1}", "${i}");
-				var oldDataType = ListUtil.get("${list3}", "${i}");
-				var oldDataType = StringUtil.upperCase("${oldDataType}");
-
-				Click(
-					key_attributeName = "${attributeName}",
-					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
-
-				AssertTextEquals(
-					key_attributeName = "${attributeName}",
-					locator1 = "ACEventAnalysis#EDITOR_LABEL",
-					value1 = "${oldDataType}");
-
-				var i = ${i} + 1;
-				var i = StringUtil.valueOf("${i}");
 			}
 		}
 	}

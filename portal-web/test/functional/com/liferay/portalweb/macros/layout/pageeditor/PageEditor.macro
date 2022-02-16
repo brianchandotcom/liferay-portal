@@ -2979,7 +2979,7 @@ definition {
 	macro gotoCommentViaFragment {
 		var key_fragmentName = "${fragmentName}";
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_COMMENT_ICON")) {
+		if (IsElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON")) {
 			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
 

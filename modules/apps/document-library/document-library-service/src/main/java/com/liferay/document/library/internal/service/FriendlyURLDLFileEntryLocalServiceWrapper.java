@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -143,30 +142,29 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 	private void _updateFriendlyURL(DLFileEntry dlFileEntry, String urlTitle)
 		throws PortalException {
 
-		try {
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_classNameLocalService.getClassNameId(FileEntry.class),
-					dlFileEntry.getFileEntryId());
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				dlFileEntry.getFileEntryId());
 
-			if (!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
-				String uniqueUrlTitle =
-					_friendlyURLEntryLocalService.getUniqueUrlTitle(
-						dlFileEntry.getGroupId(),
-						_classNameLocalService.getClassNameId(FileEntry.class),
-						dlFileEntry.getFileEntryId(), urlTitle,
-						LanguageUtil.getLanguageId(
-							LocaleUtil.getSiteDefault()));
-
-				_friendlyURLEntryLocalService.
-					updateFriendlyURLEntryLocalization(
-						friendlyURLEntry,
-						LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()),
-						uniqueUrlTitle);
-			}
-		}
-		catch (NoSuchModelException noSuchModelException) {
+		if (friendlyURLEntry == null) {
 			_addFriendlyURLEntry(dlFileEntry, urlTitle);
+
+			return;
+		}
+
+		if (!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
+			String uniqueUrlTitle =
+				_friendlyURLEntryLocalService.getUniqueUrlTitle(
+					dlFileEntry.getGroupId(),
+					_classNameLocalService.getClassNameId(FileEntry.class),
+					dlFileEntry.getFileEntryId(), urlTitle,
+					LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
+
+			_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
+				friendlyURLEntry,
+				LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()),
+				uniqueUrlTitle);
 		}
 	}
 

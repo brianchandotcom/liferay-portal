@@ -162,30 +162,12 @@ definition {
 		}
 	}
 
-	macro configureApplicationDecorator {
-		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "Look and Feel Configuration");
 
-		IFrame.selectConfigurationFrame();
 
-		Navigator.gotoNavTab(navTab = "General");
 
-		Select(
-			key_selectFieldLabel = "Application Decorators",
-			locator1 = "Select#ANY",
-			value1 = "${decorator}");
 
-		PortletEntry.save();
-	}
 
-	macro configureApplicationDecoratorViaLookandfeelPG {
-		Navigator.gotoNavTab(navTab = "General");
 
-		Select(
-			locator1 = "Portlet#APPLICATION_DECORATOR_SELECT",
-			value1 = "${applicationDecorator}");
-	}
 
 
 
@@ -265,16 +247,30 @@ definition {
 		Click.mouseDownMouseUp(locator1 = "Icon#OK");
 	}
 
-	macro configureCustomTitleViaLookandfeelPG {
-		IFrame.selectConfigurationFrame();
-
+	macro configureGeneralViaLookAndFeelPG {
 		Navigator.gotoNavTab(navTab = "General");
 
-		Check.checkToggleSwitch(locator1 = "ToggleSwitch#USE_CUSTOM_TITLE");
+		if (isSet(customTitle)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Custom Title",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Type(
-			locator1 = "TextInput#CUSTOM_TITLE",
-			value1 = "${portletName} Custom");
+				inputFieldId = "customTitle",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = "${customTitle} Custom");
+		}
+
+		if (isSet(applicationDecorator)) {
+			Select(
+				key_selectFieldLabel = "Application Decorators",
+				locator1 = "Select#ANY",
+				value1 = "${applicationDecorator}");
+		}
+
+		if (!(isSet(configureWithoutSave))) {
+			PortletEntry.save();
+		}
 	}
 
 	macro configureSharingPG {

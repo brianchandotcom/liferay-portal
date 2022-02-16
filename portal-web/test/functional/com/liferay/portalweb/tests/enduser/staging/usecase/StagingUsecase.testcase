@@ -749,9 +749,13 @@ definition {
 
 		WidgetPages.addRecentContent(assetTitle = "The SPACE Family");
 
-		Portlet.configureApplicationDecorator(
-			decorator = "Barebone",
-			portletName = "Web Content Display");
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",

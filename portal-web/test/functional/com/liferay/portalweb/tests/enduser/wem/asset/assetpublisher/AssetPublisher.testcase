@@ -851,9 +851,13 @@ definition {
 		}
 
 		task ("Configure application decorators to barebone") {
-			Portlet.configureApplicationDecorator(
-				decorator = "Barebone",
-				portletName = "Asset Publisher");
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
 		}
 
 		task ("View Asset Publisher title is hidden") {
@@ -953,9 +957,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Asset Publisher");
-
-			PortletEntry.save();
+			Portlet.configureGeneralViaLookAndFeelPG(customTitle = "Asset Publisher");
 		}
 
 		task ("View the custom title of Asset Publisher") {
@@ -980,9 +982,13 @@ definition {
 		}
 
 		task ("Configure application decorators to barebone") {
-			Portlet.configureApplicationDecorator(
-				decorator = "Decorate",
-				portletName = "Asset Publisher");
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
 		}
 
 		task ("View the Asset Publisher title") {

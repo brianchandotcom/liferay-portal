@@ -219,9 +219,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "IFrame");
-
-		PortletEntry.save();
+		Portlet.configureGeneralViaLookAndFeelPG(customTitle = "IFrame");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page 2",
@@ -270,13 +268,9 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Sites Directory");
-
-		PortletEntry.save();
-
-		Portlet.configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = "Decorate");
-
-		PortletEntry.save();
+		Portlet.configureGeneralViaLookAndFeelPG(
+			applicationDecorator = "Decorate",
+			customTitle = "Sites Directory");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -361,9 +355,13 @@ definition {
 			pageName = "Page Revision Page",
 			siteName = "Site Name");
 
-		Portlet.configureApplicationDecorator(
-			decorator = "Barebone",
-			portletName = "Blogs");
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page Revision Page",

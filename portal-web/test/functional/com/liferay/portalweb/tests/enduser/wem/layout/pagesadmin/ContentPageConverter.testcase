@@ -459,9 +459,13 @@ definition {
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");
 
-				Portlet.configureApplicationDecorator(
-					decorator = "${decoratorName}",
-					portletName = "${portletName}");
+				Portlet.gotoPortletOptions(
+					portletName = "${portletName}",
+					portletOption = "Look and Feel Configuration");
+
+				IFrame.selectConfigurationFrame();
+
+				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "${decoratorName}");
 			}
 		}
 
@@ -1076,9 +1080,13 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.configureApplicationDecorator(
-				decorator = "Decorate",
-				portletName = "Documents and Media");
+			Portlet.gotoPortletOptions(
+				portletName = "Documents and Media",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Decorate");
 		}
 
 		task ("Convert widget page to content page") {

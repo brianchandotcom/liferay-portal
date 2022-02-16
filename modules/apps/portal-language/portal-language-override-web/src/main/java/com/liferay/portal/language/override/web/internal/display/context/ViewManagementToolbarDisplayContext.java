@@ -141,6 +141,11 @@ public class ViewManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getFilterNavigationDropdownItemsLabel() {
+		return LanguageUtil.get(httpServletRequest, "filter-by-override");
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"any-language", "selected-language"};
 	}

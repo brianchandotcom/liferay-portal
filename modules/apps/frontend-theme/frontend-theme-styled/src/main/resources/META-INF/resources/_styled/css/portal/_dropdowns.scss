@@ -20,12 +20,12 @@ html#{$cadmin-selector} {
 
 .dropdown-toggle:after {
 	border-width: 0;
-	content: normal;
+	content: '';
 }
 
 .dropup .dropdown-toggle:after {
 	border-width: 0;
-	content: normal;
+	content: '';
 }
 
 .dropdown > .dropdown-menu {

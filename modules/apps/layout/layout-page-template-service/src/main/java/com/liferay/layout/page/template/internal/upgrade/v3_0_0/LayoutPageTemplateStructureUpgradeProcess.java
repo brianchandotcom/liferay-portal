@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,8 +69,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setTimestamp(7, createDate);
 			preparedStatement.setTimestamp(8, createDate);
 			preparedStatement.setLong(9, layoutPageTemplateStructureId);
-			preparedStatement.setLong(
-				10, SegmentsExperienceConstants.ID_DEFAULT);
+			preparedStatement.setLong(10, _SEGMENTS_EXPERIENCE_ID_DEFAULT);
 			preparedStatement.setString(11, data);
 
 			preparedStatement.executeUpdate();
@@ -116,6 +114,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		runSQLTemplateString(template, false);
 	}
+
+	private static final long _SEGMENTS_EXPERIENCE_ID_DEFAULT = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateStructureUpgradeProcess.class);

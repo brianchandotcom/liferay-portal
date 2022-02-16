@@ -1889,6 +1889,13 @@ war.path=${app.server.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
+						<chmod
+							file="${test.app.server.parent.dir}/elasticsearch-sidecar/**"
+							perm="777"
+							type="both"
+							verbose="true"
+						/>
+
 						<local name="jmx.remote.port.overwrite" />
 
 						<math
@@ -4523,6 +4530,14 @@ go</echo>
 				<then>
 					<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
 				</then>
+				<else>
+					<chmod
+						file="${liferay.home}/elasticsearch-sidecar/**"
+						perm="777"
+						type="both"
+						verbose="true"
+					/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

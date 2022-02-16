@@ -21,6 +21,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
@@ -72,6 +73,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -253,6 +255,11 @@ public class EditStyleBookEntryDisplayContext {
 						fragmentCollectionContributors =
 							_fragmentCollectionContributorTracker.
 								getFragmentCollectionContributors();
+
+					Collections.sort(
+						fragmentCollectionContributors,
+						new FragmentCollectionContributorNameComparator(
+							_themeDisplay.getLocale()));
 
 					List<FragmentCollectionContributor>
 						filteredFragmentCollectionContributors =

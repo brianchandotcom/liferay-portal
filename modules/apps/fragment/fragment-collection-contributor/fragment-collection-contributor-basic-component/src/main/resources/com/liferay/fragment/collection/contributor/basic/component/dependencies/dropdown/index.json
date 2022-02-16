@@ -86,7 +86,8 @@
 					"name": "keepOpen",
 					"type": "checkbox"
 				}
-			]
+			],
+			"label": "dropdown-options"
 		}
 	]
 }

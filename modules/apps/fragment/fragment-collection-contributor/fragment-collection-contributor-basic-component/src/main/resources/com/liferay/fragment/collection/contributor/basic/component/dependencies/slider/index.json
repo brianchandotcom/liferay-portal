@@ -16,7 +16,8 @@
 						}
 					}
 				}
-			]
+			],
+			"label": "slider-options"
 		}
 	]
 }

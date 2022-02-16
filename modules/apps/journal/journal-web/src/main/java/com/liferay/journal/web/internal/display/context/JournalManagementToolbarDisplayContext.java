@@ -643,9 +643,9 @@ public class JournalManagementToolbarDisplayContext
 			statuses.add(WorkflowConstants.STATUS_DENIED);
 		}
 
-		statuses.add(WorkflowConstants.STATUS_SCHEDULED);
 		statuses.add(WorkflowConstants.STATUS_APPROVED);
 		statuses.add(WorkflowConstants.STATUS_EXPIRED);
+		statuses.add(WorkflowConstants.STATUS_SCHEDULED);
 
 		return statuses;
 	}

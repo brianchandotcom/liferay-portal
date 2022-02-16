@@ -39,4 +39,12 @@
 			background-color: $color-primary;
 		}
 	}
+
+	.header-item {
+		&.cursor-pointer:hover {
+			.header-title {
+				text-decoration: underline;
+			}
+		}
+	}
 }

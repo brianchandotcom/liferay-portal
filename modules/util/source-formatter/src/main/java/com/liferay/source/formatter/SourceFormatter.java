@@ -980,6 +980,13 @@ public class SourceFormatter {
 					ExcludeSyntax.GLOB, "**/node_modules_cache/**"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.REGEX,
+					".*/frontend-theme-unstyled/.*/_unstyled/css/clay/.+"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.REGEX,
+					".*/frontend-theme-unstyled/.*/_unstyled/images/(aui|" +
+						"clay|lexicon)/.+"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.REGEX,
 					".*/tests?/.*/dependencies/.+\\.(jar|lar|war|zip)/.+"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.REGEX,

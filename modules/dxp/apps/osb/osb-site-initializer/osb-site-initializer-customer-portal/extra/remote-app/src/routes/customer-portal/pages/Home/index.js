@@ -16,7 +16,6 @@ import {
 	getAccounts,
 	getKoroneikiAccounts,
 } from '../../../../common/services/liferay/graphql/queries';
-import {SEARCH_PARAMS_KEYS} from '../../../../common/utils/constants';
 import getLiferaySiteName from '../../../../common/utils/getLiferaySiteName';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
@@ -81,8 +80,7 @@ const Home = ({userAccount}) => {
 					accounts = dataAccounts?.accounts?.items;
 					accountKeysFilter = getKoroneikiFilter(accounts);
 				}
-			}
-			else if (userAccount?.accountBriefs?.length) {
+			} else if (userAccount?.accountBriefs?.length) {
 				accounts = userAccount?.accountBriefs;
 				accountKeysFilter = getKoroneikiFilter(accounts);
 			}
@@ -141,7 +139,7 @@ const Home = ({userAccount}) => {
 	}, [userAccount]);
 
 	const nextPage = (project) => {
-		window.location.href = `${window.location.origin}/${liferaySiteName}/overview?${SEARCH_PARAMS_KEYS.accountKey}=${project.accountKey}`;
+		window.location.href = `${window.location.origin}/${liferaySiteName}/overview/#/${project.accountKey}`;
 	};
 
 	const projectsFiltered = projects.filter((project) =>

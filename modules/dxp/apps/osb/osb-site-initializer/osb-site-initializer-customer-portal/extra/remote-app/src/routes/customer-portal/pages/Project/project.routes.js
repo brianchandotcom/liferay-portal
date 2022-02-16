@@ -20,12 +20,12 @@ const ProjectRoutes = () => {
 	return (
 		<HashRouter>
 			<Routes>
-				<Route element={<Layout />} path="/">
+				<Route element={<Layout />} path="/:accountKey">
 					<Route element={<Overview />} index />
 
 					<Route
 						element={<ProductsOutlet />}
-						path="products/:productId"
+						path="activation/:productId"
 					/>
 
 					<Route

@@ -133,7 +133,6 @@ definition {
 			pageName = "Blank Page");
 
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Entry Test");
-
 	}
 
 }

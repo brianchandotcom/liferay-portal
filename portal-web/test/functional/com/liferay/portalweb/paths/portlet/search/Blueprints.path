@@ -201,8 +201,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_PREVIEW_COLLAPSE_RESULT_BUTTON</td>
+	<td>//button[contains(@aria-label,'Collapse')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_EXPAND_RESULT_BUTTON</td>
+	<td>//button[contains(@aria-label,'Expand')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_PREVIEW_RAW_RESPONSE_JSON</td>
 	<td>//span[contains(@class,'cm-string') and contains(.,'${responseString}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_RESULT_FIELD_VALUE</td>
+	<td>//div[contains(@class,'preview-results-list')]//*[contains(@class,'row')]//*[contains(.,'${fieldName}')]/following-sibling::div</td>
 	<td></td>
 </tr>
 <tr>

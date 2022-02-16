@@ -2316,6 +2316,33 @@ definition {
 			value1 = "Boost All Keywords Match");
 	}
 
+	test ViewExpandedAndCollapsedBlueprintsPreviewResult {
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "apple");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
+
+		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_EXPAND_RESULT_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			fieldName = "ddmStructureKey",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_RESULT_FIELD_VALUE",
+			value1 = "BASIC-WEB-CONTENT");
+
+		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_COLLAPSE_RESULT_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			fieldName = "entryClassName",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_RESULT_FIELD_VALUE",
+			value1 = "com.liferay.journal.model.JournalArticle");
+	}
+
 	test ViewQueryBuilderFieldValidation {
 		Blueprints.openBlueprintsAdmin();
 

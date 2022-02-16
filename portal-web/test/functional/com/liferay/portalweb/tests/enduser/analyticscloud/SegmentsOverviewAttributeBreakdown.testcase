@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 		}
 
 		task ("Add new user as member") {
@@ -164,7 +164,7 @@ definition {
 		task ("Create a static segment, add two static members and save segment") {
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
 			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
@@ -261,7 +261,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 		}
 
 		task ("Add new user as member") {
@@ -343,7 +343,7 @@ definition {
 		}
 
 		task ("Type the segment name") {
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 		}
 
 		task ("Add new user as member") {

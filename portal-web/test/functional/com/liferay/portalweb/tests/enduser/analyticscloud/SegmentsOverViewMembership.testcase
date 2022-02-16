@@ -83,7 +83,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
 		task ("Add a criteria") {
@@ -145,7 +145,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -234,7 +234,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -324,7 +324,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.includeAnonymous();
 
@@ -428,7 +428,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
 			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 

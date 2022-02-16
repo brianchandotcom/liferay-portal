@@ -91,7 +91,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 

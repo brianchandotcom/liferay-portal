@@ -59,7 +59,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "New Segment Test");
+			ACUtils.setItemName(itemName = "New Segment Test");
 		}
 
 		task ("Add a birthDate and createDate field") {
@@ -136,7 +136,7 @@ definition {
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -197,7 +197,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "New Segment Test");
+			ACUtils.setItemName(itemName = "New Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -248,7 +248,7 @@ definition {
 
 		ACSegments.createStaticSegment();
 
-		ACUtils.fileName(fileName = "Static Segment Test");
+		ACUtils.setItemName(itemName = "Static Segment Test");
 
 		ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -313,7 +313,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -347,7 +347,7 @@ definition {
 
 			ACSegments.createStaticSegment();
 
-			ACUtils.fileName(fileName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
 			ACSegments.addStaticMember(tableMember = "ac ac");
 
@@ -430,7 +430,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "New Segment Test");
+			ACUtils.setItemName(itemName = "New Segment Test");
 		}
 
 		task ("Add a Hobby Custom Fields field") {
@@ -549,7 +549,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "New Segment Test");
+			ACUtils.setItemName(itemName = "New Segment Test");
 		}
 
 		task ("Add a jobTitle field") {

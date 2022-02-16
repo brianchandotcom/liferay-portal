@@ -79,7 +79,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "New Segment Test");
+			ACUtils.setItemName(itemName = "New Segment Test");
 		}
 
 		task ("Add a Device Brand field") {
@@ -181,7 +181,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
 		task ("Add an URL criteria from Session Attributes") {
@@ -273,7 +273,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
 		task ("Add an URL criteria from Session Attributes") {
@@ -331,7 +331,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
 		task ("Add criterias from differents attributes") {

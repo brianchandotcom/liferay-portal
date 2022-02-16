@@ -107,7 +107,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property Role");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property Role");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -181,7 +181,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property Site");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property Site");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -327,7 +327,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property Team");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property Team");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -390,7 +390,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property User");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property User");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -462,7 +462,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property User Group");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property User Group");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -547,7 +547,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Individual Property Custom Fields");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Individual Property Custom Fields");
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
@@ -619,7 +619,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Using Organization Custom Fields");
+			ACUtils.setItemName(itemName = "Dynamic Segment Using Organization Custom Fields");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 

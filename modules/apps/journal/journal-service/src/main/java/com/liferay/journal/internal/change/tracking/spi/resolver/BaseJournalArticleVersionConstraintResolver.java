@@ -29,14 +29,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
  */
-@Component(service = ConstraintResolver.class)
-public class JournalArticleVersionConstraintResolver
+public abstract class BaseJournalArticleVersionConstraintResolver
 	implements ConstraintResolver<JournalArticle> {
 
 	@Override
@@ -60,11 +58,6 @@ public class JournalArticleVersionConstraintResolver
 	}
 
 	@Override
-	public String[] getUniqueIndexColumnNames() {
-		return new String[] {"groupId", "articleId", "version"};
-	}
-
-	@Override
 	public void resolveConflict(
 			ConstraintResolverContext<JournalArticle> constraintResolverContext)
 		throws PortalException {
@@ -74,14 +67,14 @@ public class JournalArticleVersionConstraintResolver
 		double latestVersion = constraintResolverContext.getInTarget(
 			() -> {
 				JournalArticle latestProductionArticle =
-					_journalArticleLocalService.getLatestArticle(
+					journalArticleLocalService.getLatestArticle(
 						ctArticle.getResourcePrimKey(),
 						WorkflowConstants.STATUS_ANY, false);
 
 				return latestProductionArticle.getVersion();
 			});
 
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+		List<JournalArticle> articles = journalArticleLocalService.getArticles(
 			ctArticle.getGroupId(), ctArticle.getArticleId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new ArticleVersionComparator());
 
@@ -91,12 +84,12 @@ public class JournalArticleVersionConstraintResolver
 
 				article.setVersion(latestVersion);
 
-				_journalArticleLocalService.updateJournalArticle(article);
+				journalArticleLocalService.updateJournalArticle(article);
 			}
 		}
 	}
 
 	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
+	protected JournalArticleLocalService journalArticleLocalService;
 
 }

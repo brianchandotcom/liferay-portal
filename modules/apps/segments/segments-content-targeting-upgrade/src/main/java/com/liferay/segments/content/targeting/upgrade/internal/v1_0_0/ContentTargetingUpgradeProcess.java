@@ -161,9 +161,11 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 							userSegmentId);
 				}
 
+				String name = resultSet.getString("name");
+
 				Map<Locale, String> nameMap =
-					LocalizationUtil.getLocalizationMap(
-						resultSet.getString("name"));
+					LocalizationUtil.getLocalizationMap(name);
+
 				Map<Locale, String> descriptionMap =
 					LocalizationUtil.getLocalizationMap(
 						resultSet.getString("description"));
@@ -174,18 +176,15 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 						resultSet.getLong("companyId"),
 						resultSet.getLong("userId")));
 
-				Locale oldLocale = LocaleThreadLocal.getSiteDefaultLocale();
-
-				String defaultLanguageId =
-					LocalizationUtil.getDefaultLanguageId(
-						resultSet.getString("name"));
-
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
-					defaultLanguageId);
+					LocalizationUtil.getDefaultLanguageId(name));
 
-				LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+				Locale currentDefaultLocale =
+					LocaleThreadLocal.getSiteDefaultLocale();
 
 				try {
+					LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+
 					_segmentsEntryLocalService.addSegmentsEntry(
 						"ct_" + userSegmentId, nameMap, descriptionMap, true,
 						_getCriteria(userSegmentId),
@@ -193,7 +192,8 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 						User.class.getName(), serviceContext);
 				}
 				finally {
-					LocaleThreadLocal.setSiteDefaultLocale(oldLocale);
+					LocaleThreadLocal.setSiteDefaultLocale(
+						currentDefaultLocale);
 				}
 			}
 		}

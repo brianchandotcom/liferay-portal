@@ -14,6 +14,7 @@
 
 import {Avatar} from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
+import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
@@ -79,9 +80,10 @@ const Build = () => {
 						},
 						{
 							key: 'error',
-							render: (_: any, {testrayCaseResult}: any) => (
-								<code>{testrayCaseResult?.errors}</code>
-							),
+							render: (_: any, {testrayCaseResult}: any) =>
+								testrayCaseResult?.errors && (
+									<Code>{testrayCaseResult.errors}</Code>
+								),
 							value: 'Errors',
 						},
 					],

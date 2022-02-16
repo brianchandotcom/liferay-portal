@@ -12,45 +12,19 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import {useContext, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {LoadingWrapper} from '../../../components/Loading';
 import QATable from '../../../components/Table/QATable';
-import {HeaderContext, HeaderTypes} from '../../../context/HeaderContext';
-import {
-	getTestrayCase,
-	getTestrayCases,
-} from '../../../graphql/queries/testrayCase';
+import {getTestrayCases} from '../../../graphql/queries/testrayCase';
 import {Liferay} from '../../../services/liferay/liferay';
 
-const Requirement = () => {
-	const {testrayCaseId} = useParams();
-
-	const [, dispatch] = useContext(HeaderContext);
-
-	const {data, loading} = useQuery(getTestrayCase, {
-		variables: {
-			testrayCaseId,
-		},
-	});
-
-	const testrayCase = data?.c?.testrayCase || {};
-
-	useEffect(() => {
-		setTimeout(() => {
-			dispatch({
-				payload: [],
-				type: HeaderTypes.SET_TABS,
-			});
-		}, 0);
-	}, [dispatch]);
+const Case = () => {
+	const {testrayCase}: any = useOutletContext();
 
 	return (
-		<LoadingWrapper isLoading={loading}>
+		<>
 			<Container title="Details">
 				<QATable
 					items={[
@@ -111,8 +85,8 @@ const Requirement = () => {
 					}}
 				/>
 			</Container>
-		</LoadingWrapper>
+		</>
 	);
 };
 
-export default Requirement;
+export default Case;

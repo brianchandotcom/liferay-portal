@@ -18,6 +18,7 @@ import {useCustomerPortal} from '../../context';
 import ActivationKeys from '../../pages/Project/ActivationKeys';
 import Overview from '../../pages/Project/Overview';
 import {PAGE_TYPES} from '../../utils/constants';
+import LayoutSkeleton from './Skeleton';
 
 const PAGE_SKELETON_LAYOUT = {
 	[PAGE_TYPES.commerce]: <ActivationKeys.Skeleton />,
@@ -48,8 +49,10 @@ const Layout = () => {
 
 	if (!project || !sessionId || !subscriptionGroups || !userAccount) {
 		return (
-			PAGE_SKELETON_LAYOUT[getCurrentPage()] ||
-			PAGE_SKELETON_LAYOUT.overview
+			<LayoutSkeleton>
+				{PAGE_SKELETON_LAYOUT[getCurrentPage()] ||
+					PAGE_SKELETON_LAYOUT.overview}
+			</LayoutSkeleton>
 		);
 	}
 
@@ -60,22 +63,24 @@ const Layout = () => {
 				subscriptionGroups={subscriptionGroups}
 			/>
 
-			<div className="w-100">
-				{hasProjectContact && <ProjectSupport project={project} />}
+			<div className="d-flex flex-fill pt-4">
+				<div className="w-100">
+					{hasProjectContact && <ProjectSupport project={project} />}
 
-				<Outlet
-					context={{
-						project,
-						sessionId,
-						subscriptionGroups,
-						userAccount,
-					}}
-				/>
+					<Outlet
+						context={{
+							project,
+							sessionId,
+							subscriptionGroups,
+							userAccount,
+						}}
+					/>
+				</div>
+
+				{hasQuickLinksPanel && (
+					<QuickLinksPanel accountKey={project.accountKey} />
+				)}
 			</div>
-
-			{hasQuickLinksPanel && (
-				<QuickLinksPanel accountKey={project.accountKey} />
-			)}
 		</div>
 	);
 };

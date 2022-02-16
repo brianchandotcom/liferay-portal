@@ -9,10 +9,21 @@
  * distribution rights of the Software.
  */
 
-import ProjectSupport from '../../../components/ProjectSupport';
+import QuickLinksPanel from '../../containers/QuickLinksPanel';
+import SideMenu from '../../containers/SideMenu';
 
-const OverviewSkeleton = () => {
-	return <ProjectSupport.Skeleton />;
+const LayoutSkeleton = ({children}) => {
+	return (
+		<div className="d-flex position-relative w-100">
+			<SideMenu.Skeleton />
+
+			<div className="d-flex flex-fill pt-4">
+				<div className="w-100">{children}</div>
+
+				<QuickLinksPanel.Skeleton />
+			</div>
+		</div>
+	);
 };
 
-export default OverviewSkeleton;
+export default LayoutSkeleton;

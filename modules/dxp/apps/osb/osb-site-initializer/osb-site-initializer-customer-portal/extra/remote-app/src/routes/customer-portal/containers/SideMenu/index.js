@@ -16,6 +16,7 @@ import Button from '../../../../common/components/Button';
 import {useCustomerPortal} from '../../context';
 import {MENU_TYPES, PAGE_TYPES, PRODUCT_TYPES} from '../../utils/constants';
 import {getCamelCase} from '../../utils/getCamelCase';
+import SideMenuSkeleton from './Skeleton';
 
 const getSubscriptionKey = (name) => {
 	const [prefixPath, suffixPath] = name.split(' ');
@@ -184,4 +185,5 @@ const SideMenu = ({getCurrentPage, subscriptionGroups}) => {
 	);
 };
 
+SideMenu.Skeleton = SideMenuSkeleton;
 export default SideMenu;

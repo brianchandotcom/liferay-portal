@@ -127,13 +127,7 @@ public class ImportResults {
 					doc.getDocumentElement(
 					).getNodeName());
 
-			NodeList nodeTestCase = doc.getElementsByTagName("testcase");
-
-			Node nodeItem = nodeTestCase.item(0);
-
-			NodeList childNode = nodeItem.getChildNodes();
-
-			NodeList nList = (NodeList)childNode.item(1);
+			NodeList nList = doc.getElementsByTagName("property");
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -158,8 +152,7 @@ public class ImportResults {
 
 						json.put(
 							"priority", value
-						);
-						System.out.println(json);	
+						);	
 					} else if(name.equals("testray.testcase.name")){
 
 						json.put(
@@ -168,11 +161,6 @@ public class ImportResults {
 						json.put(
 							"stepsType", name
 						);
-						System.out.println(json);
-					} 
-				}
-			}
-
 			try {
 				JSONObject jsonObject = new JSONObject(json);
 
@@ -184,6 +172,9 @@ public class ImportResults {
 			}
 			catch (Exception e) {
 				e.printStackTrace();
+			}
+					} 
+				}
 			}
 		}
 		catch (Exception e) {
@@ -228,7 +219,7 @@ public class ImportResults {
 			exception.printStackTrace();
 		}
 
-addProject();
+	//	addProject();
 		addTestCase();
 		
 	}

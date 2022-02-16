@@ -95,8 +95,6 @@ public class PortalInstancesTest {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
 			_virtualHostsDefaultSiteName);
-
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test

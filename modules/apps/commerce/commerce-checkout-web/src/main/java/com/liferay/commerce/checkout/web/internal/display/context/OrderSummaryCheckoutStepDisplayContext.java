@@ -129,7 +129,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
-			getCommerceOrderValidatorResults()
+			getCommerceOrderValidatorResultsMap()
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =

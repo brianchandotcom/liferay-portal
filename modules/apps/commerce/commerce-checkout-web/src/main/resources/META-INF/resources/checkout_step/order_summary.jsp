@@ -127,7 +127,7 @@ String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 								<div class="list-group-subtitle"><%= HtmlUtil.escape(stringJoiner.toString()) %></div>
 
 								<%
-								Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
+								Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResultsMap();
 								%>
 
 								<c:if test="<%= !commerceOrderValidatorResultsMap.isEmpty() %>">

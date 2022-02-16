@@ -626,7 +626,7 @@ definition {
 		Blueprints.viewCopiedContent(text = "queryConfiguration");
 	}
 
-	test CopyScoreExplanationViaBlueprintsQueryBuilder {
+	test CopyScoreExplanationViaBlueprintsPreview {
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -913,7 +913,7 @@ definition {
 			text = "queryConfiguration");
 	}
 
-	test DownloadScoreExplanationViaBlueprintsQueryBuilder {
+	test DownloadScoreExplanationViaBlueprintsPreview {
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

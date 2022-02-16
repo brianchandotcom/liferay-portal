@@ -256,7 +256,7 @@ definition {
 				key_toggleSwitchLabel = "Use Custom Title",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
+			Type(
 				inputFieldId = "customTitle",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "${customTitle} Custom");
@@ -272,6 +272,69 @@ definition {
 		if (!(isSet(configureWithoutSave))) {
 			PortletEntry.save();
 		}
+	}
+
+	macro configureMarginAndPaddingViaLookAndFeelPG {
+		Navigator.gotoNavTab(navTab = "Margin and Padding");
+
+		if (isSet(marginAttributeList)) {
+			for (var marginAttribute : list "${marginAttributeList}") {
+				var fieldLabel = StringUtil.extractFirst("${marginAttribute}", "-");
+				var value = StringUtil.extractLast("${marginAttribute}", "-");
+
+				Type(
+					inputFieldId = "margin${fieldLabel}",
+					locator1 = "TextInput#INPUT_ID",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(marginUnitList)) {
+			for (var marginUnit : list "${marginUnitList}") {
+				var fieldLabel = StringUtil.extractFirst("${marginUnit}", "-");
+				var value = StringUtil.extractLast("${marginUnit}", "-");
+
+				Select(
+					locator1 = "Select#SELECT_ID",
+					selectFieldId = "margin${fieldLabel}",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(paddingAttributeList)) {
+			for (var paddingAttribute : list "${paddingAttributeList}") {
+				var fieldLabel = StringUtil.extractFirst("${paddingAttribute}", "-");
+				var value = StringUtil.extractLast("${paddingAttribute}", "-");
+
+				Type(
+					inputFieldId = "padding${fieldLabel}",
+					locator1 = "TextInput#INPUT_ID",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(paddingUnitList)) {
+			for (var paddingUnit : list "${paddingUnitList}") {
+				var fieldLabel = StringUtil.extractFirst("${paddingUnit}", "-");
+				var value = StringUtil.extractLast("${paddingUnit}", "-");
+
+				Select(
+					locator1 = "Select#SELECT_ID",
+					selectFieldId = "padding${fieldLabel}",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(sameForAllFieldsetLabelList)) {
+			for (var sameForAllFieldsetLabel : list "${sameForAllFieldsetLabelList}") {
+				Check.checkToggleSwitch(
+					key_fieldLabel = "Same for All",
+					key_fieldsetLabel = "${sameForAllFieldsetLabel}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+			}
+		}
+
+		PortletEntry.save();
 	}
 
 	macro configureSharingPG {

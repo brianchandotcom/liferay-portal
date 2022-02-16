@@ -12,12 +12,12 @@
  * details.
  */
 
+import {Collapse} from '@liferay/layout-content-page-editor-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {AddPanelContext} from './AddPanel';
-import Collapse from './Collapse';
 import TabItem from './TabItem';
 
 const Collection = ({collection, isContentTab, isSearchResult, open}) => {

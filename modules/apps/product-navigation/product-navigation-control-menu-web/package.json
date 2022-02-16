@@ -4,6 +4,7 @@
 		"@clayui/drop-down": "3.45.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/sticker": "3.40.0",
+		"@liferay/layout-content-page-editor-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",

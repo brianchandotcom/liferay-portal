@@ -169,6 +169,64 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143304. Can add a Related Item Collection to a Display Page Template"
+	@priority = "4"
+	test CanAddAnItemCollectionToADPT {
+		task ("Add a New Display Page Template to Team Extranet Site") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Template Name",
+				groupName = "Test Site Team Extranet");
+		}
+
+		task ("Add The Blog Entries Collections to the New DPT") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Compositions",
+				composition = "true",
+				fragmentName = "Blog Entries Collection");
+
+			Button.clickPublish();
+		}
+
+		task ("Export the Display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Template Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Delete the Display Page Template") {
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Template Name");
+
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Template Name");
+		}
+
+		task ("Import the Display Page Template Exported and Assert the Fragment Presence") {
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Template Name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent(
+				key_fragmentName = "entry-card",
+				locator1 = "Masterclass#FRAGMENT_NAME");
+		}
+	}
+
 	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
 	@priority = "4"
 	test CanSetAHostedVideoURL {
@@ -901,61 +959,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-143304. Can add a Related Item Collection to a Display Page Template"
-	@priority = "4"
-	test CanAddAnItemCollectionToADPT {
-		task ("Add a New Display Page Template to Team Extranet Site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Blogs Entry",
-				displayPageTemplateEntryName = "Display Page Template Name",
-				groupName = "Test Site Team Extranet");
-		}
-
-		task ("Add The Blog Entries Collections to the New DPT") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-			PageEditor.addFragment(
-				collectionName = "Compositions",
-				composition = "true",
-				fragmentName = "Blog Entries Collection");
-
-			Button.clickPublish();
-		}
-
-		task ("Export the Display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Template Name",
-				item = "Export");
-
-			DownloadTempFile();
-		}
-
-		task ("Delete the Display Page Template") {
-			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Template Name");
-
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Template Name");
-		}
-
-		task ("Import the Display Page Template Exported and Assert the Fragment Presence") {
-			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
-
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Template Name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			AssertElementPresent(
-				key_fragmentName = "entry-card",
-				locator1 = "Masterclass#FRAGMENT_NAME");
-		}
-	}
 }

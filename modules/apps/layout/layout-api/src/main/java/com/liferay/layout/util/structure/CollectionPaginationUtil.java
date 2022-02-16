@@ -21,6 +21,12 @@ import com.liferay.info.pagination.Pagination;
  */
 public interface CollectionPaginationUtil {
 
+	public static final String PAGINATION_TYPE_NUMERIC = "numeric";
+
+	public static final String PAGINATION_TYPE_REGULAR = "regular";
+
+	public static final String PAGINATION_TYPE_SIMPLE = "simple";
+
 	public Pagination getPagination(
 		int activePage, int count, boolean displayAllPages,
 		boolean displayAllItems, int numberOfItems, int numberOfItemsPerPage,

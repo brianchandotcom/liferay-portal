@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -38,7 +39,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
-		_testClass = testClass;
+		_testClass = (JUnitTestClass)testClass;
 	}
 
 	@Override
@@ -204,7 +205,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		return false;
 	}
 
-	private final TestClass _testClass;
+	private final JUnitTestClass _testClass;
 	private List<TestClassResult> _testClassResults;
 
 }

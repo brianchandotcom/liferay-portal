@@ -138,8 +138,7 @@ public class AnalyticsBatchClientImpl
 				"file", resourceInputStream, ContentType.MULTIPART_FORM_DATA,
 				resourceName);
 
-			multipartEntityBuilder.addTextBody(
-				"uploadType", uploadType.name());
+			multipartEntityBuilder.addTextBody("uploadType", uploadType.name());
 
 			HttpPost httpPost = new HttpPost(
 				analyticsConfiguration.liferayAnalyticsEndpointURL() +

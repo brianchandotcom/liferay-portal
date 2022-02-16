@@ -26,6 +26,90 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
+	@priority = "5"
+	test AddOrderFromAUserAndCheckoutFromAnotherUser {
+		property portal.acceptance = "true";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "false",
+			requireReset = "false",
+			userEmailAddress = "buyer2@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User 2",
+			userRole = "Buyer",
+			userScreenName = "buyeruser2");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer2@liferay.com");
+		
+		AssertTextEquals(
+			locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
+			value1 = "${activeOrderId}");
+		
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+			value1 = "Success! Your order has been processed.");
+	}
+
 	@description = "COMMERCE-8168. This is a use case for COMMERCE-8127"
 	@priority = "5"
 	test DeleteOrderAndCheckoutNewOrder {

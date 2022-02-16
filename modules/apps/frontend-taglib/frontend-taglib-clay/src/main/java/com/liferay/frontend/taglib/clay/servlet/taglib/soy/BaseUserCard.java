@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderRequest;
@@ -70,7 +69,7 @@ public abstract class BaseUserCard
 
 	@Override
 	public String getName() {
-		return HtmlUtil.escape(user.getFullName());
+		return user.getFullName();
 	}
 
 	@Override

@@ -991,7 +991,7 @@ definition {
 			ACUtils.saveButton();
 		}
 
-		task ("Click on newly created analysis") {
+		task ("Open the analysis previously created by a different user") {
 			ACNavigation.openItem(itemName = "Save Analysis 1");
 		}
 

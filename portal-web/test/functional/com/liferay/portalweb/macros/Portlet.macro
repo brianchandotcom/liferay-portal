@@ -249,24 +249,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureCustomStylesViaLookandfeelPG {
-		Navigator.gotoNavTab(navTab = "Text Styles");
-
-		Select(
-			locator1 = "Portlet#TEXT_FONT_SELECT",
-			value1 = "Verdana");
-
-		Select(
-			locator1 = "Portlet#TEXT_FONT_SIZE_SELECT",
-			value1 = "2em");
-
-		Navigator.gotoNavTab(navTab = "Border Styles");
-
-		Type(
-			locator1 = "Portlet#BORDER_WIDTH_TOP_INPUT",
-			value1 = "20");
-	}
-
 	macro configureCustomTitlePG {
 		var key_portletTitleName = "${portletTitleName}";
 
@@ -654,10 +636,6 @@ definition {
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
-	}
-
-	macro viewCustomStylesViaLookandfeelPG {
-		SikuliClick(locator1 = "Portlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL");
 	}
 
 	macro viewDefaultTitle {

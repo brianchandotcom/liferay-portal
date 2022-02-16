@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BORDER_WIDTH_TOP_INPUT</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'Top')]//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFIGURATION_CHECKBOX</td>
 	<td>//label[text()[normalize-space()='${key_fieldName}']]/input[contains(@id,'PortletConfiguration')]</td>
 	<td></td>
@@ -141,11 +136,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIGN_IN_CUSTOM_LOOK_AND_FEEL</td>
-	<td>portal/screenshots/home/sign_in_custom_look_and_feel.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SPECIFIC_BORDERLESS_BAR</td>
 	<td>//div[contains(@class,'portlet-title-default')]/span[contains(.,'${key_portletName}')]</td>
 	<td></td>
@@ -178,16 +168,6 @@
 <tr>
 	<td>SPECIFIC_TITLE</td>
 	<td>//div[@id='main-content']//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FONT_SELECT</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'Font')]//select</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FONT_SIZE_SELECT</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'Size')]//select</td>
 	<td></td>
 </tr>
 <tr>

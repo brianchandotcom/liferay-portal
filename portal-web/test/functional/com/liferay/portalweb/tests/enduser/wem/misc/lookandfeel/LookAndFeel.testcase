@@ -59,9 +59,11 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureCustomStylesViaLookandfeelPG();
+			Portlet.configureTextStylesViaLookAndFeelPG(
+				textFontAttribute = "Verdana",
+				textSizeAttribute = "2em");
 
-			PortletEntry.save();
+			Portlet.configureBorderStylesViaLookAndFeelPG(borderWidthAttributeList = "WidthTop-20");
 
 			Refresh();
 		}
@@ -90,7 +92,9 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = "Decorate");
+			Portlet.configureGeneralViaLookAndFeelPG(
+				applicationDecorator = "Decorate",
+				configureWithoutSave = "true");
 
 			Button.clickCancel();
 		}
@@ -101,9 +105,13 @@ definition {
 
 		task ("View decorate and borderless are shown after selected in application decorators") {
 			for (var decoratorName : list "Decorate,Barebone") {
-				Portlet.configureApplicationDecorator(
-					decorator = "${decoratorName}",
-					portletName = "Sign In");
+				Portlet.gotoPortletOptions(
+					portletName = "Sign In",
+					portletOption = "Look and Feel Configuration");
+
+				IFrame.selectConfigurationFrame();
+
+				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "${decoratorName}");
 
 				IFrame.closeFrame();
 

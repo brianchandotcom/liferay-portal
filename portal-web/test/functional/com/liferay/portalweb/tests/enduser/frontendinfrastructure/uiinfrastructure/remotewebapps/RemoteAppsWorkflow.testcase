@@ -109,9 +109,9 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "Test Remote App");
 
-			AssertElementPresent(
-				key_infoMessage = "There are no fragments or widgets on this page.",
-				locator1 = "Message#INFO_SPECIFIC");
+			AssertElementNotPresent(
+				key_fragmentName = "Test Remote App",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS");
 		}
 	}
 

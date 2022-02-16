@@ -26,7 +26,6 @@ import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
-import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
@@ -121,7 +120,19 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getDefaultLayoutListRetrieverContext(
 				layoutListRetriever, listObjectReference);
 
-		defaultLayoutListRetrieverContext.setPagination(_getPagination());
+		CollectionPaginationUtil collectionPaginationUtil =
+			ServletContextUtil.getCollectionPaginationUtil();
+
+		defaultLayoutListRetrieverContext.setPagination(
+			collectionPaginationUtil.getPagination(
+				getActivePage(), getCollectionCount(),
+				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
+				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
+				_collectionStyledLayoutStructureItem.getNumberOfItems(),
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
+				_collectionStyledLayoutStructureItem.getNumberOfPages(),
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				_collectionStyledLayoutStructureItem.isShowAllItems()));
 
 		return layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
@@ -232,7 +243,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (_isPaginationEnabled()) {
+		CollectionPaginationUtil collectionPaginationUtil =
+			ServletContextUtil.getCollectionPaginationUtil();
+
+		if (collectionPaginationUtil.isPaginationEnabled(
+				_collectionStyledLayoutStructureItem.getPaginationType())) {
+
 			numberOfItemsToDisplay = Math.min(
 				numberOfItemsToDisplay, _getNumberOfItemsPerPage());
 		}
@@ -263,7 +279,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (_isPaginationEnabled()) {
+		CollectionPaginationUtil collectionPaginationUtil =
+			ServletContextUtil.getCollectionPaginationUtil();
+
+		if (collectionPaginationUtil.isPaginationEnabled(
+				_collectionStyledLayoutStructureItem.getPaginationType())) {
+
 			numberOfItemsToDisplay = Math.min(
 				numberOfItemsToDisplay, _getNumberOfItemsPerPage());
 		}
@@ -290,13 +311,17 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
-				paginationImprovementsEnabled()) {
+		CollectionPaginationUtil collectionPaginationUtil =
+			ServletContextUtil.getCollectionPaginationUtil();
 
-			return _getTotalNumberOfItemsWithPaginationImprovementsEnabled();
-		}
-
-		return _getTotalNumberOfItemsWithPaginationImprovementsDisabled();
+		return collectionPaginationUtil.getTotalNumberOfItems(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
+			_collectionStyledLayoutStructureItem.isDisplayAllItems(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems(),
+			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
+			_collectionStyledLayoutStructureItem.getNumberOfPages(),
+			_collectionStyledLayoutStructureItem.getPaginationType());
 	}
 
 	private Map<String, String[]> _getConfiguration() {
@@ -568,72 +593,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return (int)Math.ceil((double)maxNumberOfItems / numberOfItemsPerPage);
 	}
 
-	private Pagination _getPagination() {
-		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
-				paginationImprovementsEnabled()) {
-
-			return _getPaginationWithPaginationImprovementsEnabled();
-		}
-
-		return _getPaginationWithPaginationImprovementsDisabled();
-	}
-
-	private Pagination _getPaginationWithPaginationImprovementsDisabled() {
-		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
-		int start = 0;
-
-		if (_isPaginationEnabled()) {
-			int maxNumberOfItems =
-				_collectionStyledLayoutStructureItem.getNumberOfItems();
-
-			if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
-				maxNumberOfItems = getCollectionCount();
-			}
-
-			int numberOfItemsPerPage = _getNumberOfItemsPerPage();
-
-			end = Math.min(
-				Math.min(
-					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
-				getCollectionCount());
-
-			start = (getActivePage() - 1) * numberOfItemsPerPage;
-		}
-
-		return Pagination.of(end, start);
-	}
-
-	private Pagination _getPaginationWithPaginationImprovementsEnabled() {
-		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
-		int start = 0;
-
-		if (_isPaginationEnabled()) {
-			int maxNumberOfItems = getCollectionCount();
-
-			int numberOfItemsPerPage = _getNumberOfItemsPerPage();
-
-			if (!_collectionStyledLayoutStructureItem.isDisplayAllPages() &&
-				(_collectionStyledLayoutStructureItem.getNumberOfPages() > 0)) {
-
-				maxNumberOfItems =
-					_collectionStyledLayoutStructureItem.getNumberOfPages() *
-						numberOfItemsPerPage;
-			}
-
-			end = Math.min(
-				Math.min(
-					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
-				getCollectionCount());
-
-			start = (getActivePage() - 1) * numberOfItemsPerPage;
-		}
-		else if (_collectionStyledLayoutStructureItem.isDisplayAllItems()) {
-			end = getCollectionCount();
-		}
-
-		return Pagination.of(end, start);
-	}
-
 	private long[] _getSegmentsEntryIds() {
 		if (_segmentsEntryIds != null) {
 			return _segmentsEntryIds;
@@ -650,58 +609,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			requestContextMapper.map(_httpServletRequest));
 
 		return _segmentsEntryIds;
-	}
-
-	private int _getTotalNumberOfItemsWithPaginationImprovementsDisabled() {
-		if (_isPaginationEnabled() &&
-			_collectionStyledLayoutStructureItem.isShowAllItems()) {
-
-			return getCollectionCount();
-		}
-
-		return Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
-	}
-
-	private int _getTotalNumberOfItemsWithPaginationImprovementsEnabled() {
-		if (!_isPaginationEnabled()) {
-			if (_collectionStyledLayoutStructureItem.isDisplayAllItems()) {
-				return getCollectionCount();
-			}
-
-			return Math.min(
-				getCollectionCount(),
-				_collectionStyledLayoutStructureItem.getNumberOfItems());
-		}
-
-		if (_collectionStyledLayoutStructureItem.isDisplayAllPages() ||
-			(_collectionStyledLayoutStructureItem.getNumberOfPages() <= 0)) {
-
-			return getCollectionCount();
-		}
-
-		return Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfPages() *
-				_getNumberOfItemsPerPage());
-	}
-
-	private boolean _isPaginationEnabled() {
-		if (Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC) ||
-			Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR) ||
-			Objects.equals(
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private Integer _activePage;

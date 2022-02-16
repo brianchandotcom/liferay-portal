@@ -913,6 +913,36 @@ definition {
 		BlogsEntry.viewDefaultCP(entryTitle = "");
 	}
 
+	@description = "This is a test for LPS-147320. It checks that Javascript cannot be executed in the code view."
+	@priority = "4"
+	test CannotExecuteXSSInCodeView {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addEntryContentViaCodeView(entryContent = '''<p><img src="xss" onerror="alert(1)" /></p>''');
+
+		Button.clickPublish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a test for LPS-136764. It checks that Javascript cannot be executed in the content field."
 	@priority = "3"
 	test CannotExecuteXSSInContent {

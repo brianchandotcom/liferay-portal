@@ -922,11 +922,11 @@ definition {
 
 			WaitForPageLoad();
 
-			while (IsElementNotPresent(locator1 = "ACUtils#TABLE_COLUMN_NUMBERS") && (maxIterations = "50")) {
+			while (IsElementNotPresent(locator1 = "ACUtils#TABLE_CELL_INFORMATION") && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 			}
 
-			AssertElementPresent(locator1 = "ACUtils#TABLE_COLUMN_NUMBERS");
+			AssertElementPresent(locator1 = "ACUtils#TABLE_CELL_INFORMATION");
 
 			var i = ${i} + 1;
 			var i = StringUtil.valueOf("${i}");

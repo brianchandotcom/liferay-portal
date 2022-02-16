@@ -183,10 +183,7 @@ public class URLCodecTest {
 
 			LogEntry logEntry = logEntries.get(0);
 
-			Assert.assertEquals(
-				"java.nio.charset.UnmappableCharacterException: Input length " +
-					"= 1",
-				logEntry.getMessage());
+			Assert.assertEquals("Input length = 1", logEntry.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

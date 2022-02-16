@@ -233,8 +233,11 @@ public class Log4jConfigUtilTest {
 
 			LogEntry logEntry = logEntries.get(0);
 
-			Assert.assertEquals(
-				"java.lang.NullPointerException", logEntry.getMessage());
+			Assert.assertNull(logEntry.getMessage());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
 
 			String xmlContent = _generateXMLConfigurationContent(
 				StringUtil.randomString(), _INFO);

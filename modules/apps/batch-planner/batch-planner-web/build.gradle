@@ -9,6 +9,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:batch-planner:batch-planner-api")
+	compileOnly project(":apps:dispatch:dispatch-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")

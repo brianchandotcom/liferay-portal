@@ -130,9 +130,15 @@ public class CollectionPaginationImpl implements CollectionPaginationUtil {
 
 	@Override
 	public boolean isPaginationEnabled(String paginationType) {
-		if (Objects.equals(paginationType, "numeric") ||
-			Objects.equals(paginationType, "regular") ||
-			Objects.equals(paginationType, "simple")) {
+		if (Objects.equals(
+				paginationType,
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC) ||
+			Objects.equals(
+				paginationType,
+				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR) ||
+			Objects.equals(
+				paginationType,
+				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE)) {
 
 			return true;
 		}

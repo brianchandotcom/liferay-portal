@@ -1,5 +1,41 @@
 definition {
 
+	@summary = "Add a new user that is part of an account(the creation of a new account and the user's role are optional)"
+	macro addAccountEntryUser {
+		Variables.assertDefined(parameterList = "${accountName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
+
+		if(("${createNewAccount}" == "true") && (isSet(accountType))) {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "${accountName}",
+				accountEntryType = "${accountType}");
+		}
+
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "${accountName}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "${agreeToTermsAndAnswerReminderQuery}",
+			requireReset = "${requireReset}",
+			userEmailAddress = "${accountEmailAddress}");
+
+		if (isSet(userRole)) {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "${userRole}",
+				accountUserName = "${userEmailAddress}");
+		}
+	}
+
 	macro addFullDescriptionViaCKEditor {
 		Type.typeCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",

@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"dispatch.task.executor.hidden-in-ui=true",
-		"dispatch.task.executor.type=" + UIInvisibleTestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI
+		"dispatch.task.executor.type=" + HiddenInUIDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI
 	},
 	service = DispatchTaskExecutor.class
 )
-public class UIInvisibleTestDispatchTaskExecutor
+public class HiddenInUIDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
 	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI =

@@ -16,7 +16,7 @@ package com.liferay.dispatch.web.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
-import com.liferay.dispatch.internal.messaging.test.UIInvisibleTestDispatchTaskExecutor;
+import com.liferay.dispatch.internal.messaging.test.HiddenInUIDispatchTaskExecutor;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -77,7 +77,7 @@ public class DispatchTriggerDisplayContextTest {
 
 		Assert.assertTrue(
 			dispatchTaskExecutorTypes.contains(
-				UIInvisibleTestDispatchTaskExecutor.
+				HiddenInUIDispatchTaskExecutor.
 					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
 
 		Group group = GroupTestUtil.addGroup();
@@ -100,7 +100,7 @@ public class DispatchTriggerDisplayContextTest {
 		Assert.assertFalse(
 			"Executor not hidden!",
 			executorTypes.contains(
-				UIInvisibleTestDispatchTaskExecutor.
+				HiddenInUIDispatchTaskExecutor.
 					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
 	}
 

@@ -34,6 +34,12 @@ export function VariationPreview({
 			return;
 		}
 
+		if (!('IntersectionObserver' in window)) {
+			setVisible(true);
+
+			return;
+		}
+
 		const intersectionObserver = new IntersectionObserver((entries) => {
 			const visible = entries.some(
 				(entry) => entry.isIntersecting && entry.target === element

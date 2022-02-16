@@ -12,26 +12,76 @@
  * details.
  */
 
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
-const StyleErrorsDispatchContext = React.createContext(() => {});
-const StyleErrorsStateContext = React.createContext(false);
+const DEFAULT_ID = 'defaultId';
 
-export function StyleErrorsContextProvider({children}) {
-	const [hasStyleErrors, setHasStyleErrors] = useState(false);
+const StyleErrorsStateContext = React.createContext({});
+
+export function StyleErrorsContextProvider({children, initialState = {}}) {
+	const [state, setState] = useState(initialState);
 
 	return (
-		<StyleErrorsDispatchContext.Provider value={setHasStyleErrors}>
-			<StyleErrorsStateContext.Provider value={hasStyleErrors}>
-				{children}
-			</StyleErrorsStateContext.Provider>
-		</StyleErrorsDispatchContext.Provider>
+		<StyleErrorsStateContext.Provider value={{setState, state}}>
+			{children}
+		</StyleErrorsStateContext.Provider>
 	);
 }
 
-export function useSetHasStyleErrors() {
-	return useContext(StyleErrorsDispatchContext);
+export function useDeleteStyleError() {
+	const {setState, state} = useContext(StyleErrorsStateContext);
+
+	return useCallback(
+		(fieldName, itemId = DEFAULT_ID) => {
+			if (state[itemId]?.[fieldName]) {
+				const filteredErrors = {};
+				const {[itemId]: itemErrors, ...rest} = state;
+
+				for (const key in itemErrors) {
+					if (key !== fieldName) {
+						filteredErrors[key] = itemErrors[key];
+					}
+				}
+
+				const nextState = {
+					...rest,
+					...(Object.keys(filteredErrors).length > 0 && {
+						[itemId]: filteredErrors,
+					}),
+				};
+
+				setState(nextState);
+			}
+		},
+		[setState, state]
+	);
 }
+
 export function useHasStyleErrors() {
-	return useContext(StyleErrorsStateContext);
+	const {state} = useContext(StyleErrorsStateContext);
+
+	return Object.keys(state).length > 0;
+}
+
+export function useSetStyleError() {
+	const {setState, state} = useContext(StyleErrorsStateContext);
+
+	return useCallback(
+		(fieldName, value, itemId = DEFAULT_ID) => {
+			setState({
+				...state,
+				[itemId]: {
+					...state[itemId],
+					[fieldName]: value,
+				},
+			});
+		},
+		[setState, state]
+	);
+}
+
+export function useStyleErrors() {
+	const {state} = useContext(StyleErrorsStateContext);
+
+	return state;
 }

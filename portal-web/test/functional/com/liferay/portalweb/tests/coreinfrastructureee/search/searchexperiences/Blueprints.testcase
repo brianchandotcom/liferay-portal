@@ -626,6 +626,24 @@ definition {
 		Blueprints.viewCopiedContent(text = "queryConfiguration");
 	}
 
+	test CopyRawResponseViaBlueprintsPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Click(
+			key_text = "View Raw Response",
+			locator1 = "Button#ANY");
+
+		SelectFrameTop();
+
+		Click.javaScriptClick(locator1 = "Button#COPY");
+
+		Blueprints.viewCopiedContent(text = "hits");
+	}
+
 	test CopyScoreExplanationViaBlueprintsPreview {
 		Blueprints.openBlueprintsAdmin();
 
@@ -911,6 +929,26 @@ definition {
 		Blueprints.viewDownloadedContent(
 			fileName = "sxpElement.json",
 			text = "queryConfiguration");
+	}
+
+	test DownloadRawResponseViaBlueprintsPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Click(
+			key_text = "View Raw Response",
+			locator1 = "Button#ANY");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Link#DOWNLOAD");
+
+		Blueprints.viewDownloadedContent(
+			fileName = "raw_response.json",
+			text = "hits");
 	}
 
 	test DownloadScoreExplanationViaBlueprintsPreview {
@@ -2448,6 +2486,26 @@ definition {
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		AssertElementNotPresent(locator1 = "Message#ERROR_1");
+	}
+
+	test ViewRawResponseViaBlueprintsPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Click(
+			key_text = "View Raw Response",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Raw Response");
+
+		AssertVisible(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_RAW_RESPONSE_JSON",
+			responseString = "hits");
 	}
 
 	test ViewSearchResultsScoreViaBlueprintsPreview {

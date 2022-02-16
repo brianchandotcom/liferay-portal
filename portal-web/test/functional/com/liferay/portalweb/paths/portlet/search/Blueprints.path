@@ -201,6 +201,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_PREVIEW_RAW_RESPONSE_JSON</td>
+	<td>//span[contains(@class,'cm-string') and contains(.,'${responseString}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR</td>
 	<td>//div[contains(@class,'preview-sidebar')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>

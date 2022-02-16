@@ -19,6 +19,8 @@ import Manage from './pages/Manage';
 import OutletBridge from './pages/OutletBridge';
 import Cases from './pages/Project/Cases';
 import Case from './pages/Project/Cases/Case';
+import CaseOutlet from './pages/Project/Cases/CaseOutlet';
+import CaseRequirement from './pages/Project/Cases/CaseRequirement';
 import Home from './pages/Project/Home';
 import Overview from './pages/Project/Overview';
 import ProjectOutlet from './pages/Project/ProjectOutlet';
@@ -36,6 +38,7 @@ import RoutineArchived from './pages/Project/Routines/RoutineArchived';
 import RoutineOutlet from './pages/Project/Routines/RoutineOutlet';
 import Routines from './pages/Project/Routines/Routines';
 import Suites from './pages/Project/Suites';
+import Suite from './pages/Project/Suites/Suite';
 import Testflow from './pages/Testflow';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
 import TestflowOutlet from './pages/Testflow/TestflowOutlet';
@@ -52,12 +55,23 @@ const TestrayRoute = () => (
 
 					<Route element={<Overview />} path="overview" />
 
-					<Route element={<Suites />} path="suites" />
+					<Route element={<OutletBridge />} path="suites">
+						<Route element={<Suites />} index />
 
-					<Route path="cases">
+						<Route element={<Suite />} path=":testraySuiteId" />
+					</Route>
+
+					<Route element={<OutletBridge />} path="cases">
 						<Route element={<Cases />} index />
 
-						<Route element={<Case />} path=":testrayCaseId" />
+						<Route element={<CaseOutlet />} path=":testrayCaseId">
+							<Route element={<Case />} index />
+
+							<Route
+								element={<CaseRequirement />}
+								path="requirements"
+							/>
+						</Route>
 					</Route>
 
 					<Route path="requirements">

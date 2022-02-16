@@ -14,6 +14,7 @@
 
 package com.liferay.object.field.business.type;
 
+import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Collections;
@@ -39,6 +40,12 @@ public interface ObjectFieldBusinessType {
 
 	public default Map<String, Object> getProperties() {
 		return Collections.emptyMap();
+	}
+
+	public default Map<String, Object> getProperties(
+		Locale locale, ObjectField objectField) {
+
+		return getProperties();
 	}
 
 	public default boolean isVisible() {

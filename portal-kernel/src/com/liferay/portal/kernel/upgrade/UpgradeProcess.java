@@ -48,10 +48,10 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 
 import java.sql.Connection;
-
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -408,8 +408,8 @@ public abstract class UpgradeProcess
 	protected abstract void doUpgrade() throws Exception;
 
 	protected void ensureTableExists(
-		DatabaseMetaData databaseMetaData, DBInspector dbInspector,
-		String tableName)
+			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
+			String tableName)
 		throws SQLException {
 
 		try (ResultSet resultSet = databaseMetaData.getTables(

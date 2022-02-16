@@ -110,7 +110,7 @@ public class ImportResults {
 
 	public static void addTestCase() {
 		try {
-			Map<String, String> json = null;
+			Map<String, String> json = new HashMap<String, String>();
 			File inputFile = new File("/home/me/Downloads/key.xml");
 			DocumentBuilderFactory dbFactory =
 				DocumentBuilderFactory.newInstance();
@@ -154,11 +154,22 @@ public class ImportResults {
 						"value"
 					).getTextContent();
 
-					json = HashMapBuilder.put(
-						"name", name
-					).put(
-						"stepsType", value
-					).build();
+					if(name.equals("testray.testcase.priority")){
+
+						json.put(
+							"priority", value
+						);
+						System.out.println(json);	
+					} else if(name.equals("testray.testcase.name")){
+
+						json.put(
+							"name", value
+						);
+						json.put(
+							"stepsType", name
+						);
+						System.out.println(json);
+					} 
 				}
 			}
 
@@ -217,8 +228,9 @@ public class ImportResults {
 			exception.printStackTrace();
 		}
 
-		//addTestCase();
-		addProject();
+addProject();
+		addTestCase();
+		
 	}
 
 }

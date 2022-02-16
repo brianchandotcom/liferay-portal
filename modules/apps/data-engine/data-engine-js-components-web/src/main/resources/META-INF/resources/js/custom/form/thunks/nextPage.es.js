@@ -24,6 +24,7 @@ export default function nextPage({
 	groupId,
 	pages,
 	portletNamespace,
+	previousIndex = activePage,
 	rules,
 	viewMode,
 }) {
@@ -37,6 +38,7 @@ export default function nextPage({
 			nextPage: activePage + 1,
 			pages,
 			portletNamespace,
+			previousIndex,
 			previousPage: activePage,
 			rules,
 			viewMode,
@@ -56,7 +58,7 @@ export default function nextPage({
 
 			if (validPage) {
 				const nextActivePageIndex = evaluatedPages.findIndex(
-					({enabled}, index) => enabled && index > activePage
+					({enabled}, index) => enabled && index > previousIndex
 				);
 
 				const activePageUpdated = Math.min(

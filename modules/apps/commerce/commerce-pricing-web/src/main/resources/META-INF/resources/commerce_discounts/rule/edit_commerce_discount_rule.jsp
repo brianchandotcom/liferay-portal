@@ -118,8 +118,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 					);
 
 					window.parent.Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULES %>',
+						id: '<%= CommercePricingFDSNames.DISCOUNT_RULES %>',
 					});
 
 					return;

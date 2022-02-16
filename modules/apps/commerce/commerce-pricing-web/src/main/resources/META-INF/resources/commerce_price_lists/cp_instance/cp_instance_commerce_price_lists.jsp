@@ -41,16 +41,16 @@ PortletURL portletURL = cpInstanceCommercePriceEntryDisplayContext.getPortletURL
 
 		<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"cpInstanceId", String.valueOf(cpInstanceId)
 				).build()
 			%>'
 			creationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getCreationMenu() %>"
-			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
+			dataProviderKey="<%= CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES %>"
 			formName="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
+			id="<%= CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

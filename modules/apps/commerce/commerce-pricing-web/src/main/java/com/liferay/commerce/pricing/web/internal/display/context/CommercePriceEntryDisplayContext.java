@@ -20,7 +20,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -143,12 +143,10 @@ public class CommercePriceEntryDisplayContext
 		return creationMenu;
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getPriceEntriesClayDataSetActionDropdownItems()
+	public List<FDSActionDropdownItem> getPriceEntriesFDSActionDropdownItems()
 		throws PortalException {
 
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
@@ -169,19 +167,19 @@ public class CommercePriceEntryDisplayContext
 			_log.error(windowStateException);
 		}
 
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				portletURL.toString(), "pencil", "edit",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
 				"sidePanel"));
 
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
 				"delete", "headless"));
 
-		return clayDataSetActionDropdownItems;
+		return fdsActionDropdownItems;
 	}
 
 	public String getPriceEntryApiURL() throws PortalException {

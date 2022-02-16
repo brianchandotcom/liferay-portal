@@ -26,12 +26,12 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="deletePriceLists" type="hidden" />
 
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= commercePriceListDisplayContext.getPriceListsApiUrl(portletName) %>"
-			clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commercePriceListDisplayContext.getPriceListCreationMenu() %>"
+			fdsActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS %>"
+			id="<%= CommercePricingFDSNames.PRICE_LISTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

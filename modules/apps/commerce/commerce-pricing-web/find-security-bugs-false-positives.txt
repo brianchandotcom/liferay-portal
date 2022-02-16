@@ -8,7 +8,7 @@ com/liferay/commerce/discount/target/CommerceDiscountTarget.getLabel(Ljava/util/
 com/liferay/commerce/pricing/constants/CommercePriceModifierConstants.TARGETS:SAFE
 com/liferay/commerce/pricing/type/CommercePriceModifierType.getKey()Ljava/lang/String;:SAFE
 com/liferay/commerce/pricing/type/CommercePriceModifierType.getLabel(Ljava/util/Locale;)Ljava/lang/String;:SAFE
-com/liferay/frontend/taglib/clay/data/set/servlet/taglib/util/ClayDataSetActionDropdownItem.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V:0,1,2,3,4,5,6#7,8
+com/liferay/frontend/data/set/model/FDSActionDropdownItem.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V:0,1,2,3,4,5,6#7,8
 com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setPortletURL(Ljavax/portlet/PortletURL;)V:0#0
 java/util/Objects.equals(UNKNOWN,SAFE):SAFE#1@org/apache/jsp/discount/details_jsp
 javax/servlet/jsp/PageContext.findAttribute("currentURLObj"):SAFE@org/apache/jsp/price_005flists/qualifiers_jsp

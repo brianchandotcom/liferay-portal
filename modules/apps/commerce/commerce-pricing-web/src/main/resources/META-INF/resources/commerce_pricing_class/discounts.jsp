@@ -26,14 +26,14 @@ CommercePricingClass commercePricingClass = commercePricingClassDiscountDisplayC
 
 <c:if test="<%= hasPermission %>">
 	<div class="col-12 pt-4">
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commercePricingClassId", String.valueOf(commercePricingClass.getCommercePricingClassId())
 				).build()
 			%>'
-			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_DISCOUNTS %>"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_DISCOUNTS %>"
+			dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
+			id="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

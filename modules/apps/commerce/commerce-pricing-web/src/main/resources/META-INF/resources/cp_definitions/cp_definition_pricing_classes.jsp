@@ -56,8 +56,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 						});
 					}
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>',
+						id: '<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
 					});
 					return null;
 				});
@@ -108,7 +107,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 					'<%= LanguageUtil.get(request, "product-group-selected") %>',
 				itemsKey: 'id',
 				linkedDatasetsId: [
-					'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>',
+					'<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
 				],
 				onItemCreated: addNewItem,
 				onItemSelected: selectItem,
@@ -132,14 +131,14 @@ CProduct cProduct = cpDefinition.getCProduct();
 			elementClasses="mt-4"
 			title='<%= LanguageUtil.get(request, "product-groups") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId())
 					).build()
 				%>'
-				dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>"
-				id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>"
+				dataProviderKey="<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>"
+				id="<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>"
 				itemsPerPage="<%= 10 %>"
 				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"

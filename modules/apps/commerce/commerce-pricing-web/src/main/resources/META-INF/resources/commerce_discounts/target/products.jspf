@@ -40,7 +40,7 @@
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>',
+									'<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>',
 							});
 						})
 						.catch((error) => {
@@ -61,7 +61,7 @@
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					itemsKey: 'id',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>',
+						'<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>',
 					],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -89,11 +89,11 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "products") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionApiURL() %>"
-					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionClayDataSetActionDropdownItems() %>"
+					fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionFDSActionDropdownItems() %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>"
+					id="<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

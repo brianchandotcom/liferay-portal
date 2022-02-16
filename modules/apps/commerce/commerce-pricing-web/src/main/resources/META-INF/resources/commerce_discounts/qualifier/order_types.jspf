@@ -43,7 +43,7 @@
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ORDER_TYPES %>',
+									'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>',
 							});
 						})
 						.catch((error) => {
@@ -62,7 +62,7 @@
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "order-type-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ORDER_TYPES %>',
+						'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -86,11 +86,11 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "order-types") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountOrderTypesAPIURL() %>"
-					clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getDiscountOrderTypeClayDataSetActionDropdownItems() %>"
+					fdsActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getDiscountOrderTypeFDSActionDropdownItems() %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ORDER_TYPES %>"
+					id="<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

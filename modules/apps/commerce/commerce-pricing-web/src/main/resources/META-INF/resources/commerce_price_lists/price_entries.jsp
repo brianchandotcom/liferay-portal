@@ -22,10 +22,10 @@ CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePri
 CommercePriceList commercePriceList = commercePriceEntryDisplayContext.getCommercePriceList();
 long commercePriceListId = commercePriceEntryDisplayContext.getCommercePriceListId();
 
-String datasetId = CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_ENTRIES;
+String datasetId = CommercePricingFDSNames.PRICE_LIST_ENTRIES;
 
 if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayContext.getCommercePriceListType(portletName))) {
-	datasetId = CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PROMOTION_ENTRIES;
+	datasetId = CommercePricingFDSNames.PROMOTION_ENTRIES;
 }
 %>
 
@@ -101,9 +101,9 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "entries") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commercePriceEntryDisplayContext.getPriceEntryApiURL() %>"
-					clayDataSetActionDropdownItems="<%= commercePriceEntryDisplayContext.getPriceEntriesClayDataSetActionDropdownItems() %>"
+					fdsActionDropdownItems="<%= commercePriceEntryDisplayContext.getPriceEntriesFDSActionDropdownItems() %>"
 					formName="fm"
 					id="<%= datasetId %>"
 					itemsPerPage="<%= 10 %>"

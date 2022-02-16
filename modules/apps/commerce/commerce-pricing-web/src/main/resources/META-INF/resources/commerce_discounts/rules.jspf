@@ -34,12 +34,12 @@
 					</div>
 				</aui:fieldset>
 
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commerceDiscountDisplayContext.getDiscountRulesApiURL() %>"
-					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesClayDataSetActionDropdownItem() %>"
 					creationMenu="<%= commerceDiscountDisplayContext.getDiscountRuleCreationMenu() %>"
+					fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesFDSActionDropdownItem() %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULES %>"
+					id="<%= CommercePricingFDSNames.DISCOUNT_RULES %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

@@ -39,8 +39,7 @@
 					return CommerceDiscountSkusResource.addDiscountSku(id, skuData)
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_SKUS %>',
+								id: '<%= CommercePricingFDSNames.DISCOUNT_SKUS %>',
 							});
 						})
 						.catch((error) => {
@@ -59,9 +58,7 @@
 					itemCreation: false,
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "sku-selected") %>',
 					itemsKey: 'id',
-					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_SKUS %>',
-					],
+					linkedDatasetsId: ['<%= CommercePricingFDSNames.DISCOUNT_SKUS %>'],
 					onItemSelected: selectItem,
 					pageSize: 10,
 					panelHeaderLabel: '<%= LanguageUtil.get(request, "add-skus") %>',
@@ -88,11 +85,11 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "skus") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commerceDiscountDisplayContext.getDiscountCPInstanceAPIURL() %>"
-					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPInstanceClayDataSetActionDropdownItems() %>"
+					fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPInstanceFDSActionDropdownItems() %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_SKUS %>"
+					id="<%= CommercePricingFDSNames.DISCOUNT_SKUS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

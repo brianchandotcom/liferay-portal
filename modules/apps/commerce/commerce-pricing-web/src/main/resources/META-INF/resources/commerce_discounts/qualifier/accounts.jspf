@@ -38,7 +38,7 @@
 				.then(() => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
+							'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>',
 					});
 				})
 				.catch((error) => {
@@ -58,7 +58,7 @@
 			itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
 			itemsKey: 'id',
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
+				'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>',
 			],
 			onItemSelected: selectItem,
 			pageSize: 10,
@@ -78,11 +78,11 @@
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "accounts") %>'
 	>
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountsAPIURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>"
+			id="<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

@@ -55,7 +55,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
+									'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 							});
 						})
 						.catch((error) => {
@@ -74,7 +74,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
+						'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -104,15 +104,15 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "products") %>'
 			>
-				<clay:data-set-display
+				<frontend-data-set:classic-display
 					contextParams='<%=
 						HashMapBuilder.<String, String>put(
 							"commercePricingClassId", String.valueOf(commercePricingClassId)
 						).build()
 					%>'
-					dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
+					dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
+					id="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

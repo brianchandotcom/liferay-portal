@@ -50,7 +50,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 				.then(() => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>',
+							'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>',
 					});
 				})
 				.catch((error) => {
@@ -72,7 +72,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 			itemsKey: 'id',
 			itemCreation: false,
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>',
+				'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>',
 			],
 			onItemSelected: selectItem,
 			pageSize: 10,
@@ -94,11 +94,11 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "product-groups") %>'
 	>
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= commercePriceListDisplayContext.getPriceModifierPricingClassesApiUrl() %>"
-			clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceModifierPricingClassClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= commercePriceListDisplayContext.getPriceModifierPricingClassFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>"
+			id="<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

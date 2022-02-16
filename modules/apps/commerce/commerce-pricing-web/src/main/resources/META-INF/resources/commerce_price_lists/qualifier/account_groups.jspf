@@ -43,7 +43,7 @@
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
+									'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 							});
 						})
 						.catch((error) => {
@@ -63,7 +63,7 @@
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "account-group-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
+						'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -88,11 +88,11 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "account-groups") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountGroupsApiURL() %>"
-					clayDataSetActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountGroupClayDataSetActionDropdownItems() %>"
+					fdsActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountGroupFDSActionDropdownItems() %>"
 					formName="fm"
-					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>"
+					id="<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

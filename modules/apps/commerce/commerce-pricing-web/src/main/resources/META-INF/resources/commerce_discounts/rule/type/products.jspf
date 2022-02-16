@@ -60,7 +60,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 				.then((payload) => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
+							'<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 					});
 
 					typeSettings = payload.typeSettings
@@ -86,7 +86,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 			getSelectedItems: getSelectedItems,
 			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
+				'<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 			],
 			itemCreation: false,
 			itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
@@ -117,15 +117,15 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "products") %>'
 	>
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceDiscountRuleId", String.valueOf(commerceDiscountRule.getCommerceDiscountRuleId())
 				).build()
 			%>'
-			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
+			dataProviderKey="<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
 			formName="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
+			id="<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

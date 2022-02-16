@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiStylingCheck" files="src/testFunctional/tests/Smoke\.testcase" />
+	</source-check>
+</suppressions>

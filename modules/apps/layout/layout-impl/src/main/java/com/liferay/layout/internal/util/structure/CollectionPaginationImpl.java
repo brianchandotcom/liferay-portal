@@ -125,6 +125,10 @@ public class CollectionPaginationImpl implements CollectionPaginationUtil {
 			return Math.min(count, numberOfPages * numberOfItemsPerPage);
 		}
 
+		if (isPaginationEnabled(paginationType) && displayAllItems) {
+			return count;
+		}
+
 		return Math.min(count, numberOfItems);
 	}
 

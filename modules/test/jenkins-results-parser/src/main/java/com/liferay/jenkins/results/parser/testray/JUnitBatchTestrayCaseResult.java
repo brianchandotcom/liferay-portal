@@ -43,6 +43,12 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
+	public String getComponentName() {
+		return JenkinsResultsParserUtil.getProperty(
+			_testClass.getTestProperties(), "testray.main.component.name");
+	}
+
+	@Override
 	public String getErrors() {
 		List<TestClassResult> testClassResults = _getTestClassResults();
 

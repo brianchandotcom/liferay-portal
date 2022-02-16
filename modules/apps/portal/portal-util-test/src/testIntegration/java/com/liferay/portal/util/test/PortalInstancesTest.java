@@ -39,9 +39,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -160,17 +157,13 @@ public class PortalInstancesTest {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		TreeMap<String, String> virtualHostnames = TreeMapBuilder.put(
-			layoutHostname, StringPool.BLANK
-		).build();
-
 		_virtualHostLocalService.updateVirtualHosts(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
-			virtualHostnames);
+			TreeMapBuilder.put(
+				layoutHostname, StringPool.BLANK
+			).build());
 
-		layoutSet.setVirtualHostnames(virtualHostnames);
-
-		layout.setLayoutSet(layoutSet);
+		layout.setLayoutSet(null);
 	}
 
 	private Company _company;

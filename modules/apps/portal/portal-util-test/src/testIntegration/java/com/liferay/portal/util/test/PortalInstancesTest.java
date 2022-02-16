@@ -70,20 +70,20 @@ public class PortalInstancesTest {
 
 		_company = CompanyTestUtil.addCompany();
 
-		_defaultGroup = _groupLocalService.getGroup(
+		Group defaultGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
 		_defaultGroupPublicLayout = _layoutLocalService.fetchDefaultLayout(
-			_defaultGroup.getGroupId(), false);
+			defaultGroup.getGroupId(), false);
 
-		_nondefaultGroup = GroupTestUtil.addGroup(
+		Group nondefaultGroup = GroupTestUtil.addGroup(
 			_company.getCompanyId(), TestPropsValues.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		LayoutTestUtil.addLayout(_nondefaultGroup, false);
+		LayoutTestUtil.addLayout(nondefaultGroup, false);
 
 		_nondefaultGroupPublicLayout = _layoutLocalService.fetchDefaultLayout(
-			_nondefaultGroup.getGroupId(), false);
+			nondefaultGroup.getGroupId(), false);
 
 		_nondefaultGroupPublicLayoutHostname =
 			RandomTestUtil.randomString(6) + "." +
@@ -179,7 +179,6 @@ public class PortalInstancesTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private Group _defaultGroup;
 	private Layout _defaultGroupPublicLayout;
 
 	@Inject
@@ -188,7 +187,6 @@ public class PortalInstancesTest {
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	private Group _nondefaultGroup;
 	private Layout _nondefaultGroupPublicLayout;
 	private String _nondefaultGroupPublicLayoutHostname;
 

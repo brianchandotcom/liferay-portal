@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERAL_ADD_TO_CART_BUTTON_ENABLED</td>
+	<td>//button[contains(@class,'add-to-cart') and not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_BUTTON</td>
 	<td>//div/*[contains(@class,'commerce-button') and contains (.,'${key_button}')]</td>
 	<td></td>
@@ -178,6 +183,11 @@
 <tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD</td>
 	<td>//p[@title='${key_productName}']//..//..//input[contains(@class,"quantity-selector")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED</td>
+	<td>//input[contains(@class,"quantity-selector") and not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

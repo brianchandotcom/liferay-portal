@@ -80,7 +80,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -191,7 +191,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -291,7 +291,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test 1");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test 1");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -315,7 +315,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test 2");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test 2");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -419,7 +419,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -519,7 +519,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
@@ -614,7 +614,7 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 

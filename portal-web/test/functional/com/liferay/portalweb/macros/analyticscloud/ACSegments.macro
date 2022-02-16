@@ -193,7 +193,7 @@ definition {
 	macro createDynamicSegmentAndFillFields {
 		ACSegments.createDynamicSegment();
 
-		ACUtils.fileName(fileName = "${segments}");
+		ACUtils.setItemName(itemName = "${segments}");
 
 		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
 

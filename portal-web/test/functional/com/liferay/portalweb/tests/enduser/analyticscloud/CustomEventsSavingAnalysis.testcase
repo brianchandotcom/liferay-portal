@@ -99,7 +99,7 @@ definition {
 			}
 
 			task ("Name the report") {
-				ACUtils.fileName(fileName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = "${eventAnalysisName}");
 			}
 
 			task ("Check the analysis result appears") {
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "Save Analysis");
+			ACUtils.setItemName(itemName = "Save Analysis");
 		}
 
 		task ("Check the analysis result appears") {
@@ -236,7 +236,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "${eventAnalysisName}");
+			ACUtils.setItemName(itemName = "${eventAnalysisName}");
 		}
 
 		task ("Check the analysis result appears") {
@@ -299,7 +299,7 @@ definition {
 			}
 
 			task ("Name the report") {
-				ACUtils.fileName(fileName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = "${eventAnalysisName}");
 			}
 
 			task ("Check the analysis result appears") {
@@ -392,7 +392,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "Save Analysis");
+			ACUtils.setItemName(itemName = "Save Analysis");
 		}
 
 		task ("Check the analysis result appears") {
@@ -412,7 +412,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "New Save Analysis");
+			ACUtils.setItemName(itemName = "New Save Analysis");
 		}
 
 		task ("Add the breakdown to analysis") {
@@ -484,7 +484,7 @@ definition {
 			}
 
 			task ("Name the report") {
-				ACUtils.fileName(fileName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = "${eventAnalysisName}");
 			}
 
 			task ("Check the analysis result appears") {
@@ -567,7 +567,7 @@ definition {
 			}
 
 			task ("Name the report") {
-				ACUtils.fileName(fileName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = "${eventAnalysisName}");
 			}
 
 			task ("Check the analysis result appears") {
@@ -652,7 +652,7 @@ definition {
 			}
 
 			task ("Name the report") {
-				ACUtils.fileName(fileName = "Save Analysis 1");
+				ACUtils.setItemName(itemName = "Save Analysis 1");
 			}
 
 			task ("Check the analysis result appears") {
@@ -673,7 +673,7 @@ definition {
 		}
 
 		task ("Name the report and save") {
-			ACUtils.fileName(fileName = "Save Analysis 2");
+			ACUtils.setItemName(itemName = "Save Analysis 2");
 
 			ACUtils.saveButton();
 		}
@@ -762,7 +762,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "Save Analysis");
+			ACUtils.setItemName(itemName = "Save Analysis");
 		}
 
 		task ("Check the analysis result appears") {
@@ -936,7 +936,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "Save Analysis 1");
+			ACUtils.setItemName(itemName = "Save Analysis 1");
 		}
 
 		task ("Check the analysis result appears") {
@@ -976,7 +976,7 @@ definition {
 		}
 
 		task ("Name the report") {
-			ACUtils.fileName(fileName = "Save Analysis 2");
+			ACUtils.setItemName(itemName = "Save Analysis 2");
 		}
 
 		task ("Check the analysis result appears") {

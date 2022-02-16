@@ -16,7 +16,7 @@ package com.liferay.dispatch.web.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
-import com.liferay.dispatch.internal.messaging.test.HiddenInUIDispatchTaskExecutor;
+import com.liferay.dispatch.internal.messaging.HiddenInUIDispatchTaskExecutor;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;

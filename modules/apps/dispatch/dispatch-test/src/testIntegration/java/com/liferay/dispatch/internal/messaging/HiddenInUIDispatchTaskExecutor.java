@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.internal.messaging.test;
+package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;

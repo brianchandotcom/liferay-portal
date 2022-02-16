@@ -579,18 +579,6 @@ definition {
 		}
 	}
 
-	macro setItemName {
-		WaitForPageLoad();
-
-		if ((IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL")) || (IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT"))) {
-			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
-		}
-
-		Type.sendKeys(
-			locator1 = "ACUtils#NAME_FIELD",
-			value1 = "${itemName}");
-	}
-
 	macro getEventPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
@@ -806,6 +794,18 @@ definition {
 				locator1 = "ACSettings#SEARCH_BAR",
 				value1 = "\ENTER");
 		}
+	}
+
+	macro setItemName {
+		WaitForPageLoad();
+
+		if ((IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL")) || (IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT"))) {
+			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
+		}
+
+		Type.sendKeys(
+			locator1 = "ACUtils#NAME_FIELD",
+			value1 = "${itemName}");
 	}
 
 	macro tearDownAC {

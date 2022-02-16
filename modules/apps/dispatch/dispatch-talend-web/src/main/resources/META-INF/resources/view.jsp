@@ -39,9 +39,13 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 			</liferay-ui:error>
 
 			<%
-			ExpandoValue expandoValue = ExpandoValueLocalServiceUtil.getValue(dispatchTrigger.getCompanyId(), DispatchTrigger.class.getName(), "DispatchArchiveFile", "fileName", dispatchTrigger.getUserId());
+			DispatchTalendDisplayContext dispatchTalendDisplayContext = (DispatchTalendDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-			String fileEntryName = expandoValue.getData();
+			DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTalendDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
+
+			Map<String, String> attributes = dispatchTriggerMetadata.getAttributes();
+
+			String fileEntryName = attributes.isEmpty() ? "" : attributes.get("talend-job-design-archive-name");
 			%>
 
 			<p class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />fileEntryName">

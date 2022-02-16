@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
+import com.liferay.portal.tika.internal.util.TikaConfigUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -40,7 +41,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.tika.Tika;
-import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.extractor.EmbeddedDocumentExtractor;
 import org.apache.tika.extractor.ParsingEmbeddedDocumentExtractor;
@@ -72,7 +72,7 @@ public class TextExtractorImpl implements TextExtractor {
 		String text = null;
 
 		try {
-			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
+			Tika tika = new Tika(TikaConfigUtil.getTikaConfig());
 
 			tika.setMaxStringLength(maxStringLength);
 
@@ -227,7 +227,7 @@ public class TextExtractorImpl implements TextExtractor {
 
 			logger.setLevel(Level.SEVERE);
 
-			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
+			Tika tika = new Tika(TikaConfigUtil.getTikaConfig());
 
 			try {
 				return _parseToString(
@@ -245,21 +245,6 @@ public class TextExtractorImpl implements TextExtractor {
 		private static final long serialVersionUID = 1L;
 
 		private final byte[] _data;
-
-	}
-
-	private static class TikaConfigHolder {
-
-		private static final TikaConfig _tikaConfig;
-
-		static {
-			try {
-				_tikaConfig = new TikaConfig();
-			}
-			catch (Exception exception) {
-				throw new ExceptionInInitializerError(exception);
-			}
-		}
 
 	}
 

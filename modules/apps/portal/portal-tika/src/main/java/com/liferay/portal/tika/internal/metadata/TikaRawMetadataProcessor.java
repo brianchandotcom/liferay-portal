@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
+import com.liferay.portal.tika.internal.util.TikaConfigUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -53,7 +54,6 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.ClimateForcast;
 import org.apache.tika.metadata.CreativeCommons;
@@ -88,7 +88,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 	public TikaRawMetadataProcessor() throws Exception {
-		_parser = new AutoDetectParser(new TikaConfig());
+		_parser = new AutoDetectParser(TikaConfigUtil.getTikaConfig());
 	}
 
 	@Override

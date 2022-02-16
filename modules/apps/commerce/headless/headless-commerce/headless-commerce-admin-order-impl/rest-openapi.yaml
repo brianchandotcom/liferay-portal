@@ -316,10 +316,13 @@ components:
                     minimum: 0
                     type: number
                 shippingDiscountAmount:
-                    format: double
+                    format: bigdecimal
                     type: number
                 shippingDiscountAmountFormatted:
                     type: string
+                shippingDiscountAmountValue:
+                    format: double
+                    type: number
                 shippingDiscountPercentageLevel1:
                     example: 20
                     format: double
@@ -476,11 +479,16 @@ components:
                     type: number
                 totalDiscountAmount:
                     example: 11
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountAmountFormatted:
                     type: string
+                totalDiscountAmountValue:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
                 totalDiscountPercentageLevel1:
                     example: 20
                     format: double
@@ -523,11 +531,16 @@ components:
                     type: number
                 totalDiscountWithTaxAmount:
                     example: 11
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountWithTaxAmountFormatted:
                     type: string
+                totalDiscountWithTaxAmountValue:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
                 totalFormatted:
                     type: string
                 totalWithTaxAmount:

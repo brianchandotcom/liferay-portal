@@ -1057,6 +1057,12 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrder::setBillingAddressId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replace with {@link
+	 * #updateCommerceOrder(String, long, long, long, String, long, String, String, BigDecimal,
+	 * BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, String, CommerceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateCommerceOrder(
@@ -1072,6 +1078,78 @@ public class CommerceOrderLocalServiceImpl
 			commercePaymentMethodKey, commerceShippingMethodId,
 			shippingOptionName, purchaseOrderNumber, subtotal, shippingAmount,
 			total, advanceStatus, commerceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateCommerceOrder(
+			String externalReferenceCode, long commerceOrderId,
+			long billingAddressId, long shippingAddressId,
+			String commercePaymentMethodKey, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			BigDecimal subtotal, BigDecimal shippingAmount,
+			BigDecimal taxAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, BigDecimal totalDiscountAmount,
+			String advanceStatus, CommerceContext commerceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setExternalReferenceCode(externalReferenceCode);
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
+		commerceOrder.setCommercePaymentMethodKey(commercePaymentMethodKey);
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+		commerceOrder.setTotalDiscountAmount(totalDiscountAmount);
+
+		_setCommerceOrderPrices(
+			commerceOrder, subtotal, shippingAmount, taxAmount, total,
+			subtotalWithTaxAmount, shippingWithTaxAmount, totalWithTaxAmount);
+
+		if (commerceContext != null) {
+			CommerceOrderPriceCalculation commerceOrderPriceCalculation =
+				_commerceOrderPriceCalculationFactory.
+					getCommerceOrderPriceCalculation();
+
+			CommerceOrderPrice commerceOrderPrice =
+				commerceOrderPriceCalculation.getCommerceOrderPrice(
+					commerceOrder, false, commerceContext);
+
+			CommerceDiscountValue shippingDiscountValue =
+				commerceOrderPrice.getShippingDiscountValue();
+
+			if (shippingDiscountValue != null) {
+				CommerceMoney shippingDiscountAmountCommerceMoney =
+					shippingDiscountValue.getDiscountAmount();
+
+				commerceOrder.setShippingDiscountAmount(
+					shippingDiscountAmountCommerceMoney.getPrice());
+			}
+
+			CommerceDiscountValue shippingWithTaxAmountCommerceDiscountValue =
+				commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
+
+			if (shippingWithTaxAmountCommerceDiscountValue != null) {
+				CommerceMoney shippingDiscountWithTaxAmountCommerceMoney =
+					shippingWithTaxAmountCommerceDiscountValue.
+						getDiscountAmount();
+
+				commerceOrder.setShippingDiscountWithTaxAmount(
+					shippingDiscountWithTaxAmountCommerceMoney.getPrice());
+			}
+		}
+
+		commerceOrder.setAdvanceStatus(advanceStatus);
+
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

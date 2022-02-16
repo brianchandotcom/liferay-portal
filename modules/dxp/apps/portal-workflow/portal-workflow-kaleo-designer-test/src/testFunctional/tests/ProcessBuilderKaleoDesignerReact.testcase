@@ -502,13 +502,26 @@ definition {
 	}
 
 	@description = "Verify that connectors can be deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ConnectorCanBeDeleted {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72937 ConnectorCanBeDeleted pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start Task Connector",
+			connectorOut = "start",
+			key_direction = "top");
+
+		ProcessBuilderKaleoDesignerReact.selectConnectorPresent(connectorLabel = "START TASK CONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
+
+		ProcessBuilderKaleoDesignerReact.notViewConnectorPresent(connectorLabel = "START TASK CONNECTOR");
 
 	}
 

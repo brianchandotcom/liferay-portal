@@ -41,15 +41,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DIAGRAM_CONNECTOR_LABEL</td>
-	<td>//*[name()='g'][contains(@class,'react-flow__connection')]//*[normalize-space(text())='${key_connectorLabel}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIDEBAR_CONNECTOR_LABEL</td>
 	<td>//input[@id='edgeLabel']</td>
 	<td></td>
 </tr>
+    <td>DIAGRAM_CONNECTOR_LABEL</td>
+    <td>//*[name()='g'][contains(@class,'react-flow__connection')]//*[normalize-space(text())='${key_connectorLabel}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>VIEW_DELETE_MODAL</td>
+    <td>//div[contains(@class, 'modal-content') and contains(.,'${key_title}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>BUTTON_DELETE_MODAL</td>
+    <td>//button[contains(@class,'btn btn-danger')][contains(text(),'Delete')]</td>
+    <td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

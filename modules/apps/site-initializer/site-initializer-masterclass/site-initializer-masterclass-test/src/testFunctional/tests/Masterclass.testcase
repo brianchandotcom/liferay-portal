@@ -51,7 +51,7 @@ definition {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
 			StyleBooksAdmin.markStyleBookAsDefault(
-				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
+				confirmMessage = "Do you want to replace Masterclass Classic for Masterclass Modern as the default style book?",
 				styleBookName = "Masterclass Modern");
 		}
 
@@ -1487,7 +1487,7 @@ definition {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
 			StyleBooksAdmin.markStyleBookAsDefault(
-				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
+				confirmMessage = "Do you want to replace Masterclass Classic for Masterclass Modern as the default style book?",
 				styleBookName = "Masterclass Modern");
 		}
 

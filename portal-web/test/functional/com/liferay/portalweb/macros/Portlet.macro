@@ -162,14 +162,15 @@ definition {
 		}
 	}
 
+	macro configureBackgroundStylesViaLookAndFeelPG {
+		Navigator.gotoNavTab(navTab = "Background Styles");
 
+		PageEditor.selectColorSwatchItem(
+			colorSwatchItem = "${colorAttribute}",
+			fieldLabel = "Background Color");
 
-
-
-
-
-
-
+		PortletEntry.save();
+	}
 
 	macro configureBorderStylesViaLookAndFeelPG {
 		Navigator.gotoNavTab(navTab = "Border Styles");

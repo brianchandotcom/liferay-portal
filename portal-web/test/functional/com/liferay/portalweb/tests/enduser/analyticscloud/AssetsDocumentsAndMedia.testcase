@@ -520,8 +520,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Download the document") {
@@ -551,7 +549,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACNavigation.openItem(itemName = "Document_1.jpg");
+			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
 		task ("Assert downloads by browsers metric") {
@@ -572,8 +570,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
-
 		var documentNameList = "DM AC Title,DM AC Title";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -605,7 +601,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACNavigation.openItem(itemName = "Document_1.jpg");
+			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
 		task ("Assert downloads by devices metric") {

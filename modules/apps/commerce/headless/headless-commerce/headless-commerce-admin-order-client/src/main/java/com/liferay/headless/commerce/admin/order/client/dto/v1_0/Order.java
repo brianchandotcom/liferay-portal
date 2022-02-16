@@ -917,16 +917,16 @@ public class Order implements Cloneable, Serializable {
 
 	protected Double shippingAmountValue;
 
-	public Double getShippingDiscountAmount() {
+	public BigDecimal getShippingDiscountAmount() {
 		return shippingDiscountAmount;
 	}
 
-	public void setShippingDiscountAmount(Double shippingDiscountAmount) {
+	public void setShippingDiscountAmount(BigDecimal shippingDiscountAmount) {
 		this.shippingDiscountAmount = shippingDiscountAmount;
 	}
 
 	public void setShippingDiscountAmount(
-		UnsafeSupplier<Double, Exception>
+		UnsafeSupplier<BigDecimal, Exception>
 			shippingDiscountAmountUnsafeSupplier) {
 
 		try {
@@ -937,7 +937,7 @@ public class Order implements Cloneable, Serializable {
 		}
 	}
 
-	protected Double shippingDiscountAmount;
+	protected BigDecimal shippingDiscountAmount;
 
 	public String getShippingDiscountAmountFormatted() {
 		return shippingDiscountAmountFormatted;
@@ -963,6 +963,31 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected String shippingDiscountAmountFormatted;
+
+	public Double getShippingDiscountAmountValue() {
+		return shippingDiscountAmountValue;
+	}
+
+	public void setShippingDiscountAmountValue(
+		Double shippingDiscountAmountValue) {
+
+		this.shippingDiscountAmountValue = shippingDiscountAmountValue;
+	}
+
+	public void setShippingDiscountAmountValue(
+		UnsafeSupplier<Double, Exception>
+			shippingDiscountAmountValueUnsafeSupplier) {
+
+		try {
+			shippingDiscountAmountValue =
+				shippingDiscountAmountValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double shippingDiscountAmountValue;
 
 	public Double getShippingDiscountPercentageLevel1() {
 		return shippingDiscountPercentageLevel1;
@@ -1891,16 +1916,17 @@ public class Order implements Cloneable, Serializable {
 
 	protected Double totalAmount;
 
-	public Double getTotalDiscountAmount() {
+	public BigDecimal getTotalDiscountAmount() {
 		return totalDiscountAmount;
 	}
 
-	public void setTotalDiscountAmount(Double totalDiscountAmount) {
+	public void setTotalDiscountAmount(BigDecimal totalDiscountAmount) {
 		this.totalDiscountAmount = totalDiscountAmount;
 	}
 
 	public void setTotalDiscountAmount(
-		UnsafeSupplier<Double, Exception> totalDiscountAmountUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception>
+			totalDiscountAmountUnsafeSupplier) {
 
 		try {
 			totalDiscountAmount = totalDiscountAmountUnsafeSupplier.get();
@@ -1910,7 +1936,7 @@ public class Order implements Cloneable, Serializable {
 		}
 	}
 
-	protected Double totalDiscountAmount;
+	protected BigDecimal totalDiscountAmount;
 
 	public String getTotalDiscountAmountFormatted() {
 		return totalDiscountAmountFormatted;
@@ -1936,6 +1962,29 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected String totalDiscountAmountFormatted;
+
+	public Double getTotalDiscountAmountValue() {
+		return totalDiscountAmountValue;
+	}
+
+	public void setTotalDiscountAmountValue(Double totalDiscountAmountValue) {
+		this.totalDiscountAmountValue = totalDiscountAmountValue;
+	}
+
+	public void setTotalDiscountAmountValue(
+		UnsafeSupplier<Double, Exception>
+			totalDiscountAmountValueUnsafeSupplier) {
+
+		try {
+			totalDiscountAmountValue =
+				totalDiscountAmountValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double totalDiscountAmountValue;
 
 	public Double getTotalDiscountPercentageLevel1() {
 		return totalDiscountPercentageLevel1;
@@ -2141,18 +2190,18 @@ public class Order implements Cloneable, Serializable {
 
 	protected Double totalDiscountPercentageLevel4WithTaxAmount;
 
-	public Double getTotalDiscountWithTaxAmount() {
+	public BigDecimal getTotalDiscountWithTaxAmount() {
 		return totalDiscountWithTaxAmount;
 	}
 
 	public void setTotalDiscountWithTaxAmount(
-		Double totalDiscountWithTaxAmount) {
+		BigDecimal totalDiscountWithTaxAmount) {
 
 		this.totalDiscountWithTaxAmount = totalDiscountWithTaxAmount;
 	}
 
 	public void setTotalDiscountWithTaxAmount(
-		UnsafeSupplier<Double, Exception>
+		UnsafeSupplier<BigDecimal, Exception>
 			totalDiscountWithTaxAmountUnsafeSupplier) {
 
 		try {
@@ -2164,7 +2213,7 @@ public class Order implements Cloneable, Serializable {
 		}
 	}
 
-	protected Double totalDiscountWithTaxAmount;
+	protected BigDecimal totalDiscountWithTaxAmount;
 
 	public String getTotalDiscountWithTaxAmountFormatted() {
 		return totalDiscountWithTaxAmountFormatted;
@@ -2191,6 +2240,31 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected String totalDiscountWithTaxAmountFormatted;
+
+	public Double getTotalDiscountWithTaxAmountValue() {
+		return totalDiscountWithTaxAmountValue;
+	}
+
+	public void setTotalDiscountWithTaxAmountValue(
+		Double totalDiscountWithTaxAmountValue) {
+
+		this.totalDiscountWithTaxAmountValue = totalDiscountWithTaxAmountValue;
+	}
+
+	public void setTotalDiscountWithTaxAmountValue(
+		UnsafeSupplier<Double, Exception>
+			totalDiscountWithTaxAmountValueUnsafeSupplier) {
+
+		try {
+			totalDiscountWithTaxAmountValue =
+				totalDiscountWithTaxAmountValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double totalDiscountWithTaxAmountValue;
 
 	public String getTotalFormatted() {
 		return totalFormatted;

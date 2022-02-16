@@ -12,8 +12,6 @@
  * details.
  */
 
-import {Link} from 'react-router-dom';
-
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestrayCases} from '../../../graphql/queries/testrayCase';
@@ -26,10 +24,8 @@ const Cases = () => (
 			tableProps={{
 				columns: [
 					{
+						clickable: true,
 						key: 'name',
-						render: (name: string, {testrayCaseId}: any) => (
-							<Link to={`${testrayCaseId}`}>{name}</Link>
-						),
 						value: 'Case Name',
 					},
 					{key: 'priority', value: 'Priority'},
@@ -49,6 +45,7 @@ const Cases = () => (
 						value: 'Modified Date',
 					},
 				],
+				navigateTo: ({testrayCaseId}) => testrayCaseId?.toString(),
 			}}
 			transformData={(data) => data?.c?.testrayCases}
 			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}

@@ -62,7 +62,7 @@ const Table: React.FC<TableProps> = ({
 					<Row key={index}>
 						{columns.map((column, columnIndex) => (
 							<Cell
-								className={classNames({
+								className={classNames('text-dark', {
 									'cursor-pointer': column.clickable,
 								})}
 								expanded={columnIndex === 0}

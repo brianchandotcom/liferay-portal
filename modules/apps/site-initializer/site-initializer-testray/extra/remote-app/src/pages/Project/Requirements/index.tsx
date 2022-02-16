@@ -13,7 +13,6 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Link} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
@@ -27,10 +26,8 @@ const Requirements = () => (
 			tableProps={{
 				columns: [
 					{
+						clickable: true,
 						key: 'key',
-						render: (key: string, {testrayRequirementId}: any) => (
-							<Link to={`${testrayRequirementId}`}>{key}</Link>
-						),
 						value: 'Key',
 					},
 					{
@@ -57,6 +54,8 @@ const Requirements = () => (
 					{key: 'summary', value: 'Summary'},
 					{key: 'description', value: 'Description'},
 				],
+				navigateTo: ({testrayRequirementId}) =>
+					testrayRequirementId?.toString(),
 			}}
 			transformData={(data) => data?.c?.testrayRequirements}
 			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}

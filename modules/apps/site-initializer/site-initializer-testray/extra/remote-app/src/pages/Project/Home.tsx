@@ -12,8 +12,6 @@
  * details.
  */
 
-import {Link} from 'react-router-dom';
-
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import {initialState} from '../../context/HeaderContext';
@@ -31,18 +29,14 @@ const Home = () => {
 				tableProps={{
 					columns: [
 						{
+							clickable: true,
 							key: 'name',
-							render: (value: string, item: any) => (
-								<Link
-									to={`/project/${item.testrayProjectId}/routines`}
-								>
-									{value}
-								</Link>
-							),
 							value: 'Project',
 						},
 						{key: 'description', value: 'Description'},
 					],
+					navigateTo: (item) =>
+						`/project/${item.testrayProjectId}/routines`,
 				}}
 				transformData={(data) => data?.c?.testrayProjects}
 				variables={{scopeKey: Liferay.ThemeDisplay.getSiteGroupId()}}

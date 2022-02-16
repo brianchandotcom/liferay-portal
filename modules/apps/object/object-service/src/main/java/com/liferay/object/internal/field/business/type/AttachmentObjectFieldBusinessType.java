@@ -17,12 +17,20 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carolina Barbosa
@@ -65,5 +73,31 @@ public class AttachmentObjectFieldBusinessType
 	public String getName() {
 		return ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT;
 	}
+
+	@Override
+	public Map<String, Object> getProperties(
+		Locale locale, ObjectField objectField) {
+
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"objectFieldId", objectField.getObjectFieldId()
+		).build();
+
+		List<ObjectFieldSetting> objectFieldSettings =
+			_objectFieldSettingLocalService.getObjectFieldSettings(
+				objectField.getObjectFieldId());
+
+		if (ListUtil.isEmpty(objectFieldSettings)) {
+			return properties;
+		}
+
+		objectFieldSettings.forEach(
+			objectFieldSetting -> properties.put(
+				objectFieldSetting.getName(), objectFieldSetting.getValue()));
+
+		return properties;
+	}
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }

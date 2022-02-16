@@ -1,48 +1,92 @@
 definition {
 
-	macro addNewWorkflow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+	macro addConnector {
+		MouseOver.mouseOverInvisible(
+			key_direction = "${direction}",
+			key_nodeType = "${connectorOut}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE",
+			value1 = "0,0");
 
-		LexiconEntry.gotoAdd();
+		MouseDown.mouseDownAt(
+			key_direction = "${direction}",
+			key_nodeType = "${connectorOut}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE",
+			value1 = "0,0");
+
+		MouseMove(
+			key_nodeType = "${connectorIn}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+			value1 = "0,47");
+
+		MouseUp.mouseUpAt(
+			key_nodeType = "${connectorIn}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+			value1 = "0,47");
+
+		Type(
+			key_connectorLabel = "TRANSITION LABEL",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
+			value1 = "${connectorLabel}");
 	}
 
-	macro buttonTranslationLanguage {
-		Click(
-			key_icon = "${key_icon}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
+	macro dragAndDropDiagramNode {
+		DragAndDrop.dragAndDrop(
+			key_nodeType = "${nodeType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+			value1 = "${nodePosition}");
 	}
 
-	macro editTitleNewWorkflow {
+	macro dragSidebarNodeAndMove {
+		var key_nodeLabel = "${nodeLabel}";
+		var key_nodeType = "${nodeType}";
+
+		AssertClick.pauseAssertTextClickAt(
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
+			value1 = "${nodeLabel}");
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
+			locator2 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL",
+			nodeLabel = "${nodeLabel}");
+
+		DragAndDrop.dragAndDrop(
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+			nodeType = "${nodeType}",
+			value1 = "${nodePosition}");
+	}
+
+	macro editWorkflowTitle {
 		PortletEntry.inputTitle(title = "${title}");
 	}
 
-	macro gotoOptionsDefinitionTableSpecific {
-		Click(
-			key_workflowDefinitionTitle = "New Workflow",
-			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "${menuItem}");
-	}
-
-	macro saveNewWorkflowDefinition {
-		PortletEntry.save();
-	}
-
 	macro selectTranslationLanguage {
+		var key_translationOptionSelected = "${translationOptionSelected}";
+		var key_translationOption = "${newTranslationOption}";
+		var key_translationStatus = "${translationStatus}";
+
 		Click(
-			key_icon = "${key_icon}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY",
-			success_or_warning = "${success_or_warning}");
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY",
+			translationOption = "${translationOptionSelected}");
+
+		if (isSet(translationOption)) {
+			Click(
+				locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL",
+				translationOption = "${newTranslationOption}",
+				translationStatus = "${translationStatus}");
+		}
 	}
 
-	macro viewTranslationLanguage {
+	macro viewConnectorPresent {
 		AssertElementPresent(
-			key_icon = "${key_icon}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY",
-			success_or_warning = "${success_or_warning}");
+			key_connectorLabel = "${connectorLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+	}
+
+	macro viewTranslationLanguageStatus {
+		AssertElementPresent(
+			key_translationOption = "${newTranslationOption}",
+			key_translationStatus = "${translationStatus}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
 }

@@ -92,42 +92,43 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
+	@ignore = "true"
 	@priority = "4"
 	test CanAddTranslations {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		ProcessBuilderKaleoDesignerReact.addNewWorkflow();
+		Workflow.openWorkflowListView();
 
-		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "en-us");
-
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
-			key_icon = "pt_BR",
-			success_or_warning = "warning");
-
-		ProcessBuilderKaleoDesignerReact.editTitleNewWorkflow(title = "Test Title");
-
-		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "pt-br");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Test title");
 
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
-			key_icon = "fr_FR",
-			success_or_warning = "warning");
+			newTranslationOption = "fr_FR",
+			translationOptionSelected = "en_US",
+			translationStatus = "warning");
 
-		ProcessBuilderKaleoDesignerReact.editTitleNewWorkflow(title = "Test Title");
+		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
 
-		ProcessBuilderKaleoDesignerReact.saveNewWorkflowDefinition();
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
+			newTranslationOption = "pt_BR",
+			translationOptionSelected = "fr_FR",
+			translationStatus = "warning");
 
-		ProcessBuilderKaleoDesignerReact.gotoOptionsDefinitionTableSpecific(menuItem = "View");
+		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
 
-		ProcessBuilderKaleoDesignerReact.buttonTranslationLanguage(key_icon = "en-us");
+		Workflow.saveDefinition(newKaleoDesigner = "True");
 
-		ProcessBuilderKaleoDesignerReact.viewTranslationLanguage(
-			key_icon = "pt_BR",
-			success_or_warning = "success");
+		Workflow.viewWorkflowDefinition(workflowDefinitionTitle = "Test title");
 
-		ProcessBuilderKaleoDesignerReact.viewTranslationLanguage(
-			key_icon = "fr_FR",
-			success_or_warning = "success");
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
+			newTranslationOption = "fr_FR",
+			translationStatus = "success");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
+			newTranslationOption = "pt_BR",
+			translationStatus = "success");
+
+
 	}
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
@@ -164,13 +165,28 @@ definition {
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateTransition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72918 CanCreateTransition pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "StartTaskConnector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "STARTTASKCONNECTOR");
+
 
 	}
 
@@ -194,6 +210,27 @@ definition {
 
 		// TODO LRQA-72978 CanDeleteNodeViaSidebar pending implementation
 
+	}
+
+	@description = "Verify that the user can Delete a Draft workflow"
+	@priority = "3"
+	test CanDeleteWorkflowDefinitionDraft {
+		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition");
+
+		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
+
+		
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"
@@ -501,17 +538,6 @@ definition {
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
 		// TODO LRQA-72989 DefaultSettingsChangesReflectsOnDiagram pending implementation
-
-	}
-
-	@description = "Verify that the user can Delete a Draft workflow"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test DeleteWorkflowDefinitionDraft {
-		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
-		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
-
-		// TODO LRQA-72946 DeleteWorkflowDefinitionDraft pending implementation
 
 	}
 

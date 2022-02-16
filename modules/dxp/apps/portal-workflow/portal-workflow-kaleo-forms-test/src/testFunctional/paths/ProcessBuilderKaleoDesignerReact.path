@@ -12,20 +12,44 @@
 <tbody>
 <tr>
 	<td>ICON_COUNTRY</td>
-	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_icon}')]</td>
+	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_translationOptionSelected}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
+	<td>TRANSLATION_COUNTRY_LABEL</td>
+	<td>//div[@class='autofit-section' and contains(.,'${key_translationOption}')]//..//..//span[@class="label label-${key_translationStatus}"]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TRANSLATED_OR_UNTRANSLATED_ICON_COUNTRY</td>
-	<td>//div[@class='autofit-section' and contains(.,'${key_icon}')]//..//..//span[@class="label label-${success_or_warning}" and contains(.,'Translated')]</td>
+	<td>SIDEBAR_NODE</td>
+	<td>//div[@class='sidebar']//span[contains(.,'${key_nodeLabel}')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>DIAGRAM_NODE</td>
+	<td>//div[contains(@class, 'node ${key_nodeType}-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REACT_PANEL</td>
+	<td>//div[@class='react-flow__pane']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECTOR_SOURCE</td>
+	<td>//div[@class='node ${key_nodeType}-node']/..//div[@data-handleid='${key_direction}Source']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_CONNECTOR_LABEL</td>
+	<td>//*[name()='g'][contains(@class,'react-flow__connection')]//*[normalize-space(text())='${key_connectorLabel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONNECTOR_LABEL</td>
+	<td>//input[@id='edgeLabel']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

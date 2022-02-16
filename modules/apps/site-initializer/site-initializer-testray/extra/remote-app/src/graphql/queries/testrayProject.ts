@@ -60,6 +60,7 @@ export const getTestrayProject = gql`
 			testrayProject(testrayProjectId: $testrayProjectId) {
 				description
 				name
+				testrayProjectId
 			}
 		}
 	}

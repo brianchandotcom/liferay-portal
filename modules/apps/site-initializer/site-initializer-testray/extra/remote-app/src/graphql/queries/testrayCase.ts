@@ -14,9 +14,25 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayCase = {
+	caseNumber: number;
+	description: string;
+	descriptionType: string;
+	estimatedDuration: number;
+	name: string;
+	originationKey: string;
+	priority: number;
+	steps: string;
+	stepsType: string;
+	testrayCaseId: number;
+	testrayCaseResult: number;
+	testrayCaseTypeId: number;
+	testrayComponentId: number;
+	testrayProjectId: number;
+};
+
 const testrayCaseFragment = gql`
 	fragment TestrayCaseFragment on C_TestrayCase {
-		c_testrayCaseId
 		caseNumber
 		description
 		descriptionType

@@ -142,9 +142,7 @@ public class ViewManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {
-			"override-any-language", "override-selected-language"
-		};
+		return new String[] {"any-language", "selected-language"};
 	}
 
 	private final String _displayStyle;

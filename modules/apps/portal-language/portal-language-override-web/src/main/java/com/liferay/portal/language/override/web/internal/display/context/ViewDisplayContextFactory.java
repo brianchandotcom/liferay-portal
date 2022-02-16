@@ -256,12 +256,12 @@ public class ViewDisplayContextFactory {
 		Predicate<String> valueMatchPredicate = _getPredicate(
 			keywords, _valueMatchPatternFunction);
 
-		if (filter.equals("override-any-language")) {
+		if (filter.equals("any-language")) {
 			return _getOverrideLanguageItemDisplays(
 				keyMatchPredicate, keyPLOEntriesMap, selectedLanguageId,
 				valueMatchPredicate, false);
 		}
-		else if (filter.equals("override-selected-language")) {
+		else if (filter.equals("selected-language")) {
 			return _getOverrideLanguageItemDisplays(
 				keyMatchPredicate, keyPLOEntriesMap, selectedLanguageId,
 				valueMatchPredicate, true);

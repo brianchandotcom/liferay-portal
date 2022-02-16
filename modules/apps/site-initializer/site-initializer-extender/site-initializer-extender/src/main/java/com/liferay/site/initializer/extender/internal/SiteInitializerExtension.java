@@ -139,8 +139,9 @@ public class SiteInitializerExtension {
 			new BundleSiteInitializer(
 				accountResourceFactory, accountRoleLocalService,
 				accountRoleResourceFactory, assetCategoryLocalService,
-				assetListEntryLocalService, bundle, ddmFormImporter, ddmStructureLocalService,
-				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
+				assetListEntryLocalService, bundle, ddmFormImporter,
+				ddmStructureLocalService, ddmTemplateLocalService,
+				defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory, layoutCopyHelper,

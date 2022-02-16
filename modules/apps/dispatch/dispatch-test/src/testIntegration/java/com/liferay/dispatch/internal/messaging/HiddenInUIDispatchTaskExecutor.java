@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = DispatchTaskExecutor.class
 )
-public class HiddenInUIDispatchTaskExecutor
-	extends BaseDispatchTaskExecutor {
+public class HiddenInUIDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI =
 		"test-hidden-in-ui";

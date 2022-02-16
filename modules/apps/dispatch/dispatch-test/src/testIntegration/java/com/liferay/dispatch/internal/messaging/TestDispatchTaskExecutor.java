@@ -35,6 +35,10 @@ public class TestDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST = "test";
 
+	public static final int SLEEP_MILLIS = 1500;
+
+	public static final AtomicInteger executionCounter = new AtomicInteger(0);
+
 	@Override
 	public void doExecute(
 		DispatchTrigger dispatchTrigger,
@@ -54,10 +58,5 @@ public class TestDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	public String getName() {
 		return DISPATCH_TASK_EXECUTOR_TYPE_TEST;
 	}
-
-	protected static final int SLEEP_MILLIS = 1500;
-
-	protected static final AtomicInteger executionCounter = new AtomicInteger(
-		0);
 
 }

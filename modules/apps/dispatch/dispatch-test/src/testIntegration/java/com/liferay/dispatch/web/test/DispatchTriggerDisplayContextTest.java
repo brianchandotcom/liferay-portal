@@ -69,9 +69,7 @@ public class DispatchTriggerDisplayContextTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testDispatchTriggerDisplayContextCheckHidden()
-		throws Exception {
-
+	public void testGetDispatchTaskExecutorTypes() throws Exception {
 		Set<String> dispatchTaskExecutorTypes =
 			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
 
@@ -98,7 +96,6 @@ public class DispatchTriggerDisplayContextTest {
 			new Class<?>[0], null);
 
 		Assert.assertFalse(
-			"Executor not hidden!",
 			executorTypes.contains(
 				HiddenInUIDispatchTaskExecutor.
 					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));

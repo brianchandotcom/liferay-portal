@@ -211,153 +211,146 @@ public class GetCollectionFieldMVCResourceCommand
 			(LayoutListRetriever<?, ListObjectReference>)
 				_layoutListRetrieverTracker.getLayoutListRetriever(type);
 
-		if (layoutListRetriever != null) {
-			ListObjectReferenceFactory<?> listObjectReferenceFactory =
-				_listObjectReferenceFactoryTracker.getListObjectReference(type);
-
-			if (listObjectReferenceFactory != null) {
-				DefaultLayoutListRetrieverContext
-					defaultLayoutListRetrieverContext =
-						new DefaultLayoutListRetrieverContext();
-
-				defaultLayoutListRetrieverContext.setConfiguration(
-					LayoutObjectReferenceUtil.getConfiguration(
-						layoutObjectReferenceJSONObject));
-
-				Object infoItem = _getInfoItem(httpServletRequest);
-
-				if (infoItem != null) {
-					defaultLayoutListRetrieverContext.setContextObject(
-						infoItem);
-				}
-
-				ListObjectReference listObjectReference =
-					listObjectReferenceFactory.getListObjectReference(
-						layoutObjectReferenceJSONObject);
-
-				int listCount = layoutListRetriever.getListCount(
-					listObjectReference, defaultLayoutListRetrieverContext);
-
-				if (activePage < 1) {
-					activePage = 1;
-				}
-
-				Pagination pagination = _collectionPaginationUtil.getPagination(
-					activePage, listCount, displayAllPages, displayAllItems,
-					numberOfItems, numberOfItemsPerPage, numberOfPages,
-					paginationType, showAllItems);
-
-				defaultLayoutListRetrieverContext.setPagination(pagination);
-
-				long[] segmentsEntryIds =
-					_segmentsEntryRetriever.getSegmentsEntryIds(
-						_portal.getScopeGroupId(httpServletRequest),
-						_portal.getUserId(httpServletRequest),
-						_requestContextMapper.map(httpServletRequest));
-
-				defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-					segmentsEntryIds);
-
-				// LPS-111037
-
-				Optional<AssetListEntry> assetListEntryOptional =
-					_getAssetListEntryOptional(listObjectReference);
-
-				String itemType = assetListEntryOptional.map(
-					AssetListEntryModel::getAssetEntryType
-				).orElse(
-					listObjectReference.getItemType()
-				);
-
-				if (Objects.equals(
-						DLFileEntryConstants.getClassName(), itemType)) {
-
-					itemType = FileEntry.class.getName();
-				}
-
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						(InfoItemFieldValuesProvider<Object>)
-							_infoItemServiceTracker.getFirstInfoItemService(
-								InfoItemFieldValuesProvider.class, itemType);
-
-				if (infoItemFieldValuesProvider == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get info item form provider for class " +
-								itemType);
-					}
-
-					return JSONFactoryUtil.createJSONObject();
-				}
-
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-				List<Object> list = layoutListRetriever.getList(
-					listObjectReference, defaultLayoutListRetrieverContext);
-
-				for (Object object : list) {
-					jsonArray.put(
-						_getDisplayObjectJSONObject(
-							infoItemFieldValuesProvider, object,
-							LocaleUtil.fromLanguageId(languageId)));
-				}
-
-				InfoListRenderer<Object> infoListRenderer =
-					(InfoListRenderer<Object>)
-						_infoListRendererTracker.getInfoListRenderer(listStyle);
-
-				if (infoListRenderer != null) {
-					UnsyncStringWriter unsyncStringWriter =
-						new UnsyncStringWriter();
-
-					HttpServletResponse pipingHttpServletResponse =
-						new PipingServletResponse(
-							httpServletResponse, unsyncStringWriter);
-
-					DefaultInfoListRendererContext
-						defaultInfoListRendererContext =
-							new DefaultInfoListRendererContext(
-								httpServletRequest, pipingHttpServletResponse);
-
-					defaultInfoListRendererContext.setListItemRendererKey(
-						listItemStyle);
-					defaultInfoListRendererContext.setTemplateKey(templateKey);
-
-					infoListRenderer.render(
-						list, defaultInfoListRendererContext);
-
-					jsonObject.put("content", unsyncStringWriter.toString());
-				}
-
-				jsonObject.put(
-					"customCollectionSelectorURL",
-					_getCustomCollectionSelectorURL(
-						httpServletRequest, itemType, namespace)
-				).put(
-					"items", jsonArray
-				).put(
-					"itemSubtype",
-					assetListEntryOptional.map(
-						AssetListEntry::getAssetEntrySubtype
-					).orElse(
-						null
-					)
-				).put(
-					"itemType", itemType
-				).put(
-					"length",
-					layoutListRetriever.getListCount(
-						listObjectReference, defaultLayoutListRetrieverContext)
-				).put(
-					"totalNumberOfItems",
-					_collectionPaginationUtil.getTotalNumberOfItems(
-						listCount, displayAllPages, displayAllItems,
-						numberOfItems, numberOfItemsPerPage, numberOfPages,
-						paginationType)
-				);
-			}
+		if (layoutListRetriever == null) {
+			return jsonObject;
 		}
+
+		ListObjectReferenceFactory<?> listObjectReferenceFactory =
+			_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+		if (listObjectReferenceFactory == null) {
+			return jsonObject;
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setConfiguration(
+			LayoutObjectReferenceUtil.getConfiguration(
+				layoutObjectReferenceJSONObject));
+
+		Object infoItem = _getInfoItem(httpServletRequest);
+
+		if (infoItem != null) {
+			defaultLayoutListRetrieverContext.setContextObject(infoItem);
+		}
+
+		ListObjectReference listObjectReference =
+			listObjectReferenceFactory.getListObjectReference(
+				layoutObjectReferenceJSONObject);
+
+		int listCount = layoutListRetriever.getListCount(
+			listObjectReference, defaultLayoutListRetrieverContext);
+
+		if (activePage < 1) {
+			activePage = 1;
+		}
+
+		Pagination pagination = _collectionPaginationUtil.getPagination(
+			activePage, listCount, displayAllPages, displayAllItems,
+			numberOfItems, numberOfItemsPerPage, numberOfPages, paginationType,
+			showAllItems);
+
+		defaultLayoutListRetrieverContext.setPagination(pagination);
+
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			_portal.getScopeGroupId(httpServletRequest),
+			_portal.getUserId(httpServletRequest),
+			_requestContextMapper.map(httpServletRequest));
+
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(segmentsEntryIds);
+
+		// LPS-111037
+
+		Optional<AssetListEntry> assetListEntryOptional =
+			_getAssetListEntryOptional(listObjectReference);
+
+		String itemType = assetListEntryOptional.map(
+			AssetListEntryModel::getAssetEntryType
+		).orElse(
+			listObjectReference.getItemType()
+		);
+
+		if (Objects.equals(DLFileEntryConstants.getClassName(), itemType)) {
+			itemType = FileEntry.class.getName();
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			(InfoItemFieldValuesProvider<Object>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class, itemType);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						itemType);
+			}
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<Object> list = layoutListRetriever.getList(
+			listObjectReference, defaultLayoutListRetrieverContext);
+
+		for (Object object : list) {
+			jsonArray.put(
+				_getDisplayObjectJSONObject(
+					infoItemFieldValuesProvider, object,
+					LocaleUtil.fromLanguageId(languageId)));
+		}
+
+		InfoListRenderer<Object> infoListRenderer =
+			(InfoListRenderer<Object>)
+				_infoListRendererTracker.getInfoListRenderer(listStyle);
+
+		if (infoListRenderer != null) {
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+			HttpServletResponse pipingHttpServletResponse =
+				new PipingServletResponse(
+					httpServletResponse, unsyncStringWriter);
+
+			DefaultInfoListRendererContext defaultInfoListRendererContext =
+				new DefaultInfoListRendererContext(
+					httpServletRequest, pipingHttpServletResponse);
+
+			defaultInfoListRendererContext.setListItemRendererKey(
+				listItemStyle);
+			defaultInfoListRendererContext.setTemplateKey(templateKey);
+
+			infoListRenderer.render(list, defaultInfoListRendererContext);
+
+			jsonObject.put("content", unsyncStringWriter.toString());
+		}
+
+		jsonObject.put(
+			"customCollectionSelectorURL",
+			_getCustomCollectionSelectorURL(
+				httpServletRequest, itemType, namespace)
+		).put(
+			"items", jsonArray
+		).put(
+			"itemSubtype",
+			assetListEntryOptional.map(
+				AssetListEntry::getAssetEntrySubtype
+			).orElse(
+				null
+			)
+		).put(
+			"itemType", itemType
+		).put(
+			"length",
+			layoutListRetriever.getListCount(
+				listObjectReference, defaultLayoutListRetrieverContext)
+		).put(
+			"totalNumberOfItems",
+			_collectionPaginationUtil.getTotalNumberOfItems(
+				listCount, displayAllPages, displayAllItems, numberOfItems,
+				numberOfItemsPerPage, numberOfPages, paginationType)
+		);
 
 		return jsonObject;
 	}

@@ -127,8 +127,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
 			newTranslationOption = "pt_BR",
 			translationStatus = "success");
-
-
 	}
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
@@ -186,8 +184,6 @@ definition {
 			key_direction = "right");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "STARTTASKCONNECTOR");
-
-
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
@@ -229,8 +225,6 @@ definition {
 		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
-
-		
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"

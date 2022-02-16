@@ -75,6 +75,8 @@ definition {
 	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
 	@priority = "4"
 	test DisplaySpecificEntryPicklist {
+		property portal.upstream = "quarantine";
+
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaAPI(
@@ -131,6 +133,7 @@ definition {
 			pageName = "Blank Page");
 
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Entry Test");
+
 	}
 
 }

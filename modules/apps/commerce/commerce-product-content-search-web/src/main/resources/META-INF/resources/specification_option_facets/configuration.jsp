@@ -20,8 +20,6 @@
 CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayContext = (CPSpecificationOptionFacetsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFacetPortletInstanceConfiguration = cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionFacetPortletInstanceConfiguration();
-
-CPSpecificationOptionFacetPortletPreferences cpSpecificationOptionFacetPortletPreferences = new CPSpecificationOptionFacetPortletPreferences(java.util.Optional.ofNullable(portletPreferences));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -37,7 +35,7 @@ CPSpecificationOptionFacetPortletPreferences cpSpecificationOptionFacetPortletPr
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error key="exceededMaxTermsLimit" message="cp-specification-option-facet-portlet-instance-configuration-exceeded-max-terms-limit" />
+		<liferay-ui:error key="exceededMaxTermsLimit" message="maximum-terms-cannot-exceed-100" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset
@@ -59,9 +57,9 @@ CPSpecificationOptionFacetPortletPreferences cpSpecificationOptionFacetPortletPr
 				collapsible="<%= true %>"
 				label="advanced-configuration"
 			>
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CPSpecificationOptionFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= cpSpecificationOptionFacetPortletPreferences.getMaxTerms() %>" />
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CPSpecificationOptionFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= cpSpecificationOptionFacetPortletPreferences.getFrequencyThreshold() %>" />
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CPSpecificationOptionFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= cpSpecificationOptionFacetPortletPreferences.isFrequenciesVisible() %>" />
+				<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
+				<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
+				<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

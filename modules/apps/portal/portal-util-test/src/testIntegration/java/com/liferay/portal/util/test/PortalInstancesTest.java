@@ -70,7 +70,7 @@ public class PortalInstancesTest {
 
 		_company = CompanyTestUtil.addCompany();
 
-		_defaultGroup = _groupLocalService.fetchGroup(
+		_defaultGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
 		_defaultGroupPublicLayout = _layoutLocalService.fetchDefaultLayout(

@@ -158,6 +158,32 @@ public class JUnitTestClass extends BaseTestClass {
 		return _getPackageName();
 	}
 
+	private File _getTestPropertiesDirectory(File file) {
+		if (file == null) {
+			return null;
+		}
+
+		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
+
+		File parentFile = canonicalFile.getParentFile();
+
+		if ((parentFile == null) || !parentFile.exists()) {
+			return file;
+		}
+
+		if (!canonicalFile.isDirectory()) {
+			return _getWorkingDirectory(parentFile);
+		}
+
+		File testPropertiesFile = new File(canonicalFile, "test.properties");
+
+		if (!testPropertiesFile.exists()) {
+			return _getWorkingDirectory(parentFile);
+		}
+
+		return canonicalFile;
+	}
+
 	private void _initTestClassMethods() {
 		Matcher classHeaderMatcher = _classHeaderPattern.matcher(_fileContent);
 

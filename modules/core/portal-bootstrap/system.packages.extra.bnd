@@ -220,7 +220,6 @@ Export-Package:\
 	org.apache.logging.log4j.message;version='2.17.1',\
 	org.apache.logging.log4j.spi;version='2.17.1',\
 	org.apache.naming.java,\
-	org.apache.tika.*;version='1.26.0',\
 	org.apache.tools.ant.*;version='1.9.15',\
 	org.apache.xerces.*;version='2.11.0',\
 	org.apache.xml.dtm.*;version='2.7.1',\
@@ -342,8 +341,6 @@ Provide-Capability:\
 	@../../../lib/portal/spring-tx.jar,\
 	@../../../lib/portal/spring-web.jar,\
 	@../../../lib/portal/spring-webmvc.jar,\
-	@../../../lib/portal/tika-core.jar,\
-	@../../../lib/portal/tika-parsers.jar,\
 	@../../../lib/portal/xercesImpl.jar,\
 	@../../../lib/portal/xml-apis.jar,\
 	@../../../lib/portal/xmlsec.jar,\

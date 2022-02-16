@@ -15,14 +15,23 @@
 package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -67,5 +76,40 @@ public class PicklistObjectFieldBusinessType
 	public String getName() {
 		return ObjectFieldConstants.BUSINESS_TYPE_PICKLIST;
 	}
+
+	@Override
+	public Map<String, Object> getProperties(
+		Locale locale, ObjectField objectField) {
+
+		return HashMapBuilder.<String, Object>put(
+			"options",
+			_getDDMFormFieldOptions(
+				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
+				locale)
+		).build();
+	}
+
+	private DDMFormFieldOptions _getDDMFormFieldOptions(
+		long listTypeDefinitionId, Locale locale) {
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(listTypeDefinitionId);
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			ddmFormFieldOptions.addOptionLabel(
+				listTypeEntry.getKey(), locale,
+				GetterUtil.getString(
+					listTypeEntry.getName(locale),
+					listTypeEntry.getName(
+						listTypeEntry.getDefaultLanguageId())));
+		}
+
+		return ddmFormFieldOptions;
+	}
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

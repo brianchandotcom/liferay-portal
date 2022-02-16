@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -36,9 +35,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
@@ -105,7 +101,6 @@ public class ObjectEntryDisplayContext {
 	public ObjectEntryDisplayContext(
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector,
-		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryService objectEntryService,
 		ObjectFieldBusinessTypeServicesTracker
@@ -117,7 +112,6 @@ public class ObjectEntryDisplayContext {
 
 		_ddmFormRenderer = ddmFormRenderer;
 		_itemSelector = itemSelector;
-		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryService = objectEntryService;
 		_objectFieldBusinessTypeServicesTracker =
@@ -425,24 +419,6 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
-	private DDMFormFieldOptions _getDDMFieldOptions(long listTypeDefinitionId) {
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(listTypeDefinitionId);
-
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			ddmFormFieldOptions.addOptionLabel(
-				listTypeEntry.getKey(), _objectRequestHelper.getLocale(),
-				GetterUtil.getString(
-					listTypeEntry.getName(_objectRequestHelper.getLocale()),
-					listTypeEntry.getName(
-						listTypeEntry.getDefaultLanguageId())));
-		}
-
-		return ddmFormFieldOptions;
-	}
-
 	private DDMForm _getDDMForm(ObjectLayoutTab objectLayoutTab)
 		throws PortalException {
 
@@ -499,15 +475,6 @@ public class ObjectEntryDisplayContext {
 			objectField.getName(),
 			objectFieldBusinessType.getDDMFormFieldTypeName());
 
-		if (StringUtil.equals(
-				objectFieldBusinessType.getName(),
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			ddmFormField.setDDMFormFieldOptions(
-				_getDDMFieldOptions(
-					GetterUtil.getLong(objectField.getListTypeDefinitionId())));
-		}
-
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());
 
@@ -517,8 +484,8 @@ public class ObjectEntryDisplayContext {
 
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
-		Map<String, Object> properties =
-			objectFieldBusinessType.getProperties();
+		Map<String, Object> properties = objectFieldBusinessType.getProperties(
+			_objectRequestHelper.getLocale(), objectField);
 
 		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));
@@ -801,7 +768,6 @@ public class ObjectEntryDisplayContext {
 
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
-	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;

@@ -58,8 +58,8 @@ definition {
 	@description = "This test filters to only see Overrides."
 	@priority = "4"
 	test CanFilterOverrides {
-		task ("Given that assert no existing keys filter by override") {
-			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		task ("Given that assert no existing keys filter by Any Language") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
@@ -77,13 +77,13 @@ definition {
 				value1 = "0-analytics-cloud-connection");
 		}
 
-		task ("When add a language key and filters by Overrides") {
+		task ("When add a language key and filters by Any Language") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error",
 				translationOverrideList = "en-US",
 				translationOverrideValueList = "Text contains error");
 
-			ManagementBar.setFilterAndOrder(filterBy = "Override");
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 		}
 
 		task ("Then user can only view Overridden keys") {
@@ -116,8 +116,8 @@ definition {
 				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÂ©m erro,El texto contiene error");
 		}
 
-		task ("and the user sets the navigation filter to Override") {
-			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		task ("and the user sets the navigation filter to Any Language") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 		}
 
 		task ("When the user removes all translation overrides via the Menu Item option") {
@@ -145,8 +145,8 @@ definition {
 				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©m erro,El texto contiene error");
 		}
 
-		task ("and the user sets the navigation filter to Override") {
-			ManagementBar.setFilterAndOrder(filterBy = "Override");
+		task ("and the user sets the navigation filter to Any Language") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 		}
 
 		task ("When the user selects a language and removes translation override for the selected language") {
@@ -301,7 +301,7 @@ definition {
 				translationOverrideList = "nl-NL,de-DE,sv-SE",
 				translationOverrideValueList = "edit1,edit2,edit3");
 
-			ManagementBar.setFilterAndOrder(filterBy = "Override");
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 
 			LanguageOverride.goToLanguageKey(languageKey = "a-configuration-with-this-name-already-exists");
 

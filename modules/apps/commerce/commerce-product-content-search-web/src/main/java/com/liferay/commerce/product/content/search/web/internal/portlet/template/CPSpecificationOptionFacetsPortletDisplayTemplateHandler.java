@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS,
 	service = TemplateHandler.class
 )
-public class CPSpecificationOptionFacetPortletDisplayTemplateHandler
+public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override

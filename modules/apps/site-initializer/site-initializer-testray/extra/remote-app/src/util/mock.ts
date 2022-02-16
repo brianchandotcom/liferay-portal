@@ -66,6 +66,12 @@ const generateItems = <T>(item: T, total = 20): T[] => {
 	return [...new Array(total)].map(() => item);
 };
 
+const getRandom = (max = 50) => Math.ceil(Math.random() * max);
+
+export function getRandomMaximumValue(count: number, max: number) {
+	return [...new Array(count)].map(() => getRandom(max));
+}
+
 const assigned = generateItems<Assigned>(
 	{
 		name: 'John Doe',
@@ -267,4 +273,12 @@ export const runs = [
 		passed: 0,
 		test_fix: 0,
 	},
+];
+
+export const TotalTestCases = [
+	['PASSED', 30529],
+	['FAILED', 5374],
+	['BLOCKED', 0],
+	['TEST FIX', 0],
+	['INCOMPLETE', 21],
 ];

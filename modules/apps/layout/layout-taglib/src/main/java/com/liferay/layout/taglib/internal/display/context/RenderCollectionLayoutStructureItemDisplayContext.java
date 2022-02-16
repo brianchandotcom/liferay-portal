@@ -37,6 +37,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.FFRenderCollectionLayoutStructureItemConfigurationUtil;
+import com.liferay.layout.util.structure.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -74,12 +75,6 @@ import javax.servlet.http.HttpServletResponse;
 public class RenderCollectionLayoutStructureItemDisplayContext {
 
 	public static final String PAGE_NUMBER_PARAM_PREFIX = "page_number_";
-
-	public static final String PAGINATION_TYPE_NUMERIC = "numeric";
-
-	public static final String PAGINATION_TYPE_REGULAR = "regular";
-
-	public static final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	public RenderCollectionLayoutStructureItemDisplayContext(
 		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
@@ -695,13 +690,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private boolean _isPaginationEnabled() {
 		if (Objects.equals(
 				_collectionStyledLayoutStructureItem.getPaginationType(),
-				PAGINATION_TYPE_NUMERIC) ||
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(
 				_collectionStyledLayoutStructureItem.getPaginationType(),
-				PAGINATION_TYPE_REGULAR) ||
+				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR) ||
 			Objects.equals(
 				_collectionStyledLayoutStructureItem.getPaginationType(),
-				PAGINATION_TYPE_SIMPLE)) {
+				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE)) {
 
 			return true;
 		}

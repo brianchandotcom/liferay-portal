@@ -35,7 +35,8 @@ export function getPercentLabel(percent: number) {
 
 	if (percent > 99 && percent < 100) {
 		percentValue = LABEL_GREATER_THAN_99;
-	} else if (percent > 0 && percent < 1) {
+	}
+	else if (percent > 0 && percent < 1) {
 		percentValue = LABEL_LESS_THAN_1;
 	}
 

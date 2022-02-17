@@ -15,9 +15,11 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
 
 import java.util.Collections;
@@ -40,6 +42,33 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		_deleteSXPBlueprints();
 
 		super.tearDown();
+	}
+
+	@Override
+	@Test
+	public void testGetSXPBlueprintExport() throws Exception {
+		SXPBlueprint sxpBlueprint = randomSXPBlueprint();
+
+		String title = sxpBlueprint.getTitle();
+		String description = sxpBlueprint.getDescription();
+
+		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
+			sxpBlueprint);
+
+		HttpInvoker.HttpResponse httpResponse =
+			sxpBlueprintResource.getSXPBlueprintExportHttpResponse(
+				postSXPBlueprint.getId());
+
+		String content = httpResponse.getContent();
+
+		String expectedContent = StringBundler.concat(
+			"{  \"schemaVersion\" : \"", postSXPBlueprint.getSchemaVersion(),
+			"\",  \"title_i18n\" : {    \"en_US\" : \"", title,
+			"\"  },  \"configuration\" : { },  \"description_i18n\" :",
+			" {    \"en_US\" : \"", description,
+			"\"  },  \"elementInstances\" : [ ]}");
+
+		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Ignore

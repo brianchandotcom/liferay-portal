@@ -15,10 +15,12 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
 
 import java.util.Collections;
@@ -41,6 +43,33 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		_deleteSXPElements();
 
 		super.tearDown();
+	}
+
+	@Override
+	@Test
+	public void testGetSXPElementExport() throws Exception {
+		SXPElement sxpElement = randomSXPElement();
+
+		String title = sxpElement.getTitle();
+		String description = sxpElement.getDescription();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		HttpInvoker.HttpResponse httpResponse =
+			sxpElementResource.getSXPElementExportHttpResponse(
+				postSXPElement.getId());
+
+		String content = httpResponse.getContent();
+
+		String expectedContent = StringBundler.concat(
+			"{  \"schemaVersion\" : \"", postSXPElement.getSchemaVersion(),
+			"\",  \"title_i18n\" : {    \"en_US\" : \"", title,
+			"\"  },  \"description_i18n\" : {    \"en_US\" : \"", description,
+			"\"  },  \"type\" : ", postSXPElement.getType(),
+			",  \"elementDefinition\" : { }}");
+
+		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Ignore

@@ -1,25 +1,5 @@
 [
 	{
-		"configurationRole": "general",
-		"styles": [
-			{
-				"dataType": "string",
-				"defaultValue": "block",
-				"label": "hide-fragment",
-				"name": "display",
-				"responsive": true,
-				"responsiveTemplate": "d{viewport}{value}",
-				"type": "checkbox",
-				"typeOptions": {
-					"customValues": {
-						"checked": "none",
-						"unchecked": "block"
-					}
-				}
-			}
-		]
-	},
-	{
 		"label": "margin",
 		"styles": [
 			{
@@ -479,7 +459,7 @@
 	},
 	{
 		"configurationRole": "general",
-		"label": "size",
+		"label": "frame",
 		"styles": [
 			{
 				"dataType": "string",
@@ -564,6 +544,21 @@
 						"value": "auto"
 					}
 				]
+			},
+			{
+				"dataType": "string",
+				"defaultValue": "block",
+				"label": "hide-fragment",
+				"name": "display",
+				"responsive": true,
+				"responsiveTemplate": "d{viewport}{value}",
+				"type": "checkbox",
+				"typeOptions": {
+					"customValues": {
+						"checked": "none",
+						"unchecked": "block"
+					}
+				}
 			}
 		]
 	},

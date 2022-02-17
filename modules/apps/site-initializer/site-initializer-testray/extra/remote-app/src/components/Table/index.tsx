@@ -66,7 +66,6 @@ const Table: React.FC<TableProps> = ({
 									'cursor-pointer': column.clickable,
 								})}
 								expanded={columnIndex === 0}
-								headingCell={columnIndex === 0}
 								key={columnIndex}
 								onClick={() => {
 									if (navigateTo && column.clickable) {

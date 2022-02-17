@@ -22,78 +22,76 @@ import {getTestrayCases} from '../../../../graphql/queries';
 import {Liferay} from '../../../../services/liferay/liferay';
 import {getStatusLabel} from '../../../../util/constants';
 
-const Build = () => {
-	return (
-		<Container className="mt-4" title="Tests">
-			<ListView
-				query={getTestrayCases}
-				tableProps={{
-					columns: [
-						{
-							clickable: true,
-							key: 'priority',
-							value: 'Priority',
-						},
-						{
-							key: 'component',
-							value: 'Component',
-						},
-						{
-							clickable: true,
-							key: 'name',
-							value: 'Case',
-						},
-						{
-							key: 'run',
-							render: () => '01',
-							value: 'Run',
-						},
-						{
-							key: 'assignee',
-							render: (_: any, {testrayCaseResult}: any) =>
-								testrayCaseResult?.assignedUserId ? (
-									<Avatar />
-								) : (
-									<AssignToMe></AssignToMe>
-								),
-							value: 'Assignee',
-						},
-						{
-							key: 'status',
-							render: (_: any, {testrayCaseResult}: any) =>
-								testrayCaseResult?.dueStatus && (
-									<StatusBadge
-										type={getStatusLabel(
-											testrayCaseResult?.dueStatus
-										)?.toLowerCase()}
-									>
-										{getStatusLabel(
-											testrayCaseResult?.dueStatus
-										)}
-									</StatusBadge>
-								),
-							value: 'Status',
-						},
-						{
-							key: 'issues',
-							value: 'Issues',
-						},
-						{
-							key: 'error',
-							render: (_: any, {testrayCaseResult}: any) =>
-								testrayCaseResult?.errors && (
-									<Code>{testrayCaseResult.errors}</Code>
-								),
-							value: 'Errors',
-						},
-					],
-					navigateTo: (item) => `case/${item.testrayCaseId}`,
-				}}
-				transformData={(data) => data?.c?.testrayCases}
-				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
-			/>
-		</Container>
-	);
-};
+const Build = () => (
+	<Container className="mt-4" title="Tests">
+		<ListView
+			query={getTestrayCases}
+			tableProps={{
+				columns: [
+					{
+						clickable: true,
+						key: 'priority',
+						value: 'Priority',
+					},
+					{
+						key: 'component',
+						value: 'Component',
+					},
+					{
+						clickable: true,
+						key: 'name',
+						value: 'Case',
+					},
+					{
+						key: 'run',
+						render: () => '01',
+						value: 'Run',
+					},
+					{
+						key: 'assignee',
+						render: (_: any, {testrayCaseResult}: any) =>
+							testrayCaseResult?.assignedUserId ? (
+								<Avatar />
+							) : (
+								<AssignToMe />
+							),
+						value: 'Assignee',
+					},
+					{
+						key: 'status',
+						render: (_: any, {testrayCaseResult}: any) =>
+							testrayCaseResult?.dueStatus && (
+								<StatusBadge
+									type={getStatusLabel(
+										testrayCaseResult?.dueStatus
+									)?.toLowerCase()}
+								>
+									{getStatusLabel(
+										testrayCaseResult?.dueStatus
+									)}
+								</StatusBadge>
+							),
+						value: 'Status',
+					},
+					{
+						key: 'issues',
+						value: 'Issues',
+					},
+					{
+						key: 'error',
+						render: (_: any, {testrayCaseResult}: any) =>
+							testrayCaseResult?.errors && (
+								<Code>{testrayCaseResult.errors}</Code>
+							),
+						value: 'Errors',
+					},
+				],
+				navigateTo: (item) => `case-result/${item.testrayCaseId}`,
+			}}
+			transformData={(data) => data?.c?.testrayCases}
+			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+		/>
+	</Container>
+);
 
 export default Build;

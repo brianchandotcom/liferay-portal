@@ -159,6 +159,128 @@ definition {
 		DMNavigator.gotoRepository(dmRepositoryName = "Collaboration Test Application");
 	}
 
+	@description = "This is a test for LPS-122682. It checks that a repository can be remote published in depot."
+	@priority = "4"
+	test CanRemotePublishRepositoryInDepot {
+		property test.name.skip.portal.instance = "SharepointREST#CanRemotePublishRepositoryInDepot";
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		SystemSettings.openSystemSettingsAdmin(baseURL = "http://localhost:9080");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Sharepoint OAuth2",
+			configurationScope = "System Scope");
+
+		Button.clickAdd();
+
+		Type(
+			key_text = "name",
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationName}");
+
+		Type(
+			key_text = "authorizationGrantEndpoint",
+			locator1 = "TextArea#ANY",
+			value1 = "${authorizationGrantEndpoint}");
+
+		Type(
+			key_text = "authorizationTokenEndpoint",
+			locator1 = "TextArea#ANY",
+			value1 = "${authorizationTokenEndpoint}");
+
+		Type(
+			key_text = "clientId",
+			locator1 = "TextArea#ANY",
+			value1 = "${clientId}");
+
+		Type(
+			key_text = "clientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = "${clientSecret}");
+
+		Type(
+			key_text = "scope",
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationScope}");
+
+		Type(
+			key_text = "tenantId",
+			locator1 = "TextArea#ANY",
+			value1 = "${tenantId}");
+
+		Type(
+			key_text = "siteDomain",
+			locator1 = "TextArea#ANY",
+			value1 = "${siteDomain}");
+
+		Type(
+			key_text = "resource",
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationResource}");
+
+		PortletEntry.save();
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		Depot.remoteStagingSetUpViaJson(
+			groupName = "Test Depot Name",
+			remotePort = "9080",
+			site = "false");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Collaboration Test Application");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryPath = "Documentos compartidos",
+			dmRepositoryName = "Sharepoint (${configurationName})",
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com");
+
+		PortletEntry.save();
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DepotNavigator.openDepotAdmin(baseURL = "http://localhost:9080");
+
+		DepotNavigator.gotoDepot(depotName = "Remote Depot");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMFolder.viewEntryPresent(dmFolderName = "Collaboration Test Application");
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test CheckinDocument {

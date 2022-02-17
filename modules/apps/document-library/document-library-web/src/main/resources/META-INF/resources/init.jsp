@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/document-library" prefix="liferay-document-li
 taglib uri="http://liferay.com/tld/dynamic-section" prefix="liferay-dynamic-section" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/export-import-changeset" prefix="liferay-export-import-changeset" %><%@
+taglib uri="http://liferay.com/tld/friendly-url" prefix="liferay-friendly-url" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %><%@
@@ -97,6 +98,7 @@ page import="com.liferay.document.library.kernel.util.VideoProcessorUtil" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewSizeException" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
+page import="com.liferay.document.library.web.internal.configuration.FFFriendlyURLEntryFileEntryConfigurationUtil" %><%@
 page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@

@@ -563,6 +563,25 @@ renderResponse.setTitle(headerTitle);
 					</aui:fieldset>
 				</c:if>
 
+				<c:if test="<%= FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
+
+						<%
+						Portlet portlet = PortletLocalServiceUtil.getPortletById(DLPortletKeys.DOCUMENT_LIBRARY);
+						%>
+
+						<liferay-friendly-url:input
+							className="<%= FileEntry.class.getName() %>"
+							classPK="<%= fileEntryId %>"
+							disabled="<%= true %>"
+							inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+							localizable="<%= false %>"
+							name="urlTitle"
+							showHistory="<%= false %>"
+						/>
+					</aui:fieldset>
+				</c:if>
+
 				<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links

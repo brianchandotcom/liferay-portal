@@ -21,67 +21,75 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-import org.json.JSONObject;
-import java.util.HashMap; // import the HashMap class
-import java.io.FileInputStream;
-import java.nio.file.Paths;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.util.HttpClient;
+
 import java.io.File;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.FileInputStream;
+
+import java.nio.file.Paths;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.json.JSONObject;
+
 import org.w3c.dom.Document;
-import com.liferay.portal.kernel.util.StringUtil;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-import java.util.Map;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.InputStream;
-import com.liferay.util.HttpClient;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import org.w3c.dom.NodeList;
 
 /**
  * @author José Abelenda
  */
 public class ImportResults {
 
-	public static void addProject() {
+	public static void addProject(long groupId) {
 		try {
-			Map<String, String> json = null;
-			File inputFile = new File("/home/me/Downloads/key.xml");
-			DocumentBuilderFactory dbFactory =
+			Map<String, String> map = null;
+
+			File file = new File(_URL_KEY);
+
+			DocumentBuilderFactory documentBuilderFactory =
 				DocumentBuilderFactory.newInstance();
 
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
 
-			Document doc = dBuilder.parse(inputFile);
+			Document document = documentBuilder.parse(file);
 
-			doc.getDocumentElement(
-			).normalize();
+			Element element = document.getDocumentElement();
 
-			NodeList nList = doc.getElementsByTagName("property");
+			element.normalize();
 
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-				Node nNode = nList.item(temp);
+			NodeList nodeList = document.getElementsByTagName("property");
 
-				if ((nNode.getNodeType() == Node.ELEMENT_NODE) &&
-					(nNode.getNodeName() != "#text") &&
-					(nNode.getAttributes(
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+
+				if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+					!node.getNodeName(
+					).equals(
+						"#text"
+					) &&
+					(node.getAttributes(
 					).getLength() > 0)) {
 
-					String name = nNode.getAttributes(
+					String name = node.getAttributes(
 					).getNamedItem(
 						"name"
 					).getTextContent();
-					String value = nNode.getAttributes(
+
+					String value = node.getAttributes(
 					).getNamedItem(
 						"value"
 					).getTextContent();
 
 					if (name.equals("testray.project.name")) {
-						json = HashMapBuilder.put(
+						map = HashMapBuilder.put(
 							"description", name
 						).put(
 							"name", value
@@ -90,95 +98,73 @@ public class ImportResults {
 				}
 			}
 
-			try {
-				JSONObject jsonObject = new JSONObject(json);
-
-				System.out.println(jsonObject);
-				HttpClient.post(
-					"http://localhost:8080/o/c/" + "testrayprojects" +
-						"/scopes/" + "42532",
-					jsonObject);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			HttpClient.post(
+				_BASE_URL + "testrayprojects/scopes/" + groupId,
+				new JSONObject(map));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 
-	public static void addTestCase() {
+	public static void addTestCase(long groupId) {
 		try {
-			Map<String, String> json = new HashMap<String, String>();
-			File inputFile = new File("/home/me/Downloads/key.xml");
-			DocumentBuilderFactory dbFactory =
+			File file = new File(_URL_KEY);
+			DocumentBuilderFactory documentBuilderFactory =
 				DocumentBuilderFactory.newInstance();
 
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
 
-			Document doc = dBuilder.parse(inputFile);
+			Document document = documentBuilder.parse(file);
 
-			doc.getDocumentElement(
-			).normalize();
+			Element element = document.getDocumentElement();
 
-			System.out.println(
-				"Root element :" +
-					doc.getDocumentElement(
-					).getNodeName());
+			element.normalize();
 
-			NodeList nList = doc.getElementsByTagName("property");
+			System.out.println("Root element :" + element.getNodeName());
 
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-				Node nNode = nList.item(temp);
+			NodeList nodeList = document.getElementsByTagName("property");
 
-				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
+			Map<String, String> map = new HashMap<>();
 
-				if ((nNode.getNodeType() == Node.ELEMENT_NODE) &&
-					(nNode.getNodeName() != "#text") &&
-					(nNode.getAttributes(
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+
+				if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+					!node.getNodeName(
+					).equals(
+						"#text"
+					) &&
+					(node.getAttributes(
 					).getLength() > 0)) {
 
-					String name = nNode.getAttributes(
+					String name = node.getAttributes(
 					).getNamedItem(
 						"name"
 					).getTextContent();
-					String value = nNode.getAttributes(
+
+					String value = node.getAttributes(
 					).getNamedItem(
 						"value"
 					).getTextContent();
 
-					if(name.equals("testray.testcase.priority")){
+					if (name.equals("testray.testcase.priority")) {
+						map.put("priority", value);
+					}
+					else if (name.equals("testray.testcase.name")) {
+						map.put("name", value);
+						map.put("stepsType", name);
 
-						json.put(
-							"priority", value
-						);	
-					} else if(name.equals("testray.testcase.name")){
-
-						json.put(
-							"name", value
-						);
-						json.put(
-							"stepsType", name
-						);
-			try {
-				JSONObject jsonObject = new JSONObject(json);
-
-				System.out.println(jsonObject);
-				HttpClient.post(
-					"http://localhost:8080/o/c/" + "testraycases" + "/scopes/" +
-						"42532",
-					jsonObject);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-					} 
+						HttpClient.post(
+							_BASE_URL + "testraycases/scopes/" + groupId,
+							new JSONObject(map));
+					}
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 
@@ -204,24 +190,19 @@ public class ImportResults {
 			for (Blob blob : blobsPage.iterateAll()) {
 				System.out.println(blob.getName());
 
-				blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+				blob.downloadTo(Paths.get(_URL_KEY));
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		try {
-			System.out.println("Hello World!");
-
-			//	listBuckets("wise-aegis-340917");
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-	//	addProject();
-		addTestCase();
-		
+		long groupId = 42532L;
+		//	addProject();
+		addTestCase(groupId);
 	}
+
+	private static final String _BASE_URL = "http://localhost:8080/o/c/";
+
+	private static final String _URL_KEY = "/home/me/Downloads/key.xml";
 
 }

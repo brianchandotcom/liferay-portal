@@ -2531,9 +2531,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewFileCategoryAndTags {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "Vocabulary Name");

@@ -9286,6 +9286,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			liferay.home.dir.name=${liferay.home}
 			liferay.app.server.global.lib.dir=${app.server.lib.global.dir}
 			liferay.app.server.portal.lib.dir=${app.server.lib.portal.dir}
+			liferay.app.server.shielded.container.lib.portal.dir=${app.server.shielded-container-lib.portal.dir}
 			liferay.app.server.portal.web.dir=${app.server.portal.dir}
 			logger.resources.url=${test.poshi.logger.resources.url}
 			output.dir.name=${selenium.output.dir.name}

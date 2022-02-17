@@ -13,7 +13,7 @@
  */
 
 const Code: React.FC = ({children}) => (
-	<div className="bg-light font-italic p-2">{children}</div>
+	<div className="bg-light font-italic p-2 text-secondary">{children}</div>
 );
 
 export default Code;

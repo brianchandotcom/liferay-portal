@@ -103,29 +103,4 @@ definition {
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@description = "This ensures that the script can be escaped."
-	@priority = "3"
-	@refactordone
-	test CanViewEscapedScriptFromHTML {
-		property portal.acceptance = "false";
-
-		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			wikiNodeName = "Main",
-			wikiPageTitle = "FrontPage");
-
-		WikiPage.editFrontPagePG(wikiPageContentEdit = '''<script>alert(123);</script>''');
-
-		AssertAlertNotPresent();
-
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-	}
-
 }

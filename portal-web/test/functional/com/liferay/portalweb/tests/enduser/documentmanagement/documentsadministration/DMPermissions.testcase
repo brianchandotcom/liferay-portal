@@ -2483,6 +2483,154 @@ definition {
 		User.viewLoginPG(loginPg = "Full Screen");
 	}
 
+	@priority = "5"
+	@refactorneeded
+	test ViewDocumentWithGlobalScope {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page - Global");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page - Global",
+			widgetName = "Documents and Media");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.viewCP(
+			dmFolderName = "DM SubFolder Name",
+			specificNameFolder = "true");
+
+		Refresh();
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMPortlet.configureScopetoGlobalPG(currentScope = "Liferay");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMPortlet.configureRootFolderPG(dmFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
+
+		Refresh();
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.viewDefaultPG(portletName = "Documents and Media");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPrivatePage(
+			pageName = "DM Site Page Name - Global",
+			siteTemplate = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "DM Site Name",
+			siteTemplateName = "Site Template Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "DM Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name");
+
+		DMPortlet.configureScopetoGlobalPG(currentScope = "DM Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name");
+
+		DMPortlet.configureRootFolderPG(dmFolderName = "DM Folder Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
+
+		Refresh();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This ensures that the user can create document viewable only by the owner."
 	@priority = "4"
 	@refactorneeded

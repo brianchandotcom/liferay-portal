@@ -213,4 +213,36 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
+	@priority = "3"
+	@refactorneeded
+	test ImportDocumentWithDBStore {
+		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
+		property test.assert.warning.exceptions = "false";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "DM_Test_DB_Store.lar");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LAR.importPortlet(larFileName = "DM_Test_DB_Store.lar");
+
+		Navigator.openURL();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
 }

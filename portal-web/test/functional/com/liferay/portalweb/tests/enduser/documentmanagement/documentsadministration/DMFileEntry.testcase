@@ -34,6 +34,72 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
+	@priority = "5"
+	@refactorneeded
+	test AddAutoAssertionCategoryViaDMDocument {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DMFileEntry#AddAutoAssertionCategoryViaDMDocument";
+
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Topic");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "category",
+			vocabularyName = "Topic");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
+
+		Click(locator1 = "Icon#EDIT_CATEGORIES");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Categories");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You are editing the categories for the selected item.");
+
+		Type.sendKeys(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = "cat");
+
+		AssertClick(
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER",
+			value1 = "category");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		DMDocument.viewCategories(categoryNameList = "category");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanAddCommentToDocument {
@@ -1707,7 +1773,7 @@ definition {
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CanRestrictFileExtensionToDoc";
+		property test.name.skip.portal.instance = "DMFileEntry#CanRestrictFileExtensionToDoc";
 
 		DMDocument.updateFileExtensions(fieldValue = ".doc");
 
@@ -2336,6 +2402,45 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
+	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
+	@priority = "3"
+	@refactorneeded
+	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
+		property test.name.skip.portal.instance = "DMFileEntry#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Adaptive Media",
+			configurationName = "Images",
+			configurationScope = "System Scope");
+
+		Click(
+			key_fieldValue = "image/gif",
+			locator1 = "DDMField#REMOVE_SPECIFIC_REPEATED_FIELD");
+
+		SystemSettings.saveConfiguration();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			navTab = "Documents and Media",
+			uploadFileName = "static.gif");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "static.gif");
+	}
+
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
 	@priority = "3"
 	@refactordone
@@ -2371,37 +2476,147 @@ definition {
 			dmDocumentVersionNumber = "2.0");
 	}
 
-	@description = "This is a use case for LPS-50760."
-	@priority = "4"
-	@refactordone
-	test StagingFileSizeIsNotAffectedByDLRestrictions {
+	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
+	@priority = "5"
+	@refactorneeded
+	test ValidateFileNameRestrictions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''Document_1''',
 			dmDocumentTitle = "DM Document Title",
+			emptyFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "",
+			dmDocumentTitle = "DM Document Title",
+			emptyFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''\\\///.jpg''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentFileName = '''<>.txt''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentFileName = ''':"?.doc''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewFileCategoryAndTags {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		JSONCategory.addVocabulary(
 			groupName = "Guest",
-			mimeType = "audio/x-mpeg",
-			sourceFileName = "Document_1.mp3");
+			title = "Vocabulary Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		LAR.exportPortlet(larFileName = "DM.portlet.lar");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
-		DMDocument.updateMaximumFileSize(fieldValue = "300000");
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			portlet = "Categories");
 
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
+		Category.addCP(
+			categoryDescription = "Category Description",
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		Navigator.openSiteURL(siteName = "Guest");
 
-		LAR._gotoExportImport();
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			portlet = "Tags");
 
-		AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
+		var tagNameList = "tag1,tag2";
 
-		LAR._export(
-			exportPermissions = "${exportPermissions}",
-			larFileName = "DM.portlet.lar");
+		for (var tagName : list "${tagNameList}") {
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			categoryName = "Category Name",
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document Title",
+			tagNameList = "tag1,tag2",
+			vocabularyName = "Vocabulary Name");
+
+		Click(
+			key_dmDocumentTitle = "Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssertTextEquals(
+			key_categoryName = "Category Name",
+			locator1 = "AssetCategorization#CATEGORY",
+			value1 = "Category Name");
+
+		for (var tagName : list "${tagNameList}") {
+			var key_tagName = "${tagName}";
+
+			AssertTextEquals(
+				locator1 = "AssetCategorization#TAG",
+				value1 = "${tagName}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			categoryName = "Category Name",
+			dmDocumentDescription = "Document Description",
+			dmDocumentTitle = "Document Title",
+			tagNameList = "tag1,tag2");
 	}
 
 }

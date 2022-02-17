@@ -121,10 +121,11 @@ export function AssetCategoryTree({
 					<ClayTreeView.ItemStack
 						onClick={(event) =>
 							!multiSelection &&
+							!item.disabled &&
 							handleSingleSelectionChange(event, item)
 						}
 					>
-						{multiSelection && (
+						{multiSelection && !item.disabled && (
 							<ClayCheckbox
 								onChange={() =>
 									handleMultipleSelectionChange(
@@ -145,10 +146,11 @@ export function AssetCategoryTree({
 							<ClayTreeView.Item
 								onClick={(event) =>
 									!multiSelection &&
+									!item.disabled &&
 									handleSingleSelectionChange(event, item)
 								}
 							>
-								{multiSelection && (
+								{multiSelection && !item.disabled && (
 									<ClayCheckbox
 										onChange={() =>
 											handleMultipleSelectionChange(

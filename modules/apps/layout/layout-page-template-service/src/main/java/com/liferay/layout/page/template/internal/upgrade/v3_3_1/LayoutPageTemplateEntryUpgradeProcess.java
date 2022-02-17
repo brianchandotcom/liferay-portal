@@ -121,7 +121,12 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 		throws PortalException {
 
 		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId);
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
+				layoutPrototypeId);
+
+		if (layoutPrototype == null) {
+			return;
+		}
 
 		Map<Locale, String> nameMap = layoutPrototype.getNameMap();
 

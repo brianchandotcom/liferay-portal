@@ -271,25 +271,19 @@ public class AssetListAssetEntryProviderImpl
 	protected AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long segmentsEntryId, String userId) {
 
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
 			true
 		).fastLoad(
 			assetListEntry.getTypeSettings(segmentsEntryId)
 		).build();
 
-		_createAssetEntryQuery(
-			assetListEntry, userId, assetEntryQuery, unicodeProperties);
-
-		return assetEntryQuery;
+		return _createAssetEntryQuery(
+			assetListEntry, userId, unicodeProperties);
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int end, int start) {
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		LongStream longStream = Arrays.stream(segmentsEntryIds);
 
@@ -299,8 +293,8 @@ public class AssetListAssetEntryProviderImpl
 			Collectors.toList()
 		);
 
-		_createAssetEntryQuery(
-			assetListEntry, userId, assetEntryQuery,
+		AssetEntryQuery assetEntryQuery = _createAssetEntryQuery(
+			assetListEntry, userId,
 			UnicodePropertiesBuilder.create(
 				true
 			).setProperty(
@@ -313,9 +307,11 @@ public class AssetListAssetEntryProviderImpl
 		return assetEntryQuery;
 	}
 
-	private void _createAssetEntryQuery(
+	private AssetEntryQuery _createAssetEntryQuery(
 		AssetListEntry assetListEntry, String userId,
-		AssetEntryQuery assetEntryQuery, UnicodeProperties unicodeProperties) {
+		UnicodeProperties unicodeProperties) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		_setCategoriesAndTagsAndKeywords(
 			assetEntryQuery, unicodeProperties,
@@ -411,13 +407,15 @@ public class AssetListAssetEntryProviderImpl
 		assetEntryQuery.setOrderByType1(orderByType1);
 
 		String orderByType2 = GetterUtil.getString(
-			unicodeProperties.getProperty("orderByType2", "DESC"));
+			unicodeProperties.getProperty("orderByType2", "ASC"));
 
 		assetEntryQuery.setOrderByType2(orderByType2);
 
 		_processAssetEntryQuery(
 			assetListEntry.getCompanyId(), userId, unicodeProperties,
 			assetEntryQuery);
+
+		return assetEntryQuery;
 	}
 
 	private List<AssetEntry> _dynamicSearch(

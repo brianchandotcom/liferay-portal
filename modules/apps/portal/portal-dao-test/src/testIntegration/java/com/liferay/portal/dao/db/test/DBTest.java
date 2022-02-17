@@ -245,8 +245,10 @@ public class DBTest {
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
 			_db, "getIndexes",
-			new Class<?>[] {Connection.class, String.class, String.class},
-			_connection, _TABLE_NAME, "typeVarchar");
+			new Class<?>[] {
+				Connection.class, String.class, String.class, boolean.class
+			},
+			_connection, _TABLE_NAME, "typeVarchar", false);
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 0, indexMetadatas.size());
@@ -264,8 +266,10 @@ public class DBTest {
 	private void _validateIndex(String[] columnNames) throws Exception {
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
 			_db, "getIndexes",
-			new Class<?>[] {Connection.class, String.class, String.class},
-			_connection, _TABLE_NAME, columnNames[0]);
+			new Class<?>[] {
+				Connection.class, String.class, String.class, boolean.class
+			},
+			_connection, _TABLE_NAME, columnNames[0], false);
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 1, indexMetadatas.size());

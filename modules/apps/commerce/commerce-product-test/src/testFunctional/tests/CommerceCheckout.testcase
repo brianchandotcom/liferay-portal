@@ -30,7 +30,7 @@ definition {
 	@priority = "5"
 	test AddOrderFromAUserAndCheckoutFromAdminUser {
 		property portal.acceptance = "false";
-	
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		JSONUser.addUser(
@@ -151,11 +151,11 @@ definition {
 			password = "test",
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer2@liferay.com");
-		
+
 		AssertTextEquals(
 			locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
 			value1 = "${activeOrderId}");
-		
+
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "View Details");

@@ -4,7 +4,7 @@ definition {
 	macro addAccountEntryUser {
 		Variables.assertDefined(parameterList = "${accountName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		if(("${createNewAccount}" == "true") && (isSet(accountType))) {
+		if (("${createNewAccount}" == "true") && isSet(accountType)) {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "${accountName}",
 				accountEntryType = "${accountType}");

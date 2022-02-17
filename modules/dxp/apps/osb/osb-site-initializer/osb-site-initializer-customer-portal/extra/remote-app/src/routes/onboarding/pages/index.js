@@ -32,7 +32,8 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = PAGE_ROUTER_TYPES.project(
 				project.accountKey
 			);
@@ -59,7 +60,8 @@ const Pages = () => {
 								payload: ONBOARDING_STEP_TYPES.successDxpCloud,
 								type: actionTypes.CHANGE_STEP,
 							});
-						} else {
+						}
+						else {
 							window.location.href = PAGE_ROUTER_TYPES.project(
 								project.accountKey
 							);

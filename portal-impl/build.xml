@@ -594,6 +594,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 					<jvmarg value="-Xmx2048m" />
 					<jvmarg value="-Xss2048k" />
+					<jvmarg value="-Dfile.encoding=UTF-8" />
 					<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
 					<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
 					<arg value="commit.count=${source.formatter.commit.count}" />

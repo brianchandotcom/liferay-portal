@@ -19,6 +19,83 @@ definition {
 		}
 	}
 
+	@description = "LPS-147201. Verify approved remote app portlet can be added to page"
+	@priority = "4"
+	test AdminCanApproveRemotePortlet {
+		property portal.acceptance = "true";
+
+		task ("Apply workflow approval process to remote apps") {
+			RemoteAppsWorkflow.applyWorkflow();
+		}
+
+		task ("Add user with permissions to create remote app") {
+			Permissions.setUpRegRoleLoginUserCP(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			RemoteAppsWorkflow.addUserPermissions();
+		}
+
+		task ("Create remote app as user with permissions") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.addApp(
+				entryName = "Test Remote App",
+				entryURL = "http://www.liferay.com");
+		}
+
+		task ("Approve remote app as admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Notifications.gotoNotifications();
+
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "userfn userln sent you a Remote App Entry for review in the workflow.");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+			Workflow.confirmWorkflowAction();
+		}
+
+		task ("Assert remote app approved status") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.assertTableStatus(
+				entryName = "Test Remote App",
+				entryStatus = "Approved");
+		}
+
+		task ("Create widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.gotoPage(pageName = "Test Page");
+		}
+
+		task ("Assert remote app portlet can be added to page") {
+			Portlet.addPGCmd(portletName = "Test Remote App");
+
+			AssertElementPresent(
+				key_portletName = "Test Remote App",
+				locator1 = "Portlet#TITLE");
+		}
+	}
+
 	@description = "LPS-147198. Verify remote app entry workflow can be configured at instance level"
 	@priority = "5"
 	test CanConfigureWorkflowInstanceLevel {

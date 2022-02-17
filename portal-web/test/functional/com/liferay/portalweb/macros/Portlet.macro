@@ -251,7 +251,7 @@ definition {
 	macro configureGeneralViaLookAndFeelPG {
 		Navigator.gotoNavTab(navTab = "General");
 
-		if (isSet(customTitle)) {
+		if (isSet(useCustomTitle)) {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Use Custom Title",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -259,14 +259,14 @@ definition {
 			Type(
 				inputFieldId = "customTitle",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${customTitle} Custom");
+				value1 = "${useCustomTitle}");
 		}
 
-		if (isSet(applicationDecorator)) {
+		if (isSet(applicationDecorators)) {
 			Select(
 				key_selectFieldLabel = "Application Decorators",
 				locator1 = "Select#ANY",
-				value1 = "${applicationDecorator}");
+				value1 = "${applicationDecorators}");
 		}
 
 		if (!(isSet(configureWithoutSave))) {

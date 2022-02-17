@@ -465,7 +465,7 @@ definition {
 
 				IFrame.selectConfigurationFrame();
 
-				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "${decoratorName}");
+				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "${decoratorName}");
 			}
 		}
 
@@ -1086,7 +1086,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Decorate");
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "Decorate");
 		}
 
 		task ("Convert widget page to content page") {

@@ -215,7 +215,7 @@ definition {
 		task ("Configure the Look and Feel settings of Blogs") {
 			Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
 
-			Portlet.configureGeneralViaLookAndFeelPG(customTitle = "Blogs");
+			Portlet.configureGeneralViaLookAndFeelPG(useCustomTitle = "Blogs Custom");
 		}
 
 		task ("Changes the order of pages") {

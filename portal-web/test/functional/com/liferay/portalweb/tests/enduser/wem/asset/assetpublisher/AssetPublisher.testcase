@@ -857,7 +857,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "Barebone");
 		}
 
 		task ("View Asset Publisher title is hidden") {
@@ -957,7 +957,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureGeneralViaLookAndFeelPG(customTitle = "Asset Publisher");
+			Portlet.configureGeneralViaLookAndFeelPG(useCustomTitle = "Asset Publisher Custom");
 		}
 
 		task ("View the custom title of Asset Publisher") {
@@ -988,7 +988,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorator = "Barebone");
+			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "Barebone");
 		}
 
 		task ("View the Asset Publisher title") {

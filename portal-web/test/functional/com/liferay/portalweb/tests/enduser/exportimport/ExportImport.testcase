@@ -918,7 +918,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureGeneralViaLookAndFeelPG(customTitle = "IFrame");
+		Portlet.configureGeneralViaLookAndFeelPG(useCustomTitle = "IFrame Custom");
 
 		IFrame.closeFrame();
 

@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ThemeFactoryUtil;
+import com.liferay.portal.kernel.util.ThemeFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -532,7 +532,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		if (!exportThemeSettings) {
 			layoutSet.setThemeId(
-				ThemeFactoryUtil.getDefaultRegularThemeId(
+				_themeFactory.getDefaultRegularThemeId(
 					stagedLayoutSet.getCompanyId()));
 			layoutSet.setColorSchemeId(
 				_colorSchemeFactory.getDefaultRegularColorSchemeId());
@@ -1009,6 +1009,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	@Reference
 	private ThemeExporter _themeExporter;
+
+	@Reference
+	private ThemeFactory _themeFactory;
 
 	@Reference
 	private ThemeImporter _themeImporter;

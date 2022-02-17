@@ -30,9 +30,11 @@ import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCri
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -117,33 +119,24 @@ public class DLFolderItemSelectorView
 		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId = themeDisplay.getScopeGroupId();
-
 		long folderId = ParamUtil.getLong(
 			(HttpServletRequest)servletRequest, "folderId",
 			itemSelectorCriterion.getFolderId());
+		long repositoryId = ParamUtil.getLong(
+			(HttpServletRequest)servletRequest, "repositoryId",
+			itemSelectorCriterion.getRepositoryId());
 
-		long itemSelectorCriterionRepositoryId =
-			itemSelectorCriterion.getRepositoryId();
+		if (themeDisplay.getScopeGroupId() != _getRepositoryGroupId(
+				itemSelectorCriterion.getRepositoryId())) {
+
+			folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			repositoryId = themeDisplay.getScopeGroupId();
+		}
 
 		Folder folder = _fetchFolder(folderId);
 
-		if ((folder != null) &&
-			(folder.getRepositoryId() !=
-				itemSelectorCriterion.getRepositoryId())) {
-
-			itemSelectorCriterionRepositoryId = folder.getRepositoryId();
-		}
-
-		if (repositoryId != itemSelectorCriterionRepositoryId) {
-			folderId = ParamUtil.getLong(
-				(HttpServletRequest)servletRequest, "folderId");
-
-			folder = _fetchFolder(folderId);
-
-			if (folder != null) {
-				repositoryId = folder.getRepositoryId();
-			}
+		if (folder != null) {
+			repositoryId = folder.getRepositoryId();
 		}
 
 		Group group = _getGroup(repositoryId);
@@ -152,7 +145,7 @@ public class DLFolderItemSelectorView
 			List<Long> groupConnectedDepotEntries =
 				_getGroupConnectedDepotEntries(themeDisplay);
 
-			if (!groupConnectedDepotEntries.contains(repositoryId)) {
+			if (!groupConnectedDepotEntries.contains(group.getGroupId())) {
 				folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 				repositoryId = themeDisplay.getRefererGroupId();
 			}
@@ -215,6 +208,17 @@ public class DLFolderItemSelectorView
 		}
 	}
 
+	private long _getRepositoryGroupId(long repositoryId) {
+		Repository repository = _repositoryLocalService.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			return repositoryId;
+		}
+
+		return repository.getGroupId();
+	}
+
 	private boolean _isShowGroupSelector(
 		FolderItemSelectorCriterion itemSelectorCriterion) {
 
@@ -245,6 +249,9 @@ public class DLFolderItemSelectorView
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)"

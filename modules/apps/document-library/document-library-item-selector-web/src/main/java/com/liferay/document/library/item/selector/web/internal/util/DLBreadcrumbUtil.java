@@ -117,17 +117,21 @@ public class DLBreadcrumbUtil {
 		Folder folder, HttpServletRequest httpServletRequest,
 		long repositoryId) {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		if (folder != null) {
+			if (folder.isMountPoint()) {
+				return themeDisplay.getScopeGroupId();
+			}
+
 			return folder.getRepositoryId();
 		}
 
 		if (repositoryId != 0) {
 			return repositoryId;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
 	}

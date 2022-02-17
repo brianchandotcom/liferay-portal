@@ -254,9 +254,7 @@ public class CPOptionLocalServiceUtil {
 		return getService().fetchCPOption(CPOptionId);
 	}
 
-	public static CPOption fetchCPOption(long companyId, String key)
-		throws PortalException {
-
+	public static CPOption fetchCPOption(long companyId, String key) {
 		return getService().fetchCPOption(companyId, key);
 	}
 

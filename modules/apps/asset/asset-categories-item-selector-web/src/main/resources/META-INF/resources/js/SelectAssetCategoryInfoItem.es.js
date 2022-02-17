@@ -95,7 +95,6 @@ const Tree = Liferay.__FF__.enableClayTreeView
 	: OldAssetCategoryTree;
 
 function SelectAssetCategory({
-	categoriesMultipleSelectionEnabled,
 	itemSelectedEventName,
 	multiSelection,
 	namespace,
@@ -170,10 +169,7 @@ function SelectAssetCategory({
 								filterQuery={filterQuery}
 								itemSelectedEventName={itemSelectedEventName}
 								items={items}
-								multiSelection={
-									categoriesMultipleSelectionEnabled &&
-									multiSelection
-								}
+								multiSelection={multiSelection}
 								onItems={setItems}
 								onSelectedItemsCount={setSelectedItemsCount}
 							/>

@@ -17,7 +17,7 @@ import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {AssetCategoryTree as NewAssetCategoryTree} from './AssetCategoryTree.es';
+import {AssetCategoryTree} from './AssetCategoryTree.es';
 
 function getFilter(filterQuery) {
 	if (!filterQuery) {
@@ -41,7 +41,7 @@ function visit(nodes, callback) {
 	});
 }
 
-function AssetCategoryTree({
+function OldAssetCategoryTree({
 	filterQuery,
 	itemSelectedEventName,
 	items,
@@ -91,8 +91,8 @@ function AssetCategoryTree({
 }
 
 const Tree = Liferay.__FF__.enableClayTreeView
-	? NewAssetCategoryTree
-	: AssetCategoryTree;
+	? AssetCategoryTree
+	: OldAssetCategoryTree;
 
 function SelectAssetCategory({
 	categoriesMultipleSelectionEnabled,

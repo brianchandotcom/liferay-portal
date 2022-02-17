@@ -118,12 +118,9 @@ definition {
 			dmDocumentFile = "Commerce_Black.jpg",
 			dmDocumentTitle = "DM Document JPG Node1");
 
-		Pause(locator = "3000");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document JPG Node1",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 

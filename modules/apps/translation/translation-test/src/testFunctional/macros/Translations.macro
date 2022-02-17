@@ -695,6 +695,8 @@ definition {
 
 	macro viewImportResult {
 		if (isSet(successFileName)) {
+			Panel.expandPanel(panel = "${successFileNumber}");
+
 			AssertTextEquals(
 				locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS",
 				value1 = "${successFileNumber}");

@@ -122,7 +122,7 @@ function SelectCategory({
 	multiSelection,
 	namespace,
 	nodes,
-	selectedCategory,
+	selectedCategoryIds,
 }) {
 	const [items, setItems] = useState(() => {
 		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
@@ -194,7 +194,7 @@ function SelectCategory({
 								items={items}
 								multiSelection={multiSelection}
 								onItems={setItems}
-								selectedCategory={selectedCategory}
+								selectedCategoryIds={selectedCategoryIds}
 							/>
 						) : (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">

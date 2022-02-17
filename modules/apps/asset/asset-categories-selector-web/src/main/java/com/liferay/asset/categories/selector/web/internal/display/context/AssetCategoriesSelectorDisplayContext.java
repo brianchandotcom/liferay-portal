@@ -167,7 +167,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		).put(
 			"nodes", getCategoriesJSONArray()
 		).put(
-			"selectedCategory", getSelectedCategoryIds()
+			"selectedCategoryIds", getSelectedCategoryIds()
 		).build();
 	}
 

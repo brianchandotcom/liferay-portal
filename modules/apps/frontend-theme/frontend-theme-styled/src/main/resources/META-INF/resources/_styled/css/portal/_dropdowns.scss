@@ -9,25 +9,3 @@ html#{$cadmin-selector} {
 .overlay-content .open > .dropdown-menu {
 	display: block;
 }
-
-.dropdown-menu {
-	border: 1px solid $dropdown-border-color;
-
-	.dropdown-item.active {
-		pointer-events: initial;
-	}
-}
-
-.dropdown-toggle:after {
-	border-width: 0;
-	content: '';
-}
-
-.dropup .dropdown-toggle:after {
-	border-width: 0;
-	content: '';
-}
-
-.dropdown > .dropdown-menu {
-	position: absolute;
-}

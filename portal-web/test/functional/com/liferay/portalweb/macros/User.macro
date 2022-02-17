@@ -1562,12 +1562,7 @@ definition {
 
 		Button.clickSave();
 
-		if ("${changeable}" == "false") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "Passwords may not be changed under the current password policy.");
-		}
-		else if ("${passwordTooShort}" == "true") {
+		if ("${passwordTooShort}" == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "That password is too short. Please make sure your password is at least 6 characters long.");

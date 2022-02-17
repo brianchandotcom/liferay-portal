@@ -166,7 +166,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "Background Styles");
 
 		PageEditor.selectColorSwatchItem(
-			colorSwatchItem = "${colorAttribute}",
+			colorSwatchItem = "${backgroundColor}",
 			fieldLabel = "Background Color");
 
 		PortletEntry.save();

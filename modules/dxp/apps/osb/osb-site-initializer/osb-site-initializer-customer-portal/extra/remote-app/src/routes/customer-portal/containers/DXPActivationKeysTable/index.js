@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
+import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -18,6 +18,10 @@ import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {useCustomerPortal} from '../../context';
+import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
+import {AUTO_CLOSE_ALERT_TIME} from '../../utils/constants/autoCloseAlertTime';
+import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../DXPActivationKeysTable/utils/constants/alertAggregateKeysDownloadText';
+import {getActivationKeyDownload} from '../DXPActivationKeysTable/utils/getActivationKeyDownload';
 import DXPActivationKeysTableHeader from './components/Header';
 import ModalKeyDetails from './components/ModalKeyDetails';
 import {
@@ -62,6 +66,10 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
+	const [
+		activationKeysDownloadStatus,
+		setActivationKeysDownloadStatus,
+	] = useState('');
 
 	useEffect(() => {
 		if (activationKeysFiltered.length) {
@@ -174,6 +182,14 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		totalCount,
 	};
 
+	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
+		setActivationKeysDownloadStatus(
+			hasSuccessfullyDownloadedKeys
+				? ALERT_DOWNLOAD_TYPE.success
+				: ALERT_DOWNLOAD_TYPE.danger
+		);
+	};
+
 	return (
 		<>
 			{isVisibleModal && (
@@ -185,6 +201,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					licenseKeyDownloadURL={licenseKeyDownloadURL}
 					observer={observer}
 					onClose={onClose}
+					project={project}
 					sessionId={sessionId}
 				/>
 			)}
@@ -209,6 +226,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							accountKey={project.accountKey}
 							activationKeys={activationKeysFiltered}
 							licenseKeyDownloadURL={licenseKeyDownloadURL}
+							project={project}
 							selectedKeys={activationKeysChecked}
 							sessionId={sessionId}
 							setActivationKeys={setActivationKeys}
@@ -234,11 +252,15 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							download: (
 								<ButtonWithIcon
 									displayType="null"
-									onClick={() =>
-										downloadActivationLicenseKey(
+									onClick={async () =>
+										getActivationKeyDownload(
 											activationKey.id,
 											licenseKeyDownloadURL,
-											sessionId
+											sessionId,
+											handleAlertStatus,
+											activationKey.productName,
+											activationKey.productVersion,
+											project.name
 										)
 									}
 									small
@@ -285,6 +307,26 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					/>
 				</div>
 			</ClayTooltipProvider>
+			{activationKeysDownloadStatus && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={
+							AUTO_CLOSE_ALERT_TIME[activationKeysDownloadStatus]
+						}
+						className="cp-activation-key-download-alert"
+						displayType={
+							ALERT_DOWNLOAD_TYPE[activationKeysDownloadStatus]
+						}
+						onClose={() => setActivationKeysDownloadStatus('')}
+					>
+						{
+							ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
+								activationKeysDownloadStatus
+							]
+						}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
 		</>
 	);
 };

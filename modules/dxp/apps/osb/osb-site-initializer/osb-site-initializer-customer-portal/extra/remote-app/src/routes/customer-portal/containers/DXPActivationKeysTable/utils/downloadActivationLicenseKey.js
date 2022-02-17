@@ -20,7 +20,10 @@ import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
 export async function downloadActivationLicenseKey(
 	licenseKey,
 	licenseKeyDownloadURL,
-	sessionId
+	sessionId,
+	activationKeyName,
+	activationKeyVersion,
+	projectName
 ) {
 	const license = await getActivationDownloadKey(
 		licenseKey,
@@ -33,14 +36,25 @@ export async function downloadActivationLicenseKey(
 		const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 		const licenseBlob = await license.blob();
 
-		return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+		const projectFileName = projectName.replaceAll(' ', '').toLowerCase();
+		const productNameFormated = activationKeyName
+			.replaceAll(' ', '')
+			.toLowerCase();
+
+		return downloadFromBlob(
+			licenseBlob,
+			`activation-key-${productNameFormated}-${activationKeyVersion}-${projectFileName}${extensionFile}`
+		);
 	}
 }
 
 export async function downloadAggregatedActivationKey(
 	selectedKeysIDs,
 	licenseKeyDownloadURL,
-	sessionId
+	sessionId,
+	aggregatedKeysProductNames,
+	aggregatedProductFileVersions,
+	projectName
 ) {
 	const license = await getAggregatedActivationDownloadKey(
 		selectedKeysIDs,
@@ -48,12 +62,36 @@ export async function downloadAggregatedActivationKey(
 		sessionId
 	);
 
+	const DIFFERENT_AGGREGATED_NAMES = 'multiple-products';
+	const DIFFERENT_AGGREGATED_VERSIONS = 'multiple-versions';
+
+	const areAggregatedNamesEqual = aggregatedKeysProductNames.every(
+		(name) => name === aggregatedKeysProductNames[0]
+	);
+
+	const areAggregatedVersionsEqual = aggregatedProductFileVersions.every(
+		(version) => version === aggregatedProductFileVersions[0]
+	);
+
+	const aggregatedProductFileName = areAggregatedNamesEqual
+		? aggregatedKeysProductNames[0].replaceAll(' ', '').toLowerCase()
+		: DIFFERENT_AGGREGATED_NAMES;
+
+	const aggregatedProductFileVersion = areAggregatedVersionsEqual
+		? aggregatedProductFileVersions[0]
+		: DIFFERENT_AGGREGATED_VERSIONS;
+
+	const projectFileName = projectName.replaceAll(' ', '').toLowerCase();
+
 	if (license.status === STATUS_CODE.success) {
 		const contentType = license.headers.get('content-type');
 		const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 		const licenseBlob = await license.blob();
 
-		return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+		return downloadFromBlob(
+			licenseBlob,
+			`activation-key-${aggregatedProductFileName}-${aggregatedProductFileVersion}-${projectFileName}${extensionFile}`
+		);
 	}
 }
 

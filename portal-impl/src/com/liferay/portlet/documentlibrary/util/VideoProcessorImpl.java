@@ -428,7 +428,11 @@ public class VideoProcessorImpl
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ", fileVersion.getFileVersionId(), " ",
+					fileVersion.getTitle()),
+				exception);
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}

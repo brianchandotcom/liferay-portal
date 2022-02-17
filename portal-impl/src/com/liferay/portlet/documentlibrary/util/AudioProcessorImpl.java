@@ -298,7 +298,11 @@ public class AudioProcessorImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ", fileVersion.getFileVersionId(), " ",
+					fileVersion.getTitle()),
+				exception);
 		}
 	}
 

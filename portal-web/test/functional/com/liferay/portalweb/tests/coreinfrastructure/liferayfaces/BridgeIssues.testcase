@@ -582,27 +582,32 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3250");
 
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON");
+		BridgeIssues.upload3250File(
+			fileName = "Document_2.doc",
+			instantAjax = "false",
+			mode = "advancedMode");
+
+		AssertElementPresent(
+			key_fileName = "Document_2.doc",
+			locator1 = "BridgeIssues#FILE_NAME");
 
 		BridgeIssues.upload3250File(
-			fileName = "Document_2.jpeg",
-			instantAjax = "false");
+			fileName = "Document_2.docx",
+			instantAjax = "true",
+			mode = "simpleMode");
 
-		AssertElementPresent(locator1 = "BridgeIssues#FILE_NAME");
-
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_2");
+		AssertElementPresent(
+			key_fileName = "Document_2.docx",
+			locator1 = "BridgeIssues#FILE_NAME");
 
 		BridgeIssues.upload3250File(
 			fileName = "Document_2.jpeg",
 			instantAjax = "true",
-			submit = "skinSimple=false");
+			mode = "skinSimpleMode");
 
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_3");
-
-		BridgeIssues.upload3250File(
-			fileName = "Document_2.jpeg",
-			instantAjax = "true",
-			submit = "skinSimple=true");
+		AssertElementPresent(
+			key_fileName = "Document_2.jpeg",
+			locator1 = "BridgeIssues#FILE_NAME");
 
 		// FACES_3327
 

@@ -44,12 +44,13 @@ definition {
 
 	macro upload3250File {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
+			key_mode = "${mode}",
+			locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON",
 			value1 = "${fileName}");
 
 		if ("${instantAjax}" == "true") {
 			Click(
-				key_attribute = "${submit}",
+				key_mode = "${mode}",
 				locator1 = "BridgeIssues#SUBMIT_FILE_BUTTON");
 		}
 	}

@@ -61,7 +61,7 @@ const useHeader = ({
 	);
 
 	useEffect(() => {
-		if (shouldUpdate) {
+		if (shouldUpdate && useHeadingString) {
 			setTimeout(() => {
 				setHeading(JSON.parse(useHeadingString));
 			}, timeout);
@@ -69,7 +69,7 @@ const useHeader = ({
 	}, [setHeading, shouldUpdate, timeout, useHeadingString]);
 
 	useEffect(() => {
-		if (shouldUpdate) {
+		if (shouldUpdate && useTabsString) {
 			setTimeout(() => {
 				setTabs(JSON.parse(useTabsString));
 			}, timeout);

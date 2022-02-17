@@ -49,6 +49,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-147202. Verify admin can receive notification request to approve remote app"
+	@priority = "4"
+	test CanSendWorkflowNotification {
+		property portal.acceptance = "true";
+
+		task ("Apply workflow approval process to remote apps") {
+			RemoteAppsWorkflow.applyWorkflow();
+		}
+
+		task ("Add user with permissions to create remote app") {
+			Permissions.setUpRegRoleLoginUserCP(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			RemoteAppsWorkflow.addUserPermissions();
+		}
+
+		task ("Create remote app as user with permissions") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.addApp(
+				entryName = "Test Remote App",
+				entryURL = "http://www.liferay.com");
+		}
+
+		task ("Assert admin received notification to approve remote app") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Notifications.gotoNotifications();
+
+			AssertElementPresent(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "userfn userln sent you a Remote App Entry for review in the workflow.");
+		}
+	}
+
 	@description = "LPS-147200. Verify pending remote app portlet cannot be added to page"
 	@priority = "4"
 	test PendingRemoteAppCannotBeAddedToPage {

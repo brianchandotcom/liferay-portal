@@ -13,13 +13,40 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
+import ListView from '../../../../../components/ListView/ListView';
+import {getTestrayComponents} from '../../../../../graphql/queries/testrayComponent';
+import {Liferay} from '../../../../../services/liferay/liferay';
 
-const Components = () => {
+const Component = () => {
 	return (
-		<Container className="mt-4" title="Components">
-			Components
+		<Container className="mt-4" title="Component">
+			<ListView
+				query={getTestrayComponents}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							value: 'Team',
+						},
+						{
+							key: 'failed',
+							value: 'Failed',
+						},
+						{
+							key: 'Total',
+							value: 'Total',
+						},
+						{
+							key: 'metrics',
+							value: 'Metrics',
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayComponents}
+				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			/>
 		</Container>
 	);
 };
 
-export default Components;
+export default Component;

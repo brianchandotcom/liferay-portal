@@ -116,11 +116,10 @@
 					"displayStyle": "singleline",
 					"indexType": "keyword",
 					"label": {
-						"[$LOCALE$]": "Task Title"
+						"[$LOCALE$]": "Field 1"
 					},
 					"localizable": true,
-					"name": "taskTitle",
-					"objectFieldName": "[\"taskTitle\"]",
+					"name": "fieldOne",
 					"options": [
 						{
 							"label": {
@@ -136,73 +135,15 @@
 					"type": "text"
 				},
 				{
-					"dataSourceType": "manual",
-					"dataType": "string",
-					"indexType": "keyword",
-					"label": {
-						"[$LOCALE$]": "Task Status"
-					},
-					"localizable": true,
-					"multiple": false,
-					"name": "taskStatus",
-					"objectFieldName": "[\"taskStatus\"]",
-					"options": [
-						{
-							"label": {
-								"[$LOCALE$]": "Done"
-							},
-							"reference": "done",
-							"value": "done"
-						},
-						{
-							"label": {
-								"[$LOCALE$]": "In Progress"
-							},
-							"reference": "inprogress",
-							"value": "inprogress"
-						},
-						{
-							"label": {
-								"[$LOCALE$]": "To Do"
-							},
-							"reference": "todo",
-							"value": "todo"
-						}
-					],
-					"readOnly": false,
-					"repeatable": false,
-					"required": false,
-					"showLabel": true,
-					"type": "select"
-				},
-				{
-					"dataType": "integer",
-					"fieldNamespace": "",
-					"indexType": "keyword",
-					"label": {
-						"[$LOCALE$]": "Progress"
-					},
-					"localizable": true,
-					"name": "progress",
-					"objectFieldName": "[\"progress\"]",
-					"readOnly": false,
-					"repeatable": false,
-					"required": false,
-					"showLabel": true,
-					"type": "numeric"
-				},
-				{
 					"autocomplete": false,
-					"dataSourceType": "",
 					"dataType": "string",
 					"displayStyle": "singleline",
 					"indexType": "keyword",
 					"label": {
-						"[$LOCALE$]": "Task Description"
+						"[$LOCALE$]": "Field 2"
 					},
 					"localizable": true,
-					"name": "taskDescription",
-					"objectFieldName": "[\"taskDescription\"]",
+					"name": "fieldTwo",
 					"options": [
 						{
 							"label": {
@@ -231,21 +172,9 @@
 							"columns": [
 								{
 									"fieldNames": [
-										"taskTitle"
+										"fieldOne"
 									],
-									"size": 4
-								},
-								{
-									"fieldNames": [
-										"taskStatus"
-									],
-									"size": 4
-								},
-								{
-									"fieldNames": [
-										"progress"
-									],
-									"size": 4
+									"size": 12
 								}
 							]
 						},
@@ -253,7 +182,7 @@
 							"columns": [
 								{
 									"fieldNames": [
-										"taskDescription"
+										"fieldTwo"
 									],
 									"size": 12
 								}
@@ -261,7 +190,7 @@
 						}
 					],
 					"title": {
-						"[$LOCALE$]": "Add Detail"
+						"[$LOCALE$]": "Add Title"
 					}
 				}
 			],

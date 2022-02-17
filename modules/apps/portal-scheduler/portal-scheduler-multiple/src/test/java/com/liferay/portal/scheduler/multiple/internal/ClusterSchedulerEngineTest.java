@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
+import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -92,7 +91,6 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Tina Tian
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ClusterSchedulerEngineTest {
 
 	@ClassRule

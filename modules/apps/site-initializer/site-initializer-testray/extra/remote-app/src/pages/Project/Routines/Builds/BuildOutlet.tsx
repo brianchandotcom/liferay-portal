@@ -212,7 +212,11 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	);
 };
 
-const BuildOutlet = () => {
+type BuildOutletProps = {
+	ignorePath: string;
+};
+
+const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 	const {pathname} = useLocation();
 	const {projectId, routineId, testrayBuildId} = useParams();
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
@@ -225,55 +229,71 @@ const BuildOutlet = () => {
 		}
 	);
 
+	const isCurrentPathIgnored = pathname.includes(ignorePath);
+
 	const testrayBuild = data?.c?.testrayBuild;
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${testrayBuildId}`;
 
-	const {setHeading} = useHeader({
-		timeout: 5,
-		useTabs: [
-			{
-				active: pathname === basePath,
-				path: basePath,
-				title: 'Results',
-			},
-			{
-				active: pathname === `${basePath}/runs`,
-				path: `${basePath}/runs`,
-				title: 'Runs',
-			},
-			{
-				active: pathname === `${basePath}/teams`,
-				path: `${basePath}/teams`,
-				title: 'Teams',
-			},
-			{
-				active: pathname === `${basePath}/components`,
-				path: `${basePath}/components`,
-				title: 'Components',
-			},
-			{
-				active: pathname === `${basePath}/case-types`,
-				path: `${basePath}/case-types`,
-				title: 'Case Types',
-			},
-		],
-	});
+	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 
 	useEffect(() => {
-		if (testrayProject && testrayRoutine && testrayBuild) {
-			setHeading([
-				{category: 'PROJECT', title: testrayProject.name},
-				{category: 'ROUTINE', title: testrayRoutine.name},
-				{category: 'BUILD', title: testrayBuild.name},
-			]);
+		if (testrayBuild) {
+			setTimeout(() => {
+				setHeading(
+					[
+						{
+							category: 'BUILD',
+							path: basePath,
+							title: testrayBuild.name,
+						},
+					],
+					true
+				);
+			}, 0);
 		}
-	}, [setHeading, testrayProject, testrayRoutine, testrayBuild]);
+	}, [basePath, setHeading, testrayBuild]);
+
+	useEffect(() => {
+		if (!isCurrentPathIgnored) {
+			setTimeout(() => {
+				setTabs([
+					{
+						active: pathname === basePath,
+						path: basePath,
+						title: 'Results',
+					},
+					{
+						active: pathname === `${basePath}/runs`,
+						path: `${basePath}/runs`,
+						title: 'Runs',
+					},
+					{
+						active: pathname === `${basePath}/teams`,
+						path: `${basePath}/teams`,
+						title: 'Teams',
+					},
+					{
+						active: pathname === `${basePath}/components`,
+						path: `${basePath}/components`,
+						title: 'Components',
+					},
+					{
+						active: pathname === `${basePath}/case-types`,
+						path: `${basePath}/case-types`,
+						title: 'Case Types',
+					},
+				]);
+			}, 5);
+		}
+	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 
 	if (testrayProject && testrayRoutine && testrayBuild) {
 		return (
 			<>
-				<BuildOverview testrayBuild={testrayBuild} />
+				{!isCurrentPathIgnored && (
+					<BuildOverview testrayBuild={testrayBuild} />
+				)}
 
 				<Outlet />
 			</>

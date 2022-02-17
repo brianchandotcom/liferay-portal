@@ -137,6 +137,10 @@ public abstract class MimeResponseImpl
 			throw new IllegalStateException(
 				"Unable to reset a buffer that has been flushed");
 		}
+
+		httpServletResponse.reset();
+
+		clearHeaders();
 	}
 
 	@Override

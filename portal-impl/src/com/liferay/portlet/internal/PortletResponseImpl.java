@@ -635,6 +635,11 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		}
 	}
 
+	protected void clearHeaders() {
+		_headers.clear();
+		_markupHeadElements.clear();
+	}
+
 	protected Layout getLayout(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 

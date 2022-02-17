@@ -7,7 +7,18 @@ definition {
 	macro clickPublish {
 		Button.clickNoError(button = "Publish");
 
-		AssertConfirm.assertConfirmationNoError(value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+		if (IsElementPresent(locator1 = "Modal#HEADER")) {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+		else {
+			AssertConfirm.assertConfirmationNoError(value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+		}
 
 		Alert.viewSuccessMessage();
 	}

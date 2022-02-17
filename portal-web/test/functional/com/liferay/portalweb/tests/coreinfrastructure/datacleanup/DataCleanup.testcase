@@ -260,6 +260,8 @@ definition {
 
 	@priority = "4"
 	test CanRemoveExpiredJournalArticle {
+		property test.name.skip.portal.instance = "DataCleanup#CanRemoveExpiredJournalArticle";
+
 		var journalArticleQuery = "SELECT * FROM JournalArticle WHERE urlTitle LIKE '%wc-webcontent-title%';";
 
 		JSONWebcontent.addWebContent(

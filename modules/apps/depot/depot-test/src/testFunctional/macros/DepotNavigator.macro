@@ -234,7 +234,9 @@ definition {
 	}
 
 	macro openDepotAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
 	}
 
 	macro openDepotAssetListsAdmin {

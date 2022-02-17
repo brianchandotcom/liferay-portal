@@ -238,7 +238,9 @@ definition {
 	}
 
 	macro openSystemSettingsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet");
 	}
 
 	macro openToConfigInSystemSettings {

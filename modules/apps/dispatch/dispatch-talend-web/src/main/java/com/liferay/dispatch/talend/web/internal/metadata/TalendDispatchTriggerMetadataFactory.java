@@ -58,7 +58,9 @@ public class TalendDispatchTriggerMetadataFactory
 		if (fileEntry != null) {
 			builder.ready(true);
 
-			_build(dispatchTrigger, builder);
+			builder.attribute(
+				"talend-archive-file-name",
+				_getTalendArchiveFileName(dispatchTrigger));
 
 			return builder.build();
 		}
@@ -82,15 +84,10 @@ public class TalendDispatchTriggerMetadataFactory
 			});
 	}
 
-	private void _build(
-		DispatchTrigger dispatchTrigger,
-		TalendDispatchTriggerMetadata.Builder builder) {
-
+	private String _getTalendArchiveFileName(DispatchTrigger dispatchTrigger) {
 		ExpandoBridge expandoBridge = dispatchTrigger.getExpandoBridge();
 
-		builder.attribute(
-			"talend-job-design-archive-name",
-			String.valueOf(expandoBridge.getAttribute("fileName")));
+		return (String)expandoBridge.getAttribute("fileName");
 	}
 
 	private void _setupExpando(long companyId) throws Exception {

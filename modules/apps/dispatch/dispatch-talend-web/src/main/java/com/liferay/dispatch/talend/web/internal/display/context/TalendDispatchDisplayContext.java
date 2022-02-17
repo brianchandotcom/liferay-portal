@@ -15,28 +15,28 @@
 package com.liferay.dispatch.talend.web.internal.display.context;
 
 import com.liferay.dispatch.metadata.DispatchTriggerMetadata;
-import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Map;
 
 /**
- * @author MahmoudAzzam
  * @author Mahmoud Azzam
  */
 public class TalendDispatchDisplayContext {
 
 	public TalendDispatchDisplayContext(
-		DispatchTriggerMetadataProvider dispatchTriggerMetadataProvider) {
+		DispatchTriggerMetadata dispatchTriggerMetadata) {
 
-		_dispatchTriggerMetadataProvider = dispatchTriggerMetadataProvider;
+		_dispatchTriggerMetadata = dispatchTriggerMetadata;
 	}
 
-	public DispatchTriggerMetadata getDispatchTriggerMetadata(
-		long dispatchTriggerId) {
+	public String getTalendArchiveFileName() {
+		Map<String, String> attributes =
+			_dispatchTriggerMetadata.getAttributes();
 
-		return _dispatchTriggerMetadataProvider.getDispatchTriggerMetadata(
-			dispatchTriggerId);
+		return GetterUtil.getString(attributes.get("talend-archive-file-name"));
 	}
 
-	private final DispatchTriggerMetadataProvider
-		_dispatchTriggerMetadataProvider;
+	private final DispatchTriggerMetadata _dispatchTriggerMetadata;
 
 }

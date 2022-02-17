@@ -68,7 +68,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
- @Ignore
+@Ignore
 @RunWith(Arquillian.class)
 public class EditBlogsEntryContentDashboardItemActionProviderTest {
 

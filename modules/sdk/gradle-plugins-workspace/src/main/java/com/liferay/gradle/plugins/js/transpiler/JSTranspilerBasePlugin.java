@@ -54,10 +54,6 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 			(NpmInstallTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		final YarnInstallTask yarnInstallTask =
-			(YarnInstallTask)GradleUtil.getTask(
-				project, YarnPlugin.YARN_INSTALL_TASK_NAME);
-
 		final Configuration jsCompileConfiguration = _addConfigurationJSCompile(
 			project);
 
@@ -73,7 +69,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					_addTasksExpandJSCompileDependency(
 						expandJSCompileDependenciesTask, npmInstallTask,
-						yarnInstallTask, jsCompileConfiguration);
+						jsCompileConfiguration);
 				}
 
 			});
@@ -101,7 +97,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 
 	private void _addTasksExpandJSCompileDependency(
 		Task expandJSCompileDependenciesTask, NpmInstallTask npmInstallTask,
-		YarnInstallTask yarnInstallTask, Configuration configuration) {
+		Configuration configuration) {
 
 		Project project = expandJSCompileDependenciesTask.getProject();
 
@@ -117,7 +113,22 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 				"expandJSCompileDependency", renameDependencyClosure);
 
 			copy.dependsOn(taskDependencies);
-			copy.mustRunAfter(npmInstallTask, yarnInstallTask);
+			copy.mustRunAfter(npmInstallTask);
+
+			if (!npmInstallTask.isUseNpm()) {
+				Project curProject = npmInstallTask.getProject();
+
+				do {
+					YarnInstallTask yarnInstallTask =
+						(YarnInstallTask)GradleUtil.fetchTask(
+							curProject, YarnPlugin.YARN_INSTALL_TASK_NAME);
+
+					if (yarnInstallTask != null) {
+						copy.mustRunAfter(yarnInstallTask);
+					}
+				}
+				while ((curProject = curProject.getParent()) != null);
+			}
 
 			expandJSCompileDependenciesTask.dependsOn(copy);
 		}

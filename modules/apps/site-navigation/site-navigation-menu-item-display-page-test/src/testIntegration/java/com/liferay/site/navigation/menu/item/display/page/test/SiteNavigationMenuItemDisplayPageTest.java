@@ -35,8 +35,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -55,7 +53,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -73,7 +70,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
@@ -128,18 +124,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		ServiceRegistration<LayoutDisplayPageMultiSelectionProvider>
 			serviceRegistration = null;
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
+		try {
 			SiteNavigationMenuItemType siteNavigationMenuItemType =
 				_siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemType(
@@ -179,53 +164,12 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	}
 
 	@Test
-	public void testDisplayPageTypeMultiSelectionWhenFFDisabled()
-		throws Exception {
+	public void testDisplayPageTypeMultiSelectionCategories() throws Exception {
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				AssetCategory.class.getName());
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", false
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						AssetCategory.class.getName());
-
-			Assert.assertFalse(siteNavigationMenuItemType.isMultiSelection());
-		}
-	}
-
-	@Test
-	public void testDisplayPageTypeMultiSelectionWhenFFEnabled()
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						AssetCategory.class.getName());
-
-			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
-		}
+		Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
 	}
 
 	@Test
@@ -366,158 +310,13 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	}
 
 	@Test
-	public void testSiteNavigationMenuItemTitleUseCustomNameDisabledWhenFFEnabled()
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
-			Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				_createSiteNavigationMenuItem(locale, "{}");
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						siteNavigationMenuItem.getType());
-
-			Assert.assertEquals(
-				_assetCategory.getTitle(locale),
-				siteNavigationMenuItemType.getTitle(
-					siteNavigationMenuItem, locale));
-		}
-	}
-
-	@Test
-	public void testSiteNavigationMenuItemTitleUsingCustomNameNondefaultLocaleWhenFFEnabled()
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
-			String expectedTitle = RandomTestUtil.randomString();
-			Locale defaultLocale = _portal.getSiteDefaultLocale(
-				_group.getGroupId());
-
-			Set<Locale> locales = LanguageUtil.getAvailableLocales();
-
-			Stream<Locale> stream = locales.stream();
-
-			Locale nondefaultLocale = stream.filter(
-				locale -> !Objects.equals(defaultLocale, locale)
-			).findFirst(
-			).orElse(
-				null
-			);
-
-			Assert.assertNotNull(nondefaultLocale);
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				_createSiteNavigationMenuItem(
-					defaultLocale,
-					JSONUtil.put(
-						LocaleUtil.toLanguageId(defaultLocale),
-						RandomTestUtil.randomString()
-					).put(
-						LocaleUtil.toLanguageId(nondefaultLocale), expectedTitle
-					).toJSONString());
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						siteNavigationMenuItem.getType());
-
-			Assert.assertEquals(
-				expectedTitle,
-				siteNavigationMenuItemType.getTitle(
-					siteNavigationMenuItem, nondefaultLocale));
-		}
-	}
-
-	@Test
-	public void testSiteNavigationMenuItemTitleUsingCustomNameNontranslatedLocaleWhenFFEnabled()
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
-
-			String expectedTitle = RandomTestUtil.randomString();
-			Locale defaultLocale = _portal.getSiteDefaultLocale(
-				_group.getGroupId());
-
-			Set<Locale> locales = LanguageUtil.getAvailableLocales();
-
-			Stream<Locale> stream = locales.stream();
-
-			Locale nontranslatedLocale = stream.filter(
-				locale -> !Objects.equals(defaultLocale, locale)
-			).findFirst(
-			).orElse(
-				null
-			);
-
-			Assert.assertNotNull(nontranslatedLocale);
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				_createSiteNavigationMenuItem(
-					defaultLocale,
-					JSONUtil.put(
-						LocaleUtil.toLanguageId(defaultLocale), expectedTitle
-					).toJSONString());
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						siteNavigationMenuItem.getType());
-
-			Assert.assertEquals(
-				expectedTitle,
-				siteNavigationMenuItemType.getTitle(
-					siteNavigationMenuItem, nontranslatedLocale));
-		}
-	}
-
-	@Test
-	public void testSiteNavigationMenuItemTitleUsingCustomNameWhenFFDisabled()
+	public void testSiteNavigationMenuItemTitleUseCustomNameDisabled()
 		throws Exception {
 
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			_createSiteNavigationMenuItem(
-				locale,
-				JSONUtil.put(
-					LocaleUtil.toLanguageId(locale),
-					RandomTestUtil.randomString()
-				).toJSONString());
+			_createSiteNavigationMenuItem(locale, "{}");
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -530,41 +329,106 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	}
 
 	@Test
-	public void testSiteNavigationMenuItemTitleUsingCustomNameWhenFFEnabled()
+	public void testSiteNavigationMenuItemTitleUsingCustomName()
 		throws Exception {
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"multipleSelectionEnabled", true
-			).build();
+		String expectedTitle = RandomTestUtil.randomString();
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.site.navigation.menu.item.display.page." +
-						"internal.configuration." +
-							"FFDisplayPageSiteNavigationMenuItemConfiguration",
-					dictionary)) {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				locale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(locale), expectedTitle
+				).toJSONString());
 
-			String expectedTitle = RandomTestUtil.randomString();
-			Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
 
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				_createSiteNavigationMenuItem(
-					locale,
-					JSONUtil.put(
-						LocaleUtil.toLanguageId(locale), expectedTitle
-					).toJSONString());
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				siteNavigationMenuItem, locale));
+	}
 
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(
-						siteNavigationMenuItem.getType());
+	@Test
+	public void testSiteNavigationMenuItemTitleUsingCustomNameNondefaultLocale()
+		throws Exception {
 
-			Assert.assertEquals(
-				expectedTitle,
-				siteNavigationMenuItemType.getTitle(
-					siteNavigationMenuItem, locale));
-		}
+		String expectedTitle = RandomTestUtil.randomString();
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
+		Locale nondefaultLocale = stream.filter(
+			locale -> !Objects.equals(defaultLocale, locale)
+		).findFirst(
+		).orElse(
+			null
+		);
+
+		Assert.assertNotNull(nondefaultLocale);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				defaultLocale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(defaultLocale),
+					RandomTestUtil.randomString()
+				).put(
+					LocaleUtil.toLanguageId(nondefaultLocale), expectedTitle
+				).toJSONString());
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				siteNavigationMenuItem, nondefaultLocale));
+	}
+
+	@Test
+	public void testSiteNavigationMenuItemTitleUsingCustomNameNontranslatedLocale()
+		throws Exception {
+
+		String expectedTitle = RandomTestUtil.randomString();
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
+		Locale nontranslatedLocale = stream.filter(
+			locale -> !Objects.equals(defaultLocale, locale)
+		).findFirst(
+		).orElse(
+			null
+		);
+
+		Assert.assertNotNull(nontranslatedLocale);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				defaultLocale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(defaultLocale), expectedTitle
+				).toJSONString());
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				siteNavigationMenuItem, nontranslatedLocale));
 	}
 
 	@Test
@@ -617,7 +481,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 	private SiteNavigationMenuItem _createSiteNavigationMenuItem(
 			Locale defaultLocale, String localizedNames)
-		throws PortalException {
+		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -50,26 +49,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 		return regionLocalService.addRegion(
 			countryId, active, name, position, regionCode, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public Region addRegion(
-			long countryId, String regionCode, String name, boolean active)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		serviceContext.setCompanyId(permissionChecker.getCompanyId());
-		serviceContext.setUserId(permissionChecker.getUserId());
-
-		return addRegion(
-			countryId, active, name, 0, regionCode, serviceContext);
 	}
 
 	@Override

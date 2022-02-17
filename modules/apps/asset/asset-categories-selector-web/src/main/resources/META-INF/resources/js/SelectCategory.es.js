@@ -21,7 +21,7 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
 
-import {SelectTree as NewSelectTree} from './SelectTree.es';
+import {SelectTree} from './SelectTree.es';
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -45,7 +45,7 @@ function getFilter(filterQuery) {
 		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
 }
 
-function SelectTree({
+function OldSelectTree({
 	filterQuery,
 	itemSelectorSaveEvent,
 	items,
@@ -113,7 +113,7 @@ function SelectTree({
 	);
 }
 
-const Tree = Liferay.__FF__.enableClayTreeView ? NewSelectTree : SelectTree;
+const Tree = Liferay.__FF__.enableClayTreeView ? SelectTree : OldSelectTree;
 
 function SelectCategory({
 	addCategoryURL,

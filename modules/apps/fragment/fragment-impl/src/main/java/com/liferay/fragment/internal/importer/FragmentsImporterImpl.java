@@ -814,11 +814,11 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String[] paths = StringUtil.split(
 				zipEntry.getName(), StringPool.FORWARD_SLASH);
 
-			String fileName = zipEntry.getName();
+			String zipEntryName = zipEntry.getName();
 
 			if (!ArrayUtil.contains(paths, "resources") ||
 				excludePaths.contains(zipEntry.getName()) ||
-				!fileName.contains(fragmentCollectionKey)) {
+				!zipEntryName.contains(fragmentCollectionKey)) {
 
 				continue;
 			}

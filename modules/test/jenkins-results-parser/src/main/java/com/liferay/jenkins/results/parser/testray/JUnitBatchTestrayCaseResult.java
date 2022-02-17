@@ -39,13 +39,13 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
-		_testClass = (JUnitTestClass)testClass;
+		_jUnitTestClass = (JUnitTestClass)testClass;
 	}
 
 	@Override
 	public String getComponentName() {
 		return JenkinsResultsParserUtil.getProperty(
-			_testClass.getTestProperties(), "testray.main.component.name");
+			_jUnitTestClass.getTestProperties(), "testray.main.component.name");
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	@Override
 	public String getName() {
 		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
-			_testClass.getTestClassFile());
+			_jUnitTestClass.getTestClassFile());
 
 		testClassName = testClassName.replaceAll(".*/(com/.*)\\.java", "$1");
 
@@ -211,7 +211,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		return false;
 	}
 
-	private final JUnitTestClass _testClass;
+	private final JUnitTestClass _jUnitTestClass;
 	private List<TestClassResult> _testClassResults;
 
 }

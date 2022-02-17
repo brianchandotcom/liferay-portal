@@ -55,9 +55,10 @@ public class JUnitTestClass extends BaseTestClass {
 		File testClassFilePath = JenkinsResultsParserUtil.getCanonicalFile(
 			getTestClassFile());
 
-		File testPropertiesDir = _getTestPropertiesDirectory(testClassFilePath);
+		File testPropertiesBaseDir = _getTestPropertiesBaseDir(
+			testClassFilePath);
 
-		_setTestProperties(testPropertiesDir);
+		_setTestProperties(testPropertiesBaseDir);
 
 		try {
 			_fileContent = JenkinsResultsParserUtil.read(getTestClassFile());
@@ -170,7 +171,7 @@ public class JUnitTestClass extends BaseTestClass {
 		return _getPackageName();
 	}
 
-	private File _getTestPropertiesDirectory(File file) {
+	private File _getTestPropertiesBaseDir(File file) {
 		if (file == null) {
 			return null;
 		}
@@ -184,13 +185,13 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 
 		if (!canonicalFile.isDirectory()) {
-			return _getTestPropertiesDirectory(parentFile);
+			return _getTestPropertiesBaseDir(parentFile);
 		}
 
 		File testPropertiesFile = new File(canonicalFile, "test.properties");
 
 		if (!testPropertiesFile.exists()) {
-			return _getTestPropertiesDirectory(parentFile);
+			return _getTestPropertiesBaseDir(parentFile);
 		}
 
 		return canonicalFile;
@@ -262,13 +263,14 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 	}
 
-	private void _setTestProperties(File canonicalFile) {
-		File propertiesFile = new File(canonicalFile + "/test.properties");
+	private void _setTestProperties(File testPropertiesBaseDir) {
+		File testPropertiesFile = new File(
+			testPropertiesBaseDir + "/test.properties");
 
-		Properties properties = JenkinsResultsParserUtil.getProperties(
-			propertiesFile);
+		Properties testProperties = JenkinsResultsParserUtil.getProperties(
+			testPropertiesFile);
 
-		_testProperties = properties;
+		_testProperties = testProperties;
 	}
 
 	private static final Pattern _classHeaderPattern = Pattern.compile(

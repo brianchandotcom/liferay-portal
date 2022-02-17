@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to return only the HEAD version of Web Content articles."
+		"en_US": "Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause."
 	},
 	"elementDefinition": {
 		"category": "filter",

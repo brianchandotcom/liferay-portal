@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide assets which are marked not searchable."
+		"en_US": "Hide assets which are marked not searchable. This Element duplicates the functionality of a Liferay Search Framework query clause."
 	},
 	"elementDefinition": {
 		"category": "hide",

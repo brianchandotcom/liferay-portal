@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Show only published contents on live sites. Show only published and staged contents on staging sites."
+		"en_US": "Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause."
 	},
 	"elementDefinition": {
 		"category": "filter",

@@ -219,9 +219,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			/>
 
 			{loading ? (
-				<ClayButton disabled monospaced small>
-					<ClayLoadingIndicator small />
-				</ClayButton>
+				<ClayLoadingIndicator small />
 			) : (
 				<ClayButtonWithIcon
 					disabled={!itemChanges}
@@ -293,11 +291,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		}
 
 		if (loading) {
-			return (
-				<ClayButton className="btn-sm" disabled monospaced>
-					<ClayLoadingIndicator small />
-				</ClayButton>
-			);
+			return <ClayLoadingIndicator small />;
 		}
 
 		const content = action.icon ? (
@@ -362,11 +356,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	}
 
 	if (loading && !inlineEditingAlwaysOn) {
-		return (
-			<ClayButton disabled displayType="secondary" monospaced small>
-				<ClayLoadingIndicator small />
-			</ClayButton>
-		);
+		return <ClayLoadingIndicator small />;
 	}
 
 	const renderItems = (items) =>

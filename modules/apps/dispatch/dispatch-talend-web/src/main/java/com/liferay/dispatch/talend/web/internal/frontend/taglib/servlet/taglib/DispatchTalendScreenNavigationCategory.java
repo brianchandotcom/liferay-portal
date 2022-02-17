@@ -25,11 +25,9 @@ import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecu
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -102,31 +100,27 @@ public class DispatchTalendScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String talendFileEntryName = StringPool.BLANK;
-
-		DispatchTrigger dispatchTrigger =
-			(DispatchTrigger)httpServletRequest.getAttribute(
-				DispatchWebKeys.DISPATCH_TRIGGER);
-
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new TalendDispatchDisplayContext(_dispatchTriggerMetadataProvider));
-
-		if (dispatchTrigger != null) {
-			String fileEntryName = _dispatchFileRepository.fetchFileEntryName(
-				dispatchTrigger.getDispatchTriggerId());
-
-			if (Validator.isNotNull(fileEntryName)) {
-				talendFileEntryName = fileEntryName;
-			}
-		}
-
-		httpServletRequest.setAttribute(
-			DispatchWebKeys.FILE_ENTRY_NAME, talendFileEntryName);
+			new TalendDispatchDisplayContext(
+				_dispatchTriggerMetadataProvider.getDispatchTriggerMetadata(
+					_getDispatchTriggerId(httpServletRequest))));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
+	}
+
+	private long _getDispatchTriggerId(HttpServletRequest httpServletRequest) {
+		DispatchTrigger dispatchTrigger =
+			(DispatchTrigger)httpServletRequest.getAttribute(
+				DispatchWebKeys.DISPATCH_TRIGGER);
+
+		if (dispatchTrigger == null) {
+			return 0;
+		}
+
+		return dispatchTrigger.getDispatchTriggerId();
 	}
 
 	@Reference

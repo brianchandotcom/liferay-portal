@@ -58,7 +58,7 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 					httpServletRequest));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return "/specification_option_facets/configuration.jsp";

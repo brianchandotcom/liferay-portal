@@ -302,12 +302,14 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
 				for (String tagName : getTagNames()) {
-					selectedItems.add(
-						HashMapBuilder.put(
-							"label", tagName
-						).put(
-							"value", tagName
-						).build());
+					if (tagName != StringPool.BLANK) {
+						selectedItems.add(
+							HashMapBuilder.put(
+								"label", tagName
+							).put(
+								"value", tagName
+							).build());
+					}
 				}
 
 				return selectedItems;

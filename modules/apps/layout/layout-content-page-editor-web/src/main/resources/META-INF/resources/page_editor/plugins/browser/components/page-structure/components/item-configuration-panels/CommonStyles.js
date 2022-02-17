@@ -49,9 +49,18 @@ export function CommonStyles({
 	);
 
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-		styles = styles.filter((fieldSet) =>
-			fieldSet.styles.find((field) => field.name === 'display')
-		);
+		styles = styles
+			.filter((fieldSet) =>
+				fieldSet.styles.find((field) => field.name === 'display')
+			)
+			.map((fieldSet) => {
+				return {
+					...fieldSet,
+					styles: fieldSet.styles.filter(
+						(field) => field.name === 'display'
+					),
+				};
+			});
 	}
 
 	return (

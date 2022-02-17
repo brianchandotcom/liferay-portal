@@ -10,12 +10,12 @@
  */
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
-import Layout from '../../layouts/BaseLayout';
-import {PAGE_TYPES} from '../../utils/constants';
-import ActivationOutlet from './ActivationOutlet';
-import Overview from './Overview';
-import ProductsOutlet from './ProductsOutlet';
-import TeamMembers from './TeamMembers';
+import Layout from '../../../layouts/BaseLayout';
+import {PAGE_TYPES} from '../../../utils/constants';
+import Overview from '../Overview';
+import TeamMembers from '../TeamMembers';
+import ActivationOutlet from './Outlets/ActivationOutlet';
+import ProductsOutlet from './Outlets/ProductsOutlet';
 
 const ProjectRoutes = () => {
 	return (

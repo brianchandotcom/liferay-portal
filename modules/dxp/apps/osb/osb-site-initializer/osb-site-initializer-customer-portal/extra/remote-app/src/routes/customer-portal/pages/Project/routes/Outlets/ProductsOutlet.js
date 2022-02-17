@@ -11,7 +11,7 @@
 
 import {useMemo} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
-import {PAGE_TYPES, PRODUCT_TYPES} from '../../utils/constants';
+import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
 
 const ProductsOutlet = () => {
 	const {productId} = useParams();

@@ -13,7 +13,7 @@ import {useCustomerPortal} from '../context';
 import {PAGE_TYPES} from '../utils/constants';
 import Home from './Home';
 import Overview from './Project/Overview';
-import ProjectRoutes from './Project/project.routes';
+import ProjectRoutes from './Project/routes/project.routes';
 
 const Pages = () => {
 	const [{page, userAccount}] = useCustomerPortal();

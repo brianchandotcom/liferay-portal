@@ -821,37 +821,73 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
-		property portal.upstream = "quarantine";
+		var documentNameList = "DM AC Title,DM AC Title";
 
-		var documentNameList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title";
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("View the documents and media page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-		ACUtils.navigateToSitePage(
-			actionType = "View DM",
-			documentTitleList = "${documentNameList}",
-			pageName = "AC Page",
-			siteName = "Site Name");
+		task ("View the documents and media page") {
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "${documentNameList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-		ACUtils.closeAllSessionsAndWait();
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
-		ACUtils.launchAC();
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
 
-		ACNavigation.goToAssets();
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
 
-		ACNavigation.switchTab(tabName = "Documents and Media");
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
 
-		ACTimeFilter.clickTimeFilterButton();
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
 
-		ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setLast24Hours();
+		}
 
-		ACNavigation.openItem(itemName = "DM AC Title");
+		task ("Check the number of downloads and previews in the documents and media assets list") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "3");
 
-		ACAssets.viewVisitorsBehaviorMetric(
-			metricTitle = "Previews",
-			metricValue = "4");
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "2");
+		}
+
+		task ("Navigate to the overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check the number of downloads and previews in the overview tab") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Previews",
+				metricValue = "3");
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Downloads",
+				metricValue = "2");
+		}
 	}
 
 }

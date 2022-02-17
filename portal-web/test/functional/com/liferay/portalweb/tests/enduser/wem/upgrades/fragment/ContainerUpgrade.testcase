@@ -434,7 +434,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
-				panel = "Styles");
+				panel = "General");
 		}
 
 		task ("View the inner Container styles") {

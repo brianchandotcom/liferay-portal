@@ -1279,9 +1279,6 @@ definition {
 	@description = "This is a test for LPS-137577. The user can select multiple categories in the navigation menu in a staging site."
 	@priority = "4"
 	test SelectMultipleCategories {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
 		task ("Add three hierarchy levels categories to a vocabulary within Global site") {
 			JSONCategory.addVocabulary(
 				groupName = "Global",

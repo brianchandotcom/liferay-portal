@@ -560,9 +560,6 @@ definition {
 	@description = "This is a test for LPS-143841. The warning message won't be shown in contextual menu once change to an item with associated display page template."
 	@priority = "4"
 	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -738,9 +735,6 @@ definition {
 	@description = "This is a test case for LPS-141462. The user could change same type asset with selected one in an existing item."
 	@priority = "4"
 	test ChangeSameAssetTypeItem {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
 		task ("Add two Categories with different asset types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -1149,9 +1143,6 @@ definition {
 	@description = "This is a test for LPS-137577. The category should be added under the nearest ancestor selected."
 	@priority = "4"
 	test ViewCategoryAddedToNearestAncestor {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1303,9 +1294,6 @@ definition {
 	@description = "This is a test for LPS-137577. The modal confirmation is displayed when delete a item with children."
 	@priority = "4"
 	test ViewModalWhenDeleteItemWithChildren {
-		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
-		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
-
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

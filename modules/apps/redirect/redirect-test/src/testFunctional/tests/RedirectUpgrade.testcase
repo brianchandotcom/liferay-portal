@@ -27,6 +27,8 @@ definition {
 
 		Redirect.openToConfigInSystemSettings();
 
+		Redirect.viewActiveTabInSystemSettings();
+
 		FormFields.enableCheckbox(fieldName = "enabled");
 
 		PortletEntry.update();

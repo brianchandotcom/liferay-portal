@@ -383,6 +383,12 @@ definition {
 		}
 	}
 
+	macro viewActiveTabInSystemSettings {
+		AssertVisible(
+			key_tab = "Redirection",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+	}
+
 	macro viewDefault {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",

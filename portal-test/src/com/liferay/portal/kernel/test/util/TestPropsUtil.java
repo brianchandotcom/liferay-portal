@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -88,7 +89,9 @@ public class TestPropsUtil {
 		}
 
 		for (String key : keys) {
-			System.out.println(key + "=" + _props.getProperty(key));
+			if (!_ignoredPrintKeys.contains(key)) {
+				System.out.println(key + "=" + _props.getProperty(key));
+			}
 		}
 
 		System.out.println("");
@@ -98,6 +101,11 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
+	private static final List<String> _ignoredPrintKeys = Arrays.asList(
+		"digital.signature.account.base.uri", "digital.signature.api.accountId",
+		"digital.signature.api.username", "digital.signature.integration.key",
+		"digital.signature.rsa.private.key",
+		"digital.signature.site.settings.strategy");
 	private static final TestPropsUtil _testPropsUtil = new TestPropsUtil();
 
 	private final Properties _props = new Properties();

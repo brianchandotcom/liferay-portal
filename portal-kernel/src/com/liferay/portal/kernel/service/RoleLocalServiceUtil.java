@@ -944,37 +944,6 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	 * Returns a role with the name in the company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param name the role's name (optionally <code>null</code>)
-	 * @return the role with the name, or <code>null</code> if a role with the
-	 name could not be found in the company
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #fetchRole(long, String)}
-	 */
-	@Deprecated
-	public static Role loadFetchRole(long companyId, String name) {
-		return getService().loadFetchRole(companyId, name);
-	}
-
-	/**
-	 * Returns a role with the name in the company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param name the role's name
-	 * @return the role with the name in the company
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getRole(long, String)}
-	 */
-	@Deprecated
-	public static Role loadGetRole(long companyId, String name)
-		throws PortalException {
-
-		return getService().loadGetRole(companyId, name);
-	}
-
-	/**
 	 * Returns an ordered range of all the roles that match the keywords and
 	 * types.
 	 *

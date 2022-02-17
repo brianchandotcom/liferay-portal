@@ -56,14 +56,6 @@ public interface RegionService extends BaseService {
 			String regionCode, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public Region addRegion(
-			long countryId, String regionCode, String name, boolean active)
-		throws PortalException;
-
 	public void deleteRegion(long regionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

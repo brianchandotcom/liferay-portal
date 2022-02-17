@@ -48,17 +48,6 @@ public class RegionServiceUtil {
 			countryId, active, name, position, regionCode, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static Region addRegion(
-			long countryId, String regionCode, String name, boolean active)
-		throws PortalException {
-
-		return getService().addRegion(countryId, regionCode, name, active);
-	}
-
 	public static void deleteRegion(long regionId) throws PortalException {
 		getService().deleteRegion(regionId);
 	}

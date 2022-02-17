@@ -40,14 +40,16 @@ String assetTagName = ParamUtil.getString(request, "tag");
 	<%
 	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(KBArticle.class.getName(), searchContainer);
 
-	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+	SearchContainer<AssetEntry> assetEntrySearchContainer = searchContainer;
 
-	searchContainer.setTotal(total);
+	searchContainer.setResultsAndTotal(
+		() -> {
+			assetEntryQuery.setEnd(assetEntrySearchContainer.getEnd());
+			assetEntryQuery.setStart(assetEntrySearchContainer.getStart());
 
-	assetEntryQuery.setEnd(searchContainer.getEnd());
-	assetEntryQuery.setStart(searchContainer.getStart());
-
-	searchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
+			return AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		},
+		AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 	%>
 
 	<liferay-ui:search-container-row

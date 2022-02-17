@@ -67,12 +67,10 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		<liferay-ui:search-container-results>
 
 			<%
-			int backgroundTasksCount = 0;
-			List<BackgroundTask> backgroundTasks = null;
+			SearchContainer<BackgroundTask> backgroundTaskSearchContainer = searchContainer;
 
 			if (navigation.equals("all")) {
-				backgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR);
-				backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR));
 			}
 			else {
 				boolean completed = false;
@@ -81,12 +79,10 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 					completed = true;
 				}
 
-				backgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, completed);
-				backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, completed, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
+				boolean backgroundTaksCompleted = completed;
 
-			searchContainer.setResults(backgroundTasks);
-			searchContainer.setTotal(backgroundTasksCount);
+				searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaksCompleted, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaksCompleted));
+			}
 			%>
 
 		</liferay-ui:search-container-results>

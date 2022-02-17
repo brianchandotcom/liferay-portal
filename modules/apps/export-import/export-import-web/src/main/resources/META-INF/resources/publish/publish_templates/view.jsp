@@ -43,12 +43,9 @@ exportImportConfigurationSearchContainer.setOrderByCol("name");
 exportImportConfigurationSearchContainer.setOrderByComparator(new ExportImportConfigurationNameComparator(true));
 exportImportConfigurationSearchContainer.setOrderByType("asc");
 
-List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, keywords, exportImportConfigurationType, exportImportConfigurationSearchContainer.getStart(), exportImportConfigurationSearchContainer.getEnd(), exportImportConfigurationSearchContainer.getOrderByComparator());
+long companyId = company.getCompanyId();
 
-int exportImportConfigurationsCount = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, keywords, exportImportConfigurationType);
-
-exportImportConfigurationSearchContainer.setResults(exportImportConfigurations);
-exportImportConfigurationSearchContainer.setTotal(exportImportConfigurationsCount);
+exportImportConfigurationSearchContainer.setResultsAndTotal(() -> ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(companyId, groupId, keywords, exportImportConfigurationType, exportImportConfigurationSearchContainer.getStart(), exportImportConfigurationSearchContainer.getEnd(), exportImportConfigurationSearchContainer.getOrderByComparator()), ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(companyId, groupId, keywords, exportImportConfigurationType));
 %>
 
 <div class="export-dialog-tree">
@@ -70,7 +67,7 @@ exportImportConfigurationSearchContainer.setTotal(exportImportConfigurationsCoun
 					StringPool.BLANK
 				).buildString()
 			%>"
-			itemsTotal="<%= exportImportConfigurationsCount %>"
+			itemsTotal="<%= exportImportConfigurationSearchContainer.getTotal() %>"
 			searchActionURL="<%= searchURL.toString() %>"
 			selectable="<%= false %>"
 		/>

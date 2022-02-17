@@ -66,20 +66,15 @@ SearchContainer<Object> kbObjectSearchContainer = new SearchContainer(renderRequ
 
 boolean kbFolderView = resourceClassNameId == kbFolderClassNameId;
 
-List<Object> results = new ArrayList<>();
+long kbParentResourcePrimKey = parentResourcePrimKey;
+long kbScopeGroupId = scopeGroupId;
 
 if (kbFolderView) {
-	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, parentResourcePrimKey));
-
-	results.addAll(KBFolderServiceUtil.getKBFolders(scopeGroupId, parentResourcePrimKey, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd()));
+	kbObjectSearchContainer.setResultsAndTotal(() -> new ArrayList<>(KBFolderServiceUtil.getKBFolders(kbScopeGroupId, kbParentResourcePrimKey, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd())), KBFolderServiceUtil.getKBFoldersCount(kbScopeGroupId, kbParentResourcePrimKey));
 }
 else {
-	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, targetStatus));
-
-	results.addAll(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, targetStatus, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>()));
+	kbObjectSearchContainer.setResultsAndTotal(() -> new ArrayList<>(KBFolderServiceUtil.getKBFoldersAndKBArticles(kbScopeGroupId, kbParentResourcePrimKey, targetStatus, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>())), KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(kbScopeGroupId, kbParentResourcePrimKey, targetStatus));
 }
-
-kbObjectSearchContainer.setResults(results);
 %>
 
 <clay:container-fluid>

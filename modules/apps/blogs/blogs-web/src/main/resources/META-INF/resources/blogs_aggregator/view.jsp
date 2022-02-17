@@ -36,25 +36,23 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 SearchContainer<BlogsEntry> searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 5, portletURL, null, null);
 
-List<BlogsEntry> entries = null;
+List<BlogsEntry> entries = new ArrayList<>();
 
 if (selectionMethod.equals("users")) {
 	if (organizationId > 0) {
-		entries = BlogsEntryServiceUtil.getOrganizationEntries(organizationId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
+		entries.addAll(BlogsEntryServiceUtil.getOrganizationEntries(organizationId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
 	}
 	else {
-		entries = BlogsEntryServiceUtil.getGroupsEntries(company.getCompanyId(), scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
+		entries.addAll(BlogsEntryServiceUtil.getGroupsEntries(company.getCompanyId(), scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
 	}
 }
 else {
-	entries = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
+	entries.addAll(BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
 }
 
-searchContainer.setTotal(entries.size());
+searchContainer.setResultsAndTotal(() -> ListUtil.subList(entries, searchContainer.getStart(), searchContainer.getEnd()), entries.size());
 
-List<BlogsEntry> results = ListUtil.subList(entries, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
+List<BlogsEntry> results = searchContainer.getResults();
 %>
 
 <%@ include file="/blogs_aggregator/view_entries.jspf" %>

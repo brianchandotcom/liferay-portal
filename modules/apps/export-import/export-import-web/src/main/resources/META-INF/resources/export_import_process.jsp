@@ -47,8 +47,7 @@ if (Validator.isNotNull(backURL)) {
 			backgroundTasksCount = 1;
 		}
 
-		searchContainer.setResults(backgroundTasks);
-		searchContainer.setTotal(backgroundTasksCount);
+		searchContainer.setResultsAndTotal(() -> backgroundTasks, backgroundTasksCount);
 		%>
 
 	</liferay-ui:search-container-results>

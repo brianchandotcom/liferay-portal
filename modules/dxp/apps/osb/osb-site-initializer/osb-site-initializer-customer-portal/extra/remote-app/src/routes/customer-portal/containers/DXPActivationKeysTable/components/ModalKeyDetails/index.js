@@ -24,6 +24,7 @@ const ModalKeyDetails = ({
 	licenseKeyDownloadURL,
 	observer,
 	onClose,
+	project,
 	sessionId,
 }) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
@@ -84,7 +85,10 @@ const ModalKeyDetails = ({
 							const isAbleToDownloadKey = await downloadActivationLicenseKey(
 								activationKeys.id,
 								licenseKeyDownloadURL,
-								sessionId
+								sessionId,
+								activationKeys.productName,
+								activationKeys.productVersion,
+								project.name
 							);
 							handleAlertStatus(isAbleToDownloadKey);
 						}}

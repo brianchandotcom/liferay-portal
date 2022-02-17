@@ -12,6 +12,7 @@
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import Layout from '../../layouts/BaseLayout';
 import {PAGE_TYPES} from '../../utils/constants';
+import ActivationOutlet from './ActivationOutlet';
 import Overview from './Overview';
 import ProductsOutlet from './ProductsOutlet';
 import TeamMembers from './TeamMembers';
@@ -23,10 +24,9 @@ const ProjectRoutes = () => {
 				<Route element={<Layout />} path="/:accountKey">
 					<Route element={<Overview />} index />
 
-					<Route
-						element={<ProductsOutlet />}
-						path="activation/:productId"
-					/>
+					<Route element={<ActivationOutlet />} path="activation">
+						<Route element={<ProductsOutlet />} path=":productId" />
+					</Route>
 
 					<Route
 						element={<TeamMembers />}

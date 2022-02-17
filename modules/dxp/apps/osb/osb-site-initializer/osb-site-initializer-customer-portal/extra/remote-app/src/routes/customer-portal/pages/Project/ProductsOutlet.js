@@ -12,43 +12,12 @@
 import {useMemo} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {PAGE_TYPES, PRODUCT_TYPES} from '../../utils/constants';
-import ActivationKeys from './ActivationKeys';
-import DXP from './DXP';
-import DXPCloud from './DXPCloud';
 
 const ProductsOutlet = () => {
 	const {productId} = useParams();
-	const {
-		project,
-		sessionId,
-		subscriptionGroups,
-		userAccount,
-	} = useOutletContext();
+	const {activationComponents, subscriptionGroups} = useOutletContext();
 
-	const ProductsLayout = {
-		[PAGE_TYPES.commerce]: (
-			<ActivationKeys.Commerce
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-		[PAGE_TYPES.dxp]: <DXP project={project} sessionId={sessionId} />,
-		[PAGE_TYPES.dxpCloud]: (
-			<DXPCloud
-				project={project}
-				sessionId={sessionId}
-				subscriptionGroups={subscriptionGroups}
-				userAccount={userAccount}
-			/>
-		),
-		[PAGE_TYPES.enterpriseSearch]: (
-			<ActivationKeys.EnterpriseSearch
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-	};
-	const currentProduct = ProductsLayout[productId];
+	const currentProduct = activationComponents[productId];
 
 	const hasAccessToCurrentProduct = useMemo(() => {
 		const [pageKey] =

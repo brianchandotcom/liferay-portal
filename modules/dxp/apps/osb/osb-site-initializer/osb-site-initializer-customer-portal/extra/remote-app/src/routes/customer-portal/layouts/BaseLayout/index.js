@@ -70,6 +70,7 @@ const Layout = () => {
 
 					<Outlet
 						context={{
+							getCurrentPage,
 							project,
 							sessionId,
 							subscriptionGroups,

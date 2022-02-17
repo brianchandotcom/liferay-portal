@@ -16,17 +16,17 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetsDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
-import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.display.context.builder.CPOptionsSearchFacetDisplayContextBuilder;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -35,11 +35,11 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -80,47 +80,14 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(renderRequest);
+			_portletSharedSearchRequest.search(renderRequest);
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
+			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
-			List<Facet> filledFacets = new ArrayList<>();
-
-			Facet facet = portletSharedSearchResponse.getFacet(
-				CPField.OPTION_NAMES);
-
-			FacetCollector facetCollector = facet.getFacetCollector();
-
-			for (TermCollector termCollector :
-					facetCollector.getTermCollectors()) {
-
-				CPOption cpOption = _cpOptionLocalService.getCPOption(
-					themeDisplay.getCompanyId(), termCollector.getTerm());
-
-				if (cpOption.isFacetable()) {
-					filledFacets.add(
-						portletSharedSearchResponse.getFacet(
-							CPOptionFacetsUtil.getIndexFieldName(
-								termCollector.getTerm(),
-								themeDisplay.getLanguageId())));
-				}
-			}
-
-			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =
-				new CPOptionFacetsDisplayContext(
-					_cpOptionLocalService, renderRequest, filledFacets,
-					getPaginationStartParameterName(
-						portletSharedSearchResponse),
-					portletSharedSearchResponse);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetsDisplayContext);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpOptionsSearchFacetDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -136,13 +103,98 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		return searchRequest.getPaginationStartParameterName();
 	}
 
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
+	private CPOptionsSearchFacetDisplayContext _buildDisplayContext(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest) {
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPOptionFacetsPortlet.class);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		int maxTerms = 10;
+
+		int frequencyThreshold = 1;
+
+		boolean showFrequencies = true;
+
+		String displayStyle = "cloud";
+
+		try {
+			CPOptionFacetsPortletInstanceConfiguration
+				cpOptionFacetsPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						CPOptionFacetsPortletInstanceConfiguration.class);
+
+			maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
+
+			frequencyThreshold =
+				cpOptionFacetsPortletInstanceConfiguration.
+					getFrequencyThreshold();
+
+			showFrequencies =
+				cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
+
+			displayStyle =
+				cpOptionFacetsPortletInstanceConfiguration.displayStyle();
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+
+		Optional<PortletPreferences> portletPreferencesOptional =
+			portletSharedSearchResponse.getPortletPreferences(renderRequest);
+
+		if (portletPreferencesOptional.isPresent()) {
+			PortletPreferences portletPreferences =
+				portletPreferencesOptional.get();
+
+			frequencyThreshold = GetterUtil.getInteger(
+				portletPreferences.getValue("frequencyThreshold", null),
+				frequencyThreshold);
+			maxTerms = GetterUtil.getInteger(
+				portletPreferences.getValue("maxTerms", null), maxTerms);
+			showFrequencies = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"frequenciesVisible", StringPool.BLANK),
+				true);
+			displayStyle = portletPreferences.getValue(
+				"cpOptionFacetDisplayStyle", displayStyle);
+		}
+
+		CPOptionsSearchFacetDisplayContextBuilder
+			cpOptionsSearchFacetDisplayBuilder =
+				new CPOptionsSearchFacetDisplayContextBuilder(renderRequest);
+
+		cpOptionsSearchFacetDisplayBuilder.setCPOptionLocalService(
+			_cpOptionLocalService);
+		cpOptionsSearchFacetDisplayBuilder.setPortletSharedSearchRequest(
+			_portletSharedSearchRequest);
+
+		cpOptionsSearchFacetDisplayBuilder.setDisplayStyle(displayStyle);
+		cpOptionsSearchFacetDisplayBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(CPField.OPTION_NAMES));
+		cpOptionsSearchFacetDisplayBuilder.setFrequenciesVisible(
+			showFrequencies);
+		cpOptionsSearchFacetDisplayBuilder.setFrequencyThreshold(
+			frequencyThreshold);
+		cpOptionsSearchFacetDisplayBuilder.setMaxTerms(maxTerms);
+		cpOptionsSearchFacetDisplayBuilder.setPaginationStartParameterName(
+			getPaginationStartParameterName(portletSharedSearchResponse));
+		cpOptionsSearchFacetDisplayBuilder.setPortal(_portal);
+
+		cpOptionsSearchFacetDisplayBuilder.setLocale(themeDisplay.getLocale());
+
+		return cpOptionsSearchFacetDisplayBuilder.build();
+	}
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletSharedSearchRequest _portletSharedSearchRequest;
 
 }

@@ -50,7 +50,7 @@
 <!--SIDEBAR-->
 <tr>
 	<td>DRAFT_SAVED_MESSAGE</td>
-	<td>//div[contains(@class,'toolbar')]//span[contains(@class,'editor__status')][normalize-space(text())='Draft Saved']</td>
+	<td>//div[contains(@class,'toolbar')]//span[contains(@class,'editor__status')][normalize-space(text())='Saved']</td>
 	<td></td>
 </tr>
 <tr>

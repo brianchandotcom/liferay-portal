@@ -50,6 +50,11 @@
 	<td>//a[contains(text(),'${key_nameList}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and text()='${key_numberValue}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'Delete')]</td>
+	<td></td>
+</tr>
 <!-- CLOSE MODAL -->
 <tr>
 	<td>MODAL_CLOSE_BUTTON</td>

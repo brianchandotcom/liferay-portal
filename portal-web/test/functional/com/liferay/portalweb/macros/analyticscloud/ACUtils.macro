@@ -955,4 +955,21 @@ definition {
 			value1 = "${fileName}");
 	}
 
+	macro deleteItemFromList {
+		var key_actionButton = "Delete";
+		var key_nameList = "${itemName}";
+
+		WaitForPageLoad();
+
+		ACUtils.searchBar(searchItem = "${itemName}");
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACUtils#DELETE_BUTTON");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clearSearchBar();
+	}
+
 }

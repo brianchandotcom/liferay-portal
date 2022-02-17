@@ -34,7 +34,6 @@ import {
 	useSetSelectedMenuItemId,
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
-import deleteItem from '../utils/deleteItem';
 import getFlatItems from '../utils/getFlatItems';
 import getItemPath from '../utils/getItemPath';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
@@ -49,7 +48,6 @@ export function MenuItem({item}) {
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const {
-		categoriesMultipleSelectionEnabled,
 		deleteSiteNavigationMenuItemURL,
 		editSiteNavigationMenuItemParentURL,
 		languageId,
@@ -75,9 +73,7 @@ export function MenuItem({item}) {
 		})
 			.then((response) => response.json())
 			.then(({siteNavigationMenuItems}) => {
-				const newItems = categoriesMultipleSelectionEnabled
-					? getFlatItems(siteNavigationMenuItems)
-					: deleteItem(items, siteNavigationMenuItemId);
+				const newItems = getFlatItems(siteNavigationMenuItems);
 
 				setItems(newItems);
 
@@ -188,13 +184,12 @@ export function MenuItem({item}) {
 									>
 										{title}
 
-										{categoriesMultipleSelectionEnabled &&
-											item.icon && (
-												<ClayIcon
-													className="ml-2 text-warning"
-													symbol={item.icon}
-												/>
-											)}
+										{item.icon && (
+											<ClayIcon
+												className="ml-2 text-warning"
+												symbol={item.icon}
+											/>
+										)}
 									</ClayCard.Description>
 
 									<ClayLabel
@@ -213,8 +208,7 @@ export function MenuItem({item}) {
 										)}
 										displayType="unstyled"
 										onClick={() =>
-											categoriesMultipleSelectionEnabled &&
-											Boolean(item.children.length)
+											item.children.length
 												? setDeletionModalVisible(true)
 												: deleteMenuItem()
 										}

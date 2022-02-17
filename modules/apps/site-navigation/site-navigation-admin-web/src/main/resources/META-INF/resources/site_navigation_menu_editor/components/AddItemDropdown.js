@@ -73,11 +73,7 @@ function getNamespacedInfoItems(
 
 export function AddItemDropDown({trigger}) {
 	const [active, setActive] = useState(false);
-	const {
-		addSiteNavigationMenuItemOptions,
-		categoriesMultipleSelectionEnabled,
-		portletNamespace,
-	} = useConstants();
+	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
 
 	return (
 		<>
@@ -94,19 +90,14 @@ export function AddItemDropDown({trigger}) {
 							onClick={() => {
 								if (data.itemSelector) {
 									Liferay.Util.openSelectionModal({
-										buttonAddLabel:
-											categoriesMultipleSelectionEnabled &&
-											data.multiSelection
-												? Liferay.Language.get('select')
-												: null,
-										multiple:
-											categoriesMultipleSelectionEnabled &&
-											data.multiSelection,
+										buttonAddLabel: data.multiSelection
+											? Liferay.Language.get('select')
+											: null,
+										multiple: data.multiSelection,
 										onSelect: (selection) => {
 											fetch(data.addItemURL, {
 												body: objectToFormData(
-													categoriesMultipleSelectionEnabled &&
-														data.multiSelection
+													data.multiSelection
 														? getNamespacedInfoItems(
 																portletNamespace,
 																selection,

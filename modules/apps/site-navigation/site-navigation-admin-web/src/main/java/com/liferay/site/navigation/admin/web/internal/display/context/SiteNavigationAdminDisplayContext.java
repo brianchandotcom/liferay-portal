@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfigurationUtil;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -259,10 +258,6 @@ public class SiteNavigationAdminDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"addSiteNavigationMenuItemOptions",
 			getAddSiteNavigationMenuItemDropdownItems()
-		).put(
-			"categoriesMultipleSelectionEnabled",
-			FFSiteNavigationAdminConfigurationUtil.
-				categoriesMultipleSelectionEnabled()
 		).put(
 			"deleteSiteNavigationMenuItemURL",
 			() -> PortletURLBuilder.createActionURL(

@@ -1,9 +1,8 @@
 .congrats-information {
 	background-color: var(--color-neutral-0);
 	border: 1px solid var(--color-brand-primary-lighten-3);
-	border-radius: 8px;
 	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
-	height: 396px;
+	height: fit-content;
 	padding: 40px 45px;
 	width: 749px;
 }
@@ -81,4 +80,62 @@
 
 .congrats-information li img {
 	margin-left: 6px;
+}
+
+.congrats-information .right-column {
+	gap: 45px;
+}
+
+.outter-container {
+	display: none;
+}
+
+@media (max-width: 767.98px) {
+	.congrats-information {
+		width: 100%;
+	}
+
+	.congrats-information .right-column .download-print-share {
+		display: none;
+	}
+
+	.congrats-information .right-column .congrats-info-price {
+		padding-top: 2rem;
+		text-align: left !important;
+	}
+
+	.congrats-information .row {
+		flex-direction: column;
+		flex-wrap: wrap !important;
+	}
+
+	.congrats-information .row .left-column {
+		flex: 0 0 calc(12 / 12 * 100%);
+		max-width: calc(12 / 12 * 100%);
+	}
+
+	.congrats-information table td:first-child {
+		max-width: 280px;
+	}
+
+	.congrats-information .congrats-table-info {
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.congrats-information table tr {
+		max-width: 200px;
+	}
+
+	.outter-container {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.outter-container ul {
+		font-size: 14px;
+		list-style: none;
+		padding-left: 0 !important;
+	}
 }

@@ -1,42 +1,65 @@
-<div class="congrats-information container">
-	<div class="hide">
-		<img id="check" src="[resources:blue_check.svg]" />
+<div class="congrats-information container rounded-lg">
+	<div class="justify-content-between row">
+		<div class="col-7 left-column">
+			<div class="hide">
+				<img id="check" src="[resources:blue_check.svg]" />
 
-		<img id="close" src="[resources:close.svg]" />
-	</div>
+				<img id="close" src="[resources:close.svg]" />
+			</div>
 
-	<div class="d-flex justify-content-between">
-		<div>
-			<h1 id="congrats-info-title"></h1>
+			<div>
+				<h1 id="congrats-info-title"></h1>
 
-			<h2 id="congrats-info-policy">Policy: #</h2>
+				<h2 id="congrats-info-policy">Policy: #</h2>
 
-			<h3 id="congrats-info-date">10/1/2019-3/1/2020</h3>
+				<h3 id="congrats-info-date">10/1/2019-3/1/2020</h3>
+			</div>
+
+			<table class="congrats-table-info">
+				<tbody></tbody>
+			</table>
 		</div>
 
-		<p class="congrats-info-price" id="congrats-info-price">
-			<span id="congrats-price"></span>/yr
-		</p>
-	</div>
+		<div class="col right-column">
+			<div class="d-flex flex-column justify-content-between">
+			<p class="congrats-info-price text-right" id="congrats-info-price">
+					<span id="congrats-price"></span>/yr
+				</p>
 
-	<div class="d-flex justify-content-between">
-		<table class="congrats-table-info">
-			<tbody></tbody>
-		</table>
-
-		<ul>
-			<li>
-				DOWNLOAD
-				<img id="download" src="[resources:file_download.svg]" />
-			</li>
-			<li>
-				PRINT
-				<img id="print" src="[resources:action_print.svg]" />
-			</li>
-			<li>
-				SHARE
-				<img id="share" src="[resources:communication_email.svg]" />
-			</li>
-		</ul>
+				<div class="download-print-share">
+					<ul>
+						<li>
+							DOWNLOAD
+						<img id="download" src="[resources:file_download.svg]" />
+						</li>
+						<li>
+							PRINT
+						<img id="print" src="[resources:action_print.svg]" />
+						</li>
+						<li>
+							SHARE
+						<img id="share" src="[resources:communication_email.svg]" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+
+<div class="container my-5 outter-container">
+	<ul class="d-flex justify-content-around px-3 w-100">
+		<li>
+			DOWNLOAD
+			<img id="download" src="[resources:file_download.svg]" />
+		</li>
+		<li>
+			PRINT
+			<img id="print" src="[resources:action_print.svg]" />
+		</li>
+		<li>
+			SHARE
+			<img id="share" src="[resources:communication_email.svg]" />
+		</li>
+	</ul>
 </div>

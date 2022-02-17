@@ -105,14 +105,14 @@ const buildList = (items = []) => {
 						?.currentSrc;
 
 			return `<tr>
-			  <td class="d-flex">
-				  <img alt="icon" src="${imageSrc}" />
-				  <span class="ml-1">${title}</span>
-			  </td>
-			  <td class="text-right">${
+			   <td>
+				   <img alt="icon" src="${imageSrc}" />
+				   <span class="ml-1">${title}</span>
+			   </td>
+			   <td class="text-right">${
 					typeof formattedValue === 'string' ? formattedValue : ''
 				}</td>
-			  </tr>`;
+			   </tr>`;
 		})
 		.join('');
 };

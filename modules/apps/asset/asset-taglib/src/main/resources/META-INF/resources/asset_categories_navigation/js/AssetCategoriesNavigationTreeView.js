@@ -34,7 +34,7 @@ function findCategory(categoryId, categories = []) {
 	return null;
 }
 
-const NewAssetCategoriesNavigationTreeView = ({
+const AssetCategoriesNavigationTreeView = ({
 	selectedCategoryId,
 	vocabularies,
 }) => {
@@ -84,7 +84,7 @@ const NewAssetCategoriesNavigationTreeView = ({
 	);
 };
 
-const AssetCategoriesNavigationTreeView = ({
+const OldAssetCategoriesNavigationTreeView = ({
 	selectedCategoryId,
 	vocabularies,
 }) => {
@@ -112,5 +112,5 @@ const AssetCategoriesNavigationTreeView = ({
 };
 
 export default Liferay.__FF__.enableClayTreeView
-	? NewAssetCategoriesNavigationTreeView
-	: AssetCategoriesNavigationTreeView;
+	? AssetCategoriesNavigationTreeView
+	: OldAssetCategoriesNavigationTreeView;

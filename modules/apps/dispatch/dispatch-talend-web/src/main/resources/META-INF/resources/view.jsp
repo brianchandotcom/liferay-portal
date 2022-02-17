@@ -39,13 +39,9 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 			</liferay-ui:error>
 
 			<%
-			TalendDispatchDisplayContext dispatchTalendDisplayContext = (TalendDispatchDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+			TalendDispatchDisplayContext talendDispatchDisplayContext = (TalendDispatchDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-			DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTalendDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
-
-			Map<String, String> attributes = dispatchTriggerMetadata.getAttributes();
-
-			String fileEntryName = attributes.isEmpty() ? "" : attributes.get("talend-job-design-archive-name");
+			String fileEntryName = talendDispatchDisplayContext.getTalendArchiveFileName();
 			%>
 
 			<p class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />fileEntryName">

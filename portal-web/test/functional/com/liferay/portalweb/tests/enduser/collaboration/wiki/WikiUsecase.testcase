@@ -103,25 +103,6 @@ definition {
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@description = "This test covers LPS-106280. It ensures that the wiki Email content can be edited."
-	@priority = "3"
-	@refactordone
-	test CanViewConfiguredEmailContent {
-		property portal.acceptance = "false";
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiPortlet.configureEmailCP(
-			bodyContent = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]",
-			pageAddedEmail = "true");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiPortlet.viewEmailCP(
-			bodyContent = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]",
-			pageAddedEmail = "true");
-	}
-
 	@description = "This ensures that the script can be escaped."
 	@priority = "3"
 	@refactordone

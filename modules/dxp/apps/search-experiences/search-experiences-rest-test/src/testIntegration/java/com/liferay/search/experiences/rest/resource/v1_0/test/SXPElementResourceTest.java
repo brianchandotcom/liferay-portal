@@ -15,10 +15,12 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
 
 import java.util.Collections;
@@ -33,6 +35,37 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetSXPElementExport() throws Exception {
+		SXPElement sxpElement = randomSXPElement();
+
+		String title = sxpElement.getTitle();
+		String description = sxpElement.getDescription();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		HttpInvoker.HttpResponse httpResponse =
+			sxpElementResource.getSXPElementExportHttpResponse(
+				postSXPElement.getId());
+
+		Assert.assertTrue(
+			JSONUtil.equals(
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()),
+				JSONUtil.put(
+					"description_i18n", JSONUtil.put("en_US", description)
+				).put(
+					"elementDefinition", JSONFactoryUtil.createJSONObject()
+				).put(
+					"schemaVersion", postSXPElement.getSchemaVersion()
+				).put(
+					"title_i18n", JSONUtil.put("en_US", title)
+				).put(
+					"type", postSXPElement.getType()
+				)));
+	}
 
 	@Override
 	@Test

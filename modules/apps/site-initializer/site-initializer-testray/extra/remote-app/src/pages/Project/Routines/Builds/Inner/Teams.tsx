@@ -13,11 +13,38 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
+import ListView from '../../../../../components/ListView/ListView';
+import {getTestrayTeams} from '../../../../../graphql/queries/testrayTeam';
+import {Liferay} from '../../../../../services/liferay/liferay';
 
 const Teams = () => {
 	return (
 		<Container className="mt-4" title="Teams">
-			Teams
+			<ListView
+				query={getTestrayTeams}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							value: 'Team',
+						},
+						{
+							key: 'failed',
+							value: 'Failed',
+						},
+						{
+							key: 'Total',
+							value: 'Total',
+						},
+						{
+							key: 'metrics',
+							value: 'Metrics',
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayTeams}
+				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			/>
 		</Container>
 	);
 };

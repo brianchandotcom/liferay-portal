@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -357,11 +356,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		_type = typeSettingsUnicodeProperties.get("type");
 
 		return _type;
-	}
-
-	public boolean isFFMultipleSelectionEnabled() {
-		return FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
-			multipleSelectionEnabled();
 	}
 
 	private JSONArray _getDataJSONArray() throws Exception {

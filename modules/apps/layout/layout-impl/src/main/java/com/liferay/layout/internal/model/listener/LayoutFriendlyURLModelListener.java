@@ -62,21 +62,14 @@ public class LayoutFriendlyURLModelListener
 			if (!_stagingGroupHelper.isLiveGroup(
 					layoutFriendlyURL.getGroupId())) {
 
-				long classNameId = _layoutFriendlyURLEntryHelper.getClassNameId(
-					layoutFriendlyURL.isPrivateLayout());
-
-				String urlTitle =
-					_friendlyURLEntryLocalService.getUniqueUrlTitle(
-						layoutFriendlyURL.getGroupId(), classNameId,
-						layoutFriendlyURL.getPlid(),
-						layoutFriendlyURL.getFriendlyURL(),
-						layoutFriendlyURL.getLanguageId());
-
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
-					layoutFriendlyURL.getGroupId(), classNameId,
+					layoutFriendlyURL.getGroupId(),
+					_layoutFriendlyURLEntryHelper.getClassNameId(
+						layoutFriendlyURL.isPrivateLayout()),
 					layoutFriendlyURL.getPlid(),
 					Collections.singletonMap(
-						layoutFriendlyURL.getLanguageId(), urlTitle),
+						layoutFriendlyURL.getLanguageId(),
+						layoutFriendlyURL.getFriendlyURL()),
 					ServiceContextThreadLocal.getServiceContext());
 			}
 		}

@@ -19,6 +19,7 @@
 		"@clayui/css": "^3.44.2",
 		"@clayui/empty-state": "^3.40.0",
 		"@clayui/icon": "^3.40.0",
+		"@clayui/layout": "^3.40.0",
 		"@clayui/loading-indicator": "^3.40.0",
 		"@clayui/pagination": "^3.43.0",
 		"@clayui/pagination-bar": "^3.43.0",

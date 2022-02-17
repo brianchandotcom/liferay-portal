@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Base64;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -34,8 +33,8 @@ import org.json.JSONObject;
  */
 public class HttpClient {
 
-	public static JSONArray get(String path) {
-		JSONArray jsonArray = null;
+	public static JSONObject get(String path) {
+		JSONObject jsonObject = null;
 
 		BufferedReader reader;
 		String line;
@@ -84,9 +83,9 @@ public class HttpClient {
 				reader.close();
 			}
 
-			jsonArray = new JSONArray(responseContent.toString());
+			jsonObject = new JSONObject(responseContent.toString());
 
-			System.out.println(jsonArray);
+			System.out.println(jsonObject);
 		}
 		catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -98,7 +97,7 @@ public class HttpClient {
 			connection.disconnect();
 		}
 
-		return jsonArray;
+		return jsonObject;
 	}
 
 	public static JSONObject post(String urlTarget, JSONObject params) {
@@ -117,7 +116,7 @@ public class HttpClient {
 
 			// Request setup
 
-			String auth = "test@liferay.com:t";
+			String auth = "test@liferay.com:test";
 
 			byte[] encodedAuth = Base64.getEncoder(
 			).encode(

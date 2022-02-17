@@ -155,10 +155,6 @@ public interface Build {
 
 	public long getStatusDuration(String status);
 
-	public String getStatusReport();
-
-	public String getStatusReport(int indentSize);
-
 	public String getStatusSummary();
 
 	public Map<String, String> getStopPropertiesTempMap();

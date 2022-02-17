@@ -489,23 +489,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getStatusReport(int indentSize) {
-		String statusReport = super.getStatusReport(indentSize);
-
-		if (getDownstreamBuildCount(null) > 0) {
-			while (statusReport.endsWith("\n")) {
-				statusReport = statusReport.substring(
-					0, statusReport.length() - 1);
-			}
-
-			statusReport += " / ";
-		}
-
-		return statusReport + "Update took " + _updateDuration +
-			" milliseconds.\n";
-	}
-
-	@Override
 	public String getStatusSummary() {
 		long currentTimeMillis =
 			JenkinsResultsParserUtil.getCurrentTimeMillis();

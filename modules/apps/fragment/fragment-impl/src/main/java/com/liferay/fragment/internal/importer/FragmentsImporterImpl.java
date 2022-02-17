@@ -810,8 +810,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			Collectors.toSet()
 		);
 
-		Map<String, String> zipEntryNames = new HashMap<>();
-
 		for (ZipEntry zipEntry : zipEntries) {
 			String[] paths = StringUtil.split(
 				zipEntry.getName(), StringPool.FORWARD_SLASH);
@@ -825,25 +823,19 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				continue;
 			}
 
-			zipEntryNames.put(
-				_getFileName(zipEntry.getName()), zipEntry.getName());
-		}
+			String fileName = _getFileName(zipEntry.getName());
 
-		for (FileEntry fileEntry :
-				PortletFileRepositoryUtil.getPortletFileEntries(
-					groupId, folderId)) {
+			InputStream inputStream = _getInputStream(
+				zipFile, zipEntry.getName());
 
-			if (zipEntryNames.containsKey(fileEntry.getFileName())) {
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					groupId, folderId, fileName);
+
+			if (fileEntry != null) {
 				PortletFileRepositoryUtil.deletePortletFileEntry(
 					fileEntry.getFileEntryId());
 			}
-		}
-
-		for (Map.Entry<String, String> entry : zipEntryNames.entrySet()) {
-			InputStream inputStream = _getInputStream(
-				zipFile, entry.getValue());
-
-			String fileName = entry.getKey();
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, FragmentCollection.class.getName(),

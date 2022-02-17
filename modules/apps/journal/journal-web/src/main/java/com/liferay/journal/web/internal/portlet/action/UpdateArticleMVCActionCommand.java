@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -459,7 +459,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			String originalFriendlyURL = originalFriendlyURLMap.get(locale);
 
 			String normalizedOriginalFriendlyURL =
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				_friendlyURLNormalizer.normalizeWithEncoding(
 					originalFriendlyURL);
 
 			String currentFriendlyURL = entry.getValue();
@@ -647,6 +647,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private Http _http;

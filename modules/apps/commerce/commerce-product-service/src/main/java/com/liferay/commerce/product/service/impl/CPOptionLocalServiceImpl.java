@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -82,7 +82,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			externalReferenceCode = null;
 		}
 
-		key = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(key);
+		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(key);
 
 		validateCPOptionKey(0, user.getCompanyId(), key);
 
@@ -248,7 +248,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
-		key = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(key);
+		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(key);
 
 		validateCPOptionKey(
 			cpOption.getCPOptionId(), cpOption.getCompanyId(), key);
@@ -429,5 +429,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = FriendlyURLNormalizer.class)
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 }

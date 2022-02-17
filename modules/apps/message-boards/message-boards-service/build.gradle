@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:comment:comment-api")
 	compileOnly project(":apps:export-import:export-import-api")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:petra:petra-mail")
 	compileOnly project(":apps:petra:petra-model-adapter")

@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -584,6 +584,9 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	@Reference
+	protected FriendlyURLNormalizer friendlyURLNormalizer;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -626,7 +629,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				layoutFriendlyURLSeparatorCompositeFriendlyURL,
 				layoutFriendlyURL) ||
 			StringUtil.equalsIgnoreCase(
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				friendlyURLNormalizer.normalizeWithEncoding(
 					layoutFriendlyURLSeparatorCompositeFriendlyURL),
 				layoutFriendlyURL)) {
 

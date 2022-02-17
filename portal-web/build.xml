@@ -27,7 +27,6 @@
 		<pathelement location="${project.dir}/lib/portal/commons-math.jar" />
 		<pathelement location="${project.dir}/lib/portal/dom4j.jar" />
 		<pathelement location="${project.dir}/lib/portal/jabsorb.jar" />
-		<pathelement location="${project.dir}/lib/portal/liferay-icu4j.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-1.2-api.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-api.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-core.jar" />

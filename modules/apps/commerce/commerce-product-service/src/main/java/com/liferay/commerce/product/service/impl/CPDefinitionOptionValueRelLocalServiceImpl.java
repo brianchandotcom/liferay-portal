@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -106,7 +106,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		key = _friendlyURLNormalizer.normalize(key);
 
 		validate(0, cpDefinitionOptionRelId, key);
 
@@ -618,7 +618,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionValueRelId);
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		key = _friendlyURLNormalizer.normalize(key);
 
 		validate(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
@@ -1063,5 +1063,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = FriendlyURLNormalizer.class)
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 }

@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -309,7 +309,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
 				groupId, classNameId,
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle));
+				_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 
 		if (friendlyURLEntryLocalization != null) {
 			return friendlyURLEntryPersistence.fetchByPrimaryKey(
@@ -325,7 +325,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		return friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
 			groupId, classNameId,
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle));
+			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
 	@Override
@@ -359,7 +359,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		return friendlyURLEntryLocalizationPersistence.findByG_C_U(
 			groupId, classNameId,
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle));
+			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
 	@Override
@@ -416,7 +416,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
@@ -453,7 +453,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			prefix = _getURLEncodedSubstring(
 				urlTitle, prefix, maxLength - suffix.length());
 
-			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			curUrlTitle = _friendlyURLNormalizer.normalizeWithEncoding(
 				prefix + suffix);
 		}
 
@@ -555,7 +555,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle);
 
 		if (normalizedUrlTitle.length() > maxLength) {
 			throw new FriendlyURLLengthException(
@@ -590,7 +590,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		Map<String, String> urlTitleMap) {
 
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			String urlTitle = _friendlyURLNormalizer.normalizeWithEncoding(
 				entry.getValue());
 
 			if (!urlTitle.equals(existingUrlTitleMap.get(entry.getKey()))) {
@@ -615,7 +615,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				endPos--;
 			}
 
-			encodedString = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			encodedString = _friendlyURLNormalizer.normalizeWithEncoding(
 				decodedString.substring(0, endPos));
 		}
 
@@ -682,7 +682,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			String oldURLTitle = entry.getValue();
 
 			String normalizedUrlTitle =
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(oldURLTitle);
+				_friendlyURLNormalizer.normalizeWithEncoding(oldURLTitle);
 
 			if (Validator.isNotNull(normalizedUrlTitle)) {
 				FriendlyURLEntryLocalization
@@ -745,6 +745,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 	}
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

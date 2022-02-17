@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
@@ -85,7 +85,7 @@ public class CommercePriceListsImporter {
 		String parentPriceListName = jsonObject.getString("parentPriceList");
 
 		if (!Validator.isBlank(parentPriceListName)) {
-			String externalReferenceCode = FriendlyURLNormalizerUtil.normalize(
+			String externalReferenceCode = _friendlyURLNormalizer.normalize(
 				parentPriceListName);
 
 			CommercePriceList parentPriceList =
@@ -163,7 +163,7 @@ public class CommercePriceListsImporter {
 				_commerceCurrencyLocalService.getCommerceCurrency(
 					serviceContext.getCompanyId(), currencyCode);
 
-			String externalReferenceCode = FriendlyURLNormalizerUtil.normalize(
+			String externalReferenceCode = _friendlyURLNormalizer.normalize(
 				name);
 
 			CommercePriceList commercePriceList =
@@ -180,7 +180,7 @@ public class CommercePriceListsImporter {
 			for (int i = 0; i < accountGroupsJSONArray.length(); i++) {
 				try {
 					String accountGroupExternalReferenceCode =
-						FriendlyURLNormalizerUtil.normalize(
+						_friendlyURLNormalizer.normalize(
 							accountGroupsJSONArray.getString(i));
 
 					CommerceAccountGroup commerceAccountGroup =
@@ -235,6 +235,9 @@ public class CommercePriceListsImporter {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private UserLocalService _userLocalService;

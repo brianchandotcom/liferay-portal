@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -88,7 +88,7 @@ public class CPOptionValueLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		key = _friendlyURLNormalizer.normalize(key);
 
 		validate(0, cpOptionId, key);
 
@@ -295,7 +295,7 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.findByPrimaryKey(
 			cpOptionValueId);
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		key = _friendlyURLNormalizer.normalize(key);
 
 		validate(
 			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
@@ -449,5 +449,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = FriendlyURLNormalizer.class)
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 }

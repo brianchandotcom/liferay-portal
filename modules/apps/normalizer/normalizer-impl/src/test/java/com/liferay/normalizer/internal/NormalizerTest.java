@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.normalizer.internal;
 
+import com.liferay.normalizer.Normalizer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Máté Thurzó
  */
 public class NormalizerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testAscii() {
@@ -31,7 +40,7 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-			Normalizer.normalizeToAscii(asciiAlphabet));
+			_normalizer.normalizeToAscii(asciiAlphabet));
 	}
 
 	@Test
@@ -46,7 +55,7 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABGDEZETHIKLMN'XOPRSTYPHCHPSOabgdezethiklmn'xoprsstyphchpso",
-			Normalizer.normalizeToAscii(greekAlphabet));
+			_normalizer.normalizeToAscii(greekAlphabet));
 	}
 
 	@Test
@@ -59,7 +68,7 @@ public class NormalizerTest {
 		Assert.assertEquals(
 			"AABCDEEFGHIIJKLMNOOOOPQRSTUUUUVWXYZaabcdeefghiijklmnoooopqrstuuu" +
 				"uvwxyz",
-			Normalizer.normalizeToAscii(hungarianAlphabet));
+			_normalizer.normalizeToAscii(hungarianAlphabet));
 	}
 
 	@Test
@@ -77,7 +86,7 @@ public class NormalizerTest {
 		Assert.assertEquals(
 			"ABVGDEEZZIJKLMNOPRSTUFHCCSS\"Y'EUAabvgdeezzijklmnoprstufhccss\"y" +
 				"'eua",
-			Normalizer.normalizeToAscii(russianAlphabet));
+			_normalizer.normalizeToAscii(russianAlphabet));
 	}
 
 	@Test
@@ -87,7 +96,9 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABCDEFGIJKLMNNOPQRSTUVWXYZabcdefghijklmnnopqrstuvwxyz",
-			Normalizer.normalizeToAscii(spanishAlphabet));
+			_normalizer.normalizeToAscii(spanishAlphabet));
 	}
+
+	private final Normalizer _normalizer = new NormalizerImpl();
 
 }

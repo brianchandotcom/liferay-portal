@@ -179,7 +179,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -2050,14 +2050,12 @@ public class JournalArticleLocalServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			articles = journalArticlePersistence.findByG_UT(
-				groupId,
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle), 0, 1,
-				orderByComparator);
+				groupId, _friendlyURLNormalizer.normalizeWithEncoding(urlTitle),
+				0, 1, orderByComparator);
 		}
 		else {
 			articles = journalArticlePersistence.findByG_UT_ST(
-				groupId,
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle),
+				groupId, _friendlyURLNormalizer.normalizeWithEncoding(urlTitle),
 				status, 0, 1, orderByComparator);
 		}
 
@@ -3264,8 +3262,7 @@ public class JournalArticleLocalServiceImpl
 		}
 		else {
 			articles = journalArticlePersistence.findByG_UT_ST(
-				groupId,
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle),
+				groupId, _friendlyURLNormalizer.normalizeWithEncoding(urlTitle),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 		}
@@ -9300,6 +9297,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -96,8 +96,6 @@ Export-Package:\
 	\
 	com.ibm.crypto.provider,\
 	\
-	com.liferay.ibm.icu.*;version='4.0.1',\
-	\
 	com.rometools.rome;version='1.16.0',\
 	com.rometools.rome.feed;version='1.16.0',\
 	com.rometools.rome.feed.atom;version='1.16.0',\
@@ -321,7 +319,6 @@ Provide-Capability:\
 	@../../../lib/portal/jodd-proxetta.jar,\
 	@../../../lib/portal/jodd-util.jar,\
 	@../../../lib/portal/json-java.jar,\
-	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j-1.2-api.jar,\
 	@../../../lib/portal/log4j-api.jar,\
 	@../../../lib/portal/log4j-core.jar,\

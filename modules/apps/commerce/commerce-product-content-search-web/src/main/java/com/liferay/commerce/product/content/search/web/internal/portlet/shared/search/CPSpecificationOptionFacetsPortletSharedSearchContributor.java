@@ -98,13 +98,18 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 			Optional<PortletPreferences> portletPreferencesOptional =
 				portletSharedSearchSettings.getPortletPreferencesOptional();
 
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
+			int frequencyThreshold = 1;
+			int maxTerms = 10;
 
-			int frequencyThreshold = GetterUtil.getInteger(
-				portletPreferences.getValue("frequencyThreshold", null), 1);
-			int maxTerms = GetterUtil.getInteger(
-				portletPreferences.getValue("maxTerms", null), 10);
+			if (portletPreferencesOptional.isPresent()) {
+				PortletPreferences portletPreferences =
+					portletPreferencesOptional.get();
+
+				frequencyThreshold = GetterUtil.getInteger(
+					portletPreferences.getValue("frequencyThreshold", null), 1);
+				maxTerms = GetterUtil.getInteger(
+					portletPreferences.getValue("maxTerms", null), 10);
+			}
 
 			for (Facet facet : getFacets(renderRequest)) {
 				String cpSpecificationOptionKey =

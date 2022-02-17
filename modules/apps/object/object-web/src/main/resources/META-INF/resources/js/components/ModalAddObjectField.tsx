@@ -54,6 +54,11 @@ const ModalAddObjectField: React.FC<IProps> = ({
 }) => {
 	const [error, setError] = useState<string>('');
 	const [picklist, setPicklist] = useState<TPicklist[]>([]);
+	const [
+		selectedObjectBusinessTypeLabel,
+		setSelectedObjectBusinessTypeLabel,
+	] = useState('');
+
 	const initialValues: TInitialValues = {
 		businessType: '',
 		dbType: '',
@@ -212,6 +217,8 @@ const ModalAddObjectField: React.FC<IProps> = ({
 									);
 								}
 
+								setSelectedObjectBusinessTypeLabel(type.label);
+
 								handleChange({
 									target: {
 										name: 'businessType',
@@ -221,7 +228,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 							}}
 							options={objectFieldBusinessTypes}
 							required
-							value={values.businessType}
+							value={selectedObjectBusinessTypeLabel}
 						>
 							{({description, label}) => (
 								<>

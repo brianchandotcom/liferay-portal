@@ -1,5 +1,10 @@
-.congrats-actions {
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
+@media screen and (max-width: 767.98px) {
+	.congrats-actions {		
+		align-items: center;
+		flex-direction: column;
+	}
+	
+	.congrats-actions button {
+		max-width: 203px;
+	}
 }

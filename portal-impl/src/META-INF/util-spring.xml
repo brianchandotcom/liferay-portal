@@ -269,10 +269,9 @@
 			<bean class="com.liferay.portal.util.PortletListerFactoryImpl" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.util.ThemeFactoryImpl" id="com.liferay.portal.kernel.util.ThemeFactory" />
 	<bean class="com.liferay.portal.kernel.util.ThemeFactoryUtil" id="com.liferay.portal.kernel.util.ThemeFactoryUtil">
-		<property name="ThemeFactory">
-			<bean class="com.liferay.portal.util.ThemeFactoryImpl" />
-		</property>
+		<property name="ThemeFactory" ref="com.liferay.portal.kernel.util.ThemeFactory" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.ThreadLocalDistributor" id="com.liferay.portal.kernel.util.ThreadLocalDistributor">
 		<property name="threadLocalSources">

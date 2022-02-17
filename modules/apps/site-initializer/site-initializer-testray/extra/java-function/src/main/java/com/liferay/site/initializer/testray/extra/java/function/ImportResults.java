@@ -35,6 +35,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.w3c.dom.Document;
@@ -47,10 +48,79 @@ import org.w3c.dom.NodeList;
  */
 public class ImportResults {
 
-	public static void addProject(long groupId) {
-		try {
-			Map<String, String> map = null;
+	public static void addTestCase(long groupId, int projectId) {
+		Map<String, String> map = new HashMap<>();
 
+		map.put("testrayProjectId", String.valueOf(projectId));
+
+		try {
+			File file = new File(_URL_KEY);
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(file);
+
+			NodeList testcases = document.getElementsByTagName("testcase");
+
+			for (int i = 0; i < testcases.getLength(); i++) {
+				Node testCase = testcases.item(i);
+
+				Element eElement = (Element) testCase;
+
+				NodeList properties = eElement.getElementsByTagName("property");
+
+				for(int property = 0; property<properties.getLength();property++){
+
+					Node node = properties.item(property);
+
+					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+						!node.getNodeName(
+						).equals(
+							"#text"
+						) &&
+						(node.getAttributes(
+						).getLength() > 0)) {
+
+						String name = node.getAttributes(
+						).getNamedItem(
+							"name"
+						).getTextContent();
+
+						String value = node.getAttributes(
+						).getNamedItem(
+							"value"
+						).getTextContent();
+
+						if (name.equals("testray.testcase.priority")) {
+							map.put("priority", value);
+						}
+						else if (name.equals("testray.testcase.name")) {
+							map.put("name", value);
+							map.put("stepsType", name);
+						}
+					}
+				}
+
+				HttpClient.post(
+					_BASE_URL + "testraycases/scopes/" + groupId, new JSONObject(map));
+
+
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static int fetchOrAddProject(long groupId) {
+		Map<String, String> map = null;
+
+		int projectId = -1;
+
+		try {
 			File file = new File(_URL_KEY);
 
 			DocumentBuilderFactory documentBuilderFactory =
@@ -66,6 +136,8 @@ public class ImportResults {
 			element.normalize();
 
 			NodeList nodeList = document.getElementsByTagName("property");
+
+			String projectName = null;
 
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
@@ -89,83 +161,54 @@ public class ImportResults {
 					).getTextContent();
 
 					if (name.equals("testray.project.name")) {
+						projectName = value;
+
 						map = HashMapBuilder.put(
 							"description", name
 						).put(
 							"name", value
 						).build();
+
+						break;
 					}
 				}
 			}
 
-			HttpClient.post(
+			JSONObject response = HttpClient.get(
+				_BASE_URL + "testrayprojects/scopes/" + groupId);
+
+			JSONArray projects = response.getJSONArray("items");
+
+			for (int i = 0; i < projects.length(); i++) {
+				JSONObject project = projects.getJSONObject(i);
+
+				if (project.getString(
+						"name"
+					).equals(
+						projectName
+					)) {
+
+					projectId = project.getInt("id");
+
+					return projectId;
+				}
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		if ((projectId == -1) && (map != null)) {
+			JSONObject response = HttpClient.post(
 				_BASE_URL + "testrayprojects/scopes/" + groupId,
 				new JSONObject(map));
+
+			projectId = response.getInt("id");
+
+			return projectId;
 		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-	}
 
-	public static void addTestCase(long groupId) {
-		try {
-			File file = new File(_URL_KEY);
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(file);
-
-			Element element = document.getDocumentElement();
-
-			element.normalize();
-
-			System.out.println("Root element :" + element.getNodeName());
-
-			NodeList nodeList = document.getElementsByTagName("property");
-
-			Map<String, String> map = new HashMap<>();
-
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-
-				if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-					!node.getNodeName(
-					).equals(
-						"#text"
-					) &&
-					(node.getAttributes(
-					).getLength() > 0)) {
-
-					String name = node.getAttributes(
-					).getNamedItem(
-						"name"
-					).getTextContent();
-
-					String value = node.getAttributes(
-					).getNamedItem(
-						"value"
-					).getTextContent();
-
-					if (name.equals("testray.testcase.priority")) {
-						map.put("priority", value);
-					}
-					else if (name.equals("testray.testcase.name")) {
-						map.put("name", value);
-						map.put("stepsType", name);
-
-						HttpClient.post(
-							_BASE_URL + "testraycases/scopes/" + groupId,
-							new JSONObject(map));
-					}
-				}
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
+		return -1;
 	}
 
 	public static void listBuckets(String projectId) throws Exception {
@@ -196,13 +239,17 @@ public class ImportResults {
 	}
 
 	public static void main(String[] args) {
-		long groupId = 42532L;
-		//	addProject();
-		addTestCase(groupId);
+		long groupId = 42657L;
+		//listBuckets(_PROJECT_BUCKET_ID);
+		int projectId = fetchOrAddProject(groupId);
+		addTestCase(groupId, projectId);
 	}
 
 	private static final String _BASE_URL = "http://localhost:8080/o/c/";
 
-	private static final String _URL_KEY = "/home/me/Downloads/key.xml";
+	private static final String _PROJECT_BUCKET_ID = "wise-aegis-340917";
+
+	private static final String _URL_KEY =
+		"/home/me/Downloads/key.xml";
 
 }

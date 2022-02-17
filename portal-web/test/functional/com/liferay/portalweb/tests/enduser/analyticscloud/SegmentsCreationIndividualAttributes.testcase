@@ -353,9 +353,8 @@ definition {
 	test CanAddSegmentUsingIndividualPropertyUser {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: DXP User never appears
-		// AC Refactor ticket: LRAC-9281
-		// AC Bug ticket: LRAC-9263
+		// AC Refactor ticket: LRAC-9332
+        // AC Bug ticket: LRAC-10593
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();

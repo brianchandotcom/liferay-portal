@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.search.web.internal.display.context.builder;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -68,17 +66,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			cpSpecificationOptionFacetsDisplayContext =
 				new CPSpecificationOptionFacetsDisplayContext(
 					_portal.getHttpServletRequest(_renderRequest));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		cpSpecificationOptionFacetsDisplayContext.
-			setCPSpecificationOptionFacetPortletInstanceConfiguration(
-				portletDisplay.getPortletInstanceConfiguration(
-					CPSpecificationOptionFacetPortletInstanceConfiguration.
-						class));
 
 		cpSpecificationOptionFacetsDisplayContext.
 			setCPSpecificationOptionsSearchFacetDisplayContexts(

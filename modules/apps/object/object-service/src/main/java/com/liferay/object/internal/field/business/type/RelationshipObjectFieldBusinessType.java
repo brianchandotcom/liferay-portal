@@ -62,7 +62,7 @@ public class RelationshipObjectFieldBusinessType
 
 	@Override
 	public boolean isVisible() {
-		return false;
+		return true;
 	}
 
 }

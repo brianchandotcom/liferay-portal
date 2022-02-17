@@ -133,7 +133,7 @@ public class ObjectDefinitionsFieldsDisplayContext {
 	}
 
 	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
-		Locale locale) {
+		boolean includeRelationshipObjectFieldBusinessType, Locale locale) {
 
 		List<Map<String, String>> objectFieldBusinessTypeMaps =
 			new ArrayList<>();
@@ -146,7 +146,11 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				(StringUtil.equals(
 					objectFieldBusinessType.getName(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
-				 !_ffBusinessTypeAttachmentConfiguration.enabled())) {
+				 !_ffBusinessTypeAttachmentConfiguration.enabled()) ||
+				(StringUtil.equals(
+					objectFieldBusinessType.getName(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
+				 !includeRelationshipObjectFieldBusinessType)) {
 
 				continue;
 			}

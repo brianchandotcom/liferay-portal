@@ -98,8 +98,7 @@ export function CollectionFilterGeneralPanel({item}) {
 
 	return (
 		<>
-
-			<div className="page-editor__item-general-configuration">
+			<div className="mb-3">
 				{isEmptyObject(filterableCollections) ? (
 					<p
 						className="alert alert-info mt-2 text-center"
@@ -243,16 +242,20 @@ export function CollectionFilterGeneralPanelContent({
 				selectedFilter.configuration.fieldSets
 					?.filter((fieldSet) => fieldSet.fields.length)
 					.map((fieldSet, index) => (
-						<FieldSet
-							fields={fieldSet.fields}
+						<div
+							className="mt-3"
 							key={`${fieldSet.label || ''}-${index}`}
-							label={fieldSet.label}
-							languageId={languageId}
-							onValueSelect={(name, value) =>
-								onValueSelect(name, value)
-							}
-							values={configurationValues}
-						/>
+						>
+							<FieldSet
+								fields={fieldSet.fields}
+								label={fieldSet.label}
+								languageId={languageId}
+								onValueSelect={(name, value) =>
+									onValueSelect(name, value)
+								}
+								values={configurationValues}
+							/>
+						</div>
 					))}
 		</>
 	);

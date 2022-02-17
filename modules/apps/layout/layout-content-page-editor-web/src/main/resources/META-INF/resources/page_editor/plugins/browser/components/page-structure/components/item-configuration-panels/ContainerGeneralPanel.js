@@ -171,7 +171,7 @@ export default function ContainerGeneralPanel({item}) {
 	return (
 		<>
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-				<div className="page-editor__item-general-configuration">
+				<div className="mb-3">
 					<Collapse
 						label={Liferay.Language.get('container-options')}
 						open

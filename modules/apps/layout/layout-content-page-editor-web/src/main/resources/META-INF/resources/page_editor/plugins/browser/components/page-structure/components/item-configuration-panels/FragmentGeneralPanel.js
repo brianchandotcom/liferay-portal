@@ -71,13 +71,12 @@ export function FragmentGeneralPanel({item}) {
 
 	return (
 		<>
-			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-				<div className="page-editor__item-general-configuration">
-					{fieldSets.map((fieldSet, index) => {
-						return (
+			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				fieldSets.map((fieldSet, index) => {
+					return (
+						<div className="mb-1" key={index}>
 							<FieldSet
 								fields={fieldSet.fields}
-								key={index}
 								label={fieldSet.label}
 								languageId={languageId}
 								onValueSelect={onValueSelect}
@@ -86,10 +85,9 @@ export function FragmentGeneralPanel({item}) {
 									fragmentEntryLink
 								)}
 							/>
-						);
-					})}
-				</div>
-			)}
+						</div>
+					);
+				})}
 
 			<CommonStyles
 				commonStylesValues={itemConfig.styles}

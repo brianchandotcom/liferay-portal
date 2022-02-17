@@ -296,7 +296,7 @@ export function CollectionGeneralPanel({item}) {
 				role={COMMON_STYLES_ROLES.general}
 			/>
 
-			<div className="page-editor__item-general-configuration">
+			<div className="mb-3">
 				<Collapse
 					label={Liferay.Language.get('collection-display-options')}
 					open

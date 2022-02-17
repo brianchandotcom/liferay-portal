@@ -204,7 +204,7 @@ export function RowGeneralPanel({item}) {
 
 	return (
 		<>
-			<div className="page-editor__item-general-configuration">
+			<div className="mb-3">
 				<Collapse label={Liferay.Language.get('grid-options')} open>
 					{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 						<>

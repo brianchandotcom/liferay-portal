@@ -123,7 +123,7 @@ function ItemConfigurationContent() {
 					{panels.map((panel) => (
 						<ClayTabs.TabPane
 							aria-labelledby={`${tabIdPrefix}-${panel.panelId}`}
-							className="p-3"
+							className="pb-3 pt-4 px-3"
 							id={`${panelIdPrefix}-${panel.panelId}`}
 							key={panel.panelId}
 						>

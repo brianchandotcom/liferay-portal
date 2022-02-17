@@ -50,6 +50,31 @@ definition {
 		}
 	}
 
+	@description = "This test automates LPS-144283 and asserts that the Log Levels page displays search results even after navigating to a different page number"
+	@priority = "4"
+	test ViewLogLevelsDisplaySearchResultsAfterPageChange {
+		task ("Given the admin user navigates to Log Levels in Server Administration") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Log Levels");
+		}
+
+		task ("When navigating to another page number and searching for a term") {
+			Click(
+				key_pageNumber = "2",
+				locator1 = "Pagination#ANY_PAGE");
+
+			Search.searchCP(searchTerm = "analytics");
+		}
+
+		task ("Then search results should still be present in the table") {
+			AssertElementPresent(
+				key_columnName = "lfr-level",
+				key_tableEntry = "com.liferay.analytics",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
+		}
+	}
+
 	@description = "This is a use case for LPS-102790"
 	@priority = "4"
 	test ViewSystemAndPortalProperties {

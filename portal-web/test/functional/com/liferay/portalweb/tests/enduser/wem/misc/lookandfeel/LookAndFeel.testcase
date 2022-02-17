@@ -60,8 +60,8 @@ definition {
 			IFrame.selectConfigurationFrame();
 
 			Portlet.configureTextStylesViaLookAndFeelPG(
-				textFontAttribute = "Verdana",
-				textSizeAttribute = "2em");
+				font = "Verdana",
+				size = "2em");
 
 			Portlet.configureBorderStylesViaLookAndFeelPG(borderWidthAttributeList = "WidthTop-20");
 

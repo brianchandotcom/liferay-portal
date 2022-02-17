@@ -367,68 +367,85 @@ definition {
 	macro configureTextStylesViaLookAndFeelPG {
 		Navigator.gotoNavTab(navTab = "Text Styles");
 
-		if (isSet(textAlignmentAttribute)) {
+		if (isSet(alignment)) {
 			Select(
 				key_selectFieldLabel = "Alignment",
 				locator1 = "Select#ANY",
-				value1 = "${textAlignmentAttribute}");
+				value1 = "${alignment}");
 		}
 
-		if (isSet(textColorAttribute)) {
+		if (isSet(color)) {
 			PageEditor.selectColorSwatchItem(
-				colorSwatchItem = "${textColorAttribute}",
+				colorSwatchItem = "${color}",
 				fieldLabel = "Color");
 		}
 
-		if (isSet(textDecorationAttribute)) {
+		if (isSet(textDecoration)) {
 			Select(
 				key_selectFieldLabel = "Text Decoration",
 				locator1 = "Select#ANY",
-				value1 = "${textDecorationAttribute}");
+				value1 = "${textDecoration}");
 		}
 
-		if (isSet(textFontAttribute)) {
+		if (isSet(font)) {
 			Select(
 				key_selectFieldLabel = "Font",
 				locator1 = "Select#ANY",
-				value1 = "${textFontAttribute}");
+				value1 = "${font}");
 		}
 
-		if (isSet(textLetterSpacingAttribute)) {
+		if (isSet(letterSpacing)) {
 			Select(
 				key_selectFieldLabel = "Letter Spacing",
 				locator1 = "Select#ANY",
-				value1 = "${textLetterSpacingAttribute}");
+				value1 = "${letterSpacing}");
 		}
 
-		if (isSet(textLineHeightAttribute)) {
+		if (isSet(lineHeight)) {
 			Select(
 				key_selectFieldLabel = "Line Height",
 				locator1 = "Select#ANY",
-				value1 = "${textLineHeightAttribute}");
+				value1 = "${lineHeight}");
 		}
 
-		if (isSet(textSizeAttribute)) {
+		if (isSet(size)) {
 			Select(
 				key_selectFieldLabel = "Size",
 				locator1 = "Select#ANY",
-				value1 = "${textSizeAttribute}");
+				value1 = "${size}");
 		}
 
-		if (isSet(textToggleSwitchList)) {
-			for (var checkToggleSwitch : list "${textToggleSwitchList}") {
-				Check.checkToggleSwitch(
-					key_fieldLabel = "${checkToggleSwitch}",
-					key_fieldsetLabel = "Widget CSS",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
-			}
+		if ("${bold}" == "true") {
+			Check.checkToggleSwitch(
+				key_fieldLabel = "Bold",
+				key_fieldsetLabel = "Widget CSS",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				key_fieldLabel = "Bold",
+				key_fieldsetLabel = "Widget CSS",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
 		}
 
-		if (isSet(textWordSpacingAttribute)) {
+		if ("${italic}" == "true") {
+			Check.checkToggleSwitch(
+				key_fieldLabel = "Italic",
+				key_fieldsetLabel = "Widget CSS",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				key_fieldLabel = "Italic",
+				key_fieldsetLabel = "Widget CSS",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+		}
+
+		if (isSet(wordSpacing)) {
 			Select(
 				key_selectFieldLabel = "Word Spacing",
 				locator1 = "Select#ANY",
-				value1 = "${textWordSpacingAttribute}");
+				value1 = "${wordSpacing}");
 		}
 
 		PortletEntry.save();

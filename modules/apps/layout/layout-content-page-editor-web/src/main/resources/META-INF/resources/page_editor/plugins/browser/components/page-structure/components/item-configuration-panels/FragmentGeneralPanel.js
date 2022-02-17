@@ -71,12 +71,6 @@ export function FragmentGeneralPanel({item}) {
 
 	return (
 		<>
-			<CommonStyles
-				commonStylesValues={itemConfig.styles}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
-
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 				<div className="page-editor__item-general-configuration">
 					{fieldSets.map((fieldSet, index) => {
@@ -96,6 +90,12 @@ export function FragmentGeneralPanel({item}) {
 					})}
 				</div>
 			)}
+
+			<CommonStyles
+				commonStylesValues={itemConfig.styles}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
+			/>
 		</>
 	);
 }

@@ -43,6 +43,7 @@ import updateCollectionDisplayCollection from '../../../../../../app/thunks/upda
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {useId} from '../../../../../../app/utils/useId';
+import Collapse from '../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../common/components/CollectionSelector';
 import useControlledState from '../../../../../../core/hooks/useControlledState';
 import CollectionFilterConfigurationModal from '../CollectionFilterConfigurationModal';
@@ -296,126 +297,140 @@ export function CollectionGeneralPanel({item}) {
 			/>
 
 			<div className="page-editor__item-general-configuration">
-				<CollectionSelector
-					collectionItem={collection}
-					itemSelectorURL={config.collectionSelectorURL}
-					label={Liferay.Language.get('collection')}
-					onCollectionSelect={handleCollectionSelect}
-					optionsMenuItems={optionsMenuItems}
-					shouldPreventCollectionSelect={
-						shouldPreventCollectionSelect
-					}
-				/>
+				<Collapse
+					label={Liferay.Language.get('collection-display-options')}
+					open
+				>
+					<CollectionSelector
+						collectionItem={collection}
+						itemSelectorURL={config.collectionSelectorURL}
+						label={Liferay.Language.get('collection')}
+						onCollectionSelect={handleCollectionSelect}
+						optionsMenuItems={optionsMenuItems}
+						shouldPreventCollectionSelect={
+							shouldPreventCollectionSelect
+						}
+					/>
 
-				{collection && (
-					<>
-						<ClayForm.Group small>
-							<label htmlFor={listStyleId}>
-								{Liferay.Language.get('list-style')}
-							</label>
-
-							<ClaySelectWithOption
-								aria-label={Liferay.Language.get('list-style')}
-								id={listStyleId}
-								onChange={(event) =>
-									handleConfigurationChanged({
-										listStyle: event.target.value,
-									})
-								}
-								options={availableListStyles}
-								value={listStyle}
-							/>
-						</ClayForm.Group>
-
-						{listStyle === LIST_STYLE_GRID && (
+					{collection && (
+						<>
 							<ClayForm.Group small>
-								<label htmlFor={collectionLayoutId}>
-									{Liferay.Language.get('layout')}
+								<label htmlFor={listStyleId}>
+									{Liferay.Language.get('list-style')}
 								</label>
 
 								<ClaySelectWithOption
-									aria-label={Liferay.Language.get('layout')}
-									id={collectionLayoutId}
+									aria-label={Liferay.Language.get(
+										'list-style'
+									)}
+									id={listStyleId}
 									onChange={(event) =>
 										handleConfigurationChanged({
-											numberOfColumns: event.target.value,
+											listStyle: event.target.value,
 										})
 									}
-									options={LAYOUT_OPTIONS}
-									value={numberOfColumns}
+									options={availableListStyles}
+									value={listStyle}
 								/>
 							</ClayForm.Group>
-						)}
 
-						{listStyle !== LIST_STYLE_GRID &&
-							availableListItemStyles.length > 0 && (
+							{listStyle === LIST_STYLE_GRID && (
 								<ClayForm.Group small>
-									<label htmlFor={collectionListItemStyleId}>
-										{Liferay.Language.get(
-											'list-item-style'
-										)}
+									<label htmlFor={collectionLayoutId}>
+										{Liferay.Language.get('layout')}
 									</label>
 
-									<ClaySelect
+									<ClaySelectWithOption
 										aria-label={Liferay.Language.get(
-											'list-item-style'
+											'layout'
 										)}
-										id={collectionListItemStyleId}
-										onChange={
-											handleCollectionListItemStyleChanged
+										id={collectionLayoutId}
+										onChange={(event) =>
+											handleConfigurationChanged({
+												numberOfColumns:
+													event.target.value,
+											})
 										}
-									>
-										<ListItemStylesOptions
-											item={item}
-											listItemStyles={
-												availableListItemStyles
-											}
-										/>
-									</ClaySelect>
+										options={LAYOUT_OPTIONS}
+										value={numberOfColumns}
+									/>
 								</ClayForm.Group>
 							)}
 
-						<ClayForm.Group small>
-							<label htmlFor={collectionPaginationTypeId}>
-								{Liferay.Language.get('pagination')}
-							</label>
+							{listStyle !== LIST_STYLE_GRID &&
+								availableListItemStyles.length > 0 && (
+									<ClayForm.Group small>
+										<label
+											htmlFor={collectionListItemStyleId}
+										>
+											{Liferay.Language.get(
+												'list-item-style'
+											)}
+										</label>
 
-							<ClaySelectWithOption
-								aria-label={Liferay.Language.get('pagination')}
-								id={collectionPaginationTypeId}
-								onChange={(event) =>
-									handleConfigurationChanged({
-										paginationType: event.target.value,
-									})
-								}
-								options={PAGINATION_TYPE_OPTIONS}
-								value={paginationType || ''}
-							/>
-						</ClayForm.Group>
+										<ClaySelect
+											aria-label={Liferay.Language.get(
+												'list-item-style'
+											)}
+											id={collectionListItemStyleId}
+											onChange={
+												handleCollectionListItemStyleChanged
+											}
+										>
+											<ListItemStylesOptions
+												item={item}
+												listItemStyles={
+													availableListItemStyles
+												}
+											/>
+										</ClaySelect>
+									</ClayForm.Group>
+								)}
 
-						{paginationType ? (
-							<PaginationOptions
-								displayAllPages={displayAllPages}
-								handleConfigurationChanged={
-									handleConfigurationChanged
-								}
-								initialNumberOfItemsPerPage={
-									initialNumberOfItemsPerPage
-								}
-								initialNumberOfPages={initialNumberOfPages}
-							/>
-						) : (
-							<NoPaginationOptions
-								displayAllItems={displayAllItems}
-								handleConfigurationChanged={
-									handleConfigurationChanged
-								}
-								initialNumberOfItems={initialNumberOfItems}
-								totalNumberOfItems={totalNumberOfItems}
-							/>
-						)}
-					</>
-				)}
+							<ClayForm.Group small>
+								<label htmlFor={collectionPaginationTypeId}>
+									{Liferay.Language.get('pagination')}
+								</label>
+
+								<ClaySelectWithOption
+									aria-label={Liferay.Language.get(
+										'pagination'
+									)}
+									id={collectionPaginationTypeId}
+									onChange={(event) =>
+										handleConfigurationChanged({
+											paginationType: event.target.value,
+										})
+									}
+									options={PAGINATION_TYPE_OPTIONS}
+									value={paginationType || ''}
+								/>
+							</ClayForm.Group>
+
+							{paginationType ? (
+								<PaginationOptions
+									displayAllPages={displayAllPages}
+									handleConfigurationChanged={
+										handleConfigurationChanged
+									}
+									initialNumberOfItemsPerPage={
+										initialNumberOfItemsPerPage
+									}
+									initialNumberOfPages={initialNumberOfPages}
+								/>
+							) : (
+								<NoPaginationOptions
+									displayAllItems={displayAllItems}
+									handleConfigurationChanged={
+										handleConfigurationChanged
+									}
+									initialNumberOfItems={initialNumberOfItems}
+									totalNumberOfItems={totalNumberOfItems}
+								/>
+							)}
+						</>
+					)}
+				</Collapse>
 
 				{filterConfigurationVisible ? (
 					<CollectionFilterConfigurationModal

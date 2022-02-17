@@ -29,7 +29,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddDMImageToWikiPageViaURL {
-		property test.name.skip.portal.instance = "CPWiki#CanAddDMImageToWikiPageViaURL";
+		property test.name.skip.portal.instance = "WikiAdmin#CanAddDMImageToWikiPageViaURL";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

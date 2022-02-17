@@ -249,7 +249,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddPageWithImageViaURL {
-		property test.name.skip.portal.instance = "PGWiki#CanAddPageWithImageViaURL";
+		property test.name.skip.portal.instance = "WikiPage#CanAddPageWithImageViaURL";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -708,7 +708,7 @@ definition {
 	@refactordone
 	test CanRemoveRedirectLinkFromPage {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "PGWiki#CanRemoveRedirectLinkFromPage";
+		property test.name.skip.portal.instance = "WikiPage#CanRemoveRedirectLinkFromPage";
 
 		JSONWiki.addWikiPage(
 			groupName = "Guest",

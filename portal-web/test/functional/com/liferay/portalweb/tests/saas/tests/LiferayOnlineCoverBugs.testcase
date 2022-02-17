@@ -1,6 +1,7 @@
 @component-name = "portal-liferay-online"
 definition {
 
+	property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 	property database.types = "mysql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
@@ -10,22 +11,13 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
-		task ("Add the raylife virtual instance") {
-			Navigator.openURL();
-
-			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
-				domain = "www.raylife.com",
-				portalInstanceId = "www.raylife.com",
-				siteInitializerKey = "com.liferay.site.initializer.raylife",
-				virtualHost = "www.raylife.com");
-
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.raylife.com:8080",
-				userEmailAddress = "test@raylife.com");
-		}
+		HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			siteInitializerKey = "com.liferay.site.initializer.masterclass",
+			virtualHost = "www.able.com");
 	}
 
 	tearDown {
@@ -37,39 +29,96 @@ definition {
 	}
 
 	@description = "Verify if a virtual instance is created using the initializer, showing a different site comparing with the default Liferay bundle"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CreateVirtualInstanceUsingInitializerWithSuccess {
+		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#CreateVirtualInstanceUsingInitializerWithSuccess";
+		
+		task ("Go to the Virtual Instance created") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
 
-		// TODO Create the automation about the bug LPS-139959
+		task ("Assert the Default Home Page is not present") {
+			AssertTextNotEquals(
+				fragmentName = "heading",
+				id = "element-text",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "Welcome to Liferay");
+		}
 
+		task ("Assert the Masterclass Welcome Page") {
+			AssertElementPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+		}
 	}
 
 	@description = "Delete Virtual Instance in Liferay Online"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DeleteVirtualInstance {
+		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#DeleteVirtualInstance";
 
-		// TODO Create the automation about the bug LPS-140833.
+		task ("Go to Virtual Instances") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+		}
+		
+		task ("Delete the Virtual Instance created") {
+			PortalInstances.deleteCP(virtualHost = "www.able.com");
+		}
 
+		task ("Assert that the Virtual Instance deleted is not present") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			AssertElementNotPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+		}
 	}
 
 	@description = "Verify if a friendly error appears when the user is not able to create the virtual host"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
+		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost";
+		
+		task ("Go to Virtual Instances") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+		}
 
-		// TODO Create the automation about the bug LPS-139960
+		task ("Create a new Virtual instance using localhost") {
+			PortalInstances.addCP(
+				mailDomain = "www.baker.com",
+				virtualHost = "localhost",
+				webId = "www.baker.com");
+		}
 
+		task ("Assert the error message") {
+			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
+		}
 	}
 
 	@description = "Create Virtual instance using the Virtual Instance Initializer not works with the curl command."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test UserCanCreateVirtualInstance {
+		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#UserCanCreateVirtualInstance";
 
-		// TODO Create the automation about the the bug LPS-140302.
+		task ("Assert the Virtual Instance created by Json is present") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
 
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			AssertElementNotPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+		}
 	}
-
 }

@@ -66,6 +66,6 @@ public class DateParamConverter implements ParamConverter<Date> {
 		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 	private static final String _PATTERN_DATE_TIME_WITHOUT_MILLIS =
-		"yyyy-MM-dd'T'HH:mm:ss'Z'";
+		"yyyy-MM-dd'T'HH:mm:ssXX";
 
 }

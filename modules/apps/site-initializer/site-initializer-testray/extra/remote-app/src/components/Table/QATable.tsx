@@ -12,26 +12,53 @@
  * details.
  */
 
-import {ReactNode} from 'react';
+import classNames from 'classnames';
+import React, {ReactNode} from 'react';
+
+export enum Orientation {
+	HORIZONTAL,
+	VERTICAL,
+}
 
 type QAItem = {
+	divider?: boolean;
 	title: string;
 	value: string | ReactNode;
 };
 
 type QATableProps = {
 	items: QAItem[];
+	orientation?: Orientation;
 };
 
-const QATable: React.FC<QATableProps> = ({items}) => (
-	<table className="qa">
+const QATable: React.FC<QATableProps> = ({
+	items,
+	orientation = Orientation.HORIZONTAL,
+}) => (
+	<table className="qa w-100">
 		<tbody>
 			{items.map((item, index) => (
-				<tr key={index}>
-					<th className="small-heading">{item.title}</th>
+				<React.Fragment key={index}>
+					<tr
+						className={classNames({
+							'd-flex flex-column':
+								orientation === Orientation.VERTICAL,
+						})}
+						key={index}
+					>
+						<th className="small-heading">{item.title}</th>
 
-					<td>{item.value}</td>
-				</tr>
+						<td>{item.value}</td>
+					</tr>
+
+					{item.divider && (
+						<tr>
+							<td>
+								<hr />
+							</td>
+						</tr>
+					)}
+				</React.Fragment>
 			))}
 		</tbody>
 	</table>

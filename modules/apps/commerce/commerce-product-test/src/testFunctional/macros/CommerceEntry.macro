@@ -20,7 +20,7 @@ definition {
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "${agreeToTermsAndAnswerReminderQuery}",
 			requireReset = "${requireReset}",
-			userEmailAddress = "${accountEmailAddress}");
+			userEmailAddress = "${userEmailAddress}");
 
 		if (isSet(userRole)) {
 			ApplicationsMenu.gotoPortlet(

@@ -42,7 +42,7 @@ definition {
 	@refactordone
 	test StagingFileSizeIsNotAffectedByDLRestrictions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
+		property test.name.skip.portal.instance = "DMAdmin#StagingFileSizeIsNotAffectedByDLRestrictions";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

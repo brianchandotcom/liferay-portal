@@ -29,16 +29,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CacheControlConfiguration {
 
 	@Meta.AD(
-		deflt = "private", name = "cache-control",
-		optionLabels = {"private", "public"},
+		deflt = "private", description = "cache-control-description",
+		name = "cache-control", optionLabels = {"private", "public"},
 		optionValues = {"private", "public"}, required = false
 	)
 	public String cacheControl();
 
-	@Meta.AD(deflt = "0", name = "max-age", required = false)
+	@Meta.AD(
+		deflt = "0", description = "max-age-description", name = "max-age",
+		required = false
+	)
 	public int maxAge();
 
-	@Meta.AD(name = "not-cacheable-mime-types", required = false)
+	@Meta.AD(
+		description = "not-cacheable-mime-types-description",
+		name = "not-cacheable-mime-types", required = false
+	)
 	public String[] notCacheableMimeTypes();
 
 }

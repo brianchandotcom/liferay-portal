@@ -37,7 +37,7 @@ const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 		<div
 			className={`c-mb-4 item-vocabularies sidebar-dl sidebar-section ${cssClassNames}`}
 		>
-			<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase">
+			<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-2 text-secondary text-uppercase">
 				{title}
 			</h6>
 

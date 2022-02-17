@@ -1684,6 +1684,37 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-140253. View no private page in style book on Masterclass site."
+	@priority = "4"
+	test ViewNoPrivatePageInStyleBooksOnMasterclassSite {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+
+		task ("Go to style books") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
+
+			StyleBooksAdmin.gotoStyleBook(styleBookName = "Masterclass Classic");
+		}
+
+		task ("Click more to select a page for preview") {
+			Click(
+				index = "1",
+				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+		}
+
+		task ("Assert private pages is not shown") {
+			SelectFrameTop();
+
+			AssertVisible(
+				key_menuItem = "Pages",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			AssertElementNotPresent(
+				key_menuItem = "Public Pages",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-141750. View the Sign In page elements"
 	@priority = "5"
 	test ViewSignInPageElements {

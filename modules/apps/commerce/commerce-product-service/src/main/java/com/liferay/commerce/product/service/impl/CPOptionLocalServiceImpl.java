@@ -197,9 +197,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CPOption fetchCPOption(long companyId, String key)
-		throws PortalException {
-
+	public CPOption fetchCPOption(long companyId, String key) {
 		return cpOptionPersistence.fetchByC_K(companyId, key);
 	}
 

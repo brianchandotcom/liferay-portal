@@ -285,8 +285,7 @@ public class CPOptionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption fetchCPOption(
-			long companyId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long companyId, String key) {
 
 		return _cpOptionLocalService.fetchCPOption(companyId, key);
 	}

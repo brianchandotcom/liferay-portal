@@ -116,10 +116,10 @@
 					"displayStyle": "singleline",
 					"indexType": "keyword",
 					"label": {
-						"[$LOCALE$]": "Field 1"
+						"[$LOCALE$]": "Test Field 1"
 					},
 					"localizable": true,
-					"name": "fieldOne",
+					"name": "testField1",
 					"options": [
 						{
 							"label": {
@@ -140,10 +140,10 @@
 					"displayStyle": "singleline",
 					"indexType": "keyword",
 					"label": {
-						"[$LOCALE$]": "Field 2"
+						"[$LOCALE$]": "Test Field 2"
 					},
 					"localizable": true,
-					"name": "fieldTwo",
+					"name": "testField2",
 					"options": [
 						{
 							"label": {
@@ -172,7 +172,7 @@
 							"columns": [
 								{
 									"fieldNames": [
-										"fieldOne"
+										"testField1"
 									],
 									"size": 12
 								}
@@ -182,7 +182,7 @@
 							"columns": [
 								{
 									"fieldNames": [
-										"fieldTwo"
+										"testField2"
 									],
 									"size": 12
 								}
@@ -190,7 +190,7 @@
 						}
 					],
 					"title": {
-						"[$LOCALE$]": "Add Title"
+						"[$LOCALE$]": "Test Title 1"
 					}
 				}
 			],

@@ -37,61 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the portlet display setting can be configured."
-	@priority = "4"
-	@refactordone
-	test CanConfigurePortletDisplaySettings {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		WikiPortlet.viewConfigurationTabs(
-			isNotPresent = "NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS",
-			isPresent = "SETUP_DISPLAY_SETTINGS_PANEL");
-
-		WikiPortlet.configureDisplaySettings(uncheckSetting = "ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		WikiPortlet.viewDisplaySettings(uncheckedSetting = "ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS");
-	}
-
-	@description = "This ensures that a link added with another page URL can navigate to the page after clicking the link."
-	@priority = "5"
-	@refactordone
-	test CanNavigateToOtherPageByEditorLink {
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Research Projects");
-
-		JSONLayout.addWidgetToPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Research Projects",
-			widgetName = "Wiki");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		LAR.importPortlet(
-			larFileName = "research-projects-update-node.lar",
-			mirrorWithOverwriting = "true",
-			uploadFrom = "dependencies");
-
-		WikiNavigator.openToWikiPage(
-			siteURLKey = "guest",
-			wikiNodeName = "Organic Research Projects",
-			wikiPageTitle = "FrontPage");
-
-		AssertClick(
-			locator1 = "WikiEntry#BODY_LINK",
-			value1 = "Sweet Potatoes");
-
-		AssertTextEquals(
-			locator1 = "Portlet#H3_HEADER",
-			value1 = "Sweet Potatoes");
-	}
-
 	@description = "This ensures that the front page can be searched out by attachment name."
 	@priority = "4"
 	@refactordone
@@ -158,41 +103,6 @@ definition {
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@description = "This ensures that the Wiki tabs can be viewed in the Breadcrumb widget."
-	@priority = "4"
-	@refactordone
-	test CanViewBreadcrumbViaBreadcrumbWidgetAfterChangingWikiTab {
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Wiki Test Page",
-			widgetName = "Breadcrumb");
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "recent_changes",
-			wikiNodeName = "Main");
-
-		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Recent Changes");
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
-			wikiNodeName = "Main");
-
-		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,All Pages");
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "draft_pages",
-			wikiNodeName = "Main");
-
-		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Draft Pages");
-	}
-
 	@description = "This test covers LPS-106280. It ensures that the wiki Email content can be edited."
 	@priority = "3"
 	@refactordone
@@ -235,23 +145,6 @@ definition {
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-	}
-
-	@description = "This test ensures that the wiki widget follows W3C accessibility standards."
-	@ignore = "true"
-	@priority = "4"
-	test WidgetFollowsAccessibilityStandards {
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Wiki Test Page",
-			widgetName = "Wiki Display");
-
-		Navigator.openSitePage(
-			pageName = "Wiki Test Page",
-			siteName = "Guest");
-
-		AssertAccessible();
 	}
 
 }

@@ -2538,16 +2538,6 @@ definition {
 			groupName = "Guest",
 			title = "Vocabulary Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			portlet = "Categories");
@@ -2570,8 +2560,6 @@ definition {
 		}
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 

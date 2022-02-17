@@ -37,7 +37,7 @@ definition {
 	@priority = "5"
 	test CannotSaveWhenConfigurationIsInvalid {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AutoTranslation#CannotSaveWhenConfigurationIsBlank";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CannotSaveWhenConfigurationIsBlank";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
@@ -53,7 +53,7 @@ definition {
 	@description = "This ensures that the web content content can be translated independently"
 	@priority = "5"
 	test CanTranslateContentFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateContentFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentFieldIndependently";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -94,7 +94,7 @@ definition {
 	@description = "This ensures that google translation can be used to auto-translate a content page."
 	@priority = "5"
 	test CanTranslateContentPage {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateContentPage";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPage";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -124,7 +124,6 @@ definition {
 		// End the test if the Google refresh token limit is exceeded.
 
 		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
-
 			Translations.viewTargetFields(
 				contentPageName = "内容页面名称",
 				link = "去某地");
@@ -162,7 +161,7 @@ definition {
 	@description = "This ensures that the fragment filed on content page can be translated independently."
 	@priority = "5"
 	test CanTranslateContentPageFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateContentPageFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPageFieldIndependently";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -237,7 +236,7 @@ definition {
 	@description = "This ensures that the web content description can be translated independently"
 	@priority = "5"
 	test CanTranslateDescriptionFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateDescriptionFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateDescriptionFieldIndependently";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -278,7 +277,7 @@ definition {
 	@description = "This ensures that the numeric and decimal fields of a customized web content can be translated independently"
 	@priority = "5"
 	test CanTranslateNumericAndDecimalFieldsIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateNumericAndDecimalFieldsIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateNumericAndDecimalFieldsIndependently";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -362,7 +361,7 @@ definition {
 	@description = "This ensures that the rich text field of a customized web content can be translated independently"
 	@priority = "5"
 	test CanTranslateRichTextFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateRichTextFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateRichTextFieldIndependently";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -431,7 +430,7 @@ definition {
 	@description = "This ensures that the text box field of a customized web content can be translated independently"
 	@priority = "5"
 	test CanTranslateTextBoxFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextBoxFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextBoxFieldIndependently";
 
 		JSONWebcontent.deleteWebContent(
 			groupName = "Site Name",
@@ -507,7 +506,7 @@ definition {
 	@description = "This ensures that the text field of a customized web content can be translated independently"
 	@priority = "5"
 	test CanTranslateTextFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextFieldIndependently";
 
 		JSONWebcontent.deleteWebContent(
 			groupName = "Site Name",
@@ -580,7 +579,7 @@ definition {
 	@description = "This ensures that the web content title can be translated independently"
 	@priority = "5"
 	test CanTranslateTitleFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTitleFieldIndependently";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTitleFieldIndependently";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -622,7 +621,7 @@ definition {
 	@priority = "5"
 	test CanTranslateWCToJapaneseWithGoogle {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateWCToJapaneseWithGoogle";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateWCToJapaneseWithGoogle";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -659,7 +658,7 @@ definition {
 	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"
 	@priority = "5"
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
-		property test.name.skip.portal.instance = "AutoTranslation#CanViewTranslationAfterDisablingGoogleConfiguration";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanViewTranslationAfterDisablingGoogleConfiguration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -709,7 +708,7 @@ definition {
 	@description = "The Auto Translate button should be disabled when the fields are null."
 	@priority = "4"
 	test TranslateButtonIsDisabledWhenFieldIsNull {
-		property test.name.skip.portal.instance = "AutoTranslation#TranslateButtonIsDisabledWhenFieldIsNull";
+		property test.name.skip.portal.instance = "AutoTranslationGoogle#TranslateButtonIsDisabledWhenFieldIsNull";
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",

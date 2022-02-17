@@ -52,13 +52,7 @@ public class JUnitTestClass extends BaseTestClass {
 			return;
 		}
 
-		File testClassFilePath = JenkinsResultsParserUtil.getCanonicalFile(
-			getTestClassFile());
-
-		File testPropertiesBaseDir = _getTestPropertiesBaseDir(
-			testClassFilePath);
-
-		_setTestProperties(testPropertiesBaseDir);
+		_setTestProperties(_getTestPropertiesBaseDir(getTestClassFile()));
 
 		try {
 			_fileContent = JenkinsResultsParserUtil.read(getTestClassFile());
@@ -264,13 +258,8 @@ public class JUnitTestClass extends BaseTestClass {
 	}
 
 	private void _setTestProperties(File testPropertiesBaseDir) {
-		File testPropertiesFile = new File(
-			testPropertiesBaseDir + "/test.properties");
-
-		Properties testProperties = JenkinsResultsParserUtil.getProperties(
-			testPropertiesFile);
-
-		_testProperties = testProperties;
+		_testProperties = JenkinsResultsParserUtil.getProperties(
+			new File(testPropertiesBaseDir, "test.properties"));
 	}
 
 	private static final Pattern _classHeaderPattern = Pattern.compile(

@@ -13,13 +13,40 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
+import ListView from '../../../../../components/ListView/ListView';
+import {getTestrayCaseTypes} from '../../../../../graphql/queries/testrayCaseType';
+import {Liferay} from '../../../../../services/liferay/liferay';
 
-const CaseTypes = () => {
+const CaseType = () => {
 	return (
-		<Container className="mt-4" title="CaseTypes">
-			CaseTypes
+		<Container className="mt-4" title="CaseType">
+			<ListView
+				query={getTestrayCaseTypes}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							value: 'Team',
+						},
+						{
+							key: 'failed',
+							value: 'Failed',
+						},
+						{
+							key: 'Total',
+							value: 'Total',
+						},
+						{
+							key: 'metrics',
+							value: 'Metrics',
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayCaseTypes}
+				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			/>
 		</Container>
 	);
 };
 
-export default CaseTypes;
+export default CaseType;

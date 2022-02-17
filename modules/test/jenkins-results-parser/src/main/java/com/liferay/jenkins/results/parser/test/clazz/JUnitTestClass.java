@@ -52,12 +52,12 @@ public class JUnitTestClass extends BaseTestClass {
 			return;
 		}
 
-		File filePath = JenkinsResultsParserUtil.getCanonicalFile(
+		File testClassFilePath = JenkinsResultsParserUtil.getCanonicalFile(
 			getTestClassFile());
 
-		File canonicalFile = _getTestPropertiesDirectory(filePath);
+		File testPropertiesDir = _getTestPropertiesDirectory(testClassFilePath);
 
-		_setTestProperties(canonicalFile);
+		_setTestProperties(testPropertiesDir);
 
 		try {
 			_fileContent = JenkinsResultsParserUtil.read(getTestClassFile());

@@ -199,16 +199,14 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			_displayPageTypeContext.getClassName());
 		itemSelectorCriterion.setMultiSelection(isMultiSelection());
 
-		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			renderResponse.getNamespace() + "selectItem",
-			itemSelectorCriterion);
-
-		if (infoItemSelectorURL == null) {
-			return StringPool.BLANK;
-		}
-
-		return infoItemSelectorURL.toString();
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				renderResponse.getNamespace() + "selectItem",
+				itemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", isMultiSelection()
+		).buildString();
 	}
 
 	@Override

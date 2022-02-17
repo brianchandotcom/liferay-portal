@@ -142,7 +142,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						"tempImageFileName",
 						() -> {
 							FileEntry tempImageFileEntry =
-								_addTempImageFileEntry(actionRequest);
+								_addTempImageFileEntry(
+									actionRequest, maxFileSize);
 
 							return tempImageFileEntry.getTitle();
 						}));
@@ -172,7 +173,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private FileEntry _addTempImageFileEntry(PortletRequest portletRequest)
+	private FileEntry _addTempImageFileEntry(PortletRequest portletRequest, Long maxFileSize)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -183,6 +184,10 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		String fileName = uploadPortletRequest.getFileName("fileName");
 
 		File file = uploadPortletRequest.getFile("fileName");
+
+		if (file.length() > maxFileSize) {
+			throw new UploadRequestSizeException();
+		}
 
 		String mimeType = MimeTypesUtil.getContentType(file, fileName);
 

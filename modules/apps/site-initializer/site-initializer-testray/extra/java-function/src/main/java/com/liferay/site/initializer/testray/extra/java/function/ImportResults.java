@@ -48,6 +48,69 @@ import org.w3c.dom.NodeList;
  */
 public class ImportResults {
 
+
+	public static void addTestBuild(long groupId, int projectId) {
+		Map<String, String> map = new HashMap<>();
+
+		map.put("testrayBuildId", String.valueOf(projectId));
+
+		try {
+			File file = new File(_URL_KEY);
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(file);
+
+			NodeList testcases = document.getElementsByTagName("properties");
+
+			for (int i = 0; i < testcases.getLength(); i++) {
+				Node testCase = testcases.item(i);
+
+				Element eElement = (Element) testCase;
+
+				NodeList properties = eElement.getElementsByTagName("property");
+
+				for(int property = 0; property<properties.getLength();property++){
+
+					Node node = properties.item(property);
+
+					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+						!node.getNodeName(
+						).equals(
+							"#text"
+						) &&
+						(node.getAttributes(
+						).getLength() > 0)) {
+
+						String name = node.getAttributes(
+						).getNamedItem(
+							"name"
+						).getTextContent();
+
+						String value = node.getAttributes(
+						).getNamedItem(
+							"value"
+						).getTextContent();
+
+						if (name.equals("testray.build.name")) {
+							map.put("name", value);
+
+						HttpClient.post(
+							_BASE_URL + "testraybuilds/scopes/" + groupId, new JSONObject(map));
+						}
+					}
+				}
+
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
 	public static void addTestCase(long groupId, int projectId) {
 		Map<String, String> map = new HashMap<>();
 
@@ -239,11 +302,12 @@ public class ImportResults {
 	}
 
 	public static void main(String[] args) {
-		long groupId = 42657L;
+		long groupId = 44059L;
 		//listBuckets(_PROJECT_BUCKET_ID);
-		int projectId = fetchOrAddProject(groupId);
-		addTestCase(groupId, projectId);
-	}
+	 	int projectId = fetchOrAddProject(groupId);
+	// 	addTestCase(groupId, projectId);
+		addTestBuild(groupId, projectId);
+	 }
 
 	private static final String _BASE_URL = "http://localhost:8080/o/c/";
 

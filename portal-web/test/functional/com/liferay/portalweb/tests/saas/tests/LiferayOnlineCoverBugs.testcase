@@ -32,17 +32,15 @@ definition {
 	@priority = "4"
 	test CreateVirtualInstanceUsingInitializerWithSuccess {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#CreateVirtualInstanceUsingInitializerWithSuccess";
-		
+
 		task ("Go to the Virtual Instance created") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 		}
 
 		task ("Assert the Default Home Page is not present") {
-			AssertTextNotEquals(
-				fragmentName = "heading",
-				id = "element-text",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				value1 = "Welcome to Liferay");
+			AssertElementNotPresent(
+				key_title = "Welcome to Liferay",
+				locator1 = "Masterclass#FRAGMENT_HEADING");
 		}
 
 		task ("Assert the Masterclass Welcome Page") {
@@ -63,7 +61,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
 		}
-		
+
 		task ("Delete the Virtual Instance created") {
 			PortalInstances.deleteCP(virtualHost = "www.able.com");
 		}
@@ -81,7 +79,7 @@ definition {
 	@priority = "3"
 	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost";
-		
+
 		task ("Go to Virtual Instances") {
 			ApplicationsMenu.gotoPortlet(
 				category = "System",
@@ -116,9 +114,10 @@ definition {
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			AssertElementNotPresent(
+			AssertElementPresent(
 				key_title = "Welcome to Masterclass",
 				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
 		}
 	}
+
 }

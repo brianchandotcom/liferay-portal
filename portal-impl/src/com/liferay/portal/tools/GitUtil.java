@@ -81,17 +81,6 @@ public class GitUtil {
 		return deleteFileNames;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getCurrentBranchFileContent(
-			String gitWorkingBranchName, String fileName)
-		throws Exception {
-
-		return getFileContent(gitWorkingBranchName, fileName);
-	}
-
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
@@ -143,16 +132,6 @@ public class GitUtil {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getLatestAuthorFileContent(String fileName)
-		throws Exception {
-
-		return getFileContent(getLatestAuthorCommitId(), fileName);
-	}
-
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
@@ -176,16 +155,6 @@ public class GitUtil {
 
 	public static String getLatestCommitId() throws Exception {
 		return _getLatestCommitId("HEAD");
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getLocalChangesFileContent(String fileName)
-		throws Exception {
-
-		return getFileContent("HEAD", fileName);
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -329,20 +298,6 @@ public class GitUtil {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	protected static String getCurrentBranchCommitId(
-			String gitWorkingBranchName)
-		throws Exception {
-
-		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git merge-base HEAD " + gitWorkingBranchName);
-
-		return unsyncBufferedReader.readLine();
-	}
-
 	protected static List<String> getDeletedFileNames(
 			String baseDirName, String commitId)
 		throws Exception {
@@ -400,17 +355,6 @@ public class GitUtil {
 		}
 
 		return dirNames;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getFileContent(String)}
-	 */
-	@Deprecated
-	protected static String getFileContent(String commitId, String fileName)
-		throws Exception {
-
-		return getFileContent(fileName);
 	}
 
 	protected static String getFileName(String fileName, int gitLevel) {

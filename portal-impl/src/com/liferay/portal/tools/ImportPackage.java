@@ -28,19 +28,6 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		_line = line;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #ImportPackage(String, boolean, String)}
-	 */
-	@Deprecated
-	public ImportPackage(
-		String importString, boolean isStatic, String line, boolean bndImport) {
-
-		_importString = importString;
-		_isStatic = isStatic;
-		_line = line;
-	}
-
 	@Override
 	public int compareTo(ImportPackage importPackage) {
 		if (_isStatic != importPackage.isStatic()) {

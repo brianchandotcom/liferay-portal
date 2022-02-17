@@ -83,17 +83,6 @@ public class HypersonicLoader {
 		}
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #HypersonicLoader(String, String, String, String, String)}
-	 */
-	@Deprecated
-	public HypersonicLoader(
-		String databaseName, String sqlDir, String fileNames) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public HypersonicLoader(
 			String databaseName, String sqlDir, String fileNames,
 			String userName, String password)

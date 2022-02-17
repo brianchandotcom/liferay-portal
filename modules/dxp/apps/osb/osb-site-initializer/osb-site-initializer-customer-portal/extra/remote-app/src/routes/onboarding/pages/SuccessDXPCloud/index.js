@@ -11,17 +11,11 @@
 
 import {Button} from '../../../../common/components';
 import Layout from '../../../../common/containers/setup-forms/Layout';
-import {
-	API_BASE_URL,
-	SEARCH_PARAMS_KEYS,
-} from '../../../../common/utils/constants';
-import getLiferaySiteName from '../../../../common/utils/getLiferaySiteName';
+import {PAGE_ROUTER_TYPES} from '../../../../common/utils/constants';
 
 const SuccessDXPCloud = ({project}) => {
 	const onClickDone = () => {
-		window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
-			SEARCH_PARAMS_KEYS.accountKey
-		}=${project.accountKey}`;
+		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
 	};
 
 	return (

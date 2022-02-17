@@ -9,6 +9,15 @@
  * distribution rights of the Software.
  */
 
-export const SEARCH_PARAMS_KEYS = {
-	accountKey: 'kor_id',
+import getLiferaySiteName from '../getLiferaySiteName';
+import {API_BASE_URL} from './apiBaseUrl';
+import {ROUTE_TYPES} from './routeTypes';
+
+const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
+
+export const PAGE_ROUTER_TYPES = {
+	onboarding: (externalReferenceCode) =>
+		`${BASE_API}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
+	project: (externalReferenceCode) =>
+		`${BASE_API}/${ROUTE_TYPES.overview}/#/${externalReferenceCode}`,
 };

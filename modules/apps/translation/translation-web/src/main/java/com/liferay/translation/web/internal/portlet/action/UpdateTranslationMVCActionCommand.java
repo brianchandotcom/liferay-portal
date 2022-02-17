@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
@@ -74,8 +73,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 			long segmentsExperienceId = ParamUtil.getLong(
-				actionRequest, "segmentsExperienceId",
-				SegmentsExperienceConstants.ID_DEFAULT);
+				actionRequest, "segmentsExperienceId");
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(

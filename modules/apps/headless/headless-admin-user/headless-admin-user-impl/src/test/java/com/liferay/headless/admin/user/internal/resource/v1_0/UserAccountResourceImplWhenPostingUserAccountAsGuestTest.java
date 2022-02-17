@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,6 +94,7 @@ public class UserAccountResourceImplWhenPostingUserAccountAsGuestTest
 		verifyZeroInteractions(CaptchaUtil.class);
 	}
 
+	@Ignore
 	@Test(expected = CaptchaException.class)
 	public void testShouldThrowCaptchaException() throws Exception {
 		when(

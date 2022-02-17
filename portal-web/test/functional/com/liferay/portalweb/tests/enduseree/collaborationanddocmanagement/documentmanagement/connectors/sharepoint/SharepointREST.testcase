@@ -8,22 +8,22 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Sharepoint";
 
+	var authorizationGrantEndpoint = PropsUtil.get("sharepoint.oauth.authorization.grant.endpoint");
+	var authorizationTokenEndpoint = PropsUtil.get("sharepoint.oauth.authorization.token.endpoint");
+	var clientId = PropsUtil.get("sharepoint.oauth.client.id");
+	var clientSecret = PropsUtil.get("sharepoint.oauth.client.secret");
+	var configurationName = PropsUtil.get("sharepoint.oauth.configuration.name");
+	var configurationResource = PropsUtil.get("sharepoint.oauth.configuration.resource");
+	var configurationScope = PropsUtil.get("sharepoint.oauth.configuration.scope");
+	var siteDomain = PropsUtil.get("sharepoint.oauth.site.domain");
+	var tenantId = PropsUtil.get("sharepoint.oauth.tenant.id");
+	var userName = PropsUtil.get("sharepoint.oauth.user.name");
+	var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		var authorizationGrantEndpoint = PropsUtil.get("sharepoint.oauth.authorization.grant.endpoint");
-		var authorizationTokenEndpoint = PropsUtil.get("sharepoint.oauth.authorization.token.endpoint");
-		var clientId = PropsUtil.get("sharepoint.oauth.client.id");
-		var clientSecret = PropsUtil.get("sharepoint.oauth.client.secret");
-		var configurationName = PropsUtil.get("sharepoint.oauth.configuration.name");
-		var configurationResource = PropsUtil.get("sharepoint.oauth.configuration.resource");
-		var configurationScope = PropsUtil.get("sharepoint.oauth.configuration.scope");
-		var siteDomain = PropsUtil.get("sharepoint.oauth.site.domain");
-		var tenantId = PropsUtil.get("sharepoint.oauth.tenant.id");
-		var userName = PropsUtil.get("sharepoint.oauth.user.name");
-		var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
 		SystemSettings.openSystemSettingsAdmin();
 

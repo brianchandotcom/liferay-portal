@@ -232,8 +232,7 @@ public interface CPOptionLocalService
 	public CPOption fetchCPOption(long CPOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchCPOption(long companyId, String key)
-		throws PortalException;
+	public CPOption fetchCPOption(long companyId, String key);
 
 	/**
 	 * Returns the cp option with the matching external reference code and company.

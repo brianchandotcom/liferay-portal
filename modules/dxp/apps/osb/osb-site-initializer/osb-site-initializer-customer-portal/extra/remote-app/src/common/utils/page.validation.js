@@ -79,7 +79,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 			return true;
 		}
 
-		if (pageKey === ROUTE_TYPES.overview) {
+		if (pageKey === ROUTE_TYPES.project) {
 			if (!isValidExternalReferenceCode && !hasRoleBriefAdministrator) {
 				window.location.href = getHomeLocation();
 

@@ -11,5 +11,5 @@
 
 export const ROUTE_TYPES = {
 	onboarding: 'onboarding',
-	overview: 'overview',
+	project: 'project',
 };

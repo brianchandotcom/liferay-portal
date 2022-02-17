@@ -19,5 +19,5 @@ export const PAGE_ROUTER_TYPES = {
 	onboarding: (externalReferenceCode) =>
 		`${BASE_API}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
 	project: (externalReferenceCode) =>
-		`${BASE_API}/${ROUTE_TYPES.overview}/#/${externalReferenceCode}`,
+		`${BASE_API}/${ROUTE_TYPES.project}/#/${externalReferenceCode}`,
 };

@@ -21,7 +21,7 @@ import {
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
 import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
-import {ROLE_TYPES} from '../../../common/utils/constants';
+import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
 import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {CUSTOM_EVENT_TYPES} from '../utils/constants';
@@ -191,11 +191,11 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 			const user = await getUser(projectExternalReferenceCode);
 
-			if (user && getCurrentPageName() === 'overview') {
+			if (user && getCurrentPageName() === ROUTE_TYPES.project) {
 				const isValid = await isValidPage(
 					user,
 					projectExternalReferenceCode,
-					'overview'
+					ROUTE_TYPES.project
 				);
 
 				if (isValid) {

@@ -16,14 +16,13 @@ import {
 	getAccounts,
 	getKoroneikiAccounts,
 } from '../../../../common/services/liferay/graphql/queries';
-import getLiferaySiteName from '../../../../common/utils/getLiferaySiteName';
+import {PAGE_ROUTER_TYPES} from '../../../../common/utils/constants';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import HomeSkeleton from './Skeleton';
 
 const PROJECT_THRESHOLD_COUNT = 4;
-const liferaySiteName = getLiferaySiteName();
 
 const MAX_PAGE_SIZE = 10000;
 
@@ -139,7 +138,7 @@ const Home = ({userAccount}) => {
 	}, [userAccount]);
 
 	const nextPage = (project) => {
-		window.location.href = `${window.location.origin}/${liferaySiteName}/overview/#/${project.accountKey}`;
+		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
 	};
 
 	const projectsFiltered = projects.filter((project) =>

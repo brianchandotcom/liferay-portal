@@ -39,7 +39,7 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 			</liferay-ui:error>
 
 			<%
-			DispatchTalendDisplayContext dispatchTalendDisplayContext = (DispatchTalendDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+			TalendDispatchDisplayContext dispatchTalendDisplayContext = (TalendDispatchDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTalendDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
 

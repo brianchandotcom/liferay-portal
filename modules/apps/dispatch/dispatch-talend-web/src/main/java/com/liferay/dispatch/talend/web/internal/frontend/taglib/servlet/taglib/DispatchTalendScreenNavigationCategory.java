@@ -20,7 +20,7 @@ import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
-import com.liferay.dispatch.talend.web.internal.display.context.DispatchTalendDisplayContext;
+import com.liferay.dispatch.talend.web.internal.display.context.TalendDispatchDisplayContext;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -110,7 +110,7 @@ public class DispatchTalendScreenNavigationCategory
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new DispatchTalendDisplayContext(_dispatchTriggerMetadataProvider));
+			new TalendDispatchDisplayContext(_dispatchTriggerMetadataProvider));
 
 		if (dispatchTrigger != null) {
 			String fileEntryName = _dispatchFileRepository.fetchFileEntryName(

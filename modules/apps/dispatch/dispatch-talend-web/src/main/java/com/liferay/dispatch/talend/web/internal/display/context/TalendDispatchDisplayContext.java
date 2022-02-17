@@ -21,9 +21,9 @@ import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
  * @author MahmoudAzzam
  * @author Mahmoud Azzam
  */
-public class DispatchTalendDisplayContext {
+public class TalendDispatchDisplayContext {
 
-	public DispatchTalendDisplayContext(
+	public TalendDispatchDisplayContext(
 		DispatchTriggerMetadataProvider dispatchTriggerMetadataProvider) {
 
 		_dispatchTriggerMetadataProvider = dispatchTriggerMetadataProvider;
@@ -39,3 +39,4 @@ public class DispatchTalendDisplayContext {
 	private final DispatchTriggerMetadataProvider
 		_dispatchTriggerMetadataProvider;
 
+}

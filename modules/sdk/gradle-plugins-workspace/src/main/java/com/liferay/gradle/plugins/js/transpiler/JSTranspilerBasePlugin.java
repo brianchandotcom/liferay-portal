@@ -101,7 +101,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 
 	private void _addTasksExpandJSCompileDependency(
 		Task expandJSCompileDependenciesTask, NpmInstallTask npmInstallTask,
-		Configuration configuration) {
+		YarnInstallTask yarnInstallTask, Configuration configuration) {
 
 		Project project = expandJSCompileDependenciesTask.getProject();
 
@@ -117,7 +117,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 				"expandJSCompileDependency", renameDependencyClosure);
 
 			copy.dependsOn(taskDependencies);
-			copy.mustRunAfter(npmInstallTask);
+			copy.mustRunAfter(npmInstallTask, yarnInstallTask);
 
 			expandJSCompileDependenciesTask.dependsOn(copy);
 		}

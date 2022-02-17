@@ -29,6 +29,9 @@ import Requirement from './pages/Project/Requirements/Requirement';
 import Routine from './pages/Project/Routines';
 import Build from './pages/Project/Routines/Builds/Build';
 import BuildOutlet from './pages/Project/Routines/Builds/BuildOutlet';
+import CaseResult from './pages/Project/Routines/Builds/Inner/CaseResult';
+import CaseResultOutlet from './pages/Project/Routines/Builds/Inner/CaseResult/CaseResultOutlet';
+import CaseResultHistory from './pages/Project/Routines/Builds/Inner/CaseResult/History';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
 import Results from './pages/Project/Routines/Builds/Inner/Results';
@@ -95,10 +98,24 @@ const TestrayRoute = () => (
 							/>
 
 							<Route
-								element={<BuildOutlet />}
+								element={
+									<BuildOutlet ignorePath="case-result" />
+								}
 								path="build/:testrayBuildId"
 							>
 								<Route element={<Build />} index />
+
+								<Route
+									element={<CaseResultOutlet />}
+									path="case-result/:testrayCaseResultId"
+								>
+									<Route element={<CaseResult />} index />
+
+									<Route
+										element={<CaseResultHistory />}
+										path="history"
+									/>
+								</Route>
 
 								<Route element={<Runs />} path="runs" />
 

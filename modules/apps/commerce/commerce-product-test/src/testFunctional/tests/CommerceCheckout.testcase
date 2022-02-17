@@ -28,6 +28,74 @@ definition {
 
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
 	@priority = "5"
+	test AddOrderFromAUserAndCheckoutFromAdminUser {
+		property portal.acceptance = "false";
+	
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+
+		JSONUser.addUser(
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userScreenName = "buyeruser");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Speedwell",
+			userEmailAddress = "buyer@liferay.com");
+
+		User.logoutPG();
+
+		CommerceLogin.speedwellLogin(
+			password = "test",
+			urlAppend = "web/speedwell",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		User.logoutPG();
+
+		CommerceLogin.speedwellLogin(
+			password = "test",
+			urlAppend = "web/speedwell",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoSpeedwellAccountDropdownItem(dropdownItem = "My Account");
+
+		CommerceNavigator.gotoSpeedwellDashboardItem(dashboardItem = "Login & Security");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Select Account",
+			rowEntry = "Buyer User");
+
+		Accounts.viewSelectedAccount(entryName = "Buyer User");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+	}
+
+	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
+	@priority = "5"
 	test AddOrderFromAUserAndCheckoutFromAnotherUser {
 		property portal.acceptance = "true";
 

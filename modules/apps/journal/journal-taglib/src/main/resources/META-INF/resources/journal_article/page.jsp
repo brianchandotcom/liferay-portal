@@ -19,12 +19,18 @@
 <liferay-util:dynamic-include key="com.liferay.journal.taglib#/journal_article/page.jsp#pre" />
 
 <%
+JournalArticle article = (JournalArticle)request.getAttribute("liferay-journal:journal-article:article");
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
 boolean dataAnalyticsTrackingEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-journal:journal-article:dataAnalyticsTrackingEnabled"));
 String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-article:wrapperCssClass");
 %>
 
 <c:choose>
+	<c:when test="<%= article.isExpired() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+		</div>
+	</c:when>
 	<c:when test="<%= articleDisplay == null %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="article-is-expired-or-not-displayable" />

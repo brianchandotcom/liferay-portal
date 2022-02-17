@@ -276,9 +276,7 @@ public class DBPartitionUtil {
 			UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
 
-		if (_executorService == null) {
-			_executorService = Executors.newWorkStealingPool();
-		}
+		ExecutorService executorService = Executors.newWorkStealingPool();
 
 		List<Future<Void>> futures = new ArrayList<>();
 
@@ -294,7 +292,7 @@ public class DBPartitionUtil {
 					}
 				}
 				else {
-					Future<Void> future = _executorService.submit(
+					Future<Void> future = executorService.submit(
 						() -> {
 							try (SafeCloseable safeCloseable =
 									CompanyThreadLocal.lock(companyId)) {
@@ -743,6 +741,5 @@ public class DBPartitionUtil {
 		Arrays.asList("Company", "VirtualHost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
-	private static ExecutorService _executorService;
 
 }

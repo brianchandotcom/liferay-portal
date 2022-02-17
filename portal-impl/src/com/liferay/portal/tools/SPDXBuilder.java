@@ -83,15 +83,6 @@ public class SPDXBuilder {
 			licenseOverridePropertiesFileName);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #SPDXBuilder(String[], String, String)}
-	 */
-	@Deprecated
-	public SPDXBuilder(String[] xmls, String spdxFileName) {
-		new SPDXBuilder(xmls, spdxFileName, null);
-	}
-
 	public SPDXBuilder(
 		String[] xmls, String spdxFileName,
 		String licenseOverridePropertiesFileName) {

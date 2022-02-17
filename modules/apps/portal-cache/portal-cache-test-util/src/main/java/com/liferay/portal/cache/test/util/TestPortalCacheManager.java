@@ -46,16 +46,6 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		return testPortalCacheManager;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #reconfigurePortalCaches(URL, ClassLoader)}
-	 */
-	@Deprecated
-	@Override
-	public void reconfigurePortalCaches(URL configurationURL) {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {

@@ -44,20 +44,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 		_portalCache = portalCache;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #DynamicPortalCache(PortalCacheManager, PortalCache, String,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public DynamicPortalCache(
-		PortalCacheManager<K, V> portalCacheManager,
-		PortalCache<K, V> portalCache, String portalCacheName, boolean blocking,
-		boolean mvcc) {
-
-		this(portalCacheManager, portalCache, portalCacheName, mvcc);
-	}
-
 	@Override
 	public V get(K key) {
 		return _portalCache.get(key);
@@ -82,15 +68,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 	@Override
 	public String getPortalCacheName() {
 		return _portalCacheName;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isBlocking() {
-		return false;
 	}
 
 	@Override

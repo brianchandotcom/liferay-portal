@@ -43,15 +43,6 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPortalCache(String)}
-	 */
-	@Deprecated
-	public PortalCache<K, V> getPortalCache(
-			String portalCacheName, boolean blocking)
-		throws PortalCacheException;
-
 	public PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking, boolean mvcc)
 		throws PortalCacheException;
@@ -61,13 +52,6 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public String getPortalCacheManagerName();
 
 	public boolean isClusterAware();
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #reconfigurePortalCaches(URL, ClassLoader)}
-	 */
-	@Deprecated
-	public void reconfigurePortalCaches(URL configurationURL);
 
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader);

@@ -213,18 +213,6 @@ public class ToolDependencies {
 			return _portalCacheManager.getPortalCache(portalCacheName);
 		}
 
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #getPortalCache(String)}
-		 */
-		@Deprecated
-		@Override
-		public PortalCache<? extends Serializable, ? extends Serializable>
-			getPortalCache(String portalCacheName, boolean blocking) {
-
-			return getPortalCache(portalCacheName);
-		}
-
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
 			getPortalCache(
@@ -281,15 +269,6 @@ public class ToolDependencies {
 		@Override
 		public String getPortalCacheName() {
 			return _portalCacheName;
-		}
-
-		/**
-		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public boolean isBlocking() {
-			return false;
 		}
 
 		public boolean isMVCC() {
@@ -410,19 +389,6 @@ public class ToolDependencies {
 			return getPortalCache(portalCacheName, false, false);
 		}
 
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #getPortalCache(String)}
-		 */
-		@Deprecated
-		@Override
-		public PortalCache<K, V> getPortalCache(
-				String portalCacheName, boolean blocking)
-			throws PortalCacheException {
-
-			return getPortalCache(portalCacheName);
-		}
-
 		@Override
 		public PortalCache<K, V> getPortalCache(
 				String portalCacheName, boolean blocking, boolean mvcc)
@@ -461,15 +427,6 @@ public class ToolDependencies {
 		@Override
 		public boolean isClusterAware() {
 			return false;
-		}
-
-		/**
-		 * @deprecated As of Mueller (7.2.x), replaced by {@link
-		 *             #reconfigurePortalCaches(URL, ClassLoader)}
-		 */
-		@Deprecated
-		@Override
-		public void reconfigurePortalCaches(URL configurationURL) {
 		}
 
 		@Override
@@ -522,18 +479,6 @@ public class ToolDependencies {
 			String portalCacheName) {
 
 			return _portalCacheManager.getPortalCache(portalCacheName);
-		}
-
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #getPortalCache(String)}
-		 */
-		@Deprecated
-		@Override
-		public PortalCache<? extends Serializable, ?> getPortalCache(
-			String portalCacheName, boolean blocking) {
-
-			return getPortalCache(portalCacheName);
 		}
 
 		@Override

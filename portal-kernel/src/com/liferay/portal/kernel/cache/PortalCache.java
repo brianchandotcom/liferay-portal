@@ -38,12 +38,6 @@ public interface PortalCache<K extends Serializable, V> {
 
 	public String getPortalCacheName();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isBlocking();
-
 	public boolean isMVCC();
 
 	public void put(K key, V value);

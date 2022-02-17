@@ -21,6 +21,7 @@ import {
 	TargetCollectionsField,
 	selectConfiguredCollectionDisplays,
 } from '../../../../../../app/components/fragment-configuration-fields/TargetCollectionsField';
+import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {
 	useDispatch,
@@ -30,10 +31,13 @@ import {
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import CollectionService from '../../../../../../app/services/CollectionService';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
+import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
+import Collapse from '../../../../../../common/components/Collapse';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
+import {CommonStyles} from './CommonStyles';
 
 export function CollectionAppliedFiltersGeneralPanel({item}) {
 	const dispatch = useDispatch();
@@ -88,6 +92,12 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 
 	const languageId = useSelector(selectLanguageId);
 
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
+
 	const configurationValues =
 		fragmentEntryLink.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR] ||
 		{};
@@ -126,20 +136,34 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 					'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
 				)}
 			</p>
+			<div className="mb-3">
+				<Collapse
+					label={Liferay.Language.get('applied-filter-options')}
+					open
+				>
+					<TargetCollectionsField
+						filterableCollections={filterableCollections}
+						onValueSelect={onValueSelect}
+						value={configurationValues.targetCollections}
+					/>
 
-			<TargetCollectionsField
-				filterableCollections={filterableCollections}
-				onValueSelect={onValueSelect}
-				value={configurationValues.targetCollections}
-			/>
+					<CheckboxField
+						field={{
+							label: Liferay.Language.get(
+								'include-clear-filters-option'
+							),
+							name: 'showClearFilters',
+						}}
+						onValueSelect={onValueSelect}
+						value={configurationValues.showClearFilters}
+					/>
+				</Collapse>
+			</div>
 
-			<CheckboxField
-				field={{
-					label: Liferay.Language.get('include-clear-filters-option'),
-					name: 'showClearFilters',
-				}}
-				onValueSelect={onValueSelect}
-				value={configurationValues.showClearFilters}
+			<CommonStyles
+				commonStylesValues={itemConfig.styles}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
 			/>
 		</>
 	);

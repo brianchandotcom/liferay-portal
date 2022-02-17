@@ -16,8 +16,10 @@ package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.js.transpiler.internal.util.JSTranspilerPluginUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
+import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
@@ -52,6 +54,10 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 			(NpmInstallTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
+		final YarnInstallTask yarnInstallTask =
+			(YarnInstallTask)GradleUtil.getTask(
+				project, YarnPlugin.YARN_INSTALL_TASK_NAME);
+
 		final Configuration jsCompileConfiguration = _addConfigurationJSCompile(
 			project);
 
@@ -67,7 +73,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					_addTasksExpandJSCompileDependency(
 						expandJSCompileDependenciesTask, npmInstallTask,
-						jsCompileConfiguration);
+						yarnInstallTask, jsCompileConfiguration);
 				}
 
 			});

@@ -33,7 +33,7 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 	</c:when>
 	<c:when test="<%= articleDisplay == null %>">
 		<div class="alert alert-warning">
-			<liferay-ui:message key="article-is-expired-or-not-displayable" />
+			<liferay-ui:message key="article-is-not-displayable" />
 		</div>
 	</c:when>
 	<c:otherwise>

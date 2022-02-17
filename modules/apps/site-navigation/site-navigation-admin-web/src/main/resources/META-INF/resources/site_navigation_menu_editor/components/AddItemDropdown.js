@@ -59,12 +59,25 @@ function getNamespacedInfoItems(
 	selectedItems,
 	siteNavigationMenuId
 ) {
-	if (!selectedItems.length) {
+	if (!selectedItems) {
+		return;
+	}
+
+	let selectedItemsValue = selectedItems;
+
+	if (selectedItems.value && typeof selectedItems.value === 'object') {
+		selectedItemsValue = [];
+		selectedItems.value.forEach((item) => {
+			selectedItemsValue.push(JSON.parse(item));
+		});
+	}
+
+	if (!selectedItemsValue.length) {
 		return;
 	}
 
 	const infoItems = {
-		items: JSON.stringify(selectedItems),
+		items: JSON.stringify(selectedItemsValue),
 		siteNavigationMenuId,
 	};
 

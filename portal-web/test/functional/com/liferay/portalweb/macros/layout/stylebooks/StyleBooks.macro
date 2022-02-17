@@ -1,5 +1,9 @@
 definition {
 
+	macro clickManagementBar {
+		Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
+	}
+
 	macro clickPublish {
 		Button.clickNoError(button = "Publish");
 

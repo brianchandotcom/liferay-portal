@@ -286,32 +286,35 @@ public class ImportResults {
 		).build(
 		).getService();
 
-		Page<Bucket> bucketsPage = storage.list();
-
-		for (Bucket bucket : bucketsPage.iterateAll()) {
-			System.out.println(bucket.getName());
-
-			Page<Blob> blobsPage = storage.list(bucket.getName());
+    	Page<Blob> blobsPage =
+        storage.list(
+            _BUCKET_NAME,
+            Storage.BlobListOption.prefix(_BUCKET_FOLDER_NAME),
+            Storage.BlobListOption.currentDirectory());
 
 			for (Blob blob : blobsPage.iterateAll()) {
-				System.out.println(blob.getName());
 
-				blob.downloadTo(Paths.get(_URL_KEY));
-			}
+				if (blob.getName().endsWith("results.tar.gz")) {
+						blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+				}
 		}
 	}
 
-	public static void main(String[] args) {
-		long groupId = 44059L;
-		//listBuckets(_PROJECT_BUCKET_ID);
-	 	int projectId = fetchOrAddProject(groupId);
+	public static void main(String[] args)  throws Exception{
+	//	listObjectsWithPrefix();
+		listBuckets(_PROJECT_BUCKET_ID);
+	// 	int projectId = fetchOrAddProject(groupId);
 	// 	addTestCase(groupId, projectId);
-		addTestBuild(groupId, projectId);
+	//	addTestBuild(groupId, projectId);
 	 }
 
 	private static final String _BASE_URL = "http://localhost:8080/o/c/";
 
 	private static final String _PROJECT_BUCKET_ID = "wise-aegis-340917";
+
+	private static final String _BUCKET_NAME = "testeray";
+
+	private static final String _BUCKET_FOLDER_NAME = "test1/test1/";
 
 	private static final String _URL_KEY =
 		"/home/me/Downloads/key.xml";

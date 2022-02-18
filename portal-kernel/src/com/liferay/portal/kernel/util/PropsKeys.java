@@ -3388,9 +3388,6 @@ public interface PropsKeys {
 	public static final String YUI_COMPRESSOR_CSS_LINE_BREAK =
 		"yui.compressor.css.line.break";
 
-	public static final String ZIP_FILE_NAME_ENCODING =
-		"zip.file.name.encoding";
-
 	public static final String ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE =
 		"zip.file.writer.export.buffer.size";
 

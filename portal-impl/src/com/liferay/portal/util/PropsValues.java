@@ -2814,9 +2814,6 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_CSS_LINE_BREAK));
 
-	public static final String ZIP_FILE_NAME_ENCODING = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.ZIP_FILE_NAME_ENCODING));
-
 	public static final long ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE));

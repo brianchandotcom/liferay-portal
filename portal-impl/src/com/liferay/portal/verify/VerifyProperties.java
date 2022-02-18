@@ -1913,7 +1913,7 @@ public class VerifyProperties extends VerifyProcess {
 		"xuggler.f.ffpreset.qmin", "xuggler.f.ffpreset.qmax",
 		"xuggler.f.ffpreset.sc_threshold", "xuggler.f.ffpreset.subq",
 		"xuggler.f.ffpreset.trellis", "xuggler.f.ffpreset.wpredp", "ym.login",
-		"ym.password"
+		"ym.password", "zip.file.name.encoding"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = {

@@ -31,10 +31,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FFStyleBookConfigurationUtil {
 
-	public static boolean templatesPreviewEnabled() {
-		return _ffStyleBookConfiguration.templatesPreviewEnabled();
-	}
-
 	public static boolean tokenReuseEnabled() {
 		return _ffStyleBookConfiguration.tokenReuseEnabled();
 	}

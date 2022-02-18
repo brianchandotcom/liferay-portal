@@ -23,9 +23,7 @@ import React, {
 	useState,
 } from 'react';
 
-import PreviewInfoBar from './PreviewInfoBar';
 import {StyleBookContext} from './StyleBookContext';
-import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {
@@ -83,7 +81,6 @@ export default function LayoutPreview() {
 
 				{previewLayout?.url ? (
 					<>
-						{!config.templatesPreviewEnabled && <PreviewInfoBar />}
 						<iframe
 							className={classNames(
 								'style-book-editor__page-preview-frame',
@@ -95,13 +92,7 @@ export default function LayoutPreview() {
 								loadFrontendTokenValues();
 							}}
 							ref={iframeRef}
-							src={
-								config.templatesPreviewEnabled
-									? previewLayout?.url
-									: urlWithPreviewParameter(
-											previewLayout?.url
-									  )
-							}
+							src={previewLayout?.url}
 						/>
 					</>
 				) : (
@@ -116,15 +107,6 @@ export default function LayoutPreview() {
 			</div>
 		</>
 	);
-}
-
-function urlWithPreviewParameter(url) {
-	const nextURL = new URL(url);
-
-	nextURL.searchParams.set('p_l_mode', 'preview');
-	nextURL.searchParams.set('styleBookEntryPreview', true);
-
-	return nextURL.href;
 }
 
 function loadOverlay(iframeRef, previewLayoutType) {

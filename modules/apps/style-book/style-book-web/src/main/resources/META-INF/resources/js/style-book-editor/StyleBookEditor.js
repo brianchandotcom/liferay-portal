@@ -27,7 +27,6 @@ import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
-	initialPreviewLayout,
 }) => {
 	useCloseProductMenu();
 
@@ -35,10 +34,8 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-	const [previewLayout, setPreviewLayout] = useState(() =>
-		config.templatesPreviewEnabled
-			? getMostRecentLayout(config.previewOptions)
-			: initialPreviewLayout
+	const [previewLayout, setPreviewLayout] = useState(
+		getMostRecentLayout(config.previewOptions)
 	);
 	const [previewLayoutType, setPreviewLayoutType] = useState(
 		() =>
@@ -91,7 +88,7 @@ const StyleBookEditor = ({
 		>
 			<div className="cadmin style-book-editor">
 				<StyleErrorsContextProvider>
-					{config.templatesPreviewEnabled && <Toolbar />}
+					<Toolbar />
 
 					<div className="d-flex">
 						<LayoutPreview />
@@ -108,7 +105,6 @@ export default function ({
 	fragmentCollectionPreviewURL = '',
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
-	initialPreviewLayout,
 	isPrivateLayoutsEnabled,
 	layoutsTreeURL,
 	namespace,
@@ -117,14 +113,12 @@ export default function ({
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
-	templatesPreviewEnabled,
 	themeName,
 	tokenReuseEnabled,
 } = {}) {
 	initializeConfig({
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinition,
-		initialPreviewLayout,
 		isPrivateLayoutsEnabled,
 		layoutsTreeURL,
 		namespace,
@@ -133,17 +127,11 @@ export default function ({
 		redirectURL,
 		saveDraftURL,
 		styleBookEntryId,
-		templatesPreviewEnabled,
 		themeName,
 		tokenReuseEnabled,
 	});
 
-	return (
-		<StyleBookEditor
-			frontendTokensValues={frontendTokensValues}
-			initialPreviewLayout={initialPreviewLayout}
-		/>
-	);
+	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
 }
 
 function saveDraft(frontendTokensValues, styleBookEntryId) {

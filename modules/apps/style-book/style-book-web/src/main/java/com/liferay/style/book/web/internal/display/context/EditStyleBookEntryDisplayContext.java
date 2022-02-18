@@ -14,7 +14,6 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -132,8 +130,6 @@ public class EditStyleBookEntryDisplayContext {
 					styleBookEntry.getFrontendTokensValues());
 			}
 		).put(
-			"initialPreviewLayout", _getInitialPreviewLayoutJSONObject()
-		).put(
 			"isPrivateLayoutsEnabled",
 			() -> {
 				Group group = _themeDisplay.getScopeGroup();
@@ -194,9 +190,6 @@ public class EditStyleBookEntryDisplayContext {
 			"saveDraftURL", _getActionURL("/style_book/edit_style_book_entry")
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
-		).put(
-			"templatesPreviewEnabled",
-			FFStyleBookConfigurationUtil.templatesPreviewEnabled()
 		).put(
 			"themeName", _getThemeName()
 		).put(
@@ -347,35 +340,6 @@ public class EditStyleBookEntryDisplayContext {
 		}
 
 		return JSONFactoryUtil.createJSONObject();
-	}
-
-	private JSONObject _getInitialPreviewLayoutJSONObject() throws Exception {
-		Group group = StagingUtil.getStagingGroup(
-			_themeDisplay.getScopeGroupId());
-
-		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layout == null) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				group.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (layout == null) {
-				return null;
-			}
-		}
-
-		String layoutURL = HttpUtil.addParameter(
-			PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
-			Constants.PREVIEW);
-
-		return JSONUtil.put(
-			"name", layout.getName(_themeDisplay.getLocale())
-		).put(
-			"url", layoutURL
-		);
 	}
 
 	private JSONObject _getOptionJSONObject(int... layoutTypes) {

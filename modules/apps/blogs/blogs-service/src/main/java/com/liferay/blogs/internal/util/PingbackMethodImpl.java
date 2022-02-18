@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.kernel.xmlrpc.Response;
+import com.liferay.portal.kernel.xmlrpc.XmlRpc;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
-import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.InetAddress;
@@ -93,10 +93,10 @@ public class PingbackMethodImpl implements Method {
 				return response;
 			}
 
-			return XmlRpcUtil.createSuccess("Pingback accepted");
+			return _xmlRpc.createSuccess("Pingback accepted");
 		}
 		catch (DuplicateCommentException duplicateCommentException) {
-			return XmlRpcUtil.createFault(
+			return _xmlRpc.createFault(
 				PINGBACK_ALREADY_REGISTERED,
 				"Pingback is already registered: " +
 					duplicateCommentException.getMessage());
@@ -106,7 +106,7 @@ public class PingbackMethodImpl implements Method {
 				_log.debug(exception);
 			}
 
-			return XmlRpcUtil.createFault(
+			return _xmlRpc.createFault(
 				TARGET_URI_INVALID, "Unable to parse target URI");
 		}
 	}
@@ -173,7 +173,7 @@ public class PingbackMethodImpl implements Method {
 
 	private Response _addPingback(long companyId) throws Exception {
 		if (!_isPingbackEnabled()) {
-			return XmlRpcUtil.createFault(
+			return _xmlRpc.createFault(
 				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
 				"Pingbacks are disabled");
 		}
@@ -183,7 +183,7 @@ public class PingbackMethodImpl implements Method {
 		if (!entry.isAllowPingbacks() ||
 			Validator.isNull(entry.getUrlTitle())) {
 
-			return XmlRpcUtil.createFault(
+			return _xmlRpc.createFault(
 				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
 				"Pingbacks are disabled");
 		}
@@ -420,7 +420,7 @@ public class PingbackMethodImpl implements Method {
 
 	private Response _validateSource() throws Exception {
 		if (_isSourceURILocalNetwork()) {
-			return XmlRpcUtil.createFault(ACCESS_DENIED, "Access Denied");
+			return _xmlRpc.createFault(ACCESS_DENIED, "Access Denied");
 		}
 
 		Source source = null;
@@ -435,7 +435,7 @@ public class PingbackMethodImpl implements Method {
 				_log.debug(exception);
 			}
 
-			return XmlRpcUtil.createFault(
+			return _xmlRpc.createFault(
 				SOURCE_URI_DOES_NOT_EXIST, "Error accessing source URI");
 		}
 
@@ -450,7 +450,7 @@ public class PingbackMethodImpl implements Method {
 			}
 		}
 
-		return XmlRpcUtil.createFault(
+		return _xmlRpc.createFault(
 			SOURCE_URI_INVALID, "Unable to find target URI in source");
 	}
 
@@ -482,5 +482,8 @@ public class PingbackMethodImpl implements Method {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private XmlRpc _xmlRpc;
 
 }

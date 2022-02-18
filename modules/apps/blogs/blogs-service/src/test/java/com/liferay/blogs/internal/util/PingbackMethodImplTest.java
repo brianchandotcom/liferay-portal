@@ -428,6 +428,8 @@ public class PingbackMethodImplTest {
 			pingbackMethodImpl, "_portletLocalService", _portletLocalService);
 		ReflectionTestUtil.setFieldValue(
 			pingbackMethodImpl, "_userLocalService", _userLocalService);
+		ReflectionTestUtil.setFieldValue(
+			pingbackMethodImpl, "_xmlRpc", _xmlRpc);
 
 		return pingbackMethodImpl;
 	}

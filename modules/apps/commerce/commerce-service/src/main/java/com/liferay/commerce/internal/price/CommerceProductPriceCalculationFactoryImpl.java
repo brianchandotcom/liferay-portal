@@ -24,22 +24,18 @@ import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -90,13 +86,6 @@ public class CommerceProductPriceCalculationFactoryImpl
 			properties.get("commerce.price.list.discovery.key"));
 
 		_commercePriceListDiscoveryMap.remove(commercePriceListDiscoveryKey);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
 	}
 
 	@Reference(
@@ -158,8 +147,6 @@ public class CommerceProductPriceCalculationFactoryImpl
 
 	@Reference
 	private CommercePriceModifierHelper _commercePriceModifierHelper;
-
-	private volatile CommercePricingConfiguration _commercePricingConfiguration;
 
 	@Reference
 	private CommerceTaxCalculation _commerceTaxCalculation;

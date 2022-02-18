@@ -17,10 +17,8 @@ package com.liferay.commerce.internal.price;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -69,9 +67,6 @@ public class CommerceOrderPriceCalculationServiceFactory
 		_serviceRegistration = bundleContext.registerService(
 			CommerceOrderPriceCalculation.class, this,
 			new Hashtable<String, Object>());
-
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -87,8 +82,6 @@ public class CommerceOrderPriceCalculationServiceFactory
 
 	@Reference
 	private CommerceMoneyFactory _commerceMoneyFactory;
-
-	private volatile CommercePricingConfiguration _commercePricingConfiguration;
 
 	@Reference
 	private CommerceTaxCalculation _commerceTaxCalculation;

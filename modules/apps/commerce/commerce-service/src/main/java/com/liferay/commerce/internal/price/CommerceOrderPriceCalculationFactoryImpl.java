@@ -18,16 +18,10 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculationFactory;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -48,13 +42,6 @@ public class CommerceOrderPriceCalculationFactoryImpl
 			_commerceMoneyFactory, _commerceTaxCalculation);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
-	}
-
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
@@ -63,8 +50,6 @@ public class CommerceOrderPriceCalculationFactoryImpl
 
 	@Reference
 	private CommerceMoneyFactory _commerceMoneyFactory;
-
-	private volatile CommercePricingConfiguration _commercePricingConfiguration;
 
 	@Reference
 	private CommerceTaxCalculation _commerceTaxCalculation;

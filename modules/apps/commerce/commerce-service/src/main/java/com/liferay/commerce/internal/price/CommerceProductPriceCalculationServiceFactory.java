@@ -23,13 +23,11 @@ import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -112,9 +110,6 @@ public class CommerceProductPriceCalculationServiceFactory
 		_serviceRegistration = bundleContext.registerService(
 			CommerceProductPriceCalculation.class, this,
 			new Hashtable<String, Object>());
-
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -181,8 +176,6 @@ public class CommerceProductPriceCalculationServiceFactory
 
 	@Reference
 	private CommercePriceModifierHelper _commercePriceModifierHelper;
-
-	private volatile CommercePricingConfiguration _commercePricingConfiguration;
 
 	@Reference
 	private CommerceTaxCalculation _commerceTaxCalculation;

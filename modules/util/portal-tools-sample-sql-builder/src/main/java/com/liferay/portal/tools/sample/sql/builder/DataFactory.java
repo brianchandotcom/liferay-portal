@@ -6956,6 +6956,9 @@ public class DataFactory {
 				else if (name.equals("CdnURL")) {
 					name = "CDNURL";
 				}
+				else if (name.equals("DeliveryCTermEntryDescription")) {
+					name = "DeliveryCommerceTermEntryDescription";
+				}
 				else if (name.equals("DeliverySubTypeSettings")) {
 					name = "DeliverySubscriptionTypeSettings";
 				}
@@ -6973,6 +6976,9 @@ public class DataFactory {
 				}
 				else if (name.equals("LPageTemplateStructureRelId")) {
 					name = "LayoutPageTemplateStructureRelId";
+				}
+				else if (name.equals("PaymentCTermEntryDescription")) {
+					name = "PaymentCommerceTermEntryDescription";
 				}
 				else if (name.equals("ShippingDiscountPercentLevel1")) {
 					name = "ShippingDiscountPercentageLevel1";

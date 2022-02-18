@@ -57,6 +57,7 @@ definition {
 	@description = "Verify that multiple Assignment can be added"
 	@priority = "4"
 	test CanAddMultipleAssignment {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddMultipleAssignment";
 
 		ApplicationsMenu.gotoPortlet(
@@ -114,6 +115,7 @@ definition {
 	@description = "Verify that Notification can be added"
 	@priority = "4"
 	test CanAddNotification {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddNotification";
 
 		ApplicationsMenu.gotoPortlet(
@@ -150,6 +152,7 @@ definition {
 	@description = "Verify that Timers can be added"
 	@priority = "4"
 	test CanAddTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddTimers";
 
 		ApplicationsMenu.gotoPortlet(
@@ -503,6 +506,7 @@ definition {
 	@description = "Verify that the user can rename connector"
 	@priority = "4"
 	test ConnectorCanBeRenamed {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConnectorCanBeRenamed";
 
 		ApplicationsMenu.gotoPortlet(
@@ -606,6 +610,7 @@ definition {
 	@description = "Verify that the Fork node must have at least two outgoing transitions."
 	@priority = "4"
 	test ForkNodeMustHaveMoreThanOneTransition {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ForkNodeMustHaveMoreThanOneTransition";
 
 		ApplicationsMenu.gotoPortlet(
@@ -778,6 +783,7 @@ definition {
 	@description = "Verify that each type of Node has Notifications property"
 	@priority = "4"
 	test HasNotificationsProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasNotificationsProperty";
 
 		ApplicationsMenu.gotoPortlet(
@@ -805,6 +811,7 @@ definition {
 	@description = "Verify that the Task node has Timers property"
 	@priority = "4"
 	test HasTimersProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasTimersProperty";
 
 		ApplicationsMenu.gotoPortlet(
@@ -873,6 +880,7 @@ definition {
 	@description = "Verify that the user can rename connector"
 	@priority = "4"
 	test NodeCanBeRenamed {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#NodeCanBeRenamed";
 
 		ApplicationsMenu.gotoPortlet(
@@ -904,6 +912,7 @@ definition {
 	@description = "Verify that the transition can be dropped on plain field, pop up menu will appear, user can select new node, new node is created correctly"
 	@priority = "5"
 	test NodeIsCreatedWhenTransitionIsDroppedOnPlainField {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#NodeIsCreatedWhenTransitionIsDroppedOnPlainField";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1002,6 +1011,7 @@ definition {
 	@description = "Verify that transition can be connected to another edge of node, orange circle will appear"
 	@priority = "5"
 	test TransitionCanBeConnectedToNode {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#TransitionCanBeConnectedToNode";
 
 		ApplicationsMenu.gotoPortlet(

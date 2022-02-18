@@ -31,8 +31,9 @@ const getSubscriptionKey = (name) => {
 const ACTIVATION_PATH = 'activation/';
 
 const MenuItem = ({activeButton, menuKey, setActiveButton, ...props}) => {
+	const menuType = MENU_TYPES[menuKey];
 	const redirectPage =
-		MENU_TYPES[menuKey] === MENU_TYPES.overview ? '' : PAGE_TYPES[menuKey];
+		menuType === MENU_TYPES.overview ? '' : PAGE_TYPES[menuKey];
 
 	return (
 		<li {...props}>
@@ -41,13 +42,12 @@ const MenuItem = ({activeButton, menuKey, setActiveButton, ...props}) => {
 					className={classNames(
 						'btn-borderless mb-1 px-3 py-2 rounded text-neutral-10',
 						{
-							'cp-menu-btn-active':
-								activeButton === MENU_TYPES[menuKey],
+							'cp-menu-btn-active': activeButton === menuType,
 						}
 					)}
-					onClick={() => setActiveButton(MENU_TYPES[menuKey])}
+					onClick={() => setActiveButton(menuType)}
 				>
-					{MENU_TYPES[menuKey]}
+					{menuType}
 				</Button>
 			</Link>
 		</li>

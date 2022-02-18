@@ -19,24 +19,16 @@ const SideMenuSkeleton = () => {
 				{Object.entries(MENU_TYPES).map((menuType) => {
 					const [menuKey, menuName] = menuType;
 
-					if (menuName !== MENU_TYPES.productActivation) {
-						return (
-							<li key={menuKey}>
-								<Skeleton
-									className="mb-1"
-									height={36}
-									width={120}
-								/>
-							</li>
-						);
-					}
-
 					return (
 						<li key={menuKey}>
 							<Skeleton
 								className="mb-1"
 								height={36}
-								width={200}
+								width={
+									menuName !== MENU_TYPES.productActivation
+										? 120
+										: 200
+								}
 							/>
 						</li>
 					);

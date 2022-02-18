@@ -11,6 +11,7 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {forwardRef} from 'react';
 
 const ButtonBase = (
@@ -40,7 +41,10 @@ const ButtonBase = (
 
 			{appendIcon && (
 				<span
-					className={`inline-item inline-item-after ${appendIconClassName}`}
+					className={classNames(
+						'inline-item inline-item-after',
+						appendIconClassName
+					)}
 				>
 					<ClayIcon symbol={appendIcon} />
 				</span>

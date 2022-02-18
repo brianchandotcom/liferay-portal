@@ -15,7 +15,7 @@ import {PAGE_TYPES} from '../../../utils/constants';
 import Overview from '../Overview';
 import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
-import ProductsOutlet from './Outlets/ProductsOutlet';
+import ProductsOutlet from './Outlets/useProductsOutlet';
 
 const ProjectRoutes = () => {
 	return (

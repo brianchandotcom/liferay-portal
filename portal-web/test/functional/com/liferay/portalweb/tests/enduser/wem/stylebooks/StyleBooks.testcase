@@ -491,6 +491,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142078. The user could mark a new style book as default."
+	@priority = "4"
+	test MarkNewStyleBookAsDefault {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("Navigate to the Style Books admin") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Styles from Theme is marked as default") {
+			LexiconCard.viewCardSticker(
+				card = "Styles from Theme",
+				icon = "check-circle");
+		}
+
+		task ("Mark the new style book as default") {
+			StyleBooksAdmin.markStyleBookAsDefault(
+				confirmMessage = "Do you want to replace Styles from Theme for Test Style Book Name as the default style book?",
+				styleBookName = "Test Style Book Name");
+		}
+	}
+
 	@description = "This is a test for LPS-140834. The user could select style book in master page when use public pages theme."
 	@priority = "4"
 	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {

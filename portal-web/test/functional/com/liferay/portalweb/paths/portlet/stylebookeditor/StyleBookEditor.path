@@ -28,7 +28,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NO_PAGE_MESSAGE</td>
+	<td>EMPTY_MESSAGE</td>
 	<td>//div[contains(@class,'empty-state-text')][normalize-space(text())='You cannot preview the style book because your site is empty.']</td>
 	<td></td>
 </tr>

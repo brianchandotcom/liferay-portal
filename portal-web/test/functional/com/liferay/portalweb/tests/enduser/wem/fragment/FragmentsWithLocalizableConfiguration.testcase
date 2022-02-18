@@ -70,7 +70,7 @@ definition {
 				locator1 = "PageEditor#NAV_ITEM_BUTTON");
 
 			AssertVisible(
-				key_fieldSetLabel = "Tamaño",
+				key_fieldSetLabel = "Marco",
 				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 
 			AssertSelectedLabel(

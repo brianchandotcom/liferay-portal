@@ -2492,7 +2492,7 @@ definition {
 
 			if (isSet(height)) {
 				Type(
-					key_borderBottom = "Size",
+					key_borderBottom = "Frame",
 					key_fieldLabel = "Height",
 					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
 					value1 = "${height}");
@@ -2779,7 +2779,7 @@ definition {
 
 			if (isSet(height)) {
 				Type(
-					key_borderBottom = "Size",
+					key_borderBottom = "Frame",
 					key_fieldLabel = "Height",
 					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
 					value1 = "${height}");

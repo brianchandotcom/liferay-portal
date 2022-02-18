@@ -720,7 +720,7 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
 			AssertElementPresent(
-				key_fieldSetLabel = "Size",
+				key_fieldSetLabel = "Frame",
 				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 
 			Navigator.gotoNavTab(navTab = "Styles");

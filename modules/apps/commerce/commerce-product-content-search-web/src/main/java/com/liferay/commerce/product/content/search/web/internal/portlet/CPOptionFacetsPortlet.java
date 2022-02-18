@@ -168,22 +168,20 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 			cpOptionsSearchFacetDisplayBuilder =
 				new CPOptionsSearchFacetDisplayContextBuilder(renderRequest);
 
-		cpOptionsSearchFacetDisplayBuilder.setCPOptionLocalService(
+		cpOptionsSearchFacetDisplayBuilder.cpOptionLocalService(
 			_cpOptionLocalService);
-		cpOptionsSearchFacetDisplayBuilder.setPortletSharedSearchRequest(
-			_portletSharedSearchRequest);
-
-		cpOptionsSearchFacetDisplayBuilder.setDisplayStyle(displayStyle);
-		cpOptionsSearchFacetDisplayBuilder.setFacet(
+		cpOptionsSearchFacetDisplayBuilder.displayStyle(displayStyle);
+		cpOptionsSearchFacetDisplayBuilder.facet(
 			portletSharedSearchResponse.getFacet(CPField.OPTION_NAMES));
-		cpOptionsSearchFacetDisplayBuilder.setFrequenciesVisible(
-			showFrequencies);
-		cpOptionsSearchFacetDisplayBuilder.setFrequencyThreshold(
+		cpOptionsSearchFacetDisplayBuilder.frequenciesVisible(showFrequencies);
+		cpOptionsSearchFacetDisplayBuilder.frequencyThreshold(
 			frequencyThreshold);
-		cpOptionsSearchFacetDisplayBuilder.setMaxTerms(maxTerms);
-		cpOptionsSearchFacetDisplayBuilder.setPaginationStartParameterName(
+		cpOptionsSearchFacetDisplayBuilder.maxTerms(maxTerms);
+		cpOptionsSearchFacetDisplayBuilder.paginationStartParameterName(
 			getPaginationStartParameterName(portletSharedSearchResponse));
-		cpOptionsSearchFacetDisplayBuilder.setPortal(_portal);
+		cpOptionsSearchFacetDisplayBuilder.portal(_portal);
+		cpOptionsSearchFacetDisplayBuilder.portletSharedSearchRequest(
+			_portletSharedSearchRequest);
 
 		return cpOptionsSearchFacetDisplayBuilder.build();
 	}

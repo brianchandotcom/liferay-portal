@@ -767,11 +767,11 @@ definition {
 			Type(
 				locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
 				value1 = "${newActionName}");
+
+			Button.clickSave();
+
+			Refresh();
 		}
-
-		Button.clickSave();
-
-		Refresh();
 	}
 
 	macro goToActionDetails {

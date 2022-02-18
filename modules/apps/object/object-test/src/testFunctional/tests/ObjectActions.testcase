@@ -145,11 +145,36 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanInactivateAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145723 CanInactivateAction pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
+
+		CreateObject.checkToggleInactive();
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "No",
+			actionName = "Action Name");
 
 	}
 

@@ -2742,7 +2742,7 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VERIFY_PROCESS_CONCURRENCY_THRESHOLD));
 
-	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = PropsUtil.get(
+	public static String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = PropsUtil.get(
 		PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 	public static final String[] VIRTUAL_HOSTS_IGNORE_EXTENSIONS =
@@ -2778,10 +2778,10 @@ public class PropsValues {
 	public static final String WEB_SERVER_HOST = PropsUtil.get(
 		PropsKeys.WEB_SERVER_HOST);
 
-	public static final int WEB_SERVER_HTTP_PORT = GetterUtil.getInteger(
+	public static int WEB_SERVER_HTTP_PORT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.WEB_SERVER_HTTP_PORT), -1);
 
-	public static final int WEB_SERVER_HTTPS_PORT = GetterUtil.getInteger(
+	public static int WEB_SERVER_HTTPS_PORT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.WEB_SERVER_HTTPS_PORT), -1);
 
 	public static final String WEB_SERVER_PROTOCOL = PropsUtil.get(

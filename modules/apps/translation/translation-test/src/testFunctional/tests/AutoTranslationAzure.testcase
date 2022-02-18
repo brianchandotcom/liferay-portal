@@ -180,7 +180,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "WC コンテンツ",
 			webContentDescription = "WC description",
-			webContentTitle = "トイレタイトル");
+			webContentTitle = "WC タイトル");
 
 		PortletEntry.publish();
 
@@ -194,7 +194,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "WC コンテンツ",
 			webContentDescription = "WC description",
-			webContentTitle = "トイレタイトル");
+			webContentTitle = "WC タイトル");
 	}
 
 }

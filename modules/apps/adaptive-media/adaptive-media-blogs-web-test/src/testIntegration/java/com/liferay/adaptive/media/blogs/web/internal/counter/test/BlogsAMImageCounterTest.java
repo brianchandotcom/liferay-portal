@@ -64,7 +64,7 @@ public class BlogsAMImageCounterTest {
 
 		_user1 = UserTestUtil.getAdminUser(_company1.getCompanyId());
 
-		_group1 = GroupTestUtil.addGroup(
+		_group = GroupTestUtil.addGroup(
 			_company1.getCompanyId(), _user1.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -79,10 +79,10 @@ public class BlogsAMImageCounterTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group1, _user1.getUserId());
+				_group, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			null, _user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			_getImageBytes(), null, null, serviceContext);
@@ -115,10 +115,10 @@ public class BlogsAMImageCounterTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group1, _user1.getUserId());
+				_group, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			null, _user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			_getImageBytes(), null, null, serviceContext);
@@ -175,7 +175,7 @@ public class BlogsAMImageCounterTest {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	private Group _group1;
+	private Group _group;
 	private User _user1;
 	private User _user2;
 

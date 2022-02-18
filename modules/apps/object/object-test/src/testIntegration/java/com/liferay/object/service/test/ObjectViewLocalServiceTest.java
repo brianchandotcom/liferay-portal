@@ -21,10 +21,12 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
+import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -77,14 +79,20 @@ public class ObjectViewLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(
-					_createObjectViewColumn(), _createObjectViewColumn()));
+					_createObjectViewColumn(), _createObjectViewColumn()),
+				Arrays.asList(
+					_createObjectViewSortColumn(),
+					_createObjectViewSortColumn()));
 
 			_objectViewLocalService.addObjectView(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(
-					_createObjectViewColumn(), _createObjectViewColumn()));
+					_createObjectViewColumn(), _createObjectViewColumn()),
+				Arrays.asList(
+					_createObjectViewSortColumn(),
+					_createObjectViewSortColumn()));
 
 			Assert.fail();
 		}
@@ -129,13 +137,20 @@ public class ObjectViewLocalServiceTest {
 		objectView = _objectViewLocalService.updateObjectView(
 			objectView.getObjectViewId(), objectView.isDefaultObjectView(),
 			objectView.getNameMap(),
-			Collections.singletonList(_createObjectViewColumn()));
+			Collections.singletonList(_createObjectViewColumn()),
+			Collections.singletonList(_createObjectViewSortColumn()));
 
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
 
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
+
 		Assert.assertEquals(
 			objectViewColumns.toString(), 1, objectViewColumns.size());
+
+		Assert.assertEquals(
+			objectViewSortColumns.toString(), 1, objectViewSortColumns.size());
 
 		_deleteObjectFields();
 
@@ -159,16 +174,23 @@ public class ObjectViewLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(_createObjectViewColumn(), _createObjectViewColumn()),
 			Arrays.asList(
-				_createObjectViewColumn(), _createObjectViewColumn()));
+				_createObjectViewSortColumn(), _createObjectViewSortColumn()));
 	}
 
 	private void _assertObjectView(ObjectView objectView) {
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
 
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
+
 		Assert.assertEquals(
 			objectViewColumns.toString(), 2, objectViewColumns.size());
+
+		Assert.assertEquals(
+			objectViewSortColumns.toString(), 2, objectViewSortColumns.size());
 	}
 
 	private ObjectViewColumn _createObjectViewColumn() throws Exception {
@@ -179,6 +201,19 @@ public class ObjectViewLocalServiceTest {
 		objectViewColumn.setPriority(0);
 
 		return objectViewColumn;
+	}
+
+	private ObjectViewSortColumn _createObjectViewSortColumn()
+		throws Exception {
+
+		ObjectViewSortColumn objectViewSortColumn =
+			_objectViewSortColumnPersistence.create(0);
+
+		objectViewSortColumn.setObjectFieldName(_addObjectField());
+		objectViewSortColumn.setPriority(0);
+		objectViewSortColumn.setSortOrder("asc");
+
+		return objectViewSortColumn;
 	}
 
 	private void _deleteObjectFields() throws Exception {
@@ -205,5 +240,8 @@ public class ObjectViewLocalServiceTest {
 
 	@Inject
 	private ObjectViewLocalService _objectViewLocalService;
+
+	@Inject
+	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
 
 }

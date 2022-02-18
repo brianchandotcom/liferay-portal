@@ -141,7 +141,7 @@ public class ObjectViewServiceTest {
 		return _objectViewLocalService.addObjectView(
 			user.getUserId(), _objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Collections.emptyList());
+			Collections.emptyList(), Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -160,7 +160,7 @@ public class ObjectViewServiceTest {
 			objectView = _objectViewService.addObjectView(
 				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.emptyList());
+				Collections.emptyList(), Collections.emptyList());
 		}
 		finally {
 			if (objectView != null) {
@@ -197,7 +197,7 @@ public class ObjectViewServiceTest {
 			objectView = _objectViewService.updateObjectView(
 				objectView.getObjectViewId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.emptyList());
+				Collections.emptyList(), Collections.emptyList());
 		}
 		finally {
 			if (objectView != null) {

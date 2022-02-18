@@ -284,25 +284,30 @@ definition {
 
 		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
 
-		ACUtils.launchDXP();
+		task ("Add 3 new users and sync the Contact Data") {
+			ACUtils.launchDXP();
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
-		ACDXPSettings.syncNewContactData();
+				ACDXPSettings.syncNewContactData();
+			}
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("View the page as different users") {
+			for (var name : list "${usernameList}") {
+				ACUtils.navigateToSitePageWithUser(
+					emailList = "${name}@liferay.com",
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
 
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
+			ACUtils.closeAllSessionsAndWait();
+		}
 
 		ACUtils.launchAC();
 

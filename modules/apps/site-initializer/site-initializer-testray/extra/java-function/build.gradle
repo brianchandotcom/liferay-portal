@@ -6,6 +6,7 @@ dependencies {
 	compile group: "com.google.cloud.functions", name:"functions-framework-api", version:"1.0.4"
 	compile group: "org.json", name: "json", version: "20180813"
 	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.3"
+	compile group: "org.rauschig", name: "jarchivelib", version: "0.7.1"
 	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "9.9.0"
 	implementation group: "com.google.cloud", name: "google-cloud-storage", version: "2.4.0"
 

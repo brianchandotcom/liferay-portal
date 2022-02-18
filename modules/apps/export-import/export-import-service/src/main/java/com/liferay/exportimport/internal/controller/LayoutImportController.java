@@ -86,7 +86,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -155,7 +155,7 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -268,7 +268,7 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -377,7 +377,7 @@ public class LayoutImportController implements ImportController {
 				group.getCompanyId(), targetGroupId, parameterMap,
 				_exportImportHelper.getUserIdStrategy(
 					userId, userIdStrategyString),
-				ZipReaderFactoryUtil.getZipReader(file));
+				_zipReaderFactory.getZipReader(file));
 
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
@@ -1383,5 +1383,8 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 }

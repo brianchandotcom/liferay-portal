@@ -96,7 +96,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -479,7 +479,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			PortletDataContext portletDataContext =
 				_portletDataContextFactory.createImportPortletDataContext(
@@ -1540,6 +1540,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private volatile StagingConfiguration _stagingConfiguration;
 	private SystemEventLocalService _systemEventLocalService;
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

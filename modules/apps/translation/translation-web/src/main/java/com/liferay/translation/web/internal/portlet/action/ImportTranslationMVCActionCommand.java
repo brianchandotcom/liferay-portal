@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exception.XLIFFFileException;
@@ -379,7 +379,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
 
 			try (InputStream inputStream1 = translation.getInputStream()) {
-				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+				ZipReader zipReader = _zipReaderFactory.getZipReader(
 					inputStream1);
 
 				try {
@@ -474,6 +474,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 	private static class Translation {
 

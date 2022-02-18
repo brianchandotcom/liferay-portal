@@ -501,8 +501,66 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
 
-		return getAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetEntry);
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"assetEntryId", assetEntry.getEntryId()
+		).setParameter(
+			"cur", ParamUtil.getInteger(liferayPortletRequest, "cur")
+		).setParameter(
+			"delta",
+			() -> {
+				int delta = ParamUtil.getInteger(
+					liferayPortletRequest, "delta");
+
+				if (delta > 0) {
+					return delta;
+				}
+
+				return null;
+			}
+		).setParameter(
+			"resetCur", ParamUtil.getBoolean(liferayPortletRequest, "resetCur")
+		).buildPortletURL();
+
+		PortletURL viewFullContentURL = PortletURLBuilder.create(
+			getBaseAssetViewURL(
+				liferayPortletRequest, liferayPortletResponse, assetRenderer,
+				assetEntry)
+		).setRedirect(
+			redirectURL
+		).buildPortletURL();
+
+		String viewURL = null;
+
+		if (viewInContext) {
+			try {
+				String noSuchEntryRedirect = viewFullContentURL.toString();
+
+				viewURL = assetRenderer.getURLViewInContext(
+					liferayPortletRequest, liferayPortletResponse,
+					noSuchEntryRedirect);
+
+				if (Validator.isNotNull(viewURL) &&
+					!Objects.equals(viewURL, noSuchEntryRedirect)) {
+
+					viewURL = _http.setParameter(
+						viewURL, "redirect",
+						_portal.getCurrentURL(liferayPortletRequest));
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		if (Validator.isNull(viewURL)) {
+			viewURL = viewFullContentURL.toString();
+		}
+
+		return viewURL;
 	}
 
 	@Override

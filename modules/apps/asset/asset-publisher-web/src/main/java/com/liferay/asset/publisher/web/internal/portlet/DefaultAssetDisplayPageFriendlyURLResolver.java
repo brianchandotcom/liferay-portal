@@ -65,7 +65,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
 import java.util.List;
 import java.util.Locale;
@@ -427,7 +427,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					WorkflowConstants.STATUS_PENDING);
 
 			if ((journalArticle != null) &&
-				!WorkflowPermissionUtil.hasPermission(
+				!_workflowPermission.hasPermission(
 					permissionChecker, groupId,
 					"com.liferay.journal.model.JournalArticle",
 					journalArticle.getId(), ActionKeys.VIEW)) {
@@ -475,7 +475,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					groupId, normalizedUrlTitle,
 					WorkflowConstants.STATUS_PENDING);
 
-			if (!WorkflowPermissionUtil.hasPermission(
+			if (!_workflowPermission.hasPermission(
 					permissionChecker, groupId,
 					"com.liferay.journal.model.JournalArticle",
 					journalArticle.getId(), ActionKeys.VIEW)) {
@@ -578,5 +578,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WorkflowPermission _workflowPermission;
 
 }

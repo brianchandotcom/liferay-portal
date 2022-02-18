@@ -229,13 +229,6 @@ public interface Portal {
 		boolean doAsUser);
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void addUserLocaleOptionsMessage(
-		HttpServletRequest httpServletRequest);
-
-	/**
 	 * Clears the render parameters in the request if the portlet is in the
 	 * action phase.
 	 *
@@ -1117,13 +1110,6 @@ public interface Portal {
 
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHostnames(LayoutSet)}
-	 */
-	@Deprecated
-	public String getVirtualHostname(LayoutSet layoutSet);
 
 	public TreeMap<String, String> getVirtualHostnames(LayoutSet layoutSet);
 

@@ -148,7 +148,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
-import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -194,7 +193,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -832,38 +830,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return url;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addUserLocaleOptionsMessage(
-		HttpServletRequest httpServletRequest) {
-
-		boolean ignoreUserLocaleOptions = GetterUtil.getBoolean(
-			SessionClicks.get(
-				httpServletRequest.getSession(), "ignoreUserLocaleOptions",
-				Boolean.FALSE.toString()));
-
-		if (ignoreUserLocaleOptions) {
-			return;
-		}
-
-		boolean showUserLocaleOptionsMessage = ParamUtil.getBoolean(
-			httpServletRequest, "showUserLocaleOptionsMessage", true);
-
-		if (!showUserLocaleOptionsMessage) {
-			return;
-		}
-
-		PortalMessages.add(
-			httpServletRequest, PortalMessages.KEY_ANIMATION, false);
-		PortalMessages.add(
-			httpServletRequest, PortalMessages.KEY_JSP_PATH,
-			"/html/common/themes/user_locale_options.jsp");
-		PortalMessages.add(httpServletRequest, PortalMessages.KEY_TIMEOUT, -1);
 	}
 
 	@Override
@@ -6018,23 +5984,6 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHostnames(LayoutSet)}
-	 */
-	@Deprecated
-	@Override
-	public String getVirtualHostname(LayoutSet layoutSet) {
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
-			layoutSet);
-
-		if (virtualHostnames.isEmpty()) {
-			return layoutSet.getCompanyFallbackVirtualHostname();
-		}
-
-		return virtualHostnames.firstKey();
-	}
-
 	@Override
 	public TreeMap<String, String> getVirtualHostnames(LayoutSet layoutSet) {
 		TreeMap<String, String> virtualHostnames =
@@ -7552,30 +7501,6 @@ public class PortalImpl implements Portal {
 			layout.getGroupId(), layout.isPrivateLayout());
 
 		return LayoutLocalServiceUtil.fetchLayout(defaultPlid);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getCanonicalDomain(TreeMap, String)}
-	 */
-	@Deprecated
-	protected String getCanonicalDomain(
-		String virtualHostname, String portalDomain) {
-
-		if (Validator.isBlank(portalDomain) ||
-			StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) ||
-			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
-
-			return virtualHostname;
-		}
-
-		int pos = portalDomain.indexOf(CharPool.COLON);
-
-		if (pos == -1) {
-			return portalDomain;
-		}
-
-		return portalDomain.substring(0, pos);
 	}
 
 	protected String getCanonicalDomain(

@@ -94,9 +94,8 @@ public class DLAMImageCounterTest {
 			_getImageBytes(), null, null, serviceContext);
 
 		_portletFileRepository.addPortletFileEntry(
-			_group.getGroupId(), _user1.getUserId(),
-			BlogsEntry.class.getName(), RandomTestUtil.randomLong(),
-			BlogsConstants.SERVICE_NAME,
+			_group.getGroupId(), _user1.getUserId(), BlogsEntry.class.getName(),
+			RandomTestUtil.randomLong(), BlogsConstants.SERVICE_NAME,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _getImageBytes(),
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
 
@@ -130,9 +129,8 @@ public class DLAMImageCounterTest {
 			_getImageBytes(), null, null, serviceContext);
 
 		_portletFileRepository.addPortletFileEntry(
-			_group.getGroupId(), _user1.getUserId(),
-			BlogsEntry.class.getName(), RandomTestUtil.randomLong(),
-			BlogsConstants.SERVICE_NAME,
+			_group.getGroupId(), _user1.getUserId(), BlogsEntry.class.getName(),
+			RandomTestUtil.randomLong(), BlogsConstants.SERVICE_NAME,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _getImageBytes(),
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
 

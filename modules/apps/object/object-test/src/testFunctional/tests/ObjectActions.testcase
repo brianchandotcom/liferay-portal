@@ -175,7 +175,6 @@ definition {
 		ObjectAdmin.assertObjectActions(
 			actionActive = "No",
 			actionName = "Action Name");
-
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Name field blank"
@@ -267,12 +266,44 @@ definition {
 	}
 
 	@description = "LPS-139008 - Verify that it is possible to reactivate an Action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanReactivateAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145747 CanReactivateAction pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
+
+		CreateObject.checkToggleInactive();
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
+
+		CreateObject.checkToggleActive();
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Action Name");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to search for an Action"

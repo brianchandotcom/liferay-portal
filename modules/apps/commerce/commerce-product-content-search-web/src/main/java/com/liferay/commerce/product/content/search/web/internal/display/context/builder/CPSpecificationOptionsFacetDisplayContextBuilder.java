@@ -109,6 +109,16 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private CPSpecificationOptionsSearchFacetDisplayContext
 		_buildCPSpecificationOptionsSearchFacetDisplayContext() {
 
+		CPSpecificationOptionsFacetConfiguration
+			cpSpecificationOptionsFacetConfiguration =
+				new CPSpecificationOptionsFacetConfiguration(
+					_facet.getFacetConfiguration());
+
+		_frequencyThreshold =
+			cpSpecificationOptionsFacetConfiguration.getFrequencyThreshold();
+
+		_maxTerms = cpSpecificationOptionsFacetConfiguration.getMaxTerms();
+
 		_tuples = _getTuples(_facet.getFacetCollector());
 
 		CPSpecificationOptionsSearchFacetDisplayContext
@@ -177,18 +187,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			"cpSpecificationOptionFacetDisplayStyle", "cloud");
 
 		_frequenciesVisible = GetterUtil.getBoolean(
-			portletPreferences.getValue("frequenciesVisible", StringPool.BLANK),
-			true);
-
-		CPSpecificationOptionsFacetConfiguration
-			cpSpecificationOptionsFacetConfiguration =
-				new CPSpecificationOptionsFacetConfiguration(
-					facet.getFacetConfiguration());
-
-		_frequencyThreshold =
-			cpSpecificationOptionsFacetConfiguration.getFrequencyThreshold();
-
-		_maxTerms = cpSpecificationOptionsFacetConfiguration.getMaxTerms();
+			portletPreferences.getValue("frequenciesVisible", "true"), true);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

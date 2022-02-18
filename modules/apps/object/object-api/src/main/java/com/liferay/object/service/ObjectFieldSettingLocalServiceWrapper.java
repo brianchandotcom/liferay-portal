@@ -37,6 +37,16 @@ public class ObjectFieldSettingLocalServiceWrapper
 		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting addObjectFieldSetting(
+			long userId, long objectFieldId, String name, boolean required,
+			String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingLocalService.addObjectFieldSetting(
+			userId, objectFieldId, name, required, value);
+	}
+
 	/**
 	 * Adds the object field setting to the database. Also notifies the appropriate model listeners.
 	 *
@@ -334,6 +344,14 @@ public class ObjectFieldSettingLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectFieldSetting>
+		getObjectFieldSettings(long objectFieldId) {
+
+		return _objectFieldSettingLocalService.getObjectFieldSettings(
+			objectFieldId);
+	}
+
 	/**
 	 * Returns the number of object field settings.
 	 *
@@ -363,6 +381,15 @@ public class ObjectFieldSettingLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldSettingLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldSettingLocalService.updateObjectFieldSetting(
+			objectFieldSettingId, value);
 	}
 
 	/**

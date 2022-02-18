@@ -21,7 +21,7 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -89,11 +89,20 @@ public class CommercePaymentMethodGroupRelQualifiersDisplayContext
 		return "none";
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getCommerceOrderTypeClayDataSetActionDropdownItems()
+	public String getCommerceOrderTypeCommercePaymentMethodGroupRelsAPIURL()
 		throws PortalException {
 
-		return _getClayDataSetActionTemplates(
+		return StringBundler.concat(
+			"/o/headless-commerce-admin-channel/v1.0/payment-method-group-rels",
+			"/", getCommercePaymentMethodGroupRelId(),
+			"/payment-method-group-rel-order-types?nestedFields=orderType");
+	}
+
+	public List<FDSActionDropdownItem>
+			getCommerceOrderTypeFDSActionDropdownItems()
+		throws PortalException {
+
+		return _getFDSActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					commercePaymentMethodRequestHelper.getRequest(),
@@ -109,15 +118,6 @@ public class CommercePaymentMethodGroupRelQualifiersDisplayContext
 			false);
 	}
 
-	public String getCommerceOrderTypeCommercePaymentMethodGroupRelsAPIURL()
-		throws PortalException {
-
-		return StringBundler.concat(
-			"/o/headless-commerce-admin-channel/v1.0/payment-method-group-rels",
-			"/", getCommercePaymentMethodGroupRelId(),
-			"/payment-method-group-rel-order-types?nestedFields=orderType");
-	}
-
 	public String getCommerceTermEntriesCommercePaymentMethodGroupRelsAPIURL()
 		throws PortalException {
 
@@ -127,11 +127,11 @@ public class CommercePaymentMethodGroupRelQualifiersDisplayContext
 			"/payment-method-group-rel-terms?nestedFields=term");
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getCommerceTermEntryClayDataSetActionDropdownItems()
+	public List<FDSActionDropdownItem>
+			getCommerceTermEntryFDSActionDropdownItems()
 		throws PortalException {
 
-		return _getClayDataSetActionTemplates(
+		return _getFDSActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					commercePaymentMethodRequestHelper.getRequest(),
@@ -153,33 +153,31 @@ public class CommercePaymentMethodGroupRelQualifiersDisplayContext
 			getCommerceChannelId(), actionId);
 	}
 
-	private List<ClayDataSetActionDropdownItem> _getClayDataSetActionTemplates(
+	private List<FDSActionDropdownItem> _getFDSActionTemplates(
 		String portletURL, boolean sidePanel) {
 
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
-		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
-			new ClayDataSetActionDropdownItem(
-				portletURL, "pencil", "edit",
-				LanguageUtil.get(
-					commercePaymentMethodRequestHelper.getRequest(), "edit"),
-				"get", null, null);
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
+			portletURL, "pencil", "edit",
+			LanguageUtil.get(
+				commercePaymentMethodRequestHelper.getRequest(), "edit"),
+			"get", null, null);
 
 		if (sidePanel) {
-			clayDataSetActionDropdownItem.setTarget("sidePanel");
+			fdsActionDropdownItem.setTarget("sidePanel");
 		}
 
-		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
+		fdsActionDropdownItems.add(fdsActionDropdownItem);
 
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(
 					commercePaymentMethodRequestHelper.getRequest(), "remove"),
 				"delete", "delete", "headless"));
 
-		return clayDataSetActionDropdownItems;
+		return fdsActionDropdownItems;
 	}
 
 	private final ModelResourcePermission<CommerceChannel>

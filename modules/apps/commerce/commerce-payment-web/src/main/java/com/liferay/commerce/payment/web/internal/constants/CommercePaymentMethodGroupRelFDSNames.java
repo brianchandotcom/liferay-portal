@@ -14,15 +14,20 @@
 
 package com.liferay.commerce.payment.web.internal.constants;
 
+import com.liferay.commerce.product.constants.CPPortletKeys;
+
 /**
  * @author Riccardo Alberti
  */
-public class CommercePaymentMethodGroupRelClayDataSetDisplayNames {
+public class CommercePaymentMethodGroupRelFDSNames {
 
-	public static final String COMMERCE_DATA_SET_KEY_COMMERCE_ORDER_TYPES =
-		"commercePaymentMethodGroupRelQualifierCommerceOrderTypes";
+	public static final String ORDER_TYPES =
+		CPPortletKeys.COMMERCE_PAYMENT_METHODS + "-orderTypes";
 
-	public static final String COMMERCE_DATA_SET_KEY_COMMERCE_TERM_ENTRIES =
-		"commercePaymentMethodGroupRelQualifierCommerceTermEntries";
+	public static final String PAYMENT_RESTRICTIONS =
+		CPPortletKeys.COMMERCE_PAYMENT_METHODS + "-paymentRestrictions";
+
+	public static final String TERM_ENTRIES =
+		CPPortletKeys.COMMERCE_PAYMENT_METHODS + "-termEntries";
 
 }

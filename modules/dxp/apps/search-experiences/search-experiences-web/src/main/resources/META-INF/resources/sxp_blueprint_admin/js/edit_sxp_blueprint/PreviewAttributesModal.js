@@ -121,12 +121,14 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 					size="md"
 				>
 					<ClayModal.Header>
-						{Liferay.Language.get('attributes')}
+						{Liferay.Language.get('search-context-attributes')}
 					</ClayModal.Header>
 
 					<ClayModal.Body>
 						<p className="text-secondary">
-							{Liferay.Language.get('attributes-description')}
+							{Liferay.Language.get(
+								'search-context-attributes-description'
+							)}
 						</p>
 
 						{attributes.map((attribute, index) => (
@@ -186,13 +188,15 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 
 			<ClayTooltipProvider>
 				<ClayButton
-					aria-label={Liferay.Language.get('attributes')}
+					aria-label={Liferay.Language.get(
+						'search-context-attributes'
+					)}
 					borderless
 					displayType="secondary"
 					monospaced
 					onClick={() => setVisible(!visible)}
 					small
-					title={Liferay.Language.get('attributes')}
+					title={Liferay.Language.get('search-context-attributes')}
 				>
 					<ClayIcon symbol="cog" />
 				</ClayButton>

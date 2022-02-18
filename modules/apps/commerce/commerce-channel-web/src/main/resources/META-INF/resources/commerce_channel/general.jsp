@@ -175,14 +175,11 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "health-checks") %>'
 	>
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams="<%= contextParams %>"
-			dataProviderKey="<%= CommerceChannelHealthCheckClayTable.NAME %>"
-			id="<%= CommerceChannelHealthCheckClayTable.NAME %>"
+			dataProviderKey="<%= CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK %>"
+			id="<%= CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 			showManagementBar="<%= false %>"
 		/>
 	</commerce-ui:panel>
@@ -192,14 +189,11 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "payment-methods") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommercePaymentMethodClayTable.NAME %>"
-		id="<%= CommercePaymentMethodClayTable.NAME %>"
+		dataProviderKey="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
+		id="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 		selectedItemsKey="key"
 		showManagementBar="<%= false %>"
 	/>
@@ -209,14 +203,11 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "shipping-methods") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommerceShippingMethodClayTable.NAME %>"
-		id="<%= CommerceShippingMethodClayTable.NAME %>"
+		dataProviderKey="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
+		id="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 		selectedItemsKey="key"
 		showManagementBar="<%= false %>"
 	/>
@@ -226,14 +217,11 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "tax-calculations") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommerceTaxMethodClayTable.NAME %>"
-		id="<%= CommerceTaxMethodClayTable.NAME %>"
+		dataProviderKey="<%= CommerceChannelFDSNames.TAX_METHOD %>"
+		id="<%= CommerceChannelFDSNames.TAX_METHOD %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 		selectedItemsKey="key"
 		showManagementBar="<%= false %>"
 	/>

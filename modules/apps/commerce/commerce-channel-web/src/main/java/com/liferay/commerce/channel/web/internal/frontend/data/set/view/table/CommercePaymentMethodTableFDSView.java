@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.channel.web.internal.frontend;
+package com.liferay.commerce.channel.web.internal.frontend.data.set.view.table;
 
+import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
 import com.liferay.commerce.channel.web.internal.frontend.util.CommerceChannelClayTableUtil;
 import com.liferay.commerce.channel.web.internal.model.PaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
@@ -22,16 +23,15 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,48 +61,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommercePaymentMethodClayTable.NAME,
-		"clay.data.set.display.name=" + CommercePaymentMethodClayTable.NAME
+		"fds.data.provider.key=" + CommerceChannelFDSNames.PAYMENT_METHOD,
+		"frontend.data.set.name=" + CommerceChannelFDSNames.PAYMENT_METHOD
 	},
-	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
-		ClayDataSetDisplayView.class
-	}
+	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
 )
-public class CommercePaymentMethodClayTable
-	extends BaseTableClayDataSetDisplayView
-	implements ClayDataSetActionProvider,
-			   ClayDataSetDataProvider<PaymentMethod> {
-
-	public static final String NAME = "payment-methods";
-
-	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
-
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"description", "description");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"paymentEngine", "payment-engine");
-
-		ClayTableSchemaField statusClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
-
-		statusClayTableSchemaField.setContentRenderer("label");
-
-		return clayTableSchemaBuilder.build();
-	}
+public class CommercePaymentMethodTableFDSView
+	extends BaseTableFDSView
+	implements FDSActionProvider, FDSDataProvider<PaymentMethod> {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		return DropdownItemListBuilder.add(
@@ -135,9 +106,29 @@ public class CommercePaymentMethodClayTable
 	}
 
 	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			_fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"description", "description"
+		).add(
+			"paymentEngine", "payment-engine"
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).build();
+	}
+
+	@Override
 	public List<PaymentMethod> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -194,7 +185,7 @@ public class CommercePaymentMethodClayTable
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		Map<String, CommercePaymentMethod> commercePaymentMethodMap =
@@ -214,9 +205,6 @@ public class CommercePaymentMethodClayTable
 	}
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
@@ -225,5 +213,8 @@ public class CommercePaymentMethodClayTable
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 }

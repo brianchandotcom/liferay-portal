@@ -501,6 +501,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
 
+		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
 		PortletURL viewFullContentURL = PortletURLBuilder.create(
 			getBaseAssetViewURL(
 				liferayPortletRequest, liferayPortletResponse, assetRenderer,

@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldSettingResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
@@ -49,6 +50,8 @@ public class ServletDataImpl implements ServletData {
 			_objectDefinitionResourceComponentServiceObjects);
 		Mutation.setObjectFieldResourceComponentServiceObjects(
 			_objectFieldResourceComponentServiceObjects);
+		Mutation.setObjectFieldSettingResourceComponentServiceObjects(
+			_objectFieldSettingResourceComponentServiceObjects);
 		Mutation.setObjectLayoutResourceComponentServiceObjects(
 			_objectLayoutResourceComponentServiceObjects);
 		Mutation.setObjectRelationshipResourceComponentServiceObjects(
@@ -62,6 +65,8 @@ public class ServletDataImpl implements ServletData {
 			_objectDefinitionResourceComponentServiceObjects);
 		Query.setObjectFieldResourceComponentServiceObjects(
 			_objectFieldResourceComponentServiceObjects);
+		Query.setObjectFieldSettingResourceComponentServiceObjects(
+			_objectFieldSettingResourceComponentServiceObjects);
 		Query.setObjectLayoutResourceComponentServiceObjects(
 			_objectLayoutResourceComponentServiceObjects);
 		Query.setObjectRelationshipResourceComponentServiceObjects(
@@ -96,6 +101,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectFieldResource>
 		_objectFieldResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ObjectFieldSettingResource>
+		_objectFieldSettingResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectLayoutResource>

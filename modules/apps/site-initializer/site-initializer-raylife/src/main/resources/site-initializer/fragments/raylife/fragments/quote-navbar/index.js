@@ -22,6 +22,7 @@ const backgroundIconDisplay = ['background-icon-close', 'background-icon-grid'];
 const menuDisplay = ['show-menu', 'hidden-menu'];
 
 const pages = [
+	'congrats',
 	'hang-tight',
 	'quote-comparison',
 	'selected-quote',

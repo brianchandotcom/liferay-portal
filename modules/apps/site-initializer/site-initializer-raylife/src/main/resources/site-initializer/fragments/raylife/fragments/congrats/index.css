@@ -1,11 +1,6 @@
-.congrats {
-	text-align: center;
-}
-
 .congrats h1 {
 	color: var(--color-action-primary-default);
-	font-size: 43px;
-	font-weight: 800;
+	font-size: 43px;	
 	height: 48px;
 	margin-bottom: 34px;
 }
@@ -13,20 +8,42 @@
 .congrats h2 {
 	color: var(--color-neutral-9);
 	font-size: 21px;
-	font-weight: 800;
 	line-height: 32px;
 }
 
 .congrats h3 {
 	color: var(--color-neutral-9);
 	font-size: 21px;
-	font-weight: 500;
 	line-height: 32px;
 }
 
 .congrats h4 {
 	color: var(--color-neutral-9);
 	font-size: 16px;
-	font-weight: 500;
 	line-height: 24px;
+}
+
+.congrats-footer {
+	display: none;
+}
+	
+@media (max-width: 576px) {
+	.congrats {
+		display: none;
+	}
+	
+	.congrats-footer {
+		display: block;		
+	}
+
+	.congrats-footer h1 {
+		color: var(--color-action-primary-default);
+		font-size: 32px;
+		height: 48px;		
+	}
+
+	.congrats-footer h2 {
+		font-size: 16px;		
+		line-height: 32px;
+	}
 }

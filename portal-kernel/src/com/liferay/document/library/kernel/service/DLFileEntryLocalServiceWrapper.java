@@ -58,8 +58,8 @@ public class DLFileEntryLocalServiceWrapper
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, long, long, String, String,
-	 String, String, String, long, Map, File, InputStream, long,
-	 Date, Date, ServiceContext)}
+	 String, String, String, String, long, Map, File, InputStream,
+	 long, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -84,8 +84,8 @@ public class DLFileEntryLocalServiceWrapper
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long repositoryId, long folderId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			long fileEntryTypeId,
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog, long fileEntryTypeId,
 			java.util.Map
 				<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 					ddmFormValuesMap,
@@ -96,7 +96,7 @@ public class DLFileEntryLocalServiceWrapper
 
 		return _dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, userId, groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, description, changeLog,
+			sourceFileName, mimeType, title, urlTitle, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
@@ -1108,30 +1108,12 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 	}
 
-	@Override
-	public DLFileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			com.liferay.document.library.kernel.model.DLVersionNumberIncrease
-				dlVersionNumberIncrease,
-			long fileEntryTypeId,
-			java.util.Map
-				<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
-					ddmFormValuesMap,
-			java.io.File file, java.io.InputStream inputStream, long size,
-			java.util.Date expirationDate, java.util.Date reviewDate,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, file, inputStream, size, expirationDate,
-			reviewDate, serviceContext);
-	}
-
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, long, Map, File, InputStream, long, Date, Date, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 DLFileEntryLocalService#updateFileEntry(
+	 long, long, String, String, String, String, String, String,
+	 DLVersionNumberIncrease, long, Map, File, InputStream, long,
+	 Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1152,6 +1134,29 @@ public class DLFileEntryLocalServiceWrapper
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog,
+			com.liferay.document.library.kernel.model.DLVersionNumberIncrease
+				dlVersionNumberIncrease,
+			long fileEntryTypeId,
+			java.util.Map
+				<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+					ddmFormValuesMap,
+			java.io.File file, java.io.InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryLocalService.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
+			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	@Override

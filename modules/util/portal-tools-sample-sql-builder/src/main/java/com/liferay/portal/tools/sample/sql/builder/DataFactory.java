@@ -200,7 +200,7 @@ import com.liferay.message.boards.model.impl.MBMessageModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.social.MBActivityKeys;
-import com.liferay.normalizer.internal.NormalizerImpl;
+import com.liferay.normalizer.Normalizer;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -450,7 +450,7 @@ public class DataFactory {
 		Field field = ReflectionUtil.getDeclaredField(
 			FriendlyURLNormalizerImpl.class, "_normalizer");
 
-		field.set(_friendlyURLNormalizer, new NormalizerImpl());
+		field.set(_friendlyURLNormalizer, (Normalizer)s -> s);
 	}
 
 	public RoleModel getAdministratorRoleModel() {

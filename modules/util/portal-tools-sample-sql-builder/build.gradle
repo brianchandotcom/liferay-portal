@@ -69,7 +69,6 @@ dependencies {
 	compileInclude project(":apps:message-boards:message-boards-api")
 	compileInclude project(":apps:message-boards:message-boards-service")
 	compileInclude project(":apps:normalizer:normalizer-api")
-	compileInclude project(":apps:normalizer:normalizer-impl")
 	compileInclude project(":apps:portal-search:portal-search-web")
 	compileInclude project(":apps:portal-search:portal-search-web-api")
 	compileInclude project(":apps:portlet-display-template:portlet-display-template-api")

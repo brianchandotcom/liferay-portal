@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.frontend.constants;
+package com.liferay.commerce.product.content.web.internal.constants;
+
+import com.liferay.commerce.product.constants.CPPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPContentDataSetConstants {
+public class CPContentFDSNames {
 
-	public static final String COMMERCE_DATA_SET_KEY_REPLACEMENT_CP_INSTANCES =
-		"replacementCPInstances";
+	public static final String REPLACEMENT_CP_INSTANCES =
+		CPPortletKeys.CP_CONTENT_WEB + "-replacementCPInstances";
 
 }

@@ -61,8 +61,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		cpOptionsSearchFacetDisplayContext.setFacets(_getFacets());
 		cpOptionsSearchFacetDisplayContext.setCPOptionLocalService(
 			_cpOptionLocalService);
-		cpOptionsSearchFacetDisplayContext.setPortletSharedSearchRequest(
-			_portletSharedSearchRequest);
 		cpOptionsSearchFacetDisplayContext.setPortletSharedSearchResponse(
 			_portletSharedSearchRequest.search(_renderRequest));
 		cpOptionsSearchFacetDisplayContext.setPaginationStartParameterName(

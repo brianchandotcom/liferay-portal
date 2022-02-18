@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.subscription.web.internal.frontend;
+package com.liferay.commerce.subscription.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
+import com.liferay.commerce.subscription.web.internal.constants.CommerceSubscriptionFDSNames;
 import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -50,15 +50,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceSubscriptionFDSNames.SUBSCRIPTION_ENTRIES,
+	service = FDSActionProvider.class
 )
-public class CommerceSubscriptionEntryClayDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceSubscriptionEntryFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		SubscriptionEntry subscriptionEntry = (SubscriptionEntry)model;

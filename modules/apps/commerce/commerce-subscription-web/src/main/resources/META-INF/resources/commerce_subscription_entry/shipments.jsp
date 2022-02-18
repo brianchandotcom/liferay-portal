@@ -26,18 +26,15 @@ CommerceSubscriptionEntryDisplayContext commerceSubscriptionEntryDisplayContext 
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "items") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"commerceSubscriptionEntryId", String.valueOf(commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntryId())
 					).build()
 				%>'
-				dataProviderKey="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_SHIPMENTS %>"
-				id="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_SHIPMENTS %>"
+				dataProviderKey="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_SHIPMENTS %>"
+				id="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_SHIPMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= commerceSubscriptionEntryDisplayContext.getPortletURL() %>"
 				showManagementBar="<%= false %>"
 				style="stacked"
 			/>

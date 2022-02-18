@@ -19,6 +19,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
@@ -41,6 +42,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -59,6 +61,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ContactLocalService;
@@ -557,25 +560,78 @@ public class UserAccountResourceImpl
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
-		User user = _userService.addUser(
-			contextCompany.getCompanyId(), true, null, null, false,
-			userAccount.getAlternateName(), userAccount.getEmailAddress(),
-			contextAcceptLanguage.getPreferredLocale(),
-			userAccount.getGivenName(), userAccount.getAdditionalName(),
-			userAccount.getFamilyName(), _getPrefixId(userAccount),
-			_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
-			_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
-			userAccount.getJobTitle(), new long[0], new long[0], new long[0],
-			new long[0], _getAddresses(userAccount),
-			_getServiceBuilderEmailAddresses(userAccount),
-			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
-			Collections.emptyList(), false,
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					User.class.getName(), contextCompany.getCompanyId(),
-					userAccount.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null));
+		boolean autoPassword = false;
+		String password = userAccount.getPassword();
+
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+		}
+
+		User user;
+
+		if (contextUser.isDefaultUser()) {
+			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
+				CaptchaUtil.check(contextHttpServletRequest);
+			}
+
+			user = _userService.addUser(
+				contextCompany.getCompanyId(), autoPassword, password, password,
+				false, userAccount.getAlternateName(),
+				userAccount.getEmailAddress(),
+				contextAcceptLanguage.getPreferredLocale(),
+				userAccount.getGivenName(), userAccount.getAdditionalName(),
+				userAccount.getFamilyName(), _getPrefixId(userAccount),
+				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+				userAccount.getJobTitle(), new long[0], new long[0],
+				new long[0], new long[0], false,
+				ServiceContextRequestUtil.createServiceContext(
+					CustomFieldsUtil.toMap(
+						User.class.getName(), contextCompany.getCompanyId(),
+						userAccount.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()),
+					contextCompany.getGroupId(), contextHttpServletRequest,
+					null));
+
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			UsersAdminUtil.updateAddresses(
+				Contact.class.getName(), user.getContactId(),
+				_getAddresses(userAccount));
+			UsersAdminUtil.updateEmailAddresses(
+				Contact.class.getName(), user.getContactId(),
+				_getServiceBuilderEmailAddresses(userAccount));
+			UsersAdminUtil.updatePhones(
+				Contact.class.getName(), user.getContactId(),
+				_getServiceBuilderPhones(userAccount));
+			UsersAdminUtil.updateWebsites(
+				Contact.class.getName(), user.getContactId(),
+				_getWebsites(userAccount));
+		}
+		else {
+			user = _userService.addUser(
+				contextCompany.getCompanyId(), autoPassword, password, password,
+				false, userAccount.getAlternateName(),
+				userAccount.getEmailAddress(),
+				contextAcceptLanguage.getPreferredLocale(),
+				userAccount.getGivenName(), userAccount.getAdditionalName(),
+				userAccount.getFamilyName(), _getPrefixId(userAccount),
+				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+				userAccount.getJobTitle(), new long[0], new long[0],
+				new long[0], new long[0], _getAddresses(userAccount),
+				_getServiceBuilderEmailAddresses(userAccount),
+				_getServiceBuilderPhones(userAccount),
+				_getWebsites(userAccount), Collections.emptyList(), false,
+				ServiceContextRequestUtil.createServiceContext(
+					CustomFieldsUtil.toMap(
+						User.class.getName(), contextCompany.getCompanyId(),
+						userAccount.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()),
+					contextCompany.getGroupId(), contextHttpServletRequest,
+					null));
+		}
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -681,10 +737,18 @@ public class UserAccountResourceImpl
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
+		boolean autoPassword = false;
+		String password = userAccount.getPassword();
+
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+		}
+
 		User user = _userService.addOrUpdateUser(
 			externalReferenceCode, contextUser.getUserId(),
-			contextCompany.getCompanyId(), true, null, null, false,
-			userAccount.getAlternateName(), userAccount.getEmailAddress(),
+			contextCompany.getCompanyId(), autoPassword, password, password,
+			false, userAccount.getAlternateName(),
+			userAccount.getEmailAddress(),
 			contextAcceptLanguage.getPreferredLocale(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(userAccount),
@@ -1059,6 +1123,9 @@ public class UserAccountResourceImpl
 		_announcementsDeliveryLocalService;
 
 	@Reference
+	private CaptchaSettings _captchaSettings;
+
+	@Reference
 	private ContactLocalService _contactLocalService;
 
 	@Reference
@@ -1072,6 +1139,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private UserAccountResourceDTOConverter _userAccountResourceDTOConverter;

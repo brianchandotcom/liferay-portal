@@ -887,6 +887,11 @@ components:
                         $ref: "#/components/schemas/OrganizationBrief"
                     readOnly: true
                     type: array
+                password:
+                    description:
+                        The user's password.
+                    type: string
+                    writeOnly: true
                 profileURL:
                     description:
                         A relative URL to the user's profile.
@@ -3572,6 +3577,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
     "/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteUserAccountByExternalReferenceCode
@@ -3630,6 +3636,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
         delete:
             # @review
@@ -3702,6 +3709,7 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description:
                         "UserAccount successfully updated"
+            tags: ["UserAccount"]
         put:
             # @review
             description:
@@ -3734,6 +3742,7 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description:
                         "UserAccount successfully updated"
+            tags: ["UserAccount"]
     "/user-accounts/{userAccountId}/email-addresses":
         get:
             description:

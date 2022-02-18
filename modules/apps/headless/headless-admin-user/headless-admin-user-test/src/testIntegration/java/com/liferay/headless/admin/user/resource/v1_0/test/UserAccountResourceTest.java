@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -59,7 +60,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
@@ -568,6 +571,29 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testPostUserAccount() throws Exception {
+		UserAccount userAccount = randomUserAccount();
+
+		String password = RandomTestUtil.randomString();
+
+		userAccount.setPassword(password);
+
+		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			userAccount);
+
+		assertEquals(userAccount, postUserAccount);
+		assertValid(postUserAccount);
+
+		Assert.assertEquals(
+			Authenticator.SUCCESS,
+			_userLocalService.authenticateByEmailAddress(
+				testCompany.getCompanyId(), postUserAccount.getEmailAddress(),
+				password, Collections.emptyMap(), Collections.emptyMap(),
+				new HashMap<>()));
 	}
 
 	@Override

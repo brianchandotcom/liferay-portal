@@ -690,6 +690,34 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrganizationBrief[] organizationBriefs;
 
+	@Schema(description = "The user's password.")
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@JsonIgnore
+	public void setPassword(
+		UnsafeSupplier<String, Exception> passwordUnsafeSupplier) {
+
+		try {
+			password = passwordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's password.")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected String password;
+
 	@Schema(description = "A relative URL to the user's profile.")
 	public String getProfileURL() {
 		return profileURL;
@@ -1165,6 +1193,20 @@ public class UserAccount implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (password != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(password));
+
+			sb.append("\"");
 		}
 
 		if (profileURL != null) {

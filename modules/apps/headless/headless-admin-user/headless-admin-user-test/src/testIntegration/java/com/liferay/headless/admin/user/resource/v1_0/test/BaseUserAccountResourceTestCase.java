@@ -198,6 +198,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setImage(regex);
 		userAccount.setJobTitle(regex);
 		userAccount.setName(regex);
+		userAccount.setPassword(regex);
 		userAccount.setProfileURL(regex);
 
 		String json = UserAccountSerDes.toJSON(userAccount);
@@ -218,6 +219,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getImage());
 		Assert.assertEquals(regex, userAccount.getJobTitle());
 		Assert.assertEquals(regex, userAccount.getName());
+		Assert.assertEquals(regex, userAccount.getPassword());
 		Assert.assertEquals(regex, userAccount.getProfileURL());
 	}
 
@@ -2679,6 +2681,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("password", additionalAssertFieldName)) {
+				if (userAccount.getPassword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (userAccount.getProfileURL() == null) {
 					valid = false;
@@ -3043,6 +3053,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getOrganizationBriefs(),
 						userAccount2.getOrganizationBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("password", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getPassword(),
+						userAccount2.getPassword())) {
 
 					return false;
 				}
@@ -3449,6 +3470,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("password")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getPassword()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("profileURL")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getProfileURL()));
@@ -3544,6 +3573,8 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				lastLoginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				password = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				profileURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

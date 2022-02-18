@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -106,11 +105,6 @@ public class CommercePricingTest {
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
 				_user.getUserId());
-
-		_commerceAccountGroup =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				"", ServiceContextTestUtil.getServiceContext());
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
@@ -1296,7 +1290,6 @@ public class CommercePricingTest {
 	private static User _user;
 
 	private CommerceAccount _commerceAccount;
-	private CommerceAccountGroup _commerceAccountGroup;
 
 	@Inject
 	private CommerceAccountGroupCommerceAccountRelLocalService

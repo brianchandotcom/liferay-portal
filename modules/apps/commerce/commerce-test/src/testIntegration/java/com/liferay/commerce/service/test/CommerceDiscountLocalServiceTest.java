@@ -28,7 +28,6 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -114,10 +113,6 @@ public class CommerceDiscountLocalServiceTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
-
-		_commercePricingConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				CommercePricingConfiguration.class);
 	}
 
 	@After
@@ -857,7 +852,6 @@ public class CommerceDiscountLocalServiceTest {
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	private final List<CommerceOrder> _commerceOrders = new ArrayList<>();
-	private CommercePricingConfiguration _commercePricingConfiguration;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

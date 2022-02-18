@@ -17,7 +17,6 @@ package com.liferay.commerce.order.importer.type.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
@@ -37,7 +36,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
-import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -127,10 +125,6 @@ public class CommerceOrderImporterTypeTest {
 			_group.getGroupId(), _user.getUserId(),
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
-
-		_commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group,
-			_commerceOrder.getCommerceAccount(), _commerceOrder);
 	}
 
 	@After
@@ -270,8 +264,6 @@ public class CommerceOrderImporterTypeTest {
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
-
-	private CommerceContext _commerceContext;
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;

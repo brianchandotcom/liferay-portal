@@ -56,7 +56,7 @@ portletDisplay.setURLBack(redirect);
 
 		<hr class="mt-0" />
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceOrderItemId", String.valueOf(commerceOrderItem.getCommerceOrderItemId())
@@ -66,9 +66,9 @@ portletDisplay.setURLBack(redirect);
 					"commerceShipmentItemId", String.valueOf(commerceShipmentItem.getCommerceShipmentItemId())
 				).build()
 			%>'
-			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM %>"
+			dataProviderKey="<%= CommerceShipmentFDSNames.INVENTORY_WAREHOUSE_ITEM %>"
 			formId="fm"
-			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM %>"
+			id="<%= CommerceShipmentFDSNames.INVENTORY_WAREHOUSE_ITEM %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

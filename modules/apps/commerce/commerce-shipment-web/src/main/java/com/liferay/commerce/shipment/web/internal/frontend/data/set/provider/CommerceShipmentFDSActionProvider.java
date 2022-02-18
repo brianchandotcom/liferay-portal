@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend;
+package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.model.ShipmentItem;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.frontend.model.Shipment;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -44,40 +46,50 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alec Sloan
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPED_SHIPMENT_ITEMS,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceShipmentFDSNames.SHIPMENTS,
+	service = FDSActionProvider.class
 )
-public class ShippedCommerceShipmentItemDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceShipmentFDSActionProvider implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
+
+		Shipment shipment = (Shipment)model;
 
 		return DropdownItemListBuilder.add(
 			() -> _portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
 			dropdownItem -> {
-				ShipmentItem shipmentItem = (ShipmentItem)model;
-
 				dropdownItem.setHref(
-					_getShipmentItemDeleteURL(
-						shipmentItem.getShipmentItemId(), httpServletRequest));
-
+					_getShipmentEditURL(
+						shipment.getShipmentId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).add(
+			() -> _portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
+				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getShipmentDeleteURL(
+						shipment.getShipmentId(), httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("modal");
 			}
 		).build();
 	}
 
-	private String _getShipmentItemDeleteURL(
-		long commerceShipmentItemId, HttpServletRequest httpServletRequest) {
+	private String _getShipmentDeleteURL(
+		long commerceShipmentId, HttpServletRequest httpServletRequest) {
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
@@ -88,7 +100,7 @@ public class ShippedCommerceShipmentItemDataSetActionProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentItemId", commerceShipmentItemId
+			"commerceShipmentId", commerceShipmentId
 		).buildPortletURL();
 
 		try {
@@ -101,8 +113,33 @@ public class ShippedCommerceShipmentItemDataSetActionProvider
 		return portletURL.toString();
 	}
 
+	private String _getShipmentEditURL(
+		long commerceShipmentId, HttpServletRequest httpServletRequest) {
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("backURL", portletURL.toString());
+
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/commerce_shipment/edit_commerce_shipment");
+
+		String redirect = ParamUtil.getString(
+			httpServletRequest, "currentUrl",
+			_portal.getCurrentURL(httpServletRequest));
+
+		portletURL.setParameter("redirect", redirect);
+
+		portletURL.setParameter(
+			"commerceShipmentId", String.valueOf(commerceShipmentId));
+
+		return portletURL.toString();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		ShippedCommerceShipmentItemDataSetActionProvider.class);
+		CommerceShipmentFDSActionProvider.class);
 
 	@Reference
 	private Portal _portal;

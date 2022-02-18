@@ -34,16 +34,16 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			bulkActionDropdownItems="<%= commerceShipmentDisplayContext.getShipmentItemBulkActions() %>"
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
 				).build()
 			%>'
-			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
+			dataProviderKey="<%= CommerceShipmentFDSNames.SHIPPABLE_ORDER_ITEMS %>"
 			formName="fm"
-			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
+			id="<%= CommerceShipmentFDSNames.SHIPPABLE_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

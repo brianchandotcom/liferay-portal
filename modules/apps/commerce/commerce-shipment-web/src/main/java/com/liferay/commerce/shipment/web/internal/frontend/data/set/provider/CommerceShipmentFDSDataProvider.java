@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend;
+package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
@@ -21,7 +21,7 @@ import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
-import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
+import com.liferay.commerce.constants.CommerceShipmentFDSNames;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.frontend.model.Shipment;
 import com.liferay.commerce.model.CommerceAddress;
@@ -32,9 +32,9 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -67,16 +67,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceShipmentFDSNames.SHIPMENTS,
+	service = FDSDataProvider.class
 )
-public class CommerceShipmentDataSetDataProvider
-	implements ClayDataSetDataProvider<Shipment> {
+public class CommerceShipmentFDSDataProvider
+	implements FDSDataProvider<Shipment> {
 
 	@Override
 	public List<Shipment> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Shipment> shipments = new ArrayList<>();
@@ -92,8 +92,8 @@ public class CommerceShipmentDataSetDataProvider
 		if (commerceOrder != null) {
 			commerceShipments =
 				_commerceShipmentService.getCommerceShipmentsByOrderId(
-					commerceOrderId, pagination.getStartPosition(),
-					pagination.getEndPosition());
+					commerceOrderId, fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition());
 		}
 		else {
 			long companyId = _portal.getCompanyId(httpServletRequest);
@@ -101,8 +101,9 @@ public class CommerceShipmentDataSetDataProvider
 			commerceShipments = _commerceShipmentService.getCommerceShipments(
 				companyId, _getCommerceChannelGroupIds(companyId),
 				_getCommerceAccountIds(_portal.getUserId(httpServletRequest)),
-				filter.getKeywords(), null, false,
-				pagination.getStartPosition(), pagination.getEndPosition());
+				fdsKeywords.getKeywords(), null, false,
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 		}
 
 		User user = _portal.getUser(httpServletRequest);
@@ -157,7 +158,7 @@ public class CommerceShipmentDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -176,7 +177,7 @@ public class CommerceShipmentDataSetDataProvider
 		return _commerceShipmentService.getCommerceShipmentsCount(
 			companyId, _getCommerceChannelGroupIds(companyId),
 			_getCommerceAccountIds(_portal.getUserId(httpServletRequest)),
-			filter.getKeywords(), null, false);
+			fdsKeywords.getKeywords(), null, false);
 	}
 
 	private long[] _getCommerceAccountIds(long userId) throws PortalException {

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend;
+package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
+import com.liferay.commerce.constants.CommerceShipmentFDSNames;
 import com.liferay.commerce.frontend.model.ShipmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
@@ -22,9 +22,9 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -43,16 +43,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENT_ITEMS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceShipmentFDSNames.SHIPMENT_ITEMS,
+	service = FDSDataProvider.class
 )
-public class CommerceShipmentItemDataSetDataProvider
-	implements ClayDataSetDataProvider<ShipmentItem> {
+public class CommerceShipmentItemFDSDataProvider
+	implements FDSDataProvider<ShipmentItem> {
 
 	@Override
 	public List<ShipmentItem> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<ShipmentItem> shipmentItems = new ArrayList<>();
@@ -62,8 +62,8 @@ public class CommerceShipmentItemDataSetDataProvider
 
 		List<CommerceShipmentItem> commerceShipmentItems =
 			_commerceShipmentItemService.getCommerceShipmentItems(
-				commerceShipmentId, pagination.getStartPosition(),
-				pagination.getEndPosition(), null);
+				commerceShipmentId, fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), null);
 
 		for (CommerceShipmentItem commerceShipmentItem :
 				commerceShipmentItems) {
@@ -102,7 +102,7 @@ public class CommerceShipmentItemDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(

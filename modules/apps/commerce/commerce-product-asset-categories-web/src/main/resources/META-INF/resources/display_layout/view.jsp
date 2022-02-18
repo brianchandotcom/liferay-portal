@@ -79,18 +79,15 @@ if (selLayout != null) {
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "override-default-category-display-page") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceChannelId", String.valueOf(categoryCPDisplayLayoutDisplayContext.getCommerceChannelId())
 			).build()
 		%>'
 		creationMenu="<%= categoryCPDisplayLayoutDisplayContext.getCreationMenu() %>"
-		dataProviderKey="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
-		id="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
+		dataProviderKey="<%= CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES %>"
+		id="<%= CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= categoryCPDisplayLayoutDisplayContext.getPortletURL() %>"
 	/>
 </commerce-ui:panel>

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.asset.categories.web.internal.portlet.actio
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -47,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"javax.portlet.name=" + CommerceProductAssetCategoriesPortletKeys.ASSET_CATEGORIES_ADMIN,
 		"mvc.command.name=/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry"
 	},
 	service = MVCActionCommand.class

@@ -270,19 +270,29 @@ definition {
 	test IndividualsUpdatesInRealTime {
 		property portal.acceptance = "true";
 
-		ACUtils.addSiteAndPage();
+		var usernameList = "user1,user2,user3";
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Add a new site and widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
-		ACUtils.launchAC();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACSettings.goToUsage();
+		tas ("Go to settings and get the individuals number") {
+			ACNavigation.goToSettings();
 
-		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+			ACSettings.goToUsage();
+
+			var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+		}
 
 		task ("Add 3 new users and sync the Contact Data") {
 			ACUtils.launchDXP();
@@ -309,15 +319,17 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		ACUtils.launchAC();
+		task ("Go to AC and check that the number of individuals has changed") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToUsage();
+			ACSettings.goToUsage();
 
 			ACSettings.assertOverviewUsage(
 				notEquals = "${currentIndividuals}",
 				metricName = "Individuals");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."

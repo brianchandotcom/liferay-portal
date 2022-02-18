@@ -15,6 +15,7 @@
 package com.liferay.oauth.web.internal.security.auth;
 
 import com.liferay.oauth.constants.OAuthApplicationConstants;
+import com.liferay.oauth.exception.OAuthException;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
@@ -26,7 +27,6 @@ import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.oauth.web.internal.service.access.policy.OAuthSAPEntryActivator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;

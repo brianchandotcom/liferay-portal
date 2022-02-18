@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.util;
 
-import com.liferay.portal.kernel.oauth.OAuthException;
+import com.liferay.oauth.exception.OAuthException;
 
 /**
  * @author Ivica Cardic

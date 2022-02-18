@@ -16,6 +16,7 @@ package com.liferay.oauth.internal;
 
 import com.liferay.oauth.configuration.OAuthConfigurationValues;
 import com.liferay.oauth.constants.OAuthAccessorConstants;
+import com.liferay.oauth.exception.OAuthException;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
-import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;

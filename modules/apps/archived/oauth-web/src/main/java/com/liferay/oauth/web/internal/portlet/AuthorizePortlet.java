@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.web.internal.portlet;
 
+import com.liferay.oauth.exception.OAuthException;
 import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthConsumer;
@@ -21,7 +22,6 @@ import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthWebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;

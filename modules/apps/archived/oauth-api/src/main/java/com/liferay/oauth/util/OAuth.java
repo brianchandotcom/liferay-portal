@@ -14,8 +14,8 @@
 
 package com.liferay.oauth.util;
 
+import com.liferay.oauth.exception.OAuthException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.OutputStream;

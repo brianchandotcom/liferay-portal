@@ -682,8 +682,6 @@ definition {
 		ObjectAdmin.viewObjectPresentOnSite(
 			category = "Content & Data",
 			portlet = "Custom Objects");
-
-			
 	}
 
 	@description = "LPS-135396 - Verify it is possible to cancel the submition of an entry"

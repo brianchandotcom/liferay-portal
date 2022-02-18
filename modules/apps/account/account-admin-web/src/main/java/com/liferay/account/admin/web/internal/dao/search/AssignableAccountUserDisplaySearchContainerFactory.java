@@ -21,8 +21,6 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -114,31 +111,10 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAccountEntryUserRelLocalService(
-		AccountEntryUserRelLocalService accountEntryUserRelLocalService) {
-
-		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountRoleLocalService(
-		AccountRoleLocalService accountRoleLocalService) {
-
-		_accountRoleLocalService = accountRoleLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setAccountUserRetriever(
 		AccountUserRetriever accountUserRetriever) {
 
 		_accountUserRetriever = accountUserRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-
-		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
 	private static String _getDefaultNavigation(
@@ -191,10 +167,6 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		AssignableAccountUserDisplaySearchContainerFactory.class);
 
 	private static AccountEntryLocalService _accountEntryLocalService;
-	private static AccountEntryUserRelLocalService
-		_accountEntryUserRelLocalService;
-	private static AccountRoleLocalService _accountRoleLocalService;
 	private static AccountUserRetriever _accountUserRetriever;
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

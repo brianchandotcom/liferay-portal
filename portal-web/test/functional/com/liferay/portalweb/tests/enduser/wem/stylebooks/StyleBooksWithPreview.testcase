@@ -204,14 +204,22 @@ definition {
 				styleBookEntryName = "Test Style Book Name");
 		}
 
-		task ("View the empty state in style book editor") {
+		task ("View only the Fragments is available to the preview type selector") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
 				styleBookName = "Test Style Book Name");
 
-			AssertVisible(locator1 = "StyleBookEditor#NO_PAGE_MESSAGE");
+			StyleBooks.viewCurrentPreviewType(previewType = "Fragments");
+
+			Click(
+				index = "1",
+				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+
+			for (var previewType : list "Masters,Pages,Page Templates,Display Page Templates") {
+				MenuItem.viewNotPresent(menuItem = "${previewType}");
+			}
 		}
 
 		task ("Publish the master page") {
@@ -1235,9 +1243,26 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when no pages or page templates in the site."
+	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when the site is empty."
 	@priority = "4"
-	test ViewEmptyStateWhenNoPagesAndPageTemplatesInSite {
+	test ViewEmptyStateWhenSiteIsEmpty {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "StyleBooksWithPreview#ViewEmptyStateWhenSiteIsEmpty";
+
+		task ("Deactivate the Default fragment sets") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "App Manager");
+
+			for (var collectionName : list "Basic Component,Cookie Banner,Dialect,Featured Content,Footers,Navigation Bars") {
+				Search.searchCP(searchTerm = "Fragment Collection Contributor");
+
+				AppManager.deactivateApp(appName = "Liferay Fragment Collection Contributor ${collectionName}");
+			}
+		}
+
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
@@ -1247,7 +1272,7 @@ definition {
 		task ("View the empty state in style book editor") {
 			AssertElementNotPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
 
-			AssertVisible(locator1 = "StyleBookEditor#NO_PAGE_MESSAGE");
+			AssertVisible(locator1 = "StyleBookEditor#EMPTY_MESSAGE");
 
 			AssertElementNotPresent(
 				index = "1",

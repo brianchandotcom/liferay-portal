@@ -43,13 +43,15 @@ public class ObjectFieldLocalServiceWrapper
 			String businessType, String dbType, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required)
+			boolean required,
+			java.util.List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addCustomObjectField(
 			userId, listTypeDefinitionId, objectDefinitionId, businessType,
 			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			name, required);
+			name, required, objectFieldSettings);
 	}
 
 	/**
@@ -447,12 +449,15 @@ public class ObjectFieldLocalServiceWrapper
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required)
+			boolean required,
+			java.util.List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.updateCustomObjectField(
 			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required);
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			objectFieldSettings);
 	}
 
 	/**

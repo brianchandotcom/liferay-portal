@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,13 +44,15 @@ public class ObjectFieldServiceUtil {
 			String businessType, String dbType, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
-			boolean required)
+			boolean required,
+			List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
 			listTypeDefinitionId, objectDefinitionId, businessType, dbType,
 			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required);
+			required, objectFieldSettings);
 	}
 
 	public static ObjectField deleteObjectField(long objectFieldId)
@@ -77,12 +80,15 @@ public class ObjectFieldServiceUtil {
 			long objectFieldId, long listTypeDefinitionId, String businessType,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required)
+			String name, boolean required,
+			List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
 			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required);
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			objectFieldSettings);
 	}
 
 	public static ObjectFieldService getService() {

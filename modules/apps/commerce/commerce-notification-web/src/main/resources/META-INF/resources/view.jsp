@@ -17,28 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-queue-entries");
-
 CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesDisplayContext = (CommerceNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId())
 		).build()
 	%>'
-	dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
-	id="<%= CommerceNotificationEntryClayTable.NAME %>"
+	dataProviderKey="<%= CommerceNotificationFDSNames.NOTIFICATION_ENTRIES %>"
+	id="<%= CommerceNotificationFDSNames.NOTIFICATION_ENTRIES %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL='<%=
-		PortletURLBuilder.create(
-			commerceNotificationQueueEntriesDisplayContext.getPortletURL()
-		).setParameter(
-			"notificationNavigationItem", notificationNavigationItem
-		).buildPortletURL()
-	%>'
 	showManagementBar="<%= false %>"
 />

@@ -24,5 +24,5 @@ com/liferay/commerce/product/display/context/BaseCPDefinitionsDisplayContext.get
 com/liferay/commerce/product/model/CPDefinition.getDefaultImageThumbnailSrc()Ljava/lang/String;:SAFE
 com/liferay/commerce/product/model/CPDefinition.getDescription(Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/commerce/product/model/CommerceCatalog.getCatalogDefaultLanguageId()Ljava/lang/String;:SAFE
-com/liferay/frontend/taglib/clay/data/set/servlet/taglib/util/ClayDataSetActionDropdownItem.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V:0,1,2,3,4,5,6#7,8
+com/liferay/frontend/data/set/model/FDSActionDropdownItem.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V:0,1,2,3,4,5,6#7,8
 com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setContextParams(Ljava/util/Map;)V:0#0

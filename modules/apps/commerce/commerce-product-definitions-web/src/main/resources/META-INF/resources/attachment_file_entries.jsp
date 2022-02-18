@@ -36,16 +36,13 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "images") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams="<%= contextParams %>"
 				creationMenu="<%= cpAttachmentFileEntriesDisplayContext.getCreationMenu(CPAttachmentFileEntryConstants.TYPE_IMAGE) %>"
-				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES %>"
+				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_IMAGES %>"
 				formName="fm"
-				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES %>"
+				id="<%= CommerceProductFDSNames.PRODUCT_IMAGES %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= portletURL %>"
 				selectedItemsKey="cpattachmentFileEntryId"
 			/>
 		</commerce-ui:panel>
@@ -54,16 +51,13 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "attachments") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams="<%= contextParams %>"
 				creationMenu="<%= cpAttachmentFileEntriesDisplayContext.getCreationMenu(CPAttachmentFileEntryConstants.TYPE_OTHER) %>"
-				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ATTACHMENTS %>"
+				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_ATTACHMENTS %>"
 				formName="fm"
-				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ATTACHMENTS %>"
+				id="<%= CommerceProductFDSNames.PRODUCT_ATTACHMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= portletURL %>"
 				selectedItemsKey="cpattachmentFileEntryId"
 			/>
 		</commerce-ui:panel>

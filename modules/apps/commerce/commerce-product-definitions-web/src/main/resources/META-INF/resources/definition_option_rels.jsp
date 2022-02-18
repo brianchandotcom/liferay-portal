@@ -63,8 +63,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 					})
 					.then((e) => {
 						Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-							id:
-								'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>',
+							id: '<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>',
 						});
 						return null;
 					});
@@ -116,9 +115,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				itemCreatedMessage: '<%= LanguageUtil.get(request, "option-created") %>',
 				itemSelectedMessage: '<%= LanguageUtil.get(request, "option-selected") %>',
 				itemsKey: 'id',
-				linkedDatasetsId: [
-					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>',
-				],
+				linkedDatasetsId: ['<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>'],
 				multiSelectableEntries: true,
 				onItemCreated: addNewItem,
 				onItemSelected: selectItem,
@@ -141,18 +138,15 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			title='<%= LanguageUtil.get(request, "options") %>'
 		>
 			<aui:form action="<%= cpDefinitionOptionRelDisplayContext.getPortletURL() %>" method="post" name="fm">
-				<clay:data-set-display
+				<frontend-data-set:classic-display
 					contextParams='<%=
 						HashMapBuilder.<String, String>put(
 							"cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId())
 						).build()
 					%>'
-					dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
-					id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
+					dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>"
+					id="<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= currentURLObj %>"
 					selectedItemsKey="cpdefinitionOptionRelId"
 				/>
 			</aui:form>

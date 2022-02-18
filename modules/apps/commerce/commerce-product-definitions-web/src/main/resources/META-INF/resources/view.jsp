@@ -32,17 +32,14 @@ request.setAttribute("view.jsp-portletURL", cpDefinitionsDisplayContext.getPortl
 		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog"
 			bulkActionDropdownItems="<%= cpDefinitionsDisplayContext.getBulkActionDropdownItems() %>"
-			clayDataSetActionDropdownItems="<%= cpDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= cpDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS %>"
+			id="<%= CommerceProductFDSNames.PRODUCT_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

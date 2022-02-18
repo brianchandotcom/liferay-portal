@@ -22,17 +22,14 @@ CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDi
 CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatalog();
 %>
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceCatalogId", String.valueOf(commerceCatalog.getCommerceCatalogId())
 		).build()
 	%>'
-	dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS %>"
-	id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS %>"
+	dataProviderKey="<%= CommerceCatalogFDSNames.CATALOG_CHANNELS %>"
+	id="<%= CommerceCatalogFDSNames.CATALOG_CHANNELS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= currentURLObj %>"
 	style="stacked"
 />

@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.frontend.constants;
+package com.liferay.commerce.catalog.web.internal.constants;
+
+import com.liferay.commerce.product.constants.CPPortletKeys;
 
 /**
  * @author Gianmarco Brunialti Masera
  */
-public class CommerceCatalogDataSetConstants {
+public class CommerceCatalogFDSNames {
 
-	public static final String COMMERCE_DATA_SET_KEY_CATALOG_ACCOUNT_GROUPS =
-		"commerceCatalogAccountGroups";
+	public static final String CATALOG_ACCOUNT_GROUPS =
+		CPPortletKeys.COMMERCE_CATALOGS + "-catalogAccountGroups";
 
-	public static final String COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS =
-		"commerceCatalogChannels";
+	public static final String CATALOG_CHANNELS =
+		CPPortletKeys.COMMERCE_CATALOGS + "-catalogChannels";
 
-	public static final String COMMERCE_DATA_SET_KEY_CATALOGS =
-		"commerceCatalogs";
+	public static final String CATALOGS =
+		CPPortletKeys.COMMERCE_CATALOGS + "-catalogs";
 
 }

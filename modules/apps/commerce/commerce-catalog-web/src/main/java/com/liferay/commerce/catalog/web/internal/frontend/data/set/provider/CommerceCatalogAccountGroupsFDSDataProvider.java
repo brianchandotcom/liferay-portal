@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.frontend;
+package com.liferay.commerce.catalog.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.catalog.web.internal.frontend.constants.CommerceCatalogDataSetConstants;
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogFDSNames;
 import com.liferay.commerce.catalog.web.internal.model.AccountGroup;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,16 +41,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_ACCOUNT_GROUPS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceCatalogFDSNames.CATALOG_ACCOUNT_GROUPS,
+	service = FDSDataProvider.class
 )
-public class CommerceCatalogAccountGroupsDataSetDataProvider
-	implements ClayDataSetDataProvider<AccountGroup> {
+public class CommerceCatalogAccountGroupsFDSDataProvider
+	implements FDSDataProvider<AccountGroup> {
 
 	@Override
 	public List<AccountGroup> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<AccountGroup> accountGroups = new ArrayList<>();
@@ -61,8 +61,8 @@ public class CommerceCatalogAccountGroupsDataSetDataProvider
 		List<CommerceAccountGroupRel> commerceAccountGroups =
 			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
 				CommerceCatalog.class.getName(), commerceCatalogId,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), null);
 
 		for (CommerceAccountGroupRel commerceAccountGroupRel :
 				commerceAccountGroups) {
@@ -79,7 +79,7 @@ public class CommerceCatalogAccountGroupsDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceCatalogId = ParamUtil.getLong(

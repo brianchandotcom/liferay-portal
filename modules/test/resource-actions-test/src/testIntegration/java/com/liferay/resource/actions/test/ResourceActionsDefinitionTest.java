@@ -35,6 +35,7 @@ import java.net.URL;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.portlet.Portlet;
@@ -71,6 +72,12 @@ public class ResourceActionsDefinitionTest {
 		StringBundler sb = new StringBundler();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
+			Dictionary<String, String> headers = bundle.getHeaders("");
+
+			if (Objects.equals("parent", headers.get("Eclipse-BuddyPolicy"))) {
+				continue;
+			}
+
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 			ClassLoader bundleClassLoader = bundleWiring.getClassLoader();

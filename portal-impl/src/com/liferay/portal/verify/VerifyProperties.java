@@ -1745,7 +1745,7 @@ public class VerifyProperties extends VerifyProcess {
 		"jpa.provider", "jpa.provider.property.eclipselink.allow-zero-id",
 		"jpa.provider.property.eclipselink.logging.level",
 		"jpa.provider.property.eclipselink.logging.timestamp",
-		"language.display.style.options",
+		"language.display.style.options", "layout.comments.enabled",
 		"layout.configuration.action.update[embedded]",
 		"layout.configuration.action.update[link_to_layout]",
 		"layout.configuration.action.update[url]",

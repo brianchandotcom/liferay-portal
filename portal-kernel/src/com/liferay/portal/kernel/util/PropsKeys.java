@@ -1470,9 +1470,6 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_CLONE_IMPL = "layout.clone.impl";
 
-	public static final String LAYOUT_COMMENTS_ENABLED =
-		"layout.comments.enabled";
-
 	public static final String LAYOUT_CONFIGURATION_ACTION_DELETE =
 		"layout.configuration.action.delete";
 

@@ -290,6 +290,13 @@ definition {
 				locator1 = "ACUsage#USAGE_SINCE",
 				value1 = "${usageSince}");
 		}
+
+		if (isSet(notEquals)) {
+			AssertTextNotEquals(
+				key_metricName = "${metricName}",
+				locator1 = "ACUsage#USAGE_CURRENT_NUMBER",
+				value1 = "${notEquals}");
+		}
 	}
 
 	@summary = "Asserts the page views usage value \  @param pageViewsUsageValue"

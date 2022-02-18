@@ -11,19 +11,19 @@
 
 <tbody>
 <tr>
-    <td>BUTTON_YES_FEIN_PHONE</td>
-    <td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'Yes')]</td>
-    <td></td>
+	<td>BUTTON_YES_FEIN_PHONE</td>
+	<td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'Yes')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_NO_FEIN_PHONE</td>
-    <td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'Yes')]</td>
-    <td></td>
+	<td>BUTTON_NO_FEIN_PHONE</td>
+	<td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'Yes')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MOBILE_TITLE</td>
-    <td>//h2[contains(., '${title}')]</td>
-    <td></td>
+	<td>MOBILE_TITLE</td>
+	<td>//h2[contains(., '${title}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

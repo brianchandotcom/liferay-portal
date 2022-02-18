@@ -1,76 +1,73 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        
-        else {
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-            User.logoutPG();
-        }
-    }
+	@description = "Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
+	@priority = "5"
+	test IfContinueFromPropertyGoToLoadingPageTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-    @description = "LPS-146121 - Verify Loading Page redirects automatically to Quote Profile Page. (SmartPhone)"
-    @priority = "4"
-    test IfRedirectsToQuoteProfilePagePhone {
+		SetWindowSize(value1 = "800,1024");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeHomePage.startFlow();
 
-        SetWindowSize(value1 = "360,720");
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.formsFlowPhone();
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        AssertElementPresent(
-            locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
-            userName = "FirstName");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    }
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-    @description = "Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
-    @priority = "5"
-    test IfContinueFromPropertyGoToLoadingPageTablet {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        SetWindowSize(value1 = "800,1024");
+		RaylifeProperty.typeAllPropertyInfoFields();
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-146121 - Verify Loading Page redirects automatically to Quote Profile Page. (SmartPhone)"
+	@priority = "4"
+	test IfRedirectsToQuoteProfilePagePhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		RaylifeMobile.formsFlowPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(
+			locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
+			userName = "FirstName");
+	}
 
-        RaylifeProperty.typeAllPropertyInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
-    }
 }

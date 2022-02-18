@@ -1,175 +1,175 @@
 definition {
 
-    macro typeAllBasicsInfoFieldsPhone {
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.firstName",
-            value = "FirstName");
+	macro formsFlowPhone {
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.lastName",
-            value = "LastName");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.business.email",
-            value = "test@liferay.com");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.business.phone",
-            value = "(000) 000-0000");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	}
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.business.location.address",
-            value = "Address");
+	macro typeAllBasicsInfoFieldsPhone {
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.firstName",
+			value = "FirstName");
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.business.location.city",
-            value = "City");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.lastName",
+			value = "LastName");
 
-        RaylifeContactInfo.typeBasicsInfoFields(
-            label = "basics.businessInformation.business.location.zip",
-            value = "12345");
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    macro typeAllBusinessInfoFieldsPhone {
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.email",
+			value = "test@liferay.com");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.phone",
+			value = "(000) 000-0000");
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
-        
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.address",
+			value = "Address");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.salesMerchandise",
-            value = "3%");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.city",
+			value = "City");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.zip",
+			value = "12345");
+	}
 
-        Click(
-            field = "Do you sell products under your own brand or label?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+	macro typeAllBusinessInfoFieldsPhone {
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.overallSales",
-            value = "3%");
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    macro typeAllEmployeesInfoFieldsPhone {
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.salesMerchandise",
+			value = "3%");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.partTimeEmployees",
-            value = "200");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you sell products under your own brand or label?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.estimatedAnnualGrossRevenue",
-            value = "$111.00");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.overallSales",
+			value = "3%");
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	macro typeAllEmployeesInfoFieldsPhone {
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.annualPayrollForOwner",
-            value = "$111.00");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.annualPayrollForEmployees",
-            value = "$111.00");
-    }
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-    macro typeAllPropertyInfoFieldsPhone {
-        Click(
-            field = "Do you own the building at Address?",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
-        
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "1,000 ft²");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.totalBuildingSquareFeet",
-            value = "800 ft²");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.yearBuilding",
-            value = "2015");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "$111.00");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Is this the primary location where you conduct business?",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
-    }
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForEmployees",
+			value = "$111.00");
+	}
 
-    macro formsFlowPhone {
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+	macro typeAllPropertyInfoFieldsPhone {
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "800 ft²");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-    }
-    
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.yearBuilding",
+			value = "2015");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Is this the primary location where you conduct business?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+	}
+
 }

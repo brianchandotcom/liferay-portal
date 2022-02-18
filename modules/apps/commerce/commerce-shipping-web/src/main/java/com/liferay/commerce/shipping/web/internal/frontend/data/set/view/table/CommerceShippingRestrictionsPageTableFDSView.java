@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.web.internal.frontend;
+package com.liferay.commerce.shipping.web.internal.frontend.data.set.view.table;
 
 import com.liferay.commerce.frontend.model.RestrictionField;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -20,14 +20,15 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.web.internal.constants.CommerceShippingFDSNames;
 import com.liferay.commerce.shipping.web.internal.model.ShippingRestriction;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.selectable.BaseSelectableTableFDSView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -60,14 +61,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceShippingRestrictionsPageClayTable.NAME,
-		"clay.data.set.display.name=" + CommerceShippingRestrictionsPageClayTable.NAME
+		"fds.data.provider.key=" + CommerceShippingFDSNames.SHIPPING_RESTRICTIONS,
+		"frontend.data.set.name=" + CommerceShippingFDSNames.SHIPPING_RESTRICTIONS
 	},
-	service = {ClayDataSetDataProvider.class, ClayDataSetDisplayView.class}
+	service = {FDSDataProvider.class, FDSView.class}
 )
-public class CommerceShippingRestrictionsPageClayTable
-	extends BaseSelectableTableClayDataSetDisplayView
-	implements ClayDataSetDataProvider<ShippingRestriction> {
+public class CommerceShippingRestrictionsPageTableFDSView
+	extends BaseSelectableTableFDSView
+	implements FDSDataProvider<ShippingRestriction> {
 
 	public static final String NAME = "shipping-restrictions";
 
@@ -86,8 +87,8 @@ public class CommerceShippingRestrictionsPageClayTable
 
 	@Override
 	public List<ShippingRestriction> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -123,8 +124,8 @@ public class CommerceShippingRestrictionsPageClayTable
 		BaseModelSearchResult<Country> baseModelSearchResult =
 			_countryService.searchCountries(
 				_portal.getCompanyId(httpServletRequest), true,
-				filter.getKeywords(), pagination.getStartPosition(),
-				pagination.getEndPosition(),
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(),
 				CommerceUtil.getCountryOrderByComparator(
 					orderByFieldName, orderByType));
 
@@ -143,13 +144,13 @@ public class CommerceShippingRestrictionsPageClayTable
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		BaseModelSearchResult<Country> baseModelSearchResult =
 			_countryService.searchCountries(
 				_portal.getCompanyId(httpServletRequest), true,
-				filter.getKeywords(), 0, 0, null);
+				fdsKeywords.getKeywords(), 0, 0, null);
 
 		return baseModelSearchResult.getLength();
 	}

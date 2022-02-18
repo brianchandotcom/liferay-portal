@@ -361,11 +361,10 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary.
 		// AC Refactor ticket: LRAC-9324
 		// AC Bug ticket: LRAC-9263
 
-		task ("Add users") {
+		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -382,19 +381,15 @@ definition {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name ",
+				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add blog") {
-			ACUtils.createBlogsAndAddToPage();
+		task ("Connect DXP to AC and sync by organization") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name", orgName = "Organization Name");
 		}
 
-		task ("Connect to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Interact with DXP with user") {
+		task ("Interact in DXP with the user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -414,7 +409,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Add a new segment using the organization property Organization") {
+		task ("Add a new dynamic segment using the parent organization criteria") {
 			ACNavigation.goToSegments();
 
 			ACSegments.createDynamicSegment();
@@ -430,7 +425,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Assert Organization is present in Segment Criteria") {
+		task ("Assert Organization is present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Organization");
 		}
 
@@ -461,7 +456,7 @@ definition {
 		// AC Refactor ticket: LRAC-9323
 		// AC Bug ticket: LRAC-9263
 
-		task ("Add users") {
+		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -478,7 +473,7 @@ definition {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.addOrganization(
-				organizationName = "Organization Name child}",
+				organizationName = "Organization Name child",
 				parentOrganizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
@@ -486,15 +481,11 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add blog") {
-			ACUtils.createBlogsAndAddToPage();
+		task ("Connect DXP to AC and sync by organization") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name", orgName = "Organization Name child");
 		}
 
-		task ("Connect to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Interact with DXP with user") {
+		task ("Interact in DXP with the user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -514,7 +505,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Add a new segment using the organization property Parent Organization") {
+		task ("Add a new dynamic segment using the parent organization criteria") {
 			ACNavigation.goToSegments();
 
 			ACSegments.createDynamicSegment();
@@ -530,7 +521,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Assert Organization is present in Segment Criteria") {
+		task ("Assert Parent Organization is present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Parent Organization");
 		}
 

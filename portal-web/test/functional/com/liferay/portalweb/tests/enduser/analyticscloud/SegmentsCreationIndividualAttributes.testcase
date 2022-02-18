@@ -368,10 +368,6 @@ definition {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
 		}
 
 		task ("Close sessions") {
@@ -384,7 +380,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a new dynamic segment using Individual Property User") {
+		task ("Add a new dynamic segment using Individual Property User criteria") {
 			ACNavigation.goToSegments();
 
 			ACSegments.createDynamicSegment();
@@ -402,7 +398,7 @@ definition {
 				indexField = "1");
 		}
 
-		task ("View and asset user") {
+		task ("View and assert that the user is in the list") {
 			ACSegments.previewSegmentMembership();
 
 			ACUtils.viewNameList(nameList = "ac ac");
@@ -410,7 +406,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Asset user present in the Segments") {
+		task ("Go to membership tab and assert that the user is in the list") {
 			ACNavigation.switchTab(tabName = "Membership");
 
 			ACUtils.viewNameList(nameList = "ac ac");

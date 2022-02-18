@@ -2042,21 +2042,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/scribe.jar</file-name>
-				<version>1.0.9</version>
-				<project-name>Scribe</project-name>
-				<project-url>https://github.com/fernandezpablo85/scribe-java</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This was recompiled for compatibility with JDK 5.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/serializer.jar</file-name>
 				<version>2.7.2</version>
 				<project-name>Xalan-Java</project-name>

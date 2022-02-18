@@ -1,7 +1,6 @@
 @import 'cadmin-variables';
 
 $controlMenuDesktopHeight: 56px;
-$previewInfoBarHeight: 36px;
 $toolbarDesktopHeight: 56px;
 $previewSelectorWidth: 168px;
 
@@ -50,7 +49,7 @@ html#{$cadmin-selector} {
 
 				&-frame {
 					border: none;
-					height: calc(100% - #{$previewInfoBarHeight});
+					height: 100%;
 					width: 100%;
 				}
 

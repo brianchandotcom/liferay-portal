@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.tax.engine.fixed.web.internal.frontend;
+package com.liferay.commerce.tax.engine.fixed.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -24,12 +24,12 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.constants.CommerceTaxRateSettingDataSetConstants;
+import com.liferay.commerce.tax.engine.fixed.web.internal.constants.CommerceTaxRateSettingFDSNames;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRateSetting;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
@@ -56,16 +56,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceTaxRateSettingFDSNames.TAX_RATE_SETTING,
+	service = FDSDataProvider.class
 )
-public class CommerceTaxRateSettingDataSetDataProvider
-	implements ClayDataSetDataProvider<TaxRateSetting> {
+public class CommerceTaxRateSettingFDSDataProvider
+	implements FDSDataProvider<TaxRateSetting> {
 
 	@Override
 	public List<TaxRateSetting> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<TaxRateSetting> taxRateSettings = new ArrayList<>();
@@ -83,8 +83,8 @@ public class CommerceTaxRateSettingDataSetDataProvider
 			_commerceTaxFixedRateAddressRelService.
 				getCommerceTaxMethodFixedRateAddressRels(
 					commerceChannel.getGroupId(), commerceTaxMethodId,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null);
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null);
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
@@ -121,7 +121,7 @@ public class CommerceTaxRateSettingDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceChannelId = ParamUtil.getLong(

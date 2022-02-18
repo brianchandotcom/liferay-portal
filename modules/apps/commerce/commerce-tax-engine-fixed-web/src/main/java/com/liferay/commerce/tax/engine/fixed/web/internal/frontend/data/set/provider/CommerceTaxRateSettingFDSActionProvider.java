@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.tax.engine.fixed.web.internal.frontend;
+package com.liferay.commerce.tax.engine.fixed.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.constants.CommerceTaxRateSettingDataSetConstants;
+import com.liferay.commerce.tax.engine.fixed.web.internal.constants.CommerceTaxRateSettingFDSNames;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRateSetting;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -52,17 +52,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING,
-		"clay.data.provider.key=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING
+		"fds.data.provider.key=" + CommerceTaxRateSettingFDSNames.PERCENTAGE_TAX_RATE_SETTING,
+		"fds.data.provider.key=" + CommerceTaxRateSettingFDSNames.TAX_RATE_SETTING
 	},
-	service = ClayDataSetActionProvider.class
+	service = FDSActionProvider.class
 )
-public class CommerceTaxRateSettingDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceTaxRateSettingFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		TaxRateSetting taxRateSetting = (TaxRateSetting)model;

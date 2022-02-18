@@ -23,7 +23,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressTypeConfiguration;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.constants.CommerceTaxRateSettingDataSetConstants;
+import com.liferay.commerce.tax.engine.fixed.web.internal.constants.CommerceTaxRateSettingFDSNames;
 import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.taglib.servlet.taglib.CommerceTaxMethodAddressRateRelsScreenNavigationCategory;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
@@ -144,12 +144,10 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
 
 		if (commerceTaxMethod.isPercentage()) {
-			return CommerceTaxRateSettingDataSetConstants.
-				COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING;
+			return CommerceTaxRateSettingFDSNames.PERCENTAGE_TAX_RATE_SETTING;
 		}
 
-		return CommerceTaxRateSettingDataSetConstants.
-			COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING;
+		return CommerceTaxRateSettingFDSNames.TAX_RATE_SETTING;
 	}
 
 	public long getRegionId() throws PortalException {

@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.product.options.web.internal.frontend.constants;
+package com.liferay.commerce.product.options.web.internal.constants;
+
+import com.liferay.commerce.product.constants.CPPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOptionDataSetConstants {
+public class CommerceOptionFDSNames {
 
-	public static final String COMMERCE_DATA_SET_KEY_OPTION_VALUES =
-		"commerceOptionValues";
+	public static final String OPTION_VALUES =
+		CPPortletKeys.CP_OPTIONS + "-optionValues";
 
-	public static final String COMMERCE_DATA_SET_KEY_OPTIONS =
-		"commerceOptions";
+	public static final String OPTIONS = CPPortletKeys.CP_OPTIONS + "-options";
 
 }

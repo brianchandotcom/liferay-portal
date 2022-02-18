@@ -23,6 +23,27 @@ definition {
 		CommerceConfiguration.commerceAdminTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-6912. Bulk delete countries"
+	@priority = "3"
+	test BulkDeleteCountries {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceSettings#BulkDeleteCountries";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Countries");
+
+		AssertElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");
+
+		Pagination.changePagination(itemsPerPage = "60");
+		
+		while (IsElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS")) {
+			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected countries?");
+		}
+
+		AssertElementNotPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");
+	}
+
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "false";
 

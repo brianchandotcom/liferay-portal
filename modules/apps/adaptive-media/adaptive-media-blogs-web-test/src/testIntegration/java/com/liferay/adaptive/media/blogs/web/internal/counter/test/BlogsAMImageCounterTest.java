@@ -71,10 +71,6 @@ public class BlogsAMImageCounterTest {
 		_company2 = CompanyTestUtil.addCompany();
 
 		_user2 = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-		_group2 = GroupTestUtil.addGroup(
-			_company2.getCompanyId(), _user2.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
 	@Test
@@ -180,7 +176,6 @@ public class BlogsAMImageCounterTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	private Group _group1;
-	private Group _group2;
 	private User _user1;
 	private User _user2;
 

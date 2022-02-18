@@ -72,10 +72,6 @@ public class DLAMImageCounterTest {
 		_company2 = CompanyTestUtil.addCompany();
 
 		_user2 = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-		_group2 = GroupTestUtil.addGroup(
-			_company2.getCompanyId(), _user2.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
 	@Test
@@ -239,7 +235,6 @@ public class DLAMImageCounterTest {
 	private DLTrashLocalService _dlTrashLocalService;
 
 	private Group _group1;
-	private Group _group2;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

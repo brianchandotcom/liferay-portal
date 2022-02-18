@@ -252,7 +252,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							download: (
 								<ButtonWithIcon
 									displayType="null"
-									onClick={async () =>
+									onClick={() =>
 										getActivationKeyDownload(
 											activationKey.id,
 											licenseKeyDownloadURL,

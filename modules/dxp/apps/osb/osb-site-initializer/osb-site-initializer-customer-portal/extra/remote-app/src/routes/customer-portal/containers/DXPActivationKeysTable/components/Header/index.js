@@ -65,21 +65,9 @@ const DXPActivationKeysTableHeader = ({
 		return keyCanBeDownloaded;
 	}, [activationKeys, selectedKeys]);
 
-	const selectedKeysObjects = activationKeys.filter((item) => {
-		return selectedKeys.includes(item.id);
+	const selectedKeysObjects = activationKeys.filter((key) => {
+		return selectedKeys.includes(key.id);
 	});
-
-	const selectedKeysProductNames = activationKeys
-		.filter((item) => {
-			return selectedKeys.includes(item.id);
-		})
-		.map((item) => item.productName);
-
-	const selectedKeysProductVersion = activationKeys
-		.filter((item) => {
-			return selectedKeys.includes(item.id);
-		})
-		.map((item) => item.productVersion);
 
 	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
 		setActivationKeysDownloadStatus(
@@ -102,8 +90,7 @@ const DXPActivationKeysTableHeader = ({
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus,
-		selectedKeysProductNames,
-		selectedKeysProductVersion,
+		selectedKeysObjects,
 		project.name
 	);
 

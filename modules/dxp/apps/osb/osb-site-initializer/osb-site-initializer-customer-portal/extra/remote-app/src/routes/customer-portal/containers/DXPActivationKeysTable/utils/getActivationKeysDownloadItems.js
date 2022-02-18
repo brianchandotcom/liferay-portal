@@ -19,8 +19,7 @@ export function getActivationKeysDownloadItems(
 	licenseKeyDownloadURL,
 	sessionId,
 	handleAlertStatus,
-	aggregatedKeysProductNames,
-	aggregatedProductFileVersions,
+	selectedKeysObjects,
 	projectName
 ) {
 	return [
@@ -35,8 +34,7 @@ export function getActivationKeysDownloadItems(
 					selectedKeysIDs,
 					licenseKeyDownloadURL,
 					sessionId,
-					aggregatedKeysProductNames,
-					aggregatedProductFileVersions,
+					selectedKeysObjects,
 					projectName
 				);
 

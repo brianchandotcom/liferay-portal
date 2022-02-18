@@ -52,8 +52,7 @@ export async function downloadAggregatedActivationKey(
 	selectedKeysIDs,
 	licenseKeyDownloadURL,
 	sessionId,
-	aggregatedKeysProductNames,
-	aggregatedProductFileVersions,
+	selectedKeysObjects,
 	projectName
 ) {
 	const license = await getAggregatedActivationDownloadKey(
@@ -65,23 +64,36 @@ export async function downloadAggregatedActivationKey(
 	const DIFFERENT_AGGREGATED_NAMES = 'multiple-products';
 	const DIFFERENT_AGGREGATED_VERSIONS = 'multiple-versions';
 
-	const areAggregatedNamesEqual = aggregatedKeysProductNames.every(
-		(name) => name === aggregatedKeysProductNames[0]
+	const aggregatedNamesAndVersions = selectedKeysObjects.reduce(
+		(selectedKeysAccumulator, selectedKeysObject) => {
+			if (
+				selectedKeysObject.productName !==
+				selectedKeysAccumulator.productName
+			) {
+				selectedKeysAccumulator.productName = DIFFERENT_AGGREGATED_NAMES;
+			}
+			if (
+				selectedKeysObject.productVersion !==
+				selectedKeysAccumulator.productVersion
+			) {
+				selectedKeysAccumulator.productVersion = DIFFERENT_AGGREGATED_VERSIONS;
+			}
+
+			return selectedKeysAccumulator;
+		},
+		{
+			productName: selectedKeysObjects[0]?.productName,
+			productVersion: selectedKeysObjects[0]?.productVersion,
+		}
 	);
-
-	const areAggregatedVersionsEqual = aggregatedProductFileVersions.every(
-		(version) => version === aggregatedProductFileVersions[0]
-	);
-
-	const aggregatedProductFileName = areAggregatedNamesEqual
-		? aggregatedKeysProductNames[0].replaceAll(' ', '').toLowerCase()
-		: DIFFERENT_AGGREGATED_NAMES;
-
-	const aggregatedProductFileVersion = areAggregatedVersionsEqual
-		? aggregatedProductFileVersions[0]
-		: DIFFERENT_AGGREGATED_VERSIONS;
 
 	const projectFileName = projectName.replaceAll(' ', '').toLowerCase();
+
+	const productFileName = aggregatedNamesAndVersions.productName
+		.replaceAll(' ', '')
+		.toLowerCase();
+
+	const versionFileName = aggregatedNamesAndVersions.productVersion;
 
 	if (license.status === STATUS_CODE.success) {
 		const contentType = license.headers.get('content-type');
@@ -90,7 +102,7 @@ export async function downloadAggregatedActivationKey(
 
 		return downloadFromBlob(
 			licenseBlob,
-			`activation-key-${aggregatedProductFileName}-${aggregatedProductFileVersion}-${projectFileName}${extensionFile}`
+			`activation-key-${productFileName}-${versionFileName}-${projectFileName}${extensionFile}`
 		);
 	}
 }

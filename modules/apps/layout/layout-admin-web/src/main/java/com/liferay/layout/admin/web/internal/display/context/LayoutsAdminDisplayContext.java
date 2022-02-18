@@ -1232,7 +1232,14 @@ public class LayoutsAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String virtualHostname = PortalUtil.getVirtualHostname(layoutSet);
+		String virtualHostname = null;
+
+		TreeMap<String, String> virtualHostnames =
+			PortalUtil.getVirtualHostnames(layoutSet);
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
+		}
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -1245,7 +1252,14 @@ public class LayoutsAdminDisplayContext {
 				liveGroupLayoutSet = liveGroup.getPrivateLayoutSet();
 			}
 
-			virtualHostname = PortalUtil.getVirtualHostname(liveGroupLayoutSet);
+			virtualHostname = null;
+
+			virtualHostnames = PortalUtil.getVirtualHostnames(
+				liveGroupLayoutSet);
+
+			if (!virtualHostnames.isEmpty()) {
+				virtualHostname = virtualHostnames.firstKey();
+			}
 		}
 
 		return virtualHostname;

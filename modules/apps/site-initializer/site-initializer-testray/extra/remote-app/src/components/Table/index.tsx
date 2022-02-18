@@ -14,12 +14,12 @@
 
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
 type Column<T = any> = {
+	className?: string;
 	clickable?: boolean;
 	key: string;
 	render?: (itemValue: any, item: T) => String | React.ReactNode;
@@ -44,8 +44,12 @@ const Table: React.FC<TableProps> = ({
 	const navigate = useNavigate();
 
 	return (
-		<ClayTable borderless className={className} hover={false}>
-			<Head>
+		<ClayTable
+			borderless
+			className={`${className} testray-table`}
+			hover={true}
+		>
+			<Head className="testray-table">
 				<Row>
 					{columns.map((column, index) => (
 						<Cell headingTitle key={index}>
@@ -62,10 +66,12 @@ const Table: React.FC<TableProps> = ({
 					<Row key={index}>
 						{columns.map((column, columnIndex) => (
 							<Cell
-								className={classNames('text-dark', {
-									'cursor-pointer': column.clickable,
-								})}
-								expanded={columnIndex === 0}
+								className={classNames(
+									`text-dark ${column.className} `,
+									{
+										'cursor-pointer': column.clickable,
+									}
+								)}
 								key={columnIndex}
 								onClick={() => {
 									if (navigateTo && column.clickable) {

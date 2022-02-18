@@ -361,8 +361,8 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
 		property portal.upstream = "quarantine";
 
+		// AC Refactor: the data takes some time to appear in the segment
 		// AC Refactor ticket: LRAC-9324
-		// AC Bug ticket: LRAC-9263
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -386,7 +386,9 @@ definition {
 		}
 
 		task ("Connect DXP to AC and sync by organization") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name", orgName = "Organization Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(
+				orgName = "Organization Name",
+				siteName = "Site Name");
 		}
 
 		task ("Interact in DXP with the user") {
@@ -452,9 +454,8 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyParentOrganization {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary.
+		// AC Refactor: the data takes some time to appear in the segment
 		// AC Refactor ticket: LRAC-9323
-		// AC Bug ticket: LRAC-9263
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -482,7 +483,9 @@ definition {
 		}
 
 		task ("Connect DXP to AC and sync by organization") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name", orgName = "Organization Name child");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(
+				orgName = "Organization Name child",
+				siteName = "Site Name");
 		}
 
 		task ("Interact in DXP with the user") {

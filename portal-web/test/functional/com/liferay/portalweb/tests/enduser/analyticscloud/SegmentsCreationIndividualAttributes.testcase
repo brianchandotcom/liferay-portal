@@ -354,7 +354,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// AC Refactor ticket: LRAC-9332
-        // AC Bug ticket: LRAC-10593
+		// AC Bug ticket: LRAC-10593
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();

@@ -455,16 +455,13 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 		%>
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams="<%= contextParams %>"
-			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"
+			dataProviderKey="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
+			id="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			nestedItemsKey="orderItemId"
 			nestedItemsReferenceKey="orderItems"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
 			style="stacked"
 		/>
 	</div>

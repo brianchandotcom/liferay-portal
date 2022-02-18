@@ -29,13 +29,10 @@
 >
 	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />ordersContainer">
 		<div class="commerce-orders-container" id="<portlet:namespace />entriesContainer">
-			<clay:data-set-display
-				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
-				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
+			<frontend-data-set:classic-display
+				dataProviderKey="<%= CommerceOrderFDSNames.PLACED_ORDERS %>"
+				id="<%= CommerceOrderFDSNames.PLACED_ORDERS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
 				style="stacked"
 			/>
 		</div>

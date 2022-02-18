@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -50,8 +51,8 @@ page import="com.liferay.commerce.model.CommerceOrderType" %><%@
 page import="com.liferay.commerce.model.CommerceShipment" %><%@
 page import="com.liferay.commerce.model.CommerceShipmentItem" %><%@
 page import="com.liferay.commerce.order.CommerceOrderValidatorResult" %><%@
+page import="com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames" %><%@
 page import="com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext" %><%@
-page import="com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants" %><%@
 page import="com.liferay.commerce.order.content.web.internal.importer.type.CSVCommerceOrderImporterTypeImpl" %><%@
 page import="com.liferay.commerce.order.content.web.internal.portlet.CommerceOpenOrderContentPortlet" %><%@
 page import="com.liferay.commerce.order.content.web.internal.portlet.CommerceOrderContentPortlet" %><%@

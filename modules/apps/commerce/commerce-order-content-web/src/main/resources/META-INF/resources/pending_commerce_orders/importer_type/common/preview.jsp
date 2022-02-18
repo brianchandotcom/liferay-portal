@@ -38,7 +38,7 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= commerceOrderImporterTypeKey %>" />
 		<aui:input name="<%= commerceOrderImporterType.getCommerceOrderImporterItemParamName() %>" type="hidden" value="<%= commerceOrderImporterItemParamName %>" />
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
@@ -48,12 +48,9 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 					commerceOrderImporterType.getCommerceOrderImporterItemParamName(), commerceOrderImporterItemParamName
 				).build()
 			%>'
-			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS %>"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS %>"
+			dataProviderKey="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
+			id="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>

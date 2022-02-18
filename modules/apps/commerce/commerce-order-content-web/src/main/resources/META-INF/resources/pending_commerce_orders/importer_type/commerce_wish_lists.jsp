@@ -16,17 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
 		).build()
 	%>'
-	dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS %>"
-	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS %>"
+	dataProviderKey="<%= CommerceOrderFDSNames.WISH_LISTS %>"
+	id="<%= CommerceOrderFDSNames.WISH_LISTS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
 	style="fluid"
 />

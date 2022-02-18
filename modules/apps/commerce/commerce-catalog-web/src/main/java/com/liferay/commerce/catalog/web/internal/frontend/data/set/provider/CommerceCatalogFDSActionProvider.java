@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.frontend;
+package com.liferay.commerce.catalog.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.catalog.web.internal.frontend.constants.CommerceCatalogDataSetConstants;
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogFDSNames;
 import com.liferay.commerce.catalog.web.internal.model.Catalog;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -51,15 +51,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceCatalogFDSNames.CATALOGS,
+	service = FDSActionProvider.class
 )
-public class CommerceCatalogDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceCatalogFDSActionProvider implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		Catalog catalog = (Catalog)model;

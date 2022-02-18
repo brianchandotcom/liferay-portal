@@ -22,13 +22,10 @@ CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDi
 
 <liferay-ui:error embed="<%= false %>" exception="<%= CommerceCatalogProductsException.class %>" message="you-cannot-delete-catalogs-that-have-products" />
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	creationMenu="<%= commerceCatalogDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
-	id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
+	dataProviderKey="<%= CommerceCatalogFDSNames.CATALOGS %>"
+	id="<%= CommerceCatalogFDSNames.CATALOGS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= commerceCatalogDisplayContext.getPortletURL() %>"
 	style="fluid"
 />

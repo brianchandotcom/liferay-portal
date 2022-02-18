@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.frontend;
+package com.liferay.commerce.catalog.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.catalog.web.internal.frontend.constants.CommerceCatalogDataSetConstants;
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogFDSNames;
 import com.liferay.commerce.catalog.web.internal.model.Channel;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,16 +41,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceCatalogFDSNames.CATALOG_CHANNELS,
+	service = FDSDataProvider.class
 )
-public class CommerceCatalogChannelsDataSetDataProvider
-	implements ClayDataSetDataProvider<Channel> {
+public class CommerceCatalogChannelsFDSDataProvider
+	implements FDSDataProvider<Channel> {
 
 	@Override
 	public List<Channel> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Channel> channels = new ArrayList<>();
@@ -61,7 +61,8 @@ public class CommerceCatalogChannelsDataSetDataProvider
 		List<CommerceChannelRel> commerceChannels =
 			_commerceChannelRelService.getCommerceChannelRels(
 				CommerceCatalog.class.getName(), commerceCatalogId, null,
-				pagination.getStartPosition(), pagination.getEndPosition());
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 
 		for (CommerceChannelRel commerceChannelRel : commerceChannels) {
 			CommerceChannel commerceChannel =
@@ -78,7 +79,7 @@ public class CommerceCatalogChannelsDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceCatalogId = ParamUtil.getLong(

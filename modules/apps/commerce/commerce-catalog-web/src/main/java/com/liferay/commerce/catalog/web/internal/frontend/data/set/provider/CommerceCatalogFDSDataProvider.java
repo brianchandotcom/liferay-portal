@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.frontend;
+package com.liferay.commerce.catalog.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.catalog.web.internal.frontend.constants.CommerceCatalogDataSetConstants;
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogFDSNames;
 import com.liferay.commerce.catalog.web.internal.model.Catalog;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -40,16 +40,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceCatalogFDSNames.CATALOGS,
+	service = FDSDataProvider.class
 )
-public class CommerceCatalogDataSetDataProvider
-	implements ClayDataSetDataProvider<Catalog> {
+public class CommerceCatalogFDSDataProvider
+	implements FDSDataProvider<Catalog> {
 
 	@Override
 	public List<Catalog> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Catalog> catalogs = new ArrayList<>();
@@ -59,8 +59,8 @@ public class CommerceCatalogDataSetDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			themeDisplay.getCompanyId(), filter.getKeywords(),
-			pagination.getStartPosition(), pagination.getEndPosition(),
+			themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
+			fdsPagination.getStartPosition(), fdsPagination.getEndPosition(),
 			new Sort(Field.NAME, false));
 
 		for (CommerceCatalog catalog : commerceCatalogs) {
@@ -77,7 +77,7 @@ public class CommerceCatalogDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -85,7 +85,7 @@ public class CommerceCatalogDataSetDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		return _commerceCatalogService.searchCommerceCatalogsCount(
-			themeDisplay.getCompanyId(), filter.getKeywords());
+			themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
 	}
 
 	@Reference

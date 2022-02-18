@@ -114,18 +114,15 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "transaction-history") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
 					).build()
 				%>'
-				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS %>"
-				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS %>"
+				dataProviderKey="<%= CommerceOrderFDSNames.PAYMENTS %>"
+				id="<%= CommerceOrderFDSNames.PAYMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= commerceOrderEditDisplayContext.getCommerceOrderPaymentsPortletURL() %>"
 			/>
 		</commerce-ui:panel>
 	</div>

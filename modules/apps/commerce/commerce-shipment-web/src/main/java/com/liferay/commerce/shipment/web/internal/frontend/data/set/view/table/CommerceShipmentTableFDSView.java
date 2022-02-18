@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -43,37 +42,29 @@ public class CommerceShipmentTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField shipmentIdFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"shipmentId", "shipment-id");
-
-		shipmentIdFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("accountName", "account");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("channelName", "channel");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"address", "shipping-address");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"tracking", "tracking-number");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"createDateString", "create-date");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"expectedShipDateString", "estimated-shipping-date");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"expectedDeliveryDateString", "estimated-delivery-date");
-
-		FDSTableSchemaField statusFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
-
-		statusFDSTableSchemaField.setContentRenderer("label");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"shipmentId", "shipment-id",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"accountName", "account"
+		).add(
+			"channelName", "channel"
+		).add(
+			"address", "shipping-address"
+		).add(
+			"tracking", "tracking-number"
+		).add(
+			"createDateString", "create-date"
+		).add(
+			"expectedShipDateString", "estimated-shipping-date"
+		).add(
+			"expectedDeliveryDateString", "estimated-delivery-date"
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).build();
 	}
 
 	@Reference

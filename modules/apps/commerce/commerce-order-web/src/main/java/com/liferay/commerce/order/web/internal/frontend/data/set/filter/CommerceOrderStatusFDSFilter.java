@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseCheckBoxClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.CheckBoxClayDataSetFilterItem;
-import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.filter.BaseCheckBoxFDSFilter;
+import com.liferay.frontend.data.set.filter.CheckBoxFDSFilterItem;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,29 +33,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
-	service = ClayDataSetFilter.class
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
+	service = FDSFilter.class
 )
-public class CommerceOrderStatusClayTableDataSetFilter
-	extends BaseCheckBoxClayDataSetFilter {
+public class CommerceOrderStatusFDSFilter extends BaseCheckBoxFDSFilter {
 
 	@Override
-	public List<CheckBoxClayDataSetFilterItem>
-		getCheckBoxClayDataSetFilterItems(Locale locale) {
+	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
+		Locale locale) {
 
-		List<CheckBoxClayDataSetFilterItem> checkBoxClayDataSetFilterItems =
-			new ArrayList<>();
+		List<CheckBoxFDSFilterItem> checkBoxFDSFilterItems = new ArrayList<>();
 
 		for (CommerceOrderStatus commerceOrderStatus :
 				_commerceOrderStatusRegistry.getCommerceOrderStatuses()) {
 
-			checkBoxClayDataSetFilterItems.add(
-				new CheckBoxClayDataSetFilterItem(
+			checkBoxFDSFilterItems.add(
+				new CheckBoxFDSFilterItem(
 					commerceOrderStatus.getLabel(locale),
 					commerceOrderStatus.getKey()));
 		}
 
-		return checkBoxClayDataSetFilterItems;
+		return checkBoxFDSFilterItems;
 	}
 
 	@Override

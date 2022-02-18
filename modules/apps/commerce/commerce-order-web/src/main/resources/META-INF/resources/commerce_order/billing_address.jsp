@@ -33,20 +33,17 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
 				).build()
 			%>'
 			creationMenu='<%= commerceOrderEditDisplayContext.getCommerceAddressCreationMenu("/commerce_order/edit_commerce_order_billing_address") %>'
-			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_BILLING_ADDRESSES %>"
+			dataProviderKey="<%= CommerceOrderFDSNames.BILLING_ADDRESSES %>"
 			formName="fm"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_BILLING_ADDRESSES %>"
+			id="<%= CommerceOrderFDSNames.BILLING_ADDRESSES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 			selectedItems="<%= Collections.singletonList(String.valueOf(commerceOrder.getBillingAddressId())) %>"
 			selectedItemsKey="addressId"
 			selectionType="single"

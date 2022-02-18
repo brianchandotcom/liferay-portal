@@ -28,19 +28,15 @@ request.setAttribute("view.jsp-portletURL", commerceOrderListDisplayContext.getP
 		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(commerceOrderListDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
 			bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
-			clayDataSetActionDropdownItems="<%= commerceOrderListDisplayContext.getClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= commerceOrderListDisplayContext.getFDSActionDropdownItems() %>"
+			fdsSortItemList="<%= commerceOrderListDisplayContext.getFDSSortItemList() %>"
 			formName="fm"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
-			itemsPerPage="<%= 20 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
+			id="<%= CommerceOrderFDSNames.ALL_ORDERS %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
-			sortItemList="<%= commerceOrderListDisplayContext.getSortItemList() %>"
 			style="fluid"
 		/>
 	</aui:form>

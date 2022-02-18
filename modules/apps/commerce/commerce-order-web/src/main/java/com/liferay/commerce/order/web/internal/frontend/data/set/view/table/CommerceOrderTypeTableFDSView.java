@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -27,16 +27,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
- * @author Alec Sloan
+ * @author Riccardo Alberti
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "frontend.data.set.name=" + CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ORDER_TYPES,
 	service = FDSView.class
 )
-public class ProcessingCommerceShipmentItemTableFDSView
-	extends BaseTableFDSView {
+public class CommerceOrderTypeTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -44,17 +42,31 @@ public class ProcessingCommerceShipmentItemTableFDSView
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"sku", "sku",
+			"name.LANG", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"orderId", "order-id"
+			"displayOrder", "order"
 		).add(
-			"warehouse", "warehouse"
+			"active", "active",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
 		).add(
-			"orderedQuantity", "outstanding-quantity"
+			"displayDate", "start-date",
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setContentRenderer("dateTime");
+				fdsTableSchemaField.setSortable(true);
+			}
 		).add(
-			"toSendQuantity", "quantity-in-shipment"
+			"expirationDate", "end-date",
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setContentRenderer("dateTime");
+				fdsTableSchemaField.setSortable(true);
+			}
+		).add(
+			"workflowStatusInfo", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

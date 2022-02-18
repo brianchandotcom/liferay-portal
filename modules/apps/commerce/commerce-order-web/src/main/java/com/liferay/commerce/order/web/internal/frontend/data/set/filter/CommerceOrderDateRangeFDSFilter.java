@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseDateRangeClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.DateClayDataSetFilterItem;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
+import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import java.util.Calendar;
 
@@ -28,11 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
-	service = ClayDataSetFilter.class
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
+	service = FDSFilter.class
 )
-public class CommerceOrderDateRangeClayTableDataSetFilter
-	extends BaseDateRangeClayDataSetFilter {
+public class CommerceOrderDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getId() {
@@ -45,17 +44,17 @@ public class CommerceOrderDateRangeClayTableDataSetFilter
 	}
 
 	@Override
-	public DateClayDataSetFilterItem getMaxDateClayDataSetFilterItem() {
+	public DateFDSFilterItem getMaxDateFDSFilterItem() {
 		Calendar calendar = Calendar.getInstance();
 
-		return new DateClayDataSetFilterItem(
+		return new DateFDSFilterItem(
 			calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
 	}
 
 	@Override
-	public DateClayDataSetFilterItem getMinDateClayDataSetFilterItem() {
-		return new DateClayDataSetFilterItem(0, 0, 0);
+	public DateFDSFilterItem getMinDateFDSFilterItem() {
+		return new DateFDSFilterItem(0, 0, 0);
 	}
 
 }

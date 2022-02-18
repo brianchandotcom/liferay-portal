@@ -41,19 +41,17 @@ public class CommerceShippableOrderItemsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("sku", "sku");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("orderId", "order-id");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"quantity", "outstanding-quantity");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("available", "available");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"icon", "address-matches-shipment");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"sku", "sku"
+		).add(
+			"orderId", "order-id"
+		).add(
+			"quantity", "outstanding-quantity"
+		).add(
+			"available", "available"
+		).add(
+			"icon", "address-matches-shipment"
+		).build();
 	}
 
 	@Reference

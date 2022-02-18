@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.commerce.order.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.Address;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,16 +44,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_BILLING_ADDRESSES,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceOrderFDSNames.BILLING_ADDRESSES,
+	service = FDSDataProvider.class
 )
-public class CommerceBillingAddressDataSetDataProvider
-	implements ClayDataSetDataProvider<Address> {
+public class CommerceBillingAddressFDSDataProvider
+	implements FDSDataProvider<Address> {
 
 	@Override
 	public List<Address> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Address> addresses = new ArrayList<>();
@@ -67,9 +67,9 @@ public class CommerceBillingAddressDataSetDataProvider
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getBillingCommerceAddresses(
 				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
-				commerceOrder.getCommerceAccountId(), filter.getKeywords(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				sort);
+				commerceOrder.getCommerceAccountId(), fdsKeywords.getKeywords(),
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), sort);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 			addresses.add(
@@ -84,7 +84,7 @@ public class CommerceBillingAddressDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -95,7 +95,7 @@ public class CommerceBillingAddressDataSetDataProvider
 
 		return _commerceAddressService.getBillingCommerceAddressesCount(
 			commerceOrder.getCompanyId(), AccountEntry.class.getName(),
-			commerceOrder.getCommerceAccountId(), filter.getKeywords());
+			commerceOrder.getCommerceAccountId(), fdsKeywords.getKeywords());
 	}
 
 	private String _getDescriptiveCommerceAddress(

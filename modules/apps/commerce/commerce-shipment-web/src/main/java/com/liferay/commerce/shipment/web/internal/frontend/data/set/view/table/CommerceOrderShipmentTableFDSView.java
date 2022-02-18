@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -43,25 +42,21 @@ public class CommerceOrderShipmentTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField shipmentIdFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"shipmentId", "shipment-id");
-
-		shipmentIdFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("address", "address");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"createDate", "create-date");
-
-		FDSTableSchemaField statusFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
-
-		statusFDSTableSchemaField.setContentRenderer("label");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("tracking", "tracking");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"shipmentId", "shipment-id",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"address", "address"
+		).add(
+			"createDate", "create-date"
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).add(
+			"tracking", "tracking"
+		).build();
 	}
 
 	@Reference

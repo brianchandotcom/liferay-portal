@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -28,15 +28,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
- * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "frontend.data.set.name=" + CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSView.class
 )
-public class ProcessingCommerceShipmentItemTableFDSView
-	extends BaseTableFDSView {
+public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -44,17 +42,31 @@ public class ProcessingCommerceShipmentItemTableFDSView
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"sku", "sku",
+			"id", "order-id",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"orderId", "order-id"
+			"account.name", "account"
 		).add(
-			"warehouse", "warehouse"
+			"accountId", "account-number"
 		).add(
-			"orderedQuantity", "outstanding-quantity"
+			"channel.name", "channel"
 		).add(
-			"toSendQuantity", "quantity-in-shipment"
+			"totalFormatted", "amount"
+		).add(
+			"orderDate", "order-date",
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setContentRenderer("dateTime");
+				fdsTableSchemaField.setSortable(true);
+			}
+		).add(
+			"orderStatusInfo", "order-status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
+		).add(
+			"workflowStatusInfo", "acceptance-workflow-status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

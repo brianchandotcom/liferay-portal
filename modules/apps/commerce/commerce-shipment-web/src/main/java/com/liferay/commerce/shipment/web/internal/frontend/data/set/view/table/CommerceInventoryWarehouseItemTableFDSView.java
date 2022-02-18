@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -43,17 +42,15 @@ public class CommerceInventoryWarehouseItemTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("name", "warehouse");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("available", "available");
-
-		FDSTableSchemaField warehouseItemFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"warehouseItem", "quantity-in-shipment");
-
-		warehouseItemFDSTableSchemaField.setContentRenderer("quantitySelector");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"name", "warehouse"
+		).add(
+			"available", "available"
+		).add(
+			"warehouseItem", "quantity-in-shipment",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"quantitySelector")
+		).build();
 	}
 
 	@Reference

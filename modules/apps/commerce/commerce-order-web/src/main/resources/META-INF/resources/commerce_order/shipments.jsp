@@ -29,18 +29,15 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 %>
 
-<clay:data-set-display
+<frontend-data-set:classic-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
 		).build()
 	%>'
-	dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS %>"
-	id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_SHIPMENTS %>"
+	dataProviderKey="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
+	id="<%= CommerceShipmentFDSNames.ORDER_SHIPMENTS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= commerceOrderEditDisplayContext.getCommerceShipmentsPortletURL() %>"
 	showManagementBar="<%= false %>"
 	style="stacked"
 />

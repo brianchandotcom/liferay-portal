@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.channel.web.internal.frontend;
+package com.liferay.commerce.channel.web.internal.frontend.data.set.view.table;
 
+import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
 import com.liferay.commerce.channel.web.internal.frontend.util.CommerceChannelClayTableUtil;
 import com.liferay.commerce.channel.web.internal.model.TaxMethod;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -22,16 +23,15 @@ import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,47 +61,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceTaxMethodClayTable.NAME,
-		"clay.data.set.display.name=" + CommerceTaxMethodClayTable.NAME
+		"fds.data.provider.key=" + CommerceChannelFDSNames.TAX_METHOD,
+		"frontend.data.set.name=" + CommerceChannelFDSNames.TAX_METHOD
 	},
-	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
-		ClayDataSetDisplayView.class
-	}
+	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
 )
-public class CommerceTaxMethodClayTable
-	extends BaseTableClayDataSetDisplayView
-	implements ClayDataSetActionProvider, ClayDataSetDataProvider<TaxMethod> {
-
-	public static final String NAME = "tax-methods";
-
-	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
-
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"description", "description");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"taxEngine", "tax-engine");
-
-		ClayTableSchemaField statusClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
-
-		statusClayTableSchemaField.setContentRenderer("label");
-
-		return clayTableSchemaBuilder.build();
-	}
+public class CommerceTaxMethodTableFDSView
+	extends BaseTableFDSView
+	implements FDSActionProvider, FDSDataProvider<TaxMethod> {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		return DropdownItemListBuilder.add(
@@ -134,9 +106,29 @@ public class CommerceTaxMethodClayTable
 	}
 
 	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			_fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"description", "description"
+		).add(
+			"taxEngine", "tax-engine"
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).build();
+	}
+
+	@Override
 	public List<TaxMethod> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -188,7 +180,7 @@ public class CommerceTaxMethodClayTable
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		Map<String, CommerceTaxEngine> commerceTaxEngines =
@@ -206,9 +198,6 @@ public class CommerceTaxMethodClayTable
 	}
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
@@ -216,5 +205,8 @@ public class CommerceTaxMethodClayTable
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 }

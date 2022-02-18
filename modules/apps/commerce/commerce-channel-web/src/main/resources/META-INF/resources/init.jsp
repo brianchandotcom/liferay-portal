@@ -19,22 +19,18 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %><%@
+page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext" %><%@
-page import="com.liferay.commerce.channel.web.internal.frontend.CommerceChannelClayTable" %><%@
-page import="com.liferay.commerce.channel.web.internal.frontend.CommerceChannelHealthCheckClayTable" %><%@
-page import="com.liferay.commerce.channel.web.internal.frontend.CommercePaymentMethodClayTable" %><%@
-page import="com.liferay.commerce.channel.web.internal.frontend.CommerceShippingMethodClayTable" %><%@
-page import="com.liferay.commerce.channel.web.internal.frontend.CommerceTaxMethodClayTable" %><%@
 page import="com.liferay.commerce.channel.web.internal.servlet.taglib.ui.constants.CommerceChannelScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderConstants" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@

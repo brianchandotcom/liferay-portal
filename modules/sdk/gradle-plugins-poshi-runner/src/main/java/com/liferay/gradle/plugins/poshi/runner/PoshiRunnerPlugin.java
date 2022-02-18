@@ -538,6 +538,16 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			javaExec.getProject(), poshiRunnerExtension);
 	}
 
+	private String _getChromeDriverBinaryName() {
+		String chromeDriverBinaryName = "chromedriver";
+
+		if (OSDetector.isWindows()) {
+			chromeDriverBinaryName = chromeDriverBinaryName + ".exe";
+		}
+
+		return chromeDriverBinaryName;
+	}
+
 	private String _getChromeDriverURL(String chromeDriverVersion) {
 		StringBuilder sb = new StringBuilder();
 
@@ -599,7 +609,18 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
-					execSpec.commandLine(finalChromeBinaryPath, "--version");
+					if (OSDetector.isWindows()) {
+						execSpec.commandLine(
+							"cmd", "/c",
+							"wmic datafile where name=\"" +
+								finalChromeBinaryPath.replace("\\", "\\\\") +
+									"\" get Version /value");
+					}
+					else {
+						execSpec.commandLine(
+							finalChromeBinaryPath, "--version");
+					}
+
 					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
 
@@ -772,7 +793,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		if (_isDownloadChromeDriver(poshiProperties)) {
 			systemProperties.put(
 				"webdriver.chrome.driver",
-				_getWebDriverDir(test.getProject()) + "/chromedriver");
+				_getWebDriverDir(test.getProject()) + "/" +
+					_getChromeDriverBinaryName());
 		}
 		else if (Validator.isNotNull(
 					System.getProperty("webdriver.chrome.driver"))) {
@@ -811,6 +833,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			}
 		};
 	private static final Pattern _chromeVersionPattern = Pattern.compile(
-		"[A-z\\s]+(?<chromeMajorVersion>[0-9]{2})\\.");
+		"[A-z=\\s]+(?<chromeMajorVersion>[0-9]{2})\\.");
 
 }

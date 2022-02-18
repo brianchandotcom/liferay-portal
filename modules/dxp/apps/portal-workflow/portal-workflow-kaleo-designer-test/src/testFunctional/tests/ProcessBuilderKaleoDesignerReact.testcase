@@ -167,6 +167,7 @@ definition {
 	test CanCreateTransition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateTransition";
 
 		Workflow.openWorkflowListView();
 
@@ -213,6 +214,7 @@ definition {
 	test CanDeleteWorkflowDefinitionDraft {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteWorkflowDefinitionDraft";
 
 		Workflow.openWorkflowListView();
 

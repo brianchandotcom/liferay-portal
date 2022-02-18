@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
-	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')]</td>
+	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')] | //input[contains (@name,'table-head-selector') and (@type='checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

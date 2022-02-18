@@ -22,7 +22,7 @@
 			HashMapBuilder.<String, Object>put(
 				"commerceOrderTypeId", commerceOrderTypeId
 			).put(
-				"datasetId", CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS
+				"datasetId", CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS
 			).put(
 				"orderTypeExternalReferenceCode", HtmlUtil.escapeJS(commerceOrderType.getExternalReferenceCode())
 			).put(
@@ -38,15 +38,12 @@
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= commerceOrderTypeQualifiersDisplayContext.getCommerceOrderTypeChannelsApiURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceOrderTypeQualifiersDisplayContext.getCommerceOrderTypeChannelClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= commerceOrderTypeQualifiersDisplayContext.getCommerceOrderTypeChannelFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS %>"
+			id="<%= CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

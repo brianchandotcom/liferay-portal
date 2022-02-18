@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.view.list;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.list;
 
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.list.BaseListFDSView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,11 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS,
-	service = ClayDataSetDisplayView.class
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.PAYMENT_METHODS,
+	service = FDSView.class
 )
-public class CommercePaymentMethodClayListDataSetDisplayView
-	extends BaseListClayDataSetDisplayView {
+public class CommercePaymentMethodListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getDescription() {

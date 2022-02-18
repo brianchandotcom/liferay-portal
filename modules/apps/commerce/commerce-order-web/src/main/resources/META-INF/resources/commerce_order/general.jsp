@@ -390,20 +390,17 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "items") %>'
 		>
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
 					).build()
 				%>'
-				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS %>"
-				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS %>"
+				dataProviderKey="<%= CommerceOrderFDSNames.ORDER_ITEMS %>"
+				id="<%= CommerceOrderFDSNames.ORDER_ITEMS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				nestedItemsKey="orderItemId"
 				nestedItemsReferenceKey="orderItems"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL() %>"
 			/>
 		</commerce-ui:panel>
 	</div>
@@ -434,8 +431,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				summary.default('summary', 'summary-root', {
 					apiUrl:
 						'/o/headless-commerce-admin-order/v1.0/orders/<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>',
-					datasetDisplayId:
-						'<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS %>',
+					datasetDisplayId: '<%= CommerceOrderFDSNames.ORDER_ITEMS %>',
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 				});
 			</aui:script>

@@ -28,16 +28,13 @@ PortletURL portletURL = commerceOrderTypeDisplayContext.getPortletURL();
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteOrderTypes" type="hidden" />
 
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-order/v1.0/order-types"
-			clayDataSetActionDropdownItems="<%= commerceOrderTypeDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commerceOrderTypeDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= commerceOrderTypeDisplayContext.getCommerceOrderTypeFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPES %>"
+			id="<%= CommerceOrderFDSNames.ORDER_TYPES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
 			style="stacked"
 		/>
 	</aui:form>

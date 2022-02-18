@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set;
+package com.liferay.commerce.order.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.OrderItem;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -53,15 +53,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceOrderFDSNames.ORDER_ITEMS,
+	service = FDSActionProvider.class
 )
-public class CommerceOrderItemClayDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceOrderItemFDSActionProvider implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		OrderItem orderItem = (OrderItem)model;
@@ -151,7 +150,7 @@ public class CommerceOrderItemClayDataSetActionProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderItemClayDataSetActionProvider.class);
+		CommerceOrderItemFDSActionProvider.class);
 
 	@Reference
 	private CommerceOrderPermission _commerceOrderPermission;

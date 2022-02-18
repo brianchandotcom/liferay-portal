@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.commerce.order.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -20,7 +20,7 @@ import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.OrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
@@ -33,9 +33,9 @@ import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,16 +72,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceOrderFDSNames.ORDER_ITEMS,
+	service = FDSDataProvider.class
 )
-public class CommerceOrderItemDataSetDataProvider
-	implements ClayDataSetDataProvider<OrderItem> {
+public class CommerceOrderItemFDSDataProvider
+	implements FDSDataProvider<OrderItem> {
 
 	@Override
 	public List<OrderItem> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<OrderItem> orderItems = new ArrayList<>();
@@ -89,7 +89,7 @@ public class CommerceOrderItemDataSetDataProvider
 		try {
 			BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
 				_getBaseModelSearchResult(
-					httpServletRequest, filter, pagination, sort);
+					fdsKeywords, fdsPagination, httpServletRequest, sort);
 
 			orderItems = _getOrderItems(
 				baseModelSearchResult.getBaseModels(), httpServletRequest);
@@ -103,18 +103,19 @@ public class CommerceOrderItemDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
-			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
+			_getBaseModelSearchResult(
+				fdsKeywords, null, httpServletRequest, null);
 
 		return baseModelSearchResult.getLength();
 	}
 
 	private BaseModelSearchResult<CommerceOrderItem> _getBaseModelSearchResult(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -123,13 +124,13 @@ public class CommerceOrderItemDataSetDataProvider
 		int start = 0;
 		int end = 0;
 
-		if (pagination != null) {
-			start = pagination.getStartPosition();
-			end = pagination.getEndPosition();
+		if (fdsPagination != null) {
+			start = fdsPagination.getStartPosition();
+			end = fdsPagination.getEndPosition();
 		}
 
 		return _commerceOrderItemService.searchCommerceOrderItems(
-			commerceOrderId, 0, filter.getKeywords(), start, end, sort);
+			commerceOrderId, 0, fdsKeywords.getKeywords(), start, end, sort);
 	}
 
 	private List<OrderItem> _getChildOrderItems(
@@ -437,7 +438,7 @@ public class CommerceOrderItemDataSetDataProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderItemDataSetDataProvider.class);
+		CommerceOrderItemFDSDataProvider.class);
 
 	@Reference
 	private CommerceOrderItemQuantityFormatter

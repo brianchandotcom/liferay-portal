@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -42,19 +41,17 @@ public class ShippedCommerceShipmentItemTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField skuFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("sku", "sku");
-
-		skuFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("orderId", "order-id");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("warehouse", "warehouse");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"shippedQuantity", "shipped");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"sku", "sku",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"orderId", "order-id"
+		).add(
+			"warehouse", "warehouse"
+		).add(
+			"shippedQuantity", "shipped"
+		).build();
 	}
 
 	@Reference

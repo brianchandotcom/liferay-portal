@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.commerce.order.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderPayment;
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.Payment;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,16 +51,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceOrderFDSNames.PAYMENTS,
+	service = FDSDataProvider.class
 )
-public class CommercePaymentDataSetDataProvider
-	implements ClayDataSetDataProvider<Payment> {
+public class CommercePaymentFDSDataProvider
+	implements FDSDataProvider<Payment> {
 
 	@Override
 	public List<Payment> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Payment> payments = new ArrayList<>();
@@ -90,8 +90,8 @@ public class CommercePaymentDataSetDataProvider
 		List<CommerceOrderPayment> commerceOrderPayments =
 			_commerceOrderPaymentLocalService.getCommerceOrderPayments(
 				commerceOrder.getCommerceOrderId(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), null);
 
 		for (CommerceOrderPayment commerceOrderPayment :
 				commerceOrderPayments) {
@@ -117,7 +117,7 @@ public class CommercePaymentDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(

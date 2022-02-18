@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -28,15 +29,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
- * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "frontend.data.set.name=" + CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ORDER_ITEMS,
 	service = FDSView.class
 )
-public class ProcessingCommerceShipmentItemTableFDSView
-	extends BaseTableFDSView {
+public class CommerceOrderItemTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -44,17 +43,29 @@ public class ProcessingCommerceShipmentItemTableFDSView
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
+			"image", StringPool.BLANK,
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"image")
+		).add(
 			"sku", "sku",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"orderId", "order-id"
+			"name", "name"
 		).add(
-			"warehouse", "warehouse"
+			"options", "options"
 		).add(
-			"orderedQuantity", "outstanding-quantity"
+			"requestedDeliveryDate", "delivery-date"
 		).add(
-			"toSendQuantity", "quantity-in-shipment"
+			"deliveryGroup", "delivery-group"
+		).add(
+			"price", "list-price"
+		).add(
+			"discount", "discount"
+		).add(
+			"formattedQuantity", "quantity"
+		).add(
+			"total", "total"
 		).build();
 	}
 

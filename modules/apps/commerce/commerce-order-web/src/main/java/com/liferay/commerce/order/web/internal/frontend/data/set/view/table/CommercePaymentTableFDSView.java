@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.frontend.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -28,15 +28,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
- * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "frontend.data.set.name=" + CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.PAYMENTS,
 	service = FDSView.class
 )
-public class ProcessingCommerceShipmentItemTableFDSView
-	extends BaseTableFDSView {
+public class CommercePaymentTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -44,17 +42,15 @@ public class ProcessingCommerceShipmentItemTableFDSView
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"sku", "sku",
+			"type", "type",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+				"label")
 		).add(
-			"orderId", "order-id"
+			"amount", "amount"
 		).add(
-			"warehouse", "warehouse"
+			"createDate", "timestamp"
 		).add(
-			"orderedQuantity", "outstanding-quantity"
-		).add(
-			"toSendQuantity", "quantity-in-shipment"
+			"content", "details"
 		).build();
 	}
 

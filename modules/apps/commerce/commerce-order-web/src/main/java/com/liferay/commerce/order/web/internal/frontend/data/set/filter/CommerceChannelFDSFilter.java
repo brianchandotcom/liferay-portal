@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,11 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
-	service = ClayDataSetFilter.class
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
+	service = FDSFilter.class
 )
-public class CommerceChannelClayTableDataSetFilter
-	extends BaseAutocompleteClayDataSetFilter {
+public class CommerceChannelFDSFilter extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {

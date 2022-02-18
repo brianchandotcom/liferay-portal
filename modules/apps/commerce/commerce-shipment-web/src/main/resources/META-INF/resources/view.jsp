@@ -27,9 +27,6 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 				dataProviderKey="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
 				id="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= commerceShipmentDisplayContext.getPortletURL() %>"
 				style="fluid"
 			/>
 		</div>

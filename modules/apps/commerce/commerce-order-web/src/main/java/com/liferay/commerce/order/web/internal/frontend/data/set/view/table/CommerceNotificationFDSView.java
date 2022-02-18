@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.view.FDSView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,20 +24,29 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_BILLING_ADDRESSES,
-	service = ClayDataSetDisplayView.class
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.NOTIFICATIONS,
+	service = FDSView.class
 )
-public class CommerceBillingAddressClayListDataSetDisplayView
-	extends BaseListClayDataSetDisplayView {
+public class CommerceNotificationFDSView implements FDSView {
 
 	@Override
-	public String getDescription() {
-		return "description";
+	public String getContentRenderer() {
+		return "emailsList";
 	}
 
 	@Override
-	public String getTitle() {
-		return "title";
+	public String getLabel() {
+		return "emails";
+	}
+
+	@Override
+	public String getName() {
+		return "emailsList";
+	}
+
+	@Override
+	public String getThumbnail() {
+		return "emails";
 	}
 
 }

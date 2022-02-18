@@ -57,7 +57,7 @@ public class TimeRangeSerDes {
 		sb.append("{");
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (timeRange.getDateEnd() != null) {
 			if (sb.length() > 1) {
@@ -140,7 +140,7 @@ public class TimeRangeSerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (timeRange.getDateEnd() == null) {
 			map.put("dateEnd", null);

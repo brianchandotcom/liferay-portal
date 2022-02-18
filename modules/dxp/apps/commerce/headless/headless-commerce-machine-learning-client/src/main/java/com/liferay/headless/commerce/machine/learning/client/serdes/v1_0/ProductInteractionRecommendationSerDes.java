@@ -63,7 +63,7 @@ public class ProductInteractionRecommendationSerDes {
 		sb.append("{");
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (productInteractionRecommendation.getCreateDate() != null) {
 			if (sb.length() > 1) {
@@ -161,7 +161,7 @@ public class ProductInteractionRecommendationSerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (productInteractionRecommendation.getCreateDate() == null) {
 			map.put("createDate", null);

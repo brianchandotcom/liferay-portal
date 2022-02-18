@@ -1630,9 +1630,6 @@ public class PropsValues {
 	public static final String[] MY_SITES_DIRECTORY_SITE_EXCLUDES =
 		PropsUtil.getArray(PropsKeys.MY_SITES_DIRECTORY_SITE_EXCLUDES);
 
-	public static final String MY_SITES_DISPLAY_STYLE = PropsUtil.get(
-		PropsKeys.MY_SITES_DISPLAY_STYLE);
-
 	public static final int MY_SITES_MAX_ELEMENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MY_SITES_MAX_ELEMENTS));
 

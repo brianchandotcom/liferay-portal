@@ -2073,9 +2073,6 @@ public interface PropsKeys {
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES =
 		"my.sites.directory.site.excludes";
 
-	public static final String MY_SITES_DISPLAY_STYLE =
-		"my.sites.display.style";
-
 	public static final String MY_SITES_MAX_ELEMENTS = "my.sites.max.elements";
 
 	public static final String MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS =

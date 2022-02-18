@@ -59,7 +59,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
 			_createCPOptionsSearchFacetDisplayContext();
 
-		cpOptionsSearchFacetDisplayContext.setFacets(getFacets());
+		cpOptionsSearchFacetDisplayContext.setFacets(_getFacets());
 		cpOptionsSearchFacetDisplayContext.setCPOptionLocalService(
 			_cpOptionLocalService);
 		cpOptionsSearchFacetDisplayContext.setPortletSharedSearchRequest(
@@ -72,34 +72,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 			buildTermDisplayContexts());
 
 		return cpOptionsSearchFacetDisplayContext;
-	}
-
-	public List<Facet> getFacets() {
-		List<Facet> filledFacets = new ArrayList<>();
-
-		FacetCollector facetCollector = _facet.getFacetCollector();
-
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			_portletSharedSearchRequest.search(_renderRequest);
-
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			_renderRequest);
-
-		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
-			CPOption cpOption = _cpOptionLocalService.fetchCPOption(
-				themeDisplay.getCompanyId(), termCollector.getTerm());
-
-			if ((cpOption != null) && cpOption.isFacetable()) {
-				Facet facet = portletSharedSearchResponse.getFacet(
-					CPOptionFacetsUtil.getIndexFieldName(
-						termCollector.getTerm(), themeDisplay.getLanguageId()));
-
-				filledFacets.add(facet);
-				_tuples = _getTuples(cpOption, facet.getFacetCollector());
-			}
-		}
-
-		return filledFacets;
 	}
 
 	public void setCPOptionLocalService(
@@ -302,6 +274,34 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		).map(
 			cpOption -> buildTermDisplayContext(0, 1, true, StringPool.BLANK)
 		);
+	}
+
+	private List<Facet> _getFacets() {
+		List<Facet> filledFacets = new ArrayList<>();
+
+		FacetCollector facetCollector = _facet.getFacetCollector();
+
+		PortletSharedSearchResponse portletSharedSearchResponse =
+			_portletSharedSearchRequest.search(_renderRequest);
+
+		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			_renderRequest);
+
+		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
+			CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+				themeDisplay.getCompanyId(), termCollector.getTerm());
+
+			if ((cpOption != null) && cpOption.isFacetable()) {
+				Facet facet = portletSharedSearchResponse.getFacet(
+					CPOptionFacetsUtil.getIndexFieldName(
+						termCollector.getTerm(), themeDisplay.getLanguageId()));
+
+				filledFacets.add(facet);
+				_tuples = _getTuples(cpOption, facet.getFacetCollector());
+			}
+		}
+
+		return filledFacets;
 	}
 
 	private List<Tuple> _getTuples(

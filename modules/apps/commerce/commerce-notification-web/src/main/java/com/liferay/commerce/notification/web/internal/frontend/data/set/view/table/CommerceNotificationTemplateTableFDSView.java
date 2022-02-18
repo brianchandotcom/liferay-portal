@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.commerce.notification.web.internal.frontend;
+package com.liferay.commerce.notification.web.internal.frontend.data.set.view.table;
 
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
+import com.liferay.commerce.notification.web.internal.constants.CommerceNotificationFDSNames;
 import com.liferay.commerce.notification.web.internal.model.NotificationTemplate;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -67,44 +67,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceNotificationTemplateClayTable.NAME,
-		"clay.data.set.display.name=" + CommerceNotificationTemplateClayTable.NAME
+		"fds.data.provider.key=" + CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES,
+		"frontend.data.set.name=" + CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES
 	},
-	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
-		ClayDataSetDisplayView.class
-	}
+	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
 )
-public class CommerceNotificationTemplateClayTable
-	extends BaseTableClayDataSetDisplayView
-	implements ClayDataSetActionProvider,
-			   ClayDataSetDataProvider<NotificationTemplate> {
-
-	public static final String NAME = "notification-templates";
-
-	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
-
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
-
-		ClayTableSchemaField enabledClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("enabled", "status");
-
-		enabledClayTableSchemaField.setContentRenderer("label");
-
-		return clayTableSchemaBuilder.build();
-	}
+public class CommerceNotificationTemplateTableFDSView
+	extends BaseTableFDSView
+	implements FDSActionProvider, FDSDataProvider<NotificationTemplate> {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate = (NotificationTemplate)model;
@@ -161,9 +135,27 @@ public class CommerceNotificationTemplateClayTable
 	}
 
 	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			_fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"type", "type"
+		).add(
+			"enabled", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).build();
+	}
+
+	@Override
 	public List<NotificationTemplate> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -179,8 +171,9 @@ public class CommerceNotificationTemplateClayTable
 		List<CommerceNotificationTemplate> commerceNotificationTemplates =
 			_commerceNotificationTemplateService.
 				getCommerceNotificationTemplates(
-					commerceChannel.getGroupId(), pagination.getStartPosition(),
-					pagination.getEndPosition(), null);
+					commerceChannel.getGroupId(),
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null);
 
 		List<NotificationTemplate> notificationTemplates = new ArrayList<>();
 
@@ -204,7 +197,7 @@ public class CommerceNotificationTemplateClayTable
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -246,9 +239,6 @@ public class CommerceNotificationTemplateClayTable
 	}
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
@@ -257,6 +247,9 @@ public class CommerceNotificationTemplateClayTable
 
 	@Reference
 	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 	@Reference
 	private Portal _portal;

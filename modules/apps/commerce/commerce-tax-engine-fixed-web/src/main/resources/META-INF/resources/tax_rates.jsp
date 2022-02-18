@@ -23,7 +23,7 @@ CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (Comme
 <commerce-ui:panel
 	bodyClasses="p-0"
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceChannelId", String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceChannelId())
@@ -32,12 +32,9 @@ CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (Comme
 			).build()
 		%>'
 		creationMenu="<%= commerceTaxFixedRatesDisplayContext.getCreationMenu() %>"
-		dataProviderKey="<%= CommerceTaxRateClayTable.NAME %>"
-		id="<%= CommerceTaxRateClayTable.NAME %>"
+		dataProviderKey="<%= CommerceTaxRateSettingFDSNames.TAX_RATES %>"
+		id="<%= CommerceTaxRateSettingFDSNames.TAX_RATES %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceTaxFixedRatesDisplayContext.getPortletURL() %>"
 		showSearch="<%= false %>"
 	/>
 </commerce-ui:panel>

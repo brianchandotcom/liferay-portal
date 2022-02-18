@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.tax.engine.fixed.web.internal.frontend.constants;
+package com.liferay.commerce.tax.engine.fixed.web.internal.constants;
+
+import com.liferay.commerce.constants.CommercePortletKeys;
 
 /**
  * @author Alec Sloan
  */
-public class CommerceTaxRateSettingDataSetConstants {
+public class CommerceTaxRateSettingFDSNames {
 
-	public static final String
-		COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING =
-			"percentageCommerceTaxRateSetting";
+	public static final String PERCENTAGE_TAX_RATE_SETTING =
+		CommercePortletKeys.COMMERCE_TAX_METHODS + "-percentageTaxRateSetting";
 
-	public static final String COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING =
-		"commerceTaxRateSetting";
+	public static final String TAX_RATE_SETTING =
+		CommercePortletKeys.COMMERCE_TAX_METHODS + "-taxRateSetting";
+
+	public static final String TAX_RATES =
+		CommercePortletKeys.COMMERCE_TAX_METHODS + "-taxRates";
 
 }

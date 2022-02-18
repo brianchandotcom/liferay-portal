@@ -509,18 +509,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		String viewURL = null;
 
-		if (viewInContext) {
-			try {
-				String noSuchEntryRedirect = viewFullContentURL.toString();
+		try {
+			String noSuchEntryRedirect = viewFullContentURL.toString();
 
-				viewURL = assetRenderer.getURLViewInContext(
-					liferayPortletRequest, liferayPortletResponse,
-					noSuchEntryRedirect);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
+			viewURL = assetRenderer.getURLViewInContext(
+				liferayPortletRequest, liferayPortletResponse,
+				noSuchEntryRedirect);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 

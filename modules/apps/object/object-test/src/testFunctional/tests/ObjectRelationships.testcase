@@ -25,6 +25,8 @@ definition {
 	@description = "LPS-145393 - Verify it is possible to relate 2 entries from a Custom Object entry with the same Native Object entry in a One-to-Many relation"
 	@priority = "4"
 	test CanAddMultipleOneToManyRelationsWithNativeObject {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

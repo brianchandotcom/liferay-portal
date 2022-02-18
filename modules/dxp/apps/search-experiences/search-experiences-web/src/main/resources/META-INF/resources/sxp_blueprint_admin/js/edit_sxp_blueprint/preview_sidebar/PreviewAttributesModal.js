@@ -13,7 +13,6 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -82,7 +81,12 @@ const KeyValueRow = ({
 	);
 };
 
-const PreviewAttributesModal = ({onSubmit = () => {}}) => {
+const PreviewAttributesModal = ({
+	children,
+	title = Liferay.Language.get('attributes'),
+	description,
+	onSubmit = () => {},
+}) => {
 	const [attributes, setAttributes] = useState([{key: '', value: ''}]);
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose: handleClose} = useModal({
@@ -120,16 +124,12 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 					observer={observer}
 					size="md"
 				>
-					<ClayModal.Header>
-						{Liferay.Language.get('search-context-attributes')}
-					</ClayModal.Header>
+					<ClayModal.Header>{title}</ClayModal.Header>
 
 					<ClayModal.Body>
-						<p className="text-secondary">
-							{Liferay.Language.get(
-								'search-context-attributes-description'
-							)}
-						</p>
+						{description && (
+							<p className="text-secondary">{description}</p>
+						)}
 
 						{attributes.map((attribute, index) => (
 							<KeyValueRow
@@ -186,21 +186,7 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 				</ClayModal>
 			)}
 
-			<ClayTooltipProvider>
-				<ClayButton
-					aria-label={Liferay.Language.get(
-						'search-context-attributes'
-					)}
-					borderless
-					displayType="secondary"
-					monospaced
-					onClick={() => setVisible(!visible)}
-					small
-					title={Liferay.Language.get('search-context-attributes')}
-				>
-					<ClayIcon symbol="cog" />
-				</ClayButton>
-			</ClayTooltipProvider>
+			<span onClick={() => setVisible(!visible)}>{children}</span>
 		</>
 	);
 };

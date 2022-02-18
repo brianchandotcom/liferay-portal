@@ -19,6 +19,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -205,8 +206,31 @@ function PreviewSidebar({
 
 				<span>
 					<PreviewAttributesModal
+						description={Liferay.Language.get(
+							'search-context-attributes-description'
+						)}
 						onSubmit={_handleAttributesSubmit}
-					/>
+						title={Liferay.Language.get(
+							'search-context-attributes'
+						)}
+					>
+						<ClayTooltipProvider>
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'search-context-attributes'
+								)}
+								borderless
+								displayType="secondary"
+								monospaced
+								small
+								title={Liferay.Language.get(
+									'search-context-attributes'
+								)}
+							>
+								<ClayIcon symbol="cog" />
+							</ClayButton>
+						</ClayTooltipProvider>
+					</PreviewAttributesModal>
 
 					<ClayButton
 						aria-label={Liferay.Language.get('close')}

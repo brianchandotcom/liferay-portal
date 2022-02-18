@@ -115,7 +115,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long maxFileSize = _getMaxFileSize(actionRequest);
+		long maxFileSize = UploadImageUtil.getMaxFileSize(actionRequest);
 
 		try {
 			UploadException uploadException =
@@ -220,28 +220,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			UploadImageUtil.getTempImageFolderName(), fileName, file,
 			contentType);
-	}
-
-	private long _getMaxFileSize(ActionRequest actionRequest) {
-		String currentLogoURL = actionRequest.getParameter("currentLogoURL");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_female_portrait") ||
-			StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_male_portrait") ||
-			StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_portrait")) {
-
-			return _userFileUploadsConfiguration.imageMaxSize();
-		}
-
-		return ParamUtil.getLong(actionRequest, "maxFileSize");
 	}
 
 	private String _getTempImageFileName(PortletRequest portletRequest) {

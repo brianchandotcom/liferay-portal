@@ -14,19 +14,59 @@
 
 package com.liferay.image.uploader.web.internal.util;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
+@Component(
+	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = UploadImageUtil.class
+)
 public class UploadImageUtil {
+
+	public static long getMaxFileSize(PortletRequest portletRequest) {
+		String currentLogoURL = portletRequest.getParameter("currentLogoURL");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_female_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_male_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_portrait")) {
+
+			return _userFileUploadsConfiguration.imageMaxSize();
+		}
+
+		return _uploadImageUtil._uploadServletRequestConfigurationHelper.
+			getMaxSize();
+	}
 
 	public static FileEntry getTempImageFileEntry(PortletRequest portletRequest)
 		throws PortalException {
@@ -48,5 +88,21 @@ public class UploadImageUtil {
 
 		return clazz.getName();
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			UserFileUploadsConfiguration.class, properties);
+		_uploadImageUtil = this;
+	}
+
+	private static volatile UploadImageUtil _uploadImageUtil;
+	private static volatile UserFileUploadsConfiguration
+		_userFileUploadsConfiguration;
+
+	@Reference
+	private UploadServletRequestConfigurationHelper
+		_uploadServletRequestConfigurationHelper;
 
 }

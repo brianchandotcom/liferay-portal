@@ -83,7 +83,8 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 			_portletSharedSearchRequest.search(renderRequest);
 
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
-			_buildCPOptionsSearchFacetDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildCPOptionsSearchFacetDisplayContext(
+				portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

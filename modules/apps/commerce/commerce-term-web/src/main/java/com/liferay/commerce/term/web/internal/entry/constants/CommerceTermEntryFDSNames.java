@@ -14,15 +14,18 @@
 
 package com.liferay.commerce.term.web.internal.entry.constants;
 
+import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
+
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTermEntryClayDataSetDisplayNames {
+public class CommerceTermEntryFDSNames {
 
-	public static final String COMMERCE_TERM_ENTRIES = "commerceTermEntries";
+	public static final String TERM_ENTRIES =
+		CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY + "-termEntries";
 
-	public static final String
-		COMMERCE_TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
-			"commerceTermEntryQualifierCommerceOrderTypes";
+	public static final String TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
+		CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY +
+			"-termEntryQualifierCommerceOrderTypes";
 
 }

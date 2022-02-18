@@ -22,7 +22,7 @@ import com.liferay.commerce.term.entry.type.CommerceTermEntryTypeRegistry;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.commerce.term.web.internal.display.context.helper.CommerceTermEntryRequestHelper;
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,12 +93,12 @@ public class CommerceTermEntryDisplayContext {
 			commerceTermEntryId);
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getCommerceTermEntryClayDataSetActionDropdownItems()
+	public List<FDSActionDropdownItem>
+			getCommerceTermEntryFDSActionDropdownItems()
 		throws PortalException {
 
 		return ListUtil.fromArray(
-			new ClayDataSetActionDropdownItem(
+			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						httpServletRequest, CommerceTermEntry.class.getName(),
@@ -112,11 +112,11 @@ public class CommerceTermEntryDisplayContext {
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", null, null),
-			new ClayDataSetActionDropdownItem(
+			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
 				"delete", "headless"),
-			new ClayDataSetActionDropdownItem(
+			new FDSActionDropdownItem(
 				_getManagePermissionsURL(), null, "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"));

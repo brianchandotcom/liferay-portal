@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -40,7 +41,7 @@ page import="com.liferay.commerce.term.web.internal.display.CommerceAccountEntry
 page import="com.liferay.commerce.term.web.internal.display.CommerceTermEntryDisplay" %><%@
 page import="com.liferay.commerce.term.web.internal.display.context.CommerceTermEntryDisplayContext" %><%@
 page import="com.liferay.commerce.term.web.internal.display.context.CommerceTermEntryQualifiersDisplayContext" %><%@
-page import="com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryClayDataSetDisplayNames" %><%@
+page import="com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryFDSNames" %><%@
 page import="com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryScreenNavigationEntryConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

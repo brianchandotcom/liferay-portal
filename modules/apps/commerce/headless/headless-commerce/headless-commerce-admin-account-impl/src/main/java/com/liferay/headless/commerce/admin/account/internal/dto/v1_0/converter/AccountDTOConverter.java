@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -98,7 +98,7 @@ public class AccountDTOConverter
 	private String _getLogoURL(long logoId) {
 		return StringBundler.concat(
 			"/image/organization_logo?img_id=", logoId, "&t=",
-			WebServerServletTokenUtil.getToken(logoId));
+			_webServerServletToken.getToken(logoId));
 	}
 
 	@Reference
@@ -109,5 +109,8 @@ public class AccountDTOConverter
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WebServerServletToken _webServerServletToken;
 
 }

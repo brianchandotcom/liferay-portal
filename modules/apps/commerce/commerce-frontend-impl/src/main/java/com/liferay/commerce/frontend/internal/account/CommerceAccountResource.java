@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -311,7 +311,7 @@ public class CommerceAccountResource {
 	private String _getLogoThumbnailSrc(long logoId, String imagePath) {
 		return StringBundler.concat(
 			imagePath, "/organization_logo?img_id=", logoId, "&t=",
-			WebServerServletTokenUtil.getToken(logoId));
+			_webServerServletToken.getToken(logoId));
 	}
 
 	private String _getOrderLinkURL(
@@ -488,5 +488,8 @@ public class CommerceAccountResource {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WebServerServletToken _webServerServletToken;
 
 }

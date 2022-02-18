@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
@@ -324,7 +324,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		return StringBundler.concat(
 			pathImage, "/layout_icon?img_id=", layout.getIconImageId(), "&t=",
-			WebServerServletTokenUtil.getToken(layout.getIconImageId()));
+			_webServerServletToken.getToken(layout.getIconImageId()));
 	}
 
 	@Override
@@ -631,5 +631,8 @@ public class LayoutSiteNavigationMenuItemType
 	@Reference
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private WebServerServletToken _webServerServletToken;
 
 }

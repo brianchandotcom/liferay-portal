@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
+				"datasetId", COREntryFDSNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
 			).put(
 				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
 			).put(
@@ -36,15 +36,12 @@
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "accounts") %>'
 	>
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= corEntryQualifiersDisplayContext.getAccountEntryCOREntriesAPIURL() %>"
-			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountEntryClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountEntryFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>"
+			id="<%= COREntryFDSNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

@@ -12,25 +12,28 @@
  * details.
  */
 
-package com.liferay.commerce.order.rule.web.internal.entry.constants;
+package com.liferay.commerce.order.rule.web.internal.constants;
+
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class COREntryClayDataSetDisplayNames {
+public class COREntryFDSNames {
 
-	public static final String COR_ENTRIES = "corEntries";
+	public static final String COR_ENTRIES =
+		COREntryPortletKeys.COR_ENTRY + "-corEntries";
 
 	public static final String COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES =
-		"corEntryQualifierAccountEntries";
+		COREntryPortletKeys.COR_ENTRY + "-corEntryQualifierAccountEntries";
 
 	public static final String COR_ENTRY_QUALIFIER_ACCOUNT_GROUPS =
-		"corEntryQualifierAccountGroups";
+		COREntryPortletKeys.COR_ENTRY + "-corEntryQualifierAccountGroups";
 
 	public static final String COR_ENTRY_QUALIFIER_COMMERCE_CHANNELS =
-		"corEntryQualifierCommerceChannels";
+		COREntryPortletKeys.COR_ENTRY + "-corEntryQualifierCommerceChannels";
 
 	public static final String COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
-		"corEntryQualifierCommerceOrderTypes";
+		COREntryPortletKeys.COR_ENTRY + "-corEntryQualifierCommerceOrderTypes";
 
 }

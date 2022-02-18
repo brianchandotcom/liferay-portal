@@ -19,9 +19,9 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -33,9 +33,9 @@ page import="com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContribut
 page import="com.liferay.commerce.order.rule.exception.COREntryExpirationDateException" %><%@
 page import="com.liferay.commerce.order.rule.exception.NoSuchCOREntryException" %><%@
 page import="com.liferay.commerce.order.rule.model.COREntry" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.constants.COREntryFDSNames" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryQualifiersDisplayContext" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryClayDataSetDisplayNames" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryScreenNavigationEntryConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

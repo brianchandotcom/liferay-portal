@@ -13,17 +13,13 @@
  */
 
 package com.liferay.site.initializer.testray.extra.java.function;
-
 import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.util.HttpClient;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
@@ -192,7 +188,7 @@ public class ImportResults {
 	}
 
 	public static int fetchOrAddProject(long groupId, File file) {
-		Map<String, String> map = null;
+		Map<String, String> map = new HashMap<>();
 
 		int projectId = -1;
 
@@ -238,11 +234,8 @@ public class ImportResults {
 					if (name.equals("testray.project.name")) {
 						projectName = value;
 
-						map = HashMapBuilder.put(
-							"description", name
-						).put(
-							"name", value
-						).build();
+						map.put("description", name);
+						map.put("name", value);
 
 						break;
 					}
@@ -273,7 +266,7 @@ public class ImportResults {
 			exception.printStackTrace();
 		}
 
-		if ((projectId == -1) && (map != null)) {
+		if ((projectId == -1) && (!map.isEmpty())) {
 			JSONObject response = HttpClient.post(
 				_BASE_URL + "testrayprojects/scopes/" + groupId,
 				new JSONObject(map));

@@ -14,14 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.StringReader;
-
 import java.net.URL;
 
 import java.util.Hashtable;
-import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,29 +53,6 @@ public class BuildTest extends Test {
 			JenkinsResultsParserUtil.getLocalURL(url.toExternalForm()), null);
 
 		build.archive(testSample.getSampleDirName());
-	}
-
-	protected Properties loadProperties(String sampleName) throws Exception {
-		Properties properties = new Properties();
-
-		TestSample testSample = testSamples.get(sampleName);
-
-		String content = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(
-				toURLString(
-					new File(testSample.getSampleDir(), "sample.properties"))));
-
-		properties.load(new StringReader(content));
-
-		return properties;
-	}
-
-	protected void saveProperties(File file, Properties properties)
-		throws Exception {
-
-		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-			properties.store(fileOutputStream, null);
-		}
 	}
 
 }

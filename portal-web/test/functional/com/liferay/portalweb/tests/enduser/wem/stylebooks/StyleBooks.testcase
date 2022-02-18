@@ -557,4 +557,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142078. The user could view the default style book in Style Books admin but cannot delete and edit it."
+	@priority = "5"
+	test ViewDefaultStyleBook {
+		task ("Navigate to the Style Books admin") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Styles from Theme is shown") {
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Styles from Theme");
+		}
+
+		task ("View cannot edit or delete the Styles form Theme") {
+			AssertElementNotPresent(
+				key_card = "Blank",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			AssertElementNotPresent(
+				key_card = "Blank",
+				locator1 = "Card#CARD_CHECKBOX");
+
+			AssertElementNotPresent(
+				key_card = "Blank",
+				locator1 = "Card#CARD_TITLE_LINK");
+		}
+	}
+
 }

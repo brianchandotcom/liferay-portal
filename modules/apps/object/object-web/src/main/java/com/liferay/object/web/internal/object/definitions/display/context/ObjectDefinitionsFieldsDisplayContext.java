@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -169,6 +170,16 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		}
 
 		return objectFieldBusinessTypeMaps;
+	}
+
+	public Map<String, Object> getObjectFieldProperties(
+		Locale locale, ObjectField objectField) {
+
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeServicesTracker.getObjectFieldBusinessType(
+				objectField.getBusinessType());
+
+		return objectFieldBusinessType.getProperties(locale, objectField);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

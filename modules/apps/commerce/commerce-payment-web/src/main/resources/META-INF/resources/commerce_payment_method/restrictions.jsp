@@ -28,19 +28,16 @@ long commerceChannelId = commercePaymentMethodGroupRelsDisplayContext.getCommerc
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceChannelId", String.valueOf(commerceChannelId)
 			).build()
 		%>'
-		dataProviderKey="<%= CommercePaymentRestrictionsPageClayTable.NAME %>"
+		dataProviderKey="<%= CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS %>"
 		formName="fm"
-		id="<%= CommercePaymentRestrictionsPageClayTable.NAME %>"
+		id="<%= CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS %>"
 		itemsPerPage="<%= commercePaymentMethodGroupRelsDisplayContext.getCountriesCount() %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= currentURLObj %>"
 		selectedItemsKey="countryId"
 		showPagination="<%= false %>"
 	/>

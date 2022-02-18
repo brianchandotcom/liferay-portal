@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -32,13 +33,12 @@ page import="com.liferay.commerce.payment.exception.DuplicateCommercePaymentMeth
 page import="com.liferay.commerce.payment.method.CommercePaymentMethod" %><%@
 page import="com.liferay.commerce.payment.method.CommercePaymentMethodRegistry" %><%@
 page import="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel" %><%@
-page import="com.liferay.commerce.payment.web.internal.constants.CommercePaymentMethodGroupRelClayDataSetDisplayNames" %><%@
+page import="com.liferay.commerce.payment.web.internal.constants.CommercePaymentMethodGroupRelFDSNames" %><%@
 page import="com.liferay.commerce.payment.web.internal.dao.search.AccountEntryCommercePaymentMethodDisplaySearchContainerFactory" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.CommerceAccountEntryDisplay" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.CommercePaymentMethodDisplay" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext" %><%@
-page import="com.liferay.commerce.payment.web.internal.frontend.CommercePaymentRestrictionsPageClayTable" %><%@
 page import="com.liferay.commerce.term.constants.CommerceTermEntryConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

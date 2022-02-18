@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", CommercePaymentMethodGroupRelClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_COMMERCE_ORDER_TYPES
+				"datasetId", CommercePaymentMethodGroupRelFDSNames.ORDER_TYPES
 			).put(
 				"paymentMethodGroupRelId", commercePaymentMethodGroupRelId
 			).put(
@@ -34,15 +34,12 @@
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "order-types") %>'
 	>
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= commercePaymentMethodGroupRelQualifiersDisplayContext.getCommerceOrderTypeCommercePaymentMethodGroupRelsAPIURL() %>"
-			clayDataSetActionDropdownItems="<%= commercePaymentMethodGroupRelQualifiersDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= commercePaymentMethodGroupRelQualifiersDisplayContext.getCommerceOrderTypeFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommercePaymentMethodGroupRelClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_COMMERCE_ORDER_TYPES %>"
+			id="<%= CommercePaymentMethodGroupRelFDSNames.ORDER_TYPES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

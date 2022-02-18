@@ -36,7 +36,7 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");
 
 		Pagination.changePagination(itemsPerPage = "60");
-		
+
 		while (IsElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected countries?");
 		}

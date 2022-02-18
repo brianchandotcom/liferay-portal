@@ -104,7 +104,7 @@ definition {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Commerce Account",
 			accountEntryType = "Business");
-		
+
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();

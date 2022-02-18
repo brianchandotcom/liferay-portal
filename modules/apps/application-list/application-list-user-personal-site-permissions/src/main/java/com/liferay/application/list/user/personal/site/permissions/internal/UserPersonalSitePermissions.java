@@ -15,8 +15,6 @@
 package com.liferay.application.list.user.personal.site.permissions.internal;
 
 import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +40,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -90,14 +87,6 @@ public class UserPersonalSitePermissions {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		String filter = StringBundler.concat(
-			"(&(!(depot.panel.app.wrapper=*))(objectClass=",
-			PanelApp.class.getName(), ")(panel.category.key=",
-			PanelCategoryKeys.SITE_ADMINISTRATION, "*))");
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, filter, new PanelAppServiceTrackerCustomizer());
 	}
 
 	protected void initPermissions(
@@ -219,8 +208,6 @@ public class UserPersonalSitePermissions {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	private ServiceTracker<PanelApp, PanelApp> _serviceTracker;
 
 	private class PanelAppServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PanelApp, PanelApp> {

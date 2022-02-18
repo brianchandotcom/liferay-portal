@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.commerce.product.content.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.catalog.CPSku;
-import com.liferay.commerce.product.content.web.internal.frontend.constants.CPContentDataSetConstants;
+import com.liferay.commerce.product.content.web.internal.constants.CPContentFDSNames;
 import com.liferay.commerce.product.content.web.internal.model.ReplacementSku;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,16 +50,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CPContentDataSetConstants.COMMERCE_DATA_SET_KEY_REPLACEMENT_CP_INSTANCES,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CPContentFDSNames.REPLACEMENT_CP_INSTANCES,
+	service = FDSDataProvider.class
 )
-public class ReplacementCPInstanceDataSetDataProvider
-	implements ClayDataSetDataProvider<ReplacementSku> {
+public class ReplacementCPInstanceFDSDataProvider
+	implements FDSDataProvider<ReplacementSku> {
 
 	@Override
 	public List<ReplacementSku> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		long commerceAccountId = ParamUtil.getLong(
@@ -98,7 +98,7 @@ public class ReplacementCPInstanceDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String cpInstanceUuid = ParamUtil.getString(

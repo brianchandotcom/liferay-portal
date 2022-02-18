@@ -325,7 +325,7 @@ List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategorie
 		elementClasses="mb-3"
 		title='<%= LanguageUtil.get(resourceBundle, "replacements") %>'
 	>
-		<clay:data-set-display
+		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
@@ -339,12 +339,9 @@ List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategorie
 					"cProductId", String.valueOf(cpCatalogEntry.getCProductId())
 				).build()
 			%>'
-			dataProviderKey="<%= CPContentDataSetConstants.COMMERCE_DATA_SET_KEY_REPLACEMENT_CP_INSTANCES %>"
-			id="<%= CPContentDataSetConstants.COMMERCE_DATA_SET_KEY_REPLACEMENT_CP_INSTANCES %>"
+			dataProviderKey="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
+			id="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 			style="stacked"
 		/>
 	</commerce-ui:panel>

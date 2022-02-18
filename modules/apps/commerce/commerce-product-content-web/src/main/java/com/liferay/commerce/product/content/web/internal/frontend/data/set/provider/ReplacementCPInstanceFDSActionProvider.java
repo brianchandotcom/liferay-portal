@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.frontend.taglib.clay.data.set;
+package com.liferay.commerce.product.content.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.product.content.web.internal.frontend.constants.CPContentDataSetConstants;
+import com.liferay.commerce.product.content.web.internal.constants.CPContentFDSNames;
 import com.liferay.commerce.product.content.web.internal.model.ReplacementSku;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,15 +40,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CPContentDataSetConstants.COMMERCE_DATA_SET_KEY_REPLACEMENT_CP_INSTANCES,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CPContentFDSNames.REPLACEMENT_CP_INSTANCES,
+	service = FDSActionProvider.class
 )
-public class ReplacementCPInstanceDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class ReplacementCPInstanceFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		ReplacementSku replacementSku = (ReplacementSku)model;

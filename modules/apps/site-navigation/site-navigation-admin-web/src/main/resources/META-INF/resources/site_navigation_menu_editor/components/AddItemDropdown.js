@@ -65,11 +65,10 @@ function getNamespacedInfoItems(
 
 	let selectedItemsValue = selectedItems;
 
-	if (selectedItems.value && typeof selectedItems.value === 'object') {
-		selectedItemsValue = [];
-		selectedItems.value.forEach((item) => {
-			selectedItemsValue.push(JSON.parse(item));
-		});
+	if (selectedItems.value && Array.isArray(selectedItems.value)) {
+		selectedItemsValue = selectedItems.value.map((item) =>
+			JSON.parse(item)
+		);
 	}
 
 	if (!selectedItemsValue.length) {

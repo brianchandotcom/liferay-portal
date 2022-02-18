@@ -23,19 +23,16 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 <c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpInstanceDisplayContext.getCPDefinition(), ActionKeys.VIEW) %>">
 	<div class="pt-4" id="<portlet:namespace />productInstancesContainer">
 		<aui:form action="<%= cpInstanceDisplayContext.getPortletURL() %>" method="post" name="fm">
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())
 					).build()
 				%>'
 				creationMenu="<%= cpInstanceDisplayContext.getCreationMenu() %>"
-				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
-				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
+				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_INSTANCES %>"
+				id="<%= CommerceProductFDSNames.PRODUCT_INSTANCES %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= currentURLObj %>"
 				selectedItemsKey="cpinstanceId"
 				style="stacked"
 			/>

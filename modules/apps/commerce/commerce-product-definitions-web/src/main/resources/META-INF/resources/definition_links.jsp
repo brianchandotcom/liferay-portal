@@ -21,7 +21,6 @@ CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext = (CPDefinitionLin
 
 CPDefinition cpDefinition = cpDefinitionLinkDisplayContext.getCPDefinition();
 long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
-PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 %>
 
 <c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpDefinition, ActionKeys.VIEW) %>">
@@ -36,24 +35,21 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 	</aui:form>
 
 	<div class="pt-4" id="<portlet:namespace />productDefinitionLinksContainer">
-		<aui:form action="<%= portletURL %>" method="post" name="fm">
+		<aui:form action="<%= cpDefinitionLinkDisplayContext.getPortletURL() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<clay:data-set-display
+			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"cpDefinitionId", String.valueOf(cpDefinitionLinkDisplayContext.getCPDefinitionId())
 					).build()
 				%>'
 				creationMenu="<%= cpDefinitionLinkDisplayContext.getCreationMenu() %>"
-				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"
+				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_LINKS %>"
 				formName="fm"
-				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"
+				id="<%= CommerceProductFDSNames.PRODUCT_LINKS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= portletURL %>"
 				style="stacked"
 			/>
 		</aui:form>

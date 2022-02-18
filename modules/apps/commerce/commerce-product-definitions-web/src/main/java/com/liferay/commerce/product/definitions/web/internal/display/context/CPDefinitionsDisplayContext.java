@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.url.CPFriendlyURL;
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -146,7 +146,7 @@ public class CPDefinitionsDisplayContext
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
-			new ClayDataSetActionDropdownItem(
+			new FDSActionDropdownItem(
 				PortletURLBuilder.createActionURL(
 					cpRequestHelper.getRenderResponse()
 				).setActionName(
@@ -203,49 +203,6 @@ public class CPDefinitionsDisplayContext
 				dropdownItem.setTarget("event");
 			}
 		).build();
-	}
-
-	public List<ClayDataSetActionDropdownItem>
-			getClayDataSetActionDropdownItems()
-		throws PortalException {
-
-		return ListUtil.fromArray(
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						httpServletRequest, CPDefinition.class.getName(),
-						PortletProvider.Action.MANAGE)
-				).setMVCRenderCommandName(
-					"/cp_definitions/edit_cp_definition"
-				).setParameter(
-					"cpDefinitionId", "{id}"
-				).setParameter(
-					"screenNavigationCategoryKey",
-					CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
-				).buildString(),
-				"view", "view", LanguageUtil.get(httpServletRequest, "view"),
-				"get", null, null),
-			new ClayDataSetActionDropdownItem(
-				"/o/headless-commerce-admin-catalog/v1.0/products/{productId}",
-				"trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete", "async"),
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						cpRequestHelper.getRenderRequest(),
-						cpRequestHelper.getPortletId(),
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/cp_definitions/duplicate_cp_definition"
-				).setParameter(
-					"cpDefinitionId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"paste", "duplicate",
-				LanguageUtil.get(httpServletRequest, "duplicate"), "post",
-				"update", "modal"));
 	}
 
 	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()
@@ -359,6 +316,48 @@ public class CPDefinitionsDisplayContext
 		dropdownItems.add(dropdownItem);
 
 		return dropdownItems;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws PortalException {
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CPDefinition.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/cp_definitions/edit_cp_definition"
+				).setParameter(
+					"cpDefinitionId", "{id}"
+				).setParameter(
+					"screenNavigationCategoryKey",
+					CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
+				).buildString(),
+				"view", "view", LanguageUtil.get(httpServletRequest, "view"),
+				"get", null, null),
+			new FDSActionDropdownItem(
+				"/o/headless-commerce-admin-catalog/v1.0/products/{productId}",
+				"trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "async"),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						cpRequestHelper.getRenderRequest(),
+						cpRequestHelper.getPortletId(),
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/cp_definitions/duplicate_cp_definition"
+				).setParameter(
+					"cpDefinitionId", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"paste", "duplicate",
+				LanguageUtil.get(httpServletRequest, "duplicate"), "post",
+				"update", "modal"));
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()

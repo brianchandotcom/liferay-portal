@@ -120,11 +120,6 @@
 	<bean class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">
 		<property name="rawMetadataProcessor" ref="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
-		<property name="OAuthFactory">
-			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.patcher.PatcherUtil" id="com.liferay.portal.kernel.patcher.PatcherUtil">
 		<property name="patcher">
 			<bean class="com.liferay.portal.patcher.PatcherImpl" />

@@ -152,6 +152,7 @@ import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
+import com.liferay.friendly.url.internal.util.FriendlyURLNormalizerImpl;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
@@ -199,6 +200,8 @@ import com.liferay.message.boards.model.impl.MBMessageModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.social.MBActivityKeys;
+import com.liferay.normalizer.Normalizer;
+import com.liferay.normalizer.internal.NormalizerImpl;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -259,7 +262,7 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -6336,6 +6339,25 @@ public class DataFactory {
 		long groupId, long classNameId, long classPK, String name, int type,
 		String typeSettings, boolean site) {
 
+		Class<?> friendlyURLNormalizerClazz = _friendlyURLNormalizer.getClass();
+
+		Field[] fields = friendlyURLNormalizerClazz.getDeclaredFields();
+
+		for (Field field : fields) {
+			field.setAccessible(true);
+
+			String fileName = field.getName();
+
+			if (fileName.equals("_normalizer")) {
+				try {
+					field.set(_friendlyURLNormalizer, _normalizer);
+				}
+				catch (IllegalAccessException illegalAccessException) {
+					illegalAccessException.printStackTrace();
+				}
+			}
+		}
+
 		GroupModel groupModel = new GroupModelImpl();
 
 		// UUID
@@ -6365,8 +6387,7 @@ public class DataFactory {
 		groupModel.setMembershipRestriction(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
 		groupModel.setFriendlyURL(
-			StringPool.FORWARD_SLASH +
-				FriendlyURLNormalizerUtil.normalize(name));
+			StringPool.FORWARD_SLASH + _friendlyURLNormalizer.normalize(name));
 		groupModel.setSite(site);
 		groupModel.setActive(true);
 
@@ -7317,6 +7338,9 @@ public class DataFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
 
+	private static final FriendlyURLNormalizer _friendlyURLNormalizer =
+		new FriendlyURLNormalizerImpl();
+	private static final Normalizer _normalizer = new NormalizerImpl();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 

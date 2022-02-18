@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.clay.data.set.view.table;
+package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.data.set.view.table;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -20,17 +20,17 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.constants.CommerceShippingFixedOptionFDSNames;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFixedOption;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -67,46 +67,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME,
-		"clay.data.set.display.name=" + CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME
+		"fds.data.provider.key=" + CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS,
+		"frontend.data.set.name=" + CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS
 	},
-	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
-		ClayDataSetDisplayView.class
-	}
+	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
 )
-public class CommerceShippingFixedOptionClayTableDataSetDisplayView
-	extends BaseTableClayDataSetDisplayView
-	implements ClayDataSetActionProvider,
-			   ClayDataSetDataProvider<ShippingFixedOption> {
-
-	public static final String NAME = "shipping-fixed-options";
-
-	@Override
-	public ClayTableSchema getClayTableSchema(Locale locale) {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
-
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"description", "description");
-
-		ClayTableSchemaField priorityClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"priority", "priority");
-
-		priorityClayTableSchemaField.setSortable(true);
-
-		return clayTableSchemaBuilder.build();
-	}
+public class CommerceShippingFixedOptionTableFDSView
+	extends BaseTableFDSView
+	implements FDSActionProvider, FDSDataProvider<ShippingFixedOption> {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		ShippingFixedOption shippingFixedOption = (ShippingFixedOption)model;
@@ -134,9 +106,26 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 	}
 
 	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			_fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"description", "description"
+		).add(
+			"priority", "priority",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).build();
+	}
+
+	@Override
 	public List<ShippingFixedOption> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -154,8 +143,8 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
 				themeDisplay.getCompanyId(),
 				commerceShippingMethod.getGroupId(), commerceShippingMethodId,
-				filter.getKeywords(), pagination.getStartPosition(),
-				pagination.getEndPosition());
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 
 		List<ShippingFixedOption> shippingFixedOptions = new ArrayList<>();
 
@@ -185,7 +174,7 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceShippingMethodId = ParamUtil.getLong(
@@ -252,15 +241,15 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 	}
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 	@Reference
 	private Portal _portal;

@@ -12,41 +12,73 @@
  * details.
  */
 
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
+import {ReactElement, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 type DropDownProps = {
-	data: any[];
+	items: {
+		sections: {
+			items: {
+				icon: string;
+				label: string;
+				path: string;
+			}[];
+			title: string;
+		}[];
+	};
+	position?: any;
+	trigger: ReactElement;
 };
 
-const DropDown: React.FC<DropDownProps> = () => {
-	const [value, setValue] = useState('');
+const DropDown: React.FC<DropDownProps> = ({
+	items,
+	position = Align.BottomCenter,
+	trigger,
+}) => {
+	const [active, setActive] = useState(false);
 
 	return (
-		<ClayDropDownWithItems
-			caption={value}
-			items={[]}
-			onSearchValueChange={() => setValue('teste')}
-			spritemap="caret-bottom"
-			trigger={
-				<div className="align-items-center d-flex">
-					<a>
-						<ClayIcon
-							className="mr-2"
-							style={{fontSize: '30px'}}
-							symbol="polls"
-						/>
+		<ClayDropDown
+			active={active}
+			alignmentPosition={position}
+			onActiveChange={setActive}
+			trigger={trigger}
+		>
+			<ClayDropDown.ItemList>
+				{items.sections.map((section, index) => (
+					<div key={index}>
+						<ClayDropDown.Group>
+							<ClayDropDown.Caption>
+								{section.title}
+							</ClayDropDown.Caption>
 
-						<ClayIcon
-							className="mr-2"
-							style={{color: 'black', fontSize: '30px'}}
-							symbol="caret-bottom"
-						/>
-					</a>
-				</div>
-			}
-		/>
+							{section.items.map((item, itemIndex) => (
+								<Link key={itemIndex} to={`${item.path}`}>
+									<ClayDropDown.Item>
+										<div className="align-items-center d-flex testray-sidebar-item">
+											<ClayIcon
+												fontSize={16}
+												symbol={item.icon}
+											/>
+
+											<span className="ml-1 testray-sidebar-text">
+												{item.label}
+											</span>
+										</div>
+									</ClayDropDown.Item>
+								</Link>
+							))}
+						</ClayDropDown.Group>
+
+						{items.sections.length - 1 !== index && (
+							<ClayDropDown.Divider />
+						)}
+					</div>
+				))}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
 	);
 };
 

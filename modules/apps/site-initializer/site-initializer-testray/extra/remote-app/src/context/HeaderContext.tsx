@@ -12,8 +12,11 @@
  * details.
  */
 
-import {createContext, useReducer} from 'react';
+import {useQuery} from '@apollo/client';
+import {createContext, useEffect, useReducer} from 'react';
 
+import {getTestrayProjects} from '../graphql/queries';
+import {Liferay} from '../services/liferay/liferay';
 import {ActionMap} from '../types';
 
 export type HeaderTabs = {
@@ -29,11 +32,42 @@ export type HeaderTitle = {
 };
 
 type InitialState = {
+	dropdown: Dropdown;
 	heading: HeaderTitle[];
 	tabs: HeaderTabs[];
 };
 
+export type Dropdown = {
+	sections: [
+		{
+			items: [
+				{
+					icon: string;
+					label: string;
+					path: string;
+				}
+			];
+			title: string;
+		}
+	];
+};
+
 export const initialState: InitialState = {
+	dropdown: {
+		sections: [
+			{
+				items: [
+					{
+						icon: 'user',
+						label: 'Manage Accounts',
+						path: '/manage/user',
+					},
+				],
+				title: '',
+			},
+		],
+	},
+
 	heading: [
 		{
 			category: 'PROJECT',
@@ -48,12 +82,14 @@ export const HeaderContext = createContext<
 >([initialState, () => null]);
 
 export enum HeaderTypes {
+	SET_DROPDOWN = 'SET_DROPDOWN',
+	SET_HEADING = 'SET_HEADING',
 	SET_RESET_HEADER = 'SET_RESET_HEADER',
 	SET_TABS = 'SET_TABS',
-	SET_HEADING = 'SET_HEADING',
 }
 
 export type HeaderActionsPayload = {
+	[HeaderTypes.SET_DROPDOWN]: Dropdown;
 	[HeaderTypes.SET_HEADING]: {append?: boolean; heading: HeaderTitle[]};
 	[HeaderTypes.SET_RESET_HEADER]: null;
 	[HeaderTypes.SET_TABS]: HeaderTabs[];
@@ -65,6 +101,13 @@ export type AppActions = ActionMap<HeaderActionsPayload>[keyof ActionMap<
 
 const reducer = (state: InitialState, action: AppActions): InitialState => {
 	switch (action.type) {
+		case HeaderTypes.SET_DROPDOWN: {
+			return {
+				...state,
+				dropdown: action.payload,
+			};
+		}
+
 		case HeaderTypes.SET_TABS: {
 			return {
 				...state,
@@ -92,6 +135,40 @@ const reducer = (state: InitialState, action: AppActions): InitialState => {
 
 const HeaderContextProvider: React.FC = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+	const variables = {scopeKey: Liferay.ThemeDisplay.getSiteGroupId()};
+
+	const {data} = useQuery(getTestrayProjects, {
+		variables,
+	});
+
+	const testrayProjects = data?.c?.testrayProjects?.items;
+
+	useEffect(() => {
+		if (testrayProjects) {
+			const createObject = (elements: any): Dropdown => {
+				return {
+					sections: [
+						{
+							items: elements.map((element: any) => {
+								return {
+									icon: '',
+									label: element.name,
+									path: `${element.name}`,
+								};
+							}),
+							title: '',
+						},
+					],
+				};
+			};
+
+			dispatch({
+				payload: createObject(testrayProjects),
+				type: HeaderTypes.SET_DROPDOWN,
+			});
+		}
+	}, [testrayProjects]);
 
 	return (
 		<HeaderContext.Provider value={[state, dispatch]}>

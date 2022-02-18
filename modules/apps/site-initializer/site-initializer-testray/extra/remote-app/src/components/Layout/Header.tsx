@@ -12,6 +12,8 @@
  * details.
  */
 
+import {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import {useContext} from 'react';
@@ -23,14 +25,34 @@ import DropDown from '../DropDown';
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
 const Header = () => {
-	const [{heading, tabs}] = useContext(HeaderContext);
+	const [{dropdown, heading, tabs}] = useContext(HeaderContext);
 	const navigate = useNavigate();
 
 	return (
 		<div className="d-flex flex-column header-container pt-4">
 			<div className="d-flex">
 				<div className="align-items-center d-flex justify-content-center mx-3">
-					<DropDown data={[]}></DropDown>
+					<DropDown
+						items={dropdown}
+						position={Align.BottomLeft}
+						trigger={
+							<div className="align-items-end d-flex">
+								<a>
+									<ClayIcon
+										className="dropdown-poll-icon mr-2"
+										symbol="polls"
+									/>
+
+									<ClayIcon
+										className={classNames(
+											'dropdown-arrow-icon'
+										)}
+										symbol="caret-bottom"
+									/>
+								</a>
+							</div>
+						}
+					></DropDown>
 				</div>
 
 				<div className="d-flex flex-column">

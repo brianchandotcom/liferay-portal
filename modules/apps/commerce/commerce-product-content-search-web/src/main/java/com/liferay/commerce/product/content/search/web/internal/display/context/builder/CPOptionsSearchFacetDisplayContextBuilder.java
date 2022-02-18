@@ -37,7 +37,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -94,10 +93,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
 		_frequencyThreshold = frequencyThreshold;
-	}
-
-	public void setLocale(Locale locale) {
-		_locale = locale;
 	}
 
 	public void setMaxTerms(int maxTerms) {
@@ -326,7 +321,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
-	private Locale _locale;
 	private int _maxTerms;
 	private String _paginationStartParameterName;
 	private Portal _portal;

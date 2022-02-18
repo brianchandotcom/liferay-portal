@@ -114,13 +114,10 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		int maxTerms = 10;
-
-		int frequencyThreshold = 1;
-
+		String displayStyle = null;
+		int frequencyThreshold = -1;
+		int maxTerms = -1;
 		boolean showFrequencies = true;
-
-		String displayStyle = "cloud";
 
 		try {
 			CPOptionFacetsPortletInstanceConfiguration
@@ -128,17 +125,14 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 					portletDisplay.getPortletInstanceConfiguration(
 						CPOptionFacetsPortletInstanceConfiguration.class);
 
-			maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
-
+			displayStyle =
+				cpOptionFacetsPortletInstanceConfiguration.displayStyle();
 			frequencyThreshold =
 				cpOptionFacetsPortletInstanceConfiguration.
 					getFrequencyThreshold();
-
+			maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
 			showFrequencies =
 				cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
-
-			displayStyle =
-				cpOptionFacetsPortletInstanceConfiguration.displayStyle();
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

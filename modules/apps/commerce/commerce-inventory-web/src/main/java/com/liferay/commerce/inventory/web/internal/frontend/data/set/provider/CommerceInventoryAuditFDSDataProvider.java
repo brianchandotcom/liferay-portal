@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.frontend.model.TimelineModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditService;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,16 +50,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_AUDIT,
+	service = FDSDataProvider.class
 )
-public class CommerceInventoryAuditDataSetDataProvider
-	implements ClayDataSetDataProvider<TimelineModel> {
+public class CommerceInventoryAuditFDSDataProvider
+	implements FDSDataProvider<TimelineModel> {
 
 	@Override
 	public List<TimelineModel> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<TimelineModel> timelineModels = new ArrayList<>();
@@ -77,7 +77,8 @@ public class CommerceInventoryAuditDataSetDataProvider
 		List<CommerceInventoryAudit> commerceInventoryAudits =
 			_commerceInventoryAuditService.getCommerceInventoryAudits(
 				_portal.getCompanyId(httpServletRequest), sku,
-				pagination.getStartPosition(), pagination.getEndPosition());
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 
 		for (CommerceInventoryAudit commerceInventoryAudit :
 				commerceInventoryAudits) {
@@ -116,7 +117,7 @@ public class CommerceInventoryAuditDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");

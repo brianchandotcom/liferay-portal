@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.view.timeline;
 
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.timeline.BaseTimelineClayDataSetDisplayView;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.timeline.BaseTimelineFDSView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,11 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
-	service = ClayDataSetDisplayView.class
+	property = "frontend.data.set.name=" + CommerceInventoryFDSNames.INVENTORY_AUDIT,
+	service = FDSView.class
 )
-public class CommerceInventoryAuditClayTimelineDataSetDisplayView
-	extends BaseTimelineClayDataSetDisplayView {
+public class CommerceInventoryAuditTimelineFDSView extends BaseTimelineFDSView {
 
 	@Override
 	public String getDate() {

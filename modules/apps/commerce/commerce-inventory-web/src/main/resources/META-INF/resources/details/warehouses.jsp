@@ -24,19 +24,16 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "inventory-by-warehouse") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
 			).build()
 		%>'
 		creationMenu="<%= commerceInventoryDisplayContext.getWarehousesCreationMenu() %>"
-		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES %>"
-		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES %>"
+		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_WAREHOUSES %>"
+		id="<%= CommerceInventoryFDSNames.INVENTORY_WAREHOUSES %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceInventoryDisplayContext.getPortletURL() %>"
 		selectedItemsKey="commerceInventoryWarehouseItemId"
 		showSearch="<%= false %>"
 	/>

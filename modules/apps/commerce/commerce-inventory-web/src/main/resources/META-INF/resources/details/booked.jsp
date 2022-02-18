@@ -24,17 +24,14 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "details") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
 			).build()
 		%>'
-		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_BOOKED %>"
-		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_BOOKED %>"
+		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_BOOKED %>"
+		id="<%= CommerceInventoryFDSNames.INVENTORY_BOOKED %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceInventoryDisplayContext.getPortletURL() %>"
 	/>
 </commerce-ui:panel>

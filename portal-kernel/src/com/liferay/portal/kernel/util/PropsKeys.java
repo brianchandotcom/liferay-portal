@@ -416,9 +416,6 @@ public interface PropsKeys {
 
 	public static final String CALENDAR_EVENT_TYPES = "calendar.event.types";
 
-	public static final String CALENDAR_PUBLISH_TO_LIVE_BY_DEFAULT =
-		"calendar.publish.to.live.by.default";
-
 	public static final String CDN_DYNAMIC_RESOURCES_ENABLED =
 		"cdn.dynamic.resources.enabled";
 

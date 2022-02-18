@@ -341,10 +341,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CALENDAR_EVENT_RATINGS_ENABLED));
 
-	public static final boolean CALENDAR_PUBLISH_TO_LIVE_BY_DEFAULT =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.CALENDAR_PUBLISH_TO_LIVE_BY_DEFAULT));
-
 	public static final boolean CDN_DYNAMIC_RESOURCES_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED));

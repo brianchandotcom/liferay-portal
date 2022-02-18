@@ -16,7 +16,6 @@ package com.liferay.sync.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sync.service.SyncDeviceLocalService;
 import com.liferay.sync.web.internal.upgrade.SyncWebUpgrade;
 
@@ -51,11 +50,6 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSyncDeviceLocalService(
 		SyncDeviceLocalService syncDeviceLocalService) {
 
@@ -67,7 +61,5 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 	}
 
 	protected SyncDeviceLocalService syncDeviceLocalService;
-
-	private Portal _portal;
 
 }

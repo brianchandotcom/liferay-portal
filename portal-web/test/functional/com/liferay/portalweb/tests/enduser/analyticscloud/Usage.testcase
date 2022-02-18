@@ -286,7 +286,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		tas ("Go to settings and get the individuals number") {
+		task ("Go to settings and get the individuals number") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUsage();
@@ -327,8 +327,8 @@ definition {
 			ACSettings.goToUsage();
 
 			ACSettings.assertOverviewUsage(
-				notEquals = "${currentIndividuals}",
-				metricName = "Individuals");
+				metricName = "Individuals",
+				notEquals = "${currentIndividuals}");
 		}
 	}
 

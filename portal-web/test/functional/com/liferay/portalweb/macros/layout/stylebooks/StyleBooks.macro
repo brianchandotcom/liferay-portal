@@ -1,7 +1,12 @@
 definition {
 
 	macro clickManagementBar {
-		Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
+		if (IsElementPresent(locator1 = "StyleBookEditor#MANAGEMENT_BAR")) {
+			Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
+		}
+		else {
+			Click(locator1 = "Message#SUBTITLE");
+		}
 	}
 
 	macro clickPublish {

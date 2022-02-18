@@ -200,7 +200,6 @@ import com.liferay.message.boards.model.impl.MBMessageModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.social.MBActivityKeys;
-import com.liferay.normalizer.Normalizer;
 import com.liferay.normalizer.internal.NormalizerImpl;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -445,6 +444,13 @@ public class DataFactory {
 
 		_firstNames = _readLines("user_name/first_names.txt");
 		_lastNames = _readLines("user_name/last_names.txt");
+
+		_friendlyURLNormalizer = new FriendlyURLNormalizerImpl();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			FriendlyURLNormalizerImpl.class, "_normalizer");
+
+		field.set(_friendlyURLNormalizer, new NormalizerImpl());
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -6339,25 +6345,6 @@ public class DataFactory {
 		long groupId, long classNameId, long classPK, String name, int type,
 		String typeSettings, boolean site) {
 
-		Class<?> friendlyURLNormalizerClazz = _friendlyURLNormalizer.getClass();
-
-		Field[] fields = friendlyURLNormalizerClazz.getDeclaredFields();
-
-		for (Field field : fields) {
-			field.setAccessible(true);
-
-			String fileName = field.getName();
-
-			if (fileName.equals("_normalizer")) {
-				try {
-					field.set(_friendlyURLNormalizer, _normalizer);
-				}
-				catch (IllegalAccessException illegalAccessException) {
-					illegalAccessException.printStackTrace();
-				}
-			}
-		}
-
 		GroupModel groupModel = new GroupModelImpl();
 
 		// UUID
@@ -7338,9 +7325,6 @@ public class DataFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
 
-	private static final FriendlyURLNormalizer _friendlyURLNormalizer =
-		new FriendlyURLNormalizerImpl();
-	private static final Normalizer _normalizer = new NormalizerImpl();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
@@ -7379,6 +7363,7 @@ public class DataFactory {
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dLFileEntryIdCounter;
 	private final List<String> _firstNames;
+	private final FriendlyURLNormalizer _friendlyURLNormalizer;
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
 	private final SimpleCounter _groupCounter;

@@ -19,6 +19,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
@@ -27,12 +28,18 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInforma
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.problem.Problem;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.PhoneSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.WebUrlSerDes;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -50,10 +57,14 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -66,6 +77,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.Assert;
@@ -74,6 +87,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Javier Gamarra
@@ -594,6 +612,43 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				testCompany.getCompanyId(), postUserAccount.getEmailAddress(),
 				password, Collections.emptyMap(), Collections.emptyMap(),
 				new HashMap<>()));
+
+		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
+			TestPropsValues.getUserId(),
+			"com.liferay.headless.admin.user.internal.resource.v1_0." +
+				"UserAccountResourceImpl#postUserAccount",
+			true, true, "Guest",
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Guest"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_testPostUserAccountAsGuest(false, new MockCaptcha(Assert::fail));
+
+		_testPostUserAccountAsGuest(
+			true,
+			new MockCaptcha(
+				() -> {
+				}));
+
+		try {
+			_testPostUserAccountAsGuest(
+				true,
+				new MockCaptcha(
+					() -> {
+						throw new CaptchaException();
+					}));
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				CaptchaException.class.getName(), problem.getType());
+		}
+
+		_sapEntryLocalService.deleteSAPEntry(sapEntry);
 	}
 
 	@Override
@@ -1010,6 +1065,55 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		};
 	}
 
+	private void _testPostUserAccountAsGuest(
+			boolean enableCaptcha, Captcha captcha)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(UserAccountResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				Captcha.class, captcha,
+				HashMapDictionaryBuilder.put(
+					"captcha.engine.impl", MockCaptcha.class.getName()
+				).build());
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.captcha.configuration.CaptchaConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"captchaEngine", MockCaptcha.class.getName()
+					).put(
+						"createAccountCaptchaEnabled", enableCaptcha
+					).build())) {
+
+			UserAccount userAccount = randomUserAccount();
+
+			Assert.assertNull(
+				_userLocalService.fetchUserByEmailAddress(
+					TestPropsValues.getCompanyId(),
+					userAccount.getEmailAddress()));
+
+			UserAccountResource.Builder builder = UserAccountResource.builder();
+
+			userAccountResource = builder.locale(
+				LocaleUtil.getDefault()
+			).build();
+
+			userAccountResource.postUserAccount(userAccount);
+
+			Assert.assertNotNull(
+				_userLocalService.fetchUserByEmailAddress(
+					TestPropsValues.getCompanyId(),
+					userAccount.getEmailAddress()));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
 	private String[] _toEmailAddresses(List<User> users) {
 		return TransformUtil.transformToArray(
 			users, User::getEmailAddress, String.class);
@@ -1028,9 +1132,30 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private Organization _organization;
+
+	@Inject
+	private SAPEntryLocalService _sapEntryLocalService;
+
 	private User _testUser;
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private class MockCaptcha extends SimpleCaptchaImpl {
+
+		public MockCaptcha(UnsafeRunnable<CaptchaException> check) {
+			_unsafeRunnableCheck = check;
+		}
+
+		@Override
+		public void check(HttpServletRequest httpServletRequest)
+			throws CaptchaException {
+
+			_unsafeRunnableCheck.run();
+		}
+
+		private final UnsafeRunnable<CaptchaException> _unsafeRunnableCheck;
+
+	}
 
 }

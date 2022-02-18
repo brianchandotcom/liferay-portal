@@ -26,7 +26,7 @@ import com.liferay.social.activity.web.internal.constants.SocialActivityWebKeys;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingService;
-import com.liferay.social.kernel.util.SocialConfigurationUtil;
+import com.liferay.social.kernel.util.SocialConfiguration;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -97,7 +97,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			_socialActivitySettingService.getActivitySettings(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
-		String[] modelNames = SocialConfigurationUtil.getActivityModelNames();
+		String[] modelNames = _socialConfiguration.getActivityModelNames();
 
 		Comparator<String> comparator = new ModelResourceComparator(
 			themeDisplay.getLocale());
@@ -137,5 +137,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private SocialActivitySettingService _socialActivitySettingService;
+
+	@Reference
+	private SocialConfiguration _socialConfiguration;
 
 }

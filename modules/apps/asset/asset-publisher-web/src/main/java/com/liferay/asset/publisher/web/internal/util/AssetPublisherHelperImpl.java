@@ -497,6 +497,15 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	}
 
 	@Override
+	public String getAssetSocialURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
+
+		return getAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetEntry);
+	}
+
+	@Override
 	public String[] getAssetTagNames(PortletPreferences portletPreferences) {
 		List<String> allAssetTagNames = new ArrayList<>();
 

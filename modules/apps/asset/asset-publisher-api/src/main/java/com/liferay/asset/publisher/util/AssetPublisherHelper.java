@@ -117,6 +117,10 @@ public interface AssetPublisherHelper {
 			Map<String, Serializable> attributes)
 		throws Exception;
 
+	public String getAssetSocialURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry);
+
 	public String[] getAssetTagNames(PortletPreferences portletPreferences);
 
 	public String getAssetViewURL(

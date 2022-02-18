@@ -23,22 +23,19 @@ CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayCo
 <commerce-ui:panel
 	bodyClasses="p-0"
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionsDisplayContext.getCommerceShippingMethodId())
 			).build()
 		%>'
 		creationMenu="<%= commerceShippingFixedOptionsDisplayContext.getCreationMenu() %>"
-		dataProviderKey="<%= CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME %>"
-		id="<%= CommerceShippingFixedOptionClayTableDataSetDisplayView.NAME %>"
+		dataProviderKey="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS %>"
+		fdsSortItemList="<%= commerceShippingFixedOptionsDisplayContext.getFDSSortItemList() %>"
+		id="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceShippingFixedOptionsDisplayContext.getPortletURL() %>"
 		selectedItemsKey="shippingFixedOptionId"
 		showManagementBar="<%= true %>"
-		sortItemList="<%= commerceShippingFixedOptionsDisplayContext.getSortItemList() %>"
 		style="fluid"
 	/>
 </commerce-ui:panel>

@@ -44,6 +44,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Hugo Huijser
@@ -483,17 +485,16 @@ public class ChainingCheck extends BaseCheck {
 	private List<DetailAST> _getIdentDetailASTList(
 		DetailAST detailAST, String name) {
 
-		List<DetailAST> identDetailASTList = new ArrayList<>();
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST identDetailAST :
-				getAllChildTokens(detailAST, true, TokenTypes.IDENT)) {
+		Stream<DetailAST> stream = identDetailASTList.stream();
 
-			if (name.equals(identDetailAST.getText())) {
-				identDetailASTList.add(identDetailAST);
-			}
-		}
-
-		return identDetailASTList;
+		return stream.filter(
+			identDetailAST -> StringUtil.equals(name, identDetailAST.getText())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private JavaClass _getJavaClass(String requiredChainingClassFileName) {

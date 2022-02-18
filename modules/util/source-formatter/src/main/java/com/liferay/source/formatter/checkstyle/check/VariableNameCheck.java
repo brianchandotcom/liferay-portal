@@ -732,10 +732,7 @@ public class VariableNameCheck extends BaseCheck {
 		}
 
 		for (DetailAST definitionDetailAST : definitionDetailASTList) {
-			DetailAST definitionNameDetailAST =
-				definitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			if (variableName.equals(definitionNameDetailAST.getText())) {
+			if (variableName.equals(getName(definitionDetailAST))) {
 				return true;
 			}
 		}

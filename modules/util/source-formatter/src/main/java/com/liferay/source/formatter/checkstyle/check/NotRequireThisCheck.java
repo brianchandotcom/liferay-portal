@@ -46,20 +46,14 @@ public class NotRequireThisCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST nameDetailAST = parentDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String name = nameDetailAST.getText();
+			String name = getName(parentDetailAST);
 
 			List<DetailAST> definitionDetailASTList = getAllChildTokens(
 				detailAST, true, TokenTypes.PARAMETER_DEF, TokenTypes.RESOURCE,
 				TokenTypes.VARIABLE_DEF);
 
 			for (DetailAST definitionDetailAST : definitionDetailASTList) {
-				DetailAST definitionNameDetailAST =
-					definitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-				if (name.equals(definitionNameDetailAST.getText())) {
+				if (name.equals(getName(definitionDetailAST))) {
 					continue outerLoop;
 				}
 			}

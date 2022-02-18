@@ -73,10 +73,7 @@ public class UnusedMethodCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST nameDetailAST = methodDefinitionDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String name = nameDetailAST.getText();
+			String name = getName(methodDefinitionDetailAST);
 
 			if (allowedMethodNames.contains(name)) {
 				continue;

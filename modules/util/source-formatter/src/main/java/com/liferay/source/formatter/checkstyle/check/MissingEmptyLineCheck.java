@@ -233,11 +233,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
 		if (variableTypeName.equals(
-				getVariableTypeName(
-					detailAST, identDetailAST.getText(), false))) {
+				getVariableTypeName(detailAST, getName(detailAST), false))) {
 
 			log(
 				detailAST, _MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_DEFINITION,
@@ -313,20 +310,15 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		if (firstReferencedAssignDetailAST != null) {
-			DetailAST nameDetailAST =
-				firstReferencedAssignDetailAST.findFirstToken(TokenTypes.IDENT);
+			String name = getName(firstReferencedAssignDetailAST);
 
-			if (nameDetailAST == null) {
-				parentDetailAST = firstReferencedAssignDetailAST.getParent();
-
-				nameDetailAST = parentDetailAST.findFirstToken(
-					TokenTypes.IDENT);
+			if (name == null) {
+				name = getName(firstReferencedAssignDetailAST.getParent());
 			}
 
 			log(
 				firstReferencedAssignDetailAST,
-				_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_ASSIGN,
-				nameDetailAST.getText());
+				_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_ASSIGN, name);
 		}
 	}
 

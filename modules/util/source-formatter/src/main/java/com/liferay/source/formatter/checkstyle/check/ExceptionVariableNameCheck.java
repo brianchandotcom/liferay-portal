@@ -204,14 +204,8 @@ public class ExceptionVariableNameCheck extends VariableNameCheck {
 			if ((firstChildDetailAST != null) &&
 				(firstChildDetailAST.getType() == TokenTypes.BOR)) {
 
-				List<DetailAST> identDetailASTList =
-					DetailASTUtil.getAllChildTokens(
-						firstChildDetailAST, true, TokenTypes.IDENT);
-
-				for (DetailAST identDetailAST : identDetailASTList) {
-					String s = identDetailAST.getText();
-
-					if (s.endsWith("Exception")) {
+				for (String name : getNames(firstChildDetailAST, true)) {
+					if (name.endsWith("Exception")) {
 						return "Exception";
 					}
 				}

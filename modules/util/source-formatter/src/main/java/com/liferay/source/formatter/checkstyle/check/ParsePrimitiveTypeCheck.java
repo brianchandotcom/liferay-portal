@@ -75,13 +75,8 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 			DetailAST typeDetailAST =
 				parameterDefinitionDetailAST.findFirstToken(TokenTypes.TYPE);
 
-			List<DetailAST> identDetailASTList = getAllChildTokens(
-				typeDetailAST, true, TokenTypes.IDENT);
-
-			for (DetailAST identDetailAST : identDetailASTList) {
-				if (ArrayUtil.contains(
-						exceptionNames, identDetailAST.getText())) {
-
+			for (String name : getNames(typeDetailAST, true)) {
+				if (ArrayUtil.contains(exceptionNames, name)) {
 					return true;
 				}
 			}

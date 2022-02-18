@@ -59,6 +59,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Hugo Huijser
@@ -455,18 +457,14 @@ public abstract class BaseCheck extends AbstractCheck {
 				continue;
 			}
 
-			List<DetailAST> nameDetailASTList = getAllChildTokens(
-				dotDetailAST, false, TokenTypes.IDENT);
+			List<String> names = getNames(dotDetailAST, false);
 
-			if (nameDetailASTList.size() != 2) {
+			if (names.size() != 2) {
 				continue;
 			}
 
-			DetailAST classNameDetailAST = nameDetailASTList.get(0);
-			DetailAST methodNameDetailAST = nameDetailASTList.get(1);
-
-			String methodCallClassName = classNameDetailAST.getText();
-			String methodCallMethodName = methodNameDetailAST.getText();
+			String methodCallClassName = names.get(0);
+			String methodCallMethodName = names.get(1);
 
 			if (((className == null) ||
 				 methodCallClassName.equals(className)) &&
@@ -487,19 +485,41 @@ public abstract class BaseCheck extends AbstractCheck {
 		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
 		if (dotDetailAST == null) {
-			DetailAST nameDetailAST = detailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			return nameDetailAST.getText();
+			return getName(detailAST);
 		}
 
-		List<DetailAST> nameDetailASTList = getAllChildTokens(
-			dotDetailAST, false, TokenTypes.IDENT);
+		DetailAST childDetailAST = dotDetailAST.getLastChild();
 
-		DetailAST methodNameDetailAST = nameDetailASTList.get(
-			nameDetailASTList.size() - 1);
+		while ((childDetailAST != null) &&
+			   (childDetailAST.getType() != TokenTypes.IDENT)) {
 
-		return methodNameDetailAST.getText();
+			childDetailAST = childDetailAST.getPreviousSibling();
+		}
+
+		return childDetailAST.getText();
+	}
+
+	protected String getName(DetailAST detailAST) {
+		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		if (identDetailAST == null) {
+			return null;
+		}
+
+		return identDetailAST.getText();
+	}
+
+	protected List<String> getNames(DetailAST detailAST, boolean recursive) {
+		List<DetailAST> childDetailASTs = getAllChildTokens(
+			detailAST, recursive, TokenTypes.IDENT);
+
+		Stream<DetailAST> stream = childDetailASTs.stream();
+
+		return stream.map(
+			DetailAST::getText
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	protected String getPackageName(DetailAST detailAST) {
@@ -562,10 +582,7 @@ public abstract class BaseCheck extends AbstractCheck {
 		for (DetailAST parameterDefinitionDetailAST :
 				getParameterDefs(detailAST)) {
 
-			DetailAST identDetailAST =
-				parameterDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			parameterNames.add(identDetailAST.getText());
+			parameterNames.add(getName(parameterDefinitionDetailAST));
 		}
 
 		return parameterNames;
@@ -992,13 +1009,7 @@ public abstract class BaseCheck extends AbstractCheck {
 			return null;
 		}
 
-		DetailAST nameDetailAST = dotDetailAST.findFirstToken(TokenTypes.IDENT);
-
-		if (nameDetailAST == null) {
-			return null;
-		}
-
-		return nameDetailAST.getText();
+		return getName(dotDetailAST);
 	}
 
 	protected DetailAST getVariableTypeDetailAST(
@@ -1214,9 +1225,7 @@ public abstract class BaseCheck extends AbstractCheck {
 			return false;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String name = nameDetailAST.getText();
+		String name = getName(detailAST);
 
 		if (name.matches(".*(Collection|List|Map|Set)")) {
 			return true;
@@ -1448,13 +1457,13 @@ public abstract class BaseCheck extends AbstractCheck {
 			return null;
 		}
 
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		String name = getName(detailAST);
 
-		if (identDetailAST == null) {
+		if (name == null) {
 			return null;
 		}
 
-		return getVariableTypeName(detailAST, identDetailAST.getText(), false);
+		return getVariableTypeName(detailAST, name, false);
 	}
 
 	private List<String> _getJSPImportNames(String directoryName) {

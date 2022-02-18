@@ -551,11 +551,8 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			return false;
 		}
 
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			methodCallDetailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (Objects.equals(identDetailAST.getText(), "Mockito")) {
+		for (String name : getNames(methodCallDetailAST, true)) {
+			if (Objects.equals(name, "Mockito")) {
 				return true;
 			}
 		}

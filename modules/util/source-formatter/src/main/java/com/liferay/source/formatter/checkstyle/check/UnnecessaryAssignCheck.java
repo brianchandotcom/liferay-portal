@@ -204,13 +204,10 @@ public class UnnecessaryAssignCheck extends BaseUnnecessaryStatementCheck {
 				continue;
 			}
 
-			List<DetailAST> identDetailASTList = getAllChildTokens(
-				literalFinallyDetailAST, true, TokenTypes.IDENT);
+			List<String> names = getNames(literalFinallyDetailAST, true);
 
-			for (DetailAST identDetailAST : identDetailASTList) {
-				if (variableName.equals(identDetailAST.getText())) {
-					return true;
-				}
+			if (names.contains(variableName)) {
+				return true;
 			}
 		}
 	}

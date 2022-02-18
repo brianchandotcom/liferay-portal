@@ -50,51 +50,54 @@ public class UnusedParameterCheck extends BaseCheck {
 	}
 
 	private void _checkUnusedParameters(
-		DetailAST classDetailAST, DetailAST detailAST) {
+		DetailAST classDetailAST, DetailAST constructorOrMethodDetailAST) {
 
-		DetailAST modifiersDetailAST = detailAST.findFirstToken(
-			TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST =
+			constructorOrMethodDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
 		if (!modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		String constructorOrMethodName = getName(constructorOrMethodDetailAST);
 
-		String name = nameDetailAST.getText();
+		if (constructorOrMethodName.equals("readObject") ||
+			constructorOrMethodName.equals("writeObject")) {
 
-		if (name.equals("readObject") || name.equals("writeObject")) {
 			return;
 		}
 
-		List<String> parameterNames = getParameterNames(detailAST);
+		List<String> parameterNames = getParameterNames(
+			constructorOrMethodDetailAST);
 
 		if (parameterNames.isEmpty()) {
 			return;
 		}
 
-		DetailAST statementsDetailAST = detailAST.findFirstToken(
-			TokenTypes.SLIST);
+		DetailAST statementsDetailAST =
+			constructorOrMethodDetailAST.findFirstToken(TokenTypes.SLIST);
 
-		List<DetailAST> allIdentsAST = getAllChildTokens(
-			statementsDetailAST, true, TokenTypes.IDENT);
+		List<String> names = getNames(statementsDetailAST, true);
 
-		parameterNameLoop:
-		for (String parameterName : getParameterNames(detailAST)) {
-			for (DetailAST identDetailAST : allIdentsAST) {
-				if (parameterName.equals(identDetailAST.getText())) {
-					continue parameterNameLoop;
-				}
+		for (String parameterName :
+				getParameterNames(constructorOrMethodDetailAST)) {
+
+			if (names.contains(parameterName)) {
+				continue;
 			}
 
-			if (!_isReferencedMethod(classDetailAST, detailAST)) {
-				log(detailAST, _MSG_UNUSED_PARAMETER, parameterName);
+			if (!_isReferencedMethod(
+					classDetailAST, constructorOrMethodDetailAST)) {
+
+				log(
+					constructorOrMethodDetailAST, _MSG_UNUSED_PARAMETER,
+					parameterName);
 			}
 		}
 	}
 
 	private boolean _isReferencedMethod(
-		DetailAST classDetailAST, DetailAST detailAST) {
+		DetailAST classDetailAST, DetailAST constructorOrMethodDetailAST) {
 
 		List<DetailAST> methodReferenceDetailASTList = getAllChildTokens(
 			classDetailAST, true, TokenTypes.METHOD_REF);
@@ -103,18 +106,13 @@ public class UnusedParameterCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String name = nameDetailAST.getText();
+		String constructorOrMethodName = getName(constructorOrMethodDetailAST);
 
 		for (DetailAST methodReferenceDetailAST :
 				methodReferenceDetailASTList) {
 
-			for (DetailAST identDetailAST :
-					getAllChildTokens(
-						methodReferenceDetailAST, true, TokenTypes.IDENT)) {
-
-				if (name.equals(identDetailAST.getText())) {
+			for (String name : getNames(methodReferenceDetailAST, true)) {
+				if (constructorOrMethodName.equals(name)) {
 					return true;
 				}
 			}

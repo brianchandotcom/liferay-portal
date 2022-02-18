@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,14 +76,7 @@ public class ExceptionCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = methodDefinitionDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (nameDetailAST == null) {
-			return;
-		}
-
-		String methodName = nameDetailAST.getText();
+		String methodName = getName(methodDefinitionDetailAST);
 
 		List<DetailAST> identDetailASTList = getAllChildTokens(
 			classDefinitionDetailAST, true, TokenTypes.IDENT);
@@ -110,7 +103,8 @@ public class ExceptionCheck extends BaseCheck {
 				return;
 			}
 
-			nameDetailAST = parentDetailAST.findFirstToken(TokenTypes.IDENT);
+			DetailAST nameDetailAST = parentDetailAST.findFirstToken(
+				TokenTypes.IDENT);
 
 			if (methodName.equals(nameDetailAST.getText())) {
 				continue;
@@ -142,23 +136,14 @@ public class ExceptionCheck extends BaseCheck {
 	}
 
 	private List<String> _getExceptionNames(DetailAST detailAST) {
-		List<String> exceptionNames = new ArrayList<>();
-
 		DetailAST literalThrowsDetailAST = detailAST.findFirstToken(
 			TokenTypes.LITERAL_THROWS);
 
 		if (literalThrowsDetailAST == null) {
-			return exceptionNames;
+			return Collections.emptyList();
 		}
 
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			literalThrowsDetailAST, false, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			exceptionNames.add(identDetailAST.getText());
-		}
-
-		return exceptionNames;
+		return getNames(literalThrowsDetailAST, false);
 	}
 
 	private String _getExceptionNamesString(List<String> exceptionNames) {

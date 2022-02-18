@@ -32,8 +32,6 @@ public class UnnecessaryVariableDeclarationCheck
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
@@ -49,7 +47,7 @@ public class UnnecessaryVariableDeclarationCheck
 			return;
 		}
 
-		String variableName = nameDetailAST.getText();
+		String variableName = getName(detailAST);
 
 		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES)) {
 			checkUnnecessaryListVariableBeforeReturn(

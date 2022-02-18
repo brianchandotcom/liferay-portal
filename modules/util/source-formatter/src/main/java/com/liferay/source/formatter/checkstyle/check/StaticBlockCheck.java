@@ -202,10 +202,7 @@ public class StaticBlockCheck extends BaseCheck {
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {
 
-			DetailAST nameDetailAST =
-				variableDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			String name = nameDetailAST.getText();
+			String name = getName(variableDefinitionDetailAST);
 
 			List<DetailAST> identDetailASTList = identDetailASTMap.get(name);
 

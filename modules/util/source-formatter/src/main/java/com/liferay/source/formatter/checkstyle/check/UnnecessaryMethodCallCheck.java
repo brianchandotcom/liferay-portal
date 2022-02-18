@@ -62,7 +62,7 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 				continue;
 			}
 
-			String methodName = _getMethodName(methodCallDetailAST);
+			String methodName = getName(methodCallDetailAST);
 
 			if (!returnVariableNamesMap.containsKey(methodName)) {
 				continue;
@@ -86,12 +86,6 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 				}
 			}
 		}
-	}
-
-	private String _getMethodName(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		return nameDetailAST.getText();
 	}
 
 	private String _getReplacementValue(
@@ -214,7 +208,7 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 			}
 
 			returnVariableNamesMap.put(
-				_getMethodName(methodDefinitionDetailAST),
+				getName(methodDefinitionDetailAST),
 				firstChildDetailAST.getText());
 		}
 

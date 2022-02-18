@@ -52,9 +52,7 @@ public class MVCCommandNameCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String className = nameDetailAST.getText();
+		String className = getName(detailAST);
 
 		if (!className.endsWith("MVCActionCommand") &&
 			!className.endsWith("MVCRenderCommand") &&
@@ -254,10 +252,7 @@ public class MVCCommandNameCheck extends BaseCheck {
 			classDefinitionDetailAST, true, TokenTypes.ANNOTATION);
 
 		for (DetailAST annotationDetailAST : annotationDetailASTList) {
-			DetailAST identDetailAST = annotationDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			if (!Objects.equals(identDetailAST.getText(), "Reference")) {
+			if (!Objects.equals(getName(annotationDetailAST), "Reference")) {
 				continue;
 			}
 
@@ -314,13 +309,10 @@ public class MVCCommandNameCheck extends BaseCheck {
 				continue;
 			}
 
-			List<DetailAST> identDetailASTList = getAllChildTokens(
-				stringLiteralDetailAST.getParent(), true, TokenTypes.IDENT);
+			for (String name :
+					getNames(stringLiteralDetailAST.getParent(), true)) {
 
-			for (DetailAST identDetailAST : identDetailASTList) {
-				if (StringUtil.equalsIgnoreCase(
-						path, identDetailAST.getText())) {
-
+				if (StringUtil.equalsIgnoreCase(path, name)) {
 					return true;
 				}
 			}

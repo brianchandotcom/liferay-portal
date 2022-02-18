@@ -38,13 +38,8 @@ public class StringCastCheck extends BaseCheck {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.DOT);
 
-			List<DetailAST> nameDetailASTList = getAllChildTokens(
-				dotDetailAST, false, TokenTypes.IDENT);
-
-			DetailAST variableNameDetailAST = nameDetailASTList.get(0);
-
 			String variableTypeName = getVariableTypeName(
-				methodCallDetailAST, variableNameDetailAST.getText(), false);
+				methodCallDetailAST, getName(dotDetailAST), false);
 
 			if (variableTypeName.equals("String")) {
 				log(methodCallDetailAST, _MSG_UNNEEDED_STRING_CAST);

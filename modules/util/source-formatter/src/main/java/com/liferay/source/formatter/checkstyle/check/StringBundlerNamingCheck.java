@@ -44,19 +44,13 @@ public class StringBundlerNamingCheck extends BaseCheck {
 			return;
 		}
 
-		String name = _getName(detailAST);
+		String name = getName(detailAST);
 
 		if (!name.matches("_?(sb|.*SB)([0-9]*)?")) {
 			log(
 				detailAST, _MSG_INCORRECT_VARIABLE_NAME,
 				_getTokenTypeName(detailAST), name);
 		}
-	}
-
-	private String _getName(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		return nameDetailAST.getText();
 	}
 
 	private String _getTokenTypeName(DetailAST detailAST) {

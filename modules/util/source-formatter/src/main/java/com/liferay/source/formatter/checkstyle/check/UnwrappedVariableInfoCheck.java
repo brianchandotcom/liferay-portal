@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -49,12 +51,7 @@ public class UnwrappedVariableInfoCheck extends BaseCheck {
 			}
 
 			if (parentDetailAST.getType() == TokenTypes.CLASS_DEF) {
-				DetailAST nameDetailAST = parentDetailAST.findFirstToken(
-					TokenTypes.IDENT);
-
-				String className = nameDetailAST.getText();
-
-				if (className.equals("Concealer")) {
+				if (StringUtil.equals(getName(parentDetailAST), "Concealer")) {
 					return;
 				}
 
@@ -64,9 +61,7 @@ public class UnwrappedVariableInfoCheck extends BaseCheck {
 			parentDetailAST = parentDetailAST.getParent();
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		log(detailAST, _MSG_UNWRAPPED_VARIABLE_INFO, nameDetailAST.getText());
+		log(detailAST, _MSG_UNWRAPPED_VARIABLE_INFO, getName(detailAST));
 	}
 
 	private static final String _MSG_UNWRAPPED_VARIABLE_INFO =

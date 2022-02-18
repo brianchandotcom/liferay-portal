@@ -119,22 +119,13 @@ public class AssertEqualsCheck extends BaseCheck {
 			return null;
 		}
 
-		List<DetailAST> nameDetailASTList = getAllChildTokens(
-			detailAST, false, TokenTypes.IDENT);
+		List<String> names = getNames(detailAST, false);
 
-		if (nameDetailASTList.size() != 2) {
+		if ((names.size() != 2) || !methodName.equals(names.get(1))) {
 			return null;
 		}
 
-		DetailAST methodNameDetailAST = nameDetailASTList.get(1);
-
-		if (!methodName.equals(methodNameDetailAST.getText())) {
-			return null;
-		}
-
-		DetailAST variableNameDetailAST = nameDetailASTList.get(0);
-
-		return variableNameDetailAST.getText();
+		return names.get(0);
 	}
 
 	private String _getVariableNameForMethodCall(
@@ -150,15 +141,7 @@ public class AssertEqualsCheck extends BaseCheck {
 	}
 
 	private boolean _isHits(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String name = nameDetailAST.getText();
-
-		if (name.equals("Hits")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(getName(detailAST), "Hits");
 	}
 
 	private static final String _MSG_ASSERT_ADD_INFORMATION =

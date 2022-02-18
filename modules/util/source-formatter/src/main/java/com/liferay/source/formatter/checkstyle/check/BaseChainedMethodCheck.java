@@ -105,14 +105,7 @@ public abstract class BaseChainedMethodCheck extends BaseCheck {
 			return null;
 		}
 
-		DetailAST nameDetailAST = parentDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (nameDetailAST != null) {
-			return nameDetailAST.getText();
-		}
-
-		return null;
+		return getName(parentDetailAST);
 	}
 
 }

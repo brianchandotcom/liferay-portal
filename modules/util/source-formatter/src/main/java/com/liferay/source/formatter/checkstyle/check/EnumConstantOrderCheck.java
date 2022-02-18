@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
  * @author Hugo Huijser
@@ -41,21 +40,14 @@ public class EnumConstantOrderCheck extends BaseEnumConstantCheck {
 		NaturalOrderStringComparator comparator =
 			new NaturalOrderStringComparator();
 
-		String name1 = _getName(enumConstantDefinitionDetailAST1);
-		String name2 = _getName(enumConstantDefinitionDetailAST2);
+		String name1 = getName(enumConstantDefinitionDetailAST1);
+		String name2 = getName(enumConstantDefinitionDetailAST2);
 
 		if (comparator.compare(name1, name2) > 0) {
 			log(
 				enumConstantDefinitionDetailAST1,
 				_MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1, name2);
 		}
-	}
-
-	private String _getName(DetailAST enumConstantDefinitionDetailAST) {
-		DetailAST nameDetailAST =
-			enumConstantDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-		return nameDetailAST.getText();
 	}
 
 	private static final String _MSG_ENUM_CONSTANT_ORDER_INCORRECT =

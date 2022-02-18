@@ -68,30 +68,20 @@ public class SizeIsZeroCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST dotDetailAST = methodCallDetailAST.getFirstChild();
-
-		DetailAST nameDetailAST = dotDetailAST.findFirstToken(TokenTypes.IDENT);
-
-		String variableName = nameDetailAST.getText();
+		String variableName = getName(methodCallDetailAST.getFirstChild());
 
 		List<DetailAST> definitionDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST definitionDetailAST : definitionDetailASTList) {
-			DetailAST definitionNameDetailAST =
-				definitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			if (!variableName.equals(definitionNameDetailAST.getText())) {
+			if (!variableName.equals(getName(definitionDetailAST))) {
 				continue;
 			}
 
 			DetailAST typeDetailAST = definitionDetailAST.findFirstToken(
 				TokenTypes.TYPE);
 
-			DetailAST typeNameDetailAST = typeDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String typeName = typeNameDetailAST.getText();
+			String typeName = getName(typeDetailAST);
 
 			if (typeName.matches(".*(Collection|List|Map|Set)")) {
 				log(

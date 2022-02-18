@@ -48,7 +48,7 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
-		String name = _getName(detailAST);
+		String name = getName(detailAST);
 		String tokenTypeName = _getTokenTypeName(detailAST);
 
 		_checkName(
@@ -118,12 +118,6 @@ public class JSONNamingCheck extends BaseCheck {
 		_checkName(
 			name, typeName, tokenTypeName, reservedNameEnding,
 			incorrectNameEnding, lineNo, checkTokenTypeNames);
-	}
-
-	private String _getName(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		return nameDetailAST.getText();
 	}
 
 	private String _getTokenTypeName(DetailAST detailAST) {

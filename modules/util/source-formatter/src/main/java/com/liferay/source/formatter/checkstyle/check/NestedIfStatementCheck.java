@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -62,14 +61,10 @@ public class NestedIfStatementCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			exprDetailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (Objects.equals(identDetailAST.getText(), "_log") ||
-				Objects.equals(identDetailAST.getText(), "_logger") ||
-				Objects.equals(identDetailAST.getText(), "log") ||
-				Objects.equals(identDetailAST.getText(), "logger")) {
+		for (String text : getNames(exprDetailAST, true)) {
+			if (Objects.equals(text, "_log") ||
+				Objects.equals(text, "_logger") ||
+				Objects.equals(text, "log") || Objects.equals(text, "logger")) {
 
 				return;
 			}

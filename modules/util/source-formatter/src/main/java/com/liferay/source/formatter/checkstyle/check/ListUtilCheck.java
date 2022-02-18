@@ -29,11 +29,12 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Hugo Huijser
@@ -71,9 +72,7 @@ public class ListUtilCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String variableName = nameDetailAST.getText();
+		String variableName = getName(detailAST);
 
 		if (!_isAddMethodCall(
 				nextStatementDetailAST.getFirstChild(), variableName)) {
@@ -303,18 +302,16 @@ public class ListUtilCheck extends BaseCheck {
 	private List<DetailAST> _getIdentDetailASTList(
 		DetailAST detailAST, String name) {
 
-		List<DetailAST> identDetailASTList = new ArrayList<>();
-
 		List<DetailAST> childDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST childDetailAST : childDetailASTList) {
-			if (name.equals(childDetailAST.getText())) {
-				identDetailASTList.add(childDetailAST);
-			}
-		}
+		Stream<DetailAST> stream = childDetailASTList.stream();
 
-		return identDetailASTList;
+		return stream.filter(
+			childDetailAST -> name.equals(childDetailAST.getText())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private DetailAST _getNextStatementDetailAST(DetailAST detailAST) {

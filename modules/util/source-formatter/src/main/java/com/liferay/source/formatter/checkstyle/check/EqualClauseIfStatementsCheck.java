@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,14 +60,7 @@ public class EqualClauseIfStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			clauseExprDetailAST1, true, TokenTypes.IDENT);
-
-		List<String> namesList = new ArrayList<>();
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			namesList.add(identDetailAST.getText());
-		}
+		List<String> namesList = getNames(clauseExprDetailAST1, true);
 
 		DetailAST slistDetailAST1 = detailAST.findFirstToken(TokenTypes.SLIST);
 
@@ -117,14 +109,13 @@ public class EqualClauseIfStatementsCheck extends BaseCheck {
 			slistDetailAST, true, ASSIGNMENT_OPERATOR_TOKEN_TYPES);
 
 		for (DetailAST assignDetailAST : assignDetailASTList) {
-			DetailAST identDetailAST = assignDetailAST.findFirstToken(
-				TokenTypes.IDENT);
+			String name = getName(assignDetailAST);
 
-			if (identDetailAST == null) {
+			if (name == null) {
 				continue;
 			}
 
-			if (namesList.contains(identDetailAST.getText())) {
+			if (namesList.contains(name)) {
 				return true;
 			}
 		}
@@ -151,12 +142,9 @@ public class EqualClauseIfStatementsCheck extends BaseCheck {
 				for (DetailAST methodDefinitionDetailAST :
 						methodDefinitionDetailASTList) {
 
-					DetailAST identDetailAST =
-						methodDefinitionDetailAST.findFirstToken(
-							TokenTypes.IDENT);
+					String name = getName(methodDefinitionDetailAST);
 
-					if ((identDetailAST != null) &&
-						methodName.equals(identDetailAST.getText()) &&
+					if ((name != null) && methodName.equals(name) &&
 						_hasValueChangeOperation(
 							namesList,
 							methodDefinitionDetailAST.findFirstToken(

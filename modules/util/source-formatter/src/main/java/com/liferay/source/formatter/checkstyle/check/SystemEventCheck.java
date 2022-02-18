@@ -65,9 +65,7 @@ public class SystemEventCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String className = identDetailAST.getText();
+		String className = getName(detailAST);
 
 		if (!className.endsWith("LocalServiceImpl")) {
 			return;
@@ -93,10 +91,7 @@ public class SystemEventCheck extends BaseCheck {
 				continue;
 			}
 
-			identDetailAST = methodDefDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String methodName = identDetailAST.getText();
+			String methodName = getName(methodDefDetailAST);
 
 			if (_hasSystemDeleteEventAnnotation(methodDefDetailAST)) {
 				if (!entityName.equals(

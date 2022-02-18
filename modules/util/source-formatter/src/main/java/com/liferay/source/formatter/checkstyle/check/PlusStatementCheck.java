@@ -173,18 +173,14 @@ public class PlusStatementCheck extends BaseStringConcatenationCheck {
 				return false;
 			}
 
-			List<DetailAST> nameDetailASTList = getAllChildTokens(
-				firstChildDetailAST, false, TokenTypes.IDENT);
+			List<String> names = getNames(firstChildDetailAST, false);
 
-			if (nameDetailASTList.size() != 2) {
+			if (names.size() != 2) {
 				return false;
 			}
 
-			DetailAST classNameDetailAST = nameDetailASTList.get(0);
-			DetailAST methodNameDetailAST = nameDetailASTList.get(1);
-
-			String methodCallClassName = classNameDetailAST.getText();
-			String methodCallMethodName = methodNameDetailAST.getText();
+			String methodCallClassName = names.get(0);
+			String methodCallMethodName = names.get(1);
 
 			if (methodCallMethodName.equals("matches") ||
 				(methodCallClassName.equals("Pattern") &&

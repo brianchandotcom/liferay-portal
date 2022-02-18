@@ -69,10 +69,7 @@ public class AttributeOrderCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST nameDetailAST = childDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String name = nameDetailAST.getText();
+			String name = getName(childDetailAST);
 
 			if ((previousName != null) &&
 				(previousName.compareToIgnoreCase(name) > 0)) {

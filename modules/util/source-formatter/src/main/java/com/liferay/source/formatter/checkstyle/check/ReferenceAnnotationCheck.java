@@ -87,10 +87,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {
 
-			DetailAST identDetailAST =
-				variableDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			if (!variableName.equals(identDetailAST.getText())) {
+			if (!variableName.equals(getName(variableDefinitionDetailAST))) {
 				continue;
 			}
 
@@ -139,9 +136,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		String unbindName = _getAnnotationMemberValue(
 			annotationDetailAST, "unbind", null);
 
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String methodName = identDetailAST.getText();
+		String methodName = getName(detailAST);
 
 		String defaultUnbindMethodName = _getDefaultUnbindMethodName(
 			methodName);
@@ -238,10 +233,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 
-			DetailAST identDetailAST = methodDefinitionDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			if (methodName.equals(identDetailAST.getText())) {
+			if (methodName.equals(getName(methodDefinitionDetailAST))) {
 				return true;
 			}
 		}
@@ -260,11 +252,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		for (DetailAST annotationMemberValuePairDetailAST :
 				annotationMemberValuePairDetailASTList) {
 
-			DetailAST identDetailAST =
-				annotationMemberValuePairDetailAST.findFirstToken(
-					TokenTypes.IDENT);
-
-			String annotationMemberName = identDetailAST.getText();
+			String annotationMemberName = getName(
+				annotationMemberValuePairDetailAST);
 
 			if (!annotationMemberName.equals(name)) {
 				continue;

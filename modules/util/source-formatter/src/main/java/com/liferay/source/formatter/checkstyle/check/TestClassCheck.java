@@ -43,9 +43,7 @@ public class TestClassCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String name = nameDetailAST.getText();
+		String name = getName(detailAST);
 
 		if (!name.matches(".*Test(Case)?")) {
 			return;

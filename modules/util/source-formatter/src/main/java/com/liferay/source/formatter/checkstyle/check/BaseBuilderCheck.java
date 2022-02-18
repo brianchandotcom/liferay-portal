@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -133,14 +132,7 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 			return null;
 		}
 
-		DetailAST identDetailAST = assignValueDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (identDetailAST != null) {
-			return identDetailAST.getText();
-		}
-
-		return null;
+		return getName(assignValueDetailAST);
 	}
 
 	protected Map<String, String[][]> getReservedKeywordsMap() {
@@ -286,14 +278,11 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 			return;
 		}
 
-		DetailAST identDetailAST = parentDetailAST.findFirstToken(
-			TokenTypes.IDENT);
+		String className = getName(parentDetailAST);
 
-		if (identDetailAST == null) {
+		if (className == null) {
 			return;
 		}
-
-		String className = identDetailAST.getText();
 
 		BuilderInformation builderInformation =
 			_findBuilderInformationByClassName(className);
@@ -992,15 +981,14 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 					return;
 				}
 
-				DetailAST identDetailAST = firstChildDetailAST.findFirstToken(
-					TokenTypes.IDENT);
+				String name = getName(firstChildDetailAST);
 
-				if (identDetailAST == null) {
+				if (name == null) {
 					return;
 				}
 
 				variableDefinitionDetailAST = getVariableDefinitionDetailAST(
-					detailAST, identDetailAST.getText(), false);
+					detailAST, name, false);
 			}
 			else if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
 				variableDefinitionDetailAST = detailAST;
@@ -1620,11 +1608,8 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		for (DetailAST identDetailAST :
-				DetailASTUtil.getAllChildTokens(
-					elistDetailAST, true, TokenTypes.IDENT)) {
-
-			if (variableName.equals(identDetailAST.getText())) {
+		for (String name : getNames(elistDetailAST, true)) {
+			if (variableName.equals(name)) {
 				return true;
 			}
 		}

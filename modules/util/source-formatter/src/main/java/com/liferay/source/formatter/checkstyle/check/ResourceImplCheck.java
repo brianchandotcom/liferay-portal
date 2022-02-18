@@ -37,7 +37,7 @@ public class ResourceImplCheck extends BaseCheck {
 			return;
 		}
 
-		String className = _getName(detailAST);
+		String className = getName(detailAST);
 
 		if (!className.endsWith("ResourceImpl") &&
 			className.startsWith("Base")) {
@@ -53,7 +53,7 @@ public class ResourceImplCheck extends BaseCheck {
 				getAllChildTokens(
 					classDefinitionDetailAST, true, TokenTypes.METHOD_DEF)) {
 
-			String methodName = _getName(methodDefinitionDetailAST);
+			String methodName = getName(methodDefinitionDetailAST);
 
 			for (DetailAST parameterDefinitionDetailAST :
 					getAllChildTokens(
@@ -68,7 +68,7 @@ public class ResourceImplCheck extends BaseCheck {
 						getAllChildTokens(
 							modifiersDetailAST, false, TokenTypes.ANNOTATION)) {
 
-					String annotationName = _getName(annotationDetailAST);
+					String annotationName = getName(annotationDetailAST);
 
 					if (ArrayUtil.contains(
 							_ALLOWED_ANNOTATIONS, annotationName)) {
@@ -83,16 +83,6 @@ public class ResourceImplCheck extends BaseCheck {
 				}
 			}
 		}
-	}
-
-	private String _getName(DetailAST detailAST) {
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		if (identDetailAST == null) {
-			return null;
-		}
-
-		return identDetailAST.getText();
 	}
 
 	private static final String[] _ALLOWED_ANNOTATIONS = {

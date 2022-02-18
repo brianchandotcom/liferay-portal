@@ -40,9 +40,7 @@ public class NestedFieldAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String className = nameDetailAST.getText();
+		String className = getName(detailAST);
 
 		if (!className.endsWith("ResourceImpl")) {
 			return;

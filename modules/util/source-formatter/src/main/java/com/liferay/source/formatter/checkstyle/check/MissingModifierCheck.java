@@ -48,9 +48,7 @@ public class MissingModifierCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		log(detailAST, _MSG_MISSING_MODIFIER, nameDetailAST.getText());
+		log(detailAST, _MSG_MISSING_MODIFIER, getName(detailAST));
 	}
 
 	private static final String _MSG_MISSING_MODIFIER = "modifier.missing";

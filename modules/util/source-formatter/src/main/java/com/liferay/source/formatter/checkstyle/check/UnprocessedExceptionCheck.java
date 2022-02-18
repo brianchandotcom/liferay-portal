@@ -218,18 +218,9 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 	private boolean _containsVariable(
 		DetailAST detailAST, String variableName) {
 
-		List<DetailAST> nameDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
+		List<String> names = getNames(detailAST, true);
 
-		for (DetailAST nameDetailAST : nameDetailASTList) {
-			String name = nameDetailAST.getText();
-
-			if (name.equals(variableName)) {
-				return true;
-			}
-		}
-
-		return false;
+		return names.contains(variableName);
 	}
 
 	private String _getExceptionClassName(
@@ -282,18 +273,16 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 	}
 
 	private String _getName(DetailAST detailAST) {
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		String name = getName(detailAST);
 
-		if (nameDetailAST != null) {
-			return nameDetailAST.getText();
+		if (name != null) {
+			return name;
 		}
 
 		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
 		if (dotDetailAST != null) {
-			nameDetailAST = dotDetailAST.findFirstToken(TokenTypes.IDENT);
-
-			return nameDetailAST.getText();
+			return getName(dotDetailAST);
 		}
 
 		return null;

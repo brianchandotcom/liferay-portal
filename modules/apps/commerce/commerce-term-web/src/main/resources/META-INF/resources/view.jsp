@@ -26,16 +26,13 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(commerceTermEntryDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCommerceTermEntries" type="hidden" />
 
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-order/v1.0/terms?sort=priority:asc"
-			clayDataSetActionDropdownItems="<%= commerceTermEntryDisplayContext.getCommerceTermEntryClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commerceTermEntryDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= commerceTermEntryDisplayContext.getCommerceTermEntryFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommerceTermEntryClayDataSetDisplayNames.COMMERCE_TERM_ENTRIES %>"
+			id="<%= CommerceTermEntryFDSNames.TERM_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= commerceTermEntryDisplayContext.getPortletURL() %>"
 			style="stacked"
 		/>
 	</aui:form>

@@ -132,9 +132,7 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
-			List<Facet> facets = getFacets(renderRequest);
-
-			for (Facet facet : facets) {
+			for (Facet facet : getFacets(renderRequest)) {
 				String cpOptionKey =
 					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());

@@ -21,10 +21,8 @@ import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.discount.test.util.TestCommerceDiscountValidator;
 import com.liferay.commerce.discount.validator.CommerceDiscountValidatorResult;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -53,8 +51,6 @@ public class CommerceDiscountValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 	}
 
@@ -197,7 +193,5 @@ public class CommerceDiscountValidatorTest {
 
 	@Inject
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
-
-	private Group _group;
 
 }

@@ -119,8 +119,6 @@ public class RemoteCommerceTaxEngineTest {
 			Mockito.anyLong()
 		);
 
-		_cpTaxCategory = _getCPTaxCategory();
-
 		_startHttpServer();
 	}
 
@@ -437,7 +435,6 @@ public class RemoteCommerceTaxEngineTest {
 	private CommerceAddress _commerceBillingAddress;
 	private CommerceAddress _commerceShippingAddress;
 	private CommerceTaxMethod _commerceTaxMethod;
-	private CPTaxCategory _cpTaxCategory;
 	private HttpServer _httpServer;
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final Map<String, String> _recordedParameterMap = new HashMap<>();

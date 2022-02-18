@@ -23,12 +23,10 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,8 +57,6 @@ public class CPDefinitionModelListenerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_user = UserTestUtil.addUser();
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -94,8 +90,6 @@ public class CPDefinitionModelListenerTest {
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
-
-	private static User _user;
 
 	private CommerceCatalog _commerceCatalog;
 

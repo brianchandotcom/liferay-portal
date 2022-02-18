@@ -24,19 +24,16 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "incoming") %>'
 >
-	<clay:data-set-display
+	<frontend-data-set:classic-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
 			).build()
 		%>'
 		creationMenu="<%= commerceInventoryDisplayContext.getReplenishmentCreationMenu() %>"
-		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT %>"
-		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT %>"
+		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT %>"
+		id="<%= CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= commerceInventoryDisplayContext.getPortletURL() %>"
 		showSearch="<%= false %>"
 	/>
 </commerce-ui:panel>

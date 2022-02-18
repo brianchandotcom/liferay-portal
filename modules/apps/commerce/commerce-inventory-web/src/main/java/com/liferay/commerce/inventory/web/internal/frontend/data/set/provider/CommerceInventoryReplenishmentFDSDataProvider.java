@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.Replenishment;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,16 +47,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT,
+	service = FDSDataProvider.class
 )
-public class CommerceInventoryReplenishmentDataSetDataProvider
-	implements ClayDataSetDataProvider<Replenishment> {
+public class CommerceInventoryReplenishmentFDSDataProvider
+	implements FDSDataProvider<Replenishment> {
 
 	@Override
 	public List<Replenishment> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Replenishment> replenishments = new ArrayList<>();
@@ -76,8 +76,8 @@ public class CommerceInventoryReplenishmentDataSetDataProvider
 				_commerceInventoryReplenishmentItemService.
 					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
 						_portal.getCompanyId(httpServletRequest), sku,
-						pagination.getStartPosition(),
-						pagination.getEndPosition());
+						fdsPagination.getStartPosition(),
+						fdsPagination.getEndPosition());
 
 		for (CommerceInventoryReplenishmentItem
 				commerceInventoryReplenishmentItem :
@@ -103,7 +103,7 @@ public class CommerceInventoryReplenishmentDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");

@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityService;
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.BookedQuantity;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -52,16 +52,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_BOOKED,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_BOOKED,
+	service = FDSDataProvider.class
 )
-public class CommerceInventoryBookedDataSetDataProvider
-	implements ClayDataSetDataProvider<BookedQuantity> {
+public class CommerceInventoryBookedFDSDataProvider
+	implements FDSDataProvider<BookedQuantity> {
 
 	@Override
 	public List<BookedQuantity> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<BookedQuantity> bookedQuantities = new ArrayList<>();
@@ -73,8 +73,8 @@ public class CommerceInventoryBookedDataSetDataProvider
 				_commerceInventoryBookedQuantityService.
 					getCommerceInventoryBookedQuantities(
 						_portal.getCompanyId(httpServletRequest), sku,
-						pagination.getStartPosition(),
-						pagination.getEndPosition());
+						fdsPagination.getStartPosition(),
+						fdsPagination.getEndPosition());
 
 		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
 				commerceInventoryBookedQuantities) {
@@ -100,7 +100,7 @@ public class CommerceInventoryBookedDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");

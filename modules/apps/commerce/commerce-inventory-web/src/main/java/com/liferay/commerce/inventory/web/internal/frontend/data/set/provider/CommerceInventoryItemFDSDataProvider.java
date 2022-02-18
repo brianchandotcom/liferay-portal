@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.InventoryItem;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -44,16 +44,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_ITEMS,
+	service = FDSDataProvider.class
 )
-public class CommerceInventoryItemDataSetDataProvider
-	implements ClayDataSetDataProvider<InventoryItem> {
+public class CommerceInventoryItemFDSDataProvider
+	implements FDSDataProvider<InventoryItem> {
 
 	@Override
 	public List<InventoryItem> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -68,8 +68,9 @@ public class CommerceInventoryItemDataSetDataProvider
 
 		List<CIWarehouseItem> ciWarehouseItems =
 			_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
-				_portal.getCompanyId(httpServletRequest), filter.getKeywords(),
-				pagination.getStartPosition(), pagination.getEndPosition());
+				_portal.getCompanyId(httpServletRequest),
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 
 		for (CIWarehouseItem ciWarehouseItem : ciWarehouseItems) {
 			inventoryItems.add(
@@ -85,7 +86,7 @@ public class CommerceInventoryItemDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -98,7 +99,8 @@ public class CommerceInventoryItemDataSetDataProvider
 
 		return _commerceInventoryWarehouseItemLocalService.
 			countItemsByCompanyId(
-				_portal.getCompanyId(httpServletRequest), filter.getKeywords());
+				_portal.getCompanyId(httpServletRequest),
+				fdsKeywords.getKeywords());
 	}
 
 	@Reference

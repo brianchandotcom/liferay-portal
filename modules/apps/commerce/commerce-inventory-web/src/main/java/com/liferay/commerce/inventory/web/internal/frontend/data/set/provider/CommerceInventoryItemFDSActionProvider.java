@@ -12,22 +12,19 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.frontend;
+package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.inventory.web.internal.frontend.constants.CommerceInventoryDataSetConstants;
-import com.liferay.commerce.inventory.web.internal.model.Warehouse;
+import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
+import com.liferay.commerce.inventory.web.internal.model.InventoryItem;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -43,8 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,53 +52,70 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_ITEMS,
+	service = FDSActionProvider.class
 )
-public class CommerceInventoryWarehouseClayDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class CommerceInventoryItemFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		Warehouse warehouse = (Warehouse)model;
+		InventoryItem inventoryItem = (InventoryItem)model;
 
 		return DropdownItemListBuilder.add(
 			() -> _hasPermission(),
 			dropdownItem -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				dropdownItem.setHref(
-					_getWarehouseEditURL(
-						warehouse.getCommerceInventoryWarehouseItemId(),
-						httpServletRequest));
+					_getCommerceInventoryItemEditURL(
+						inventoryItem.getSku(), themeDisplay));
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
 			() -> _hasPermission(),
 			dropdownItem -> {
 				dropdownItem.setHref(
-					_getWarehouseDeleteURL(
-						warehouse.getCommerceInventoryWarehouseItemId(),
-						httpServletRequest));
+					_getInventoryItemDeleteURL(
+						inventoryItem.getSku(), httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
 
-	private String _getWarehouseDeleteURL(
-		long commerceInventoryWarehouseItemId,
-		HttpServletRequest httpServletRequest) {
+	private String _getCommerceInventoryItemEditURL(
+		String sku, ThemeDisplay themeDisplay) {
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				themeDisplay.getRequest(), portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_inventory/edit_commerce_inventory_item"
+		).setParameter(
+			"sku", sku
+		).buildString();
+	}
+
+	private String _getInventoryItemDeleteURL(
+		String sku, HttpServletRequest httpServletRequest) {
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
 		).setActionName(
-			"/commerce_inventory/edit_commerce_inventory_warehouse_item"
+			"/commerce_inventory/edit_commerce_inventory_warehouse"
 		).setCMD(
 			Constants.DELETE
 		).setRedirect(
@@ -111,40 +123,8 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 				httpServletRequest, "currentUrl",
 				_portal.getCurrentURL(httpServletRequest))
 		).setParameter(
-			"commerceInventoryWarehouseItemId", commerceInventoryWarehouseItemId
+			"sku", sku
 		).buildString();
-	}
-
-	private String _getWarehouseEditURL(
-		long commerceInventoryWarehouseItemId,
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				themeDisplay.getRequest(), portletDisplay.getId(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/commerce_inventory/edit_commerce_inventory_warehouse_item"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).setParameter(
-			"commerceInventoryWarehouseItemId", commerceInventoryWarehouseItemId
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException);
-		}
-
-		return portletURL.toString();
 	}
 
 	private boolean _hasPermission() throws PrincipalException {
@@ -156,9 +136,6 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 			PermissionThreadLocal.getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceInventoryWarehouseClayDataSetActionProvider.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"

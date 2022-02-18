@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.commerce.product.asset.categories.web.internal.frontend;
+package com.liferay.commerce.product.asset.categories.web.internal.frontend.data.set.view.table;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesFDSNames;
 import com.liferay.commerce.product.asset.categories.web.internal.model.CategoryDisplayPage;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -66,40 +67,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"clay.data.provider.key=" + CommerceCategoryDisplayPageClayTable.NAME,
-		"clay.data.set.display.name=" + CommerceCategoryDisplayPageClayTable.NAME
+		"fds.data.provider.key=" + CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES,
+		"frontend.data.set.name=" + CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES
 	},
-	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
-		ClayDataSetDisplayView.class
-	}
+	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
 )
-public class CommerceCategoryDisplayPageClayTable
-	extends BaseTableClayDataSetDisplayView
-	implements ClayDataSetActionProvider,
-			   ClayDataSetDataProvider<CategoryDisplayPage> {
+public class CommerceCategoryDisplayPageTableFDSView
+	extends BaseTableFDSView
+	implements FDSActionProvider, FDSDataProvider<CategoryDisplayPage> {
 
 	public static final String NAME = "category-display-pages";
 
 	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
-
-		ClayTableSchemaField categoryNameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"categoryName", "category-name");
-
-		categoryNameClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("layout", "layout");
-
-		return clayTableSchemaBuilder.build();
-	}
-
-	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		CategoryDisplayPage categoryDisplayPage = (CategoryDisplayPage)model;
@@ -127,9 +108,23 @@ public class CommerceCategoryDisplayPageClayTable
 	}
 
 	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			_fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"categoryName", "category-name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"layout", "layout"
+		).build();
+	}
+
+	@Override
 	public List<CategoryDisplayPage> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -149,9 +144,9 @@ public class CommerceCategoryDisplayPageClayTable
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					AssetCategory.class.getName(), filter.getKeywords(),
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					sort);
+					AssetCategory.class.getName(), fdsKeywords.getKeywords(),
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), sort);
 
 		for (CPDisplayLayout cpDisplayLayout :
 				cpDisplayLayoutBaseModelSearchResult.getBaseModels()) {
@@ -168,7 +163,7 @@ public class CommerceCategoryDisplayPageClayTable
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -182,8 +177,8 @@ public class CommerceCategoryDisplayPageClayTable
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					AssetCategory.class.getName(), filter.getKeywords(), 0, 0,
-					null);
+					AssetCategory.class.getName(), fdsKeywords.getKeywords(), 0,
+					0, null);
 
 		return cpDisplayLayoutBaseModelSearchResult.getLength();
 	}
@@ -257,13 +252,13 @@ public class CommerceCategoryDisplayPageClayTable
 	}
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 	@Reference
 	private Portal _portal;

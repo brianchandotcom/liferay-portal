@@ -93,6 +93,20 @@
 		<field name="relationshipType" type="String" />
 		<field name="required" type="boolean" />
 	</model>
+	<model name="com.liferay.object.model.ObjectFieldSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectFieldSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectFieldId" type="long" />
+		<field name="name" type="String" />
+		<field name="required" type="boolean" />
+		<field name="value" type="String" />
+	</model>
 	<model name="com.liferay.object.model.ObjectLayout">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.Serializable;
@@ -188,12 +187,6 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
-	public void setPortletSharedSearchRequest(
-		PortletSharedSearchRequest portletSharedSearchRequest) {
-
-		_portletSharedSearchRequest = portletSharedSearchRequest;
-	}
-
 	public void setPortletSharedSearchResponse(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
@@ -219,7 +212,6 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 	private final HttpServletRequest _httpServletRequest;
 	private Locale _locale;
 	private String _paginationStartParameterName;
-	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private PortletSharedSearchResponse _portletSharedSearchResponse;
 	private final RenderRequest _renderRequest;
 

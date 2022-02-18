@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.subscription.web.internal.frontend;
+package com.liferay.commerce.subscription.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -24,11 +24,11 @@ import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
-import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
+import com.liferay.commerce.subscription.web.internal.constants.CommerceSubscriptionFDSNames;
 import com.liferay.commerce.subscription.web.internal.model.Payment;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -59,16 +59,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_PAYMENTS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceSubscriptionFDSNames.SUBSCRIPTION_PAYMENTS,
+	service = FDSDataProvider.class
 )
-public class CommerceSubscriptionPaymentsDataSetDataProvider
-	implements ClayDataSetDataProvider<Payment> {
+public class CommerceSubscriptionPaymentsFDSDataProvider
+	implements FDSDataProvider<Payment> {
 
 	@Override
 	public List<Payment> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<Payment> orderPayments = new ArrayList<>();
@@ -129,7 +129,7 @@ public class CommerceSubscriptionPaymentsDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long commerceSubscriptionEntryId = ParamUtil.getLong(

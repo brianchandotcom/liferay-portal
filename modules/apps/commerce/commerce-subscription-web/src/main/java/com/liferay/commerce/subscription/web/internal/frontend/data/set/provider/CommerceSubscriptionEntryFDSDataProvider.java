@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.subscription.web.internal.frontend;
+package com.liferay.commerce.subscription.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
@@ -23,13 +23,13 @@ import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryService;
-import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
+import com.liferay.commerce.subscription.web.internal.constants.CommerceSubscriptionFDSNames;
 import com.liferay.commerce.subscription.web.internal.model.Label;
 import com.liferay.commerce.subscription.web.internal.model.Link;
 import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,23 +58,23 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceSubscriptionFDSNames.SUBSCRIPTION_ENTRIES,
+	service = FDSDataProvider.class
 )
-public class CommerceSubscriptionEntryDataSetDataProvider
-	implements ClayDataSetDataProvider<SubscriptionEntry> {
+public class CommerceSubscriptionEntryFDSDataProvider
+	implements FDSDataProvider<SubscriptionEntry> {
 
 	@Override
 	public List<SubscriptionEntry> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<SubscriptionEntry> subscriptionEntries = new ArrayList<>();
 
 		BaseModelSearchResult<CommerceSubscriptionEntry> baseModelSearchResult =
 			_getBaseModelSearchResult(
-				httpServletRequest, filter, pagination, sort);
+				fdsKeywords, fdsPagination, httpServletRequest, sort);
 
 		for (CommerceSubscriptionEntry commerceSubscriptionEntry :
 				baseModelSearchResult.getBaseModels()) {
@@ -117,33 +117,34 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		BaseModelSearchResult<CommerceSubscriptionEntry> baseModelSearchResult =
-			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
+			_getBaseModelSearchResult(
+				fdsKeywords, null, httpServletRequest, null);
 
 		return baseModelSearchResult.getLength();
 	}
 
 	private BaseModelSearchResult<CommerceSubscriptionEntry>
 			_getBaseModelSearchResult(
-				HttpServletRequest httpServletRequest, Filter filter,
-				Pagination pagination, Sort sort)
+				FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+				HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
-		if (pagination != null) {
-			start = pagination.getStartPosition();
-			end = pagination.getEndPosition();
+		if (fdsPagination != null) {
+			start = fdsPagination.getStartPosition();
+			end = fdsPagination.getEndPosition();
 		}
 
 		return _commerceSubscriptionEntryService.
 			searchCommerceSubscriptionEntries(
 				_portal.getCompanyId(httpServletRequest), null, null,
-				filter.getKeywords(), start, end, sort);
+				fdsKeywords.getKeywords(), start, end, sort);
 	}
 
 	private String _getEditAccountURL(

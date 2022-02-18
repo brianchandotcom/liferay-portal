@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.subscription.web.internal.frontend;
+package com.liferay.commerce.subscription.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -29,11 +29,11 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryService;
-import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
+import com.liferay.commerce.subscription.web.internal.constants.CommerceSubscriptionFDSNames;
 import com.liferay.commerce.subscription.web.internal.model.OrderItem;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,16 +59,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS,
+	service = FDSDataProvider.class
 )
-public class CommerceSubscriptionOrderItemDataSetDataProvider
-	implements ClayDataSetDataProvider<OrderItem> {
+public class CommerceSubscriptionOrderItemFDSDataProvider
+	implements FDSDataProvider<OrderItem> {
 
 	@Override
 	public List<OrderItem> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		List<OrderItem> orderItems = new ArrayList<>();
@@ -137,7 +137,7 @@ public class CommerceSubscriptionOrderItemDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return 1;

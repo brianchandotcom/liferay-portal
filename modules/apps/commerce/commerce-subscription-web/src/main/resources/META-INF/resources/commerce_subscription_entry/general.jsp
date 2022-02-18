@@ -382,14 +382,11 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "items") %>'
 >
-<clay:data-set-display
+<frontend-data-set:classic-display
 	contextParams="<%= contextParams %>"
-	dataProviderKey="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"
-	id="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"
+	dataProviderKey="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS %>"
+	id="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= commerceSubscriptionEntryDisplayContext.getPortletURL() %>"
 	style="stacked"
 />
 </commerce-ui:panel>

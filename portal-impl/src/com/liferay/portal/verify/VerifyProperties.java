@@ -1554,6 +1554,7 @@ public class VerifyProperties extends VerifyProcess {
 	private static final String[] _OBSOLETE_PORTAL_KEYS = {
 		"aim.login", "aim.login", "amazon.access.key.id",
 		"amazon.associate.tag", "amazon.secret.access.key",
+		"asset.categories.properties.default",
 		"asset.entry.increment.view.counter.enabled", "asset.entry.validator",
 		"asset.publisher.asset.entry.query.processors",
 		"asset.publisher.filter.unlistable.entries",

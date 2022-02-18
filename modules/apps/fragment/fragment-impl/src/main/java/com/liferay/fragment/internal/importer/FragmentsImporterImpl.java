@@ -829,13 +829,19 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				_getFileName(zipEntry.getName()), zipEntry.getName());
 		}
 
-		for (FileEntry fileEntry :
-				PortletFileRepositoryUtil.getPortletFileEntries(
-					groupId, folderId)) {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, FragmentPortletKeys.FRAGMENT);
 
-			if (zipEntryNames.containsKey(fileEntry.getFileName())) {
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					fileEntry.getFileEntryId());
+		if (repository != null) {
+			for (FileEntry fileEntry :
+					PortletFileRepositoryUtil.getPortletFileEntries(
+						groupId, folderId)) {
+
+				if (zipEntryNames.containsKey(fileEntry.getFileName())) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						fileEntry.getFileEntryId());
+				}
 			}
 		}
 

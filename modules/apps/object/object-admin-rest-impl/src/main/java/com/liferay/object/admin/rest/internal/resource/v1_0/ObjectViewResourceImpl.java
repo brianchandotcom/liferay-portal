@@ -100,7 +100,8 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
-					this::_toObjectViewColumn)));
+					this::_toObjectViewColumn),
+				null));
 	}
 
 	@Override
@@ -113,7 +114,8 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
-					this::_toObjectViewColumn)));
+					this::_toObjectViewColumn),
+				null));
 	}
 
 	private ObjectView _toObjectView(

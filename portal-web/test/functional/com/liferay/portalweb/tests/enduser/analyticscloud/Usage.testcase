@@ -315,11 +315,9 @@ definition {
 
 		ACSettings.goToUsage();
 
-		var newIdividuals = ${currentIndividuals} + 1;
-
-		ACSettings.assertOverviewUsage(
-			current = "${newIdividuals}",
-			metricName = "Individuals");
+			ACSettings.assertOverviewUsage(
+				notEquals = "${currentIndividuals}",
+				metricName = "Individuals");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."

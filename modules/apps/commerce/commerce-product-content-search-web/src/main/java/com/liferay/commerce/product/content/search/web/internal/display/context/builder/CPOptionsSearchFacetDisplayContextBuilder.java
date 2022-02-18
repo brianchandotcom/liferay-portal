@@ -73,43 +73,43 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		return cpOptionsSearchFacetDisplayContext;
 	}
 
-	public void setCPOptionLocalService(
+	public void cpOptionLocalService(
 		CPOptionLocalService cpOptionLocalService) {
 
 		_cpOptionLocalService = cpOptionLocalService;
 	}
 
-	public void setDisplayStyle(String displayStyle) {
+	public void displayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
-	public void setFacet(Facet facet) {
+	public void facet(Facet facet) {
 		_facet = facet;
 	}
 
-	public void setFrequenciesVisible(boolean frequenciesVisible) {
+	public void frequenciesVisible(boolean frequenciesVisible) {
 		_frequenciesVisible = frequenciesVisible;
 	}
 
-	public void setFrequencyThreshold(int frequencyThreshold) {
+	public void frequencyThreshold(int frequencyThreshold) {
 		_frequencyThreshold = frequencyThreshold;
 	}
 
-	public void setMaxTerms(int maxTerms) {
+	public void maxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
 	}
 
-	public void setPaginationStartParameterName(
+	public void paginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
-	public void setPortal(Portal portal) {
+	public void portal(Portal portal) {
 		_portal = portal;
 	}
 
-	public void setPortletSharedSearchRequest(
+	public void portletSharedSearchRequest(
 		PortletSharedSearchRequest portletSharedSearchRequest) {
 
 		_portletSharedSearchRequest = portletSharedSearchRequest;

@@ -28,7 +28,6 @@ definition {
 	test CanExportMultipleWCsWithMultipleLanguages {
 		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
-		property portal.acceptance = "false";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -429,7 +428,6 @@ definition {
 	test CanImportWithLongInputs {
 		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
-		property portal.acceptance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WebContentContent",

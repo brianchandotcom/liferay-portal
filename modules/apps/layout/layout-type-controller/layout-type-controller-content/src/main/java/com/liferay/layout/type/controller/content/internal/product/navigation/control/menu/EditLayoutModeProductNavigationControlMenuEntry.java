@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Collections;
@@ -192,7 +192,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 		if (Objects.equals(
 				className, LayoutPageTemplateEntry.class.getName()) ||
-			!layout.isTypeContent() || !SitesUtil.isLayoutUpdateable(layout)) {
+			!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
 
 			return false;
 		}
@@ -260,6 +260,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTree;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -587,7 +587,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			).put(
 				"sortable",
 				hasManageLayoutsPermission && !mobile &&
-				SitesUtil.isLayoutSortable(layout)
+				_sites.isLayoutSortable(layout)
 			).put(
 				"type", layout.getType()
 			).put(
@@ -711,6 +711,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

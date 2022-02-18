@@ -89,7 +89,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.Serializable;
@@ -1024,7 +1024,7 @@ public class LayoutImportController implements ImportController {
 					continue;
 				}
 
-				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+				if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
 					modifiedLayouts.add(layout);
 
 					continue;
@@ -1380,6 +1380,9 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

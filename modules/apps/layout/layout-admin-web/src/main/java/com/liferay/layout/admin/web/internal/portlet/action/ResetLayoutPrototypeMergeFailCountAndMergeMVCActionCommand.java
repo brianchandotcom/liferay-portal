@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,7 +62,7 @@ public class ResetLayoutPrototypeMergeFailCountAndMergeMVCActionCommand
 		long layoutPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutPrototypeId");
 
-		SitesUtil.setMergeFailCount(
+		_sites.setMergeFailCount(
 			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId),
 			0);
 	}
@@ -75,5 +75,8 @@ public class ResetLayoutPrototypeMergeFailCountAndMergeMVCActionCommand
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;
+
+	@Reference
+	private Sites _sites;
 
 }

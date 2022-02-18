@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -128,7 +128,7 @@ public class PermissionsPortletConfigurationIcon
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!SitesUtil.isLayoutUpdateable(layout)) {
+		if (!_sites.isLayoutUpdateable(layout)) {
 			return false;
 		}
 
@@ -179,5 +179,8 @@ public class PermissionsPortletConfigurationIcon
 		PermissionsPortletConfigurationIcon.class);
 
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private Sites _sites;
 
 }

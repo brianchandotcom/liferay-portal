@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.sites.kernel.util.Sites;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 
@@ -291,7 +290,7 @@ public class StagedLayoutSetStagedModelDataHandler
 				continue;
 			}
 
-			if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+			if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
 				modifiedLayouts.add(layout);
 
 				continue;
@@ -1002,6 +1001,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private StagedLayoutSetStagedModelRepository

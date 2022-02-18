@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.site.internal.exportimport.staged.model.repository.StagedGroupStagedModelRepository;
 import com.liferay.site.model.adapter.StagedGroup;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -523,7 +523,7 @@ public class StagedGroupStagedModelDataHandler
 			long plid = LayoutConstants.DEFAULT_PLID;
 
 			if (layout != null) {
-				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+				if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
 					continue;
 				}
 
@@ -709,6 +709,9 @@ public class StagedGroupStagedModelDataHandler
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private StagedGroupStagedModelRepository _stagedGroupStagedModelRepository;

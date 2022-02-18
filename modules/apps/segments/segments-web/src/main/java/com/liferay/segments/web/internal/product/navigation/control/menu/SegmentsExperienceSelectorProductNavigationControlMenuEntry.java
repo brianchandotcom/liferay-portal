@@ -37,7 +37,7 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.web.internal.display.context.SegmentsExperienceSelectorDisplayContext;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.IOException;
 
@@ -116,7 +116,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeContent() || !SitesUtil.isLayoutUpdateable(layout)) {
+		if (!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
 			return false;
 		}
 
@@ -189,5 +189,8 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private Sites _sites;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,12 +48,15 @@ public class ResetMergeFailCountMVCActionCommand extends BaseMVCActionCommand {
 		long layoutPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutPrototypeId");
 
-		SitesUtil.setMergeFailCount(
+		_sites.setMergeFailCount(
 			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId),
 			0);
 	}
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private Sites _sites;
 
 }

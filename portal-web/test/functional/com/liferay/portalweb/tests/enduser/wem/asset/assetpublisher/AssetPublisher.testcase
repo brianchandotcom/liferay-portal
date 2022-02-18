@@ -957,7 +957,7 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureGeneralViaLookAndFeelPG(useCustomTitle = "Asset Publisher Custom");
+			Portlet.configureGeneralViaLookAndFeelPG(customTitle = "Asset Publisher Custom");
 		}
 
 		task ("View the custom title of Asset Publisher") {

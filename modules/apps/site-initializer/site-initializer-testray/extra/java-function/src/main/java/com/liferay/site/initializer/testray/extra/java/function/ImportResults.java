@@ -279,7 +279,7 @@ public class ImportResults {
 		return -1;
 	}
 
-	public static void listBuckets(String projectId) throws Exception {
+	public static void getResults(String projectId) throws Exception {
 		GoogleCredentials credentials = GoogleCredentials.fromStream(
 			new FileInputStream("/home/me/Downloads/key.json"));
 
@@ -291,23 +291,29 @@ public class ImportResults {
 		).build(
 		).getService();
 
-    	Page<Blob> blobsPage =
+    	Page<Blob> blobsPage1 =
         storage.list(
             _BUCKET_NAME,
             Storage.BlobListOption.prefix(_BUCKET_FOLDER_NAME),
             Storage.BlobListOption.currentDirectory());
 
-			for (Blob blob : blobsPage.iterateAll()) {
+		for (Blob blob1 : blobsPage1.iterateAll()) {
 
-				if (blob.getName().endsWith("results.tar.gz")) {
-						blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
-				}
-		}
-	}
+			if (blob1.getName().endsWith("/")) {
+				_BUCKET_FOLDER_NAME = "" + blob1.getName();
+
+				getResults(projectId);
+			} 
+			if (blob1.getName().endsWith("results.tar.gz")) {
+					blob1.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+			}
+			
+		}}
+	
 
 	public static void main(String[] args) {
 		long groupId = 42657L;
-		//listBuckets(_PROJECT_BUCKET_ID);
+		getResults(_PROJECT_BUCKET_ID);
 		File[] files = unzipFiles(_URL_KEY);
 	 	for(int index = 0; index<files.length; index++){
 			File file = files[index];
@@ -323,7 +329,7 @@ public class ImportResults {
 
 	private static final String _BUCKET_NAME = "testeray";
 
-	private static final String _BUCKET_FOLDER_NAME = "test1/test1/";
+	private static  String _BUCKET_FOLDER_NAME = "test1/";
 
 	private static final String _URL_KEY =
 		"/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results.tar.gz";

@@ -18,22 +18,17 @@
 
 <%
 CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <div class="pt-4" id="<portlet:namespace />optionsContainer">
-	<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-		<clay:headless-data-set-display
+	<div class="container-fluid container-fluid-max-xl">
+		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-catalog/v1.0/options"
-			clayDataSetActionDropdownItems="<%= cpOptionDisplayContext.getOptionClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= cpOptionDisplayContext.getCreationMenu() %>"
-			id="<%= CommerceOptionDataSetConstants.COMMERCE_DATA_SET_KEY_OPTIONS %>"
+			fdsActionDropdownItems="<%= cpOptionDisplayContext.getOptionFDSActionDropdownItems() %>"
+			id="<%= CommerceOptionFDSNames.OPTIONS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
 			style="stacked"
 		/>
-	</aui:form>
+	</div>
 </div>

@@ -121,15 +121,12 @@ else {
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "values") %>'
 			>
-				<clay:headless-data-set-display
+				<frontend-data-set:headless-display
 					apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/options/" + cpOptionId + "/optionValues" %>'
-					clayDataSetActionDropdownItems="<%= cpOptionDisplayContext.getOptionValueClayDataSetActionDropdownItems() %>"
 					creationMenu="<%= cpOptionDisplayContext.getOptionValueCreationMenu(cpOptionId) %>"
-					id="<%= CommerceOptionDataSetConstants.COMMERCE_DATA_SET_KEY_OPTION_VALUES %>"
+					fdsActionDropdownItems="<%= cpOptionDisplayContext.getOptionValueFDSActionDropdownItems() %>"
+					id="<%= CommerceOptionFDSNames.OPTION_VALUES %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= renderResponse.createRenderURL() %>"
 					style="stacked"
 				/>
 			</commerce-ui:panel>

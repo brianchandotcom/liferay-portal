@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.product.options.web.internal.frontend;
+package com.liferay.commerce.product.options.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.options.web.internal.frontend.constants.CommerceOptionDataSetConstants;
+import com.liferay.commerce.product.options.web.internal.constants.CommerceOptionFDSNames;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseRadioClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.RadioClayDataSetFilterItem;
+import com.liferay.frontend.data.set.filter.BaseRadioFDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,11 +47,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOptionDataSetConstants.COMMERCE_DATA_SET_KEY_OPTIONS,
-	service = ClayDataSetFilter.class
+	property = "frontend.data.set.name=" + CommerceOptionFDSNames.OPTIONS,
+	service = FDSFilter.class
 )
-public class CommerceOptionFieldTypeClayTableDataSetFilter
-	extends BaseRadioClayDataSetFilter {
+public class CommerceOptionFieldTypeFDSFilter extends BaseRadioFDSFilter {
 
 	public String getDDMFormFieldTypeLabel(
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
@@ -108,24 +107,21 @@ public class CommerceOptionFieldTypeClayTableDataSetFilter
 	}
 
 	@Override
-	public List<RadioClayDataSetFilterItem> getRadioClayDataSetFilterItems(
-		Locale locale) {
-
-		List<RadioClayDataSetFilterItem> radioClayDataSetFilterItems =
-			new ArrayList<>();
+	public List<RadioFDSFilterItem> getRadioFDSFilterItems(Locale locale) {
+		List<RadioFDSFilterItem> radioFDSFilterItems = new ArrayList<>();
 
 		for (DDMFormFieldType ddmFormFieldType : getDDMFormFieldTypes()) {
-			radioClayDataSetFilterItems.add(
-				new RadioClayDataSetFilterItem(
+			radioFDSFilterItems.add(
+				new RadioFDSFilterItem(
 					getDDMFormFieldTypeLabel(ddmFormFieldType, locale),
 					ddmFormFieldType.getName()));
 		}
 
-		return radioClayDataSetFilterItems;
+		return radioFDSFilterItems;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOptionFieldTypeClayTableDataSetFilter.class);
+		CommerceOptionFieldTypeFDSFilter.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

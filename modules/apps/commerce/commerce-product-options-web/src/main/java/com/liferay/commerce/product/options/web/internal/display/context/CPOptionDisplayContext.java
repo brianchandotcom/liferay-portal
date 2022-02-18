@@ -23,7 +23,7 @@ import com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigati
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -163,11 +163,10 @@ public class CPOptionDisplayContext {
 		return headerActionModels;
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getOptionClayDataSetActionDropdownItems()
+	public List<FDSActionDropdownItem> getOptionFDSActionDropdownItems()
 		throws PortalException {
 
-		return _getClayDataSetActionDropdownItems(
+		return _getFDSActionDropdownItems(
 			PortletURLBuilder.createRenderURL(
 				cpRequestHelper.getRenderResponse()
 			).setMVCRenderCommandName(
@@ -181,33 +180,6 @@ public class CPOptionDisplayContext {
 				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
 			).buildString(),
 			false);
-	}
-
-	public List<ClayDataSetActionDropdownItem>
-			getOptionValueClayDataSetActionDropdownItems()
-		throws PortalException {
-
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			cpRequestHelper.getRenderResponse()
-		).setMVCRenderCommandName(
-			"/cp_options/edit_cp_option_value"
-		).setRedirect(
-			cpRequestHelper.getCurrentURL()
-		).setParameter(
-			"cpOptionValueId", "{id}"
-		).setParameter(
-			"screenNavigationCategoryKey",
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
-
-		return _getClayDataSetActionDropdownItems(portletURL.toString(), true);
 	}
 
 	public CreationMenu getOptionValueCreationMenu(long cpOptionId)
@@ -233,6 +205,32 @@ public class CPOptionDisplayContext {
 		).build();
 	}
 
+	public List<FDSActionDropdownItem> getOptionValueFDSActionDropdownItems()
+		throws PortalException {
+
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			cpRequestHelper.getRenderResponse()
+		).setMVCRenderCommandName(
+			"/cp_options/edit_cp_option_value"
+		).setRedirect(
+			cpRequestHelper.getCurrentURL()
+		).setParameter(
+			"cpOptionValueId", "{id}"
+		).setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return _getFDSActionDropdownItems(portletURL.toString(), true);
+	}
+
 	public boolean hasPermission(String actionId) throws PortalException {
 		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
 
@@ -256,32 +254,29 @@ public class CPOptionDisplayContext {
 
 	protected final CPRequestHelper cpRequestHelper;
 
-	private List<ClayDataSetActionDropdownItem>
-		_getClayDataSetActionDropdownItems(
-			String portletURL, boolean sidePanel) {
+	private List<FDSActionDropdownItem> _getFDSActionDropdownItems(
+		String portletURL, boolean sidePanel) {
 
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
-		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
-			new ClayDataSetActionDropdownItem(
-				portletURL, "pencil", "edit",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "edit"), "get",
-				null, null);
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
+			portletURL, "pencil", "edit",
+			LanguageUtil.get(cpRequestHelper.getRequest(), "edit"), "get", null,
+			null);
 
 		if (sidePanel) {
-			clayDataSetActionDropdownItem.setTarget("sidePanel");
+			fdsActionDropdownItem.setTarget("sidePanel");
 		}
 
-		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
+		fdsActionDropdownItems.add(fdsActionDropdownItem);
 
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(cpRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "headless"));
 
-		return clayDataSetActionDropdownItems;
+		return fdsActionDropdownItems;
 	}
 
 	private boolean _hasDDMFormFieldTypeProperties(

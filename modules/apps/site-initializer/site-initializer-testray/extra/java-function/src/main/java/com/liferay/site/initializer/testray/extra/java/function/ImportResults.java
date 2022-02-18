@@ -26,36 +26,50 @@ import com.liferay.util.HttpClient;
 
 import java.io.File;
 import java.io.FileInputStream;
-
 import java.nio.file.Paths;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import java.io.*;
+import org.rauschig.jarchivelib.Archiver;
+import org.rauschig.jarchivelib.ArchiverFactory;
 
 /**
  * @author José Abelenda
  */
 public class ImportResults {
 
+	public static File[] unzipFiles(String URL_KEY){
 
-	public static void addTestBuild(long groupId, int projectId) {
+		File archive = new File(_URL_KEY);
+		File destination = new File("/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results/");
+
+		try{
+			Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+			archiver.extract(archive, destination);
+		}
+		catch(Exception exception){
+			exception.printStackTrace();
+		}
+
+		return destination.listFiles();
+
+	}
+
+
+	public static void addTestBuild(long groupId, int projectId, File file) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
 
 		try {
-			File file = new File(_URL_KEY);
 			DocumentBuilderFactory documentBuilderFactory =
 				DocumentBuilderFactory.newInstance();
 
@@ -111,13 +125,12 @@ public class ImportResults {
 		}
 	}
 
-	public static void addTestCase(long groupId, int projectId) {
+	public static void addTestCase(long groupId, int projectId, File file) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
 
 		try {
-			File file = new File(_URL_KEY);
 			DocumentBuilderFactory documentBuilderFactory =
 				DocumentBuilderFactory.newInstance();
 
@@ -178,13 +191,12 @@ public class ImportResults {
 		}
 	}
 
-	public static int fetchOrAddProject(long groupId) {
+	public static int fetchOrAddProject(long groupId, File file) {
 		Map<String, String> map = null;
 
 		int projectId = -1;
 
 		try {
-			File file = new File(_URL_KEY);
 
 			DocumentBuilderFactory documentBuilderFactory =
 				DocumentBuilderFactory.newInstance();
@@ -300,12 +312,16 @@ public class ImportResults {
 		}
 	}
 
-	public static void main(String[] args)  throws Exception{
-	//	listObjectsWithPrefix();
-		listBuckets(_PROJECT_BUCKET_ID);
-	// 	int projectId = fetchOrAddProject(groupId);
-	// 	addTestCase(groupId, projectId);
-	//	addTestBuild(groupId, projectId);
+	public static void main(String[] args) {
+		long groupId = 42657L;
+		//listBuckets(_PROJECT_BUCKET_ID);
+		File[] files = unzipFiles(_URL_KEY);
+	 	for(int index = 0; index<files.length; index++){
+			File file = files[index];
+			int projectId = fetchOrAddProject(groupId, file);
+			addTestCase(groupId, projectId, file);
+			addTestBuild(groupId, projectId, file);
+		}
 	 }
 
 	private static final String _BASE_URL = "http://localhost:8080/o/c/";
@@ -317,6 +333,6 @@ public class ImportResults {
 	private static final String _BUCKET_FOLDER_NAME = "test1/test1/";
 
 	private static final String _URL_KEY =
-		"/home/me/Downloads/key.xml";
+		"/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results.tar.gz";
 
 }

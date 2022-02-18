@@ -83,7 +83,7 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 			_portletSharedSearchRequest.search(renderRequest);
 
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
-			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildCPOptionsSearchFacetDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -103,9 +103,10 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		return searchRequest.getPaginationStartParameterName();
 	}
 
-	private CPOptionsSearchFacetDisplayContext _buildDisplayContext(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
+	private CPOptionsSearchFacetDisplayContext
+		_buildCPOptionsSearchFacetDisplayContext(
+			PortletSharedSearchResponse portletSharedSearchResponse,
+			RenderRequest renderRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

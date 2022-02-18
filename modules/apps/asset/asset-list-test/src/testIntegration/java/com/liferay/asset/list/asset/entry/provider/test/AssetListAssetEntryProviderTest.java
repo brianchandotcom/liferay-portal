@@ -162,6 +162,69 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
+	public void testCombineSegmentsOfDynamicCollectionWithoutDuplications()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.web.internal.configuration." +
+						"FFCollectionsVariationsPrioritizationConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			_setCombinedAssetForDynamicCollections(true);
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
+					null, _serviceContext);
+
+			User userTest = TestPropsValues.getUser();
+
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), userTest);
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), userTest);
+
+			JournalArticle journalArticle = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
+
+			_addJournalArticle(new long[0], TestPropsValues.getUserId());
+			_addJournalArticle(new long[0], TestPropsValues.getUserId());
+
+			long[] segmentsEntryIds = {
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()
+			};
+
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry1.getSegmentsEntryId(),
+				_getTypeSettings(userTest.getFirstName()));
+
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(),
+				_getTypeSettings(userTest.getFirstName()));
+
+			List<AssetEntry> assetEntries =
+				_assetListAssetEntryProvider.getAssetEntries(
+					assetListEntry, segmentsEntryIds);
+
+			Assert.assertEquals(
+				assetEntries.toString(), 3, assetEntries.size());
+
+			AssetEntry firstAssetEntry = assetEntries.get(0);
+
+			Assert.assertEquals(
+				firstAssetEntry.getTitle(LocaleUtil.US),
+				journalArticle.getTitle(LocaleUtil.US));
+		}
+	}
+
+	@Test
 	public void testGetDynamicAssetEntriesByKeywords() throws Exception {
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),

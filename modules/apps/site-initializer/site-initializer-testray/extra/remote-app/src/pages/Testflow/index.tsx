@@ -13,39 +13,64 @@
  * details.
  */
 
+import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AvatarGroup} from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
 import ProgressBar from '../../components/ProgressBar/';
+import StatusBadge from '../../components/StatusBadge';
 import Table from '../../components/Table';
+import useHeader from '../../hooks/useHeader';
 import {routines} from '../../util/mock';
 
 const TestFlow = () => {
+	const {setHeading} = useHeader();
+
+	useEffect(() => {
+		setHeading([{category: 'PROJECT', title: 'Testflow'}]);
+	}, [setHeading]);
+
 	return (
 		<Container title="Tasks">
 			<Table
 				columns={[
 					{
+						clickable: true,
 						key: 'status',
-						render: (value: string) => (
-							<Link
-								to={`/testflow/${value
-									.toLowerCase()
-									.replace(' ', '_')}`}
-							>
-								<span className="label label-inverse-secondary">
-									{value}
-								</span>
-							</Link>
-						),
+						render: (value: string) => {
+							return (
+								<Link
+									className="text-decoration-none"
+									to={`/testflow/${value
+										.toLowerCase()
+										.replace(' ', '_')}`}
+								>
+									<StatusBadge type="failed">
+										Failed
+									</StatusBadge>
+								</Link>
+							);
+						},
 						value: 'Status',
 					},
-					{key: 'startDate', value: 'Start Date'},
-					{key: 'task', value: 'Task'},
-					{key: 'projectName', value: 'Project Name'},
-					{key: 'routineName', value: 'Routine Name'},
-					{key: 'buildName', value: 'Build Name'},
+					{
+						clickable: true,
+						key: 'startDate',
+						value: 'Start Date',
+					},
+					{clickable: true, key: 'task', value: 'Task'},
+					{
+						clickable: true,
+						key: 'projectName',
+						value: 'Project Name',
+					},
+					{
+						clickable: true,
+						key: 'routineName',
+						value: 'Routine Name',
+					},
+					{clickable: true, key: 'buildName', value: 'Build Name'},
 					{
 						key: 'score',
 						render: ({incomplete, other, self}: any) => {
@@ -59,6 +84,7 @@ const TestFlow = () => {
 						value: 'Score',
 					},
 					{
+						className: 'table-cell-expand',
 						key: 'score',
 						render: (score: any) => <ProgressBar items={score} />,
 						value: 'Progress',
@@ -75,6 +101,7 @@ const TestFlow = () => {
 					},
 				]}
 				items={routines}
+				navigateTo={(item) => `/testflow/${item.id}`}
 			/>
 		</Container>
 	);

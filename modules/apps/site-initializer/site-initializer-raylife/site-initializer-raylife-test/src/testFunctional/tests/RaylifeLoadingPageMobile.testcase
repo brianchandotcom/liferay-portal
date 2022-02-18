@@ -1,0 +1,76 @@
+@component-name = "portal-solutions"
+definition {
+
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Raylife";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Raylife.createRaylifeSite(siteName = "Raylife");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        Raylife.tearDownCP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        
+        else {
+
+            User.logoutPG();
+        }
+    }
+
+    @description = "LPS-146121 - Verify Loading Page redirects automatically to Quote Profile Page. (SmartPhone)"
+    @priority = "4"
+    test IfRedirectsToQuoteProfilePagePhone {
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "360,720");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeMobile.formsFlowPhone();
+
+        AssertElementPresent(
+            locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
+            userName = "FirstName");
+
+    }
+
+    @description = "Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
+    @priority = "5"
+    test IfContinueFromPropertyGoToLoadingPageTablet {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "800,1024");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeAllBusinessInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeEmployees.typeAllEmployeesInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeProperty.typeAllPropertyInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
+    }
+}

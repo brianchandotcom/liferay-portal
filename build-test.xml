@@ -5556,10 +5556,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 
-			<copy
-				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
-				todir="${liferay.home}/deploy"
-			/>
+			<if>
+				<equals arg1="@{dxp.license.file}" arg2="dxp-license-virtual-cluster.xml" />
+				<then>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/@{dxp.license.file}"
+						todir="${liferay.home}/deploy"
+					/>
+				</then>
+				<else>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+						todir="${liferay.home}/deploy"
+					/>
+				</else>
+			</if>
 
 			<if>
 				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />

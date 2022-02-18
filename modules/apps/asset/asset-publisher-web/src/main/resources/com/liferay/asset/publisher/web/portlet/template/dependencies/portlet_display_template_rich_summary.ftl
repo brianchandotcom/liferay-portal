@@ -190,6 +190,6 @@
 		target="_blank"
 		title=entry.getTitle(locale)
 		types="${socialBookmarksTypes}"
-		url=viewURL
+		url=assetPublisherHelper.getAssetSocialURL(renderRequest, renderResponse, entry)
 	/>
 </#macro>

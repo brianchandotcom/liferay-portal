@@ -44,6 +44,14 @@ public class ObjectFieldSettingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldSettingLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectFieldSetting addObjectFieldSetting(
+			long userId, long objectFieldId, String name, boolean required,
+			String value)
+		throws PortalException {
+
+		return getService().addObjectFieldSetting(
+			userId, objectFieldId, name, required, value);
+	}
 
 	/**
 	 * Adds the object field setting to the database. Also notifies the appropriate model listeners.
@@ -300,6 +308,12 @@ public class ObjectFieldSettingLocalServiceUtil {
 		return getService().getObjectFieldSettings(start, end);
 	}
 
+	public static List<ObjectFieldSetting> getObjectFieldSettings(
+		long objectFieldId) {
+
+		return getService().getObjectFieldSettings(objectFieldId);
+	}
+
 	/**
 	 * Returns the number of object field settings.
 	 *
@@ -325,6 +339,14 @@ public class ObjectFieldSettingLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws PortalException {
+
+		return getService().updateObjectFieldSetting(
+			objectFieldSettingId, value);
 	}
 
 	/**

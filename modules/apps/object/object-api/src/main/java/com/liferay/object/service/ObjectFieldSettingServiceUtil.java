@@ -14,6 +14,9 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for ObjectFieldSetting. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectFieldSettingServiceImpl</code> and is an
@@ -33,14 +36,43 @@ public class ObjectFieldSettingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldSettingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectFieldSetting addObjectFieldSetting(
+			long objectFieldId, String name, boolean required, String value)
+		throws PortalException {
+
+		return getService().addObjectFieldSetting(
+			objectFieldId, name, required, value);
+	}
+
+	public static ObjectFieldSetting deleteObjectFieldSetting(
+			long objectFieldSettingId)
+		throws PortalException {
+
+		return getService().deleteObjectFieldSetting(objectFieldSettingId);
+	}
+
+	public static ObjectFieldSetting getObjectFieldSetting(
+			long objectFieldSettingId)
+		throws PortalException {
+
+		return getService().getObjectFieldSetting(objectFieldSettingId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws PortalException {
+
+		return getService().updateObjectFieldSetting(
+			objectFieldSettingId, value);
 	}
 
 	public static ObjectFieldSettingService getService() {

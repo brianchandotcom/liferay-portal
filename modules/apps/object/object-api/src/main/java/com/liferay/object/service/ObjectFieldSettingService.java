@@ -14,12 +14,14 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,6 +49,17 @@ public interface ObjectFieldSettingService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldSettingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object field setting remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectFieldSettingServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectFieldSetting addObjectFieldSetting(
+			long objectFieldId, String name, boolean required, String value)
+		throws PortalException;
+
+	public ObjectFieldSetting deleteObjectFieldSetting(
+			long objectFieldSettingId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectFieldSetting getObjectFieldSetting(long objectFieldSettingId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +67,9 @@ public interface ObjectFieldSettingService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ObjectFieldSetting updateObjectFieldSetting(
+			long objectFieldSettingId, String value)
+		throws PortalException;
 
 }

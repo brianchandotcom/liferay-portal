@@ -210,7 +210,6 @@
 	<classpathentry kind="lib" path="lib/portal/rometools.jar"/>
 	<classpathentry kind="lib" path="lib/portal/saaj-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/saaj-impl.jar"/>
-	<classpathentry kind="lib" path="lib/portal/scribe.jar"/>
 	<classpathentry kind="lib" path="lib/portal/serializer.jar"/>
 	<classpathentry kind="lib" path="lib/portal/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/soap.jar"/>

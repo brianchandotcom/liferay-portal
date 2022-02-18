@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -130,6 +132,45 @@ public class FragmentsImporterTest {
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), 1, fragmentCollections.size());
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertFalse(fragmentEntries.isEmpty());
+	}
+
+	@Test
+	public void testImportFragmentsSystemWide() throws Exception {
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				CompanyConstants.SYSTEM, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		long initialFragmentCollectionsCount = fragmentCollections.size();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_user.getCompanyId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), CompanyConstants.SYSTEM, 0, _file, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				CompanyConstants.SYSTEM, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), initialFragmentCollectionsCount + 1,
+			fragmentCollections.size());
 
 		FragmentCollection fragmentCollection = fragmentCollections.get(0);
 

@@ -112,31 +112,18 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		CPOptionFacetsPortletInstanceConfiguration
+			cpOptionFacetsPortletInstanceConfiguration =
+				_getCpOptionFacetsPortletInstanceConfiguration(
+					themeDisplay.getPortletDisplay());
 
-		String displayStyle = null;
-		int frequencyThreshold = -1;
-		int maxTerms = -1;
-		boolean showFrequencies = true;
-
-		try {
-			CPOptionFacetsPortletInstanceConfiguration
-				cpOptionFacetsPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPOptionFacetsPortletInstanceConfiguration.class);
-
-			displayStyle =
-				cpOptionFacetsPortletInstanceConfiguration.displayStyle();
-			frequencyThreshold =
-				cpOptionFacetsPortletInstanceConfiguration.
-					getFrequencyThreshold();
-			maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
-			showFrequencies =
-				cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
+		String displayStyle =
+			cpOptionFacetsPortletInstanceConfiguration.displayStyle();
+		int frequencyThreshold =
+			cpOptionFacetsPortletInstanceConfiguration.getFrequencyThreshold();
+		int maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
+		boolean showFrequencies =
+			cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
 
 		Optional<PortletPreferences> portletPreferencesOptional =
 			portletSharedSearchResponse.getPortletPreferences(renderRequest);
@@ -178,6 +165,19 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 			_portletSharedSearchRequest);
 
 		return cpOptionsSearchFacetDisplayBuilder.build();
+	}
+
+	private CPOptionFacetsPortletInstanceConfiguration
+		_getCpOptionFacetsPortletInstanceConfiguration(
+			PortletDisplay portletDisplay) {
+
+		try {
+			return portletDisplay.getPortletInstanceConfiguration(
+				CPOptionFacetsPortletInstanceConfiguration.class);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	@Reference

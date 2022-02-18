@@ -26,11 +26,14 @@ import React, {
 	useState,
 } from 'react';
 
-import SearchInput from '../shared/SearchInput';
-import ThemeContext from '../shared/ThemeContext';
-import {CUSTOM_JSON_SXP_ELEMENT, DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
-import {addParams, fetchData} from '../utils/fetch';
-import {getLocalizedText} from '../utils/language';
+import SearchInput from '../../shared/SearchInput';
+import ThemeContext from '../../shared/ThemeContext';
+import {
+	CUSTOM_JSON_SXP_ELEMENT,
+	DEFAULT_SXP_ELEMENT_ICON,
+} from '../../utils/data';
+import {addParams, fetchData} from '../../utils/fetch';
+import {getLocalizedText} from '../../utils/language';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];

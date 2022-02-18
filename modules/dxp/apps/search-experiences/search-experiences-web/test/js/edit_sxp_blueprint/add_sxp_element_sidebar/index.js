@@ -12,8 +12,8 @@
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import AddSXPElementSidebar from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/AddSXPElementSidebar';
-import {QUERY_SXP_ELEMENTS} from '../mocks/data';
+import AddSXPElementSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/add_sxp_element_sidebar';
+import {QUERY_SXP_ELEMENTS} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 

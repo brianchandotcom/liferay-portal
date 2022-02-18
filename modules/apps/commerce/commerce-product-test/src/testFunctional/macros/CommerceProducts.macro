@@ -20,11 +20,18 @@ definition {
 	}
 
 	macro deleteEntries {
-		ClickNoError.clickNoMouseOver(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
-		ClickNoError(locator1 = "Button#DELETE");
+		if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+		}
+		else {
+			ClickNoError(locator1 = "Button#DELETE");
+		}
 
-		Confirm(value1 = "${deleteMessage}");
+		if (isSet(deleteMessage)) {
+			Confirm(value1 = "${deleteMessage}");
+		}
 	}
 
 	macro deleteProductsEntry {

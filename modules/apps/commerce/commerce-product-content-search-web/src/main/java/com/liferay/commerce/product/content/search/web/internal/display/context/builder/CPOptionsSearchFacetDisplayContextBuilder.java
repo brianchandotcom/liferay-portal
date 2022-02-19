@@ -164,7 +164,9 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		int maxCount = 1;
 		int minCount = 1;
 
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
+		if (_frequenciesVisible &&
+			_displayStyle.equals(
+				"ddmTemplate_CP-SPECIFICATION-OPTION-FACET-CLOUD-FTL")) {
 
 			// The cloud style may not list tags in the order of frequency.
 			// Keep looking through the results until we reach the maximum

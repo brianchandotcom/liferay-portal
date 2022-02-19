@@ -49,7 +49,7 @@ import java.util.List;
  */
 public class ImportResults {
 
-	public ImportResults() throws Exception {
+	public ImportResults(long groupId) throws Exception {
 		_storage = getStorage();
 
 		_documentBuilderFactory =
@@ -57,9 +57,11 @@ public class ImportResults {
 
 		_documentBuilder =
 			_documentBuilderFactory.newDocumentBuilder();
+
+		_groupId = groupId;
 	}
 
-	public void addTestBuild(long groupId, int projectId, Document document) {
+	public void addTestBuild(int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
@@ -100,7 +102,7 @@ public class ImportResults {
 							map.put("name", value);
 
 						HttpClient.post(
-							_BASE_URL + "testraybuilds/scopes/" + groupId, new JSONObject(map));
+							_BASE_URL + "testraybuilds/scopes/" + _groupId, new JSONObject(map));
 						}
 					}
 				}
@@ -112,7 +114,7 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestCase(long groupId, int projectId, Document document) {
+	public void addTestCase(int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
@@ -160,7 +162,7 @@ public class ImportResults {
 				}
 
 				HttpClient.post(
-					_BASE_URL + "testraycases/scopes/" + groupId, new JSONObject(map));
+					_BASE_URL + "testraycases/scopes/" + _groupId, new JSONObject(map));
 
 
 			}
@@ -170,7 +172,7 @@ public class ImportResults {
 		}
 	}
 
-	public int fetchOrAddProject(long groupId, Document document) {
+	public int fetchOrAddProject(Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		int projectId = -1;
@@ -217,7 +219,7 @@ public class ImportResults {
 			}
 
 			JSONObject response = HttpClient.get(
-				_BASE_URL + "testrayprojects/scopes/" + groupId);
+				_BASE_URL + "testrayprojects/scopes/" + _groupId);
 
 			JSONArray projects = response.getJSONArray("items");
 
@@ -242,7 +244,7 @@ public class ImportResults {
 
 		if ((projectId == -1) && (!map.isEmpty())) {
 			JSONObject response = HttpClient.post(
-				_BASE_URL + "testrayprojects/scopes/" + groupId,
+				_BASE_URL + "testrayprojects/scopes/" + _groupId,
 				new JSONObject(map));
 
 			projectId = response.getInt("id");
@@ -319,27 +321,20 @@ public class ImportResults {
 
 			Document document = _documentBuilder.parse(file);
 
-			// int projectId = fetchOrAddProject(groupId, document);
+			int projectId = fetchOrAddProject(document);
+
+			addTestBuild(projectId, document);
+			addTestCase(projectId, document);
 		}
 	}
 	
 	public static void main(String[] args) {
 		try {
-			long groupId = 42657L;
+			long groupId = 44357L;
 
-			ImportResults importResults = new ImportResults();
+			ImportResults importResults = new ImportResults(44357L);
 
 			importResults.readFiles("");
-
-			// File[] files = unzipFiles(_URL_KEY);
-
-			// for(int index = 0; index<files.length; index++){
-			// 	File file = files[index];
-			// 	int projectId = fetchOrAddProject(groupId, file);
-			// 	addTestCase(groupId, projectId, file);
-			// 	addTestBuild(groupId, projectId, file);
-			// }
-
 		}
 		catch(Exception exception) {
 			exception.printStackTrace();
@@ -347,8 +342,10 @@ public class ImportResults {
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory;
-
+	
 	private final DocumentBuilder _documentBuilder;
+	
+	private final Long _groupId;
 
 	private final Storage _storage;
  

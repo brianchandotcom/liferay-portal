@@ -20,10 +20,12 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import com.liferay.site.initializer.testray.extra.java.function.util.PropsUtil;
+import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
 import com.liferay.util.HttpClient;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,19 +56,20 @@ public class ImportResults {
 		try {
 			long groupId = 0L;
 
-			for(String arg : args) {
+			for (String arg : args) {
 				if (arg.startsWith("--groupId")) {
 					groupId = Long.parseLong(arg.substring(10));
 				}
 			}
 
-			if(groupId == 0) {
+			if (groupId == 0) {
 				throw new Exception("groupId was not defined.");
 			}
 
 			ImportResults importResults = new ImportResults(groupId);
 
 			importResults.readFiles("");
+
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -127,7 +130,8 @@ public class ImportResults {
 		}
 
 		JSONObject responseJSONObject = HttpClient.get(
-			_BASE_URL + "testrayprojects/scopes/" + _groupId);
+			PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
+				_groupId);
 
 		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
 
@@ -150,7 +154,8 @@ public class ImportResults {
 
 		if ((projectId == -1) && !map.isEmpty()) {
 			responseJSONObject = HttpClient.post(
-				_BASE_URL + "testrayprojects/scopes/" + _groupId,
+				PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
+					_groupId,
 				new JSONObject(map));
 
 			return responseJSONObject.getInt("id");
@@ -201,7 +206,8 @@ public class ImportResults {
 							map.put("name", value);
 
 							HttpClient.post(
-								_BASE_URL + "testraybuilds/scopes/" + _groupId,
+								PropsValues.TESTRAY_BASE_URL +
+									"testraybuilds/scopes/" + _groupId,
 								new JSONObject(map));
 						}
 					}
@@ -262,7 +268,8 @@ public class ImportResults {
 				}
 
 				HttpClient.post(
-					_BASE_URL + "testraycases/scopes/" + _groupId,
+					PropsValues.TESTRAY_BASE_URL + "testraycases/scopes/" +
+						_groupId,
 					new JSONObject(map));
 			}
 		}
@@ -272,12 +279,15 @@ public class ImportResults {
 	}
 
 	public Storage getStorage() throws Exception {
+		InputStream inputStream = PropsUtil.class.getResourceAsStream(
+			PropsValues.TESTRAY_URL_API_KEY);
+
 		GoogleCredentials credentials = GoogleCredentials.fromStream(
-			new FileInputStream(_URL_API_KEY));
+			inputStream);
 
 		return StorageOptions.newBuilder(
 		).setProjectId(
-			_BUCKET_NAME
+			PropsValues.TESTRAY_BUCKET_NAME
 		).setCredentials(
 			credentials
 		).build(
@@ -289,11 +299,13 @@ public class ImportResults {
 
 		if (folderName == null) {
 			page = _storage.list(
-				_BUCKET_NAME, Storage.BlobListOption.currentDirectory());
+				PropsValues.TESTRAY_BUCKET_NAME,
+				Storage.BlobListOption.currentDirectory());
 		}
 		else {
 			page = _storage.list(
-				_BUCKET_NAME, Storage.BlobListOption.prefix(folderName),
+				PropsValues.TESTRAY_BUCKET_NAME,
+				Storage.BlobListOption.prefix(folderName),
 				Storage.BlobListOption.currentDirectory());
 		}
 
@@ -304,7 +316,7 @@ public class ImportResults {
 				)) {
 
 				Blob lfrTestrayCompletedBlod = _storage.get(
-					_BUCKET_NAME,
+					PropsValues.TESTRAY_BUCKET_NAME,
 					blob.getName(
 					).replace(
 						"results.tar.gz", ".lfr-testray-completed"
@@ -360,13 +372,6 @@ public class ImportResults {
 			addTestCase(projectId, document);
 		}
 	}
-
-	private static final String _BASE_URL = "http://localhost:8080/o/c/";
-
-	private static final String _BUCKET_NAME = "testray-test";
-
-	private static final String _URL_API_KEY =
-		"/Users/joseabelenda/temp/ictusweb.json";
 
 	private final DocumentBuilder _documentBuilder;
 	private final DocumentBuilderFactory _documentBuilderFactory;

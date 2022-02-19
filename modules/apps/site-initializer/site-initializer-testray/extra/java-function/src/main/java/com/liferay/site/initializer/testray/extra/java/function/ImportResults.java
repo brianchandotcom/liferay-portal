@@ -350,15 +350,8 @@ public class ImportResults {
 	private final Storage _storage;
  
 	private final String _BASE_URL = "http://localhost:8080/o/c/";
-	 
-	private final String _PROJECT_BUCKET_ID = "wise-aegis-340917";
 	
 	private final String _BUCKET_NAME = "testray-test";
-	
-	private String _BUCKET_FOLDER_NAME = "/";
 
 	private final String _URL_API_KEY = "/Users/joseabelenda/temp/ictusweb.json";
-
-	private final String _URL_KEY =
-		"/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results.tar.gz";
 }

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Add a new user that is part of an account(the creation of a new account and the user's role are optional)"
+	@summary = "Add a new user that is part of an account(the creation of a new account, the membership and the user's role are optional)"
 	macro addAccountEntryUser {
 		Variables.assertDefined(parameterList = "${accountName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
@@ -21,6 +21,12 @@ definition {
 			agreeToTermsAndAnswerReminderQuery = "${agreeToTermsAndAnswerReminderQuery}",
 			requireReset = "${requireReset}",
 			userEmailAddress = "${userEmailAddress}");
+
+		if (isSet(userSiteMembership)) {
+			JSONUser.addUserToSite(
+				groupName = "${userSiteMembership}",
+				userEmailAddress = "${userEmailAddress}");
+		}
 
 		if (isSet(userRole)) {
 			ApplicationsMenu.gotoPortlet(

@@ -2209,13 +2209,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SCHEMA_MODULE_BUILD_AUTO_UPGRADE));
 
-	public static final String SCRIPTING_JRUBY_COMPILE_MODE = PropsUtil.get(
-		PropsKeys.SCRIPTING_JRUBY_COMPILE_MODE);
-
-	public static final int SCRIPTING_JRUBY_COMPILE_THRESHOLD =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.SCRIPTING_JRUBY_COMPILE_THRESHOLD), 50);
-
 	public static final int SEARCH_CONTAINER_PAGE_DEFAULT_DELTA =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20);

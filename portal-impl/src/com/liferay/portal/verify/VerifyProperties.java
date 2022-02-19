@@ -1862,6 +1862,7 @@ public class VerifyProperties extends VerifyProcess {
 		"sc.image.max.size", "sc.image.thumbnail.max.height",
 		"sc.image.thumbnail.max.width", "sc.product.comments.enabled",
 		"scheduler.classes", "schema.run.minimal",
+		"scripting.jruby.compile.mode", "scripting.jruby.compile.threshold",
 		"search.container.page.iterator.page.values",
 		"service.builder.service.read.only.prefixes", "session.disabled",
 		"setup.database.types", "shard.available.names", "shard.default.name",

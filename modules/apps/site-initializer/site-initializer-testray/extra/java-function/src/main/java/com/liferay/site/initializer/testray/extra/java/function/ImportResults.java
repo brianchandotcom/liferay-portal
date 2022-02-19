@@ -54,7 +54,7 @@ public class ImportResults {
 		try {
 			long groupId = 44357L;
 
-			ImportResults importResults = new ImportResults(44357L);
+			ImportResults importResults = new ImportResults(groupId);
 
 			importResults.readFiles("");
 		}
@@ -84,9 +84,9 @@ public class ImportResults {
 			for (int i = 0; i < testcases.getLength(); i++) {
 				Node testCase = testcases.item(i);
 
-				Element eElement = (Element)testCase;
+				Element element = (Element)testCase;
 
-				NodeList properties = eElement.getElementsByTagName("property");
+				NodeList properties = element.getElementsByTagName("property");
 
 				for (int property = 0; property < properties.getLength();
 					 property++) {
@@ -138,9 +138,9 @@ public class ImportResults {
 			for (int i = 0; i < testcases.getLength(); i++) {
 				Node testCase = testcases.item(i);
 
-				Element eElement = (Element)testCase;
+				Element element = (Element)testCase;
 
-				NodeList properties = eElement.getElementsByTagName("property");
+				NodeList properties = element.getElementsByTagName("property");
 
 				for (int property = 0; property < properties.getLength();
 					 property++) {
@@ -185,7 +185,7 @@ public class ImportResults {
 		}
 	}
 
-	public int fetchOrAddProject(Document document) {
+	public int addProject(Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		int projectId = -1;
@@ -231,23 +231,21 @@ public class ImportResults {
 				}
 			}
 
-			JSONObject response = HttpClient.get(
+			JSONObject responseJSONObject = HttpClient.get(
 				_BASE_URL + "testrayprojects/scopes/" + _groupId);
 
-			JSONArray projects = response.getJSONArray("items");
+			JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
 
-			for (int i = 0; i < projects.length(); i++) {
-				JSONObject project = projects.getJSONObject(i);
+			for (int i = 0; i < projectsJSONArray.length(); i++) {
+				JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
 
-				if (project.getString(
+				if (projectJSONObject.getString(
 						"name"
 					).equals(
 						projectName
 					)) {
 
-					projectId = project.getInt("id");
-
-					return projectId;
+					return projectJSONObject.getInt("id");
 				}
 			}
 		}
@@ -256,13 +254,11 @@ public class ImportResults {
 		}
 
 		if ((projectId == -1) && !map.isEmpty()) {
-			JSONObject response = HttpClient.post(
+			JSONObject responseJSONObject = HttpClient.post(
 				_BASE_URL + "testrayprojects/scopes/" + _groupId,
 				new JSONObject(map));
 
-			projectId = response.getInt("id");
-
-			return projectId;
+			return responseJSONObject.getInt("id");
 		}
 
 		return -1;
@@ -307,7 +303,7 @@ public class ImportResults {
 							"results.tar.gz", ".lfr-testray-completed"
 						)) != null) {
 
-					_unTarGzip(blob.getName(), blob.getContent());
+					_unTarGzip(blob.getContent());
 				}
 
 				continue;
@@ -330,7 +326,7 @@ public class ImportResults {
 		}
 	}
 
-	private void _unTarGzip(String fileName, byte[] bytes) throws Exception {
+	private void _unTarGzip(byte[] bytes) throws Exception {
 		Path pathTempFile = Files.createTempFile(null, null);
 
 		Files.write(pathTempFile, bytes);
@@ -350,7 +346,7 @@ public class ImportResults {
 		for (File file : files) {
 			Document document = _documentBuilder.parse(file);
 
-			int projectId = fetchOrAddProject(document);
+			int projectId = addProject(document);
 
 			addTestBuild(projectId, document);
 			addTestCase(projectId, document);

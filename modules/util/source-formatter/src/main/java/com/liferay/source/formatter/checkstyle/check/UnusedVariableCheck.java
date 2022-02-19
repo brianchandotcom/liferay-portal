@@ -14,7 +14,10 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.tools.java.parser.util.DetailASTUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -70,7 +73,9 @@ public class UnusedVariableCheck extends BaseCheck {
 		}
 
 		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
-			if (_isInsideConstructorOrActivateMethod(variableCallerDetailAST)) {
+			if (_isInsideConstructorOrOSGiAnnotationsMethod(
+					variableCallerDetailAST)) {
+
 				return;
 			}
 
@@ -97,23 +102,44 @@ public class UnusedVariableCheck extends BaseCheck {
 		log(detailAST, _MSG_UNUSED_VARIABLE_VALUE, variableName);
 	}
 
-	private boolean _isInsideConstructorOrActivateMethod(DetailAST detailAST) {
+	private boolean _isInsideConstructorOrOSGiAnnotationsMethod(
+		DetailAST detailAST) {
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
+		List<String> importNames = getImportNames(parentDetailAST);
+
 		while (parentDetailAST != null) {
-			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
-				DetailAST identDetailAST = parentDetailAST.findFirstToken(
-					TokenTypes.IDENT);
-
-				String methodName = identDetailAST.getText();
-
-				if (methodName.equals("activate")) {
-					return true;
-				}
-			}
-
 			if (parentDetailAST.getType() == TokenTypes.CTOR_DEF) {
 				return true;
+			}
+
+			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
+				DetailAST modifiersDetailAST = parentDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
+
+				List<DetailAST> annotationDetailASTList =
+					DetailASTUtil.getAllChildTokens(
+						modifiersDetailAST, false, TokenTypes.ANNOTATION);
+
+				for (DetailAST annotationDetailAST : annotationDetailASTList) {
+					DetailAST atDetailAST = annotationDetailAST.findFirstToken(
+						TokenTypes.AT);
+
+					FullIdent fullIdent = FullIdent.createFullIdent(
+						atDetailAST.getNextSibling());
+
+					String annotationName = fullIdent.getText();
+
+					if (importNames.contains(
+							"org.osgi.service.component.annotations." +
+								annotationName)) {
+
+						return true;
+					}
+
+					return true;
+				}
 			}
 
 			parentDetailAST = parentDetailAST.getParent();

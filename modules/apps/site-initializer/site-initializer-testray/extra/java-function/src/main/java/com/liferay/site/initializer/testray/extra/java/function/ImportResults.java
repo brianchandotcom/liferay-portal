@@ -59,14 +59,12 @@ public class ImportResults {
 			_documentBuilderFactory.newDocumentBuilder();
 	}
 
-	public void addTestBuild(long groupId, int projectId, File file) {
+	public void addTestBuild(long groupId, int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
 
 		try {
-			Document document = _documentBuilder.parse(file);
-
 			NodeList testcases = document.getElementsByTagName("properties");
 
 			for (int i = 0; i < testcases.getLength(); i++) {
@@ -114,14 +112,12 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestCase(long groupId, int projectId, File file) {
+	public void addTestCase(long groupId, int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
 
 		try {
-			Document document = _documentBuilder.parse(file);
-
 			NodeList testcases = document.getElementsByTagName("testcase");
 
 			for (int i = 0; i < testcases.getLength(); i++) {
@@ -174,14 +170,12 @@ public class ImportResults {
 		}
 	}
 
-	public int fetchOrAddProject(long groupId, File file) {
+	public int fetchOrAddProject(long groupId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		int projectId = -1;
 
 		try {
-			Document document = _documentBuilder.parse(file);
-
 			Element element = document.getDocumentElement();
 
 			element.normalize();
@@ -322,6 +316,10 @@ public class ImportResults {
 			
 		for(File file : files) {
 			System.out.println("\t" + file);
+
+			Document document = _documentBuilder.parse(file);
+
+			// int projectId = fetchOrAddProject(groupId, document);
 		}
 	}
 	

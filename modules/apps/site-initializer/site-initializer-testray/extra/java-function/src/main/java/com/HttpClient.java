@@ -84,8 +84,6 @@ public class HttpClient {
 			}
 
 			jsonObject = new JSONObject(responseContent.toString());
-
-			System.out.println(jsonObject);
 		}
 		catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -159,10 +157,7 @@ public class HttpClient {
 				reader.close();
 			}
 
-			System.out.println(responseContent.toString());
 			jsonObject = new JSONObject(responseContent.toString());
-
-			System.out.println(jsonObject);
 		}
 		catch (MalformedURLException e) {
 			e.printStackTrace();

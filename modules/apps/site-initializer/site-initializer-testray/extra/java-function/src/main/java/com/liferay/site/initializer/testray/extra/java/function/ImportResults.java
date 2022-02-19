@@ -298,8 +298,6 @@ public class ImportResults {
 	}
 
 	private void _unTarGzip(String fileName, byte[] bytes) throws Exception {
-		System.out.println("Processing " + fileName);
-
 		Path pathTempFile = Files.createTempFile(null, null);
 		
 		Files.write(pathTempFile, bytes);
@@ -317,8 +315,6 @@ public class ImportResults {
 		File[] files = tempDirectory.listFiles();
 			
 		for(File file : files) {
-			System.out.println("\t" + file);
-
 			Document document = _documentBuilder.parse(file);
 
 			int projectId = fetchOrAddProject(document);

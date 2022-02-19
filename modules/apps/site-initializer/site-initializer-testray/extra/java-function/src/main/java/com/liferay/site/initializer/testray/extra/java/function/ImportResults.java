@@ -51,6 +51,12 @@ public class ImportResults {
 
 	public ImportResults() throws Exception {
 		_storage = getStorage();
+
+		_documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		_documentBuilder =
+			_documentBuilderFactory.newDocumentBuilder();
 	}
 
 	public void addTestBuild(long groupId, int projectId, File file) {
@@ -59,13 +65,7 @@ public class ImportResults {
 		map.put("testrayBuildId", String.valueOf(projectId));
 
 		try {
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(file);
+			Document document = _documentBuilder.parse(file);
 
 			NodeList testcases = document.getElementsByTagName("properties");
 
@@ -120,13 +120,7 @@ public class ImportResults {
 		map.put("testrayProjectId", String.valueOf(projectId));
 
 		try {
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(file);
+			Document document = _documentBuilder.parse(file);
 
 			NodeList testcases = document.getElementsByTagName("testcase");
 
@@ -186,14 +180,7 @@ public class ImportResults {
 		int projectId = -1;
 
 		try {
-
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(file);
+			Document document = _documentBuilder.parse(file);
 
 			Element element = document.getDocumentElement();
 
@@ -360,6 +347,10 @@ public class ImportResults {
 			exception.printStackTrace();
 		}
 	}
+
+	private final DocumentBuilderFactory _documentBuilderFactory;
+
+	private final DocumentBuilder _documentBuilder;
 
 	private final Storage _storage;
  

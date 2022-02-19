@@ -52,7 +52,17 @@ public class ImportResults {
 
 	public static void main(String[] args) {
 		try {
-			long groupId = 44357L;
+			long groupId = 0L;
+
+			for(String arg : args) {
+				if (arg.startsWith("--groupId")) {
+					groupId = Long.parseLong(arg.substring(10));
+				}
+			}
+
+			if(groupId == 0) {
+				throw new Exception("groupId was not defined.");
+			}
 
 			ImportResults importResults = new ImportResults(groupId);
 

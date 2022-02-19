@@ -18,7 +18,6 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.facet.config.CPSpecificationOptionsFacetConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
@@ -109,16 +108,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private CPSpecificationOptionsSearchFacetDisplayContext
 		_buildCPSpecificationOptionsSearchFacetDisplayContext() {
 
-		CPSpecificationOptionsFacetConfiguration
-			cpSpecificationOptionsFacetConfiguration =
-				new CPSpecificationOptionsFacetConfiguration(
-					_facet.getFacetConfiguration());
-
-		_frequencyThreshold =
-			cpSpecificationOptionsFacetConfiguration.getFrequencyThreshold();
-
-		_maxTerms = cpSpecificationOptionsFacetConfiguration.getMaxTerms();
-
 		_tuples = _getTuples(_facet.getFacetCollector());
 
 		CPSpecificationOptionsSearchFacetDisplayContext
@@ -180,14 +169,21 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		Optional<PortletPreferences> portletPreferencesOptional =
 			_portletSharedSearchResponse.getPortletPreferences(_renderRequest);
 
-		PortletPreferences portletPreferences =
-			portletPreferencesOptional.get();
+		if (portletPreferencesOptional.isPresent()) {
+			PortletPreferences portletPreferences =
+				portletPreferencesOptional.get();
 
-		_displayStyle = portletPreferences.getValue(
-			"cpSpecificationOptionFacetDisplayStyle", "cloud");
-
-		_frequenciesVisible = GetterUtil.getBoolean(
-			portletPreferences.getValue("frequenciesVisible", "true"), true);
+			_displayStyle = portletPreferences.getValue(
+				"cpSpecificationOptionFacetDisplayStyle", _displayStyle);
+			_frequencyThreshold = GetterUtil.getInteger(
+				portletPreferences.getValue("frequencyThreshold", null),
+				_frequencyThreshold);
+			_frequenciesVisible = GetterUtil.getBoolean(
+				portletPreferences.getValue("frequenciesVisible", "true"),
+				_frequenciesVisible);
+			_maxTerms = GetterUtil.getInteger(
+				portletPreferences.getValue("maxTerms", null), _maxTerms);
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -402,10 +398,10 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		_cpSpecificationOptionLocalService;
 	private String _displayStyle;
 	private Facet _facet;
-	private boolean _frequenciesVisible;
-	private int _frequencyThreshold;
+	private boolean _frequenciesVisible = true;
+	private int _frequencyThreshold = 1;
 	private Locale _locale;
-	private int _maxTerms;
+	private int _maxTerms = 10;
 	private String _paginationStartParameterName;
 	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

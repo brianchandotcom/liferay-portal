@@ -12,6 +12,7 @@
 /development/com.liferay.ant.manifest.helper.jar
 /development/com.liferay.jenkins.results.parser.jar
 /development/com.liferay.poshi.core.jar
+/development/commons-lang3.jar
 /development/db2jcc.jar
 /development/db2jcc_license_cu.jar
 /development/dtddoc.jar
@@ -106,7 +107,6 @@
 /portal/commons-fileupload.jar
 /portal/commons-io.jar
 /portal/commons-lang.jar
-/portal/commons-lang3.jar
 /portal/commons-logging.jar
 /portal/commons-math.jar
 /portal/commons-math3.jar

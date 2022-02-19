@@ -33,9 +33,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import java.io.*;
+
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author José Abelenda
@@ -44,17 +51,6 @@ public class ImportResults {
 
 	public ImportResults() throws Exception {
 		_storage = getStorage();
-	}
-
-	public File[] unzipFiles(String URL_KEY) throws Exception {
-		File archive = new File(_URL_KEY);
-		File destination = new File("/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results/");
-
-		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
-
-		archiver.extract(archive, destination);
-
-		return destination.listFiles();
 	}
 
 	public void addTestBuild(long groupId, int projectId, File file) {
@@ -300,15 +296,11 @@ public class ImportResults {
 		}
 
 		for (Blob blob : page.iterateAll()) {
-			System.out.println(blob.getName());
-
 			if (blob.getName().endsWith("results.tar.gz")) {
-				Blob completed = _storage.get(_BUCKET_NAME, blob.getName().replace("results.tar.gz", ".lfr-testray-completed"));
-
-				if(completed != null) {
-					//blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
-					_processFile(blob.getName());
+				if(_storage.get(_BUCKET_NAME, blob.getName().replace("results.tar.gz", ".lfr-testray-completed")) != null) {
+					_unTarGzip(blob.getName(), blob.getContent());
 				}
+
 				continue;
 			}
 
@@ -322,11 +314,30 @@ public class ImportResults {
 		}
 	}
 
-	private void _processFile(String fileName) {
+	private void _unTarGzip(String fileName, byte[] bytes) throws Exception {
 		System.out.println("Processing " + fileName);
+
+		Path pathTempFile = Files.createTempFile(null, null);
+		
+		Files.write(pathTempFile, bytes);
+		
+		File tempFile = pathTempFile.toFile();
+		
+		Path pathTempDirectory = Files.createTempDirectory(null);
+
+		File tempDirectory = pathTempDirectory.toFile();
+
+		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+
+		archiver.extract(tempFile, tempDirectory);
+
+		File[] files = tempDirectory.listFiles();
+			
+		for(File file : files) {
+			System.out.println("\t" + file);
+		}
 	}
 	
-
 	public static void main(String[] args) {
 		try {
 			long groupId = 42657L;

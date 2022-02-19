@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -36,9 +35,6 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Samuel Trong Tran
@@ -77,30 +73,22 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 					long defaultUserId = _userLocalService.getDefaultUserId(
 						companyId);
 
-					Map<Locale, String> descriptionMap = HashMapBuilder.put(
-						LocaleUtil.fromLanguageId(
-							UpgradeProcessUtil.getDefaultLanguageId(companyId)),
-						PropsUtil.get(
-							StringBundler.concat(
-								"system.role.",
-								StringUtil.replace(
-									RoleConstants.PUBLICATIONS_USER,
-									CharPool.SPACE, CharPool.PERIOD),
-								".description"))
-					).build();
-
-					PermissionThreadLocal.setAddResource(false);
-
-					try {
-						role = _roleLocalService.addRole(
-							defaultUserId, null, 0,
-							RoleConstants.PUBLICATIONS_USER, null,
-							descriptionMap, RoleConstants.TYPE_REGULAR, null,
-							null);
-					}
-					finally {
-						PermissionThreadLocal.setAddResource(true);
-					}
+					role = _roleLocalService.addRole(
+						defaultUserId, null, 0, RoleConstants.PUBLICATIONS_USER,
+						null,
+						HashMapBuilder.put(
+							LocaleUtil.fromLanguageId(
+								UpgradeProcessUtil.getDefaultLanguageId(
+									companyId)),
+							PropsUtil.get(
+								StringBundler.concat(
+									"system.role.",
+									StringUtil.replace(
+										RoleConstants.PUBLICATIONS_USER,
+										CharPool.SPACE, CharPool.PERIOD),
+									".description"))
+						).build(),
+						RoleConstants.TYPE_REGULAR, null, null);
 				}
 
 				_resourcePermissionLocalService.addResourcePermission(

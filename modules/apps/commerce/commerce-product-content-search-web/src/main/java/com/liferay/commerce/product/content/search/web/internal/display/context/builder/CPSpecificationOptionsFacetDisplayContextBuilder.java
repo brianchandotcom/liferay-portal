@@ -174,7 +174,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 				portletPreferencesOptional.get();
 
 			_displayStyle = portletPreferences.getValue(
-				"cpSpecificationOptionFacetDisplayStyle", _displayStyle);
+				"displayStyle", _displayStyle);
 			_frequencyThreshold = GetterUtil.getInteger(
 				portletPreferences.getValue("frequencyThreshold", null),
 				_frequencyThreshold);
@@ -261,7 +261,9 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		int maxCount = 1;
 		int minCount = 1;
 
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
+		if (_frequenciesVisible &&
+			_displayStyle.equals(
+				"ddmTemplate_CP-SPECIFICATION-OPTION-FACET-CLOUD-FTL")) {
 
 			// The cloud style may not list tags in the order of frequency.
 			// Keep looking through the results until we reach the maximum
@@ -396,7 +398,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
-	private String _displayStyle;
+	private String _displayStyle = StringPool.BLANK;
 	private Facet _facet;
 	private boolean _frequenciesVisible = true;
 	private int _frequencyThreshold = 1;

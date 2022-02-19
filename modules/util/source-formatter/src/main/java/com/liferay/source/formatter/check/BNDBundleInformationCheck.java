@@ -47,6 +47,9 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 		if (bundleVersion == null) {
 			addMessage(fileName, "Missing Bundle-Version");
 		}
+		else if (!bundleVersion.matches("^\\d+\\.\\d+\\.\\d+$")) {
+			addMessage(fileName, "Invalid Bundle-Version: " + bundleVersion);
+		}
 		else if (absolutePath.endsWith("-test/bnd.bnd") &&
 				 !bundleVersion.equals("1.0.0")) {
 

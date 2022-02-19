@@ -14,32 +14,19 @@
 
 package com.liferay.commerce.product.content.search.web.internal.portlet;
 
-import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.builder.CPOptionsSearchFacetDisplayContextBuilder;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.searcher.SearchRequest;
-import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -79,12 +66,8 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			_portletSharedSearchRequest.search(renderRequest);
-
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
-			_buildCPOptionsSearchFacetDisplayContext(
-				portletSharedSearchResponse, renderRequest);
+			_buildCPOptionsSearchFacetDisplayContext(renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -93,57 +76,8 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected String getPaginationStartParameterName(
-		PortletSharedSearchResponse portletSharedSearchResponse) {
-
-		SearchResponse searchResponse =
-			portletSharedSearchResponse.getSearchResponse();
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		return searchRequest.getPaginationStartParameterName();
-	}
-
 	private CPOptionsSearchFacetDisplayContext
-		_buildCPOptionsSearchFacetDisplayContext(
-			PortletSharedSearchResponse portletSharedSearchResponse,
-			RenderRequest renderRequest) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		CPOptionFacetsPortletInstanceConfiguration
-			cpOptionFacetsPortletInstanceConfiguration =
-				_getCpOptionFacetsPortletInstanceConfiguration(
-					themeDisplay.getPortletDisplay());
-
-		String displayStyle =
-			cpOptionFacetsPortletInstanceConfiguration.displayStyle();
-		int frequencyThreshold =
-			cpOptionFacetsPortletInstanceConfiguration.getFrequencyThreshold();
-		int maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
-		boolean showFrequencies =
-			cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
-
-		Optional<PortletPreferences> portletPreferencesOptional =
-			portletSharedSearchResponse.getPortletPreferences(renderRequest);
-
-		if (portletPreferencesOptional.isPresent()) {
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
-
-			frequencyThreshold = GetterUtil.getInteger(
-				portletPreferences.getValue("frequencyThreshold", null),
-				frequencyThreshold);
-			maxTerms = GetterUtil.getInteger(
-				portletPreferences.getValue("maxTerms", null), maxTerms);
-			showFrequencies = GetterUtil.getBoolean(
-				portletPreferences.getValue(
-					"frequenciesVisible", StringPool.BLANK),
-				true);
-			displayStyle = portletPreferences.getValue(
-				"cpOptionFacetDisplayStyle", displayStyle);
-		}
+		_buildCPOptionsSearchFacetDisplayContext(RenderRequest renderRequest) {
 
 		CPOptionsSearchFacetDisplayContextBuilder
 			cpOptionsSearchFacetDisplayBuilder =
@@ -151,33 +85,11 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 
 		cpOptionsSearchFacetDisplayBuilder.cpOptionLocalService(
 			_cpOptionLocalService);
-		cpOptionsSearchFacetDisplayBuilder.displayStyle(displayStyle);
-		cpOptionsSearchFacetDisplayBuilder.facet(
-			portletSharedSearchResponse.getFacet(CPField.OPTION_NAMES));
-		cpOptionsSearchFacetDisplayBuilder.frequenciesVisible(showFrequencies);
-		cpOptionsSearchFacetDisplayBuilder.frequencyThreshold(
-			frequencyThreshold);
-		cpOptionsSearchFacetDisplayBuilder.maxTerms(maxTerms);
-		cpOptionsSearchFacetDisplayBuilder.paginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
 		cpOptionsSearchFacetDisplayBuilder.portal(_portal);
 		cpOptionsSearchFacetDisplayBuilder.portletSharedSearchRequest(
 			_portletSharedSearchRequest);
 
 		return cpOptionsSearchFacetDisplayBuilder.build();
-	}
-
-	private CPOptionFacetsPortletInstanceConfiguration
-		_getCpOptionFacetsPortletInstanceConfiguration(
-			PortletDisplay portletDisplay) {
-
-		try {
-			return portletDisplay.getPortletInstanceConfiguration(
-				CPOptionFacetsPortletInstanceConfiguration.class);
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
 	}
 
 	@Reference

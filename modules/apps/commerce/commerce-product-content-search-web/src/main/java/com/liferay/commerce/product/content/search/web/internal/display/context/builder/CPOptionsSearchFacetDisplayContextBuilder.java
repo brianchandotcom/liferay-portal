@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.content.search.web.internal.display.context.builder;
 
+import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetTermDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
@@ -24,11 +26,16 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -41,6 +48,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 /**
@@ -58,13 +66,51 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
 			_createCPOptionsSearchFacetDisplayContext();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		CPOptionFacetsPortletInstanceConfiguration
+			cpOptionFacetsPortletInstanceConfiguration =
+				_getCpOptionFacetsPortletInstanceConfiguration(
+					themeDisplay.getPortletDisplay());
+
+		_displayStyle =
+			cpOptionFacetsPortletInstanceConfiguration.displayStyle();
+		_frequencyThreshold =
+			cpOptionFacetsPortletInstanceConfiguration.getFrequencyThreshold();
+		_frequenciesVisible =
+			cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
+		_maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
+
+		PortletSharedSearchResponse portletSharedSearchResponse =
+			_portletSharedSearchRequest.search(_renderRequest);
+
+		Optional<PortletPreferences> portletPreferencesOptional =
+			portletSharedSearchResponse.getPortletPreferences(_renderRequest);
+
+		if (portletPreferencesOptional.isPresent()) {
+			PortletPreferences portletPreferences =
+				portletPreferencesOptional.get();
+
+			_displayStyle = portletPreferences.getValue(
+				"displayStyle", _displayStyle);
+			_frequencyThreshold = GetterUtil.getInteger(
+				portletPreferences.getValue("frequencyThreshold", null),
+				_frequencyThreshold);
+			_frequenciesVisible = GetterUtil.getBoolean(
+				portletPreferences.getValue("frequenciesVisible", "true"),
+				true);
+			_maxTerms = GetterUtil.getInteger(
+				portletPreferences.getValue("maxTerms", null), _maxTerms);
+		}
+
 		cpOptionsSearchFacetDisplayContext.setFacets(_getFacets());
 		cpOptionsSearchFacetDisplayContext.setCPOptionLocalService(
 			_cpOptionLocalService);
 		cpOptionsSearchFacetDisplayContext.setPortletSharedSearchResponse(
-			_portletSharedSearchRequest.search(_renderRequest));
+			portletSharedSearchResponse);
 		cpOptionsSearchFacetDisplayContext.setPaginationStartParameterName(
-			_paginationStartParameterName);
+			_getPaginationStartParameterName());
 		cpOptionsSearchFacetDisplayContext.setTermDisplayContexts(
 			buildTermDisplayContexts());
 
@@ -75,32 +121,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		CPOptionLocalService cpOptionLocalService) {
 
 		_cpOptionLocalService = cpOptionLocalService;
-	}
-
-	public void displayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
-	}
-
-	public void facet(Facet facet) {
-		_facet = facet;
-	}
-
-	public void frequenciesVisible(boolean frequenciesVisible) {
-		_frequenciesVisible = frequenciesVisible;
-	}
-
-	public void frequencyThreshold(int frequencyThreshold) {
-		_frequencyThreshold = frequencyThreshold;
-	}
-
-	public void maxTerms(int maxTerms) {
-		_maxTerms = maxTerms;
-	}
-
-	public void paginationStartParameterName(
-		String paginationStartParameterName) {
-
-		_paginationStartParameterName = paginationStartParameterName;
 	}
 
 	public void portal(Portal portal) {
@@ -259,6 +279,19 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		}
 	}
 
+	private CPOptionFacetsPortletInstanceConfiguration
+		_getCpOptionFacetsPortletInstanceConfiguration(
+			PortletDisplay portletDisplay) {
+
+		try {
+			return portletDisplay.getPortletInstanceConfiguration(
+				CPOptionFacetsPortletInstanceConfiguration.class);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
 	private Optional<CPOptionsSearchFacetTermDisplayContext>
 		_getEmptyTermDisplayContext(long cpOptionId) {
 
@@ -272,10 +305,13 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	private List<Facet> _getFacets() {
 		List<Facet> filledFacets = new ArrayList<>();
 
-		FacetCollector facetCollector = _facet.getFacetCollector();
-
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(_renderRequest);
+
+		Facet facet = portletSharedSearchResponse.getFacet(
+			CPField.OPTION_NAMES);
+
+		FacetCollector facetCollector = facet.getFacetCollector();
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			_renderRequest);
@@ -285,16 +321,29 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 				themeDisplay.getCompanyId(), termCollector.getTerm());
 
 			if ((cpOption != null) && cpOption.isFacetable()) {
-				Facet facet = portletSharedSearchResponse.getFacet(
+				Facet cpOptionFacet = portletSharedSearchResponse.getFacet(
 					CPOptionFacetsUtil.getIndexFieldName(
 						termCollector.getTerm(), themeDisplay.getLanguageId()));
 
-				filledFacets.add(facet);
-				_tuples = _getTuples(cpOption, facet.getFacetCollector());
+				filledFacets.add(cpOptionFacet);
+				_tuples = _getTuples(
+					cpOption, cpOptionFacet.getFacetCollector());
 			}
 		}
 
 		return filledFacets;
+	}
+
+	private String _getPaginationStartParameterName() {
+		PortletSharedSearchResponse portletSharedSearchResponse =
+			_portletSharedSearchRequest.search(_renderRequest);
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		return searchRequest.getPaginationStartParameterName();
 	}
 
 	private List<Tuple> _getTuples(
@@ -315,12 +364,10 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private CPOptionLocalService _cpOptionLocalService;
-	private String _displayStyle;
-	private Facet _facet;
+	private String _displayStyle = StringPool.BLANK;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private int _maxTerms;
-	private String _paginationStartParameterName;
 	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private final RenderRequest _renderRequest;

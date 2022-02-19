@@ -42,25 +42,22 @@ import org.rauschig.jarchivelib.ArchiverFactory;
  */
 public class ImportResults {
 
-	public static File[] unzipFiles(String URL_KEY){
+	public ImportResults() throws Exception {
+		_storage = getStorage();
+	}
 
+	public File[] unzipFiles(String URL_KEY) throws Exception {
 		File archive = new File(_URL_KEY);
 		File destination = new File("/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results/");
 
-		try{
-			Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
-			archiver.extract(archive, destination);
-		}
-		catch(Exception exception){
-			exception.printStackTrace();
-		}
+		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+
+		archiver.extract(archive, destination);
 
 		return destination.listFiles();
-
 	}
 
-
-	public static void addTestBuild(long groupId, int projectId, File file) {
+	public void addTestBuild(long groupId, int projectId, File file) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
@@ -121,7 +118,7 @@ public class ImportResults {
 		}
 	}
 
-	public static void addTestCase(long groupId, int projectId, File file) {
+	public void addTestCase(long groupId, int projectId, File file) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
@@ -187,7 +184,7 @@ public class ImportResults {
 		}
 	}
 
-	public static int fetchOrAddProject(long groupId, File file) {
+	public int fetchOrAddProject(long groupId, File file) {
 		Map<String, String> map = new HashMap<>();
 
 		int projectId = -1;
@@ -279,59 +276,92 @@ public class ImportResults {
 		return -1;
 	}
 
-	public static void getResults(String projectId) throws Exception {
+	public Storage getStorage() throws Exception {
 		GoogleCredentials credentials = GoogleCredentials.fromStream(
-			new FileInputStream("/home/me/Downloads/key.json"));
+			new FileInputStream(_URL_API_KEY));
 
-		Storage storage = StorageOptions.newBuilder(
+		return StorageOptions.newBuilder(
 		).setProjectId(
-			projectId
+			_BUCKET_NAME
 		).setCredentials(
 			credentials
 		).build(
 		).getService();
+	}
 
-    	Page<Blob> blobsPage1 =
-        storage.list(
-            _BUCKET_NAME,
-            Storage.BlobListOption.prefix(_BUCKET_FOLDER_NAME),
-            Storage.BlobListOption.currentDirectory());
+	public void readFiles(String folderName) throws Exception {
+		Page<Blob> page;
 
-		for (Blob blob1 : blobsPage1.iterateAll()) {
+		if(folderName == null) {
+			page = _storage.list(_BUCKET_NAME,  Storage.BlobListOption.currentDirectory());
+		}
+		else {
+    		page = _storage.list(_BUCKET_NAME, Storage.BlobListOption.prefix(folderName), Storage.BlobListOption.currentDirectory());
+		}
 
-			if (blob1.getName().endsWith("/")) {
-				_BUCKET_FOLDER_NAME = "" + blob1.getName();
+		for (Blob blob : page.iterateAll()) {
+			System.out.println(blob.getName());
 
-				getResults(projectId);
-			} 
-			if (blob1.getName().endsWith("results.tar.gz")) {
-					blob1.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+			if (blob.getName().endsWith("results.tar.gz")) {
+				Blob completed = _storage.get(_BUCKET_NAME, blob.getName().replace("results.tar.gz", ".lfr-testray-completed"));
+
+				if(completed != null) {
+					//blob.downloadTo(Paths.get("/home/me/Downloads/key.xml"));
+					_processFile(blob.getName());
+				}
+				continue;
 			}
-			
-		}}
+
+			if (blob.getName().endsWith("/")) {
+				folderName = blob.getName().replace(folderName,"");
+
+				if(!folderName.equals("")){
+					readFiles(folderName);
+				}
+			}
+		}
+	}
+
+	private void _processFile(String fileName) {
+		System.out.println("Processing " + fileName);
+	}
 	
 
 	public static void main(String[] args) {
-		long groupId = 42657L;
-		getResults(_PROJECT_BUCKET_ID);
-		File[] files = unzipFiles(_URL_KEY);
-	 	for(int index = 0; index<files.length; index++){
-			File file = files[index];
-			int projectId = fetchOrAddProject(groupId, file);
-			addTestCase(groupId, projectId, file);
-			addTestBuild(groupId, projectId, file);
+		try {
+			long groupId = 42657L;
+
+			ImportResults importResults = new ImportResults();
+
+			importResults.readFiles("");
+
+			// File[] files = unzipFiles(_URL_KEY);
+
+			// for(int index = 0; index<files.length; index++){
+			// 	File file = files[index];
+			// 	int projectId = fetchOrAddProject(groupId, file);
+			// 	addTestCase(groupId, projectId, file);
+			// 	addTestBuild(groupId, projectId, file);
+			// }
+
 		}
-	 }
+		catch(Exception exception) {
+			exception.printStackTrace();
+		}
+	}
 
-	private static final String _BASE_URL = "http://localhost:8080/o/c/";
+	private final Storage _storage;
+ 
+	private final String _BASE_URL = "http://localhost:8080/o/c/";
+	 
+	private final String _PROJECT_BUCKET_ID = "wise-aegis-340917";
+	
+	private final String _BUCKET_NAME = "testray-test";
+	
+	private String _BUCKET_FOLDER_NAME = "/";
 
-	private static final String _PROJECT_BUCKET_ID = "wise-aegis-340917";
+	private final String _URL_API_KEY = "/Users/joseabelenda/temp/ictusweb.json";
 
-	private static final String _BUCKET_NAME = "testeray";
-
-	private static  String _BUCKET_FOLDER_NAME = "test1/";
-
-	private static final String _URL_KEY =
+	private final String _URL_KEY =
 		"/home/me/Downloads/2022-02-test-1-9-test-portal-testsuite-upstream(master)-650-results.tar.gz";
-
 }

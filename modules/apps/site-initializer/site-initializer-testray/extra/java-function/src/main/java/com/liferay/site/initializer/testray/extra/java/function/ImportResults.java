@@ -20,9 +20,9 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import com.liferay.site.initializer.testray.extra.java.function.http.HttpClient;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
-import com.liferay.util.HttpClient;
 
 import java.io.File;
 import java.io.InputStream;

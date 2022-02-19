@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.site.initializer.testray.extra.java.function.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

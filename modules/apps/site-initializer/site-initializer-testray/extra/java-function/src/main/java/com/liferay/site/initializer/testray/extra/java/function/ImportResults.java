@@ -73,6 +73,82 @@ public class ImportResults {
 		_groupId = groupId;
 	}
 
+	public int addProject(Document document) throws Exception {
+		Map<String, String> map = new HashMap<>();
+
+		Element element = document.getDocumentElement();
+
+		element.normalize();
+
+		NodeList nodeList = document.getElementsByTagName("property");
+
+		String projectName = null;
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+
+			if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+				!node.getNodeName(
+				).equals(
+					"#text"
+				) &&
+				(node.getAttributes(
+				).getLength() > 0)) {
+
+				String name = node.getAttributes(
+				).getNamedItem(
+					"name"
+				).getTextContent();
+
+				if (name.equals("testray.project.name")) {
+					String value = node.getAttributes(
+					).getNamedItem(
+						"value"
+					).getTextContent();
+
+					projectName = value;
+
+					map.put("description", name);
+					map.put("name", value);
+
+					break;
+				}
+			}
+		}
+
+		JSONObject responseJSONObject = HttpClient.get(
+			_BASE_URL + "testrayprojects/scopes/" + _groupId);
+
+		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
+
+		int projectId = -1;
+
+		for (int i = 0; i < projectsJSONArray.length(); i++) {
+			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
+
+			if (projectJSONObject.getString(
+					"name"
+				).equals(
+					projectName
+				)) {
+
+				projectId = projectJSONObject.getInt("id");
+
+				break;
+			}
+		}
+
+		if ((projectId == -1) && !map.isEmpty()) {
+			responseJSONObject = HttpClient.post(
+				_BASE_URL + "testrayprojects/scopes/" + _groupId,
+				new JSONObject(map));
+
+			return responseJSONObject.getInt("id");
+		}
+
+		return projectId;
+	}
+
 	public void addTestBuild(int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
@@ -106,12 +182,12 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
-						String value = node.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
 						if (name.equals("testray.build.name")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
 							map.put("name", value);
 
 							HttpClient.post(
@@ -185,85 +261,6 @@ public class ImportResults {
 		}
 	}
 
-	public int addProject(Document document) {
-		Map<String, String> map = new HashMap<>();
-
-		int projectId = -1;
-
-		try {
-			Element element = document.getDocumentElement();
-
-			element.normalize();
-
-			NodeList nodeList = document.getElementsByTagName("property");
-
-			String projectName = null;
-
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-
-				if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-					!node.getNodeName(
-					).equals(
-						"#text"
-					) &&
-					(node.getAttributes(
-					).getLength() > 0)) {
-
-					String name = node.getAttributes(
-					).getNamedItem(
-						"name"
-					).getTextContent();
-
-					String value = node.getAttributes(
-					).getNamedItem(
-						"value"
-					).getTextContent();
-
-					if (name.equals("testray.project.name")) {
-						projectName = value;
-
-						map.put("description", name);
-						map.put("name", value);
-
-						break;
-					}
-				}
-			}
-
-			JSONObject responseJSONObject = HttpClient.get(
-				_BASE_URL + "testrayprojects/scopes/" + _groupId);
-
-			JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
-
-			for (int i = 0; i < projectsJSONArray.length(); i++) {
-				JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
-
-				if (projectJSONObject.getString(
-						"name"
-					).equals(
-						projectName
-					)) {
-
-					return projectJSONObject.getInt("id");
-				}
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		if ((projectId == -1) && !map.isEmpty()) {
-			JSONObject responseJSONObject = HttpClient.post(
-				_BASE_URL + "testrayprojects/scopes/" + _groupId,
-				new JSONObject(map));
-
-			return responseJSONObject.getInt("id");
-		}
-
-		return -1;
-	}
-
 	public Storage getStorage() throws Exception {
 		GoogleCredentials credentials = GoogleCredentials.fromStream(
 			new FileInputStream(_URL_API_KEY));
@@ -296,13 +293,14 @@ public class ImportResults {
 					"results.tar.gz"
 				)) {
 
-				if (_storage.get(
-						_BUCKET_NAME,
-						blob.getName(
-						).replace(
-							"results.tar.gz", ".lfr-testray-completed"
-						)) != null) {
+				Blob lfrTestrayCompletedBlod = _storage.get(
+					_BUCKET_NAME,
+					blob.getName(
+					).replace(
+						"results.tar.gz", ".lfr-testray-completed"
+					));
 
+				if (lfrTestrayCompletedBlod != null) {
 					_unTarGzip(blob.getContent());
 				}
 

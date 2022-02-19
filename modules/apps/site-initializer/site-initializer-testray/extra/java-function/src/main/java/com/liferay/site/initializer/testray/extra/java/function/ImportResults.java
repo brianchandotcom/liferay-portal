@@ -13,52 +13,140 @@
  */
 
 package com.liferay.site.initializer.testray.extra.java.function;
+
 import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+
 import com.liferay.util.HttpClient;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Paths;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author José Abelenda
  */
 public class ImportResults {
 
+	public static void main(String[] args) {
+		try {
+			long groupId = 44357L;
+
+			ImportResults importResults = new ImportResults(groupId);
+
+			importResults.readFiles("");
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
 	public ImportResults(long groupId) throws Exception {
 		_storage = getStorage();
 
-		_documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
+		_documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
-		_documentBuilder =
-			_documentBuilderFactory.newDocumentBuilder();
+		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 
 		_groupId = groupId;
+	}
+
+	public int addProject(Document document) throws Exception {
+		Map<String, String> map = new HashMap<>();
+
+		Element element = document.getDocumentElement();
+
+		element.normalize();
+
+		NodeList nodeList = document.getElementsByTagName("property");
+
+		String projectName = null;
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+
+			if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+				!node.getNodeName(
+				).equals(
+					"#text"
+				) &&
+				(node.getAttributes(
+				).getLength() > 0)) {
+
+				String name = node.getAttributes(
+				).getNamedItem(
+					"name"
+				).getTextContent();
+
+				if (name.equals("testray.project.name")) {
+					String value = node.getAttributes(
+					).getNamedItem(
+						"value"
+					).getTextContent();
+
+					projectName = value;
+
+					map.put("description", name);
+					map.put("name", value);
+
+					break;
+				}
+			}
+		}
+
+		JSONObject responseJSONObject = HttpClient.get(
+			_BASE_URL + "testrayprojects/scopes/" + _groupId);
+
+		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
+
+		int projectId = -1;
+
+		for (int i = 0; i < projectsJSONArray.length(); i++) {
+			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
+
+			if (projectJSONObject.getString(
+					"name"
+				).equals(
+					projectName
+				)) {
+
+				projectId = projectJSONObject.getInt("id");
+
+				break;
+			}
+		}
+
+		if ((projectId == -1) && !map.isEmpty()) {
+			responseJSONObject = HttpClient.post(
+				_BASE_URL + "testrayprojects/scopes/" + _groupId,
+				new JSONObject(map));
+
+			return responseJSONObject.getInt("id");
+		}
+
+		return projectId;
 	}
 
 	public void addTestBuild(int projectId, Document document) {
@@ -72,11 +160,12 @@ public class ImportResults {
 			for (int i = 0; i < testcases.getLength(); i++) {
 				Node testCase = testcases.item(i);
 
-				Element eElement = (Element) testCase;
+				Element element = (Element)testCase;
 
-				NodeList properties = eElement.getElementsByTagName("property");
+				NodeList properties = element.getElementsByTagName("property");
 
-				for(int property = 0; property<properties.getLength();property++){
+				for (int property = 0; property < properties.getLength();
+					 property++) {
 
 					Node node = properties.item(property);
 
@@ -93,20 +182,20 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
-						String value = node.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
 						if (name.equals("testray.build.name")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
 							map.put("name", value);
 
-						HttpClient.post(
-							_BASE_URL + "testraybuilds/scopes/" + _groupId, new JSONObject(map));
+							HttpClient.post(
+								_BASE_URL + "testraybuilds/scopes/" + _groupId,
+								new JSONObject(map));
 						}
 					}
 				}
-
 			}
 		}
 		catch (Exception exception) {
@@ -125,11 +214,12 @@ public class ImportResults {
 			for (int i = 0; i < testcases.getLength(); i++) {
 				Node testCase = testcases.item(i);
 
-				Element eElement = (Element) testCase;
+				Element element = (Element)testCase;
 
-				NodeList properties = eElement.getElementsByTagName("property");
+				NodeList properties = element.getElementsByTagName("property");
 
-				for(int property = 0; property<properties.getLength();property++){
+				for (int property = 0; property < properties.getLength();
+					 property++) {
 
 					Node node = properties.item(property);
 
@@ -162,97 +252,13 @@ public class ImportResults {
 				}
 
 				HttpClient.post(
-					_BASE_URL + "testraycases/scopes/" + _groupId, new JSONObject(map));
-
-
+					_BASE_URL + "testraycases/scopes/" + _groupId,
+					new JSONObject(map));
 			}
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-	}
-
-	public int fetchOrAddProject(Document document) {
-		Map<String, String> map = new HashMap<>();
-
-		int projectId = -1;
-
-		try {
-			Element element = document.getDocumentElement();
-
-			element.normalize();
-
-			NodeList nodeList = document.getElementsByTagName("property");
-
-			String projectName = null;
-
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-
-				if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-					!node.getNodeName(
-					).equals(
-						"#text"
-					) &&
-					(node.getAttributes(
-					).getLength() > 0)) {
-
-					String name = node.getAttributes(
-					).getNamedItem(
-						"name"
-					).getTextContent();
-
-					String value = node.getAttributes(
-					).getNamedItem(
-						"value"
-					).getTextContent();
-
-					if (name.equals("testray.project.name")) {
-						projectName = value;
-
-						map.put("description", name);
-						map.put("name", value);
-
-						break;
-					}
-				}
-			}
-
-			JSONObject response = HttpClient.get(
-				_BASE_URL + "testrayprojects/scopes/" + _groupId);
-
-			JSONArray projects = response.getJSONArray("items");
-
-			for (int i = 0; i < projects.length(); i++) {
-				JSONObject project = projects.getJSONObject(i);
-
-				if (project.getString(
-						"name"
-					).equals(
-						projectName
-					)) {
-
-					projectId = project.getInt("id");
-
-					return projectId;
-				}
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		if ((projectId == -1) && (!map.isEmpty())) {
-			JSONObject response = HttpClient.post(
-				_BASE_URL + "testrayprojects/scopes/" + _groupId,
-				new JSONObject(map));
-
-			projectId = response.getInt("id");
-
-			return projectId;
-		}
-
-		return -1;
 	}
 
 	public Storage getStorage() throws Exception {
@@ -271,39 +277,60 @@ public class ImportResults {
 	public void readFiles(String folderName) throws Exception {
 		Page<Blob> page;
 
-		if(folderName == null) {
-			page = _storage.list(_BUCKET_NAME,  Storage.BlobListOption.currentDirectory());
+		if (folderName == null) {
+			page = _storage.list(
+				_BUCKET_NAME, Storage.BlobListOption.currentDirectory());
 		}
 		else {
-    		page = _storage.list(_BUCKET_NAME, Storage.BlobListOption.prefix(folderName), Storage.BlobListOption.currentDirectory());
+			page = _storage.list(
+				_BUCKET_NAME, Storage.BlobListOption.prefix(folderName),
+				Storage.BlobListOption.currentDirectory());
 		}
 
 		for (Blob blob : page.iterateAll()) {
-			if (blob.getName().endsWith("results.tar.gz")) {
-				if(_storage.get(_BUCKET_NAME, blob.getName().replace("results.tar.gz", ".lfr-testray-completed")) != null) {
-					_unTarGzip(blob.getName(), blob.getContent());
+			if (blob.getName(
+				).endsWith(
+					"results.tar.gz"
+				)) {
+
+				Blob lfrTestrayCompletedBlod = _storage.get(
+					_BUCKET_NAME,
+					blob.getName(
+					).replace(
+						"results.tar.gz", ".lfr-testray-completed"
+					));
+
+				if (lfrTestrayCompletedBlod != null) {
+					_unTarGzip(blob.getContent());
 				}
 
 				continue;
 			}
 
-			if (blob.getName().endsWith("/")) {
-				folderName = blob.getName().replace(folderName,"");
+			if (blob.getName(
+				).endsWith(
+					"/"
+				)) {
 
-				if(!folderName.equals("")){
+				folderName = blob.getName(
+				).replace(
+					folderName, ""
+				);
+
+				if (!folderName.equals("")) {
 					readFiles(folderName);
 				}
 			}
 		}
 	}
 
-	private void _unTarGzip(String fileName, byte[] bytes) throws Exception {
+	private void _unTarGzip(byte[] bytes) throws Exception {
 		Path pathTempFile = Files.createTempFile(null, null);
-		
+
 		Files.write(pathTempFile, bytes);
-		
+
 		File tempFile = pathTempFile.toFile();
-		
+
 		Path pathTempDirectory = Files.createTempDirectory(null);
 
 		File tempDirectory = pathTempDirectory.toFile();
@@ -313,41 +340,27 @@ public class ImportResults {
 		archiver.extract(tempFile, tempDirectory);
 
 		File[] files = tempDirectory.listFiles();
-			
-		for(File file : files) {
+
+		for (File file : files) {
 			Document document = _documentBuilder.parse(file);
 
-			int projectId = fetchOrAddProject(document);
+			int projectId = addProject(document);
 
 			addTestBuild(projectId, document);
 			addTestCase(projectId, document);
 		}
 	}
-	
-	public static void main(String[] args) {
-		try {
-			long groupId = 44357L;
 
-			ImportResults importResults = new ImportResults(44357L);
+	private static final String _BASE_URL = "http://localhost:8080/o/c/";
 
-			importResults.readFiles("");
-		}
-		catch(Exception exception) {
-			exception.printStackTrace();
-		}
-	}
+	private static final String _BUCKET_NAME = "testray-test";
 
-	private final DocumentBuilderFactory _documentBuilderFactory;
-	
+	private static final String _URL_API_KEY =
+		"/Users/joseabelenda/temp/ictusweb.json";
+
 	private final DocumentBuilder _documentBuilder;
-	
+	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final Long _groupId;
-
 	private final Storage _storage;
- 
-	private final String _BASE_URL = "http://localhost:8080/o/c/";
-	
-	private final String _BUCKET_NAME = "testray-test";
 
-	private final String _URL_API_KEY = "/Users/joseabelenda/temp/ictusweb.json";
 }

@@ -137,6 +137,7 @@ public class ImportResults {
 
 		int projectId = -1;
 
+		//TODO use filter
 		for (int i = 0; i < projectsJSONArray.length(); i++) {
 			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
 

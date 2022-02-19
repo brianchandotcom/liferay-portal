@@ -89,7 +89,7 @@ export function Container({
 
 		return () => {
 			backButton?.classList.add('hide');
-			alertElement.classList.remove(
+			alertElement?.classList.remove(
 				'lfr-ddm__show-partial-results-alert--hidden'
 			);
 		};

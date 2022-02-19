@@ -5,13 +5,14 @@
 	"name": "TestrayProject",
 	"objectFields": [
 		{
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
 			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{

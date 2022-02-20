@@ -164,8 +164,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					Assert.assertEquals(
 						companyId, CompanyThreadLocal.getCompanyId());
 
-					Assert.assertEquals(
-						true, CompanyThreadLocal.isLocked());
+					Assert.assertTrue(CompanyThreadLocal.isLocked());
 
 					companyIds.add(companyId);
 

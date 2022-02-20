@@ -39,7 +39,7 @@ public class ResourceImplCheck extends BaseCheck {
 
 		String className = getName(detailAST);
 
-		if (!className.endsWith("ResourceImpl") &&
+		if (!className.endsWith("ResourceImpl") ||
 			className.startsWith("Base")) {
 
 			return;

@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.internal.upgrade.v3_0_0;
 
-import com.liferay.calendar.internal.upgrade.v3_0_0.util.CalendarBookingTable;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.upgrade.util.BaseUpgradeResourceBlock;
 
@@ -35,8 +34,8 @@ public class UpgradeCalendarBookingResourceBlock
 	}
 
 	@Override
-	protected Class<?> getTableClass() {
-		return CalendarBookingTable.class;
+	protected String getTableName() {
+		return "CalendarBooking";
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.object.internal.deployer;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.configuration.activator.FFGuestResourcePermissionConfigurationUtil;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
@@ -256,12 +257,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private void _readResourceActions(ObjectDefinition objectDefinition)
 		throws Exception {
 
+		String resourceActionsXml = "resource-actions/resource-actions.xml.tpl";
+
+		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
+			resourceActionsXml =
+				"resource-actions/ff-guest-resource-permission-resource-" +
+					"actions.xml.tpl";
+		}
+
 		_resourceActions.populateModelResources(
 			SAXReaderUtil.read(
 				StringUtil.replace(
 					StringUtil.read(
 						ObjectDefinitionDeployerImpl.class.getClassLoader(),
-						"resource-actions/resource-actions.xml.tpl"),
+						resourceActionsXml),
 					new String[] {
 						"[$MODEL_NAME$]", "[$PORTLET_NAME$]",
 						"[$RESOURCE_NAME$]"

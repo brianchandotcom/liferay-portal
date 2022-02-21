@@ -23,7 +23,6 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -41,7 +40,6 @@
 			</supports>
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_OBJECT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>

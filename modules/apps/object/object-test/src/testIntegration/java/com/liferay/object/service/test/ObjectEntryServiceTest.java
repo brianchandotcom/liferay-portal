@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.configuration.activator.FFGuestResourcePermissionConfigurationUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -127,27 +128,31 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
-		_setUser(_defaultUser);
+		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
+			_setUser(_defaultUser);
 
-		_assertFailPermission("ADD_OBJECT_ENTRY", null);
+			_assertFailPermission("ADD_OBJECT_ENTRY", null);
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+			Role guestRole = _roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), "ADD_OBJECT_ENTRY");
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(),
+				_objectDefinition.getResourceName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				guestRole.getRoleId(), "ADD_OBJECT_ENTRY");
 
-		Assert.assertNotNull(
-			_objectEntryService.addObjectEntry(
-				0, _objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomStringUtils.randomAlphabetic(5)
-				).build(),
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId(), _defaultUser.getUserId())));
+			Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"firstName", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						_defaultUser.getUserId())));
+		}
 	}
 
 	@Test
@@ -190,26 +195,29 @@ public class ObjectEntryServiceTest {
 
 		_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
 
-		_setUser(_defaultUser);
+		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
+			_setUser(_defaultUser);
 
-		_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
+			_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
 
-		ObjectEntry defaultUserObjectEntry = _addObjectEntry(_defaultUser);
+			ObjectEntry defaultUserObjectEntry = _addObjectEntry(_defaultUser);
 
-		_assertFailPermission(ActionKeys.VIEW, defaultUserObjectEntry);
+			_assertFailPermission(ActionKeys.VIEW, defaultUserObjectEntry);
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+			Role guestRole = _roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getClassName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ActionKeys.VIEW);
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(),
+				_objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				guestRole.getRoleId(), ActionKeys.VIEW);
 
-		Assert.assertNotNull(
-			_objectEntryService.getObjectEntry(
-				adminObjectEntry.getObjectEntryId()));
+			Assert.assertNotNull(
+				_objectEntryService.getObjectEntry(
+					adminObjectEntry.getObjectEntryId()));
+		}
 	}
 
 	@Test

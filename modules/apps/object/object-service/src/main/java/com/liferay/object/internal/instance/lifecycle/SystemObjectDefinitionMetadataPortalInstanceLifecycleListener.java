@@ -15,6 +15,7 @@
 package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.object.constants.ObjectSAPConstants;
+import com.liferay.object.internal.configuration.activator.FFGuestResourcePermissionConfigurationUtil;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
@@ -67,14 +68,16 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_log.debug("Registered portal instance " + company);
 		}
 
-		try {
-			_addSAPEntry(company.getCompanyId());
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add service access policy entry for company " +
-					company.getCompanyId(),
-				portalException);
+		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
+			try {
+				_addSAPEntry(company.getCompanyId());
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to add service access policy entry for company " +
+						company.getCompanyId(),
+					portalException);
+			}
 		}
 
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :

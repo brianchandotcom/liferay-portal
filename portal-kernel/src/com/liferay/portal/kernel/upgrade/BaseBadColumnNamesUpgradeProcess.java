@@ -107,6 +107,9 @@ public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 		DB db = DBManagerUtil.getDB();
 
 		for (String[] alterColumnName : alterColumnNames) {
+
+			// Special alter for reserved words like System in MySQL
+
 			if (db.getDBType() == DBType.MYSQL) {
 				runSQL(
 					StringBundler.concat(

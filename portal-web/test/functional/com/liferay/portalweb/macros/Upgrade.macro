@@ -5171,6 +5171,16 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	macro viewSpecificDisplayPageTemplateViaAssetPublisher {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/Document Display Page");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+		AssertElementPresent(
+			key_text = "DM Document Title",
+			locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+	}
+
 	macro viewStagingConfiguration {
 		SystemSettings.openSystemSettingsAdmin();
 

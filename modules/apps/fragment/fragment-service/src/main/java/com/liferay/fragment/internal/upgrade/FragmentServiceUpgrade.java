@@ -43,13 +43,10 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "1.0.1",
 			UpgradeStepFactory.alterColumnTypes(
-				com.liferay.fragment.internal.upgrade.v1_0_1.util.
-					FragmentEntryTable.class,
-				"TEXT null", "css", "html", "js"),
+				"FragmentEntry", "TEXT null", "css", "html", "js"),
 			UpgradeStepFactory.alterColumnTypes(
-				com.liferay.fragment.internal.upgrade.v1_0_1.util.
-					FragmentEntryLinkTable.class,
-				"TEXT null", "css", "html", "js", "editableValues"));
+				"FragmentEntryLink", "TEXT null", "css", "html", "js",
+				"editableValues"));
 
 		registry.register("1.0.1", "1.0.2", new DummyUpgradeStep());
 

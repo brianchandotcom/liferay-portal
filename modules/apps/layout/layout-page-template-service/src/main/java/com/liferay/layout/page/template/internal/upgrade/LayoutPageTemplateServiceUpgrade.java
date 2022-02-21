@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.internal.upgrade.v1_2_0.LayoutPageTempla
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_1_0.LayoutUpgradeProcess;
-import com.liferay.layout.page.template.internal.upgrade.v3_0_1.util.LayoutPageTemplateStructureRelTable;
 import com.liferay.layout.page.template.internal.upgrade.v3_1_3.ResourcePermissionUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.LayoutPageTemplateStructureRelUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_4_1.FragmentEntryLinkEditableValuesUpgradeProcess;
@@ -89,8 +88,7 @@ public class LayoutPageTemplateServiceUpgrade
 		registry.register(
 			"3.0.0", "3.0.1",
 			UpgradeStepFactory.alterColumnTypes(
-				LayoutPageTemplateStructureRelTable.class, "TEXT null",
-				"data_"));
+				"LayoutPageTemplateStructureRel", "TEXT null", "data_"));
 
 		registry.register(
 			"3.0.1", "3.1.0",

@@ -104,7 +104,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 							</c:if>
 
 							<div class="button-holder">
-								<label class="btn btn-secondary" for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage" tabindex="0"><liferay-ui:message key="select" /></label>
+								<label class="btn btn-secondary mt-2" for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage" tabindex="0"><liferay-ui:message key="select" /></label>
 
 								<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="hide" label="" name="fileName" type="file">
 									<aui:validator name="acceptFiles">

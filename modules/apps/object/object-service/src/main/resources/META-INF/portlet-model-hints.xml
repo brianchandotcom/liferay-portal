@@ -234,4 +234,18 @@
 		<field name="objectFieldName" type="String" />
 		<field name="priority" type="int" />
 	</model>
+	<model name="com.liferay.object.model.ObjectViewSortColumn">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectViewSortColumnId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectViewId" type="long" />
+		<field name="objectFieldName" type="String" />
+		<field name="priority" type="int" />
+		<field name="sortOrder" type="String" />
+	</model>
 </model-hints>

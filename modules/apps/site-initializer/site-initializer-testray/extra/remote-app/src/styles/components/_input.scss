@@ -1,0 +1,16 @@
+label {
+	display: flex;
+	font-size: 1.125rem;
+	font-weight: bold;
+	gap: 0.75rem;
+	margin-right: -5px;
+
+	&.required::after {
+		color: red;
+		content: '*';
+		font-size: 1rem;
+		left: -10px;
+		position: relative;
+		top: -5px;
+	}
+}

@@ -3,8 +3,7 @@ deploy-excludes=\
     **/WEB-INF/lib/com.liferay.calendar.service.jar,\
     **/WEB-INF/lib/com.liferay.petra.content.jar,\
     **/WEB-INF/lib/com.liferay.portal.dao.orm.custom.sql.api.jar,\
-    **/WEB-INF/lib/com.liferay.portal.spring.extender.jar,\
-    **/WEB-INF/lib/jericho-html.jar
+    **/WEB-INF/lib/com.liferay.portal.spring.extender.jar
 change-log=
 author=Liferay, Inc.
 Import-Package: com.liferay.portal.kernel.search.filter

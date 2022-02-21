@@ -8,12 +8,11 @@
 		"react": "16.8.6"
 	},
 	"devDependencies": {
-		"generator-liferay-fragments": "1.10.0"
+		"generator-liferay-fragments": "2.0.0-rc3"
 	},
 	"name": "@liferay/site-initializer-customer-portal-fragments",
 	"scripts": {
-		"add-fragment": "yo liferay-fragments:fragment",
-		"compress": "yo liferay-fragments:compress"
+		"build": "yo liferay-fragments:build"
 	},
 	"version": "1.0.0"
 }

@@ -39,6 +39,13 @@ import java.util.Set;
  */
 public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #upgradeLocalizedColumn(
+	 *          	ResourceBundleLoader, String, String, String, String,
+	 *          	String, long[])}
+	 */
+	@Deprecated
 	protected void upgradeLocalizedColumn(
 			ResourceBundleLoader resourceBundleLoader, Class<?> tableClass,
 			String columnName, String originalContent,
@@ -47,8 +54,24 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 		throws SQLException {
 
 		try {
-			String tableName = getTableName(tableClass);
+			upgradeLocalizedColumn(
+				resourceBundleLoader, getTableName(tableClass), columnName,
+				originalContent, localizationMapKey, localizationXMLKey,
+				companyIds);
+		}
+		catch (Exception exception) {
+			throw new SQLException(exception);
+		}
+	}
 
+	protected void upgradeLocalizedColumn(
+			ResourceBundleLoader resourceBundleLoader, String tableName,
+			String columnName, String originalContent,
+			String localizationMapKey, String localizationXMLKey,
+			long[] companyIds)
+		throws SQLException {
+
+		try {
 			if (!hasColumnType(tableName, columnName, "TEXT null") &&
 				!_alteredTableNameColumnNames.contains(
 					tableName + StringPool.POUND + columnName)) {
@@ -67,7 +90,7 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 						new ClassResourceBundleLoader(
 							"content.Language", clazz.getClassLoader()),
 						resourceBundleLoader),
-					tableClass, columnName, originalContent, localizationMapKey,
+					tableName, columnName, originalContent, localizationMapKey,
 					localizationXMLKey, companyId),
 				companyIds);
 		}
@@ -112,18 +135,6 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 		finally {
 			CompanyThreadLocal.setCompanyId(originalCompanyId);
 		}
-	}
-
-	private void _upgrade(
-			ResourceBundleLoader resourceBundleLoader, Class<?> tableClass,
-			String columnName, String originalContent,
-			String localizationMapKey, String localizationXMLKey,
-			long companyId)
-		throws Exception {
-
-		_upgrade(
-			resourceBundleLoader, getTableName(tableClass), columnName,
-			originalContent, localizationMapKey, localizationXMLKey, companyId);
 	}
 
 	private void _upgrade(

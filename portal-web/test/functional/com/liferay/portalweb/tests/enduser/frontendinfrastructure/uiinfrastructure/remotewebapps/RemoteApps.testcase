@@ -26,8 +26,8 @@ definition {
 				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
 
 				JSONLayout.deletePublicLayout(
-						groupName = "Guest",
-						layoutName = "${layoutName}");
+					groupName = "Guest",
+					layoutName = "${layoutName}");
 
 				Navigator.gotoPage(pageName = "Home");
 			}
@@ -49,8 +49,8 @@ definition {
 
 		task ("Add a public widget page with JSON") {
 			JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page");
+				groupName = "Guest",
+				layoutName = "Test Page");
 
 			Navigator.openURL();
 
@@ -67,12 +67,12 @@ definition {
 			Pause(locator1 = "3000");
 
 			Type(
-					locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-					value1 = "Test Remote App");
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "Test Remote App");
 
 			AssertElementPresent(
-					key_assetItem = "Collaboration",
-					locator1 = "ControlMenuAddPanel#ASSET_ITEM");
+				key_assetItem = "Collaboration",
+				locator1 = "ControlMenuAddPanel#ASSET_ITEM");
 		}
 	}
 
@@ -86,8 +86,8 @@ definition {
 		var remoteAppName = "My New Remote App To Delete";
 
 		JSONRemoteApp.addIFrameRemoteAppEntry(
-				iFrameURL = "http://www.liferay.com/my_new_remote_app",
-				name = "${remoteAppName}");
+			iFrameURL = "http://www.liferay.com/my_new_remote_app",
+			name = "${remoteAppName}");
 
 		RemoteApps.goToRemoteAppsPortlet();
 
@@ -109,30 +109,30 @@ definition {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElementAllFields(
-					entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-					entryHtmlName = "vanilla-counter",
-					entryName = "Vanilla Counter",
-					entryProperties = "test-data-user=QAuser",
-					entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Assert that the Vanilla Counter is listed") {
 			RemoteApps.viewTableEntries(
-					entryName = "Vanilla Counter",
-					entryType = "Custom Element");
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
 		}
 
 		task ("Assert that the Vanilla Counter fields have been saved correctly") {
 			Click(
-					key_tableEntryName = "Vanilla Counter",
-					locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-					entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-					entryHtmlName = "vanilla-counter",
-					entryName = "Vanilla Counter",
-					entryProperties = "test-data-user=QAuser",
-					entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -143,9 +143,9 @@ definition {
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-					customElementHtmlName = "vanilla-counter",
-					customElementName = "Vanilla Counter",
-					customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Delete Vanilla Counter") {
@@ -169,24 +169,24 @@ definition {
 
 		task ("Create virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
-					domain = "www.able.com",
-					portalInstanceId = "www.able.com",
-					virtualHost = "www.able.com");
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Navigate to virtual instance") {
 			User.firstLoginUI(
-					password = "test",
-					specificURL = "http://www.able.com:8080",
-					userEmailAddress = "test@www.able.com");
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
 		}
 
 		task ("Assert custom remote app is present") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.viewTableEntries(
-					entryName = "Vanilla Counter",
-					entryType = "Custom Element");
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
 		}
 
 		task ("Navigate back to default instance") {
@@ -205,24 +205,24 @@ definition {
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page",
-					type = "content");
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElement(
-					entryHtmlName = "${customElementHtmlName}",
-					entryName = "${customElementName}",
-					entryURL = "${customElementURL}");
+				entryHtmlName = "${customElementHtmlName}",
+				entryName = "${customElementName}",
+				entryURL = "${customElementURL}");
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Page",
-					siteName = "Guest");
+				pageName = "Test Page",
+				siteName = "Guest");
 
 			PageEditor.addWidget(portletName = "Vanilla Counter");
 
@@ -245,23 +245,23 @@ definition {
 
 		task ("Create a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-					customElementHtmlName = "new-counter",
-					customElementName = "New Counter",
-					customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementHtmlName = "new-counter",
+				customElementName = "New Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Edit the fields of the Custom Element") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			Click(
-					key_tableEntryName = "${remoteAppName}",
-					locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				key_tableEntryName = "${remoteAppName}",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.editCustomElement(
-					entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-					entryHtmlName = "vanilla-counter-edited",
-					entryName = "Vanilla Counter Edited",
-					entryProperties = "test-data-user=QAuser");
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter-edited",
+				entryName = "Vanilla Counter Edited",
+				entryProperties = "test-data-user=QAuser");
 		}
 
 		task ("Assert that the Custom Element is listed") {
@@ -270,15 +270,15 @@ definition {
 
 		task ("Assert that the fields have been updated") {
 			Click(
-					key_tableEntryName = "Vanilla Counter Edited",
-					locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				key_tableEntryName = "Vanilla Counter Edited",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-					entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-					entryHtmlName = "vanilla-counter-edited",
-					entryName = "Vanilla Counter Edited",
-					entryProperties = "test-data-user=QAuser",
-					entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter-edited",
+				entryName = "Vanilla Counter Edited",
+				entryProperties = "test-data-user=QAuser",
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -289,44 +289,44 @@ definition {
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page",
-					type = "content");
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
 
 			JSONLayout.publishLayout(
-					groupName = "Guest",
-					layoutName = "Test Page");
+				groupName = "Guest",
+				layoutName = "Test Page");
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-					customElementHtmlName = "vanilla-counter",
-					customElementName = "Vanilla Counter",
-					customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Page",
-					siteName = "Guest");
+				pageName = "Test Page",
+				siteName = "Guest");
 
 			PageEditor.addFragment(
-					collectionName = "Layout Elements",
-					fragmentName = "Grid");
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
 		}
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-					columnCount = "2",
-					panelList = "General");
+				columnCount = "2",
+				panelList = "General");
 		}
 
 		task ("Add Vanilla Counter in each module") {
 			for (var n : list "1,2") {
 				PageEditor.addElementToColumn(
-						columnNumber = "${n}",
-						navTab = "Widgets",
-						portletName = "Vanilla Counter");
+					columnNumber = "${n}",
+					navTab = "Widgets",
+					portletName = "Vanilla Counter");
 			}
 
 			PageEditor.clickPublish();
@@ -337,8 +337,8 @@ definition {
 
 			for (var n : list "1,2") {
 				AssertElementPresent(
-						column_number = "${n}",
-						locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_N");
+					column_number = "${n}",
+					locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_N");
 			}
 		}
 	}
@@ -350,38 +350,38 @@ definition {
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page");
+				groupName = "Guest",
+				layoutName = "Test Page");
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-					customElementHtmlName = "vanilla-counter",
-					customElementName = "Vanilla Counter",
-					customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Obtain Vanilla Counter's remoteAppEntryId") {
 			var remoteAppEntryIdValue = RemoteApps.getRemoteAppEntryIdValue();
 
 			JSONLayout.addWidgetToPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page",
-					remoteAppEntryId = "${remoteAppEntryIdValue}",
-					widgetName = "Vanilla Counter");
+				groupName = "Guest",
+				layoutName = "Test Page",
+				remoteAppEntryId = "${remoteAppEntryIdValue}",
+				widgetName = "Vanilla Counter");
 		}
 
 		task ("Change Vanilla Counter portlet name") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			Click(
-					key_tableEntryName = "Vanilla Counter",
-					locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			Type(
-					key_text = "Name",
-					locator1 = "TextInput#ANY",
-					value1 = "Vanilla Counter Modified");
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Vanilla Counter Modified");
 
 			PortletEntry.publish();
 		}
@@ -398,12 +398,12 @@ definition {
 			Pause(locator1 = "3000");
 
 			Type(
-					locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-					value1 = "Vanilla Counter Modified");
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "Vanilla Counter Modified");
 
 			AssertElementPresent(
-					key_remoteAppName = "Vanilla Counter Modified",
-					locator1 = "RemoteApps#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
+				key_remoteAppName = "Vanilla Counter Modified",
+				locator1 = "RemoteApps#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
 		}
 
 		task ("Assert Vanilla Counter continues displayed") {
@@ -420,36 +420,36 @@ definition {
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page");
+				groupName = "Guest",
+				layoutName = "Test Page");
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-					customElementCssurl = "http://remote-component-test.wincent.com/index.css",
-					customElementHtmlName = "vanilla-counter",
-					customElementName = "Vanilla Counter",
-					customElementProperties = "test-data-user=QAuser",
-					customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementProperties = "test-data-user=QAuser",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
 			var remoteAppEntryIdValue = RemoteApps.getRemoteAppEntryIdValue();
 
 			JSONLayout.addWidgetToPublicLayout(
-					groupName = "Guest",
-					layoutName = "Test Page",
-					remoteAppEntryId = "${remoteAppEntryIdValue}",
-					widgetName = "Vanilla Counter");
+				groupName = "Guest",
+				layoutName = "Test Page",
+				remoteAppEntryId = "${remoteAppEntryIdValue}",
+				widgetName = "Vanilla Counter");
 		}
 
 		task ("Assert Vanilla Counter's property is present") {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(
-					key_customElementHtmlName = "vanilla-counter",
-					key_customElementProperty = "QAuser",
-					locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
+				key_customElementHtmlName = "vanilla-counter",
+				key_customElementProperty = "QAuser",
+				locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
 		}
 	}
 
@@ -466,8 +466,8 @@ definition {
 
 		task ("Go to edit entry") {
 			Click(
-					key_tableEntryName = "Vanilla Counter",
-					locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 		}
 
 		task ("Assert multiple URL fields are saved") {
@@ -484,8 +484,8 @@ definition {
 		RemoteApps.goToRemoteAppsPortlet();
 
 		RemoteApps.addApp(
-				entryName = "Test Remote App",
-				entryURL = "http://www.liferay.com");
+			entryName = "Test Remote App",
+			entryURL = "http://www.liferay.com");
 
 		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
 	}
@@ -503,28 +503,28 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Select(
-				locator1 = "Select#TYPE",
-				value1 = "${iFrameType}");
+			locator1 = "Select#TYPE",
+			value1 = "${iFrameType}");
 
 		AssertNotVisible(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY");
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
 
 		AssertNotVisible(
-				key_text = "CSS URL",
-				locator1 = "TextInput#ANY");
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
 
 		Select(
-				locator1 = "Select#TYPE",
-				value1 = "${customElementType}");
+			locator1 = "Select#TYPE",
+			value1 = "${customElementType}");
 
 		AssertVisible(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY");
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
 
 		AssertVisible(
-				key_text = "CSS URL",
-				locator1 = "TextInput#ANY");
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
 	}
 
 }

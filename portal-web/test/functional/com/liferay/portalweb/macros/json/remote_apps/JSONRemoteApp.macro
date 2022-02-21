@@ -4,12 +4,12 @@ definition {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
 		var response = JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
-				customElementCssurl = "${customElementCssurl}",
-				customElementHtmlName = "${customElementHtmlName}",
-				customElementName = "${customElementName}",
-				customElementProperties = "${customElementProperties}",
-				customElementURL = "${customElementURL}",
-				customElementUseESM = "${customElementUseESM}");
+			customElementCssurl = "${customElementCssurl}",
+			customElementHtmlName = "${customElementHtmlName}",
+			customElementName = "${customElementName}",
+			customElementProperties = "${customElementProperties}",
+			customElementURL = "${customElementURL}",
+			customElementUseESM = "${customElementUseESM}");
 
 		return "{response}";
 	}
@@ -18,8 +18,8 @@ definition {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
 		var response = JSONRemoteAppAPI._addIFrameRemoteAppEntry(
-				iFrameURL = "${iFrameURL}",
-				name = "${name}");
+			iFrameURL = "${iFrameURL}",
+			name = "${name}");
 
 		return "${response}";
 	}

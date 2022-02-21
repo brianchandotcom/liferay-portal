@@ -1347,7 +1347,7 @@ definition {
 	When there's a variation of a dynamic collection targeting segment 2, and it is prioritized above the variation targeting segment 1
 	And both are prioritized above the anyone variation
 	Then the user will see only the assets included in the variation targeting segment 2 in Asset Publisher"
-	@priority = "4"
+	@priority = "3"
 	test DynamicCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";

@@ -329,28 +329,42 @@ definition {
 				#end${line.separator}
 			''';
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
 
-		DDLList.addViaDDLDisplayPG();
-
-		DDLDataDefinition.addViaDDLDisplayPG();
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Name",
 			fieldName = "Name");
 
-		DDLDataDefinition.saveViaDDLDisplayPG();
+		DDLDataDefinition.save();
 
-		DDLDataDefinition.selectViaDDLDisplayPG();
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
 
-		DDLList.saveViaDDLDisplayPG();
+		DDLList.addCP(
+			ddlListDescription = "New List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		DDLRecord.addViaDDLDisplayPG();
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
 
-		Pause(locator1 = "3000");
+		IFrame.closeFrame();
+
+		Click(locator1 = "Button#PLUS");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Name1",

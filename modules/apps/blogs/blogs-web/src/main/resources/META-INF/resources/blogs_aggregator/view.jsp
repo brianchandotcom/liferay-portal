@@ -28,29 +28,9 @@ boolean blogsPortletFound = ParamUtil.getBoolean(request, "blogsPortletFound", t
 </c:if>
 
 <%
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/blogs_aggregator/view"
-).buildPortletURL();
+BlogsAggregatorDisplayContext blogsAggregatorDisplayContext = new BlogsAggregatorDisplayContext(request, renderRequest, renderResponse);
 
-SearchContainer<BlogsEntry> searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 5, portletURL, null, null);
-
-List<BlogsEntry> entries = new ArrayList<>();
-
-if (selectionMethod.equals("users")) {
-	if (organizationId > 0) {
-		entries.addAll(BlogsEntryServiceUtil.getOrganizationEntries(organizationId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
-	}
-	else {
-		entries.addAll(BlogsEntryServiceUtil.getGroupsEntries(company.getCompanyId(), scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
-	}
-}
-else {
-	entries.addAll(BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max));
-}
-
-searchContainer.setResultsAndTotal(() -> ListUtil.subList(entries, searchContainer.getStart(), searchContainer.getEnd()), entries.size());
+SearchContainer<BlogsEntry> searchContainer = blogsAggregatorDisplayContext.getSearchContainer();
 
 List<BlogsEntry> results = searchContainer.getResults();
 %>

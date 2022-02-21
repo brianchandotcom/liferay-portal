@@ -16,42 +16,23 @@
 
 <%@ include file="/search/init.jsp" %>
 
-<%
-long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-String assetTagName = ParamUtil.getString(request, "tag");
-%>
-
 <div class="kb-search-header">
 	<liferay-util:include page="/search/view.jsp" servletContext="<%= application %>" />
 </div>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/search/search.jsp" />
-	<portlet:param name="categoryId" value="<%= String.valueOf(assetCategoryId) %>" />
-	<portlet:param name="tag" value="<%= assetTagName %>" />
+	<portlet:param name="categoryId" value='<%= String.valueOf(ParamUtil.getLong(request, "categoryId")) %>' />
+	<portlet:param name="tag" value='<%= ParamUtil.getString(request, "tag") %>' />
 </liferay-portlet:renderURL>
 
+<%
+KBViewPrpArticlesDisplayContext kbViewPrpArticlesDisplayContext = new KBViewPrpArticlesDisplayContext(request, iteratorURL);
+%>
+
 <liferay-ui:search-container
-	iteratorURL="<%= iteratorURL %>"
-	orderByCol='<%= ParamUtil.getString(request, "orderByCol") %>'
-	orderByType='<%= ParamUtil.getString(request, "orderByType", "desc") %>'
+	searchContainer="<%= kbViewPrpArticlesDisplayContext.getSearchContainer() %>"
 >
-
-	<%
-	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(KBArticle.class.getName(), searchContainer);
-
-	SearchContainer<AssetEntry> assetEntrySearchContainer = searchContainer;
-
-	searchContainer.setResultsAndTotal(
-		() -> {
-			assetEntryQuery.setEnd(assetEntrySearchContainer.getEnd());
-			assetEntryQuery.setStart(assetEntrySearchContainer.getStart());
-
-			return AssetEntryServiceUtil.getEntries(assetEntryQuery);
-		},
-		AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
-	%>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.asset.kernel.model.AssetEntry"
 		keyProperty="entryId"
@@ -123,25 +104,25 @@ String assetTagName = ParamUtil.getString(request, "tag");
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<c:if test="<%= (assetCategoryId > 0) || Validator.isNotNull(assetTagName) %>">
+	<c:if test="<%= (kbViewPrpArticlesDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(kbViewPrpArticlesDisplayContext.getAssetTagName()) %>">
 		<div class="alert alert-info">
 			<c:choose>
-				<c:when test="<%= assetCategoryId > 0 %>">
+				<c:when test="<%= kbViewPrpArticlesDisplayContext.getAssetCategoryId() > 0 %>">
 
 					<%
-					AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
+					AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(kbViewPrpArticlesDisplayContext.getAssetCategoryId());
 
 					AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 					%>
 
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(assetTagName) %>">
+						<c:when test="<%= Validator.isNotNull(kbViewPrpArticlesDisplayContext.getAssetTagName()) %>">
 							<c:choose>
 								<c:when test="<%= total > 0 %>">
-									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(assetTagName)}, false) %>
+									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName())}, false) %>
 								</c:when>
 								<c:otherwise>
-									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(assetTagName)}, false) %>
+									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName())}, false) %>
 								</c:otherwise>
 							</c:choose>
 						</c:when>
@@ -160,10 +141,10 @@ String assetTagName = ParamUtil.getString(request, "tag");
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= total > 0 %>">
-							<%= LanguageUtil.format(request, "articles-with-tag-x", HtmlUtil.escape(assetTagName), false) %>
+							<%= LanguageUtil.format(request, "articles-with-tag-x", HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName()), false) %>
 						</c:when>
 						<c:otherwise>
-							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", HtmlUtil.escape(assetTagName), false) %>
+							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName()), false) %>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

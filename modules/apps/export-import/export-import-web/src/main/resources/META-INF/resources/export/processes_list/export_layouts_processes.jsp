@@ -17,33 +17,9 @@
 <%@ include file="/export/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-String navigation = ParamUtil.getString(request, "navigation");
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+ExportLayoutsProcessesDisplayContext exportLayoutsProcessesDisplayContext = new ExportLayoutsProcessesDisplayContext(request, liferayPortletResponse);
 
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	liferayPortletResponse
-).setMVCRenderCommandName(
-	"/export_import/view_export_layouts"
-).setNavigation(
-	navigation
-).setParameter(
-	"displayStyle", displayStyle
-).setParameter(
-	"groupId", groupId
-).setParameter(
-	"orderByCol", orderByCol
-).setParameter(
-	"orderByType", orderByType
-).setParameter(
-	"privateLayout", privateLayout
-).setParameter(
-	"searchContainerId", searchContainerId
-).buildPortletURL();
+PortletURL portletURL = exportLayoutsProcessesDisplayContext.getPortletURL();
 %>
 
 <portlet:actionURL name="/export_import/delete_layout_export_background_tasks" var="deleteBackgroundTasksURL">
@@ -56,37 +32,8 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	<aui:input name="deleteBackgroundTaskIds" type="hidden" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-export-processes-were-found"
-		id="<%= searchContainerId %>"
-		iteratorURL="<%= portletURL %>"
-		orderByCol="<%= orderByCol %>"
-		orderByComparator="<%= BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType) %>"
-		orderByType="<%= orderByType %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
+		searchContainer="<%= exportLayoutsProcessesDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			SearchContainer<BackgroundTask> backgroundTaskSearchContainer = searchContainer;
-
-			if (navigation.equals("all")) {
-				searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR));
-			}
-			else {
-				boolean completed = false;
-
-				if (navigation.equals("completed")) {
-					completed = true;
-				}
-
-				boolean backgroundTaksCompleted = completed;
-
-				searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaksCompleted, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, backgroundTaksCompleted));
-			}
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
 			keyProperty="backgroundTaskId"
@@ -100,7 +47,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(exportLayoutsProcessesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
 							userId="<%= backgroundTask.getUserId() %>"
@@ -220,7 +167,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 						</c:if>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(exportLayoutsProcessesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="user"
 					>
@@ -340,7 +287,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= exportLayoutsProcessesDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			resultRowSplitter="<%= new ExportImportResultRowSplitter() %>"
 		/>
@@ -348,7 +295,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 </aui:form>
 
 <%
-int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
+int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(exportLayoutsProcessesDisplayContext.getGroupId(), BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
 %>
 
 <div class="hide incomplete-process-message">

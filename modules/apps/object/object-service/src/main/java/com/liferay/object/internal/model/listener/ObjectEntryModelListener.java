@@ -153,7 +153,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return _jsonFactory.looseSerializeDeep(externalModel);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return objectEntry.toString();

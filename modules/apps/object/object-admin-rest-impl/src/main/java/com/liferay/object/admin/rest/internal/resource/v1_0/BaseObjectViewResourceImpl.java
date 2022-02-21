@@ -117,7 +117,7 @@ public abstract class BaseObjectViewResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-views' -d $'{"defaultObjectView": ___, "name": ___, "objectDefinitionId": ___, "objectViewColumns": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-views' -d $'{"defaultObjectView": ___, "name": ___, "objectDefinitionId": ___, "objectViewColumns": ___, "objectViewSortColumns": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -305,7 +305,7 @@ public abstract class BaseObjectViewResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-views/{objectViewId}' -d $'{"defaultObjectView": ___, "name": ___, "objectDefinitionId": ___, "objectViewColumns": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-views/{objectViewId}' -d $'{"defaultObjectView": ___, "name": ___, "objectDefinitionId": ___, "objectViewColumns": ___, "objectViewSortColumns": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

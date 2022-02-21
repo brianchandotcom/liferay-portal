@@ -15,7 +15,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -156,10 +155,6 @@ public class StartupAction extends SimpleAction {
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 			StartupHelperUtil.updateIndexes(true);
 		}
-
-		// Jericho
-
-		CachedLoggerProvider.install();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupAction.class);

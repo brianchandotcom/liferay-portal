@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HtmlParser;
 
 import net.htmlparser.jericho.Source;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -83,6 +84,11 @@ public class HtmlParserImpl implements HtmlParser {
 		Source source = new Source(html);
 
 		return String.valueOf(source.getRenderer());
+	}
+
+	@Activate
+	protected void activate() throws Exception {
+		CachedLoggerProvider.install();
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jericho;
+package com.liferay.html.parser.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 

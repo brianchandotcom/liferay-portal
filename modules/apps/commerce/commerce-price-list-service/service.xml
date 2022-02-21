@@ -57,7 +57,7 @@
 		<finder name="CPInstanceUuid" return-type="Collection">
 			<finder-column name="CPInstanceUuid" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceEntry" unique="true">
+		<finder name="C_C" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
 		</finder>
@@ -69,7 +69,7 @@
 			<finder-column comparator="&lt;" name="expirationDate" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_C_S" return-type="CommercePriceEntry" unique="true">
+		<finder name="C_C_S" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
 			<finder-column name="status" />

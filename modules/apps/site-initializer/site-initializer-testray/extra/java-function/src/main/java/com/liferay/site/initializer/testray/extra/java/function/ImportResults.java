@@ -86,7 +86,7 @@ public class ImportResults {
 		_groupId = groupId;
 	}
 
-	public int addProject(Document document) throws Exception {
+	public int addTestrayProject(Document document) throws Exception {
 		Map<String, String> map = new HashMap<>();
 
 		Element element = document.getDocumentElement();
@@ -165,7 +165,7 @@ public class ImportResults {
 		return projectId;
 	}
 
-	public void addTestBuild(int projectId, Document document) {
+	public void addTestrayBuild(int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
@@ -220,7 +220,7 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestCase(int projectId, Document document) {
+	public void addTestrayCase(int projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
@@ -367,10 +367,10 @@ public class ImportResults {
 		for (File file : files) {
 			Document document = _documentBuilder.parse(file);
 
-			int projectId = addProject(document);
+			int projectId = addTestrayProject(document);
 
-			addTestBuild(projectId, document);
-			addTestCase(projectId, document);
+			addTestrayBuild(projectId, document);
+			addTestrayCase(projectId, document);
 		}
 	}
 

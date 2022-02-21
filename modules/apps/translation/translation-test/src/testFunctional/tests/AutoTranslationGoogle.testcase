@@ -223,10 +223,10 @@ definition {
 
 			Page.viewCurrentPage(pageName = "Content Page Name");
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Üerschrift",
-				fragmentName = "Heading",
-				id = "element-text");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Üerschrift");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "element-text", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

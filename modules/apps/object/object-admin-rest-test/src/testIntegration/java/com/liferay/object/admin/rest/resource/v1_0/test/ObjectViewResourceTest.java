@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewColumn;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -97,6 +98,8 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 			_objectDefinition.getObjectDefinitionId());
 		objectView.setObjectViewColumns(
 			new ObjectViewColumn[] {_randomObjectViewColumn()});
+		objectView.setObjectViewSortColumns(
+			new ObjectViewSortColumn[] {_randomObjectViewSortColumn()});
 
 		return objectView;
 	}
@@ -139,6 +142,16 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 			{
 				objectFieldName = _objectField.getName();
 				priority = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	private ObjectViewSortColumn _randomObjectViewSortColumn() {
+		return new ObjectViewSortColumn() {
+			{
+				objectFieldName = _objectField.getName();
+				priority = RandomTestUtil.randomInt();
+				sortOrder = "asc";
 			}
 		};
 	}

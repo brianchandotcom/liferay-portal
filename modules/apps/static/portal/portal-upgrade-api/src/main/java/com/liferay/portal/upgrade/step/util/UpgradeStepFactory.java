@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.step.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
@@ -28,6 +29,11 @@ import java.util.stream.Stream;
  */
 public class UpgradeStepFactory {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 				#addColumns(String, String...)}
+	 */
+	@Deprecated
 	public static UpgradeStep addColumns(
 		Class<?> tableClass, String... columnDefinitions) {
 
@@ -44,6 +50,31 @@ public class UpgradeStepFactory {
 		};
 	}
 
+	public static UpgradeStep addColumns(
+		String tableName, String... columnDefinitions) {
+
+		return new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				for (String columnDefinition : columnDefinitions) {
+					alterTableAddColumn(
+						tableName,
+						columnDefinition.substring(
+							0, columnDefinition.indexOf(StringPool.SPACE)),
+						columnDefinition.substring(
+							columnDefinition.indexOf(StringPool.SPACE) + 1));
+				}
+			}
+
+		};
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 				#alterColumnTypes(String, String, String...)}
+	 */
+	@Deprecated
 	public static UpgradeStep alterColumnTypes(
 		Class<?> tableClass, String newType, String... columnNames) {
 
@@ -59,6 +90,26 @@ public class UpgradeStepFactory {
 		};
 	}
 
+	public static UpgradeStep alterColumnTypes(
+		String tableName, String newType, String... columnNames) {
+
+		return new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				for (String columnName : columnNames) {
+					alterColumnType(tableName, columnName, newType);
+				}
+			}
+
+		};
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 				#dropColumns(String, String...)}
+	 */
+	@Deprecated
 	public static UpgradeStep dropColumns(
 		Class<?> tableClass, String... tableNames) {
 
@@ -69,6 +120,21 @@ public class UpgradeStepFactory {
 				alter(
 					tableClass,
 					_getAlterables(AlterTableDropColumn::new, tableNames));
+			}
+
+		};
+	}
+
+	public static UpgradeStep dropColumns(
+		String tableName, String... columnNames) {
+
+		return new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				for (String columnName : columnNames) {
+					alterTableDropColumn(tableName, columnName);
+				}
 			}
 
 		};

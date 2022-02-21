@@ -52,7 +52,8 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		DetailAST annotationDetailAST = detailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		if (!StringUtil.equals(
+		if ((annotationDetailAST == null) ||
+			!StringUtil.equals(
 				annotationDetailAST.getText(), _COMPONENT_ANNOTATION_NAME)) {
 
 			return;
@@ -61,6 +62,10 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		DetailAST annotationMemberValuePairPropertyDetailAST =
 			getAnnotationMemberValuePairDetailAST(
 				detailAST, _COMPONENT_ANNOTATION_PROPERTY_KEY_NAME);
+
+		if (annotationMemberValuePairPropertyDetailAST == null) {
+			return;
+		}
 
 		List<DetailAST> propertyAnnotationExprList = getAllChildTokens(
 			annotationMemberValuePairPropertyDetailAST, true, TokenTypes.EXPR);

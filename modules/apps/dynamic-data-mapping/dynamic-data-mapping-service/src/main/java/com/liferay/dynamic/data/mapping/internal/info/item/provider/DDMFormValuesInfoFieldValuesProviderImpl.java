@@ -16,11 +16,14 @@ package com.liferay.dynamic.data.mapping.internal.info.item.provider;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
@@ -31,8 +34,11 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -255,6 +261,48 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				return _getWebImage(
 					JSONFactoryUtil.createJSONObject(valueString));
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(),
+						DDMFormFieldTypeConstants.SELECT)) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
+				JSONArray optionReferencesJSONArray = null;
+
+				try {
+					optionReferencesJSONArray = JSONFactoryUtil.createJSONArray(
+						valueString);
+				}
+				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				}
+
+				if (optionReferencesJSONArray == null) {
+					return null;
+				}
+
+				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				JSONArray optionLabelsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (int i = 0; i < optionReferencesJSONArray.length(); i++) {
+					LocalizedValue localizedValue =
+						ddmFormFieldOptions.getOptionLabels(
+							optionReferencesJSONArray.getString(i));
+
+					optionLabelsJSONArray.put(localizedValue.getString(locale));
+				}
+
+				return JSONUtil.toString(optionLabelsJSONArray);
 			}
 
 			return SanitizerUtil.sanitize(

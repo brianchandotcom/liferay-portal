@@ -69,7 +69,6 @@ public class ImportResults {
 			ImportResults importResults = new ImportResults(groupId);
 
 			importResults.readFiles("");
-
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -84,6 +83,120 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 
 		_groupId = groupId;
+	}
+
+	public void addTestrayBuild(int projectId, Document document) {
+		Map<String, String> map = new HashMap<>();
+
+		map.put("testrayBuildId", String.valueOf(projectId));
+
+		try {
+			NodeList propertiesNodeList = document.getElementsByTagName(
+				"properties");
+
+			for (int i = 0; i < propertiesNodeList.getLength(); i++) {
+				Node propertiesNode = propertiesNodeList.item(i);
+
+				Element element = (Element)propertiesNode;
+
+				NodeList propertyNodeList = element.getElementsByTagName(
+					"property");
+
+				for (int j = 0; j < propertyNodeList.getLength(); j++) {
+					Node propertyNode = propertyNodeList.item(j);
+
+					if ((propertyNode.getNodeType() == Node.ELEMENT_NODE) &&
+						!propertyNode.getNodeName(
+						).equals(
+							"#text"
+						) &&
+						(propertyNode.getAttributes(
+						).getLength() > 0)) {
+
+						String name = propertyNode.getAttributes(
+						).getNamedItem(
+							"name"
+						).getTextContent();
+
+						if (name.equals("testray.build.name")) {
+							String value = propertyNode.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
+							map.put("name", value);
+
+							HttpClient.post(
+								PropsValues.TESTRAY_BASE_URL +
+									"testraybuilds/scopes/" + _groupId,
+								new JSONObject(map));
+						}
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public void addTestrayCase(int projectId, Document document) {
+		Map<String, String> map = new HashMap<>();
+
+		map.put("testrayProjectId", String.valueOf(projectId));
+
+		try {
+			NodeList testCasesNodeList = document.getElementsByTagName(
+				"testcase");
+
+			for (int i = 0; i < testCasesNodeList.getLength(); i++) {
+				Node testCaseNode = testCasesNodeList.item(i);
+
+				Element element = (Element)testCaseNode;
+
+				NodeList propertyNodeList = element.getElementsByTagName(
+					"property");
+
+				for (int j = 0; j < propertyNodeList.getLength(); j++) {
+					Node node = propertyNodeList.item(j);
+
+					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+						!node.getNodeName(
+						).equals(
+							"#text"
+						) &&
+						(node.getAttributes(
+						).getLength() > 0)) {
+
+						String name = node.getAttributes(
+						).getNamedItem(
+							"name"
+						).getTextContent();
+
+						String value = node.getAttributes(
+						).getNamedItem(
+							"value"
+						).getTextContent();
+
+						if (name.equals("testray.testcase.priority")) {
+							map.put("priority", value);
+						}
+						else if (name.equals("testray.testcase.name")) {
+							map.put("name", value);
+							map.put("stepsType", name);
+						}
+					}
+				}
+
+				HttpClient.post(
+					PropsValues.TESTRAY_BASE_URL + "testraycases/scopes/" +
+						_groupId,
+					new JSONObject(map));
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	public int addTestrayProject(Document document) throws Exception {
@@ -138,6 +251,7 @@ public class ImportResults {
 		int projectId = -1;
 
 		//TODO use filter
+
 		for (int i = 0; i < projectsJSONArray.length(); i++) {
 			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
 
@@ -163,120 +277,6 @@ public class ImportResults {
 		}
 
 		return projectId;
-	}
-
-	public void addTestrayBuild(int projectId, Document document) {
-		Map<String, String> map = new HashMap<>();
-
-		map.put("testrayBuildId", String.valueOf(projectId));
-
-		try {
-			NodeList testcases = document.getElementsByTagName("properties");
-
-			for (int i = 0; i < testcases.getLength(); i++) {
-				Node testCase = testcases.item(i);
-
-				Element element = (Element)testCase;
-
-				NodeList properties = element.getElementsByTagName("property");
-
-				for (int property = 0; property < properties.getLength();
-					 property++) {
-
-					Node node = properties.item(property);
-
-					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-						!node.getNodeName(
-						).equals(
-							"#text"
-						) &&
-						(node.getAttributes(
-						).getLength() > 0)) {
-
-						String name = node.getAttributes(
-						).getNamedItem(
-							"name"
-						).getTextContent();
-
-						if (name.equals("testray.build.name")) {
-							String value = node.getAttributes(
-							).getNamedItem(
-								"value"
-							).getTextContent();
-
-							map.put("name", value);
-
-							HttpClient.post(
-								PropsValues.TESTRAY_BASE_URL +
-									"testraybuilds/scopes/" + _groupId,
-								new JSONObject(map));
-						}
-					}
-				}
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-	}
-
-	public void addTestrayCase(int projectId, Document document) {
-		Map<String, String> map = new HashMap<>();
-
-		map.put("testrayProjectId", String.valueOf(projectId));
-
-		try {
-			NodeList testcases = document.getElementsByTagName("testcase");
-
-			for (int i = 0; i < testcases.getLength(); i++) {
-				Node testCase = testcases.item(i);
-
-				Element element = (Element)testCase;
-
-				NodeList properties = element.getElementsByTagName("property");
-
-				for (int property = 0; property < properties.getLength();
-					 property++) {
-
-					Node node = properties.item(property);
-
-					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-						!node.getNodeName(
-						).equals(
-							"#text"
-						) &&
-						(node.getAttributes(
-						).getLength() > 0)) {
-
-						String name = node.getAttributes(
-						).getNamedItem(
-							"name"
-						).getTextContent();
-
-						String value = node.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
-						if (name.equals("testray.testcase.priority")) {
-							map.put("priority", value);
-						}
-						else if (name.equals("testray.testcase.name")) {
-							map.put("name", value);
-							map.put("stepsType", name);
-						}
-					}
-				}
-
-				HttpClient.post(
-					PropsValues.TESTRAY_BASE_URL + "testraycases/scopes/" +
-						_groupId,
-					new JSONObject(map));
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
 	}
 
 	public Storage getStorage() throws Exception {

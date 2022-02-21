@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.change.tracking.spi.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -67,7 +68,8 @@ public class RepositoryConstraintResolver
 
 	@Override
 	public void resolveConflict(
-		ConstraintResolverContext<Repository> constraintResolverContext) {
+			ConstraintResolverContext<Repository> constraintResolverContext)
+		throws PortalException {
 
 		Repository sourceRepository =
 			constraintResolverContext.getSourceCTModel();

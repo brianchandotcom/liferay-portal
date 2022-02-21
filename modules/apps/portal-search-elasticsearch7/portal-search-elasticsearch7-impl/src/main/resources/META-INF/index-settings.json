@@ -1,6 +1,14 @@
 {
 	"analysis": {
 		"analyzer": {
+			"1_10_ngram": {
+				"filter": [
+					"lowercase",
+					"1_10_ngram"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
 			"keyword_lowercase": {
 				"filter": "lowercase",
 				"tokenizer": "keyword"
@@ -23,9 +31,22 @@
 					"spanish_stemmer"
 				],
 				"tokenizer": "standard"
+			},
+			"reverse_keyword_lowercase": {
+				"filter": [
+					"lowercase",
+					"reverse"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
 			}
 		},
 		"filter": {
+			"1_10_ngram": {
+				"max_gram": 10,
+				"min_gram": 1,
+				"type": "ngram"
+			},
 			"english_possessive_stemmer": {
 				"language": "possessive_english",
 				"type": "stemmer"
@@ -59,5 +80,8 @@
 				"type": "stop"
 			}
 		}
+	},
+	"index": {
+		"max_ngram_diff": 9
 	}
 }

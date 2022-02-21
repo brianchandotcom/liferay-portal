@@ -17,6 +17,7 @@ package com.liferay.portal.search.web.internal.search.bar.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
 
@@ -33,7 +34,8 @@ public class SearchBarPortletDestinationUtil {
 		String destination = GetterUtil.getString(
 			portletPreferences.getValue("destination", StringPool.BLANK));
 
-		if (isSameDestination(
+		if (Validator.isNull(destination) ||
+			isSameDestination(
 				destination,
 				themeDisplay.getLayoutFriendlyURL(themeDisplay.getLayout()))) {
 

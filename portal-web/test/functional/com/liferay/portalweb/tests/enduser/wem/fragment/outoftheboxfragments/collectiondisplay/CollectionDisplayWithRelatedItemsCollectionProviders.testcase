@@ -937,11 +937,13 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
-				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
-				title = "Blogs Entry Title");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addEntryWithCategory(
+				categoryName = "Category Name",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a document with category") {

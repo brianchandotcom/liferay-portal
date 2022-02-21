@@ -1351,46 +1351,22 @@ definition {
 	test DynamicCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
-		task ("Create categories") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
 
-			var categoryId1 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_1",
-				vocabularyName = "Vocabulary Name");
-
-			var categoryId2 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_2",
-				vocabularyName = "Vocabulary Name");
-
-			var categoryId3 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_3",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Create three web content articles for each category") {
+		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC_Title_1");
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_1");
 
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
-				content = "WC WebContent Content",
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
-				title = "WC_Title_2");
+				title = "Blog_1");
 
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC_Title_3");
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name");
 		}
 		
 		task ("Create two segments") {
@@ -1424,10 +1400,9 @@ definition {
 		}
 
 		task ("Configure default variation") {
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_1",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create and configure first personalized variation") {
@@ -1435,12 +1410,7 @@ definition {
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
-
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_2",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+				itemType = "Document");
 		}
 
 		task ("Prioritize the variation") {
@@ -1450,14 +1420,7 @@ definition {
 		task ("Create and configure second personalized variation") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
 
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
-
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_3",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Prioritize the variation") {
@@ -1494,7 +1457,7 @@ definition {
 		task ("Assert the correct variation is shown") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
 			
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_3");
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Blog_1");
 		}
 	}
 
@@ -1747,45 +1710,21 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		
-		task ("Create categories") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-
-			var categoryId1 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_1",
-				vocabularyName = "Vocabulary Name");
-
-			var categoryId2 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_2",
-				vocabularyName = "Vocabulary Name");
-
-			var categoryId3 = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category_3",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Create three web content articles for each category") {
+		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC_Title_1");
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_1");
 
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
-				content = "WC WebContent Content",
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
-				title = "WC_Title_2");
+				title = "Blog_1");
 
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC_Title_3");
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name");
 		}
 		
 		task ("Create two segments") {
@@ -1819,10 +1758,9 @@ definition {
 		}
 
 		task ("Configure default variation") {
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_1",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create and configure first personalized variation") {
@@ -1830,12 +1768,7 @@ definition {
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
-
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_2",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+				itemType = "Document");
 		}
 
 		task ("Prioritize the variation") {
@@ -1845,14 +1778,7 @@ definition {
 		task ("Create and configure second personalized variation") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
 
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
-
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category_3",
-				queryAndOperator = "Any",
-				queryContains = "Contains");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Prioritize the variation") {
@@ -1896,7 +1822,7 @@ definition {
 		task ("Assert the correct variation is shown") {
 			AssertTextEquals(
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
-				value1 = "WC_Title_3");
+				value1 = "Blog_1");
 		}
 	}
 

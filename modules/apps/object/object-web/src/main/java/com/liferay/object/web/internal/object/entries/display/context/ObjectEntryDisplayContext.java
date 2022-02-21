@@ -198,7 +198,14 @@ public class ObjectEntryDisplayContext {
 				"objectEntryId");
 		}
 
-		_objectEntry = _objectEntryService.fetchObjectEntry(objectEntryId);
+		try {
+			_objectEntry = _objectEntryService.fetchObjectEntry(objectEntryId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
 
 		return _objectEntry;
 	}
@@ -340,7 +347,7 @@ public class ObjectEntryDisplayContext {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(portalException);
 			}
 		}
 

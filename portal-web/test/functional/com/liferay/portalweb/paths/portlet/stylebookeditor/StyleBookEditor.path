@@ -38,11 +38,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_PREVIEW_INFO_BAR_TOGGLE</td>
-	<td>//div[contains(@class,'page-preview-info-bar')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_SELECTOR</td>
 	<td>xpath=(//button[contains(@class,'style-book-editor__preview-selector')])[${index}]</td>
 	<td></td>

@@ -171,8 +171,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			commerceShippingFixedOption =
 				_commerceShippingFixedOptionService.
 					updateCommerceShippingFixedOption(
-						commerceShippingFixedOptionId, nameMap, descriptionMap,
-						amount, priority);
+						commerceShippingFixedOptionId, amount, descriptionMap,
+						nameMap, priority);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -187,7 +187,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 					addCommerceShippingFixedOption(
 						commerceShippingMethod.getGroupId(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
-						nameMap, descriptionMap, amount, priority);
+						amount, descriptionMap, nameMap, priority);
 		}
 
 		return commerceShippingFixedOption;

@@ -150,10 +150,11 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			return null;
 		}
 
+		String key = commerceShippingFixedOption.getKey();
 		String name = commerceShippingFixedOption.getName(locale);
 
 		if (_commerceShippingHelper.isFreeShipping(commerceOrder)) {
-			return new CommerceShippingOption(name, name, BigDecimal.ZERO);
+			return new CommerceShippingOption(key, name, BigDecimal.ZERO);
 		}
 
 		BigDecimal amount = commerceShippingFixedOptionRel.getFixedPrice();
@@ -200,7 +201,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			amount = amount.multiply(commerceCurrency.getRate());
 		}
 
-		return new CommerceShippingOption(name, name, amount);
+		return new CommerceShippingOption(key, name, amount);
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(

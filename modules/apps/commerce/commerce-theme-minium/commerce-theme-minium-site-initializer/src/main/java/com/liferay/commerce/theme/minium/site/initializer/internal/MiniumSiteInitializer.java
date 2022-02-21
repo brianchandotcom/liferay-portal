@@ -888,14 +888,14 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			serviceContext.getUserId(), commerceShippingMethod.getGroupId(),
-			commerceShippingMethod.getCommerceShippingMethodId(),
-			HashMapBuilder.put(
-				serviceContext.getLocale(), name
-			).build(),
+			commerceShippingMethod.getCommerceShippingMethodId(), price,
 			HashMapBuilder.put(
 				serviceContext.getLocale(), description
 			).build(),
-			price, 0);
+			HashMapBuilder.put(
+				serviceContext.getLocale(), name
+			).build(),
+			0);
 	}
 
 	private void _setDefaultCatalogImage(

@@ -625,6 +625,124 @@ public class OrderResourceImpl
 
 		// Requested Delivery Date
 
+		_commerceOrderService.updateCommerceOrderPrices(
+			commerceOrder.getCommerceOrderId(),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotal(), commerceOrder.getSubtotal()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountAmount(),
+				commerceOrder.getSubtotalDiscountAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel1(),
+				commerceOrder.getSubtotalDiscountPercentageLevel1()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel2(),
+				commerceOrder.getSubtotalDiscountPercentageLevel2()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel3(),
+				commerceOrder.getTotalDiscountPercentageLevel3()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel4(),
+				commerceOrder.getSubtotalDiscountPercentageLevel4()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingAmount(), commerceOrder.getShippingAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountAmount(),
+				commerceOrder.getShippingDiscountAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel1(),
+				commerceOrder.getShippingDiscountPercentageLevel1()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel2(),
+				commerceOrder.getShippingDiscountPercentageLevel2()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel3(),
+				commerceOrder.getShippingDiscountPercentageLevel3()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel4(),
+				commerceOrder.getShippingDiscountPercentageLevel4()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTaxAmount(), commerceOrder.getTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotal(), commerceOrder.getTotal()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountAmount(),
+				commerceOrder.getTotalDiscountAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel1(),
+				commerceOrder.getTotalDiscountPercentageLevel1()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel2(),
+				commerceOrder.getTotalDiscountPercentageLevel2()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel3(),
+				commerceOrder.getTotalDiscountPercentageLevel3()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel4(),
+				commerceOrder.getTotalDiscountPercentageLevel4()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalWithTaxAmount(),
+				commerceOrder.getSubtotalWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountWithTaxAmount(),
+				commerceOrder.getSubtotalDiscountWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel1WithTaxAmount(),
+				commerceOrder.
+					getSubtotalDiscountPercentageLevel1WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel2WithTaxAmount(),
+				commerceOrder.
+					getSubtotalDiscountPercentageLevel2WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel3WithTaxAmount(),
+				commerceOrder.
+					getSubtotalDiscountPercentageLevel3WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalDiscountPercentageLevel4WithTaxAmount(),
+				commerceOrder.
+					getSubtotalDiscountPercentageLevel4WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingWithTaxAmount(),
+				commerceOrder.getShippingWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountWithTaxAmount(),
+				commerceOrder.getShippingDiscountWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel1WithTaxAmount(),
+				commerceOrder.
+					getShippingDiscountPercentageLevel1WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel2WithTaxAmount(),
+				commerceOrder.
+					getShippingDiscountPercentageLevel2WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel3WithTaxAmount(),
+				commerceOrder.
+					getShippingDiscountPercentageLevel3WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingDiscountPercentageLevel4WithTaxAmount(),
+				commerceOrder.
+					getShippingDiscountPercentageLevel4WithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalWithTaxAmount(),
+				commerceOrder.getTotalWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountWithTaxAmount(),
+				commerceOrder.getTotalDiscountWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel1(),
+				commerceOrder.getTotalDiscountPercentageLevel1()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel2(),
+				commerceOrder.getTotalDiscountPercentageLevel2()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel3(),
+				commerceOrder.getTotalDiscountPercentageLevel3()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalDiscountPercentageLevel4(),
+				commerceOrder.getTotalDiscountPercentageLevel4()));
+
 		if (order.getRequestedDeliveryDate() != null) {
 			ServiceContext serviceContext =
 				_serviceContextHelper.getServiceContext(

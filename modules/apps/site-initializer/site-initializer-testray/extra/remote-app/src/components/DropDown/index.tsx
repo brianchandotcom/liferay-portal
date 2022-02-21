@@ -14,8 +14,8 @@
 
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {ReactElement, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {ReactElement, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {Dropdown} from '../../context/HeaderContext';
 
@@ -30,6 +30,7 @@ const DropDown: React.FC<DropDownProps> = ({
 	position = Align.BottomCenter,
 	trigger,
 }) => {
+	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 
 	return (
@@ -49,26 +50,42 @@ const DropDown: React.FC<DropDownProps> = ({
 								</ClayDropDown.Caption>
 							)}
 
-							{section.items.map((item, itemIndex) => (
-								<Link key={itemIndex} to={`${item.path}`}>
-									<ClayDropDown.Item>
-										<div className="align-items-center d-flex testray-sidebar-item text-dark">
-											{item.icon && (
-												<ClayIcon
-													fontSize={16}
-													symbol={item.icon}
-												/>
-											)}
+							{section.items.map(
+								({divider, icon, label, path}, itemIndex) => (
+									<React.Fragment key={itemIndex}>
+										<ClayDropDown.Item
+											onClick={() => {
+												const isHttpUrl = path.startsWith(
+													'http'
+												);
 
-											<span className="ml-1 testray-sidebar-text">
-												{item.label}
-											</span>
-										</div>
-									</ClayDropDown.Item>
+												if (isHttpUrl) {
+													window.location.href = path;
 
-									{item.divider && <ClayDropDown.Divider />}
-								</Link>
-							))}
+													return;
+												}
+
+												navigate(path);
+											}}
+										>
+											<div className="align-items-center d-flex testray-sidebar-item text-dark">
+												{icon && (
+													<ClayIcon
+														fontSize={16}
+														symbol={icon}
+													/>
+												)}
+
+												<span className="ml-1 testray-sidebar-text">
+													{label}
+												</span>
+											</div>
+										</ClayDropDown.Item>
+
+										{divider && <ClayDropDown.Divider />}
+									</React.Fragment>
+								)
+							)}
 						</ClayDropDown.Group>
 
 						{items.length - 1 !== index && <ClayDropDown.Divider />}

@@ -110,21 +110,23 @@ export const MANAGE_DROPDOWN = [
 	},
 ];
 
-export const USER_DROPDOWN = {
-	sections: [
-		{
-			items: [
-				{
-					icon: 'user',
-					label: 'Manage Accounts',
-					path: '/manage/user',
-				},
-				{icon: 'logout', label: 'Sign Out'},
-			],
-			title: '',
-		},
-	],
-};
+export const USER_DROPDOWN = [
+	{
+		items: [
+			{
+				icon: 'user',
+				label: 'Manage Accounts',
+				path: '/manage/user',
+			},
+			{
+				icon: 'logout',
+				label: 'Sign Out',
+				path: `${window.location.origin}/c/portal/logout`,
+			},
+		],
+		title: '',
+	},
+];
 
 const getStatusLabel = (status: number): string =>
 	(TEST_STATUS_LABEL as any)[status];

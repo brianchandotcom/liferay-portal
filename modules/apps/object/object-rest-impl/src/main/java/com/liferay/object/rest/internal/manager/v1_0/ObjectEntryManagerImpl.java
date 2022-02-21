@@ -20,7 +20,6 @@ import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.internal.configuration.activator.FFObjectEntryPermissionsActionConfigurationActivator;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.search.aggregation.AggregationUtil;
@@ -386,22 +385,13 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 						objectEntry.getGroupId(), uriInfo)
 				).put(
 					"permissions",
-					() -> {
-						if (!_ffObjectEntryPermissionsActionConfigurationActivator.
-								enabled()) {
-
-							return null;
-						}
-
-						return ActionUtil.addAction(
-							ActionKeys.PERMISSIONS,
-							ObjectEntryResourceImpl.class,
-							objectEntry.getObjectEntryId(), "patchObjectEntry",
-							null, objectEntry.getUserId(),
-							_getObjectEntryPermissionName(
-								objectEntry.getObjectDefinitionId()),
-							objectEntry.getGroupId(), uriInfo);
-					}
+					ActionUtil.addAction(
+						ActionKeys.PERMISSIONS, ObjectEntryResourceImpl.class,
+						objectEntry.getObjectEntryId(), "patchObjectEntry",
+						null, objectEntry.getUserId(),
+						_getObjectEntryPermissionName(
+							objectEntry.getObjectDefinitionId()),
+						objectEntry.getGroupId(), uriInfo)
 				).put(
 					"update",
 					ActionUtil.addAction(
@@ -464,10 +454,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private FFObjectEntryPermissionsActionConfigurationActivator
-		_ffObjectEntryPermissionsActionConfigurationActivator;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -304,11 +304,6 @@ public class IGConfigurationDisplayContext {
 		_selectedRepositoryId =
 			dlPortletInstanceSettings.getSelectedRepositoryId();
 
-		_repository = _repositoryLocalService.fetchRepository(
-			_selectedRepositoryId);
-
-		_repositoryNotFound = _repository == null;
-
 		if (_selectedRepositoryId != 0) {
 			return;
 		}
@@ -349,9 +344,7 @@ public class IGConfigurationDisplayContext {
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
 	private final RenderRequest _renderRequest;
-	private Repository _repository;
 	private final RepositoryLocalService _repositoryLocalService;
-	private boolean _repositoryNotFound;
 	private long _selectedRepositoryId;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

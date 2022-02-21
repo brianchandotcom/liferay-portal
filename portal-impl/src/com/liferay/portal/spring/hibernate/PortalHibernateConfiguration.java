@@ -14,15 +14,12 @@
 
 package com.liferay.portal.spring.hibernate;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
@@ -37,8 +34,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import javassist.util.proxy.ProxyFactory;
 
 import javax.sql.DataSource;
 
@@ -234,40 +229,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
-
-	private static final Map<ProxyFactory, ClassLoader>
-		_proxyFactoryClassLoaders = new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
-
-	static {
-		ProxyFactory.classLoaderProvider =
-			new ProxyFactory.ClassLoaderProvider() {
-
-				@Override
-				public ClassLoader get(ProxyFactory proxyFactory) {
-					return _proxyFactoryClassLoaders.computeIfAbsent(
-						proxyFactory,
-						(ProxyFactory pf) -> {
-							ClassLoader classLoader =
-								PortalClassLoaderUtil.getClassLoader();
-
-							Thread currentThread = Thread.currentThread();
-
-							ClassLoader contextClassLoader =
-								currentThread.getContextClassLoader();
-
-							if (classLoader != contextClassLoader) {
-								classLoader = new PreloadClassLoader(
-									contextClassLoader,
-									getPreloadClassLoaderClasses());
-							}
-
-							return classLoader;
-						});
-				}
-
-			};
-	}
 
 	private DataSource _dataSource;
 	private boolean _mvccEnabled = true;

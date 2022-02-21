@@ -16,7 +16,6 @@ package com.liferay.blogs.layout.prototype.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseLocalizedColumnUpgradeProcess;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.upgrade.v7_0_5.util.LayoutPrototypeTable;
 import com.liferay.portal.util.PortalInstances;
 
 /**
@@ -29,14 +28,13 @@ public class UpgradeLocalizedColumn extends BaseLocalizedColumnUpgradeProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		upgradeLocalizedColumn(
-			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
-			LayoutPrototypeTable.class, "name", _NAME,
-			"layout-prototype-blog-title", "Name", companyIds);
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",
+			"name", _NAME, "layout-prototype-blog-title", "Name", companyIds);
 
 		upgradeLocalizedColumn(
-			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
-			LayoutPrototypeTable.class, "description", _DESCRIPTION,
-			"layout-prototype-blog-description", "Description", companyIds);
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",
+			"description", _DESCRIPTION, "layout-prototype-blog-description",
+			"Description", companyIds);
 	}
 
 	private static final String _DESCRIPTION =

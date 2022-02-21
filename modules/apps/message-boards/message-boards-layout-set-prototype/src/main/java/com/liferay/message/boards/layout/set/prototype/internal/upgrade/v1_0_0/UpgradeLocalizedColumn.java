@@ -16,7 +16,6 @@ package com.liferay.message.boards.layout.set.prototype.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseLocalizedColumnUpgradeProcess;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.upgrade.v7_1_x.util.LayoutSetPrototypeTable;
 import com.liferay.portal.util.PortalInstances;
 
 /**
@@ -30,12 +29,12 @@ public class UpgradeLocalizedColumn extends BaseLocalizedColumnUpgradeProcess {
 
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
-			LayoutSetPrototypeTable.class, "name", _NAME,
+			"LayoutSetPrototype", "name", _NAME,
 			"layout-set-prototype-community-site-title", "Name", companyIds);
 
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
-			LayoutSetPrototypeTable.class, "description", _DESCRIPTION,
+			"LayoutSetPrototype", "description", _DESCRIPTION,
 			"layout-set-prototype-community-site-description", "Description",
 			companyIds);
 	}

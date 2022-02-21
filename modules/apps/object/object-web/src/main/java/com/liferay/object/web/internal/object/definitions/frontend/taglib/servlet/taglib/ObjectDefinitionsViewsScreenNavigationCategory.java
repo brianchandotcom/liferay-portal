@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.configuration.activator.FFObjectViewConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsViewsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -72,13 +71,7 @@ public class ObjectDefinitionsViewsScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isSystem() &&
-			_ffObjectViewConfigurationActivator.enabled()) {
-
-			return true;
-		}
-
-		return false;
+		return !objectDefinition.isSystem();
 	}
 
 	@Override
@@ -94,10 +87,6 @@ public class ObjectDefinitionsViewsScreenNavigationCategory
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
-
-	@Reference
-	private FFObjectViewConfigurationActivator
-		_ffObjectViewConfigurationActivator;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

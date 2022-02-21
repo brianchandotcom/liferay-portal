@@ -26,6 +26,11 @@
 	<td>//*[contains(@class,'text-block') and contains(.,'${key_description}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TITLE_LINK</td>
+	<td>//h3[contains(.,'${key_entryTitle}')]//a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -783,9 +783,9 @@ definition {
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
-			Navigator.gotoSpecificURLPage(
+			Navigator.gotoSitePage(
 				pageName = "Blog",
-				url = "http://localhost:8080/web/test-site-team-extranet");
+				siteName = "Test Site Team Extranet");
 
 			Masterclass.goToLink(
 				key_buttonName = "Read More",
@@ -808,9 +808,9 @@ definition {
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
-			Navigator.gotoSpecificURLPage(
+			Navigator.gotoSitePage(
 				pageName = "Team",
-				url = "http://localhost:8080/web/test-site-team-extranet");
+				siteName = "Test Site Team Extranet");
 
 			Click(
 				key_imageName = "member",
@@ -833,13 +833,13 @@ definition {
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
-			Navigator.gotoSpecificURLPage(
+			Navigator.gotoSitePage(
 				pageName = "Careers",
-				url = "http://localhost:8080/web/test-site-team-extranet");
+				siteName = "Test Site Team Extranet");
 
 			Click(
 				key_entryTitle = "Growth Product Manager",
-				locator1 = "BlogsEntry#TITLE_CARD");
+				locator1 = "TeamExtranet#TITLE_LINK");
 		}
 
 		task ("Click on 'All open positions' and assert it redirects to Careers Page") {

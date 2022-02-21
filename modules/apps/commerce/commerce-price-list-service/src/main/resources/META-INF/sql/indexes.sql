@@ -2,7 +2,7 @@ create unique index IX_DEFDE07C on CPLCommerceGroupAccountRel (commercePriceList
 create index IX_E475B7EB on CPLCommerceGroupAccountRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_2FCFB9FB on CommercePriceEntry (CPInstanceUuid[$COLUMN_LENGTH:75$]);
-create unique index IX_2D76B43E on CommercePriceEntry (commercePriceListId, CPInstanceUuid[$COLUMN_LENGTH:75$]);
+create index IX_E653D524 on CommercePriceEntry (commercePriceListId, CPInstanceUuid[$COLUMN_LENGTH:75$], status);
 create index IX_B058565F on CommercePriceEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_790F9C1C on CommercePriceEntry (displayDate, status);
 create index IX_770DC1E1 on CommercePriceEntry (expirationDate, status);

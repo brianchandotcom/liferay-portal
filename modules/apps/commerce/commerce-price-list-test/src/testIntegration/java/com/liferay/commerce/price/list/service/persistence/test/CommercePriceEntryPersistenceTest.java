@@ -688,33 +688,6 @@ public class CommercePriceEntryPersistenceTest {
 
 	private void _assertOriginalValues(CommercePriceEntry commercePriceEntry) {
 		Assert.assertEquals(
-			Long.valueOf(commercePriceEntry.getCommercePriceListId()),
-			ReflectionTestUtil.<Long>invoke(
-				commercePriceEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commercePriceListId"));
-		Assert.assertEquals(
-			commercePriceEntry.getCPInstanceUuid(),
-			ReflectionTestUtil.invoke(
-				commercePriceEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPInstanceUuid"));
-
-		Assert.assertEquals(
-			Long.valueOf(commercePriceEntry.getCommercePriceListId()),
-			ReflectionTestUtil.<Long>invoke(
-				commercePriceEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commercePriceListId"));
-		Assert.assertEquals(
-			commercePriceEntry.getCPInstanceUuid(),
-			ReflectionTestUtil.invoke(
-				commercePriceEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPInstanceUuid"));
-		Assert.assertEquals(
-			Integer.valueOf(commercePriceEntry.getStatus()),
-			ReflectionTestUtil.<Integer>invoke(
-				commercePriceEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "status"));
-
-		Assert.assertEquals(
 			Long.valueOf(commercePriceEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				commercePriceEntry, "getColumnOriginalValue",

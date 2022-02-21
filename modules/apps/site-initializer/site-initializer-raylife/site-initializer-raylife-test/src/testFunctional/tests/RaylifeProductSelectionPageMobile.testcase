@@ -1,152 +1,149 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            User.logoutPG();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-    @description = "Verify that the continue button is activated when selecting a product (Smartphone)"
-    @priority = "5"
-    test CanViewContinueButtonActivatedPhone {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+	@description = "Check if I can follow the flow by clicking on the continue button (Smartphone)"
+	@priority = "5"
+	test CanClickInContinueButtonPhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        SetWindowSize(value1 = "360,720");
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(
+			label = "Search",
+			locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
 
-        Raylife.dismissAlert();
+		Raylife.dismissAlert();
+	}
 
-    }
+	@description = "Check if I can follow the flow by clicking on the continue button (Tablet)"
+	@priority = "5"
+	test CanClickInContinueButtonTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-    @description = "Check if I can follow the flow by clicking on the continue button (Smartphone)"
-    @priority = "5"
-    test CanClickInContinueButtonPhone {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		SetWindowSize(value1 = "800,1024");
 
-        SetWindowSize(value1 = "360,720");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeHomePage.getAQuote();
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(
+			label = "Search",
+			locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
 
-        AssertElementPresent(
-            label = "Search",
-            locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+		Raylife.dismissAlert();
+	}
 
-        Raylife.dismissAlert();
+	@description = "Check if I can go back to the previous page (Smartphone)"
+	@priority = "5"
+	test CanViewBackPagePhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-    }
+		SetWindowSize(value1 = "360,720");
 
-    @description = "Check if I can go back to the previous page (Smartphone)"
-    @priority = "5"
-    test CanViewBackPagePhone {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeHomePage.getAQuote();
 
-        SetWindowSize(value1 = "360,720");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        RaylifeHomePage.getAQuote();
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+	}
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	@description = "Check if I can go back to the previous page (Tablet)"
+	@priority = "5"
+	test CanViewBackPageTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+		SetWindowSize(value1 = "800,1024");
 
-    }
+		RaylifeHomePage.getAQuote();
 
-    @description = "Verify that the continue button is activated when selecting a product (Tablet)"
-    @priority = "5"
-    test CanViewContinueButtonActivatedTablet {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        SetWindowSize(value1 = "800,1024");
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-        RaylifeHomePage.getAQuote();
+		AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+	}
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+	@description = "Verify that the continue button is activated when selecting a product (Smartphone)"
+	@priority = "5"
+	test CanViewContinueButtonActivatedPhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		SetWindowSize(value1 = "360,720");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        Raylife.dismissAlert();
-    }
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-    @description = "Check if I can follow the flow by clicking on the continue button (Tablet)"
-    @priority = "5"
-    test CanClickInContinueButtonTablet {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        SetWindowSize(value1 = "800,1024");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.getAQuote();
+		Raylife.dismissAlert();
+	}
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+	@description = "Verify that the continue button is activated when selecting a product (Tablet)"
+	@priority = "5"
+	test CanViewContinueButtonActivatedTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		SetWindowSize(value1 = "800,1024");
 
-        AssertElementPresent(
-            label = "Search",
-            locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+		RaylifeHomePage.getAQuote();
 
-        Raylife.dismissAlert();
-    }
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-    @description = "Check if I can go back to the previous page (Tablet)"
-    @priority = "5"
-    test CanViewBackPageTablet {
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        SetWindowSize(value1 = "800,1024");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.getAQuote();
+		Raylife.dismissAlert();
+	}
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
-
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-        AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
-
-    }
 }

@@ -125,9 +125,6 @@ definition {
 	@description = "This is a test for LPS-137065. The user cannot preview the effects of styles on draft changes."
 	@priority = "4"
 	test CannotPreviewStyleBookOnDraftChanges {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
-
 		task ("Add a Heading fragment to a master page without publish") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -374,8 +371,6 @@ definition {
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all display page templates."
 	@priority = "5"
 	test PreviewStyleBookOnDisplayPageTemplates {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to the first display page template for Web Content Article and Basic Web Content") {
@@ -667,8 +662,6 @@ definition {
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on master page."
 	@priority = "5"
 	test PreviewStyleBookOnMasterPage {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a master with a Header Dark fragment then publish") {
@@ -741,8 +734,6 @@ definition {
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all pages."
 	@priority = "5"
 	test PreviewStyleBookOnPages {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add the first widget page with a Blogs widget") {
@@ -990,8 +981,6 @@ definition {
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all page templates."
 	@priority = "5"
 	test PreviewStyleBookOnPageTemplates {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a page template collection") {
@@ -1246,8 +1235,6 @@ definition {
 	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when the site is empty."
 	@priority = "4"
 	test ViewEmptyStateWhenSiteIsEmpty {
-		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
-		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "StyleBooksWithPreview#ViewEmptyStateWhenSiteIsEmpty";
 
 		task ("Deactivate the Default fragment sets") {

@@ -652,9 +652,11 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
 			value1 = "Custom Field");
 
-		Select(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
-			value1 = "String");
+		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
+
+		Click(
+			key_fieldType = "Text",
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE_OPTION");
 
 		Button.clickCancel();
 
@@ -845,13 +847,13 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "BigDecimal");
+			fieldType = "Precision Decimal");
 
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "BigDecimal");
+			fieldType = "PrecisionDecimal");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Boolean field"
@@ -936,13 +938,13 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "Double");
+			fieldType = "Decimal");
 
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "Double");
+			fieldType = "Decimal");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create an Integer field"
@@ -1009,11 +1011,11 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "Long");
+			fieldType = "Long Integer");
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "Long");
+			fieldType = "LongInteger");
 	}
 
 	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
@@ -1104,7 +1106,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Field Picklist",
-			fieldType = "String");
+			fieldType = "Picklist");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a String field"
@@ -1125,13 +1127,13 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "String");
+			fieldType = "Text");
 
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "String");
+			fieldType = "Text");
 	}
 
 	@description = "LPS-137879 - Verify it is not possible to delete a Custom Object field after the Object is published"
@@ -1603,7 +1605,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = "customObjectField",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "This name is already in use. Try another one.");
 	}
@@ -1784,7 +1786,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = " ",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Name is required.");
 	}
@@ -1808,7 +1810,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "",
 			fieldName = "customField",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.assertLabelFieldRequired();
 	}
@@ -1952,9 +1954,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Choose an Option");
+		ObjectAdmin.addObjectFieldViaUI(fieldLabel = "Custom Field");
 
 		ObjectAdmin.assertTypeFieldRequired();
 	}
@@ -2059,7 +2059,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = "customField#$%",
-			fieldType = "Long");
+			fieldType = "Long Integer");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits.");
 	}
@@ -2081,7 +2081,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = "CustomField",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an lower case letter.");
 	}
@@ -2907,7 +2907,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field A",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field B");
 	}
@@ -3159,7 +3159,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "String",
+			fieldType = "Text",
 			isMandatory = "true");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
@@ -5944,7 +5944,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "String");
+			fieldType = "Text");
 	}
 
 	@description = "LPS-137874 - Verify that Objects created on a Virtual Instance are not displayed on the Forms Settings, Collection Providers and Display Page Template of the Main Instance and vice versa"
@@ -7759,7 +7759,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Object A",
-			fieldType = "Long");
+			fieldType = "Relationship");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"

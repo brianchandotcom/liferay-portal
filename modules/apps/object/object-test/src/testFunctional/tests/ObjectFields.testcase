@@ -40,13 +40,13 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "Clob");
+			fieldType = "Long Text");
 
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "Clob");
+			fieldType = "LongText");
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"

@@ -705,7 +705,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Field",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.openObjectAdmin();
 

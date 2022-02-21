@@ -126,9 +126,13 @@ definition {
 				value1 = "${fieldName}");
 		}
 
-		Select(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
-			value1 = "${fieldType}");
+		if (isSet(fieldType)) {
+			Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
+
+			Click(
+				key_fieldType = "${fieldType}",
+				locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE_OPTION");
+		}
 
 		if ("${isMandatory}" == "true") {
 			Check.checkToggleSwitch(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");

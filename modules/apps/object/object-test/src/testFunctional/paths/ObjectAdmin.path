@@ -292,7 +292,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_TYPE</td>
-		<td>//select[contains(@id,'objectFieldType')]</td>
+		<td>//input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELDS_TYPE_OPTION</td>
+		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_fieldType}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -472,7 +477,7 @@
 	</tr>
 	<tr>
 		<td>TYPE_FIELD_REQUIRED</td>
-		<td>//select[@id='objectFieldType']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//input[@placeholder='Choose an Option']/ancestor::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

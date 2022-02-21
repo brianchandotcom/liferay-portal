@@ -324,7 +324,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Field String",
-			fieldType = "String");
+			fieldType = "Text");
 
 		ObjectAdmin.goToDetailsTab();
 

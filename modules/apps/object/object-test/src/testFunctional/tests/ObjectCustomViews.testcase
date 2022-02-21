@@ -1,0 +1,246 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+	property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectViewConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-135394 - Verify it is possible to add a column for the View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddColumn {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147765 CanAddColumn pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelColumnAddition {
+
+		// TODO LPS-147766 CanCancelColumnAddition pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelViewCreation {
+
+		// TODO LPS-147754 CanCancelViewCreation pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to create a View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateView {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147756 CanCreateView pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to delete a column for the View by unselecting it"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteColumnByUnselect {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147768 CanDeleteColumnByUnselect pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteColumnThroughDeleteButton {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147767 CanDeleteColumnThroughDeleteButton pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to delete a View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteView {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147758 CanDeleteView pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to drag the columns"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDragColumns {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147769 CanDragColumns pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the Name is required when creating a View"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveNameFieldEmpty {
+
+		// TODO LPS-147755 CannotLeaveNameFieldEmpty pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify that it is not possible to save another View as default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSaveAnotherViewAsDefault {
+
+		// TODO LPS-147759 CannotSaveAnotherViewAsDefault pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchColumn {
+
+		// TODO LPS-147762 CanSearchColumn pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchColumnAddColumnModal {
+
+		// TODO LPS-147763 CanSearchColumnAddColumnModal pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to search for a View"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchView {
+
+		// TODO LPS-147753 CanSearchView pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify it is possible to update a View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdateView {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147757 CanUpdateView pending implementation
+
+	}
+
+	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewEntries {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147770 CanViewEntries pending implementation
+
+	}
+
+	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewOnlySelectedColumns {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147771 CanViewOnlySelectedColumns pending implementation
+
+	}
+
+	@description = "LPS-144902 - Verify that custom view title is presented correctly"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewTitle {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147773 CanViewTitle pending implementation
+
+	}
+
+	@description = "LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ColumnsAreOrdered {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147772 ColumnsAreOrdered pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the empty state for the View Builder tab"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateViewBuilder {
+
+		// TODO LPS-147760 EmptyStateViewBuilder pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the empty state for the View tab"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateViewTab {
+
+		// TODO LPS-147751 EmptyStateViewTab pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test MetadataColumnsDisplayed {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147764 MetadataColumnsDisplayed pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the no result message when searching for a view"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NoResultMessageView {
+
+		// TODO LPS-147752 NoResultMessageView pending implementation
+
+	}
+
+	@description = "LPS-135394 - Verify the no result message when searching for a column"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NoResultMessageViewBuilder {
+
+		// TODO LPS-147761 NoResultMessageViewBuilder pending implementation
+
+	}
+
+}

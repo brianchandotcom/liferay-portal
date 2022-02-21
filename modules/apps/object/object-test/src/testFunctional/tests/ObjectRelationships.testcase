@@ -163,6 +163,51 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-135402 - Verify it is possible to create a Many to Many Relationship with itself"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateSelfManyToManyRelationship {
+
+		// TODO LPS-147732 CanCreateSelfManyToManyRelationship pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveRelationshipLabelBlank {
+
+		// TODO LPS-147736 CannotLeaveRelationshipLabelBlank pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab {
+
+		// TODO LPS-147734 CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab pending implementation
+
+	}
+
+	@description = "LPS-135402 - Verify that it is not possible to relate an entry with itself"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotRelateEntryItself {
+
+		// TODO LPS-147733 CannotRelateEntryItself pending implementation
+
+	}
+
+	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSelectRelationshipFieldForObjectEntryTitle {
+
+		// TODO LPS-147735 CannotSelectRelationshipFieldForObjectEntryTitle pending implementation
+
+	}
+
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"
 	@priority = "4"
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
@@ -266,6 +311,33 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many (self-reference) will allow to delete only the entry with relation but not its relations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CascadeDeletionSelfManyToManyWillAllowDelete {
+
+		// TODO LPS-147738 CascadeDeletionSelfManyToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many (self-reference) will allow the entry with relation to be deleted and its relations to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisassociateDeletionSelfManyToManyWillAllowDelete {
+
+		// TODO LPS-147739 DisassociateDeletionSelfManyToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many (self-reference) won't allow the user to delete an entry with relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionSelfManyToManyWontAllowDelete {
+
+		// TODO LPS-147737 PreventDeletionSelfManyToManyWontAllowDelete pending implementation
+
 	}
 
 }

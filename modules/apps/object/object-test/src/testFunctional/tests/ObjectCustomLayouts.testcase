@@ -22,6 +22,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSaveAnotherLayoutAsDefault {
+
+		// TODO LPS-147724 CannotSaveAnotherLayoutAsDefault pending implementation
+
+	}
+
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"
 	@priority = "4"
 	test CanViewDateEntry {

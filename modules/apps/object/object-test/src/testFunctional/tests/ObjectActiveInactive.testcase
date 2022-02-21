@@ -1,0 +1,34 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectEntriesDisappearsWorkflowMetricsWhenInactivated {
+
+		// TODO LPS-147750 ObjectEntriesDisappearsWorkflowMetricsWhenInactivated pending implementation
+
+	}
+
+}

@@ -180,6 +180,10 @@ definition {
 	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
 	@priority = "4"
 	test CanUpdateNumberOfMembersForDynamicSegment {
+		property portal.upstream = "quarantine";
+
+		// The segment membership list takes a long time to process the events and update the list.
+
 		var nameList1 = "user2 user2,user3 user3";
 		var nameList2 = "user1 user1,user2 user2";
 		var emailList = "user2@liferay.com,user3@liferay.com";

@@ -23,13 +23,19 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -69,6 +75,8 @@ public class ObjectEntryServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_adminUser = TestPropsValues.getUser();
+		_defaultUser = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -141,22 +149,44 @@ public class ObjectEntryServiceTest {
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
-		try {
-			_testGetObjectEntry(_adminUser, _user);
+		_setUser(_adminUser);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		ObjectEntry adminObjectEntry = _addObjectEntry(_adminUser);
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have VIEW permission for"));
-		}
+		Assert.assertNotNull(
+			_objectEntryService.getObjectEntry(
+				adminObjectEntry.getObjectEntryId()));
 
-		_testGetObjectEntry(_adminUser, _adminUser);
-		_testGetObjectEntry(_user, _user);
+		_setUser(_user);
+
+		ObjectEntry userObjectEntry = _addObjectEntry(_user);
+
+		Assert.assertNotNull(
+			_objectEntryService.getObjectEntry(
+				userObjectEntry.getObjectEntryId()));
+
+		_assertFailPermission(adminObjectEntry);
+
+		_setUser(_defaultUser);
+
+		_assertFailPermission(adminObjectEntry);
+
+		ObjectEntry defaultUserObjectEntry = _addObjectEntry(_defaultUser);
+
+		_assertFailPermission(defaultUserObjectEntry);
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ActionKeys.VIEW);
+
+		Assert.assertNotNull(
+			_objectEntryService.getObjectEntry(
+				adminObjectEntry.getObjectEntryId()));
 	}
 
 	@Test
@@ -195,7 +225,28 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _setUser(User user) {
+	private void _assertFailPermission(ObjectEntry objectEntry)
+		throws Exception {
+
+		try {
+			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId());
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + permissionChecker.getUserId() +
+						" must have VIEW permission for"));
+		}
+	}
+
+	private void _setUser(User user) throws Exception {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 
@@ -246,26 +297,8 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private void _testGetObjectEntry(User ownerUser, User user)
-		throws Exception {
-
-		ObjectEntry objectEntry = null;
-
-		try {
-			_setUser(user);
-
-			objectEntry = _addObjectEntry(ownerUser);
-
-			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId());
-		}
-		finally {
-			if (objectEntry != null) {
-				_objectEntryLocalService.deleteObjectEntry(objectEntry);
-			}
-		}
-	}
-
 	private User _adminUser;
+	private User _defaultUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
@@ -280,6 +313,13 @@ public class ObjectEntryServiceTest {
 	private ObjectEntryService _objectEntryService;
 
 	private PermissionChecker _originalPermissionChecker;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private User _user;
 
 	@Inject(type = UserLocalService.class)

@@ -44,12 +44,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -110,21 +112,42 @@ public class ObjectEntryServiceTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		try {
-			_testAddObjectEntry(_user);
+		_setUser(_user);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		_assertFailPermission("ADD_OBJECT_ENTRY", null);
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have ADD_OBJECT_ENTRY permission for"));
-		}
+		_setUser(_adminUser);
 
-		_testAddObjectEntry(_adminUser);
+		Assert.assertNotNull(
+			_objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _adminUser.getUserId())));
+
+		_setUser(_defaultUser);
+
+		_assertFailPermission("ADD_OBJECT_ENTRY", null);
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), "ADD_OBJECT_ENTRY");
+
+		Assert.assertNotNull(
+			_objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _defaultUser.getUserId())));
 	}
 
 	@Test
@@ -165,15 +188,15 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.getObjectEntry(
 				userObjectEntry.getObjectEntryId()));
 
-		_assertFailPermission(adminObjectEntry);
+		_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
 
 		_setUser(_defaultUser);
 
-		_assertFailPermission(adminObjectEntry);
+		_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
 
 		ObjectEntry defaultUserObjectEntry = _addObjectEntry(_defaultUser);
 
-		_assertFailPermission(defaultUserObjectEntry);
+		_assertFailPermission(ActionKeys.VIEW, defaultUserObjectEntry);
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -225,24 +248,38 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _assertFailPermission(ObjectEntry objectEntry)
+	private void _assertFailPermission(String action, ObjectEntry objectEntry)
 		throws Exception {
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
-			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId());
+			if (Objects.equals(action, ActionKeys.VIEW)) {
+				_objectEntryService.getObjectEntry(
+					objectEntry.getObjectEntryId());
+			}
+			else {
+				_objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"firstName", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						permissionChecker.getUserId()));
+			}
 
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			Assert.assertTrue(
 				message.contains(
-					"User " + permissionChecker.getUserId() +
-						" must have VIEW permission for"));
+					StringBundler.concat(
+						"User ", String.valueOf(permissionChecker.getUserId()),
+						" must have ", action, " permission for")));
 		}
 	}
 
@@ -251,29 +288,6 @@ public class ObjectEntryServiceTest {
 			PermissionCheckerFactoryUtil.create(user));
 
 		PrincipalThreadLocal.setName(user.getUserId());
-	}
-
-	private void _testAddObjectEntry(User user) throws Exception {
-		ObjectEntry objectEntry = null;
-
-		try {
-			_setUser(user);
-
-			objectEntry = _objectEntryService.addObjectEntry(
-				0, _objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomStringUtils.randomAlphabetic(5)
-				).put(
-					"LastName", RandomStringUtils.randomAlphabetic(5)
-				).build(),
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId(), user.getUserId()));
-		}
-		finally {
-			if (objectEntry != null) {
-				_objectEntryLocalService.deleteObjectEntry(objectEntry);
-			}
-		}
 	}
 
 	private void _testDeleteObjectEntry(User ownerUser, User user)

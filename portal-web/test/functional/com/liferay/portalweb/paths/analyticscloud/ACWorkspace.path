@@ -41,6 +41,12 @@
 	<td>//*[contains(@class, 'workspace-link')]</td>
 	<td></td>
 </tr>
+<!--CREATE_WORKSPACE-->
+<tr>
+	<td>INVITE_USERS_INPUT</td>
+	<td>xpath=(//input[@class='form-control-inset'])[2]</td>
+	<td></td>
+</tr>
 <!--WORKSPACE_SETTINGS-->
 <tr>
 	<td>TIMEZONE_COUNTRY_SELECT_FIELD</td>

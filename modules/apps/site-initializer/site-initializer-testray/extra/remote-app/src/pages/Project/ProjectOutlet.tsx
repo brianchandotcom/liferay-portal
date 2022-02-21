@@ -13,23 +13,41 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useCallback, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
+import {HeaderContext, HeaderTypes} from '../../context/HeaderContext';
+import {CTypePagination} from '../../graphql/queries';
 import {
+	TestrayProject,
 	TestrayProjectQuery,
 	getTestrayProject,
+	getTestrayProjects,
 } from '../../graphql/queries/testrayProject';
 import useHeader from '../../hooks/useHeader';
+import {Liferay} from '../../services/liferay/liferay';
 
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
 	const {setHeading, setTabs} = useHeader();
 
+	const [, dispatch] = useContext(HeaderContext);
+
 	const {data} = useQuery<TestrayProjectQuery>(getTestrayProject, {
 		variables: {testrayProjectId: projectId},
 	});
+
+	const {data: dataTestrayProjects} = useQuery<
+		CTypePagination<'testrayProjects', TestrayProject>
+	>(getTestrayProjects, {
+		variables: {
+			pageSize: 100,
+			scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+		},
+	});
+
+	const testrayProjects = dataTestrayProjects?.c?.testrayProjects?.items;
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 	const testrayProject = data?.c.testrayProject;
@@ -45,6 +63,29 @@ const ProjectOutlet = () => {
 		},
 		[projectId, pathname]
 	);
+
+	useEffect(() => {
+		if (testrayProjects) {
+			dispatch({
+				payload: [
+					{
+						items: [
+							{
+								divider: true,
+								label: 'Project Directory',
+								path: '/',
+							},
+							...testrayProjects.map((testrayProject) => ({
+								label: testrayProject.name,
+								path: `/project/${testrayProject.testrayProjectId}/routines`,
+							})),
+						],
+					},
+				],
+				type: HeaderTypes.SET_DROPDOWN,
+			});
+		}
+	}, [dispatch, testrayProjects]);
 
 	useEffect(() => {
 		if (testrayProject && !hasOtherParams) {

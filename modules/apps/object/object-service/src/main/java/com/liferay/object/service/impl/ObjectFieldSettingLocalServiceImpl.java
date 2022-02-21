@@ -68,6 +68,13 @@ public class ObjectFieldSettingLocalServiceImpl
 	}
 
 	@Override
+	public ObjectFieldSetting fetchObjectFieldSetting(
+		long objectFieldId, String name) {
+
+		return objectFieldSettingPersistence.fetchByOFI_N(objectFieldId, name);
+	}
+
+	@Override
 	public List<ObjectFieldSetting> getObjectFieldSettings(long objectFieldId) {
 		return objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
 	}

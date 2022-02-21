@@ -115,6 +115,12 @@
 	<td>//button[@aria-label='Click to Copy']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIX_PACK_DROPDOWN</td>
+	<td>//select[contains(@class,'form-control')]//option[text()='${key_version}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_SCREEN</td>
 	<td>//div[contains(@class,'onboarding-base-screen-root')]</td>
 	<td></td>

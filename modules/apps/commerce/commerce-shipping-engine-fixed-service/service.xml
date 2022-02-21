@@ -25,9 +25,10 @@
 		<!-- Other fields -->
 
 		<column name="commerceShippingMethodId" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column localized="true" name="description" type="String" />
 		<column name="amount" type="BigDecimal" />
+		<column localized="true" name="description" type="String" />
+		<column name="key" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column name="priority" type="double" />
 
 		<!-- Order -->
@@ -40,6 +41,10 @@
 
 		<finder name="CommerceShippingMethodId" return-type="Collection">
 			<finder-column name="commerceShippingMethodId" />
+		</finder>
+		<finder name="C_K" return-type="CommerceShippingFixedOption" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="key" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceShippingFixedOptionQualifier" remote-service="true" table="CSFixedOptionQualifier">

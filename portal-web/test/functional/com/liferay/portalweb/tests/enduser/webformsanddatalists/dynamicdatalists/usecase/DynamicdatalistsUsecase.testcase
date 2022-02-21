@@ -306,9 +306,23 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66229."
-	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankDocumentsAndMediaField {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Documents and Media",
+			fieldFieldLabel = "Documents and Media",
+			fieldName = "DocumentsAndMedia");
+
+		DDLDataDefinition.save();
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -325,18 +339,11 @@ definition {
 
 		DDLList.addViaDDLDisplayPG();
 
-		DDLDataDefinition.addViaDDLDisplayPG();
-
-		DynamicDataMapping.addField(
-			field = "Documents and Media",
-			fieldFieldLabel = "Documents and Media",
-			fieldName = "DocumentsAndMedia");
-
-		DDLDataDefinition.saveViaDDLDisplayPG();
-
-		DDLDataDefinition.selectViaDDLDisplayPG();
+		DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
 
 		DDLList.saveViaDDLDisplayPG();
+
+		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "DDL Page");
 
@@ -3126,7 +3133,6 @@ definition {
 	@description = "This is a use case for LPS-63290 and LPS-72216."
 	@priority = "4"
 	test ViewRepeatableNestedFields {
-		property forms.functional = "test";
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewRepeatableNestedFields";
 
 		Navigator.openURL();

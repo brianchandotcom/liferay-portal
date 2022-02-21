@@ -325,46 +325,46 @@ components:
                     type: number
                 shippingDiscountPercentageLevel1:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel1WithTaxAmount:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel2:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel2WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel3:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel3WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel4:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountPercentageLevel4WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 shippingDiscountWithTaxAmount:
-                    format: double
+                    format: bigdecimal
                     type: number
                 shippingDiscountWithTaxAmountFormatted:
                     type: string
@@ -394,52 +394,52 @@ components:
                     readOnly: true
                     type: number
                 subtotalDiscountAmount:
-                    format: double
+                    format: bigdecimal
                     type: number
                 subtotalDiscountAmountFormatted:
                     type: string
                 subtotalDiscountPercentageLevel1:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel1WithTaxAmount:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel2:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel2WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel3:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel3WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel4:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountPercentageLevel4WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 subtotalDiscountWithTaxAmount:
-                    format: double
+                    format: bigdecimal
                     type: number
                 subtotalDiscountWithTaxAmountFormatted:
                     type: string
@@ -491,42 +491,42 @@ components:
                     type: number
                 totalDiscountPercentageLevel1:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel1WithTaxAmount:
                     example: 20
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel2:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel2WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel3:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel3WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel4:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountPercentageLevel4WithTaxAmount:
                     example: 0
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 totalDiscountWithTaxAmount:

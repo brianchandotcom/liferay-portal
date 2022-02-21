@@ -4160,23 +4160,6 @@ public abstract class BaseOrderResourceTestCase {
 				shippingDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingDiscountAmountValue = RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel1 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel2 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel3 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel4 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountWithTaxAmount = RandomTestUtil.randomDouble();
 				shippingDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingMethod = StringUtil.toLowerCase(
@@ -4187,26 +4170,8 @@ public abstract class BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				shippingWithTaxAmountValue = RandomTestUtil.randomDouble();
 				subtotalAmount = RandomTestUtil.randomDouble();
-				subtotalDiscountAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				subtotalDiscountPercentageLevel1 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel2 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel3 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel4 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountWithTaxAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				subtotalFormatted = StringUtil.toLowerCase(
@@ -4221,18 +4186,6 @@ public abstract class BaseOrderResourceTestCase {
 				totalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				totalDiscountAmountValue = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel1 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel2 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel3 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel4 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
 				totalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				totalDiscountWithTaxAmountValue = RandomTestUtil.randomDouble();

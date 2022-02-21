@@ -40,7 +40,7 @@ const Subtasks = () => {
 									title: 'STATUS',
 									value: (
 										<StatusBadge type="blocked">
-											blocked
+											Blocked
 										</StatusBadge>
 									),
 								},
@@ -67,7 +67,7 @@ const Subtasks = () => {
 									value: 'None',
 								},
 							]}
-						></QATable>
+						/>
 					</div>
 
 					<div className="col-4 col-lg-4 col-md-12 pb-5">
@@ -82,10 +82,11 @@ const Subtasks = () => {
 									value: 'Failed prior to running test',
 								},
 							]}
-						></QATable>
+						/>
 					</div>
 				</div>
 			</Container>
+
 			<Container className="mt-5" title="Tests">
 				<Table
 					columns={[
@@ -94,9 +95,9 @@ const Subtasks = () => {
 						{clickable: true, key: 'team', value: 'TEAM'},
 						{clickable: true, key: 'component', value: 'COMPONENT'},
 						{
-							className: 'table-cell-expand-small',
 							clickable: true,
 							key: 'case',
+							size: 'xl',
 							value: 'CASE',
 						},
 						{clickable: true, key: 'issues', value: 'ISSUES'},
@@ -105,7 +106,7 @@ const Subtasks = () => {
 							key: 'status',
 							render: () => (
 								<StatusBadge type="blocked">
-									blocked
+									Blocked
 								</StatusBadge>
 							),
 
@@ -113,8 +114,8 @@ const Subtasks = () => {
 						},
 					]}
 					items={Tests}
-					navigateTo={() => `/testflow/details`}
-				></Table>
+					navigateTo={() => '/testflow/details'}
+				/>
 			</Container>
 		</>
 	);

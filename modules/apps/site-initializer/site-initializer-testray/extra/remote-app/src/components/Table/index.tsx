@@ -19,36 +19,25 @@ import {useNavigate} from 'react-router-dom';
 const {Body, Cell, Head, Row} = ClayTable;
 
 type Column<T = any> = {
-	className?: string;
 	clickable?: boolean;
 	key: string;
 	render?: (itemValue: any, item: T) => String | React.ReactNode;
+	size?: 'sm' | 'md' | 'lg' | 'xl' | 'none';
 	value: string;
 };
 
 export type TableProps<T = any> = {
 	actions?: any[];
-	className?: string;
 	columns: Column[];
 	items: T[];
 	navigateTo?: (item: T) => string;
 };
 
-const Table: React.FC<TableProps> = ({
-	actions,
-	className,
-	columns,
-	items,
-	navigateTo,
-}) => {
+const Table: React.FC<TableProps> = ({actions, columns, items, navigateTo}) => {
 	const navigate = useNavigate();
 
 	return (
-		<ClayTable
-			borderless
-			className={`${className} testray-table`}
-			hover={true}
-		>
+		<ClayTable borderless className="testray-table" hover>
 			<Head className="testray-table">
 				<Row>
 					{columns.map((column, index) => (
@@ -57,7 +46,7 @@ const Table: React.FC<TableProps> = ({
 						</Cell>
 					))}
 
-					{actions && <Cell headingCell></Cell>}
+					{actions && <Cell headingCell />}
 				</Row>
 			</Head>
 
@@ -66,12 +55,16 @@ const Table: React.FC<TableProps> = ({
 					<Row key={index}>
 						{columns.map((column, columnIndex) => (
 							<Cell
-								className={classNames(
-									`text-dark ${column.className} `,
-									{
-										'cursor-pointer': column.clickable,
-									}
-								)}
+								className={classNames('text-dark', {
+									'cursor-pointer': column.clickable,
+									'table-cell-expand': column.size === 'sm',
+									'table-cell-expand-small':
+										column.size === 'xl',
+									'table-cell-expand-smaller':
+										column.size === 'lg',
+									'table-cell-expand-smallest':
+										column.size === 'md',
+								})}
 								key={columnIndex}
 								onClick={() => {
 									if (navigateTo && column.clickable) {

@@ -54,7 +54,7 @@ const TestFlowTasks: React.FC = () => {
 									title: 'Status',
 									value: (
 										<StatusBadge type="passed">
-											passed
+											Passed
 										</StatusBadge>
 									),
 								},
@@ -122,7 +122,7 @@ const TestFlowTasks: React.FC = () => {
 							key: 'status',
 							render: () => (
 								<StatusBadge type="blocked">
-									blocked
+									Blocked
 								</StatusBadge>
 							),
 
@@ -131,14 +131,13 @@ const TestFlowTasks: React.FC = () => {
 						{clickable: true, key: 'score', value: 'Score'},
 						{clickable: true, key: 'tests', value: 'Tests'},
 						{
-							className: 'table-cell-expand-small',
 							clickable: true,
 							key: 'error',
 							render: (value) => <Code>{value}</Code>,
+							size: 'xl',
 							value: 'Errors',
 						},
 						{
-							className: 'table-cell-minw-150',
 							clickable: true,
 							key: 'assignee',
 							render: (assignee: any) => (
@@ -148,12 +147,12 @@ const TestFlowTasks: React.FC = () => {
 									url={assignee[0].url}
 								/>
 							),
-
+							size: 'sm',
 							value: 'Assignee',
 						},
 					]}
 					items={subtask}
-					navigateTo={() => `/testflow/subtasks`}
+					navigateTo={() => '/testflow/subtasks'}
 				/>
 			</Container>
 		</>

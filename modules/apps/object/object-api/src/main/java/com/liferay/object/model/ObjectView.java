@@ -58,7 +58,12 @@ public interface ObjectView extends ObjectViewModel, PersistedModel {
 
 	public java.util.List<ObjectViewColumn> getObjectViewColumns();
 
+	public java.util.List<ObjectViewSortColumn> getObjectViewSortColumns();
+
 	public void setObjectViewColumns(
 		java.util.List<ObjectViewColumn> objectViewColumns);
+
+	public void setObjectViewSortColumns(
+		java.util.List<ObjectViewSortColumn> objectViewSortColumns);
 
 }

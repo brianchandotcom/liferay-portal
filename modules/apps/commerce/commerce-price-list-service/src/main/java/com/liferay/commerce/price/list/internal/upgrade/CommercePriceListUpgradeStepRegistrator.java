@@ -113,6 +113,11 @@ public class CommercePriceListUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"2.3.0", "2.4.0",
+			new com.liferay.commerce.price.list.internal.upgrade.v2_4_0.
+				CommercePriceEntryUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");
 		}

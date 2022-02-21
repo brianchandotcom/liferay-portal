@@ -29,6 +29,24 @@ definition {
 			value1 = "${connectorLabel}");
 	}
 
+	macro backArrowOnSidebar {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BACK_TO_SIDEBAR_BUTTON");
+	}
+
+	macro clickDefaultToggle {
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+	}
+
+	macro deleteNodeOrConnection {
+		Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
+
+		AssertElementPresent(
+			key_title = "${title}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#VIEW_DELETE_MODAL");
+
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+	}
+
 	macro dragAndDropDiagramNode {
 		DragAndDrop.dragAndDrop(
 			key_nodeType = "${nodeType}",
@@ -55,8 +73,28 @@ definition {
 			value1 = "${nodePosition}");
 	}
 
+	macro editConnector {
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+
+		Type(
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
+			value1 = "${newConnectorLabel}");
+	}
+
 	macro editWorkflowTitle {
 		PortletEntry.inputTitle(title = "${title}");
+	}
+
+	macro selectConnector {
+		Click(
+			key_connectorLabel = "${connectorLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+	}
+
+	macro selectNode {
+		Click(
+			key_nodeType = "${nodeType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE");
 	}
 
 	macro selectTranslationLanguage {
@@ -76,33 +114,122 @@ definition {
 		}
 	}
 
-	macro viewConnectorPresent {
-		AssertElementPresent(
-			key_connectorLabel = "${connectorLabel}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
-	}
-	
-	macro selectConnectorPresent {
-		Click(
-			key_connectorLabel = "${connectorLabel}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
-	}
-
-	macro deleteNodeOrConnection {
-
-		Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
+	macro viewAndFillNotification {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_NEW_BUTTON");
 
 		AssertElementPresent(
-			key_title = "${title}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#VIEW_DELETE_MODAL");
+			key_inputOption = "Name",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_INPUT");
 
-		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+		AssertElementPresent(
+			key_inputOption = "Description",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_INPUT");
+
+		AssertElementPresent(
+			key_selectorField = "Template Language",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS");
+
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TEMPLATE_TEXTAREA");
+
+		AssertElementPresent(
+			key_selectorField = "Notifications Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS");
+
+		AssertElementPresent(
+			key_selectorField = "Execution Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS");
+
+		AssertElementPresent(
+			key_selectorField = "Recipient Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS");
+
+		if (isSet(name)) {
+			Type(
+				key_inputOption = "Name",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_INPUT",
+				value1 = "${name}");
+		}
+
+		if (isSet(description)) {
+			Type(
+				key_inputOption = "Description",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_INPUT",
+				value1 = "${description}");
+		}
+
+		if (isSet(templateLanguageOption)) {
+			Select(
+				key_selectorField = "Template Language",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS",
+				value1 = "${templateLanguageOption}");
+		}
+
+		if (isSet(notificationTemplateValue)) {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TEMPLATE_TEXTAREA",
+				value1 = "${notificationTemplateValue}");
+		}
+
+		if (isSet(notificationsTypeOption)) {
+			Select(
+				key_selectorField = "Notifications Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS",
+				value1 = "${notificationsTypeOption}");
+		}
+
+		if (isSet(executionTypeOption)) {
+			Select(
+				key_selectorField = "Execution Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS",
+				value1 = "${executionTypeOption}");
+		}
+
+		if (isSet(recipientTypeOption)) {
+			Select(
+				key_selectorField = "Recipient Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_SELECTORS",
+				value1 = "${recipientTypeOption}");
+		}
 	}
 
-	macro notViewConnectorPresent {
+	macro viewConnectorNotPresent {
 		AssertElementNotPresent(
 			key_connectorLabel = "${connectorLabel}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+	}
+
+	macro viewConnectorPresent {
+		AssertTextEquals(
+			key_connectorLabel = "${connectorLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL",
+			value1 = "${connectorLabel}");
+	}
+
+	macro viewDefaultToggleStatus {
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+
+		AssertElementPresent(
+			key_defaultStatus = "${defaultStatus}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH_STATUS");
+
+		if ("${defaultStatus}" == "True") {
+			AssertElementPresent(
+				key_connectorLabel = "${connectorLabel}",
+				key_transitionStyle = "0",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TRANSITION_STYLE");
+		}
+		else {
+			AssertElementPresent(
+				key_connectorLabel = "${connectorLabel}",
+				key_transitionStyle = "5",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TRANSITION_STYLE");
+		}
+	}
+
+	macro viewDescription {
+		AssertTextEquals(
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE_DESCRIPTION",
+			value1 = "${description}");
 	}
 
 	macro viewTranslationLanguageStatus {
@@ -111,4 +238,5 @@ definition {
 			key_translationStatus = "${translationStatus}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
+
 }

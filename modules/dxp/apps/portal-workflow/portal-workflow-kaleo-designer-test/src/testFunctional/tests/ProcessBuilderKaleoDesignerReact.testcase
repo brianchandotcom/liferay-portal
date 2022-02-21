@@ -227,6 +227,8 @@ definition {
 		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
+
+
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"
@@ -389,14 +391,11 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		Workflow.saveDefinition();
+		Workflow.saveDefinition(newKaleoDesigner = "True");
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 
@@ -425,14 +424,36 @@ definition {
 	}
 
 	@description = "Verify that the user can set transition Default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetDefaultTransition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72969 CanSetDefaultTransition pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "StartEndConnector",
+			connectorOut = "start",
+			key_direction = "bottom");
+
+		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
+			connectorLabel = "STARTENDCONNECTOR",
+			defaultStatus = "True");
+
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(connectorLabel = "STARTENDCONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
+			connectorLabel = "STARTENDCONNECTOR",
+			defaultStatus = "False");
+
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(connectorLabel = "STARTENDCONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
+			connectorLabel = "STARTENDCONNECTOR",
+			defaultStatus = "True");
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
@@ -517,22 +538,44 @@ definition {
 			connectorOut = "start",
 			key_direction = "top");
 
-		ProcessBuilderKaleoDesignerReact.selectConnectorPresent(connectorLabel = "START TASK CONNECTOR");
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "START TASK CONNECTOR");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
-		ProcessBuilderKaleoDesignerReact.notViewConnectorPresent(connectorLabel = "START TASK CONNECTOR");
+		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "START TASK CONNECTOR");
+
+		
 
 	}
 
 	@description = "Verify that the user can edit the connectors label"
-	@ignore = "Test Stub"
+	@ignore = "true"
 	@priority = "4"
 	test ConnectorsLabelCanBeEdited {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72968 ConnectorsLabelCanBeEdited pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "StartEndConnector",
+			connectorOut = "start",
+			key_direction = "bottom");
+
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "STARTENDCONNECTOR",
+			newConnectorLabel = "EditedConnector");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
+
+		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
 
 	}
 
@@ -603,24 +646,92 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Description property"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test HasDescriptionProperty {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72947 HasDescriptionProperty pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="start");
+
+		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Begin a workflow.");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="end");
+
+		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Conclude the workflow.");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "20,-500",
+			nodeType = "fork");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="fork");
+
+		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Split the workflow into multiple paths.");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Condition",
+			nodePosition = "20,-100",
+			nodeType = "condition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="condition");
+
+		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Execute conditional logic.");
+
+		
 	}
 
 	@description = "Verify that each type of Node has Notifications property"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test HasNotificationsProperty {
 		property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
 		property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
-		// TODO LRQA-72950 HasNotificationsProperty pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="end");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "20,-500",
+			nodeType = "fork");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="fork");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Condition",
+			nodePosition = "20,-100",
+			nodeType = "condition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="condition");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+
 
 	}
 

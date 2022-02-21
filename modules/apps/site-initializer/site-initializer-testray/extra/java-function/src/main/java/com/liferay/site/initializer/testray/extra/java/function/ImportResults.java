@@ -69,7 +69,6 @@ public class ImportResults {
 			ImportResults importResults = new ImportResults(groupId);
 
 			importResults.readFiles("");
-
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -84,85 +83,6 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 
 		_groupId = groupId;
-	}
-
-	public int addTestrayProject(Document document) throws Exception {
-		Map<String, String> map = new HashMap<>();
-
-		Element element = document.getDocumentElement();
-
-		element.normalize();
-
-		NodeList nodeList = document.getElementsByTagName("property");
-
-		String projectName = null;
-
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-
-			if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-				!node.getNodeName(
-				).equals(
-					"#text"
-				) &&
-				(node.getAttributes(
-				).getLength() > 0)) {
-
-				String name = node.getAttributes(
-				).getNamedItem(
-					"name"
-				).getTextContent();
-
-				if (name.equals("testray.project.name")) {
-					String value = node.getAttributes(
-					).getNamedItem(
-						"value"
-					).getTextContent();
-
-					projectName = value;
-
-					map.put("description", name);
-					map.put("name", value);
-
-					break;
-				}
-			}
-		}
-
-		JSONObject responseJSONObject = HttpClient.get(
-			PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
-				_groupId);
-
-		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
-
-		int projectId = -1;
-
-		//TODO use filter
-		for (int i = 0; i < projectsJSONArray.length(); i++) {
-			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
-
-			if (projectJSONObject.getString(
-					"name"
-				).equals(
-					projectName
-				)) {
-
-				projectId = projectJSONObject.getInt("id");
-
-				break;
-			}
-		}
-
-		if ((projectId == -1) && !map.isEmpty()) {
-			responseJSONObject = HttpClient.post(
-				PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
-					_groupId,
-				new JSONObject(map));
-
-			return responseJSONObject.getInt("id");
-		}
-
-		return projectId;
 	}
 
 	public void addTestrayBuild(int projectId, Document document) {
@@ -277,6 +197,86 @@ public class ImportResults {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+
+	public int addTestrayProject(Document document) throws Exception {
+		Map<String, String> map = new HashMap<>();
+
+		Element element = document.getDocumentElement();
+
+		element.normalize();
+
+		NodeList nodeList = document.getElementsByTagName("property");
+
+		String projectName = null;
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+
+			if ((node.getNodeType() == Node.ELEMENT_NODE) &&
+				!node.getNodeName(
+				).equals(
+					"#text"
+				) &&
+				(node.getAttributes(
+				).getLength() > 0)) {
+
+				String name = node.getAttributes(
+				).getNamedItem(
+					"name"
+				).getTextContent();
+
+				if (name.equals("testray.project.name")) {
+					String value = node.getAttributes(
+					).getNamedItem(
+						"value"
+					).getTextContent();
+
+					projectName = value;
+
+					map.put("description", name);
+					map.put("name", value);
+
+					break;
+				}
+			}
+		}
+
+		JSONObject responseJSONObject = HttpClient.get(
+			PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
+				_groupId);
+
+		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
+
+		int projectId = -1;
+
+		//TODO use filter
+
+		for (int i = 0; i < projectsJSONArray.length(); i++) {
+			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
+
+			if (projectJSONObject.getString(
+					"name"
+				).equals(
+					projectName
+				)) {
+
+				projectId = projectJSONObject.getInt("id");
+
+				break;
+			}
+		}
+
+		if ((projectId == -1) && !map.isEmpty()) {
+			responseJSONObject = HttpClient.post(
+				PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
+					_groupId,
+				new JSONObject(map));
+
+			return responseJSONObject.getInt("id");
+		}
+
+		return projectId;
 	}
 
 	public Storage getStorage() throws Exception {

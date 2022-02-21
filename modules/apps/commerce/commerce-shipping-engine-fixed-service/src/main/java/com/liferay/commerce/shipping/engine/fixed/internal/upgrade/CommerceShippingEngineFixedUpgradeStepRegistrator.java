@@ -16,12 +16,15 @@ package com.liferay.commerce.shipping.engine.fixed.internal.upgrade;
 
 import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v1_1_0.CommerceShippingFixedOptionRelUpgradeProcess;
 import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_2_0.CommerceShippingFixedOptionQualifierUpgradeProcess;
+import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0.CommerceShippingFixedOptionUpgradeProcess;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -66,6 +69,11 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 			"2.1.0", "2.2.0",
 			new CommerceShippingFixedOptionQualifierUpgradeProcess());
 
+		registry.register(
+			"2.2.0", "2.3.0",
+			new CommerceShippingFixedOptionUpgradeProcess(
+				_commerceShippingFixedOptionLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Commerce shipping engine fixed upgrade step registrator " +
@@ -75,5 +83,9 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShippingEngineFixedUpgradeStepRegistrator.class);
+
+	@Reference
+	private CommerceShippingFixedOptionLocalService
+		_commerceShippingFixedOptionLocalService;
 
 }

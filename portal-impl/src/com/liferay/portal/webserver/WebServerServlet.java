@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -181,7 +182,7 @@ public class WebServerServlet extends HttpServlet {
 			else if (Validator.isNumber(pathArray[0])) {
 				_checkFileEntry(pathArray);
 			}
-			else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+			else if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathArray[0])) {
 				Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
 					httpServletRequest, pathArray);
 
@@ -1589,7 +1590,7 @@ public class WebServerServlet extends HttpServlet {
 						httpServletRequest, httpServletResponse, user,
 						pathArray);
 				}
-				else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+				else if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathArray[0])) {
 					sendFile(
 						httpServletRequest, httpServletResponse, user,
 						pathArray);
@@ -1661,7 +1662,7 @@ public class WebServerServlet extends HttpServlet {
 
 			return fileEntry;
 		}
-		else if (_PATH_FILE_ENTRY_FRIENDLY_URL.equals(pathArray[0])) {
+		else if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathArray[0])) {
 			Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
 				httpServletRequest, pathArray);
 
@@ -1779,7 +1780,10 @@ public class WebServerServlet extends HttpServlet {
 		return true;
 	}
 
-	private static final String _PATH_FILE_ENTRY_FRIENDLY_URL = "d";
+	private static final String _PATH_SEPARATOR_FILE_ENTRY =
+		FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.substring(
+			1,
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.length() - 1);
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(

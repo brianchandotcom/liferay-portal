@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -73,8 +74,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		_addFileEntry(urlTitle);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(
-				String.format("/d%s/%s", group.getFriendlyURL(), urlTitle));
+			_createMockHttpServletRequest(_getFileEntryFriendlyURL(urlTitle));
 
 		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}
@@ -86,8 +86,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		_addFileEntry(urlTitle);
 
 		MockHttpServletResponse mockHttpServletResponse = service(
-			Method.GET,
-			String.format("/d%s/%s", group.getFriendlyURL(), urlTitle),
+			Method.GET, _getFileEntryFriendlyURL(urlTitle),
 			Collections.emptyMap(), Collections.emptyMap(),
 			TestPropsValues.getUser(), null);
 
@@ -101,9 +100,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_createMockHttpServletRequest(
-				String.format(
-					"/d%s/%s", group.getFriendlyURL(),
-					RandomTestUtil.randomString()));
+				_getFileEntryFriendlyURL(RandomTestUtil.randomString()));
 
 		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}
@@ -113,10 +110,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse = service(
-			Method.GET,
-			String.format(
-				"/d%s/%s", group.getFriendlyURL(),
-				RandomTestUtil.randomString()),
+			Method.GET, _getFileEntryFriendlyURL(RandomTestUtil.randomString()),
 			Collections.emptyMap(), Collections.emptyMap(),
 			TestPropsValues.getUser(), null);
 
@@ -152,6 +146,16 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		mockHttpServletRequest.setServletPath(StringPool.BLANK);
 
 		return mockHttpServletRequest;
+	}
+
+	private String _getFileEntryFriendlyURL(String urlTitle) {
+		return String.format(
+			"%s%s/%s",
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.substring(
+				0,
+				FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.length() -
+					1),
+			group.getFriendlyURL(), urlTitle);
 	}
 
 	@Inject

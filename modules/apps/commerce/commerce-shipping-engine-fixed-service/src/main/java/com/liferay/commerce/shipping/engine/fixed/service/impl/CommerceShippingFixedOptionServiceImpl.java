@@ -42,17 +42,17 @@ public class CommerceShippingFixedOptionServiceImpl
 
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long groupId, long commerceShippingMethodId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			BigDecimal amount, double priority)
+			long groupId, long commerceShippingMethodId, BigDecimal amount,
+			Map<Locale, String> descriptionMap, Map<Locale, String> nameMap,
+			double priority)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingFixedOptionLocalService.
 			addCommerceShippingFixedOption(
-				getUserId(), groupId, commerceShippingMethodId, nameMap,
-				descriptionMap, amount, priority);
+				getUserId(), groupId, commerceShippingMethodId, amount,
+				descriptionMap, nameMap, priority);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class CommerceShippingFixedOptionServiceImpl
 		return commerceShippingFixedOptionService.
 			addCommerceShippingFixedOption(
 				serviceContext.getScopeGroupId(), commerceShippingMethodId,
-				nameMap, descriptionMap, amount, priority);
+				amount, descriptionMap, nameMap, priority);
 	}
 
 	@Override
@@ -183,8 +183,8 @@ public class CommerceShippingFixedOptionServiceImpl
 
 	@Override
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
-			long commerceShippingFixedOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, BigDecimal amount,
+			long commerceShippingFixedOptionId, BigDecimal amount,
+			Map<Locale, String> descriptionMap, Map<Locale, String> nameMap,
 			double priority)
 		throws PortalException {
 
@@ -196,7 +196,7 @@ public class CommerceShippingFixedOptionServiceImpl
 
 		return commerceShippingFixedOptionLocalService.
 			updateCommerceShippingFixedOption(
-				commerceShippingFixedOptionId, nameMap, descriptionMap, amount,
+				commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
 				priority);
 	}
 

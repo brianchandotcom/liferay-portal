@@ -485,7 +485,6 @@ definition {
 
 		// AC Refactor: DXP User never appears
 		// AC Refactor ticket: LRAC-9351
-		// AC Bug ticket: LRAC-9350
 
 		task ("Add a user custom field") {
 			ApplicationsMenu.gotoPortlet(

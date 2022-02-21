@@ -19,6 +19,7 @@ import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDat
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -27,6 +28,9 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -237,8 +241,6 @@ public class CommercePriceEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(commercePriceListId, cpInstanceUuid);
-
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
@@ -384,7 +386,6 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		CommercePriceEntry commercePriceEntry = null;
-		CPInstance cpInstance = null;
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -393,19 +394,6 @@ public class CommercePriceEntryLocalServiceImpl
 		if (!Validator.isBlank(externalReferenceCode)) {
 			commercePriceEntry = commercePriceEntryPersistence.fetchByC_ERC(
 				serviceContext.getCompanyId(), externalReferenceCode);
-		}
-		else if (cpInstanceUuid != null) {
-			commercePriceEntry = commercePriceEntryPersistence.fetchByC_C(
-				commercePriceListId, cpInstanceUuid);
-		}
-		else if (Validator.isNotNull(skuExternalReferenceCode)) {
-			cpInstance = _cpInstanceLocalService.fetchCPInstanceByReferenceCode(
-				serviceContext.getCompanyId(), skuExternalReferenceCode);
-
-			if (cpInstance != null) {
-				commercePriceEntry = commercePriceEntryPersistence.fetchByC_C(
-					commercePriceListId, cpInstance.getCPInstanceUuid());
-			}
 		}
 
 		if (commercePriceEntry != null) {
@@ -422,8 +410,6 @@ public class CommercePriceEntryLocalServiceImpl
 		// Add
 
 		if ((cProductId > 0) && (cpInstanceUuid != null)) {
-			validate(commercePriceListId, cpInstanceUuid);
-
 			return addCommercePriceEntry(
 				externalReferenceCode, cProductId, cpInstanceUuid,
 				commercePriceListId, price, promoPrice, discountDiscovery,
@@ -435,11 +421,9 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(skuExternalReferenceCode)) {
-			cpInstance =
+			CPInstance cpInstance =
 				_cpInstanceLocalService.getCPInstanceByExternalReferenceCode(
 					skuExternalReferenceCode, serviceContext.getCompanyId());
-
-			validate(commercePriceListId, cpInstance.getCPInstanceUuid());
 
 			CPDefinition cpDefinition =
 				_cpDefinitionLocalService.getCPDefinition(
@@ -686,8 +670,24 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceListId, String cpInstanceUuid) {
 
-		return commercePriceEntryPersistence.fetchByC_C(
-			commercePriceListId, cpInstanceUuid);
+		List<CommercePriceEntry> commercePriceEntries = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceEntryTable.INSTANCE),
+				commercePriceListId, cpInstanceUuid,
+				WorkflowConstants.STATUS_ANY
+			).orderBy(
+				CommercePriceEntryTable.INSTANCE.displayDate.descending(),
+				CommercePriceEntryTable.INSTANCE.createDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceEntries.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceEntries.get(0);
 	}
 
 	@Override
@@ -722,8 +722,23 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceListId, String cpInstanceUuid, int status) {
 
-		return commercePriceEntryPersistence.fetchByC_C_S(
-			commercePriceListId, cpInstanceUuid, status);
+		List<CommercePriceEntry> commercePriceEntries = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceEntryTable.INSTANCE),
+				commercePriceListId, cpInstanceUuid, status
+			).orderBy(
+				CommercePriceEntryTable.INSTANCE.displayDate.descending(),
+				CommercePriceEntryTable.INSTANCE.createDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceEntries.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceEntries.get(0);
 	}
 
 	@Override
@@ -1421,18 +1436,6 @@ public class CommercePriceEntryLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
-	protected void validate(long commercePriceListId, String cpInstanceUuid)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryPersistence.fetchByC_C(
-				commercePriceListId, cpInstanceUuid);
-
-		if (commercePriceEntry != null) {
-			throw new DuplicateCommercePriceEntryException();
-		}
-	}
-
 	protected void validateExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
@@ -1450,6 +1453,31 @@ public class CommercePriceEntryLocalServiceImpl
 				"There is another commerce price entry with external " +
 					"reference code " + externalReferenceCode);
 		}
+	}
+
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, long commercePriceListId, String cpInstanceUuid,
+		int status) {
+
+		return fromStep.from(
+			CommercePriceEntryTable.INSTANCE
+		).where(
+			CommercePriceEntryTable.INSTANCE.commercePriceListId.eq(
+				commercePriceListId
+			).and(
+				CommercePriceEntryTable.INSTANCE.CPInstanceUuid.eq(
+					cpInstanceUuid)
+			).and(
+				() -> {
+					if (status == WorkflowConstants.STATUS_ANY) {
+						return CommercePriceEntryTable.INSTANCE.status.neq(
+							WorkflowConstants.STATUS_IN_TRASH);
+					}
+
+					return CommercePriceEntryTable.INSTANCE.status.eq(status);
+				}
+			)
+		);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

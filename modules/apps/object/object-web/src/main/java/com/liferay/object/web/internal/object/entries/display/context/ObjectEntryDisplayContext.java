@@ -324,7 +324,27 @@ public class ObjectEntryDisplayContext {
 	}
 
 	public boolean isReadOnly() {
-		return _readOnly;
+		if (_readOnly) {
+			return true;
+		}
+
+		try {
+			ObjectEntry objectEntry = getObjectEntry();
+
+			if (objectEntry == null) {
+				return false;
+			}
+
+			return !_objectEntryService.hasModelResourcePermission(
+				objectEntry, ActionKeys.UPDATE);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	public String renderDDMForm(PageContext pageContext)

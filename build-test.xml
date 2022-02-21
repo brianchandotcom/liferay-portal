@@ -14311,6 +14311,13 @@ url=${short.hostname}:8080</echo>
 		<var name="translation.file.type" value="xlf" />
 
 		<if>
+			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
+			<then>
+				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${operation}" arg2="unzip" />
 			<then>
 				<unzip
@@ -14412,6 +14419,13 @@ url=${short.hostname}:8080</echo>
 
 	<target name="update-translation-file-id">
 		<var name="translation.file.type" value="xlf" />
+
+		<if>
+			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
+			<then>
+				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
+			</then>
+		</if>
 
 		<replace
 			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"

@@ -170,7 +170,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Titulodelcontenidoweb1",
 			translationFileName = "WebContentTitle1-en_US-es_ES",
-			translationZipFileName = "Web Content Article Translations-en_US",
+			translationZipFileName = "WCGeneralName",
 			webContentContent = "WebContent1",
 			webContentDescription = "Description1",
 			webContentTitle = "WebContentTitle1");
@@ -182,7 +182,7 @@ definition {
 			operation = "zip",
 			titleTranslation = "Titulodelcontenidoweb3",
 			translationFileName = "WebContentTitle3-en_US-es_ES",
-			translationZipFileName = "Web Content Article Translations-en_US",
+			translationZipFileName = "WCGeneralName",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
@@ -547,7 +547,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Titulodelcontenidoweb1",
 			translationFileName = "WebContentTitle1-en_US-es_ES",
-			translationZipFileName = "Web Content Article Translations-en_US",
+			translationZipFileName = "WCGeneralName",
 			webContentContent = "WebContent1",
 			webContentDescription = "Description1",
 			webContentTitle = "WebContentTitle1");
@@ -555,7 +555,7 @@ definition {
 		Translations.updateTranslateFileID(
 			translationEntryType = "JournalArticle",
 			translationFileName = "WebContentTitle1-en_US-ja_JP",
-			translationZipFileName = "Web Content Article Translations-en_US");
+			translationZipFileName = "WCGeneralName");
 
 		Translations.translateFile(
 			contentTranslation = "Webコンテンツ3",
@@ -564,7 +564,7 @@ definition {
 			operation = "false",
 			titleTranslation = "Webコンテンツのタイトル3",
 			translationFileName = "WebContentTitle3-en_US-ja_JP",
-			translationZipFileName = "Web Content Article Translations-en_US",
+			translationZipFileName = "WCGeneralName",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
@@ -576,7 +576,7 @@ definition {
 			operation = "zip",
 			titleTranslation = "Titulodelcontenidoweb3",
 			translationFileName = "WebContentTitle3-en_US-es_ES",
-			translationZipFileName = "Web Content Article Translations-en_US",
+			translationZipFileName = "WCGeneralName",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");

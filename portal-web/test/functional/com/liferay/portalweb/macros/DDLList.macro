@@ -8,7 +8,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type.clickAtType(
-			locator1 = "TextInput#NAME",
+			locator1 = "DDL#NAME_INPUT",
 			value1 = "${ddlListName}");
 
 		if (isSet(ddlListDescription)) {

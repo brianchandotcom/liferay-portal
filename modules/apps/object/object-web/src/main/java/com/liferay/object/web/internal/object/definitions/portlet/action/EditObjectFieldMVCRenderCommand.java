@@ -21,7 +21,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
-import com.liferay.object.web.internal.configuration.activator.FFObjectFieldBusinessTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -76,7 +75,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
 					_ffBusinessTypeAttachmentConfiguration,
-					_ffObjectFieldBusinessTypeConfigurationActivator,
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
 					_objectFieldBusinessTypeServicesTracker));
@@ -97,10 +95,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 	private FFBusinessTypeAttachmentConfiguration
 		_ffBusinessTypeAttachmentConfiguration;
-
-	@Reference
-	private FFObjectFieldBusinessTypeConfigurationActivator
-		_ffObjectFieldBusinessTypeConfigurationActivator;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

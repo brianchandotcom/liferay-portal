@@ -15,7 +15,6 @@
 import React from 'react';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	ffObjectFieldBusinessTypeConfigurationEnabled: boolean;
 	objectFieldBusinessTypes: IObjectFieldBusinessType[];
 	observer: any;
 	onClose: () => void;

@@ -353,12 +353,14 @@ public abstract class BaseCommerceOrderPriceCalculation
 			discountPercentage, discountPercentageValues);
 	}
 
-	private boolean _equalsZero(BigDecimal value) {
-		if ((value != null) && CommerceBigDecimalUtil.isZero(value)) {
-			return true;
+	private boolean _greaterThanZero(BigDecimal value) {
+		if ((value == null) ||
+			CommerceBigDecimalUtil.lte(value, BigDecimal.ZERO)) {
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private CommerceOrderItemPrice _getCommerceOrderItemPrice(

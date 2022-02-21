@@ -1,58 +1,49 @@
 definition {
 
-	macro _addCustomElementRemoteAppAllFields {
-		Variables.assertDefined(parameterList = "${customElementCssurl},${customElementHtmlName},${customElementName},${customElementProperties},${customElementURL}");
-
-		var cssurlModified = StringUtil.replace("${customElementCssurl}", ":", "%3A");
-		var customElementURLModified = StringUtil.replace("${customElementURL}", ":", "%3A");
-		var htmlNameModified = StringUtil.replace("${customElementHtmlName}", " ", "%20");
-		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
-		var propertiesModified = StringUtil.replace("${customElementProperties}", " ", "%20");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-custom-element-remote-app-entry \
-				  -u test@liferay.com:test \
-				  -d customElementCSSURLs=${cssurlModified} \
-				  -d customElementHTMLElementName=${htmlNameModified} \
-				  -d customElementURLs=${customElementURLModified} \
-				  -d description= \
-				  -d externalReferenceCode= \
-				  -d friendlyURLMapping= \
-				  -d instanceable=true \
-				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
-				  -d portletCategoryName=RemoteApps \
-				  -d properties=${propertiesModified} \
-				  -d sourceCodeURL=
-		''';
-		var remoteAppEntryId = JSONCurlUtil.post("${curl}", "$.['remoteAppEntryId']");
-
-		return "${remoteAppEntryId}";
-	}
-
 	macro _addCustomElementRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
+		var customElementCssurlModified = "${customElementCssurl}";
 		var customElementURLModified = StringUtil.replace("${customElementURL}", ":", "%3A");
-		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
 		var htmlNameModified = StringUtil.replace("${customElementHtmlName}", " ", "%20");
+		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
+		var customElementPropertiesModified = "${customElementProperties}";
+		var customElementUseESMValue = "${customElementUseESM}";
+
+		if (!(isSet(customElementCssurlModified))) {
+			var customElementCssurlModified = "";
+		}
+		else {
+			var customElementCssurlModified = StringUtil.replace("${customElementCssurl}", ":", "%3A");
+		}
+
+		if (!(isSet(customElementPropertiesModified))) {
+			var customElementPropertiesModified = "";
+		}
+		else {
+			var customElementPropertiesModified = StringUtil.replace("${customElementProperties}", " ", "%20");
+		}
+
+		if (!(isSet(customElementUseESMValue))) {
+			var customElementUseESMValue = "false";
+		}
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-custom-element-remote-app-entry \
 				  -u test@liferay.com:test \
-				  -d customElementCSSURLs= \
+				  -d customElementCSSURLs=${customElementCssurlModified} \
 				  -d customElementHTMLElementName=${htmlNameModified} \
 				  -d customElementURLs=${customElementURLModified} \
+				  -d customElementUseESM=${customElementUseESMValue} \
 				  -d description= \
 				  -d externalReferenceCode= \
 				  -d friendlyURLMapping= \
 				  -d instanceable=true \
 				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
 				  -d portletCategoryName=RemoteApps \
-				  -d properties= \
+				  -d properties=${customElementPropertiesModified} \
 				  -d sourceCodeURL=
 		''';
 		var remoteAppEntryId = JSONCurlUtil.post("${curl}", "$.['remoteAppEntryId']");

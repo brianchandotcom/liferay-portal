@@ -15,6 +15,11 @@
 	<td>//section[contains(@id,'content')]//div[contains(@class,'portlet-body')]//ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_SITE_NAV_BUT_HOME</td>
+	<td>//li[contains(@class,'lfr-nav-item') and not (contains(@class,'selected'))]//span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

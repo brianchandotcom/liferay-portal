@@ -12,6 +12,8 @@
  * details.
  */
 
+import {TreeView as ClayTreeView} from '@clayui/core';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
@@ -30,6 +32,20 @@ import {
 const SEARCH_QUERY_MIN_LENGHT = 2;
 const SEARCH_INPUT_DEBOUNCE = 300;
 
+const nodeByName = (items, name) => {
+	return items.reduce(function reducer(acc, item) {
+		if (item.name.match(new RegExp(`^${name}`, 'i'))) {
+			acc.push(item);
+		}
+
+		if (item.children) {
+			acc.concat(item.children.reduce(reducer, acc));
+		}
+
+		return acc;
+	}, []);
+};
+
 const TreeFilter = ({
 	childrenPropertyKey,
 	itemSelectorSaveEvent,
@@ -41,10 +57,14 @@ const TreeFilter = ({
 	const [filterQuery, setFilterQuery] = useState('');
 	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
+	const [items, setItems] = useState(nodes);
+	const initialItemsRef = useRef(items);
+
 	const selectedNodesRef = useRef(null);
 	const refItemsCount = selectedNodesRef.current?.length || 0;
 
 	const searchInputElementRef = useRef(null);
+	const [showBanner, setShowBanner] = useState(false);
 
 	const initialSelectedNodeIds = useMemo(() => {
 		const selectedNodes = [];
@@ -60,6 +80,27 @@ const TreeFilter = ({
 
 		return selectedNodes;
 	}, [nodes]);
+
+	const [selectedKeys, setSelectedKeys] = useState(
+		new Set(initialSelectedNodeIds)
+	);
+
+	const expandedNodesIds = useMemo(() => {
+		const expandedNodes = [];
+
+		visit(nodes, (node) => {
+			if (
+				node.expanded ||
+				node.children?.every((childNode) => childNode.expanded)
+			) {
+				expandedNodes.push(node.id);
+			}
+		});
+
+		return expandedNodes;
+	}, [nodes]);
+
+	const expandedKeys = new Set(expandedNodesIds);
 
 	const computedNodes = () => {
 		if (!filterQuery || filterQuery.length < SEARCH_QUERY_MIN_LENGHT) {
@@ -127,6 +168,7 @@ const TreeFilter = ({
 			});
 
 			setSelectedItemsCount(data.length);
+			setSelectedKeys(selectedNodes);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[refItemsCount]
@@ -137,14 +179,39 @@ const TreeFilter = ({
 	}, SEARCH_INPUT_DEBOUNCE);
 
 	const inputSearchHandler = (event) => {
-		event.persist();
+		if (!window.Liferay.__FF__.enableClayTreeView) {
+			event.persist();
 
-		debouncedSetFilterQuery(event);
+			debouncedSetFilterQuery(event);
+		}
+		else {
+			const value = event.target.value;
+			setFilterQuery(value);
+
+			if (!value) {
+				setItems(initialItemsRef.current);
+				setShowBanner(false);
+
+				return;
+			}
+			else {
+				const newItems = nodeByName(initialItemsRef.current, value);
+
+				if (newItems.length) {
+					setItems(newItems);
+				}
+				else {
+					setShowBanner(true);
+				}
+			}
+		}
 	};
 
 	const handleInputClear = () => {
 		setFilterQuery('');
+		setShowBanner(false);
 		searchInputElementRef.current.value = '';
+		setItems(initialItemsRef.current);
 	};
 
 	useEffect(() => {
@@ -211,16 +278,54 @@ const TreeFilter = ({
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						<Treeview
-							NodeComponent={Treeview.Card}
-							inheritSelection
-							initialSelectedNodeIds={initialSelectedNodeIds}
-							multiSelection
-							nodes={computedNodes()}
-							onSelectedNodesChange={handleSelectionChange}
-						/>
+						{!window.Liferay.__FF__.enableClayTreeView ? (
+							<Treeview
+								NodeComponent={Treeview.Card}
+								inheritSelection
+								initialSelectedNodeIds={initialSelectedNodeIds}
+								multiSelection
+								nodes={computedNodes()}
+								onSelectedNodesChange={handleSelectionChange}
+							/>
+						) : (
+							!showBanner && (
+								<ClayTreeView
+									expandedKeys={expandedKeys}
+									items={items}
+									onItemsChange={setItems}
+									onSelectionChange={handleSelectionChange}
+									selectedKeys={selectedKeys}
+									selectionMode="multiple-recursive"
+									showExpanderOnHover={false}
+								>
+									{(item) => (
+										<ClayTreeView.Item>
+											<ClayTreeView.ItemStack>
+												<ClayCheckbox />
 
-						{!computedNodes().length && (
+												<ClayIcon symbol={item.icon} />
+
+												{item.name}
+											</ClayTreeView.ItemStack>
+
+											<ClayTreeView.Group
+												items={item.children}
+											>
+												{(item) => (
+													<ClayTreeView.Item>
+														<ClayCheckbox />
+
+														{item.name}
+													</ClayTreeView.Item>
+												)}
+											</ClayTreeView.Group>
+										</ClayTreeView.Item>
+									)}
+								</ClayTreeView>
+							)
+						)}
+
+						{showBanner && (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">
 								<div className="taglib-empty-result-message-header"></div>
 

@@ -560,7 +560,7 @@ definition {
 		Translations.translateFile(
 			contentTranslation = "Webコンテンツ3",
 			descriptionTranslation = "説明3",
-			encoding = "utf8",
+			encoding = "false",
 			operation = "false",
 			titleTranslation = "Webコンテンツのタイトル3",
 			translationFileName = "WebContentTitle3-en_US-ja_JP",

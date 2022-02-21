@@ -16,11 +16,13 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectViewUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,7 +103,9 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
-				null));
+				transformToList(
+					objectView.getObjectViewSortColumns(),
+					this::_toObjectViewSortColumn)));
 	}
 
 	@Override
@@ -115,7 +119,9 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
-				null));
+				transformToList(
+					objectView.getObjectViewSortColumns(),
+					this::_toObjectViewSortColumn)));
 	}
 
 	private ObjectView _toObjectView(
@@ -159,10 +165,30 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 		return serviceBuilderObjectViewColumn;
 	}
 
+	private com.liferay.object.model.ObjectViewSortColumn
+		_toObjectViewSortColumn(ObjectViewSortColumn objectViewSortColumn) {
+
+		com.liferay.object.model.ObjectViewSortColumn
+			serviceBuilderObjectViewSortColumn =
+				_objectViewSortColumnPersistence.create(0L);
+
+		serviceBuilderObjectViewSortColumn.setObjectFieldName(
+			objectViewSortColumn.getObjectFieldName());
+		serviceBuilderObjectViewSortColumn.setPriority(
+			objectViewSortColumn.getPriority());
+		serviceBuilderObjectViewSortColumn.setSortOrder(
+			objectViewSortColumn.getSortOrder());
+
+		return serviceBuilderObjectViewSortColumn;
+	}
+
 	@Reference
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;
 
 	@Reference
 	private ObjectViewService _objectViewService;
+
+	@Reference
+	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
 
 }

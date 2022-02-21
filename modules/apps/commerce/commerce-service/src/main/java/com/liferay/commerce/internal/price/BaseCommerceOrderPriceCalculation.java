@@ -353,14 +353,12 @@ public abstract class BaseCommerceOrderPriceCalculation
 			discountPercentage, discountPercentageValues);
 	}
 
-	private boolean _greaterThanZero(BigDecimal value) {
-		if ((value == null) ||
-			CommerceBigDecimalUtil.lte(value, BigDecimal.ZERO)) {
-
-			return false;
+	private boolean _equalsZero(BigDecimal value) {
+		if ((value != null) && CommerceBigDecimalUtil.isZero(value)) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private CommerceOrderItemPrice _getCommerceOrderItemPrice(
@@ -534,13 +532,13 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private boolean _greaterThanZero(BigDecimal value) {
-		if ((value != null) ||
-			CommerceBigDecimalUtil.gt(value, BigDecimal.ZERO)) {
+		if ((value == null) ||
+			CommerceBigDecimalUtil.lte(value, BigDecimal.ZERO)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private void _updateDiscounts(

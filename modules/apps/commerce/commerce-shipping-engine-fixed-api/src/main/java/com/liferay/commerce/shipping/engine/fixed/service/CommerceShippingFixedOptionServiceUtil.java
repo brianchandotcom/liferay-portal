@@ -42,13 +42,13 @@ public class CommerceShippingFixedOptionServiceUtil {
 	 */
 	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long groupId, long commerceShippingMethodId,
-			Map<java.util.Locale, String> nameMap,
+			java.math.BigDecimal amount,
 			Map<java.util.Locale, String> descriptionMap,
-			java.math.BigDecimal amount, double priority)
+			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
-			groupId, commerceShippingMethodId, nameMap, descriptionMap, amount,
+			groupId, commerceShippingMethodId, amount, descriptionMap, nameMap,
 			priority);
 	}
 
@@ -142,14 +142,13 @@ public class CommerceShippingFixedOptionServiceUtil {
 	}
 
 	public static CommerceShippingFixedOption updateCommerceShippingFixedOption(
-			long commerceShippingFixedOptionId,
-			Map<java.util.Locale, String> nameMap,
+			long commerceShippingFixedOptionId, java.math.BigDecimal amount,
 			Map<java.util.Locale, String> descriptionMap,
-			java.math.BigDecimal amount, double priority)
+			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().updateCommerceShippingFixedOption(
-			commerceShippingFixedOptionId, nameMap, descriptionMap, amount,
+			commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
 			priority);
 	}
 

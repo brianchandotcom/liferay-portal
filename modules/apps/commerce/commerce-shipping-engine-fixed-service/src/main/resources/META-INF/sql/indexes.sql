@@ -6,3 +6,4 @@ create index IX_D89A7E24 on CShippingFixedOptionRel (commerceShippingFixedOption
 create index IX_4AA09D60 on CShippingFixedOptionRel (commerceShippingMethodId);
 
 create index IX_DCB21C1F on CommerceShippingFixedOption (commerceShippingMethodId);
+create unique index IX_8F8E889A on CommerceShippingFixedOption (key_[$COLUMN_LENGTH:75$]);

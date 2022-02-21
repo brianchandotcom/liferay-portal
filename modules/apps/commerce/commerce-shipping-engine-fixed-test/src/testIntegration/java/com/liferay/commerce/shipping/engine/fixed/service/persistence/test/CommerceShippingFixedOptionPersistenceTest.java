@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -151,13 +153,15 @@ public class CommerceShippingFixedOptionPersistenceTest {
 		newCommerceShippingFixedOption.setCommerceShippingMethodId(
 			RandomTestUtil.nextLong());
 
-		newCommerceShippingFixedOption.setName(RandomTestUtil.randomString());
+		newCommerceShippingFixedOption.setAmount(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceShippingFixedOption.setDescription(
 			RandomTestUtil.randomString());
 
-		newCommerceShippingFixedOption.setAmount(
-			new BigDecimal(RandomTestUtil.nextDouble()));
+		newCommerceShippingFixedOption.setKey(RandomTestUtil.randomString());
+
+		newCommerceShippingFixedOption.setName(RandomTestUtil.randomString());
 
 		newCommerceShippingFixedOption.setPriority(RandomTestUtil.nextDouble());
 
@@ -201,14 +205,17 @@ public class CommerceShippingFixedOptionPersistenceTest {
 			existingCommerceShippingFixedOption.getCommerceShippingMethodId(),
 			newCommerceShippingFixedOption.getCommerceShippingMethodId());
 		Assert.assertEquals(
-			existingCommerceShippingFixedOption.getName(),
-			newCommerceShippingFixedOption.getName());
+			existingCommerceShippingFixedOption.getAmount(),
+			newCommerceShippingFixedOption.getAmount());
 		Assert.assertEquals(
 			existingCommerceShippingFixedOption.getDescription(),
 			newCommerceShippingFixedOption.getDescription());
 		Assert.assertEquals(
-			existingCommerceShippingFixedOption.getAmount(),
-			newCommerceShippingFixedOption.getAmount());
+			existingCommerceShippingFixedOption.getKey(),
+			newCommerceShippingFixedOption.getKey());
+		Assert.assertEquals(
+			existingCommerceShippingFixedOption.getName(),
+			newCommerceShippingFixedOption.getName());
 		AssertUtils.assertEquals(
 			existingCommerceShippingFixedOption.getPriority(),
 			newCommerceShippingFixedOption.getPriority());
@@ -219,6 +226,15 @@ public class CommerceShippingFixedOptionPersistenceTest {
 		_persistence.countByCommerceShippingMethodId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceShippingMethodId(0L);
+	}
+
+	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_K(0L, "null");
+
+		_persistence.countByC_K(0L, (String)null);
 	}
 
 	@Test
@@ -255,8 +271,9 @@ public class CommerceShippingFixedOptionPersistenceTest {
 			"CommerceShippingFixedOption", "mvccVersion", true,
 			"commerceShippingFixedOptionId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceShippingMethodId", true, "name",
-			true, "description", true, "amount", true, "priority", true);
+			"modifiedDate", true, "commerceShippingMethodId", true, "amount",
+			true, "description", true, "key", true, "name", true, "priority",
+			true);
 	}
 
 	@Test
@@ -506,6 +523,76 @@ public class CommerceShippingFixedOptionPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceShippingFixedOption newCommerceShippingFixedOption =
+			addCommerceShippingFixedOption();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newCommerceShippingFixedOption.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceShippingFixedOption newCommerceShippingFixedOption =
+			addCommerceShippingFixedOption();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceShippingFixedOption.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceShippingFixedOptionId",
+				newCommerceShippingFixedOption.
+					getCommerceShippingFixedOptionId()));
+
+		List<CommerceShippingFixedOption> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceShippingFixedOption commerceShippingFixedOption) {
+
+		Assert.assertEquals(
+			Long.valueOf(commerceShippingFixedOption.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceShippingFixedOption, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			commerceShippingFixedOption.getKey(),
+			ReflectionTestUtil.invoke(
+				commerceShippingFixedOption, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "key_"));
+	}
+
 	protected CommerceShippingFixedOption addCommerceShippingFixedOption()
 		throws Exception {
 
@@ -531,13 +618,15 @@ public class CommerceShippingFixedOptionPersistenceTest {
 		commerceShippingFixedOption.setCommerceShippingMethodId(
 			RandomTestUtil.nextLong());
 
-		commerceShippingFixedOption.setName(RandomTestUtil.randomString());
+		commerceShippingFixedOption.setAmount(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceShippingFixedOption.setDescription(
 			RandomTestUtil.randomString());
 
-		commerceShippingFixedOption.setAmount(
-			new BigDecimal(RandomTestUtil.nextDouble()));
+		commerceShippingFixedOption.setKey(RandomTestUtil.randomString());
+
+		commerceShippingFixedOption.setName(RandomTestUtil.randomString());
 
 		commerceShippingFixedOption.setPriority(RandomTestUtil.nextDouble());
 

@@ -225,103 +225,18 @@ public interface CommerceShippingFixedOptionModel
 	public void setCommerceShippingMethodId(long commerceShippingMethodId);
 
 	/**
-	 * Returns the name of this commerce shipping fixed option.
+	 * Returns the amount of this commerce shipping fixed option.
 	 *
-	 * @return the name of this commerce shipping fixed option
+	 * @return the amount of this commerce shipping fixed option
 	 */
-	public String getName();
+	public BigDecimal getAmount();
 
 	/**
-	 * Returns the localized name of this commerce shipping fixed option in the language. Uses the default language if no localization exists for the requested language.
+	 * Sets the amount of this commerce shipping fixed option.
 	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this commerce shipping fixed option
+	 * @param amount the amount of this commerce shipping fixed option
 	 */
-	@AutoEscape
-	public String getName(Locale locale);
-
-	/**
-	 * Returns the localized name of this commerce shipping fixed option in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this commerce shipping fixed option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getName(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized name of this commerce shipping fixed option in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this commerce shipping fixed option
-	 */
-	@AutoEscape
-	public String getName(String languageId);
-
-	/**
-	 * Returns the localized name of this commerce shipping fixed option in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this commerce shipping fixed option
-	 */
-	@AutoEscape
-	public String getName(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getNameCurrentLanguageId();
-
-	@AutoEscape
-	public String getNameCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized names of this commerce shipping fixed option.
-	 *
-	 * @return the locales and localized names of this commerce shipping fixed option
-	 */
-	public Map<Locale, String> getNameMap();
-
-	/**
-	 * Sets the name of this commerce shipping fixed option.
-	 *
-	 * @param name the name of this commerce shipping fixed option
-	 */
-	public void setName(String name);
-
-	/**
-	 * Sets the localized name of this commerce shipping fixed option in the language.
-	 *
-	 * @param name the localized name of this commerce shipping fixed option
-	 * @param locale the locale of the language
-	 */
-	public void setName(String name, Locale locale);
-
-	/**
-	 * Sets the localized name of this commerce shipping fixed option in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this commerce shipping fixed option
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setName(String name, Locale locale, Locale defaultLocale);
-
-	public void setNameCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized names of this commerce shipping fixed option from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this commerce shipping fixed option
-	 */
-	public void setNameMap(Map<Locale, String> nameMap);
-
-	/**
-	 * Sets the localized names of this commerce shipping fixed option from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this commerce shipping fixed option
-	 * @param defaultLocale the default locale
-	 */
-	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
+	public void setAmount(BigDecimal amount);
 
 	/**
 	 * Returns the description of this commerce shipping fixed option.
@@ -425,18 +340,118 @@ public interface CommerceShippingFixedOptionModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the amount of this commerce shipping fixed option.
+	 * Returns the key of this commerce shipping fixed option.
 	 *
-	 * @return the amount of this commerce shipping fixed option
+	 * @return the key of this commerce shipping fixed option
 	 */
-	public BigDecimal getAmount();
+	@AutoEscape
+	public String getKey();
 
 	/**
-	 * Sets the amount of this commerce shipping fixed option.
+	 * Sets the key of this commerce shipping fixed option.
 	 *
-	 * @param amount the amount of this commerce shipping fixed option
+	 * @param key the key of this commerce shipping fixed option
 	 */
-	public void setAmount(BigDecimal amount);
+	public void setKey(String key);
+
+	/**
+	 * Returns the name of this commerce shipping fixed option.
+	 *
+	 * @return the name of this commerce shipping fixed option
+	 */
+	public String getName();
+
+	/**
+	 * Returns the localized name of this commerce shipping fixed option in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized name of this commerce shipping fixed option
+	 */
+	@AutoEscape
+	public String getName(Locale locale);
+
+	/**
+	 * Returns the localized name of this commerce shipping fixed option in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce shipping fixed option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getName(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized name of this commerce shipping fixed option in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized name of this commerce shipping fixed option
+	 */
+	@AutoEscape
+	public String getName(String languageId);
+
+	/**
+	 * Returns the localized name of this commerce shipping fixed option in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce shipping fixed option
+	 */
+	@AutoEscape
+	public String getName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getNameCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized names of this commerce shipping fixed option.
+	 *
+	 * @return the locales and localized names of this commerce shipping fixed option
+	 */
+	public Map<Locale, String> getNameMap();
+
+	/**
+	 * Sets the name of this commerce shipping fixed option.
+	 *
+	 * @param name the name of this commerce shipping fixed option
+	 */
+	public void setName(String name);
+
+	/**
+	 * Sets the localized name of this commerce shipping fixed option in the language.
+	 *
+	 * @param name the localized name of this commerce shipping fixed option
+	 * @param locale the locale of the language
+	 */
+	public void setName(String name, Locale locale);
+
+	/**
+	 * Sets the localized name of this commerce shipping fixed option in the language, and sets the default locale.
+	 *
+	 * @param name the localized name of this commerce shipping fixed option
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setName(String name, Locale locale, Locale defaultLocale);
+
+	public void setNameCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized names of this commerce shipping fixed option from the map of locales and localized names.
+	 *
+	 * @param nameMap the locales and localized names of this commerce shipping fixed option
+	 */
+	public void setNameMap(Map<Locale, String> nameMap);
+
+	/**
+	 * Sets the localized names of this commerce shipping fixed option from the map of locales and localized names, and sets the default locale.
+	 *
+	 * @param nameMap the locales and localized names of this commerce shipping fixed option
+	 * @param defaultLocale the default locale
+	 */
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
 	 * Returns the priority of this commerce shipping fixed option.

@@ -43,8 +43,9 @@ create table CommerceShippingFixedOption (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceShippingMethodId LONG,
-	name STRING null,
-	description STRING null,
 	amount DECIMAL(30, 16) null,
+	description STRING null,
+	key_ VARCHAR(75) null,
+	name STRING null,
 	priority DOUBLE
 );

@@ -43,15 +43,16 @@ public class CommerceShippingFixedOptionServiceWrapper
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption addCommerceShippingFixedOption(
 					long groupId, long commerceShippingMethodId,
-					java.util.Map<java.util.Locale, String> nameMap,
+					java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
+					java.util.Map<java.util.Locale, String> nameMap,
+					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionService.
 			addCommerceShippingFixedOption(
-				groupId, commerceShippingMethodId, nameMap, descriptionMap,
-				amount, priority);
+				groupId, commerceShippingMethodId, amount, descriptionMap,
+				nameMap, priority);
 	}
 
 	/**
@@ -172,14 +173,15 @@ public class CommerceShippingFixedOptionServiceWrapper
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption updateCommerceShippingFixedOption(
 					long commerceShippingFixedOptionId,
-					java.util.Map<java.util.Locale, String> nameMap,
+					java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
+					java.util.Map<java.util.Locale, String> nameMap,
+					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionService.
 			updateCommerceShippingFixedOption(
-				commerceShippingFixedOptionId, nameMap, descriptionMap, amount,
+				commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
 				priority);
 	}
 

@@ -88,8 +88,8 @@ public interface CommerceShippingFixedOptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long userId, long groupId, long commerceShippingMethodId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			BigDecimal amount, double priority)
+			BigDecimal amount, Map<Locale, String> descriptionMap,
+			Map<Locale, String> nameMap, double priority)
 		throws PortalException;
 
 	/**
@@ -236,6 +236,10 @@ public interface CommerceShippingFixedOptionLocalService
 		long commerceShippingFixedOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+		long companyId, String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -337,8 +341,8 @@ public interface CommerceShippingFixedOptionLocalService
 		CommerceShippingFixedOption commerceShippingFixedOption);
 
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
-			long commerceShippingFixedOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, BigDecimal amount,
+			long commerceShippingFixedOptionId, BigDecimal amount,
+			Map<Locale, String> descriptionMap, Map<Locale, String> nameMap,
 			double priority)
 		throws PortalException;
 

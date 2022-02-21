@@ -65,14 +65,14 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 
 	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long userId, long groupId, long commerceShippingMethodId,
-			Map<java.util.Locale, String> nameMap,
+			java.math.BigDecimal amount,
 			Map<java.util.Locale, String> descriptionMap,
-			java.math.BigDecimal amount, double priority)
+			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
-			userId, groupId, commerceShippingMethodId, nameMap, descriptionMap,
-			amount, priority);
+			userId, groupId, commerceShippingMethodId, amount, descriptionMap,
+			nameMap, priority);
 	}
 
 	/**
@@ -260,6 +260,12 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 			commerceShippingFixedOptionId);
 	}
 
+	public static CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+		long companyId, String key) {
+
+		return getService().fetchCommerceShippingFixedOption(companyId, key);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -401,14 +407,13 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 	}
 
 	public static CommerceShippingFixedOption updateCommerceShippingFixedOption(
-			long commerceShippingFixedOptionId,
-			Map<java.util.Locale, String> nameMap,
+			long commerceShippingFixedOptionId, java.math.BigDecimal amount,
 			Map<java.util.Locale, String> descriptionMap,
-			java.math.BigDecimal amount, double priority)
+			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().updateCommerceShippingFixedOption(
-			commerceShippingFixedOptionId, nameMap, descriptionMap, amount,
+			commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
 			priority);
 	}
 

@@ -54,10 +54,10 @@ public class CommerceShippingFixedOptionServiceHttp {
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption addCommerceShippingFixedOption(
 					HttpPrincipal httpPrincipal, long groupId,
-					long commerceShippingMethodId,
-					java.util.Map<java.util.Locale, String> nameMap,
+					long commerceShippingMethodId, java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
+					java.util.Map<java.util.Locale, String> nameMap,
+					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -67,8 +67,8 @@ public class CommerceShippingFixedOptionServiceHttp {
 				_addCommerceShippingFixedOptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, commerceShippingMethodId, nameMap,
-				descriptionMap, amount, priority);
+				methodKey, groupId, commerceShippingMethodId, amount,
+				descriptionMap, nameMap, priority);
 
 			Object returnObj = null;
 
@@ -464,9 +464,10 @@ public class CommerceShippingFixedOptionServiceHttp {
 			CommerceShippingFixedOption updateCommerceShippingFixedOption(
 					HttpPrincipal httpPrincipal,
 					long commerceShippingFixedOptionId,
-					java.util.Map<java.util.Locale, String> nameMap,
+					java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
+					java.util.Map<java.util.Locale, String> nameMap,
+					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -476,8 +477,8 @@ public class CommerceShippingFixedOptionServiceHttp {
 				_updateCommerceShippingFixedOptionParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceShippingFixedOptionId, nameMap,
-				descriptionMap, amount, priority);
+				methodKey, commerceShippingFixedOptionId, amount,
+				descriptionMap, nameMap, priority);
 
 			Object returnObj = null;
 
@@ -513,8 +514,8 @@ public class CommerceShippingFixedOptionServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceShippingFixedOptionParameterTypes0 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.math.BigDecimal.class, double.class
+			long.class, long.class, java.math.BigDecimal.class,
+			java.util.Map.class, java.util.Map.class, double.class
 		};
 	private static final Class<?>[]
 		_addCommerceShippingFixedOptionParameterTypes1 = new Class[] {
@@ -554,8 +555,8 @@ public class CommerceShippingFixedOptionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommerceShippingFixedOptionParameterTypes9 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.math.BigDecimal.class, double.class
+			long.class, java.math.BigDecimal.class, java.util.Map.class,
+			java.util.Map.class, double.class
 		};
 
 }

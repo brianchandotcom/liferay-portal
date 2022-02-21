@@ -326,6 +326,75 @@ public class CommerceShippingFixedOptionUtil {
 	}
 
 	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or throws a <code>NoSuchShippingFixedOptionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching commerce shipping fixed option
+	 * @throws NoSuchShippingFixedOptionException if a matching commerce shipping fixed option could not be found
+	 */
+	public static CommerceShippingFixedOption findByC_K(
+			long companyId, String key)
+		throws com.liferay.commerce.shipping.engine.fixed.exception.
+			NoSuchShippingFixedOptionException {
+
+		return getPersistence().findByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
+	 */
+	public static CommerceShippingFixedOption fetchByC_K(
+		long companyId, String key) {
+
+		return getPersistence().fetchByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
+	 */
+	public static CommerceShippingFixedOption fetchByC_K(
+		long companyId, String key, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_K(companyId, key, useFinderCache);
+	}
+
+	/**
+	 * Removes the commerce shipping fixed option where companyId = &#63; and key = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the commerce shipping fixed option that was removed
+	 */
+	public static CommerceShippingFixedOption removeByC_K(
+			long companyId, String key)
+		throws com.liferay.commerce.shipping.engine.fixed.exception.
+			NoSuchShippingFixedOptionException {
+
+		return getPersistence().removeByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the number of commerce shipping fixed options where companyId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the number of matching commerce shipping fixed options
+	 */
+	public static int countByC_K(long companyId, String key) {
+		return getPersistence().countByC_K(companyId, key);
+	}
+
+	/**
 	 * Caches the commerce shipping fixed option in the entity cache if it is enabled.
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option

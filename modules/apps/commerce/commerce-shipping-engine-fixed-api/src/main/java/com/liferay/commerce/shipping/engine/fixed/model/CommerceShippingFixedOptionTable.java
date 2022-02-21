@@ -63,14 +63,16 @@ public class CommerceShippingFixedOptionTable
 		commerceShippingMethodId = createColumn(
 			"commerceShippingMethodId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionTable, String> name =
-		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionTable, String> description =
-		createColumn(
-			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionTable, BigDecimal> amount =
 		createColumn(
 			"amount", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionTable, String> description =
+		createColumn(
+			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionTable, String> key =
+		createColumn("key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionTable, String> name =
+		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionTable, Double> priority =
 		createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);

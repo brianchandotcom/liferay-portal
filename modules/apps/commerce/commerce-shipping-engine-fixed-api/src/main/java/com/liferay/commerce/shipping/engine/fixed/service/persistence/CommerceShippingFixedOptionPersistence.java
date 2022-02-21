@@ -191,6 +191,56 @@ public interface CommerceShippingFixedOptionPersistence
 	public int countByCommerceShippingMethodId(long commerceShippingMethodId);
 
 	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or throws a <code>NoSuchShippingFixedOptionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching commerce shipping fixed option
+	 * @throws NoSuchShippingFixedOptionException if a matching commerce shipping fixed option could not be found
+	 */
+	public CommerceShippingFixedOption findByC_K(long companyId, String key)
+		throws NoSuchShippingFixedOptionException;
+
+	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
+	 */
+	public CommerceShippingFixedOption fetchByC_K(long companyId, String key);
+
+	/**
+	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
+	 */
+	public CommerceShippingFixedOption fetchByC_K(
+		long companyId, String key, boolean useFinderCache);
+
+	/**
+	 * Removes the commerce shipping fixed option where companyId = &#63; and key = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the commerce shipping fixed option that was removed
+	 */
+	public CommerceShippingFixedOption removeByC_K(long companyId, String key)
+		throws NoSuchShippingFixedOptionException;
+
+	/**
+	 * Returns the number of commerce shipping fixed options where companyId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the number of matching commerce shipping fixed options
+	 */
+	public int countByC_K(long companyId, String key);
+
+	/**
 	 * Caches the commerce shipping fixed option in the entity cache if it is enabled.
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option

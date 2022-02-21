@@ -11,12 +11,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceShippingMethodId" type="long" />
+		<field name="amount" type="BigDecimal" />
+		<field localized="true" name="description" type="String" />
+		<field name="key" type="String" />
 		<field localized="true" name="name" type="String">
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
-		<field localized="true" name="description" type="String" />
-		<field name="amount" type="BigDecimal" />
 		<field name="priority" type="double" />
 	</model>
 	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifier">

@@ -26,10 +26,12 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -226,6 +228,15 @@ public class ObjectEntryDTOConverter
 				if (serializable != null) {
 					objectEntryId = (long)serializable;
 
+					if ((objectEntryId != 0) &&
+						!_objectEntryService.hasModelResourcePermission(
+							_objectEntryLocalService.getObjectEntry(
+								objectEntryId),
+							ActionKeys.VIEW)) {
+
+						continue;
+					}
+
 					Optional<UriInfo> uriInfoOptional =
 						dtoConverterContext.getUriInfoOptional();
 
@@ -282,6 +293,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

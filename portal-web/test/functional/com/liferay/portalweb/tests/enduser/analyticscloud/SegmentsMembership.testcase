@@ -177,6 +177,98 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
+	@priority = "4"
+	test CanUpdateNumberOfMembersForDynamicSegment {
+		var nameList1 = "user2 user2,user3 user3";
+		var nameList2 = "user1 user1,user2 user2";
+		var emailList = "user2@liferay.com,user3@liferay.com";
+
+		task ("View the blogs page") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				emailList = "user1@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Interact with other users in DXP") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Create a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+
+			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+			ACSegments.editWebBehaviorCriterion(
+				activitiesOption = "has not",
+				indexField = "1",
+				occurenceNumber = "1",
+				searchTerm = "Blogs AC Title",
+				timeOption = "since",
+				timePeriod = "Last 30 days");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("View members of segment") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "${nameList1}");
+		}
+
+		task ("Go to DXP and login with user2") {
+			ACUtils.launchDXP(userEmailAddress = "user2@liferay.com");
+		}
+
+		task ("View the blogs page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC and navigate to segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("View members of segment") {
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "user3 user3");
+
+			ACUtils.viewNameListIsNotPresent(nameList = "${nameList2}");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8524 | Test Summary: No change on segment profile selected point"
 	@ignore = "true"
 	@priority = "3"
@@ -744,98 +836,6 @@ definition {
 			ACSegments.viewSegmentMembershipChartRowNumbers(
 				row = "Known Members",
 				value = "3");
-		}
-	}
-
-	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
-	@priority = "4"
-	test CanUpdateNumberOfMembersForDynamicSegment {
-		var nameList1 = "user2 user2,user3 user3";
-		var nameList2 = "user1 user1,user2 user2";
-		var emailList = "user2@liferay.com,user3@liferay.com";
-
-		task ("View the blogs page") {
-			ACUtils.navigateToSitePageWithUser(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				emailList = "user1@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Interact with other users in DXP") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Create a new dynamic segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createDynamicSegment();
-
-			ACUtils.fileName(fileName = "Dynamic Segment Test");
-
-			ACSegments.addSegmentField(segmentField = "Viewed Blog");
-
-			ACSegments.editWebBehaviorCriterion(
-				activitiesOption = "has not",
-				timeOption = "since",
-				timePeriod = "Last 30 days",
-				indexField = "1",
-				occurenceNumber = "1",
-				searchTerm = "Blogs AC Title");
-
-			ACSegments.saveSegment();
-		}
-
-		task ("View members of segment") {
-			ACNavigation.switchTab(tabName = "Membership");
-
-			ACUtils.viewNameList(nameList = "${nameList1}");
-		}
-
-		task ("Go to DXP and login with user2") {
-			ACUtils.launchDXP(userEmailAddress = "user2@liferay.com");
-		}
-
-		task ("View the blogs page") {
-			ACUtils.navigateToSitePage(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Go to AC and navigate to segment") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSegments();
-		}
-
-		task ("View members of segment") {
-			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-			ACNavigation.switchTab(tabName = "Membership");
-
-			ACUtils.viewNameList(nameList = "user3 user3");
-
-			ACUtils.viewNameListIsNotPresent(nameList = "${nameList2}");
 		}
 	}
 

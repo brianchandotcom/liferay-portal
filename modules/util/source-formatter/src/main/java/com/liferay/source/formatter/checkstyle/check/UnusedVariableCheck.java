@@ -14,10 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import com.liferay.portal.tools.java.parser.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -74,7 +71,7 @@ public class UnusedVariableCheck extends BaseCheck {
 
 		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
 			if (_isInsideConstructor(variableCallerDetailAST) ||
-				_isInsideOSGiAnnotationsMethod(variableCallerDetailAST)) {
+				!_isInsidePrivateMethod(variableCallerDetailAST)) {
 
 				return;
 			}
@@ -116,35 +113,18 @@ public class UnusedVariableCheck extends BaseCheck {
 		return false;
 	}
 
-	private boolean _isInsideOSGiAnnotationsMethod(DetailAST detailAST) {
+	private boolean _isInsidePrivateMethod(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
-
-		List<String> importNames = getImportNames(parentDetailAST);
 
 		while (parentDetailAST != null) {
 			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
 				DetailAST modifiersDetailAST = parentDetailAST.findFirstToken(
 					TokenTypes.MODIFIERS);
 
-				List<DetailAST> annotationDetailASTList =
-					DetailASTUtil.getAllChildTokens(
-						modifiersDetailAST, false, TokenTypes.ANNOTATION);
+				if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PRIVATE)) {
 
-				for (DetailAST annotationDetailAST : annotationDetailASTList) {
-					DetailAST atDetailAST = annotationDetailAST.findFirstToken(
-						TokenTypes.AT);
-
-					FullIdent fullIdent = FullIdent.createFullIdent(
-						atDetailAST.getNextSibling());
-
-					String annotationName = fullIdent.getText();
-
-					if (importNames.contains(
-							"org.osgi.service.component.annotations." +
-								annotationName)) {
-
-						return true;
-					}
+					return true;
 				}
 			}
 

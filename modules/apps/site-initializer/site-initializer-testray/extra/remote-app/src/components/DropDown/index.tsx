@@ -17,17 +17,10 @@ import ClayIcon from '@clayui/icon';
 import {ReactElement, useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import {Dropdown} from '../../context/HeaderContext';
+
 type DropDownProps = {
-	items: {
-		sections: {
-			items: {
-				icon: string;
-				label: string;
-				path: string;
-			}[];
-			title: string;
-		}[];
-	};
+	items: Dropdown;
 	position?: any;
 	trigger: ReactElement;
 };
@@ -47,34 +40,38 @@ const DropDown: React.FC<DropDownProps> = ({
 			trigger={trigger}
 		>
 			<ClayDropDown.ItemList>
-				{items.sections.map((section, index) => (
+				{items.map((section, index) => (
 					<div key={index}>
 						<ClayDropDown.Group>
-							<ClayDropDown.Caption>
-								{section.title}
-							</ClayDropDown.Caption>
+							{section.title && (
+								<ClayDropDown.Caption>
+									{section.title}
+								</ClayDropDown.Caption>
+							)}
 
 							{section.items.map((item, itemIndex) => (
 								<Link key={itemIndex} to={`${item.path}`}>
 									<ClayDropDown.Item>
-										<div className="align-items-center d-flex testray-sidebar-item">
-											<ClayIcon
-												fontSize={16}
-												symbol={item.icon}
-											/>
+										<div className="align-items-center d-flex testray-sidebar-item text-dark">
+											{item.icon && (
+												<ClayIcon
+													fontSize={16}
+													symbol={item.icon}
+												/>
+											)}
 
 											<span className="ml-1 testray-sidebar-text">
 												{item.label}
 											</span>
 										</div>
 									</ClayDropDown.Item>
+
+									{item.divider && <ClayDropDown.Divider />}
 								</Link>
 							))}
 						</ClayDropDown.Group>
 
-						{items.sections.length - 1 !== index && (
-							<ClayDropDown.Divider />
-						)}
+						{items.length - 1 !== index && <ClayDropDown.Divider />}
 					</div>
 				))}
 			</ClayDropDown.ItemList>

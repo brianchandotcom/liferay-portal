@@ -94,7 +94,7 @@ const Sidebar = () => {
 							</span>
 						</div>
 					}
-				></DropDown>
+				/>
 
 				<DropDown
 					items={USER_DROPDOWN}
@@ -108,7 +108,7 @@ const Sidebar = () => {
 							/>
 						</div>
 					}
-				></DropDown>
+				/>
 			</div>
 		</div>
 	);

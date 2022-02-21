@@ -12,12 +12,23 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import {createContext, useEffect, useReducer} from 'react';
+import {createContext, useReducer} from 'react';
 
-import {getTestrayProjects} from '../graphql/queries';
-import {Liferay} from '../services/liferay/liferay';
 import {ActionMap} from '../types';
+
+type DropdownItem = {
+	divider?: boolean;
+	icon?: string;
+	label: string;
+	path: string;
+};
+
+type DropdownSection = {
+	items: DropdownItem[];
+	title?: string;
+};
+
+export type Dropdown = DropdownSection[];
 
 export type HeaderTabs = {
 	active: boolean;
@@ -37,37 +48,13 @@ type InitialState = {
 	tabs: HeaderTabs[];
 };
 
-export type Dropdown = {
-	sections: [
-		{
-			items: [
-				{
-					icon: string;
-					label: string;
-					path: string;
-				}
-			];
-			title: string;
-		}
-	];
-};
-
 export const initialState: InitialState = {
-	dropdown: {
-		sections: [
-			{
-				items: [
-					{
-						icon: 'user',
-						label: 'Manage Accounts',
-						path: '/manage/user',
-					},
-				],
-				title: '',
-			},
-		],
-	},
-
+	dropdown: [
+		{
+			items: [],
+			title: '',
+		},
+	],
 	heading: [
 		{
 			category: 'PROJECT',
@@ -135,40 +122,6 @@ const reducer = (state: InitialState, action: AppActions): InitialState => {
 
 const HeaderContextProvider: React.FC = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-
-	const variables = {scopeKey: Liferay.ThemeDisplay.getSiteGroupId()};
-
-	const {data} = useQuery(getTestrayProjects, {
-		variables,
-	});
-
-	const testrayProjects = data?.c?.testrayProjects?.items;
-
-	useEffect(() => {
-		if (testrayProjects) {
-			const createObject = (elements: any): Dropdown => {
-				return {
-					sections: [
-						{
-							items: elements.map((element: any) => {
-								return {
-									icon: '',
-									label: element.name,
-									path: `${element.name}`,
-								};
-							}),
-							title: '',
-						},
-					],
-				};
-			};
-
-			dispatch({
-				payload: createObject(testrayProjects),
-				type: HeaderTypes.SET_DROPDOWN,
-			});
-		}
-	}, [testrayProjects]);
 
 	return (
 		<HeaderContext.Provider value={[state, dispatch]}>

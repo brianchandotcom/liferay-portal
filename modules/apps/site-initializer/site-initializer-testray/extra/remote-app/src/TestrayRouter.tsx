@@ -15,6 +15,7 @@
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
+import Manager from './pages/Manage';
 import OutletBridge from './pages/OutletBridge';
 import Cases from './pages/Project/Cases';
 import Case from './pages/Project/Cases/Case';
@@ -43,11 +44,9 @@ import Suites from './pages/Project/Suites';
 import Suite from './pages/Project/Suites/Suite';
 import Testflow from './pages/Testflow';
 import Subtasks from './pages/Testflow/Subtask';
-import TestsDetails from './pages/Testflow/TestDetails';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
 import TestflowOutlet from './pages/Testflow/TestflowOutlet';
 import TestFlowTasks from './pages/Testflow/TestflowTasks';
-import UserManagement from './pages/UserManagement';
 
 const TestrayRoute = () => (
 	<HashRouter>
@@ -140,7 +139,7 @@ const TestrayRoute = () => (
 				</Route>
 
 				<Route element={<OutletBridge />} path="manage">
-					<Route element={<UserManagement />} path="user" />
+					<Route element={<Manager />} path="user" />
 				</Route>
 
 				<Route element={<TestflowOutlet />} path="testflow">
@@ -151,8 +150,6 @@ const TestrayRoute = () => (
 					<Route element={<Subtasks />} path="subtasks" />
 
 					<Route element={<TestFlowTasks />} path=":testflowId" />
-
-					<Route element={<TestsDetails />} path="details" />
 				</Route>
 
 				<Route element={<div>Page not found</div>} path="*" />

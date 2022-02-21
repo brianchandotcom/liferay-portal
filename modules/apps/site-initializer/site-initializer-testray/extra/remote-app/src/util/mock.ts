@@ -57,17 +57,6 @@ type Routine = {
 	task?: any;
 };
 
-export type Status = {
-	blocked: string;
-	failed: string;
-	in_analisys: string;
-	incomplete: string;
-	other: string;
-	passed: string;
-	self: string;
-	test_fix: string;
-};
-
 export const Status = {
 	blocked: 'label-inverse-secondary',
 	failed: 'label-inverse-danger',
@@ -159,7 +148,7 @@ export const routines = generateItems<Routine>(
 		routineName: 'CE Package Tester',
 		score: progress[0],
 		startDate: 'a day ago',
-		status: Status.blocked,
+		status: 'Blocked',
 		task: 'CE Package Tester - 7.4.3.10-ga10 - 3099 - 2022-01-31[08:44:04]',
 	},
 	20

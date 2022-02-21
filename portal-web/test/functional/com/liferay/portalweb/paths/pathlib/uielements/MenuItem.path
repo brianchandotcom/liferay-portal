@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ANY_ICON</td>
-	<td>//div[contains(@class,'menu')][contains(@class,'open')]//li//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td>//div[contains(@class,'menu')][contains(@class,'open') or contains(@class,'show')]//li//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 <tr>

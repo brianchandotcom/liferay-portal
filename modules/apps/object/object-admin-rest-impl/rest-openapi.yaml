@@ -335,6 +335,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectViewColumn"
                     type: array
+                objectViewSortColumns:
+                    items:
+                        $ref: "#/components/schemas/ObjectViewSortColumn"
+                    type: array
         ObjectViewColumn:
             properties:
                 id:
@@ -346,6 +350,19 @@ components:
                 priority:
                     format: int32
                     type: integer
+        ObjectViewSortColumn:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                objectFieldName:
+                    type: string
+                priority:
+                    format: int32
+                    type: integer
+                sortOrder:
+                    type: string
         Status:
             properties:
                 code:

@@ -26,7 +26,7 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 %>
 
 <c:choose>
-	<c:when test="<%= article.isExpired() %>">
+	<c:when test="<%= article!= null && article.isExpired() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
 		</div>

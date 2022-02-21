@@ -55,7 +55,9 @@ public class ObjectViewServiceHttp {
 			boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
-				objectViewColumns)
+				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -65,7 +67,7 @@ public class ObjectViewServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, defaultObjectView, nameMap,
-				objectViewColumns);
+				objectViewColumns, objectViewSortColumns);
 
 			Object returnObj = null;
 
@@ -180,7 +182,9 @@ public class ObjectViewServiceHttp {
 			boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
-				objectViewColumns)
+				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -190,7 +194,7 @@ public class ObjectViewServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectViewId, defaultObjectView, nameMap,
-				objectViewColumns);
+				objectViewColumns, objectViewSortColumns);
 
 			Object returnObj = null;
 
@@ -225,7 +229,8 @@ public class ObjectViewServiceHttp {
 
 	private static final Class<?>[] _addObjectViewParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.util.List.class
+			long.class, boolean.class, java.util.Map.class,
+			java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectViewParameterTypes1 =
 		new Class[] {long.class};
@@ -233,7 +238,8 @@ public class ObjectViewServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateObjectViewParameterTypes3 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.util.List.class
+			long.class, boolean.class, java.util.Map.class,
+			java.util.List.class, java.util.List.class
 		};
 
 }

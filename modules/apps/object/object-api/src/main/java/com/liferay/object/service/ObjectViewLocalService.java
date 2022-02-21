@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
+import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -72,7 +73,8 @@ public interface ObjectViewLocalService
 	public ObjectView addObjectView(
 			long userId, long objectDefinitionId, boolean defaultObjectView,
 			Map<Locale, String> nameMap,
-			List<ObjectViewColumn> objectViewColumns)
+			List<ObjectViewColumn> objectViewColumns,
+			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws PortalException;
 
 	/**
@@ -305,7 +307,8 @@ public interface ObjectViewLocalService
 	public ObjectView updateObjectView(
 			long objectViewId, boolean defaultObjectView,
 			Map<Locale, String> nameMap,
-			List<ObjectViewColumn> objectViewColumns)
+			List<ObjectViewColumn> objectViewColumns,
+			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws PortalException;
 
 	/**

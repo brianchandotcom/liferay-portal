@@ -252,6 +252,14 @@ public class ObjectFieldSettingLocalServiceWrapper
 			objectFieldSettingId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFieldSetting fetchObjectFieldSetting(
+		long objectFieldId, String name) {
+
+		return _objectFieldSettingLocalService.fetchObjectFieldSetting(
+			objectFieldId, name);
+	}
+
 	/**
 	 * Returns the object field setting with the matching UUID and company.
 	 *

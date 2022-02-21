@@ -226,6 +226,12 @@ public class ObjectFieldSettingLocalServiceUtil {
 		return getService().fetchObjectFieldSetting(objectFieldSettingId);
 	}
 
+	public static ObjectFieldSetting fetchObjectFieldSetting(
+		long objectFieldId, String name) {
+
+		return getService().fetchObjectFieldSetting(objectFieldId, name);
+	}
+
 	/**
 	 * Returns the object field setting with the matching UUID and company.
 	 *

@@ -211,6 +211,10 @@ public interface ObjectFieldSettingLocalService
 	public ObjectFieldSetting fetchObjectFieldSetting(
 		long objectFieldSettingId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectFieldSetting fetchObjectFieldSetting(
+		long objectFieldId, String name);
+
 	/**
 	 * Returns the object field setting with the matching UUID and company.
 	 *

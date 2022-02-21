@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.web.internal.configuration.activator.FFObjectViewConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -57,15 +56,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewObjectEntriesDisplayContext {
 
 	public ViewObjectEntriesDisplayContext(
-		FFObjectViewConfigurationActivator ffObjectViewConfigurationActivator,
 		HttpServletRequest httpServletRequest,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
 		PortletResourcePermission portletResourcePermission,
 		String restContextPath) {
 
-		_ffObjectViewConfigurationActivator =
-			ffObjectViewConfigurationActivator;
 		_httpServletRequest = httpServletRequest;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProvider = objectScopeProvider;
@@ -185,10 +181,6 @@ public class ViewObjectEntriesDisplayContext {
 	}
 
 	private String _getNestedFieldsQueryString() {
-		if (!_ffObjectViewConfigurationActivator.enabled()) {
-			return StringPool.BLANK;
-		}
-
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());
@@ -249,8 +241,6 @@ public class ViewObjectEntriesDisplayContext {
 		ViewObjectEntriesDisplayContext.class);
 
 	private final String _apiURL;
-	private final FFObjectViewConfigurationActivator
-		_ffObjectViewConfigurationActivator;
 	private final HttpServletRequest _httpServletRequest;
 	private ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;

@@ -32,7 +32,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
-import com.liferay.object.web.internal.configuration.activator.FFObjectViewConfigurationActivator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,7 +51,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 	public ObjectEntriesTableFDSView(
 		FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory,
-		FFObjectViewConfigurationActivator ffObjectViewConfigurationActivator,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -60,8 +58,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		ObjectViewLocalService objectViewLocalService) {
 
 		_fdsTableSchemaBuilderFactory = fdsTableSchemaBuilderFactory;
-		_ffObjectViewConfigurationActivator =
-			ffObjectViewConfigurationActivator;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -73,12 +69,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
-
-		if (!_ffObjectViewConfigurationActivator.enabled()) {
-			_addAllObjectFields(fdsTableSchemaBuilder, locale);
-
-			return fdsTableSchemaBuilder.build();
-		}
 
 		ObjectView defaultObjectView =
 			_objectViewLocalService.getDefaultObjectView(
@@ -212,12 +202,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale,
 		ObjectField objectField) {
 
-		if (!_ffObjectViewConfigurationActivator.enabled() &&
-			Validator.isNotNull(objectField.getRelationshipType())) {
-
-			return;
-		}
-
 		if (Validator.isNull(objectField.getRelationshipType())) {
 			_addFDSTableSchemaField(
 				null, fdsTableSchemaBuilder,
@@ -274,8 +258,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	}
 
 	private final FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
-	private final FFObjectViewConfigurationActivator
-		_ffObjectViewConfigurationActivator;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

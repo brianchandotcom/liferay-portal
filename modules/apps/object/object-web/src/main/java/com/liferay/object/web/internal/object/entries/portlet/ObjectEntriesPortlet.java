@@ -18,7 +18,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.web.internal.configuration.activator.FFObjectViewConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -39,15 +38,12 @@ import javax.portlet.RenderResponse;
 public class ObjectEntriesPortlet extends MVCPortlet {
 
 	public ObjectEntriesPortlet(
-		FFObjectViewConfigurationActivator ffObjectViewConfigurationActivator,
 		long objectDefinitionId,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
 		PortletResourcePermission portletResourcePermission) {
 
-		_ffObjectViewConfigurationActivator =
-			ffObjectViewConfigurationActivator;
 		_objectDefinitionId = objectDefinitionId;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -71,7 +67,6 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectEntriesDisplayContext(
-				_ffObjectViewConfigurationActivator,
 				_portal.getHttpServletRequest(renderRequest),
 				_objectFieldLocalService,
 				_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -82,8 +77,6 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	private final FFObjectViewConfigurationActivator
-		_ffObjectViewConfigurationActivator;
 	private final long _objectDefinitionId;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

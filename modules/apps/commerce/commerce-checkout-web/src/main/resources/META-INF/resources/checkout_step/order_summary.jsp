@@ -41,16 +41,6 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	totalCommerceDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
 	totalOrderCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
 }
-
-String commercePaymentMethodName = StringPool.BLANK;
-
-String commercePaymentMethodKey = commerceOrder.getCommercePaymentMethodKey();
-
-if (commercePaymentMethodKey != null) {
-	commercePaymentMethodName = orderSummaryCheckoutStepDisplayContext.getPaymentMethodName(commercePaymentMethodKey, locale);
-}
-
-String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 %>
 
 <div class="commerce-order-summary">
@@ -461,6 +451,14 @@ String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 				</address>
 			</c:if>
 
+			<%
+			String commerceShippingOptionName = StringPool.BLANK;
+
+			if (commerceOrder.getShippingOptionName() != null) {
+				commerceShippingOptionName = orderSummaryCheckoutStepDisplayContext.getShippingOptionName(commerceOrder.getShippingOptionName(), locale);
+			}
+			%>
+
 			<c:if test="<%= Validator.isNotNull(commerceShippingOptionName) %>">
 				<div class="panel-body shipping-method">
 					<h5>
@@ -476,6 +474,14 @@ String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 					</div>
 				</div>
 			</c:if>
+
+			<%
+			String commercePaymentMethodName = StringPool.BLANK;
+
+			if (commerceOrder.getCommercePaymentMethodKey() != null) {
+				commercePaymentMethodName = orderSummaryCheckoutStepDisplayContext.getPaymentMethodName(commerceOrder.getCommercePaymentMethodKey(), locale);
+			}
+			%>
 
 			<c:if test="<%= Validator.isNotNull(commercePaymentMethodName) %>">
 				<div class="panel-body payment-method">

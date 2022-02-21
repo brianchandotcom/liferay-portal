@@ -544,6 +544,8 @@ definition {
 		Button.clickAdd();
 
 		Alert.viewSuccessMessage();
+
+		SelectFrameTop();
 	}
 
 	macro viewAssetList {

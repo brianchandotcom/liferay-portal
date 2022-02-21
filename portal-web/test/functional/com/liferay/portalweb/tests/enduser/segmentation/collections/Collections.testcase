@@ -1121,6 +1121,785 @@ definition {
 		}
 	}
 
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a dynamic collection targeting segment 1, and it is not prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in 'Anyone' in Asset Publisher"
+	@priority = "3"
+	test DynamicCollectionInAssetPublisherSegmentNotPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create two web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_1");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a dynamic collection targeting segment 1, and it is prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in that variation in Asset Publisher"
+	@priority = "4"
+	test DynamicCollectionInAssetPublisherSegmentPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create two web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_2");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
+	When there's a variation of a dynamic collection targeting segment 2, and it is prioritized above the variation targeting segment 1
+	And both are prioritized above the anyone variation
+	Then the user will see only the assets included in the variation targeting segment 2 in Asset Publisher"
+	@priority = "4"
+	test DynamicCollectionInAssetPublisherSegmentTwoPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId3 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_3",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create three web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_3");
+		}
+		
+		task ("Create two segments") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure first personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create and configure second personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_3",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+
+			Refresh();
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+			
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_3");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a dynamic collection targeting segment 1, and it is not prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in 'Anyone' in Collection Display Fragment"
+	@priority = "3"
+	test DynamicCollectionInCollectionDisplaySegmentNotPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create two web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_1");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a dynamic collection targeting segment 1, and it is prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in that variation in Collection Display Fragment"
+	@priority = "4"
+	test DynamicCollectionInCollectionDisplaySegmentPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create two web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_2");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
+	When there's a variation of a dynamic collection targeting segment 2, and it is prioritized above the variation targeting segment 1
+	And both are prioritized above the anyone variation
+	Then the user will see only the assets included in the variation targeting segment 2 in Collection Display Fragment"
+	@priority = "3"
+	test DynamicCollectionInCollectionDisplaySegmentTwoPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId3 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_3",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create three web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_2");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_3");
+		}
+		
+		task ("Create two segments") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure first personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create and configure second personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_3",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+
+			Refresh();
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_3");
+		}
+	}
+
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
 	@priority = "4"
 	test FilterCollectionItemsByGlobalCategory {
@@ -1212,6 +1991,579 @@ definition {
 
 				var n = ${n} + 1;
 			}
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a manual collection targeting segment 1, and it is not prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in 'Anyone' in Asset Publisher"
+	@priority = "3"
+	test ManualCollectionInAssetPublisherSegmentNotPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_1");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a manual collection targeting segment 1, and it is prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in that variation in Asset Publisher"
+	@priority = "4"
+	test ManualCollectionInAssetPublisherSegmentPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_2");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
+	When there's a variation of a manual collection targeting segment 2, and it is prioritized above the variation targeting segment 1
+	And both are prioritized above the anyone variation
+	Then the user will see only the assets included in the variation targeting segment 2 in Asset Publisher"
+	@priority = "3"
+	test ManualCollectionInAssetPublisherSegmentTwoPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a 2 segments") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation with the first segment") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+		}
+
+		task ("Create a variation with the second segment") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_3");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+
+			Refresh();
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_3");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a manual collection targeting segment 1, and it is not prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in 'Anyone' in Collection Display Fragment"
+	@priority = "3"
+	test ManualCollectionInCollectionDisplaySegmentNotPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_1");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1
+	When there's a variation of a manual collection targeting segment 1, and it is prioritized above the Anyone variation
+	Then the user belonging to that segment will see only the assets included in that variation in Collection Display Fragment"
+	@priority = "4"
+	test ManualCollectionInCollectionDisplaySegmentPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_2");
+		}
+	}
+
+	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
+	When there's a variation of a manual collection targeting segment 2, and it is prioritized above the variation targeting segment 1
+	And both are prioritized above the anyone variation
+	Then the user will see only the assets included in the variation targeting segment 2 in Collection Display Fragment"
+	@priority = "3"
+	test ManualCollectionInCollectionDisplaySegmentTwoPrioritized {
+		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Create web content articles") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+		
+		task ("Create a 2 segments") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a Manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
+		}
+
+		task ("Create a variation with the first segment") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_2");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+		}
+
+		task ("Create a variation with the second segment") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_3");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+
+			Refresh();
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection Test",
+				fragmentName = "Collection Display",
+				listStyle = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct variation is shown") {
+			AssertTextEquals(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				value1 = "WC_Title_3");
 		}
 	}
 

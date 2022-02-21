@@ -111,6 +111,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COPY_TOKEN_BUTTON</td>
+	<td>//button[@aria-label='Click to Copy']</td>
+	<td></td>
+</tr>
 	<td>MODAL_SCREEN</td>
 	<td>//div[contains(@class,'onboarding-base-screen-root')]</td>
 	<td></td>

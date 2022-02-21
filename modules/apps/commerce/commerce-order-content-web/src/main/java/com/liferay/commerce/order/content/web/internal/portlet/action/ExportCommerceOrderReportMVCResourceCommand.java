@@ -233,13 +233,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			commerceOrder.getTotalWithTaxAmountMoney()
 		);
 
-		CommerceChannel commerceChannel =
-			_commerceChannelService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		FileEntry fileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
+				commerceOrder.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
 		PortletResponseUtil.write(
 			resourceResponse,

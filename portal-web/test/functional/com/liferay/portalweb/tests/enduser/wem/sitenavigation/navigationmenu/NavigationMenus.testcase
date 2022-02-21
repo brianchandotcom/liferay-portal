@@ -197,7 +197,7 @@ definition {
 				item = "Document");
 
 			NavigationMenusAdmin.addItem(
-				assetTitle = "Category Name",
+				assetTitleList = "Category Name",
 				item = "Category");
 		}
 
@@ -613,7 +613,9 @@ definition {
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name 1");
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Category Name 1",
+				item = "Category");
 		}
 
 		task ("View a warning icon is shown in the item card") {
@@ -772,7 +774,9 @@ definition {
 		}
 
 		task ("Adding a category item type and view the iframe is Select Categories") {
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Document Category Name");
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Document Category Name",
+				item = "Category");
 		}
 
 		task ("Assert the first category is shown after selecting in Navigation Menu") {
@@ -1177,7 +1181,9 @@ definition {
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name,SubSubcategory Name");
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Category Name,SubSubcategory Name",
+				item = "Category");
 		}
 
 		task ("View third level of category is nested to first category") {
@@ -1328,7 +1334,9 @@ definition {
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name,Subcategory Name,SubSubcategory Name");
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Category Name,Subcategory Name,SubSubcategory Name",
+				item = "Category");
 		}
 
 		task ("Delete only the second leve item that has child") {

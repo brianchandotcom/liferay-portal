@@ -205,7 +205,7 @@ definition {
 				item = "Document");
 
 			NavigationMenusAdmin.addItem(
-				assetTitle = "Category Name",
+				assetTitleList = "Category Name",
 				item = "Category");
 		}
 
@@ -1341,7 +1341,9 @@ definition {
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Global Category Name,Global Subcategory Name,Global SubSubcategory Name,Site Category Name,Site Subcategory Name,Site SubSubcategory Name");
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Global Category Name,Global Subcategory Name,Global SubSubcategory Name,Site Category Name,Site Subcategory Name,Site SubSubcategory Name",
+				item = "Category");
 		}
 
 		task ("View categories are shown in hiearchy order") {

@@ -91,6 +91,8 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					<aui:validator name="customElementName" />
 				</aui:input>
 
+				<aui:input label="use-esm" name="customElementUseESM" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isCustomElementUseESM() %>" />
+
 				<div id="<portlet:namespace />_type_customElementURLs">
 
 					<%

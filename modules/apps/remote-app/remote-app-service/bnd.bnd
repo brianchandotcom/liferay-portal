@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Remote App Service
 Bundle-SymbolicName: com.liferay.remote.app.service
 Bundle-Version: 2.0.24
-Liferay-Require-SchemaVersion: 2.4.0
+Liferay-Require-SchemaVersion: 2.5.0
 Liferay-Service: true
 -dsannotations-options: inherit

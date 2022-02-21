@@ -199,6 +199,11 @@ public class EditRemoteAppEntryDisplayContext {
 		return _remoteAppEntry.getName(themeDisplay.getLocale());
 	}
 
+	public boolean isCustomElementUseESM() {
+		return BeanParamUtil.getBoolean(
+			_remoteAppEntry, _getHttpServletRequest(), "customElementUseESM");
+	}
+
 	public boolean isEditingRemoteAppEntryType(String type) {
 		return type.equals(_getRemoteAppEntryType());
 	}

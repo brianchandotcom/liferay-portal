@@ -41,16 +41,17 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping, boolean instanceable,
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, boolean instanceable,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
 			externalReferenceCode, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	public static RemoteAppEntry addIFrameRemoteAppEntry(
@@ -88,16 +89,16 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, nameMap, portletCategoryName, properties,
-			sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(

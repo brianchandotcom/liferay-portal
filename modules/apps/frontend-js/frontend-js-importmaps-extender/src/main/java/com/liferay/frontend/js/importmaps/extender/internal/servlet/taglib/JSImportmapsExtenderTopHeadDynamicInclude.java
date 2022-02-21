@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
-	immediate = true,
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = {
 		DynamicInclude.class, JSImportmapsExtenderTopHeadDynamicInclude.class
 	}

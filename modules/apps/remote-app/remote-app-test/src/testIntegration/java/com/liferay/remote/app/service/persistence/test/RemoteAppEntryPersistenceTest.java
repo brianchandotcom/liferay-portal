@@ -149,6 +149,9 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
+		newRemoteAppEntry.setCustomElementUseESM(
+			RandomTestUtil.randomBoolean());
+
 		newRemoteAppEntry.setDescription(RandomTestUtil.randomString());
 
 		newRemoteAppEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
@@ -214,6 +217,9 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(
 			existingRemoteAppEntry.getCustomElementURLs(),
 			newRemoteAppEntry.getCustomElementURLs());
+		Assert.assertEquals(
+			existingRemoteAppEntry.isCustomElementUseESM(),
+			newRemoteAppEntry.isCustomElementUseESM());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getDescription(),
 			newRemoteAppEntry.getDescription());
@@ -308,10 +314,11 @@ public class RemoteAppEntryPersistenceTest {
 			"externalReferenceCode", true, "remoteAppEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "customElementHTMLElementName", true,
-			"friendlyURLMapping", true, "iFrameURL", true, "instanceable", true,
-			"name", true, "portletCategoryName", true, "sourceCodeURL", true,
-			"type", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"customElementUseESM", true, "friendlyURLMapping", true,
+			"iFrameURL", true, "instanceable", true, "name", true,
+			"portletCategoryName", true, "sourceCodeURL", true, "type", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -618,6 +625,8 @@ public class RemoteAppEntryPersistenceTest {
 			RandomTestUtil.randomString());
 
 		remoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+
+		remoteAppEntry.setCustomElementUseESM(RandomTestUtil.randomBoolean());
 
 		remoteAppEntry.setDescription(RandomTestUtil.randomString());
 

@@ -93,8 +93,8 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, String description,
-			String friendlyURLMapping, boolean instanceable,
+			String customElementURLs, boolean customElementUseESM,
+			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
@@ -132,6 +132,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setCustomElementUseESM(customElementUseESM);
 		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
@@ -199,8 +200,8 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, String description,
-			String friendlyURLMapping, boolean instanceable,
+			String customElementURLs, boolean customElementUseESM,
+			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
@@ -216,15 +217,16 @@ public class RemoteAppEntryLocalServiceImpl
 			return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 				userId, remoteAppEntry.getRemoteAppEntryId(),
 				customElementCSSURLs, customElementHTMLElementName,
-				customElementURLs, description, friendlyURLMapping, nameMap,
-				portletCategoryName, properties, sourceCodeURL);
+				customElementURLs, customElementUseESM, description,
+				friendlyURLMapping, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 		}
 
 		return addCustomElementRemoteAppEntry(
 			externalReferenceCode, userId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, description,
-			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
-			properties, sourceCodeURL);
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -336,9 +338,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long userId, long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -361,6 +363,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setCustomElementUseESM(customElementUseESM);
 		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setNameMap(nameMap);

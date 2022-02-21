@@ -116,6 +116,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
+				ParamUtil.getBoolean(actionRequest, "customElementUseESM"),
 				description, friendlyURLMapping, instanceable, nameMap,
 				portletCategoryName, properties, sourceCodeURL);
 		}
@@ -170,6 +171,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
+				ParamUtil.getBoolean(actionRequest, "customElementUseESM"),
 				description, friendlyURLMapping, nameMap, portletCategoryName,
 				properties, sourceCodeURL);
 		}

@@ -66,6 +66,10 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 	public final Column<RemoteAppEntryTable, Clob> customElementURLs =
 		createColumn(
 			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, Boolean> customElementUseESM =
+		createColumn(
+			"customElementUseESM", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Clob> description = createColumn(
 		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, String> friendlyURLMapping =

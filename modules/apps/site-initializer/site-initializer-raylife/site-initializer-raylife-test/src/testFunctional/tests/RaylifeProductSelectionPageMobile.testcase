@@ -1,0 +1,152 @@
+@component-name = "portal-solutions"
+definition {
+
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Raylife";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Raylife.createRaylifeSite(siteName = "Raylife");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        Raylife.tearDownCP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            User.logoutPG();
+        }
+    }
+
+    @description = "Verify that the continue button is activated when selecting a product (Smartphone)"
+    @priority = "5"
+    test CanViewContinueButtonActivatedPhone {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "360,720");
+
+        RaylifeHomePage.getAQuote();
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+
+    }
+
+    @description = "Check if I can follow the flow by clicking on the continue button (Smartphone)"
+    @priority = "5"
+    test CanClickInContinueButtonPhone {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "360,720");
+
+        RaylifeHomePage.getAQuote();
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(
+            label = "Search",
+            locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+
+        Raylife.dismissAlert();
+
+    }
+
+    @description = "Check if I can go back to the previous page (Smartphone)"
+    @priority = "5"
+    test CanViewBackPagePhone {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "360,720");
+
+        RaylifeHomePage.getAQuote();
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+
+    }
+
+    @description = "Verify that the continue button is activated when selecting a product (Tablet)"
+    @priority = "5"
+    test CanViewContinueButtonActivatedTablet {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "800,1024");
+
+        RaylifeHomePage.getAQuote();
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "Check if I can follow the flow by clicking on the continue button (Tablet)"
+    @priority = "5"
+    test CanClickInContinueButtonTablet {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "800,1024");
+
+        RaylifeHomePage.getAQuote();
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(
+            label = "Search",
+            locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "Check if I can go back to the previous page (Tablet)"
+    @priority = "5"
+    test CanViewBackPageTablet {
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        SetWindowSize(value1 = "800,1024");
+
+        RaylifeHomePage.getAQuote();
+
+        Click(
+            locator1 = "RaylifeProduct#SELECT_PRODUCT",
+            selectProduct = "Business Owners Policy");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+
+    }
+}

@@ -18,9 +18,16 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateCont
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,11 +51,45 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"acceptedFileExtensions",
 			ddmFormField.getProperty("acceptedFileExtensions")
 		).put(
-			"maximumFileSize",
-			ddmFormField.getProperty("acceptedFileExtensions")
+			"fileSource", ddmFormField.getProperty("fileSource")
+		).put(
+			"maximumFileSize", ddmFormField.getProperty("maximumFileSize")
+		).put(
+			"objectEntryId", ddmFormField.getProperty("objectEntryId")
+		).put(
+			"uploadURL",
+			_getUploadURL(
+				ddmFormField,
+				ddmFormFieldRenderingContext.getHttpServletRequest())
 		).put(
 			"value", ddmFormFieldRenderingContext.getValue()
 		).build();
+	}
+
+	private String _getUploadURL(
+		DDMFormField ddmFormField, HttpServletRequest httpServletRequest) {
+
+		String uploadURL = GetterUtil.getString(
+			ddmFormField.getProperty("uploadURL"));
+
+		if (Validator.isNotNull(uploadURL)) {
+			return uploadURL;
+		}
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createActionURL(
+				GetterUtil.getString(ddmFormField.getProperty("portletId")))
+		).setActionName(
+			"/object_entries/upload_attachment"
+		).setParameter(
+			"folderId", GetterUtil.getLong(ddmFormField.getProperty("folderId"))
+		).setParameter(
+			"objectFieldId",
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId"))
+		).buildString();
 	}
 
 }

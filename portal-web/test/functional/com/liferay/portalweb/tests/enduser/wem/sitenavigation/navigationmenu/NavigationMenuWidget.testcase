@@ -215,6 +215,8 @@ definition {
 		task ("Configure the Look and Feel settings of Blogs") {
 			Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
 
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			Portlet.configureGeneralViaLookAndFeelPG(customTitle = "Blogs Custom");
 		}
 

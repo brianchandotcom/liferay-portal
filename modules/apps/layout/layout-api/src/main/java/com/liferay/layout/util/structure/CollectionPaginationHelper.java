@@ -19,7 +19,7 @@ import com.liferay.info.pagination.Pagination;
 /**
  * @author Eudaldo Alonso
  */
-public interface CollectionPaginationUtil {
+public interface CollectionPaginationHelper {
 
 	public static final String PAGINATION_TYPE_NUMERIC = "numeric";
 

@@ -16,7 +16,7 @@ package com.liferay.layout.internal.util.structure;
 
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.internal.configuration.FFRenderCollectionLayoutStructureItemConfiguration;
-import com.liferay.layout.util.structure.CollectionPaginationUtil;
+import com.liferay.layout.util.structure.CollectionPaginationHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -32,9 +32,10 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.layout.internal.configuration.FFRenderCollectionLayoutStructureItemConfiguration",
-	immediate = true, service = CollectionPaginationUtil.class
+	immediate = true, service = CollectionPaginationHelper.class
 )
-public class CollectionPaginationImpl implements CollectionPaginationUtil {
+public class CollectionPaginationHelperImpl
+	implements CollectionPaginationHelper {
 
 	@Override
 	public Pagination getPagination(
@@ -136,13 +137,13 @@ public class CollectionPaginationImpl implements CollectionPaginationUtil {
 	public boolean isPaginationEnabled(String paginationType) {
 		if (Objects.equals(
 				paginationType,
-				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC) ||
+				CollectionPaginationHelper.PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(
 				paginationType,
-				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR) ||
+				CollectionPaginationHelper.PAGINATION_TYPE_REGULAR) ||
 			Objects.equals(
 				paginationType,
-				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE)) {
+				CollectionPaginationHelper.PAGINATION_TYPE_SIMPLE)) {
 
 			return true;
 		}

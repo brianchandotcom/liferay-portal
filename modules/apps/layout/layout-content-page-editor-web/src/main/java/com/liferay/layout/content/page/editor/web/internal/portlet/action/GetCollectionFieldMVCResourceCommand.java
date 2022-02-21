@@ -54,7 +54,7 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
-import com.liferay.layout.util.structure.CollectionPaginationUtil;
+import com.liferay.layout.util.structure.CollectionPaginationHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -246,7 +246,7 @@ public class GetCollectionFieldMVCResourceCommand
 			activePage = 1;
 		}
 
-		Pagination pagination = _collectionPaginationUtil.getPagination(
+		Pagination pagination = _collectionPaginationHelper.getPagination(
 			activePage, listCount, displayAllPages, displayAllItems,
 			numberOfItems, numberOfItemsPerPage, numberOfPages, paginationType,
 			showAllItems);
@@ -347,7 +347,7 @@ public class GetCollectionFieldMVCResourceCommand
 				listObjectReference, defaultLayoutListRetrieverContext)
 		).put(
 			"totalNumberOfItems",
-			_collectionPaginationUtil.getTotalNumberOfItems(
+			_collectionPaginationHelper.getTotalNumberOfItems(
 				listCount, displayAllPages, displayAllItems, numberOfItems,
 				numberOfItemsPerPage, numberOfPages, paginationType)
 		);
@@ -553,7 +553,7 @@ public class GetCollectionFieldMVCResourceCommand
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
-	private CollectionPaginationUtil _collectionPaginationUtil;
+	private CollectionPaginationHelper _collectionPaginationHelper;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

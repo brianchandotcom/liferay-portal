@@ -36,7 +36,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.FFRenderCollectionLayoutStructureItemConfigurationUtil;
-import com.liferay.layout.util.structure.CollectionPaginationUtil;
+import com.liferay.layout.util.structure.CollectionPaginationHelper;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -120,11 +120,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getDefaultLayoutListRetrieverContext(
 				layoutListRetriever, listObjectReference);
 
-		CollectionPaginationUtil collectionPaginationUtil =
-			ServletContextUtil.getCollectionPaginationUtil();
+		CollectionPaginationHelper collectionPaginationHelper =
+			ServletContextUtil.getCollectionPaginationHelper();
 
 		defaultLayoutListRetrieverContext.setPagination(
-			collectionPaginationUtil.getPagination(
+			collectionPaginationHelper.getPagination(
 				getActivePage(), getCollectionCount(),
 				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
@@ -243,10 +243,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		CollectionPaginationUtil collectionPaginationUtil =
-			ServletContextUtil.getCollectionPaginationUtil();
+		CollectionPaginationHelper collectionPaginationHelper =
+			ServletContextUtil.getCollectionPaginationHelper();
 
-		if (collectionPaginationUtil.isPaginationEnabled(
+		if (collectionPaginationHelper.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -279,10 +279,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		CollectionPaginationUtil collectionPaginationUtil =
-			ServletContextUtil.getCollectionPaginationUtil();
+		CollectionPaginationHelper collectionPaginationHelper =
+			ServletContextUtil.getCollectionPaginationHelper();
 
-		if (collectionPaginationUtil.isPaginationEnabled(
+		if (collectionPaginationHelper.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -311,10 +311,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		CollectionPaginationUtil collectionPaginationUtil =
-			ServletContextUtil.getCollectionPaginationUtil();
+		CollectionPaginationHelper collectionPaginationHelper =
+			ServletContextUtil.getCollectionPaginationHelper();
 
-		return collectionPaginationUtil.getTotalNumberOfItems(
+		return collectionPaginationHelper.getTotalNumberOfItems(
 			getCollectionCount(),
 			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 			_collectionStyledLayoutStructureItem.isDisplayAllItems(),

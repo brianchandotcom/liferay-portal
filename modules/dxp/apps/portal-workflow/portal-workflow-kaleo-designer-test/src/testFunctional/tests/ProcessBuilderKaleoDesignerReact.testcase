@@ -227,8 +227,6 @@ definition {
 		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
-
-
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"
@@ -398,7 +396,6 @@ definition {
 		Workflow.saveDefinition(newKaleoDesigner = "True");
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
-
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"
@@ -543,9 +540,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "START TASK CONNECTOR");
-
-		
-
 	}
 
 	@description = "Verify that the user can edit the connectors label"
@@ -576,7 +570,6 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
-
 	}
 
 	@description = "Verify that default names for nodes are provided"
@@ -655,11 +648,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="start");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
 		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Begin a workflow.");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="end");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
 		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Conclude the workflow.");
 
@@ -670,7 +663,7 @@ definition {
 			nodePosition = "20,-500",
 			nodeType = "fork");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="fork");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "fork");
 
 		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Split the workflow into multiple paths.");
 
@@ -681,11 +674,9 @@ definition {
 			nodePosition = "20,-100",
 			nodeType = "condition");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="condition");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
 
 		ProcessBuilderKaleoDesignerReact.viewDescription(description = "Execute conditional logic.");
-
-		
 	}
 
 	@description = "Verify that each type of Node has Notifications property"
@@ -698,11 +689,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="start");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="end");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
 
@@ -715,7 +706,7 @@ definition {
 			nodePosition = "20,-500",
 			nodeType = "fork");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="fork");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "fork");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
 
@@ -728,11 +719,9 @@ definition {
 			nodePosition = "20,-100",
 			nodeType = "condition");
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType="condition");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
-
-
 	}
 
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"

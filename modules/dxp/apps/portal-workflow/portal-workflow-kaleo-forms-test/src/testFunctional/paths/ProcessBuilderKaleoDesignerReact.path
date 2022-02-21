@@ -52,59 +52,59 @@
 	<td></td>
 </tr>
 <tr>
-    <td>DIAGRAM_CONNECTOR_LABEL</td>
-    <td>//*[name()='g'][contains(@class,'react-flow__connection')]//*[normalize-space(text())='${key_connectorLabel}']</td>
-    <td></td>
+	<td>DIAGRAM_CONNECTOR_LABEL</td>
+	<td>//*[name()='g'][contains(@class,'react-flow__connection')]//*[normalize-space(text())='${key_connectorLabel}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>VIEW_DELETE_MODAL</td>
-    <td>//div[contains(@class, 'modal-content') and contains(.,'${key_title}')]</td>
-    <td></td>
+	<td>VIEW_DELETE_MODAL</td>
+	<td>//div[contains(@class, 'modal-content') and contains(.,'${key_title}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_DELETE_MODAL</td>
-    <td>//button[contains(@class,'btn btn-danger')][contains(text(),'Delete')]</td>
-    <td></td>
+	<td>BUTTON_DELETE_MODAL</td>
+	<td>//button[contains(@class,'btn btn-danger')][contains(text(),'Delete')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BACK_TO_SIDEBAR_BUTTON</td>
-    <td>//button[@class='text-secondary btn btn-monospaced btn-unstyled']</td>
-    <td></td>
+	<td>BACK_TO_SIDEBAR_BUTTON</td>
+	<td>//button[@class='text-secondary btn btn-monospaced btn-unstyled']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_NEW_BUTTON</td>
-    <td>//span[contains(., 'Notifications')]/../..//button[contains(.,'New')]</td>
-    <td></td>
+	<td>NOTIFICATION_NEW_BUTTON</td>
+	<td>//span[contains(., 'Notifications')]/../..//button[contains(.,'New')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATIONS_INPUT</td>
-    <td>//label[contains(., '${key_inputOption}')]/..//input</td>
-    <td></td>
+	<td>NOTIFICATIONS_INPUT</td>
+	<td>//label[contains(., '${key_inputOption}')]/..//input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_SELECTORS</td>
-    <td>//label[contains(., '${key_selectorField}')]/..//select</td>
-    <td></td>
+	<td>NOTIFICATION_SELECTORS</td>
+	<td>//label[contains(., '${key_selectorField}')]/..//select</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATIONS_TEMPLATE_TEXTAREA</td>
-    <td>//label[contains(., 'Template')]/..//textarea</td>
-    <td></td>
+	<td>NOTIFICATIONS_TEMPLATE_TEXTAREA</td>
+	<td>//label[contains(., 'Template')]/..//textarea</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DEFAULT_TOGGLE_SWITCH</td>
-    <td>//span[@class='toggle-switch-bar']</td>
-    <td></td>
+	<td>DEFAULT_TOGGLE_SWITCH</td>
+	<td>//span[@class='toggle-switch-bar']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DEFAULT_TOGGLE_SWITCH_STATUS</td>
-    <td>//span[@class='toggle-switch-label' and contains(., '${key_defaultStatus}')]</td>
-    <td></td>
+	<td>DEFAULT_TOGGLE_SWITCH_STATUS</td>
+	<td>//span[@class='toggle-switch-label' and contains(., '${key_defaultStatus}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DEFAULT_TRANSITION_STYLE</td>
-    <td>//*[name()='path'][contains(@style,'stroke: rgb(128, 172, 255); stroke-dasharray: ${key_transitionStyle}; stroke-width: 2;')]/..//*[normalize-space(text())='${key_connectorLabel}']</td>
-    <td></td>
+	<td>DEFAULT_TRANSITION_STYLE</td>
+	<td>//*[name()='path'][contains(@style,'stroke: rgb(128, 172, 255); stroke-dasharray: ${key_transitionStyle}; stroke-width: 2;')]/..//*[normalize-space(text())='${key_connectorLabel}']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

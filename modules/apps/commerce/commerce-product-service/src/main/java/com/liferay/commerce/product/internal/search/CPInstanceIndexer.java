@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,9 +36,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -165,7 +165,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
-		addSearchTerm(searchQuery, searchContext, CPField.SKU, false);
+
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		addSearchTerm(
 			searchQuery, searchContext, CPField.EXTERNAL_REFERENCE_CODE, false);
@@ -187,9 +187,27 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			try {
 				keywords = StringUtil.toLowerCase(keywords);
 
-				searchQuery.add(
-					_getTrailingWildcardQuery(CPField.SKU, keywords),
+				BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+				booleanQuery.add(
+					new TermQueryImpl("sku.1_10_ngram", keywords),
 					BooleanClauseOccur.SHOULD);
+
+				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(
+					searchContext.getKeywords());
+
+				multiMatchQuery.addField(CPField.SKU);
+				multiMatchQuery.addField("sku.reverse");
+				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
+
+				booleanQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
+
+				if (searchContext.isAndSearch()) {
+					searchQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+				}
+				else {
+					searchQuery.add(booleanQuery, BooleanClauseOccur.SHOULD);
+				}
 			}
 			catch (ParseException parseException) {
 				throw new SystemException(parseException);
@@ -298,12 +316,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		_reindexCPInstances(companyId);
-	}
-
-	private WildcardQuery _getTrailingWildcardQuery(
-		String field, String value) {
-
-		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
 	private void _reindexCPInstances(long companyId) throws Exception {

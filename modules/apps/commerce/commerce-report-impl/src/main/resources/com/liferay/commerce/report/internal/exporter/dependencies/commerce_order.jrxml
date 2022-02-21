@@ -87,6 +87,7 @@
 	<parameter class="java.lang.String" name="commerceAccountName" />
 	<parameter class="java.lang.Integer" name="commerceOrderItemsSize" />
 	<parameter class="java.lang.Long" name="companyId" />
+	<parameter class="java.lang.String" name="externalReferenceCode" />
 	<parameter class="java.util.Locale" name="locale" />
 	<parameter class="java.lang.String" name="logoURL" />
 	<parameter class="java.util.Date" name="orderDate" />
@@ -432,6 +433,25 @@
 					<font size="9" />
 				</textElement>
 				<textFieldExpression><![CDATA[$P{shippingAddressPhoneNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement height="14" uuid="f0d3c4eb-252b-42f7-9d8d-c52fa36a99a4" width="167" x="354" y="130">
+					<property name="com.jaspersoft.studio.unit.width" value="px" />
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" size="9" />
+				</textElement>
+				<text><![CDATA[External Reference Code]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement height="14" uuid="752f0505-9393-4c74-bb26-99d7ff2af666" width="167" x="354" y="150">
+					<property name="com.jaspersoft.studio.unit.height" value="px" />
+					<property name="com.jaspersoft.studio.unit.width" value="px" />
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" />
+				</textElement>
+				<textFieldExpression><![CDATA[$P{externalReferenceCode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

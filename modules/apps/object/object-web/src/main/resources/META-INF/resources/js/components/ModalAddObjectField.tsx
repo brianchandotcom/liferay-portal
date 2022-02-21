@@ -138,7 +138,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
@@ -177,7 +177,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 					/>
 
 					<CustomSelect
-						error={errors.type}
+						error={errors.businessType}
 						label={Liferay.Language.get('type')}
 						onChange={async (type: any) => {
 							if (type.businessType === 'Picklist') {
@@ -189,7 +189,9 @@ const ModalAddObjectField: React.FC<IProps> = ({
 									}
 								);
 
-								const {items = []} = (await result.json()) as {
+								const {
+									items = [],
+								} = (await result.json()) as {
 									items: [];
 								};
 
@@ -203,12 +205,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 
 							setSelectedObjectBusinessTypeLabel(type.label);
 
-							handleChange({
-								target: {
-									name: 'businessType',
-									value: type.businessType,
-								},
-							} as any);
+							setValues({businessType: type.businessType});
 						}}
 						options={objectFieldBusinessTypes}
 						required
@@ -228,14 +225,13 @@ const ModalAddObjectField: React.FC<IProps> = ({
 						<Select
 							error={errors.listTypeDefinitionId}
 							label={Liferay.Language.get('picklist')}
-							onChange={({target: {value}}: any) => {
-								handleChange({
-									target: {
-										name: 'listTypeDefinitionId',
-										value: picklist[Number(value) - 1].id,
-									},
-								} as any);
-							}}
+							onChange={({target: {value}}: any) =>
+								setValues({
+									listTypeDefinitionId: Number(
+										picklist[Number(value) - 1].id
+									),
+								})
+							}
 							options={picklist.map(({name}) => name)}
 							required
 						/>
@@ -243,14 +239,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 
 					<ClayToggle
 						label={Liferay.Language.get('mandatory')}
-						onToggle={() => {
-							handleChange({
-								target: {
-									name: 'required',
-									value: !values.required,
-								},
-							} as any);
-						}}
+						onToggle={() => setValues({required: !values.required})}
 						toggled={values.required}
 					/>
 				</ClayModal.Body>

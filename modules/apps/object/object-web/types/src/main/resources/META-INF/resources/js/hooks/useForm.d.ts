@@ -12,23 +12,28 @@
  * details.
  */
 
-import React from 'react';
-declare type TFormEvent = React.FormEventHandler<HTMLFormElement>;
-declare type TUseFormProps = {
-	initialValues: {};
-	onSubmit: (values: any) => void;
-	validate: (values: any) => {};
-};
-declare type TGenericObject = {
-	[key: string]: any;
-};
-declare type TUseForm = (
-	props: TUseFormProps
-) => {
-	errors: TGenericObject;
-	handleChange: TFormEvent;
-	handleSubmit: TFormEvent;
-	values: TGenericObject;
-};
-declare const useForm: TUseForm;
-export default useForm;
+import {ChangeEventHandler, FormEventHandler} from 'react';
+export default function useForm<T, K extends Partial<T> = T>({
+	initialValues,
+	onSubmit,
+	validate,
+}: IProps<T, K>): IUseForm<T, K>;
+interface IProps<T, K extends Partial<T> = T> {
+	initialValues: K;
+	onSubmit: (values: T) => void;
+	validate: (
+		values: K
+	) => {
+		[key in keyof T]?: string;
+	};
+}
+interface IUseForm<T, K extends Partial<T> = T> {
+	errors: {
+		[key in keyof T]?: string;
+	};
+	handleChange: ChangeEventHandler<HTMLInputElement>;
+	handleSubmit: FormEventHandler<HTMLFormElement>;
+	setValues: (values: Partial<T>) => void;
+	values: K;
+}
+export {};

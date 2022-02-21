@@ -170,7 +170,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues: {
 			name: '',
 			objectRelationshipId: 0,
@@ -245,15 +245,11 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 									...item,
 									type: separateCamelCase(type),
 								};
-								const syntheticEvent: any = {
-									target: {
-										name: 'objectRelationshipId',
-										value: selectedItem.id,
-									},
-								};
 
 								setSelectedRelationship(selectedItem);
-								handleChange(syntheticEvent);
+								setValues({
+									objectRelationshipId: selectedItem.id,
+								});
 							}}
 							query={query}
 							required

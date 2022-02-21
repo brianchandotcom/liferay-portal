@@ -96,11 +96,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 		}
 
 		if (!values.objectActionTrigger.label) {
-			errors.trigger = Liferay.Language.get('required');
+			errors.objectActionTrigger = Liferay.Language.get('required');
 		}
 
 		if (!values.objectActionExecutor.label) {
-			errors.executor = Liferay.Language.get('required');
+			errors.objectActionExecutor = Liferay.Language.get('required');
 		}
 
 		if (values.objectActionExecutor.label === 'Webhook' && !values.url) {
@@ -110,7 +110,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
@@ -139,16 +139,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 					/>
 
 					<CustomSelect
-						error={errors.trigger}
+						error={errors.objectActionTrigger}
 						label={Liferay.Language.get('when[object]')}
-						onChange={(objectActionTrigger: any) => {
-							handleChange({
-								target: {
-									name: 'objectActionTrigger',
-									value: objectActionTrigger,
-								},
-							} as any);
-						}}
+						onChange={(objectActionTrigger: any) =>
+							setValues({objectActionTrigger})
+						}
 						options={objectActionTriggers}
 						required
 						value={values.objectActionTrigger.label}
@@ -164,16 +159,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 					</CustomSelect>
 
 					<CustomSelect
-						error={errors.executor}
+						error={errors.objectActionExecutor}
 						label={Liferay.Language.get('then[object]')}
-						onChange={(objectActionExecutor: any) => {
-							handleChange({
-								target: {
-									name: 'objectActionExecutor',
-									value: objectActionExecutor,
-								},
-							} as any);
-						}}
+						onChange={(objectActionExecutor: any) =>
+							setValues({objectActionExecutor})
+						}
 						options={objectActionExecutors}
 						required
 						value={values.objectActionExecutor.label}

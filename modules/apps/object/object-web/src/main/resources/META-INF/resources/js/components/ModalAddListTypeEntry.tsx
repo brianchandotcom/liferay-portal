@@ -97,7 +97,7 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
@@ -121,14 +121,9 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 						label={Liferay.Language.get('name')}
 						locales={availableLocales}
 						onSelectedLocaleChange={setSelectedLocale}
-						onTranslationsChange={(value) => {
-							handleChange({
-								target: {
-									name: 'name_i18n',
-									value,
-								},
-							} as any);
-						}}
+						onTranslationsChange={(value) =>
+							setValues({name_i18n: value})
+						}
 						required
 						selectedLocale={selectedLocale}
 						translations={values.name_i18n}

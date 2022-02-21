@@ -34,7 +34,7 @@ type TInitialValues = {
 	name: LocalizedValue<string>;
 };
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale;
 
 export function ModalBasicWithFieldName({
 	apiURL,
@@ -44,9 +44,7 @@ export function ModalBasicWithFieldName({
 	onClose,
 }: IProps) {
 	const initialValues: TInitialValues = {
-		name: {
-			[defaultLanguageId]: '',
-		},
+		name: {[defaultLanguageId]: ''},
 	};
 	const [error, setError] = useState<string>('');
 
@@ -85,7 +83,7 @@ export function ModalBasicWithFieldName({
 		const errors: any = {};
 
 		if (name[defaultLanguageId] === '') {
-			errors.label = Liferay.Language.get('required');
+			errors.name = Liferay.Language.get('required');
 		}
 
 		return errors;
@@ -109,7 +107,7 @@ export function ModalBasicWithFieldName({
 						)}
 
 						<Input
-							error={errors.label}
+							error={errors.name}
 							id={inputId}
 							label={Liferay.Language.get('name')}
 							name="name"

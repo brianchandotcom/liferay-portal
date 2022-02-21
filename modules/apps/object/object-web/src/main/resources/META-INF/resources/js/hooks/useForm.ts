@@ -12,34 +12,17 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import {ChangeEventHandler, FormEvent, FormEventHandler, useState} from 'react';
 
-type TFormEvent = React.FormEventHandler<HTMLFormElement>;
+export default function useForm<T, K extends Partial<T> = T>({
+	initialValues,
+	onSubmit,
+	validate,
+}: IProps<T, K>): IUseForm<T, K> {
+	const [values, setValues] = useState<K>(initialValues);
+	const [errors, setErrors] = useState<{[key in keyof T]?: string}>({});
 
-type TUseFormProps = {
-	initialValues: {};
-	onSubmit: (values: any) => void;
-	validate: (values: any) => {};
-};
-
-type TGenericObject = {
-	[key: string]: any;
-};
-
-type TUseForm = (
-	props: TUseFormProps
-) => {
-	errors: TGenericObject;
-	handleChange: TFormEvent;
-	handleSubmit: TFormEvent;
-	values: TGenericObject;
-};
-
-const useForm: TUseForm = ({initialValues, onSubmit, validate}) => {
-	const [values, setValues] = useState(initialValues);
-	const [errors, setErrors] = useState({});
-
-	const handleSubmit: TFormEvent = (event) => {
+	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
 
 		const errors = validate(values);
@@ -50,23 +33,34 @@ const useForm: TUseForm = ({initialValues, onSubmit, validate}) => {
 		else {
 			setErrors({});
 
-			onSubmit(values);
+			onSubmit((values as unknown) as T);
 		}
 	};
 
-	const handleChange: TFormEvent = ({target: {name, value}}: any) => {
-		setValues({
-			...values,
-			[name]: value,
-		});
-	};
+	const handleChange: ChangeEventHandler<HTMLInputElement> = ({
+		target: {name, value},
+	}) => setValues((values) => ({...values, [name]: value}));
 
 	return {
 		errors,
 		handleChange,
 		handleSubmit,
+		setValues: (values: Partial<T>) =>
+			setValues((currentValues) => ({...currentValues, ...values})),
 		values,
 	};
-};
+}
 
-export default useForm;
+interface IProps<T, K extends Partial<T> = T> {
+	initialValues: K;
+	onSubmit: (values: T) => void;
+	validate: (values: K) => {[key in keyof T]?: string};
+}
+
+interface IUseForm<T, K extends Partial<T> = T> {
+	errors: {[key in keyof T]?: string};
+	handleChange: ChangeEventHandler<HTMLInputElement>;
+	handleSubmit: FormEventHandler<HTMLFormElement>;
+	setValues: (values: Partial<T>) => void;
+	values: K;
+}

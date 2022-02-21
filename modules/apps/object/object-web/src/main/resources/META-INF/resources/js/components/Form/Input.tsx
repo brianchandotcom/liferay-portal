@@ -20,19 +20,9 @@ import ErrorFeedback from './ErrorFeedback';
 import FeedbackMessage from './FeedbackMessage';
 import RequiredMask from './RequiredMask';
 
-interface IInputProps extends React.HTMLAttributes<HTMLElement> {
-	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
-	id?: string;
-	label: string;
-	name: string;
-	required?: boolean;
-	value: string;
-}
-
-const Input: React.FC<IInputProps> = ({
+export default function Input({
 	className,
+	component,
 	disabled = false,
 	error,
 	feedbackMessage,
@@ -41,9 +31,10 @@ const Input: React.FC<IInputProps> = ({
 	name,
 	onChange,
 	required = false,
+	type,
 	value,
 	...otherProps
-}) => {
+}: IProps) {
 	return (
 		<ClayForm.Group
 			className={classNames(className, {
@@ -58,11 +49,12 @@ const Input: React.FC<IInputProps> = ({
 
 			<ClayInput
 				{...otherProps}
+				component={component}
 				disabled={disabled}
 				id={id}
 				name={name}
 				onChange={onChange}
-				type="input"
+				type={type}
 				value={value}
 			/>
 
@@ -73,6 +65,18 @@ const Input: React.FC<IInputProps> = ({
 			)}
 		</ClayForm.Group>
 	);
-};
+}
 
-export default Input;
+interface IProps
+	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label: string;
+	name: string;
+	required?: boolean;
+	type?: 'number' | 'text';
+	value?: string | number | string[];
+}

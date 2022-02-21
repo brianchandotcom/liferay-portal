@@ -1128,7 +1128,7 @@ definition {
 	test DynamicCollectionInAssetPublisherSegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1158,7 +1158,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1237,7 +1237,7 @@ definition {
 	test DynamicCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1267,7 +1267,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1354,9 +1354,9 @@ definition {
 
 		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Test Site Name",
-					title = "WC_Title_1");
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
@@ -1368,7 +1368,7 @@ definition {
 				dmDocumentTitle = "Document_1",
 				groupName = "Test Site Name");
 		}
-		
+
 		task ("Create two segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1456,7 +1456,7 @@ definition {
 
 		task ("Assert the correct variation is shown") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
-			
+
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "Blog_1");
 		}
 	}
@@ -1468,7 +1468,7 @@ definition {
 	test DynamicCollectionInCollectionDisplaySegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1498,7 +1498,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1586,7 +1586,7 @@ definition {
 	test DynamicCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1616,7 +1616,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1709,12 +1709,12 @@ definition {
 	test DynamicCollectionInCollectionDisplaySegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+
 		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Test Site Name",
-					title = "WC_Title_1");
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
@@ -1726,7 +1726,7 @@ definition {
 				dmDocumentTitle = "Document_1",
 				groupName = "Test Site Name");
 		}
-		
+
 		task ("Create two segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1936,7 +1936,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -1958,7 +1958,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2018,7 +2018,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -2040,7 +2040,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2055,7 +2055,7 @@ definition {
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_2");
 
-			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
 		}
 
 		task ("Create a public page") {
@@ -2103,7 +2103,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a 2 segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -2132,7 +2132,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2147,7 +2147,7 @@ definition {
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_2");
 
-			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
 		}
 
 		task ("Create a variation with the second segment") {
@@ -2209,7 +2209,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -2231,7 +2231,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2300,7 +2300,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -2322,7 +2322,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2337,7 +2337,7 @@ definition {
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_2");
 
-			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
 		}
 
 		task ("Create a public page") {
@@ -2394,7 +2394,7 @@ definition {
 					title = "WC_Title_${i}");
 			}
 		}
-		
+
 		task ("Create a 2 segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
@@ -2423,7 +2423,7 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-			
+
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2438,7 +2438,7 @@ definition {
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_2");
 
-			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");	
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
 		}
 
 		task ("Create a variation with the second segment") {

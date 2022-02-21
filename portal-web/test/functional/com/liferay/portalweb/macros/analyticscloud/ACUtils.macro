@@ -651,7 +651,22 @@ definition {
 			}
 		}
 
-		ACWorkspace.openWorkspace();
+		if (!(isSet(workspaceName))) {
+			ACWorkspace.openWorkspace();
+		}
+
+		if (isSet(workspaceName)) {
+			if (!(isSet(emailList))) {
+				ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
+			}
+
+			if (isSet(emailList)) {
+				ACWorkspace.createWorkspace(
+					workspaceName = "${workspaceName}",
+					emailList = "${emailList}");
+			}
+		}
+		
 	}
 
 	macro launchDXP {

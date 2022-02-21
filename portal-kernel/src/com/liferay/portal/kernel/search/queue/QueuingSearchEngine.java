@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.QueuingInvocationHandler;
 
+import java.lang.reflect.InvocationHandler;
+
+import java.util.function.Function;
+
 /**
  * @author Michael C. Han
  */
@@ -29,10 +33,7 @@ public class QueuingSearchEngine extends BaseSearchEngine {
 	public QueuingSearchEngine(int capacity) {
 		_queuingInvocationHandler = new QueuingInvocationHandler(capacity);
 
-		Class<?> clazz = getClass();
-
-		_indexWriter = (IndexWriter)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {IndexWriter.class},
+		_indexWriter = _indexWriterProxyProviderFunction.apply(
 			_queuingInvocationHandler);
 	}
 
@@ -53,6 +54,10 @@ public class QueuingSearchEngine extends BaseSearchEngine {
 	public void invokeQueued(IndexWriter indexWriter) throws Exception {
 		_queuingInvocationHandler.invokeQueued(indexWriter);
 	}
+
+	private static final Function<InvocationHandler, IndexWriter>
+		_indexWriterProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			IndexWriter.class);
 
 	private final IndexSearcher _indexSearcher = new DummyIndexSearcher();
 	private final IndexWriter _indexWriter;

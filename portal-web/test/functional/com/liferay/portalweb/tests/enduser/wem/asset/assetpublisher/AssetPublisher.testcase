@@ -996,7 +996,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.viewSpecificPG(portletName = "Asset Publisher");
+			Portlet.viewDefaultTitle(portletName = "Asset Publisher");
 		}
 	}
 

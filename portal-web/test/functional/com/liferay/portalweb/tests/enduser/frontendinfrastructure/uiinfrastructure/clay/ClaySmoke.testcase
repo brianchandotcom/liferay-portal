@@ -1,0 +1,78 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			layoutTemplate = "1 Column");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			widgetName = "Clay Sample");
+
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+	@description = "Check if each nav section of clay sample portlet looks normal from screenshot"
+	@priority = "3"
+	test CanRenderUI {
+		task ("Change tabs and take a screenshot") {
+			Clay.changeTabAndAssertElementImage(tab = "Badges");
+
+			Clay.changeTabAndAssertElementImage(tab = "Buttons");
+
+			Clay.changeTabAndAssertElementImage(tab = "Dropdowns");
+
+			Clay.changeTabAndAssertElementImage(tab = "Labels");
+
+			Clay.changeTabAndAssertElementImage(tab = "Links");
+
+			Clay.changeTabAndAssertElementImage(tab = "Navigation Bars");
+
+			Clay.changeTabAndAssertElementImage(tab = "Pagination Bars");
+
+			Clay.changeTabAndAssertElementImage(tab = "Progress Bars");
+
+			Clay.changeTabAndAssertElementImage(tab = "Stickers");
+
+			// They are commented because ocular not working for full page screenshots
+
+			//Clay.changeTabAndAssertElementImage(tab = "Alerts");
+			//Clay.changeTabAndAssertElementImage(tab = "Cards");
+			//Clay.changeTabAndAssertElementImage(tab = "Form Elements");
+			//Clay.changeTabAndAssertElementImage(tab = "Icons");
+			//Clay.changeTabAndAssertElementImage(tab = "Management Toolbars");
+
+		}
+	}
+
+}

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.internal.util.structure;
+package com.liferay.layout.internal.helper;
 
 import com.liferay.info.pagination.Pagination;
+import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.internal.configuration.FFRenderCollectionLayoutStructureItemConfiguration;
-import com.liferay.layout.util.structure.CollectionPaginationHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.util.PropsValues;
 

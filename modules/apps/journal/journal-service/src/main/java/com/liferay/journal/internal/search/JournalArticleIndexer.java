@@ -689,9 +689,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addLocalizedFields(
-			BooleanQuery searchQuery, String fieldName, String value,
-			SearchContext searchContext)
-		throws Exception {
+		BooleanQuery searchQuery, String fieldName, String value,
+		SearchContext searchContext) {
 
 		String[] localizedFieldNames =
 			_searchLocalizationHelper.getLocalizedFieldNames(
@@ -723,9 +722,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext,
-			String fieldName)
-		throws Exception {
+		BooleanQuery searchQuery, SearchContext searchContext,
+		String fieldName) {
 
 		if (Validator.isBlank(fieldName)) {
 			return;

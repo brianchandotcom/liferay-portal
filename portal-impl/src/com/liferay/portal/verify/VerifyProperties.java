@@ -1574,6 +1574,8 @@ public class VerifyProperties extends VerifyProcess {
 		"auto.deploy.websphere.wsadmin.app.name.suffix",
 		"auto.deploy.websphere.wsadmin.properties.file.name",
 		"auto.deploy.wildfly.dest.dir", "auto.deploy.wildfly.prefix",
+		"axis.servlet.enabled", "axis.servlet.hosts.allowed",
+		"axis.servlet.https.required", "axis.servlet.mapping",
 		"blogs.image.small.max.size", "breadcrumb.display.style.options",
 		"buffered.increment.parallel.queue.size",
 		"buffered.increment.serial.queue.size",
@@ -1912,6 +1914,7 @@ public class VerifyProperties extends VerifyProcess {
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = {
 		"com.liferay.petra.memory.FinalizeManager.thread.enabled",
 		"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled",
+		"com.liferay.util.axis.SimpleHTTPSender.regexp.pattern",
 		"com.liferay.util.Http.proxy.host", "com.liferay.util.Http.proxy.port",
 		"com.liferay.util.XSSUtil.regexp.pattern",
 		"finalize.manager.thread.enabled"

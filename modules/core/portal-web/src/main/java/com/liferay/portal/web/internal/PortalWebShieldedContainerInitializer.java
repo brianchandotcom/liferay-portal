@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.AxisServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.web.internal.session.replication.SessionReplicationFilter;
@@ -213,16 +212,6 @@ public class PortalWebShieldedContainerInitializer
 						dynamic.addMapping(urlPatterns.toArray(new String[0]));
 					}
 				});
-
-			if (PropsValues.AXIS_SERVLET_ENABLED) {
-				ServletRegistration.Dynamic dynamic = servletContext.addServlet(
-					"Axis Servlet", new AxisServlet());
-
-				dynamic.addMapping(PropsValues.AXIS_SERVLET_MAPPING);
-
-				dynamic.setAsyncSupported(true);
-				dynamic.setLoadOnStartup(1);
-			}
 		}
 		catch (Exception exception) {
 			throw new ServletException(exception);

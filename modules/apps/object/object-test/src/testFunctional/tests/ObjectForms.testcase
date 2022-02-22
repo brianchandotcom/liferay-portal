@@ -297,12 +297,77 @@ definition {
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanRetrieveDataProvidersOnSelectFromListField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-145726 CanRetrieveDataProvidersOnSelectFromListField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProvider(
+			name = "Object Entries",
+			outputParameterLabel = "Entry",
+			outputParameterName = "Object Name",
+			outputParameterPath = "$.items..customField",
+			outputParameterType = "List",
+			password = "test",
+			url = "http://localhost:8080/o/c/customobjects",
+			username = "test@liferay.com");
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
+
+		Navigator.openURL();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Select from List");
+
+		var fieldNameDataProvider = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
+
+		Form.editFieldDataProvider(
+			dataProvider = "Object Entries",
+			dataProviderOutput = "Entry");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validatePredefinedSelectFromList(
+			fieldName = "Data Provider Select Field",
+			fieldValue = "Choose an Option");
+
+		FormFields.viewSelectFromListOption(optionValue = "Entry Test");
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"

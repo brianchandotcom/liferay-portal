@@ -13,10 +13,12 @@
  */
 
 (function () {
-	const HEADING_BOTH = 'Both';
-	const HEADING_COL = 'Column';
-	const HEADING_NONE = 'None';
-	const HEADING_ROW = 'Row';
+	const HEADING = {
+		BOTH: 'Both',
+		COL: 'Column',
+		NONE: 'None',
+		ROW: 'Row',
+	};
 
 	const pluginName = 'toolbarbuttons';
 
@@ -25,85 +27,56 @@
 	}
 
 	/**
-	 * Creates a new CKEDITOR.dom.element using the passed tag name.
-	 *
-	 * @instance
-	 * @memberof CKEDITOR.Table
-	 * @protected
-	 * @method _createElement
-	 * @param {String} name The tag name from which an element should be created
-	 * @param {Object} editor The CKEditor instance.
-	 * @return {CKEDITOR.dom.element} Instance of CKEDITOR DOM element class
-	 */
-	function _createElement(name, editor) {
-		return new CKEDITOR.dom.element(name, editor.document);
-	}
-
-	/**
 	 * Returns which heading style is set for the given table.
 	 *
-	 * @instance
-	 * @memberof CKEDITOR.Table
-	 * @method getHeading
 	 * @param {CKEDITOR.dom.element} table The table to gather the heading from. If null, it will be retrieved from the current selection.
 	 * @param {Object} editor The CKEditor instance.
-	 * @return {String} The heading of the table. Expected values are `CKEDITOR.Table.NONE`, `CKEDITOR.Table.ROW`, `CKEDITOR.Table.COL` and `CKEDITOR.Table.BOTH`.
+	 * @return {String} The heading of the table. Expected values are `HEADING.NONE`, `HEADING.ROW`, `HEADING.COL` and `HEADING.BOTH`.
 	 */
-	function getHeading(table, editor) {
+	function getCurrentHeading({editor, table}) {
 		table = table || getFromSelection(editor);
 
 		if (!table) {
 			return null;
 		}
 
-		const rowHeadingSettings = table.$.tHead !== null;
-
-		let colHeadingSettings = true;
-
-		// Check if all of the first cells in every row are TH
+		let isColumnHeading = true;
 
 		for (let row = 0; row < table.$.rows.length; row++) {
-
-			// If just one cell isn't a TH then it isn't a header column
-
 			const cell = table.$.rows[row].cells[0];
 
 			if (cell && cell.nodeName.toLowerCase() !== 'th') {
-				colHeadingSettings = false;
+				isColumnHeading = false;
 				break;
 			}
 		}
 
-		let headingSettings = HEADING_NONE;
+		let heading = HEADING.NONE;
 
-		if (rowHeadingSettings) {
-			headingSettings = HEADING_ROW;
+		if (table.$.tHead !== null) {
+			heading = HEADING.ROW;
 		}
 
-		if (colHeadingSettings) {
-			headingSettings =
-				headingSettings === HEADING_ROW ? HEADING_BOTH : HEADING_COL;
+		if (isColumnHeading) {
+			heading = heading === HEADING.ROW ? HEADING.BOTH : HEADING.COL;
 		}
 
-		return headingSettings;
+		return heading;
 	}
 
 	/**
 	 * Retrieves a table from the current selection.
 	 *
-	 * @instance
-	 * @memberof CKEDITOR.Table
-	 * @method getFromSelection
 	 * @param {Object} editor The CKEditor instance.
 	 * @return {CKEDITOR.dom.element} The retrieved table or null if not found.
 	 */
 	function getFromSelection(editor) {
 		let table;
 		const selection = editor.getSelection();
-		const selected = selection.getSelectedElement();
+		const selectedElement = selection.getSelectedElement();
 
-		if (selected && selected.is('table')) {
-			table = selected;
+		if (selectedElement?.is('table')) {
+			table = selectedElement;
 		}
 		else {
 			const ranges = selection.getRanges();
@@ -113,7 +86,6 @@
 				// Webkit could report the following range on cell selection (#4948):
 				// <table><tr><td>[&nbsp;</td></tr></table>]
 
-				/* istanbul ignore else */
 				if (CKEDITOR.env.webkit) {
 					ranges[0].shrink(CKEDITOR.NODE_ELEMENT);
 				}
@@ -127,7 +99,7 @@
 		return table;
 	}
 
-	function setHeading(table, heading, editor) {
+	function setHeadingsHTML({editor, heading, table}) {
 		table = table || getFromSelection(editor);
 
 		let i;
@@ -135,28 +107,21 @@
 		let tableHead;
 		const tableBody = table.getElementsByTag('tbody').getItem(0);
 
-		let tableHeading = getHeading(table, editor);
+		let tableHeading = getCurrentHeading({editor, table});
 		const hadColHeading =
-			tableHeading === HEADING_COL || tableHeading === HEADING_BOTH;
+			tableHeading === HEADING.COL || tableHeading === HEADING.BOTH;
 
 		const needColHeading =
-			heading === HEADING_COL || heading === HEADING_BOTH;
+			heading === HEADING.COL || heading === HEADING.BOTH;
 		const needRowHeading =
-			heading === HEADING_ROW || heading === HEADING_BOTH;
-
-		// If we need row heading and don't have a <thead> element yet, move the
-		// first row of the table to the head and convert the nodes to <th> ones.
+			heading === HEADING.ROW || heading === HEADING.BOTH;
 
 		if (!table.$.tHead && needRowHeading) {
 			const tableFirstRow = tableBody.getElementsByTag('tr').getItem(0);
 			const tableFirstRowChildCount = tableFirstRow.getChildCount();
 
-			// Change TD to TH:
-
 			for (i = 0; i < tableFirstRowChildCount; i++) {
 				const cell = tableFirstRow.getChild(i);
-
-				// Skip bookmark nodes. (#6155)
 
 				if (
 					cell.type === CKEDITOR.NODE_ELEMENT &&
@@ -167,18 +132,15 @@
 				}
 			}
 
-			tableHead = _createElement(table.$.createTHead(), editor);
+			tableHead = new CKEDITOR.dom.element(
+				table.$.createTHead(),
+				editor.document
+			);
 			tableHead.append(tableFirstRow.remove());
 		}
 
-		// If we don't need row heading and we have a <thead> element, move the
-		// row out of there and into the <tbody> element.
-
 		if (table.$.tHead !== null && !needRowHeading) {
-
-			// Move the row out of the THead and put it in the TBody:
-
-			tableHead = _createElement(table.$.tHead, editor);
+			tableHead = new CKEDITOR.dom.element(table.$.createTHead(), editor);
 
 			const previousFirstRow = tableBody.getFirst();
 
@@ -201,12 +163,9 @@
 			tableHead.remove();
 		}
 
-		tableHeading = getHeading(table, editor);
+		tableHeading = getCurrentHeading({editor, table});
 		const hasColHeading =
-			tableHeading === HEADING_COL || tableHeading === HEADING_BOTH;
-
-		// If we need column heading and the table doesn't have it, convert every first cell in
-		// every row into a `<th scope="row">` element.
+			tableHeading === HEADING.COL || tableHeading === HEADING.BOTH;
 
 		if (!hasColHeading && needColHeading) {
 			for (i = 0; i < table.$.rows.length; i++) {
@@ -219,9 +178,6 @@
 				}
 			}
 		}
-
-		// If we don't need column heading but the table has it, convert every first cell in every
-		// row back into a `<td>` element.
 
 		if (hadColHeading && !needColHeading) {
 			for (i = 0; i < table.$.rows.length; i++) {
@@ -238,21 +194,6 @@
 
 	CKEDITOR.plugins.add(pluginName, {
 		init(editor) {
-			const headingCommands = [
-				HEADING_NONE,
-				HEADING_ROW,
-				HEADING_COL,
-				HEADING_BOTH,
-			];
-
-			headingCommands.forEach((heading) => {
-				editor.addCommand('tableHeading' + heading, {
-					exec(_editor) {
-						setHeading(null, heading, editor);
-					},
-				});
-			});
-
 			editor.ui.addBalloonToolbarButton('ImageAlignLeft', {
 				command: 'justifyleft',
 				icon: 'align-image-left',
@@ -283,41 +224,43 @@
 
 			editor.ui.addRichCombo('TableHeaders', {
 				_headersLabels: {
-					[HEADING_BOTH]: `${editor.lang.table.headers}: ${editor.lang.table.headersBoth}`,
-					[HEADING_COL]: `${editor.lang.table.headers}: ${editor.lang.table.headersColumn}`,
-					[HEADING_NONE]: `${editor.lang.table.headers}: ${editor.lang.table.headersNone}`,
-					[HEADING_ROW]: `${editor.lang.table.headers}: ${editor.lang.table.headersRow}`,
+					[HEADING.BOTH]: `${editor.lang.table.headers}: ${editor.lang.table.headersBoth}`,
+					[HEADING.COL]: `${editor.lang.table.headers}: ${editor.lang.table.headersColumn}`,
+					[HEADING.NONE]: `${editor.lang.table.headers}: ${editor.lang.table.headersNone}`,
+					[HEADING.ROW]: `${editor.lang.table.headers}: ${editor.lang.table.headersRow}`,
 				},
 
 				_setHeading(heading, editor) {
-					editor.execCommand(`tableHeading${heading}`);
+					setHeadingsHTML({editor, heading});
 
 					this.setValue(heading, this._headersLabels[heading]);
 				},
 
 				init() {
 					this.add(
-						HEADING_NONE,
-						this._headersLabels[HEADING_NONE],
-						this._headersLabels[HEADING_NONE]
+						HEADING.NONE,
+						this._headersLabels[HEADING.NONE],
+						this._headersLabels[HEADING.NONE]
 					);
 					this.add(
-						HEADING_ROW,
-						this._headersLabels[HEADING_ROW],
-						this._headersLabels[HEADING_ROW]
+						HEADING.ROW,
+						this._headersLabels[HEADING.ROW],
+						this._headersLabels[HEADING.ROW]
 					);
 					this.add(
-						HEADING_COL,
-						this._headersLabels[HEADING_COL],
-						this._headersLabels[HEADING_COL]
+						HEADING.COL,
+						this._headersLabels[HEADING.COL],
+						this._headersLabels[HEADING.COL]
 					);
 					this.add(
-						HEADING_BOTH,
-						this._headersLabels[HEADING_BOTH],
-						this._headersLabels[HEADING_BOTH]
+						HEADING.BOTH,
+						this._headersLabels[HEADING.BOTH],
+						this._headersLabels[HEADING.BOTH]
 					);
 
-					const currentHeading = getHeading(null, editor);
+					const currentHeading = getCurrentHeading({
+						editor,
+					});
 
 					this._setHeading(currentHeading, editor);
 				},
@@ -329,19 +272,9 @@
 				},
 
 				onRender() {
-					const currentHeading = getHeading(null, editor);
+					const currentHeading = getCurrentHeading({editor});
 
-					this._setHeading(currentHeading, editor);
-
-					editor.on(
-						'selectionChange',
-						function (_) {
-							const currentHeading = getHeading(null, editor);
-
-							this._setHeading(currentHeading, editor);
-						},
-						this
-					);
+					this.label = this._headersLabels[currentHeading];
 				},
 
 				panel: {

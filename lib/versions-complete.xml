@@ -822,6 +822,17 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!org.apache.axis.jar</file-name>
+				<version>1.4.LIFERAY-PATCHED-6</version>
+				<project-name>org.apache.axis</project-name>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.content.dashboard.web.jar!SparseBitSet.jar</file-name>
 				<version>1.2</version>
 				<project-name>SparseBitSet</project-name>
@@ -2298,6 +2309,17 @@
 					<license>
 						<license-name>GNU Lesser General Public License (LGPL)</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.normalizer.impl.jar!com.ibm.icu4j.jar</file-name>
+				<version>54.1.1.LIFERAY-PATCHED-2</version>
+				<project-name>com.liferay:com.ibm.icu4j</project-name>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4748,18 +4770,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.rss.impl.jar!icu4j.jar</file-name>
-				<version>54.1.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.segments.content.targeting.upgrade.jar!commons-lang3.jar</file-name>
 				<version>3.8</version>
 				<project-name>Apache Commons Lang</project-name>
@@ -4928,6 +4938,42 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.xstream.jar!kxml2.jar</file-name>
+				<version>2.3.0</version>
+				<project-name>kXML 2 is a small XML pull parser based on the common XML pull API</project-name>
+				<project-url>http://kxml.sourceforge.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>Public Domain</license-name>
+						<license-url>http://creativecommons.org/licenses/publicdomain</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.xstream.jar!mxparser.jar</file-name>
+				<version>1.2.2</version>
+				<project-name>MXParser</project-name>
+				<project-url>http://x-stream.github.io/mxparser</project-url>
+				<licenses>
+					<license>
+						<license-name>Indiana University Extreme! Lab Software License</license-name>
+						<license-url>https://raw.githubusercontent.com/x-stream/mxparser/master/LICENSE.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.xstream.jar!xstream.jar</file-name>
+				<version>1.4.17</version>
+				<project-name>XStream Core</project-name>
+				<project-url>http://x-stream.github.io</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>http://x-stream.github.io/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.style.book.web.jar!org.jsoup.jar</file-name>
 				<version>1.10.2.LIFERAY-PATCHED-3</version>
 				<project-name>org.jsoup</project-name>
@@ -5026,6 +5072,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.web.jar!commons-csv.jar</file-name>
+				<version>1.8</version>
+				<project-name>Apache Commons CSV</project-name>
+				<project-url>https://commons.apache.org/proper/commons-csv/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

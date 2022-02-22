@@ -35,7 +35,7 @@ public interface BatchEngineTaskConfiguration {
 	)
 	public int completedTasksCleanerScanInterval();
 
-	@Meta.AD(name = "csv-file-column-delimiter", required = false)
+	@Meta.AD(deflt = ",", name = "csv-file-column-delimiter", required = false)
 	public String csvFileColumnDelimiter();
 
 	@Meta.AD(deflt = "100", name = "export-batch-size", required = false)

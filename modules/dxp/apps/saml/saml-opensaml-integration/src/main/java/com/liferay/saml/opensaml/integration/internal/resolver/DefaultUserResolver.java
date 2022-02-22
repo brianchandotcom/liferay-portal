@@ -48,9 +48,15 @@ import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,6 +102,18 @@ public class DefaultUserResolver implements UserResolver {
 			companyId, samlSpIdpConnection,
 			userResolverSAMLContext.resolveSubjectNameIdentifier(),
 			subjectNameFormat, userResolverSAMLContext, serviceContext);
+	}
+
+	private void _addPassThroughAttributes(Properties userAttributeMappings) {
+		Set<Object> mappedFieldExpressions = new HashSet<>(
+			userAttributeMappings.values());
+
+		for (String validFieldExpression : _getValidUserFieldExpressions()) {
+			if (!mappedFieldExpressions.contains(validFieldExpression)) {
+				userAttributeMappings.put(
+					validFieldExpression, validFieldExpression);
+			}
+		}
 	}
 
 	private User _addUser(
@@ -146,9 +164,14 @@ public class DefaultUserResolver implements UserResolver {
 		UserResolverSAMLContext userResolverSAMLContext) {
 
 		try {
+			Properties normalizedUserAttributeMappings =
+				samlSpIdpConnection.getNormalizedUserAttributeMappings();
+
+			_addPassThroughAttributes(normalizedUserAttributeMappings);
+
 			return userResolverSAMLContext.
 				resolveBearerAssertionAttributesWithMapping(
-					samlSpIdpConnection.getNormalizedUserAttributeMappings());
+					normalizedUserAttributeMappings);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -201,6 +224,24 @@ public class DefaultUserResolver implements UserResolver {
 
 		return _userFieldExpressionResolverRegistry.
 			getUserFieldExpressionResolver(userFieldExpressionResolverKey);
+	}
+
+	private Set<String> _getValidUserFieldExpressions() {
+		Set<String> fieldExpressionHandlerPrefixes =
+			_userFieldExpressionHandlerRegistry.
+				getFieldExpressionHandlerPrefixes();
+
+		Stream<String> stream = fieldExpressionHandlerPrefixes.stream();
+
+		return stream.map(
+			_userFieldExpressionHandlerRegistry::getFieldExpressionHandler
+		).map(
+			UserFieldExpressionHandler::getValidFieldExpressions
+		).flatMap(
+			Collection::stream
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private String _getValueAsString(

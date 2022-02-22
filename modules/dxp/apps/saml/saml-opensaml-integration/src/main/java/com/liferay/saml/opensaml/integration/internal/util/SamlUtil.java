@@ -114,7 +114,7 @@ public class SamlUtil {
 			}
 
 			if (Validator.isNull(key)) {
-				key = attribute.getName();
+				continue;
 			}
 
 			List<XMLObject> xmlValues = attribute.getAttributeValues();

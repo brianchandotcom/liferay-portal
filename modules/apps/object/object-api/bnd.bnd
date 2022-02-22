@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Object API
 Bundle-SymbolicName: com.liferay.object.api
-Bundle-Version: 12.0.1
+Bundle-Version: 13.0.0
 Export-Package:\
 	com.liferay.object.action.engine,\
 	com.liferay.object.action.executor,\
@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.object.deployer,\
 	com.liferay.object.exception,\
 	com.liferay.object.field.business.type,\
+	com.liferay.object.field.render,\
 	com.liferay.object.model,\
 	com.liferay.object.related.models,\
 	com.liferay.object.rest.context.path,\

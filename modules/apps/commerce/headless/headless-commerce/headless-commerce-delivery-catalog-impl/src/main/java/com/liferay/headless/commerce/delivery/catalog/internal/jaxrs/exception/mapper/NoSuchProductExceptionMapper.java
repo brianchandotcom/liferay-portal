@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.NoSuchProductException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.NoSuchProductExceptionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

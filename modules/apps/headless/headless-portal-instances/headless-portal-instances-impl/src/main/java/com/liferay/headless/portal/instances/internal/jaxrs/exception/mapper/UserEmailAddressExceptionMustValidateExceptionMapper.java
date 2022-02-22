@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Portal.Instances)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Portal.Instances.UserEmailAddressExceptionMustValidate"
+		"osgi.jaxrs.name=Liferay.Headless.Portal.Instances.UserEmailAddressExceptionMustValidateExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

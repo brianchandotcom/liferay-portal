@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ExceptionMapper.class
 )
-public class ExceptionMapper
+public class ExceptionMapperService
 	extends BaseExceptionMapper<AddressCityException> {
 
 	@Override

@@ -519,11 +519,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testExceptionMapper() throws Exception {
 		test(
-			"ExceptionMapper.testjava",
+			"ExceptionMapperService.testjava",
 			new String[] {
 				"The name of osgi.jaxrs.name should end with 'ExceptionMapper' "
 			},
-			new Integer[] {32});
+			new Integer[] {33});
 	}
 
 	@Test

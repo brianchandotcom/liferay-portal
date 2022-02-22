@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.InventoryInvalidDateException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.InventoryInvalidDateExceptionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

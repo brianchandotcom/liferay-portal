@@ -21,6 +21,7 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Simon Jiang
@@ -42,6 +43,21 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 
 		List<DetailAST> detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.ANNOTATION);
+
+		if (detailASTList.isEmpty()) {
+			return;
+		}
+
+		String fullyQualifiedExceptionMapperName = getFullyQualifiedTypeName(
+			_OSGI_SERVICE_NAME, detailAST, true);
+
+		if (Objects.isNull(fullyQualifiedExceptionMapperName) ||
+			!StringUtil.equals(
+				fullyQualifiedExceptionMapperName,
+				_OSGI_EXCEPTION_MAPPER_QUALIFIED_PACKAGE_NAME)) {
+
+			return;
+		}
 
 		for (DetailAST curDetailAST : detailASTList) {
 			_checkComponentAnnotation(curDetailAST);
@@ -134,6 +150,9 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 
 	private static final String _MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER =
 		"osgi.jaxrs.name.missed.excepionmaaper";
+
+	private static final String _OSGI_EXCEPTION_MAPPER_QUALIFIED_PACKAGE_NAME =
+		"javax.ws.rs.ext.ExceptionMapper";
 
 	private static final String _OSGI_JAXRS_NAME_VALUE = "\"osgi.jaxrs.name";
 

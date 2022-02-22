@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.User)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.User.RequiredUserGroupException"
+		"osgi.jaxrs.name=Liferay.Headless.Admin.User.RequiredUserGroupExceptionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

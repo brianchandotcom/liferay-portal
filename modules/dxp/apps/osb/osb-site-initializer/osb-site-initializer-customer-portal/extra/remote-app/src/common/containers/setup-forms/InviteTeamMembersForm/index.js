@@ -180,8 +180,14 @@ const InviteTeamMembersPage = ({
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
+			} else {
+				setAccountRolesOptions((previousAccountRoles) =>
+					previousAccountRoles.map((previousAccountRoles) => ({
+						...previousAccountRoles,
+						disabled: false,
+					}))
+				);
 			}
-
 			setAvailableAdminsRoles(remainingAdmins);
 		}
 	}, [values, project, maxRequestors, accountRoles]);
@@ -252,6 +258,30 @@ const InviteTeamMembersPage = ({
 		}
 	};
 
+	const handleRemoveTeamMember = () => {
+		const removeLastTeamMember = values.invites?.splice(-1);
+
+		setFieldValue(removeLastTeamMember);
+
+		if (
+			removeLastTeamMember[0].role.name === 'Administrator' ||
+			removeLastTeamMember[0].role.name === 'Requestor'
+		) {
+			setAvailableAdminsRoles((previousAdmins) => previousAdmins + 1);
+		}
+	};
+
+	useEffect(() => {
+		if (availableAdminsRoles > 0) {
+			setAccountRolesOptions((previousAccountRoles) =>
+				previousAccountRoles.map((previousAccountRoles) => ({
+					...previousAccountRoles,
+					disabled: false,
+				}))
+			);
+		}
+	}, [availableAdminsRoles]);
+
 	return (
 		<Layout
 			footerProps={{
@@ -315,15 +345,18 @@ const InviteTeamMembersPage = ({
 					))}
 				</ClayForm.Group>
 
-				<div className="mb-4 ml-3 mt-5">
-					<Button
-						className="mr-3 py-2 text-brandy-secondary"
-						displayType="secondary"
-						prependIcon="hr"
-						small
-					>
-						Remove this Member
-					</Button>
+				<div className="ml-3 my-4">
+					{values?.invites?.length > 1 && (
+						<Button
+							className="mr-3 py-2 text-brandy-secondary"
+							displayType="secondary"
+							onClick={handleRemoveTeamMember}
+							prependIcon="hr"
+							small
+						>
+							Remove this Member
+						</Button>
+					)}
 
 					{values?.invites?.length < MAXIMUM_INVITES_COUNT && (
 						<Button

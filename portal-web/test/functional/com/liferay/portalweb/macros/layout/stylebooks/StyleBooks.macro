@@ -16,13 +16,39 @@ definition {
 			AssertConfirm.assertConfirmationNoError(value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
 		}
 		else {
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+			if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected")) {
+				AssertTextEquals(
+					locator1 = "Modal#BODY",
+					value1 = "Some of the fields have invalid values. If you continue publishing, the latest valid values will display.");
 
-			Click(
-				key_text = "Continue",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+				if ("${publishing}" == "Cancel") {
+					Click(
+						key_text = "Cancel",
+						locator1 = "Modal#MODAL_FOOTER_BUTTON");
+				}
+				else {
+					Click(
+						key_text = "Continue",
+						locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+					AssertTextEquals(
+						locator1 = "Modal#BODY",
+						value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+
+					Click(
+						key_text = "Continue",
+						locator1 = "Modal#MODAL_FOOTER_BUTTON");
+				}
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Modal#BODY",
+					value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+
+				Click(
+					key_text = "Continue",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			}
 		}
 
 		Alert.viewSuccessMessage();

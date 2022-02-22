@@ -18,4 +18,7 @@ package com.liferay.info.item.provider;
  * @author Eudaldo Alonso
  */
 public interface InfoItemObjectVariationProvider<T> {
+
+	public String getInfoItemFormVariationKey(T t);
+
 }

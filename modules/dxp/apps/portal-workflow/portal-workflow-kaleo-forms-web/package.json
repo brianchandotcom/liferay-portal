@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
 	},
 	"name": "portal-workflow-kaleo-forms-web",
 	"private": true,

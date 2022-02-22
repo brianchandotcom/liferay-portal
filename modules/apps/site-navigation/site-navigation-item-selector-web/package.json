@@ -1,12 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/core": "3.46.0",
-		"@clayui/form": "3.45.0",
-		"@clayui/layout": "3.40.0",
-		"frontend-js-components-web": "*",
-		"frontend-js-web": "*",
-		"react": "16.12.0"
 	},
 	"name": "site-navigation-item-selector-web",
 	"scripts": {

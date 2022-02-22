@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/map-common": "*"
 	},
 	"name": "@liferay/expando-taglib",
 	"scripts": {

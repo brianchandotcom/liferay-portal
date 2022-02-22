@@ -1,13 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.45.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/sticker": "3.40.0",
-		"@liferay/frontend-js-react-web": "*",
-		"@liferay/frontend-js-state-web": "*",
-		"classnames": "2.3.1",
-		"prop-types": "15.7.2",
-		"react": "16.12.0"
+		"@liferay/frontend-js-state-web": "*"
 	},
 	"main": "index.js",
 	"name": "frontend-js-components-web",

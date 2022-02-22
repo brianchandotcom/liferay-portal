@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"clay-icon": "2.23.2",
-		"metal-state": "2.16.8"
 	},
 	"name": "commerce-cart-taglib",
 	"scripts": {

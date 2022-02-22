@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/map-common": "*",
-		"metal-state": "2.16.8"
 	},
 	"name": "@liferay/map-google-maps",
 	"private": true,

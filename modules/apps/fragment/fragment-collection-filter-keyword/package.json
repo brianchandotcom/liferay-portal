@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/fragment-renderer-collection-filter-impl": "*"
 	},
 	"name": "@liferay/fragment-collection-filter-keyword",
 	"scripts": {

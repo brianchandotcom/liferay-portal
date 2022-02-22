@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"commerce-frontend-js": "*",
-		"frontend-js-web": "*"
 	},
 	"name": "@liferay/commerce-shipping-engine-fixed-web",
 	"scripts": {

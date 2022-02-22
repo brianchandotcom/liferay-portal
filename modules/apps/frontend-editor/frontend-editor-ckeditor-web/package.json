@@ -1,9 +1,7 @@
 {
 	"dependencies": {
 		"ckeditor4-react": "1.4.2",
-		"frontend-js-web": "*",
-		"liferay-ckeditor": "4.17.1-liferay.1",
-		"prop-types": "15.7.2"
+		"liferay-ckeditor": "4.17.1-liferay.1"
 	},
 	"main": "index.js",
 	"name": "frontend-editor-ckeditor-web",

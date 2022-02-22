@@ -1,9 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.40.0",
-		"@clayui/icon": "3.40.0",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
 	},
 	"main": "js/App.es",
 	"name": "frontend-js-clay-sample-web",

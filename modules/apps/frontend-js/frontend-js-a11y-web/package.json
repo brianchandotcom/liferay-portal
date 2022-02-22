@@ -1,13 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.40.0",
-		"@clayui/list": "3.45.0",
-		"@clayui/popover": "3.45.0",
 		"@liferay/frontend-js-react-web": "*",
 		"axe-core": "4.2.0",
-		"crypto": "1.0.1",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
+		"crypto": "1.0.1"
 	},
 	"jest": {
 		"setupFilesAfterEnv": [

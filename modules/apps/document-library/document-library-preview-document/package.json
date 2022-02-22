@@ -1,13 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/loading-indicator": "3.40.0",
-		"@liferay/document-library-preview-css": "*",
-		"frontend-js-web": "*",
-		"image-promise": "^5.0.1",
-		"prop-types": "15.7.2",
-		"react": "16.12.0"
+		"image-promise": "^5.0.1"
 	},
 	"name": "document-library-preview-document",
 	"private": true,

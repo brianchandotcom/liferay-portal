@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"metal-state": "2.16.8"
 	},
 	"name": "@liferay/map-common",
 	"scripts": {

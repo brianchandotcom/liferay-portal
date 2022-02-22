@@ -1,8 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/layout": "3.40.0",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
 	},
 	"name": "@liferay/frontend-js-components-sample-web",
 	"scripts": {

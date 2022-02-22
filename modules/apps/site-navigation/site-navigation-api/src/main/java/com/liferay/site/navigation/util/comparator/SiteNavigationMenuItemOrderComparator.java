@@ -17,6 +17,8 @@ package com.liferay.site.navigation.util.comparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.util.Objects;
+
 /**
  * @author Pavel Savinov
  */
@@ -55,6 +57,39 @@ public class SiteNavigationMenuItemOrderComparator
 		}
 
 		return 0;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == null) {
+			return false;
+		}
+
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof SiteNavigationMenuItemOrderComparator)) {
+			return false;
+		}
+
+		SiteNavigationMenuItemOrderComparator
+			siteNavigationMenuItemOrderComparator =
+				(SiteNavigationMenuItemOrderComparator)object;
+
+		if (Objects.equals(
+				siteNavigationMenuItemOrderComparator.getOrderBy(),
+				getOrderBy()) &&
+			Objects.equals(
+				siteNavigationMenuItemOrderComparator.getOrderByFields(),
+				getOrderByFields()) &&
+			(siteNavigationMenuItemOrderComparator.isAscending() ==
+				isAscending())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

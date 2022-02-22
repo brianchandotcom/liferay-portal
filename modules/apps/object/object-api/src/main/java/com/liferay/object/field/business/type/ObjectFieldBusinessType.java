@@ -14,6 +14,7 @@
 
 package com.liferay.object.field.business.type;
 
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 
@@ -38,14 +39,11 @@ public interface ObjectFieldBusinessType {
 
 	public String getName();
 
-	public default Map<String, Object> getProperties() {
-		return Collections.emptyMap();
-	}
-
 	public default Map<String, Object> getProperties(
-		Locale locale, ObjectField objectField) {
+		ObjectField objectField,
+		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
-		return getProperties();
+		return Collections.emptyMap();
 	}
 
 	public default boolean isVisible() {

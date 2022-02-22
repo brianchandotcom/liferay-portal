@@ -698,7 +698,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				new String[] {fieldName}, searchContext);
 
 		for (String localizedFieldName : localizedFieldNames) {
-			searchQuery.addTerm(localizedFieldName, value, false);
+			_addTerm(searchQuery, localizedFieldName, value);
 		}
 	}
 
@@ -752,6 +752,19 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 		else {
 			_addLocalizedFields(searchQuery, fieldName, value, searchContext);
+		}
+	}
+
+	private void _addTerm(
+		BooleanQuery booleanQuery, String field, String value) {
+
+		try {
+			booleanQuery.addTerm(field, value, false);
+		}
+		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException);
+			}
 		}
 	}
 

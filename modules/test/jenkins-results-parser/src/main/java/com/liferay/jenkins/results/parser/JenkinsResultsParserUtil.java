@@ -3202,6 +3202,23 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isJSONArray(String string) {
+		if (isNullOrEmpty(string)) {
+			return false;
+		}
+
+		string = string.trim();
+
+		try {
+			new JSONArray(string);
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean isJSONArrayEqual(
 		JSONArray expectedJSONArray, JSONArray actualJSONArray) {
 
@@ -3216,6 +3233,23 @@ public class JenkinsResultsParserUtil {
 			if (!_isJSONExpectedAndActualEqual(expected, actual)) {
 				return false;
 			}
+		}
+
+		return true;
+	}
+
+	public static boolean isJSONObject(String string) {
+		if (isNullOrEmpty(string)) {
+			return false;
+		}
+
+		string = string.trim();
+
+		try {
+			new JSONObject(string);
+		}
+		catch (Exception exception) {
+			return false;
 		}
 
 		return true;

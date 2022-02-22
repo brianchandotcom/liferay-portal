@@ -1,13 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/card": "3.45.0",
-		"@clayui/form": "3.45.0",
-		"@clayui/layout": "3.40.0",
-		"@clayui/tabs": "3.45.0",
-		"classnames": "2.3.1",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
 	},
 	"name": "@liferay/frontend-theme-dialect-style-guide-sample-web",
 	"scripts": {

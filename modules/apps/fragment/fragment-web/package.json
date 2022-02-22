@@ -1,10 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.40.0",
-		"@clayui/tabs": "3.45.0",
-		"codemirror": "^5.59.0",
-		"frontend-js-web": "*",
-		"metal-state": "2.16.8"
+		"codemirror": "^5.59.0"
 	},
 	"name": "fragment-web",
 	"scripts": {

@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"frontend-editor-ckeditor-web": "*",
-		"react": "16.12.0"
 	},
 	"name": "@liferay/frontend-editor-ckeditor-sample-web",
 	"private": true,

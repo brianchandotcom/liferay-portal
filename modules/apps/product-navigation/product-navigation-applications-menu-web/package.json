@@ -1,15 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/drop-down": "3.45.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/label": "3.45.0",
-		"@clayui/layout": "3.40.0",
-		"@clayui/sticker": "3.40.0",
-		"@liferay/frontend-js-react-web": "*",
-		"frontend-js-web": "*",
-		"prop-types": "15.7.2",
-		"react": "16.12.0"
 	},
 	"name": "product-navigation-applications-menu",
 	"scripts": {

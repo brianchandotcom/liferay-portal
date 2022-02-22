@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"react": "16.12.0"
 	},
 	"name": "social-bookmarks-taglib",
 	"scripts": {

@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"item-selector-taglib": "*"
 	},
 	"name": "item-selector-upload-web",
 	"scripts": {

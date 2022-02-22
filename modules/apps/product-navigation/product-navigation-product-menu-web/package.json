@@ -1,14 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/core": "3.46.0",
-		"@clayui/drop-down": "3.45.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/loading-indicator": "3.40.0",
-		"frontend-js-components-web": "*",
-		"frontend-js-web": "*",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
+		"@clayui/core": "3.46.0"
 	},
 	"name": "product-navigation-control-menu-web",
 	"scripts": {

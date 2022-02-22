@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.40.0",
-		"react": "16.12.0"
 	},
 	"name": "@liferay/frontend-data-set-sample-web",
 	"private": true,

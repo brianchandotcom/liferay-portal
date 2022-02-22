@@ -1,27 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/data-provider": "3.45.0",
-		"@clayui/drop-down": "3.45.0",
-		"@clayui/form": "3.45.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/layout": "3.40.0",
-		"@clayui/link": "3.45.0",
-		"@clayui/loading-indicator": "3.40.0",
-		"@clayui/management-toolbar": "3.40.0",
-		"@clayui/modal": "3.45.0",
-		"@clayui/multi-select": "3.46.0",
-		"@clayui/pagination-bar": "3.46.0",
-		"@clayui/tabs": "3.45.0",
-		"@liferay/frontend-js-react-web": "*",
-		"classnames": "2.3.1",
 		"lodash.isfunction": "3.0.9",
-		"lodash.times": "^4.3.2",
-		"prop-types": "15.7.2",
-		"react": "16.12.0",
-		"react-dnd": "11.1.1",
-		"react-dnd-html5-backend": "11.1.1",
-		"react-dom": "16.12.0"
+		"lodash.times": "^4.3.2"
 	},
 	"jest": {
 		"setupFilesAfterEnv": [

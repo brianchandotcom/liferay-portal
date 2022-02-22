@@ -1,11 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.40.0",
-		"@clayui/form": "3.45.0",
-		"@clayui/loading-indicator": "3.40.0",
-		"frontend-js-web": "*",
-		"prop-types": "15.7.2",
-		"react": "16.12.0"
 	},
 	"name": "item-selector-url-web",
 	"scripts": {

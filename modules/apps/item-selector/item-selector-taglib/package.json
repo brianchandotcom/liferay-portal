@@ -1,22 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.40.0",
-		"@clayui/button": "3.40.0",
-		"@clayui/form": "3.45.0",
-		"@clayui/icon": "3.40.0",
-		"@clayui/layout": "3.40.0",
-		"@clayui/navigation-bar": "3.45.0",
-		"@clayui/progress-bar": "3.40.0",
-		"@clayui/tabs": "3.45.0",
 		"@clayui/toolbar": "3.45.0",
-		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"cropperjs": "1.5.11",
-		"frontend-js-web": "*",
-		"metal-state": "2.16.8",
-		"prop-types": "15.7.2",
-		"react": "16.12.0",
-		"react-dom": "16.12.0",
 		"react-dropzone": "11.4.2"
 	},
 	"main": "index.es.js",

@@ -1,0 +1,89 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+    @description = "LPS-146115 - Check if I can follow the flow by clicking on the continue button"
+	@priority = "5"
+	test CanClickInContinueButtonPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		AssertElementPresent(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+	}
+
+	@description = "LPS-146117 - Verify if when clicking the Close button (in the menu) the options are closed"
+	@priority = "3"
+	test ClickingCloseButtonOptionsDissapearPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#OPTIONS_MENU_LINK");
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementNotPresent(locator1 = "RaylifeMobile#OPTIONS_MENU_LINK");
+
+  	}
+
+	@description = "LPS-146123 - Check if I can follow the flow by clicking on the continue button"
+	@priority = "5"
+	test CanClickInContinueButtonTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		AssertElementPresent(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+	}
+
+	@description = "LPS-146124 - Verify if by clicking on the menu button the options appear"
+	@priority = "3"
+	test ClickMenuButtonOptionsAppearTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#OPTIONS_MENU_LINK");
+
+  	}
+
+}

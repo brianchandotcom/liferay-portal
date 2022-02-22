@@ -25,6 +25,16 @@
 	<td>//h2[contains(., '${title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MENU_LINK</td>
+	<td>//div[contains(@class, 'menu-drop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENU_LINK</td>
+	<td>//div[contains(@class, 'show-menu')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

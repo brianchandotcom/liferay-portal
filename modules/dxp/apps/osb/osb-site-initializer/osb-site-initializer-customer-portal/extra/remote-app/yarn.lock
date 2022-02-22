@@ -1169,6 +1169,20 @@
   resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.45.0.tgz#e5a4ae06d64d5e6b451cd2c0a89bd2c54a6c0c1b"
   integrity sha512-Hb3jrf6iFYyjDztYRZ/q8cELueMydTssU+UCXkhu6MtwJBQPb2pMjBdV+UOMH0h2JTRukUf/P0dBDhuIyUSEDw==
 
+"@clayui/date-picker@^3.46.0":
+  version "3.46.0"
+  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.46.0.tgz#5b41633a429a52999e8bd070117efd5f1d322864"
+  integrity sha512-5oQ+57fcmDo1tURSADZOpil5TvMISJCdTgIc/k+yVJna1RwMit8a46Yylq//sAY7FaH7OoDrwMFKOigLTWHmvQ==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/drop-down" "^3.45.0"
+    "@clayui/form" "^3.45.0"
+    "@clayui/icon" "^3.40.0"
+    "@clayui/shared" "^3.45.0"
+    "@clayui/time-picker" "^3.45.0"
+    classnames "^2.2.6"
+    date-fns "^2.14.0"
+
 "@clayui/drop-down@^3.41.0", "@clayui/drop-down@^3.45.0":
   version "3.45.0"
   resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.45.0.tgz#51ef862b6397851ee03d95df1f66b6360dfdc45b"
@@ -1309,6 +1323,17 @@
   resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.40.0.tgz#a414d6e7972ecb2b66438bbddbaf0bd805c1097a"
   integrity sha512-hySlCXcdIwo+sqzfWzujTOoZJtyH8biqu+BigVa75fwtfUjOKHLf+RrNEwSGjAy4swRNCwIBipwuoMQ6PhMTqQ==
   dependencies:
+    classnames "^2.2.6"
+
+"@clayui/time-picker@^3.45.0":
+  version "3.45.0"
+  resolved "https://registry.yarnpkg.com/@clayui/time-picker/-/time-picker-3.45.0.tgz#e5a77451a9d7b11585de241ea223b8e37372a649"
+  integrity sha512-dpk5PYucxMhPGw8k7eMAzG829Ta2Pb7BnImqDo7rinPRm1VvsmaAWZFwu4Pp7jVdEIUouBDef8OfOZmfNltWQg==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/form" "^3.45.0"
+    "@clayui/icon" "^3.40.0"
+    "@clayui/shared" "^3.45.0"
     classnames "^2.2.6"
 
 "@clayui/tooltip@^3.40.0":
@@ -4064,6 +4089,11 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+date-fns@^2.14.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
+  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"

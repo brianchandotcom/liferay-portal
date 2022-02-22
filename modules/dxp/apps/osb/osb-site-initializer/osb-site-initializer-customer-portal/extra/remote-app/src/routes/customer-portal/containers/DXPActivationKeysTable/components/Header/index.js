@@ -21,6 +21,11 @@ import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
+
+import EnvironmentTypeFilter from '../Filter/components/EnvironmentType';
+import KeyTypeFilter from '../Filter/components/KeyType';
+import StartDateFilter from '../Filter/components/StartDate';
+import StatusFilter from '../Filter/components/Status';
 import Search from '../Search';
 
 const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
@@ -151,6 +156,14 @@ const DXPActivationKeysTableHeader = ({
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
 				<Search setSearchTerm={setSearchTerm} />
+
+				<KeyTypeFilter />
+
+				<EnvironmentTypeFilter />
+
+				<StartDateFilter />
+
+				<StatusFilter />
 
 				<div className="align-items-center d-flex ml-auto">
 					{!!selectedKeys.length && (

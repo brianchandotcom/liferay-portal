@@ -331,6 +331,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145650. The user could continue publish process in style book editor if link invalid color token."
+	@priority = "5"
+	test ContinuePublishProcessInStyleBookEditorIfLinkInvalidColorToken {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("Change the Brand Color 1 to an invalid color token") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			Type(
+				key_text = "Brand Color 1",
+				locator1 = "TextInput#ANY",
+				value1 = "aaa");
+
+			StyleBooks.clickManagementBar();
+
+			AssertVisible(
+				key_alertMessage = "This token does not exist.",
+				key_fieldLabel = "Brand Color 1",
+				locator1 = "TextInput#ALERT_MESSAGE");
+		}
+
+		task ("Continue the publish process") {
+			StyleBooks.clickPublish(publishing = "Continue");
+		}
+
+		task ("View the Brand Color 1 is the #0B5FFF") {
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			InputField.viewText(
+				fieldLabel = "Brand Color 1",
+				text = "#0B5FFF");
+		}
+	}
+
 	@description = "This is a test for LPS-136199. The user could detach the linked token."
 	@priority = "5"
 	test DetachLinkedColorTokenInPageEditor {

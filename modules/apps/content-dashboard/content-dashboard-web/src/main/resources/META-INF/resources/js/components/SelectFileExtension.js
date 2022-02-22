@@ -15,8 +15,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import TreeFilter from './TreeFilter/TreeFilter';
-import {nodeTreeArrayMapper} from './TreeFilter/treeUtils';
+import ClayTreeFilter from './TreeFilter/ClayTreeFilter/ClayTreeFilter';
+import FrontendTreeFilter from './TreeFilter/FrontendTreeFilter/TreeFilter';
+import {nodeTreeArrayMapper} from './TreeFilter/FrontendTreeFilter/treeUtils';
 
 const SelectFileExtension = ({
 	fileExtensionGroups,
@@ -29,8 +30,17 @@ const SelectFileExtension = ({
 		nodeArray: fileExtensionGroups,
 	});
 
-	return (
-		<TreeFilter
+	return window.Liferay.__FF__.enableClayTreeView ? (
+		<ClayTreeFilter
+			childrenPropertyKey="fileExtensions"
+			itemSelectorSaveEvent={itemSelectorSaveEvent}
+			mandatoryFieldsForFiltering={['id']}
+			namePropertyKey="fileExtension"
+			nodes={nodes}
+			portletNamespace={portletNamespace}
+		/>
+	) : (
+		<FrontendTreeFilter
 			childrenPropertyKey="fileExtensions"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['id']}

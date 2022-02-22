@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.petra.string.StringPool;
@@ -102,13 +102,13 @@ public class TemplateInfoItemTemplatedRenderer<T>
 
 		String infoItemFormVariationKey = StringPool.BLANK;
 
-		InfoItemFormVariationsProvider<T> infoItemFormVariationsProvider =
+		InfoItemObjectVariationProvider<T> infoItemObjectVariationProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, _className);
+				InfoItemObjectVariationProvider.class, _className);
 
-		if (infoItemFormVariationsProvider != null) {
+		if (infoItemObjectVariationProvider != null) {
 			infoItemFormVariationKey =
-				infoItemFormVariationsProvider.getInfoItemFormVariationKey(t);
+				infoItemObjectVariationProvider.getInfoItemFormVariationKey(t);
 		}
 
 		return getInfoItemRendererTemplates(
@@ -189,7 +189,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return Collections.emptyList();

@@ -327,6 +327,17 @@ definition {
 		}
 	}
 
+	@summary = "Assert that the cards entry for template '${templateName}' is present with alternate path"
+	macro viewCardsEntryCP2 {
+		LexiconCard.viewCardTitle(card = "${templateName}");
+
+		if (isSet(templateSmallImage)) {
+			AssertVisible(
+				locator1 = "DDMSelectTemplate#TEMPLATE_CARDS_SMALL_IMAGE_2",
+				value1 = "${templateSmallImage}");
+		}
+	}
+
 	@summary = "Assert that certain template attributes are present for the template '${templateName}'"
 	macro viewCP {
 		var key_ddlStructureName = "${structureName}";

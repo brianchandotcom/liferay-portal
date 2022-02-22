@@ -32,6 +32,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATE_CARDS_SMALL_IMAGE_2</td>
+	<td>//div[contains(@class,'aspect-ratio')]/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

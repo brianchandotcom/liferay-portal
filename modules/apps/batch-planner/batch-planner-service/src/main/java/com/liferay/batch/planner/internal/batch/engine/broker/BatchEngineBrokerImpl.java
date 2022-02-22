@@ -51,6 +51,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -139,6 +141,20 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		return batchPlannerPolicy.getValue();
 	}
 
+	private UriInfo _getImportTaskUriInfo(BatchPlannerPlan batchPlannerPlan) {
+		BatchPlannerPolicy batchPlannerPolicy =
+			batchPlannerPlan.fetchBatchPlannerPolicy("csvSeparator");
+
+		String csvSeparator = null;
+
+		if (batchPlannerPolicy != null) {
+			csvSeparator = batchPlannerPolicy.getValue();
+		}
+
+		return new BatchPlannerUriInfo(
+			csvSeparator, batchPlannerPlan.getTaskItemDelegateName());
+	}
+
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
@@ -177,13 +193,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
 
-		BatchPlannerPolicy batchPlannerPolicy =
-			batchPlannerPlan.getBatchPlannerPolicy("csvSeparator");
-
 		_importTaskResource.setContextUriInfo(
-			new BatchPlannerUriInfo(
-				batchPlannerPolicy.getValue(),
-				batchPlannerPlan.getTaskItemDelegateName()));
+			_getImportTaskUriInfo(batchPlannerPlan));
 
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));

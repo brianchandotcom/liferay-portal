@@ -97,12 +97,25 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Name"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanFilterByTemplateName {
+		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
 
-		// TODO LRQA-71974 CanFilterByTemplateName pending implementation
+		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "First template name");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+
+		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Second template name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Name");
+
+		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "First template name,Second template name");
+
+		Workflow.clickRevertSortDirection();
+
+		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "Second template name,First template name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"

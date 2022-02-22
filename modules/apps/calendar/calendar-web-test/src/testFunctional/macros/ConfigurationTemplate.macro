@@ -80,4 +80,17 @@ definition {
 			key_configurationName = "${configurationName}");
     }
 
+	macro viewOrderFieldsTable {
+		var rowNumber = "1";
+
+        for (var configurationName : list "${tableOrder}") {
+            AssertElementPresent(
+                key_rowNumber = "${rowNumber}",
+                key_configurationName = "${configurationName}",
+				locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME");
+
+            var rowNumber = MathUtil.sum("${rowNumber}", "1");
+        }
+
+	}
 }

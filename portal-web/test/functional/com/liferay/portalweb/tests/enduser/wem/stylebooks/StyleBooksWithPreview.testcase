@@ -358,6 +358,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140774. The user can preview the effects on current site fragments in styles book editor."
+	@priority = "4"
+	test PreviewEffectOnCurrentSiteFragment {
+		task ("Add a fragment set in current site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Copy the Heading fragment from Basic Components to new set") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Heading",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Fragments is selected in the preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Fragments");
+		}
+
+		task ("View the new fragment set is selected in the preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Collection Name");
+		}
+
+		task ("View the help text is shown in dropdown list of preview item selector") {
+			Click(
+				index = "2",
+				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+
+			AssertElementPresent(
+				key_caption = "Showing 4 of 7 Items",
+				locator1 = "Dropdown#CAPTION");
+		}
+
+		task ("Define the Heading 1 Font Size of Headings") {
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Headings");
+
+			Type(
+				key_fieldLabel = "Heading 1 Font Size",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "2rem");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("View the defined Heading 1 Font Size applied on Heading fragment") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				key_content = "Heading Example",
+				key_element = "h1",
+				key_id = "element-text",
+				key_type = "text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "32px");
+		}
+	}
+
 	@description = "This is a test for LPS-140774. The user can preview the effects on default fragments in styles book editor."
 	@priority = "4"
 	test PreviewEffectOnDefaultFragment {

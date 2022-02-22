@@ -51,10 +51,19 @@ const DropDown: React.FC<DropDownProps> = ({
 							)}
 
 							{section.items.map(
-								({divider, icon, label, path}, itemIndex) => (
+								(
+									{divider, icon, label, onClick, path},
+									itemIndex
+								) => (
 									<React.Fragment key={itemIndex}>
 										<ClayDropDown.Item
 											onClick={() => {
+												if (onClick) {
+													setActive(false);
+
+													return onClick();
+												}
+
 												const isHttpUrl = path.startsWith(
 													'http'
 												);

@@ -50,66 +50,6 @@ export const TEST_STATUS_LABEL = {
 	7: 'Test Fix',
 };
 
-export const MANAGE_DROPDOWN = [
-	{
-		items: [
-			{icon: 'plus', label: 'New Project', path: '/'},
-			{icon: 'cog', label: 'Case Types', path: '/'},
-		],
-		title: 'System',
-	},
-	{
-		items: [
-			{
-				icon: 'cog',
-				label: 'Categories',
-				path: '/',
-			},
-			{
-				icon: 'cog',
-				label: 'Options',
-				path: '/',
-			},
-		],
-		title: 'Enviroment Factors',
-	},
-	{
-		items: [
-			{
-				icon: 'pencil',
-				label: 'Manage User',
-				path: '/',
-			},
-			{
-				icon: 'pencil',
-				label: 'Manager User Groups',
-				path: '/',
-			},
-			{
-				icon: 'pencil',
-				label: 'Manage Roles',
-				path: '/',
-			},
-		],
-		title: '',
-	},
-	{
-		items: [
-			{
-				icon: 'filter',
-				label: 'Manage Indexers',
-				path: '/',
-			},
-			{
-				icon: 'pencil',
-				label: 'Manage Server',
-				path: '/',
-			},
-		],
-		title: '',
-	},
-];
-
 export const USER_DROPDOWN = [
 	{
 		items: [

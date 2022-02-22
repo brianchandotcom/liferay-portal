@@ -20,6 +20,7 @@ type DropdownItem = {
 	divider?: boolean;
 	icon?: string;
 	label: string;
+	onClick?: () => void;
 	path: string;
 };
 

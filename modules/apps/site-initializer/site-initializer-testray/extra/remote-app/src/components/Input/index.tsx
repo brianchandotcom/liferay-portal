@@ -23,7 +23,7 @@ type InputProps = {
 	label: string;
 	name: string;
 	required?: boolean;
-};
+} & React.HTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
 	error,
@@ -31,6 +31,7 @@ const Input: React.FC<InputProps> = ({
 	name,
 	id = name,
 	required = false,
+	...otherProps
 }) => (
 	<>
 		{label && (
@@ -45,7 +46,7 @@ const Input: React.FC<InputProps> = ({
 			</label>
 		)}
 
-		<ClayInput id={id} name={name} type="text" />
+		<ClayInput id={id} name={name} type="text" {...otherProps} />
 
 		{error && <InputWarning>{error}</InputWarning>}
 	</>

@@ -73,20 +73,30 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 							"sxpBlueprintId"));
 				}
 
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(
-						portletSharedSearchSettings.getRenderRequest());
+				if (Validator.isNull(
+						searchContext.getAttribute(
+							"search.experiences.ip.address"))) {
 
-				searchContext.setAttribute(
-					"search.experiences.ip.address",
-					httpServletRequest.getRemoteAddr());
+					HttpServletRequest httpServletRequest =
+						_portal.getHttpServletRequest(
+							portletSharedSearchSettings.getRenderRequest());
 
-				ThemeDisplay themeDisplay =
-					portletSharedSearchSettings.getThemeDisplay();
+					searchContext.setAttribute(
+						"search.experiences.ip.address",
+						httpServletRequest.getRemoteAddr());
+				}
 
-				searchContext.setAttribute(
-					"search.experiences.scope.group.id",
-					themeDisplay.getScopeGroupId());
+				if (Validator.isNull(
+						searchContext.getAttribute(
+							"search.experiences.scope.group.id"))) {
+
+					ThemeDisplay themeDisplay =
+						portletSharedSearchSettings.getThemeDisplay();
+
+					searchContext.setAttribute(
+						"search.experiences.scope.group.id",
+						themeDisplay.getScopeGroupId());
+				}
 			});
 	}
 

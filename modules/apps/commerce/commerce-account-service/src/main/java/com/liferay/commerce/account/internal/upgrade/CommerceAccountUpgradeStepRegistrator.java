@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -138,6 +140,13 @@ public class CommerceAccountUpgradeStepRegistrator
 			new com.liferay.commerce.account.internal.upgrade.v9_0_1.
 				CommerceAccountPortletUpgradeProcess());
 
+		registry.register(
+			"9.1.1", "9.2.0",
+			new com.liferay.commerce.account.internal.upgrade.v9_2_0.
+				CommerceAccountRoleUpgradeProcess(
+					_companyLocalService, _resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");
 		}
@@ -169,6 +178,9 @@ public class CommerceAccountUpgradeStepRegistrator
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
@@ -181,6 +193,9 @@ public class CommerceAccountUpgradeStepRegistrator
 		target = "(&(release.bundle.symbolic.name=com.liferay.account.service)(release.schema.version>=2.1.0))"
 	)
 	private Release _release;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

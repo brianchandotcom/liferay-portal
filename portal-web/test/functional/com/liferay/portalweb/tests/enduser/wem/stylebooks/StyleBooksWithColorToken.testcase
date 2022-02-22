@@ -168,6 +168,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145650. The user could cancel publish process in style book editor if link invalid color token."
+	@priority = "4"
+	test CancelPublishProcessInStyleBookEditorIfLinkInvalidColorToken {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("Change the Brand Color 1 to an invalid color token") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			Type(
+				key_text = "Brand Color 1",
+				locator1 = "TextInput#ANY",
+				value1 = "aaa");
+
+			StyleBooks.clickManagementBar();
+
+			AssertVisible(
+				key_alertMessage = "This token does not exist.",
+				key_fieldLabel = "Brand Color 1",
+				locator1 = "TextInput#ALERT_MESSAGE");
+		}
+
+		task ("Cancel the publish process") {
+			StyleBooks.clickPublish(publishing = "Cancel");
+		}
+
+		task ("View the invalid color token is still shown in Brand Color 1 field") {
+			InputField.viewText(
+				fieldLabel = "Brand Color 1",
+				text = "aaa");
+		}
+
+		task ("Type an valid color token in Brand Color 1 field then publish") {
+			Type(
+				key_text = "Brand Color 1",
+				locator1 = "TextInput#ANY",
+				value1 = "#00CCBB");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("View the Brand Color 1 is new color token") {
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			InputField.viewText(
+				fieldLabel = "Brand Color 1",
+				text = "#00CCBB");
+		}
+	}
+
 	@description = "This is a test for LPS-141568. The user cannot refer two tokens mutually."
 	@priority = "4"
 	test CannotReferTwoTokensMutually {

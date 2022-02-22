@@ -53,11 +53,9 @@ SearchContainer<String> searchContainer = new SearchContainer(liferayPortletRequ
 
 searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
 
-searchContainer.setTotal(resourceActions.size());
-
 List<String> results = resourceActions;
 
-searchContainer.setResults(results);
+searchContainer.setResultsAndTotal(() -> results, results.size());
 
 List<com.liferay.portal.kernel.dao.search.ResultRow> resultRows = searchContainer.getResultRows();
 

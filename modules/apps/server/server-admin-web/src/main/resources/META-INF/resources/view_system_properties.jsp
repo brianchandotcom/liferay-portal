@@ -68,8 +68,7 @@ List<Map.Entry<String, String>> filteredPropertiesList = ListUtil.fromCollection
 
 SearchContainer<Map.Entry<String, String>> propertiesSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
 
-propertiesSearchContainer.setResults(ListUtil.subList(filteredPropertiesList, propertiesSearchContainer.getStart(), propertiesSearchContainer.getEnd()));
-propertiesSearchContainer.setTotal(filteredPropertiesList.size());
+propertiesSearchContainer.setResultsAndTotal(() -> ListUtil.subList(filteredPropertiesList, propertiesSearchContainer.getStart(), propertiesSearchContainer.getEnd()), filteredPropertiesList.size());
 %>
 
 <clay:management-toolbar

@@ -112,15 +112,11 @@ for (int i = 0; i < permissions.size(); i++) {
 	}
 }
 
-permissionDisplays = ListUtil.sort(permissionDisplays);
-
-searchContainer.setTotal(permissionDisplays.size());
-
-List<PermissionDisplay> results = ListUtil.subList(permissionDisplays, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
+searchContainer.setResultsAndTotal(() -> ListUtil.subList(ListUtil.sort(permissionDisplays), searchContainer.getStart(), searchContainer.getEnd()), permissionDisplays.size());
 
 List<com.liferay.portal.kernel.dao.search.ResultRow> resultRows = searchContainer.getResultRows();
+
+List<PermissionDisplay> results = searchContainer.getResults();
 
 for (int i = 0; i < results.size(); i++) {
 	PermissionDisplay permissionDisplay = results.get(i);

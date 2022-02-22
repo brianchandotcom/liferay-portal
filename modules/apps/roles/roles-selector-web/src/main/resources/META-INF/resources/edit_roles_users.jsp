@@ -25,6 +25,8 @@ long roleId = (Long)request.getAttribute("edit_roles.jsp-roleId");
 Organization organization = (Organization)request.getAttribute("edit_roles.jsp-organization");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+
+UserSearch userSearch = new UserSearch(renderRequest, portletURL);
 %>
 
 <aui:input name="addUserIds" type="hidden" />
@@ -34,7 +36,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 
 <liferay-ui:search-container
 	rowChecker="<%= (role.getType() == RoleConstants.TYPE_SITE) ? new UserGroupRoleUserChecker(renderResponse, group, role) : new OrganizationRoleUserChecker(renderResponse, organization, role) %>"
-	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= userSearch %>"
 	var="userSearchContainer"
 >
 
@@ -55,22 +57,14 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	<liferay-ui:search-container-results>
 
 		<%
+		long companyId = company.getCompanyId();
+
 		if (searchTerms.isAdvancedSearch()) {
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator());
-
-			userSearchContainer.setTotal(total);
-
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+			userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator()));
 		}
 		else {
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-			userSearchContainer.setTotal(total);
-
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+			userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams));
 		}
-
-		userSearchContainer.setResults(results);
 		%>
 
 	</liferay-ui:search-container-results>

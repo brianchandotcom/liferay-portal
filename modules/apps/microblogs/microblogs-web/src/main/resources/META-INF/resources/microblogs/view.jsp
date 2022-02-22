@@ -69,9 +69,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 	searchContainer.setDeltaConfigurable(false);
 
-	List<MicroblogsEntry> results = new ArrayList<MicroblogsEntry>();
-	int total = 0;
-
 	if (tabs1.equals("mentions")) {
 		receiverUserId = themeDisplay.getUserId();
 
@@ -87,13 +84,14 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		catch (NoSuchUserException nsue) {
 		}
 
-		total = MicroblogsEntryServiceUtil.getMicroblogsEntriesCount(assetTagName);
+		String microblogsAssetTagName = assetTagName;
 
-		searchContainer.setTotal(total);
-
-		results = MicroblogsEntryServiceUtil.getMicroblogsEntries(assetTagName, searchContainer.getStart(), searchContainer.getEnd());
+		searchContainer.setResultsAndTotal(() -> MicroblogsEntryServiceUtil.getMicroblogsEntries(microblogsAssetTagName, searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryServiceUtil.getMicroblogsEntriesCount(microblogsAssetTagName));
 	}
 	else if (parentMicroblogsEntryId > 0) {
+		List<MicroblogsEntry> results = new ArrayList<MicroblogsEntry>();
+		int total = 0;
+
 		MicroblogsEntry microblogsEntry = MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(parentMicroblogsEntryId);
 
 		if (microblogsEntry != null) {
@@ -101,53 +99,39 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			total = 1;
 		}
 
+		searchContainer.setResultsAndTotal(() -> results, total);
+
 		portletURL.setParameter("parentMicroblogsEntryId", String.valueOf(parentMicroblogsEntryId));
 	}
 	else if ((receiverUserId > 0) && (receiverUserId == themeDisplay.getUserId())) {
-		total = MicroblogsEntryLocalServiceUtil.getUserMicroblogsEntriesCount(receiverUserId);
+		long microblogsReceiverUserId = receiverUserId;
 
-		searchContainer.setTotal(total);
+		searchContainer.setResultsAndTotal(() -> MicroblogsEntryLocalServiceUtil.getUserMicroblogsEntries(microblogsReceiverUserId, searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryLocalServiceUtil.getUserMicroblogsEntriesCount(microblogsReceiverUserId));
 
-		results = MicroblogsEntryLocalServiceUtil.getUserMicroblogsEntries(receiverUserId, searchContainer.getStart(), searchContainer.getEnd());
-
-		portletURL.setParameter("receiverUserId", String.valueOf(receiverUserId));
+		portletURL.setParameter("receiverUserId", String.valueOf(microblogsReceiverUserId));
 	}
 	else if (receiverUserId > 0) {
-		total = MicroblogsEntryServiceUtil.getUserMicroblogsEntriesCount(receiverUserId);
+		long microblogsReceiverUserId = receiverUserId;
 
-		searchContainer.setTotal(total);
+		searchContainer.setResultsAndTotal(() -> MicroblogsEntryServiceUtil.getUserMicroblogsEntries(microblogsReceiverUserId, searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryServiceUtil.getUserMicroblogsEntriesCount(microblogsReceiverUserId));
 
-		results = MicroblogsEntryServiceUtil.getUserMicroblogsEntries(receiverUserId, searchContainer.getStart(), searchContainer.getEnd());
-
-		portletURL.setParameter("receiverUserId", String.valueOf(receiverUserId));
+		portletURL.setParameter("receiverUserId", String.valueOf(microblogsReceiverUserId));
 	}
 	else if (Validator.isNotNull(assetTagName)) {
-		total = MicroblogsEntryServiceUtil.getMicroblogsEntriesCount(assetTagName);
+		String microblogsAssetTagName = assetTagName;
 
-		searchContainer.setTotal(total);
+		searchContainer.setResultsAndTotal(() -> MicroblogsEntryServiceUtil.getMicroblogsEntries(microblogsAssetTagName, searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryServiceUtil.getMicroblogsEntriesCount(microblogsAssetTagName));
 
-		results = MicroblogsEntryServiceUtil.getMicroblogsEntries(assetTagName, searchContainer.getStart(), searchContainer.getEnd());
-
-		portletURL.setParameter("assetTagName", String.valueOf(assetTagName));
+		portletURL.setParameter("assetTagName", microblogsAssetTagName);
 	}
 	else if (tabs1.equals("timeline")) {
 		if (userPublicPage) {
-			total = MicroblogsEntryServiceUtil.getUserMicroblogsEntriesCount(group.getClassPK());
-
-			searchContainer.setTotal(total);
-
-			results = MicroblogsEntryServiceUtil.getUserMicroblogsEntries(group.getClassPK(), searchContainer.getStart(), searchContainer.getEnd());
+			searchContainer.setResultsAndTotal(() -> MicroblogsEntryServiceUtil.getUserMicroblogsEntries(group.getClassPK(), searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryServiceUtil.getUserMicroblogsEntriesCount(group.getClassPK()));
 		}
 		else {
-			total = MicroblogsEntryServiceUtil.getMicroblogsEntriesCount();
-
-			searchContainer.setTotal(total);
-
-			results = MicroblogsEntryServiceUtil.getMicroblogsEntries(searchContainer.getStart(), searchContainer.getEnd());
+			searchContainer.setResultsAndTotal(() -> MicroblogsEntryServiceUtil.getMicroblogsEntries(searchContainer.getStart(), searchContainer.getEnd()), MicroblogsEntryServiceUtil.getMicroblogsEntriesCount());
 		}
 	}
-
-	searchContainer.setResults(results);
 
 	PortletURL microblogsEntriesURL = PortletURLBuilder.createRenderURL(
 		renderResponse
@@ -161,7 +145,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		LiferayWindowState.EXCLUSIVE
 	).buildPortletURL();
 
-	request.setAttribute(WebKeys.MICROBLOGS_ENTRIES, results);
+	request.setAttribute(WebKeys.MICROBLOGS_ENTRIES, searchContainer.getResults());
 	request.setAttribute(WebKeys.MICROBLOGS_ENTRIES_URL, microblogsEntriesURL);
 	%>
 

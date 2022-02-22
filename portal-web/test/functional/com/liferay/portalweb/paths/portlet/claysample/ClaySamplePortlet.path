@@ -81,6 +81,11 @@
 	<td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//button[.='${key_item}']/..//span[contains(@class,'sticker-overlay')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CLAY_SECTION</td>
+	<td>//section[contains(@id,'portlet_ClaySamplePortlet')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

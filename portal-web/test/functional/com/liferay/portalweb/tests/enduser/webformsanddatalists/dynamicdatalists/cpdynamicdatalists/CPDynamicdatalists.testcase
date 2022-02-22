@@ -1727,7 +1727,6 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test CopyDataDefinition {
 		Navigator.openURL();

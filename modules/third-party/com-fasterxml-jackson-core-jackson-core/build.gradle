@@ -1,0 +1,25 @@
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", transitive: false, version: "2.10.3"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	exclude "module-info.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}

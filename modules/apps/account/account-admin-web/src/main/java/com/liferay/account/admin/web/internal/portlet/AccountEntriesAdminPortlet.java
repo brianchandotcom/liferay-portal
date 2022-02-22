@@ -47,7 +47,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/account_entries_admin/view.jsp",
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator"
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

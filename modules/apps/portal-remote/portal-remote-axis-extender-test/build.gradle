@@ -1,6 +1,0 @@
-apply plugin: "nebula.optional-base"
-
-dependencies {
-	testIntegrationCompile group: "axis", name: "axis", optional, version: "1.4"
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

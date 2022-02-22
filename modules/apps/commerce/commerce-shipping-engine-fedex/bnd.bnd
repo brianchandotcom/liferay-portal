@@ -1,5 +1,25 @@
 Bundle-Name: Liferay Commerce Shipping Engine FedEx
 Bundle-SymbolicName: com.liferay.commerce.shipping.engine.fedex
 Bundle-Version: 5.0.14
+Import-Package:\
+	!com.ibm.*,\
+	\
+	!com.sun.*,\
+	\
+	!javax.jms.*,\
+	\
+	!javax.swing.*,\
+	\
+	!org.apache.bsf.*,\
+	!org.apache.commons.httpclient.*,\
+	!org.apache.commons.net.*,\
+	\
+	!org.exolab.castor.xml.*,\
+	\
+	!org.omg.*,\
+	\
+	!sun.awt.image.codec,\
+	\
+	*
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Web-ContextPath: /commerce-shipping-engine-fedex

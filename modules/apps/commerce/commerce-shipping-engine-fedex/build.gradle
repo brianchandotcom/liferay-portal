@@ -1,11 +1,12 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "com.fedex.ws", version: "1.0.0"
+	compileInclude group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
+	compileInclude group: "commons-discovery", name: "commons-discovery", version: "0.4"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	compileOnly group: "org.apache.axis", name: "axis", version: "1.4"
 	compileOnly group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

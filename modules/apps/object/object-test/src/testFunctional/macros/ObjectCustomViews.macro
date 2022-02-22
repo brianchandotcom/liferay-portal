@@ -1,0 +1,24 @@
+definition {
+
+    macro addObjectViewViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectCustomViews#ADD_VIEW_NAME",
+			value1 = "${viewName}");
+		
+		Button.clickSave();
+
+		WaitForPageLoad();
+	}
+
+    macro assertObjectView {
+		var key_viewLabel = "${viewLabel}";
+
+		AssertElementPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
+	}
+
+    macro goToViewsTab {
+		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
+	}
+}

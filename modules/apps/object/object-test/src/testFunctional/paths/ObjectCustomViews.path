@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>ObjectCustomViews</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectCustomViews</td></tr>
+</thead>
+
+<tbody>
+    <tr>
+		<td>ADD_VIEW_NAME</td>
+		<td>//input[contains(@id,'listObjectCustomViewName')]</td>
+		<td></td>
+	</tr>
+    <tr>
+		<td>OBJECT_VIEW_LABEL</td>
+		<td>//div[(@class = 'dnd-td') and contains (.,'${key_viewLabel}')]</td>
+		<td></td>
+	</tr>
+    <tr>
+		<td>OBJECT_VIEWS_TAB</td>
+		<td>//a[contains(text(),'Views')]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

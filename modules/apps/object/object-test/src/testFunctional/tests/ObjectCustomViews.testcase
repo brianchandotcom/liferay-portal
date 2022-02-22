@@ -53,12 +53,25 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateView {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147756 CanCreateView pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 171621",
+			objectName = "CustomObject171621",
+			pluralLabelName = "Custom Objects 171621");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 171621");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.assertObjectView(viewLabel = "Custom Views");
+
 
 	}
 

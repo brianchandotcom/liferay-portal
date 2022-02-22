@@ -17,6 +17,7 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -76,7 +77,8 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		Locale locale, ObjectField objectField) {
+		ObjectField objectField,
+		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"objectFieldId", objectField.getObjectFieldId()

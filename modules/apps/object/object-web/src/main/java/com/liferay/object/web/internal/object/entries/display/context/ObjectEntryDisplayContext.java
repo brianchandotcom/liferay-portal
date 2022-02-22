@@ -38,6 +38,7 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -418,6 +419,32 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
+	private ObjectFieldRenderingContext _createObjectFieldRenderingContext()
+		throws PortalException {
+
+		ObjectFieldRenderingContext objectFieldRenderingContext =
+			new ObjectFieldRenderingContext();
+
+		objectFieldRenderingContext.setGroupId(
+			_objectRequestHelper.getScopeGroupId());
+		objectFieldRenderingContext.setHttpServletRequest(
+			_objectRequestHelper.getRequest());
+		objectFieldRenderingContext.setLocale(_objectRequestHelper.getLocale());
+
+		ObjectEntry objectEntry = getObjectEntry();
+
+		if (objectEntry != null) {
+			objectFieldRenderingContext.setObjectEntryId(
+				objectEntry.getObjectEntryId());
+		}
+
+		objectFieldRenderingContext.setPortletId(
+			_objectRequestHelper.getPortletId());
+		objectFieldRenderingContext.setUserId(_objectRequestHelper.getUserId());
+
+		return objectFieldRenderingContext;
+	}
+
 	private DDMForm _getDDMForm(ObjectLayoutTab objectLayoutTab)
 		throws PortalException {
 
@@ -462,7 +489,8 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private DDMFormField _getDDMFormField(
-		ObjectField objectField, boolean readOnly) {
+			ObjectField objectField, boolean readOnly)
+		throws PortalException {
 
 		// TODO Store the type and the object field type in the database
 
@@ -484,7 +512,7 @@ public class ObjectEntryDisplayContext {
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
 		Map<String, Object> properties = objectFieldBusinessType.getProperties(
-			_objectRequestHelper.getLocale(), objectField);
+			objectField, _createObjectFieldRenderingContext());
 
 		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));

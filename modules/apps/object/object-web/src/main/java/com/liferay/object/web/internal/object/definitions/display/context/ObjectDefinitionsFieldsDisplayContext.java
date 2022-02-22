@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
@@ -168,13 +169,14 @@ public class ObjectDefinitionsFieldsDisplayContext {
 	}
 
 	public Map<String, Object> getObjectFieldProperties(
-		Locale locale, ObjectField objectField) {
+		ObjectField objectField) {
 
 		ObjectFieldBusinessType objectFieldBusinessType =
 			_objectFieldBusinessTypeServicesTracker.getObjectFieldBusinessType(
 				objectField.getBusinessType());
 
-		return objectFieldBusinessType.getProperties(locale, objectField);
+		return objectFieldBusinessType.getProperties(
+			objectField, _createObjectFieldRenderingContext());
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -191,6 +193,15 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);
+	}
+
+	private ObjectFieldRenderingContext _createObjectFieldRenderingContext() {
+		ObjectFieldRenderingContext objectFieldRenderingContext =
+			new ObjectFieldRenderingContext();
+
+		objectFieldRenderingContext.setLocale(_objectRequestHelper.getLocale());
+
+		return objectFieldRenderingContext;
 	}
 
 	private final FFBusinessTypeAttachmentConfiguration

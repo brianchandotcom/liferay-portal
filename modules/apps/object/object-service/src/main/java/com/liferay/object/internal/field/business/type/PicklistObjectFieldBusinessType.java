@@ -20,6 +20,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -79,13 +80,14 @@ public class PicklistObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		Locale locale, ObjectField objectField) {
+		ObjectField objectField,
+		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
 			"options",
 			_getDDMFormFieldOptions(
 				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-				locale)
+				objectFieldRenderingContext.getLocale())
 		).build();
 	}
 

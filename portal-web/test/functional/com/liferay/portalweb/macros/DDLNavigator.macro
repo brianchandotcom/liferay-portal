@@ -22,7 +22,7 @@ definition {
 	macro gotoDDLRecordEditViaWorkflow {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
-		WorkflowAsset.viewDetails(
+		DDLNavigator.viewDetails(
 			userName = "${userName}",
 			workflowStatus = "${workflowStatus}");
 	}
@@ -90,6 +90,18 @@ definition {
 		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewDetails {
+		Click(locator1 = "Icon#INFO");
+
+		AssertTextEquals(
+			locator1 = "NavBar#DETAILS",
+			value1 = "Details");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
+			value1 = "${workflowStatus}");
 	}
 
 }

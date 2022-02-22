@@ -1065,7 +1065,7 @@ definition {
 				locator1 = "DDLRecord#FIELD_1",
 				value1 = "${fieldFieldLabel}");
 
-			AssertTextEquals.assertPartialText(
+			AssertElementPresent(
 				locator1 = "DDLRecord#FIELD_1",
 				value1 = "${ddlRecordFieldData}");
 		}

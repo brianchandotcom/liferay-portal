@@ -1180,11 +1180,8 @@ definition {
 			fieldName = "Text");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertGuestCannotEditRecord {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1320,12 +1317,6 @@ definition {
 			fieldName = "Text");
 
 		Portlet.viewCannotPublish();
-
-		Navigator.openSpecificURL(url = "${adminEditURL}");
-
-		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
-			fieldName = "Document",
-			userRole = "Guest");
 
 		Navigator.openSpecificURL(url = "${adminEditURL}");
 
@@ -1583,11 +1574,8 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertUserUpdateRejectedRecord {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -1711,9 +1699,7 @@ definition {
 			workflowAssignedTo = "userfn userln",
 			workflowTask = "Update");
 
-		DDLNavigator.gotoDDLRecordEditViaWorkflow(
-			userName = "userfn userln",
-			workflowStatus = "PENDING (UPDATE)");
+		DDLNavigator.gotoDDLRecordEditViaWorkflow(workflowStatus = "PENDING (UPDATE)");
 
 		User.logoutPG();
 

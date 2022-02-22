@@ -1313,7 +1313,6 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewIntegerFieldPredefinedValue {
 		Navigator.openURL();

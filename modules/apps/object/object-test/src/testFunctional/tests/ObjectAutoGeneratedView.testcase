@@ -50,6 +50,16 @@ definition {
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 	}
 
+	@description = "LPS-147658 - Verify it is possible to submit an empty value for a Date field and it will be correctly displayed on the View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDisplayEmptyDateValue {
+		property portal.acceptance = "true";
+
+		// TODO LPS-147871 CanDisplayEmptyDateValue pending implementation
+
+	}
+
 	@description = "LPS-142659 - Verify it is possible to edit a entry of Clob field and view the update on entry table"
 	@priority = "4"
 	test CanEditClobField {

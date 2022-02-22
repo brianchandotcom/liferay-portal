@@ -165,6 +165,11 @@ public class BatchPlannerPlanWrapper
 		return model.fetchBatchPlannerLog();
 	}
 
+	@Override
+	public BatchPlannerPolicy fetchBatchPlannerPolicy(String name) {
+		return model.fetchBatchPlannerPolicy(name);
+	}
+
 	/**
 	 * Returns the active of this batch planner plan.
 	 *

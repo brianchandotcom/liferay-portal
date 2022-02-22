@@ -214,6 +214,10 @@ public interface BatchPlannerPolicyLocalService
 		long batchPlannerPolicyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPolicy fetchBatchPlannerPolicy(
+		long batchPlannerPlanId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

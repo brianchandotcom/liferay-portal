@@ -266,6 +266,14 @@ public class BatchPlannerPolicyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+		fetchBatchPlannerPolicy(long batchPlannerPlanId, String name) {
+
+		return _batchPlannerPolicyLocalService.fetchBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

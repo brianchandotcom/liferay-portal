@@ -45,6 +45,9 @@ public class CommerceOrderActionKeys {
 	public static final String MANAGE_COMMERCE_ORDER_NOTES =
 		"MANAGE_COMMERCE_ORDER_NOTES";
 
+	public static final String MANAGE_COMMERCE_ORDER_PAYMENT_METHODS =
+		"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS";
+
 	public static final String MANAGE_COMMERCE_ORDER_PAYMENT_TERMS =
 		"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS";
 

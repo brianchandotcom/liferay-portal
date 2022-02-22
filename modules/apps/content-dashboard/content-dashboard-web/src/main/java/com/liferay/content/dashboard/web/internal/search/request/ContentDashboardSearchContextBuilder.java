@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -122,9 +123,39 @@ public class ContentDashboardSearchContextBuilder {
 					Optional::isPresent
 				).map(
 					Optional::get
+				).filter(
+					jsonObject -> !jsonObject.isNull("classPK")
 				).mapToLong(
 					jsonObject -> jsonObject.getLong("classPK")
 				).toArray());
+
+			searchContext.setEntryClassNames(
+				Stream.of(
+					contentDashboardItemSubtypePayloads
+				).map(
+					contentDashboardItemSubtypePayload -> {
+						try {
+							return Optional.of(
+								JSONFactoryUtil.createJSONObject(
+									contentDashboardItemSubtypePayload));
+						}
+						catch (JSONException jsonException) {
+							_log.error(jsonException);
+
+							return Optional.<JSONObject>empty();
+						}
+					}
+				).filter(
+					Optional::isPresent
+				).map(
+					Optional::get
+				).map(
+					jsonObject -> jsonObject.getString(Field.ENTRY_CLASS_NAME)
+				).filter(
+					entryClassName -> Validator.isNotNull(entryClassName)
+				).toArray(
+					size -> new String[size]
+				));
 		}
 
 		if (_end != null) {

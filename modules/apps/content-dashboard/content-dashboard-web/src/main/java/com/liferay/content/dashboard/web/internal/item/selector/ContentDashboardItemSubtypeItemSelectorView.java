@@ -230,6 +230,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		if (infoItemFormVariationsProvider == null) {
 			contentDashboardItemTypesJSONArray.put(
 				JSONUtil.put(
+					"entryClassName", className
+				).put(
 					"icon", _getIcon(className)
 				).put(
 					"itemSubtypes", JSONFactoryUtil.createJSONArray()
@@ -291,6 +293,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					).put(
 						"classPK",
 						String.valueOf(infoItemFormVariation.getKey())
+					).put(
+						"entryClassName", className
 					).put(
 						"label",
 						_getInfoItemFormVariationLabel(

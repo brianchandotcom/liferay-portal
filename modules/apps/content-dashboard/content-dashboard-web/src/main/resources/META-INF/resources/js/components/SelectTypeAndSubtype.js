@@ -33,7 +33,11 @@ const SelectTypeAndSubtype = ({
 		<TreeFilter
 			childrenPropertyKey="itemSubtypes"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
-			mandatoryFieldsForFiltering={['className', 'classPK']}
+			mandatoryFieldsForFiltering={[
+				'className',
+				'classPK',
+				'entryClassName',
+			]}
 			namePropertyKey="label"
 			nodes={nodes}
 			portletNamespace={portletNamespace}

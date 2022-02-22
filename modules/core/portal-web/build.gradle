@@ -1,5 +1,4 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

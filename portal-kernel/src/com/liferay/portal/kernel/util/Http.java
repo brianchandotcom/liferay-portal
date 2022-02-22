@@ -314,6 +314,41 @@ public interface Http {
 
 	}
 
+	public class InputStreamPart {
+
+		public InputStreamPart(
+			String name, String inputStreamName, InputStream inputStream,
+			String contentType) {
+
+			_name = name;
+			_inputStreamName = inputStreamName;
+			_inputStream = inputStream;
+			_contentType = contentType;
+		}
+
+		public String getContentType() {
+			return _contentType;
+		}
+
+		public InputStream getInputStream() {
+			return _inputStream;
+		}
+
+		public String getInputStreamName() {
+			return _inputStreamName;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		private final String _contentType;
+		private final InputStream _inputStream;
+		private final String _inputStreamName;
+		private final String _name;
+
+	}
+
 	public enum Method {
 
 		DELETE, GET, HEAD, PATCH, POST, PUT
@@ -348,6 +383,26 @@ public interface Http {
 			}
 
 			_headers.put(name, value);
+		}
+
+		public void addInputStreamPart(
+			String name, String inputStreamName, InputStream inputStream,
+			String contentType) {
+
+			if (_body != null) {
+				throw new IllegalArgumentException(
+					"File part cannot be added because a body has already " +
+						"been set");
+			}
+
+			if (_inputStreamParts == null) {
+				_inputStreamParts = new ArrayList<>();
+			}
+
+			InputStreamPart inputStreamPart = new InputStreamPart(
+				name, inputStreamName, inputStream, contentType);
+
+			_inputStreamParts.add(inputStreamPart);
 		}
 
 		public void addPart(String name, String value) {
@@ -389,6 +444,10 @@ public interface Http {
 
 		public Map<String, String> getHeaders() {
 			return _headers;
+		}
+
+		public List<InputStreamPart> getInputStreamParts() {
+			return _inputStreamParts;
 		}
 
 		public String getLocation() {
@@ -526,6 +585,12 @@ public interface Http {
 			_headers = headers;
 		}
 
+		public void setInputStreamParts(
+			List<InputStreamPart> inputStreamParts) {
+
+			_inputStreamParts = inputStreamParts;
+		}
+
 		public void setLocation(String location) {
 			_location = location;
 		}
@@ -581,6 +646,7 @@ public interface Http {
 		private List<FilePart> _fileParts;
 		private boolean _followRedirects = true;
 		private Map<String, String> _headers;
+		private List<InputStreamPart> _inputStreamParts;
 		private String _location;
 		private Method _method = Method.GET;
 		private Map<String, String> _parts;

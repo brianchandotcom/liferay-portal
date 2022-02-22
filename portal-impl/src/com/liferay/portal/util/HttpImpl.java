@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -97,6 +98,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -1193,7 +1195,8 @@ public class HttpImpl implements Http {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getParts(), options.getResponse(),
+			options.getFileParts(), options.getInputStreamParts(),
+			options.getParts(), options.getResponse(),
 			options.isFollowRedirects(), options.getTimeout());
 	}
 
@@ -1225,7 +1228,8 @@ public class HttpImpl implements Http {
 		return URLtoInputStream(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getParts(), options.getResponse(),
+			options.getFileParts(), options.getInputStreamParts(),
+			options.getParts(), options.getResponse(),
 			options.isFollowRedirects(), options.getTimeout());
 	}
 
@@ -1433,9 +1437,11 @@ public class HttpImpl implements Http {
 
 	protected void processPostMethod(
 		RequestBuilder requestBuilder, Map<String, String> headers,
-		List<Http.FilePart> fileParts, Map<String, String> parts) {
+		List<Http.FilePart> fileParts,
+		List<Http.InputStreamPart> inputStreamParts,
+		Map<String, String> parts) {
 
-		if (ListUtil.isEmpty(fileParts)) {
+		if (ListUtil.isEmpty(fileParts) && ListUtil.isEmpty(inputStreamParts)) {
 			if (parts != null) {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {
 					String value = entry.getValue();
@@ -1476,17 +1482,43 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			for (Http.FilePart filePart : fileParts) {
-				ByteArrayBody byteArrayBody = new ByteArrayBody(
-					filePart.getValue(), ContentType.DEFAULT_BINARY,
-					filePart.getFileName());
+			if (fileParts != null) {
+				for (Http.FilePart filePart : fileParts) {
+					ByteArrayBody byteArrayBody = new ByteArrayBody(
+						filePart.getValue(), ContentType.DEFAULT_BINARY,
+						filePart.getFileName());
 
-				multipartEntityBuilder.addPart(
-					filePart.getName(), byteArrayBody);
+					multipartEntityBuilder.addPart(
+						filePart.getName(), byteArrayBody);
+				}
+			}
+
+			if (inputStreamParts != null) {
+				for (InputStreamPart inputStreamPart : inputStreamParts) {
+					ContentType contentType = ContentType.DEFAULT_BINARY;
+
+					if (inputStreamPart.getContentType() != null) {
+						contentType = ContentType.create(
+							inputStreamPart.getContentType());
+					}
+
+					multipartEntityBuilder.addPart(
+						inputStreamPart.getName(),
+						new InputStreamBody(
+							inputStreamPart.getInputStream(), contentType,
+							inputStreamPart.getInputStreamName()));
+				}
 			}
 
 			requestBuilder.setEntity(multipartEntityBuilder.build());
 		}
+	}
+
+	protected void processPostMethod(
+		RequestBuilder requestBuilder, Map<String, String> headers,
+		List<Http.FilePart> fileParts, Map<String, String> parts) {
+
+		processPostMethod(requestBuilder, headers, fileParts, null, parts);
 	}
 
 	protected org.apache.http.cookie.Cookie toHttpCookie(Cookie cookie) {
@@ -1584,25 +1616,15 @@ public class HttpImpl implements Http {
 	protected byte[] URLtoByteArray(
 			String location, Http.Method method, Map<String, String> headers,
 			Cookie[] cookies, Http.Auth auth, Http.Body body,
-			List<Http.FilePart> fileParts, Map<String, String> parts,
-			Http.Response response, boolean followRedirects)
-		throws IOException {
-
-		return URLtoByteArray(
-			location, method, headers, cookies, auth, body, fileParts, parts,
-			response, followRedirects, 0);
-	}
-
-	protected byte[] URLtoByteArray(
-			String location, Http.Method method, Map<String, String> headers,
-			Cookie[] cookies, Http.Auth auth, Http.Body body,
-			List<Http.FilePart> fileParts, Map<String, String> parts,
-			Http.Response response, boolean followRedirects, int timeout)
+			List<Http.FilePart> fileParts,
+			List<Http.InputStreamPart> inputStreamParts,
+			Map<String, String> parts, Http.Response response,
+			boolean followRedirects, int timeout)
 		throws IOException {
 
 		try (InputStream inputStream = URLtoInputStream(
 				location, method, headers, cookies, auth, body, fileParts,
-				parts, response, followRedirects, timeout)) {
+				inputStreamParts, parts, response, followRedirects, timeout)) {
 
 			if (inputStream == null) {
 				return null;
@@ -1622,23 +1644,37 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	protected InputStream URLtoInputStream(
+	protected byte[] URLtoByteArray(
 			String location, Http.Method method, Map<String, String> headers,
 			Cookie[] cookies, Http.Auth auth, Http.Body body,
 			List<Http.FilePart> fileParts, Map<String, String> parts,
 			Http.Response response, boolean followRedirects)
 		throws IOException {
 
-		return URLtoInputStream(
+		return URLtoByteArray(
 			location, method, headers, cookies, auth, body, fileParts, parts,
 			response, followRedirects, 0);
+	}
+
+	protected byte[] URLtoByteArray(
+			String location, Http.Method method, Map<String, String> headers,
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects, int timeout)
+		throws IOException {
+
+		return URLtoByteArray(
+			location, method, headers, cookies, auth, body, fileParts, null,
+			parts, response, followRedirects, timeout);
 	}
 
 	protected InputStream URLtoInputStream(
 			String location, Http.Method method, Map<String, String> headers,
 			Cookie[] cookies, Http.Auth auth, Http.Body body,
-			List<Http.FilePart> fileParts, Map<String, String> parts,
-			Http.Response response, boolean followRedirects, int timeout)
+			List<Http.FilePart> fileParts,
+			List<Http.InputStreamPart> inputStreamParts,
+			Map<String, String> parts, Http.Response response,
+			boolean followRedirects, int timeout)
 		throws IOException {
 
 		URI uri = null;
@@ -1720,7 +1756,8 @@ public class HttpImpl implements Http {
 					}
 
 					processPostMethod(
-						requestBuilder, headers, fileParts, parts);
+						requestBuilder, headers, fileParts, inputStreamParts,
+						parts);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {
@@ -1743,9 +1780,9 @@ public class HttpImpl implements Http {
 			if ((method.equals(Method.PATCH) ||
 				 method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
-				((body != null) ||
-				 ((fileParts != null) && !fileParts.isEmpty()) ||
-				 ((parts != null) && !parts.isEmpty())) &&
+				((body != null) || !ListUtil.isEmpty(fileParts) ||
+				 !ListUtil.isEmpty(inputStreamParts) ||
+				 !MapUtil.isEmpty(parts)) &&
 				!hasRequestHeader(requestBuilder, HttpHeaders.CONTENT_TYPE)) {
 
 				requestBuilder.addHeader(
@@ -1813,8 +1850,8 @@ public class HttpImpl implements Http {
 
 						return URLtoInputStream(
 							locationHeaderValue, Http.Method.GET, headers,
-							cookies, auth, body, fileParts, parts, response,
-							followRedirects, timeout);
+							cookies, auth, body, fileParts, inputStreamParts,
+							parts, response, followRedirects, timeout);
 					}
 
 					response.setRedirect(locationHeaderValue);
@@ -1922,6 +1959,30 @@ public class HttpImpl implements Http {
 				_log.error(exception);
 			}
 		}
+	}
+
+	protected InputStream URLtoInputStream(
+			String location, Http.Method method, Map<String, String> headers,
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects)
+		throws IOException {
+
+		return URLtoInputStream(
+			location, method, headers, cookies, auth, body, fileParts, parts,
+			response, followRedirects, 0);
+	}
+
+	protected InputStream URLtoInputStream(
+			String location, Http.Method method, Map<String, String> headers,
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects, int timeout)
+		throws IOException {
+
+		return URLtoInputStream(
+			location, method, headers, cookies, auth, body, fileParts, null,
+			parts, response, followRedirects, timeout);
 	}
 
 	private URI _getURI(String uriString) throws URISyntaxException {

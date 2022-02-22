@@ -18,13 +18,16 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.internal.field.business.type.attachment.AttachmentHelper;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -81,7 +84,29 @@ public class AttachmentObjectFieldBusinessType
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"folderId",
+			() -> {
+				if (Validator.isNull(
+						objectFieldRenderingContext.getPortletId())) {
+
+					return null;
+				}
+
+				Folder folder = _attachmentHelper.getFolder(
+					objectFieldRenderingContext);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return folder.getFolderId();
+			}
+		).put(
+			"objectEntryId", objectFieldRenderingContext.getObjectEntryId()
+		).put(
 			"objectFieldId", objectField.getObjectFieldId()
+		).put(
+			"portletId", objectFieldRenderingContext.getPortletId()
 		).build();
 
 		List<ObjectFieldSetting> objectFieldSettings =
@@ -95,6 +120,9 @@ public class AttachmentObjectFieldBusinessType
 
 		return properties;
 	}
+
+	@Reference
+	private AttachmentHelper _attachmentHelper;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

@@ -3845,8 +3845,8 @@ log.sanitizer.enabled=false</echo>
 	<target name="functional-bundle-jboss-db2115-jdk8">
 		<run-functional-test
 			app.server.type="jboss"
-			database.db2.version="11.5.6"
 			database.type="db2"
+			database.version="11.5.6"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -4121,8 +4121,8 @@ log.sanitizer.enabled=false</echo>
 
 		<run-functional-test
 			app.server.type="tomcat"
-			database.db2.version="11.5.6"
 			database.type="db2"
+			database.version="11.5.6"
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
@@ -4948,11 +4948,11 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-smoke-tomcat90-db2115-jdk8">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" test.portal.log.assert="true" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat90-db2115-jdk11_open">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" test.portal.log.assert="true" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat90-mariadb102-jdk8">
@@ -5096,11 +5096,11 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-tomcat90-db2115-jdk8">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="functional-tomcat90-db2115-jdk11_open">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="functional-tomcat90-hypersonic20-jdk8">
@@ -5268,11 +5268,11 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-upgrade-tomcat90-db2115-jdk8">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-db2115-jdk11_open">
-		<run-functional-test app.server.type="tomcat" database.db2.version="11.5.6" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-mariadb102-jdk8">
@@ -5566,7 +5566,7 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-db2115">
-		<run-legacy-database-dump database.db2.version="11.5.6" database.type="db2" />
+		<run-legacy-database-dump database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-mariadb102">
@@ -5790,8 +5790,8 @@ log.sanitizer.enabled=false</echo>
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
-			database.db2.version="11.5.6"
 			database.type="db2"
+			database.version="11.5.6"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -5809,8 +5809,8 @@ log.sanitizer.enabled=false</echo>
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
-			database.db2.version="11.5.6"
 			database.type="db2"
+			database.version="11.5.6"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -6148,11 +6148,11 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-integration-db2115-jdk8">
-		<run-modules-integration-test database.db2.version="11.5.6" database.type="db2" />
+		<run-modules-integration-test database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="modules-integration-db2115-jdk11_open">
-		<run-modules-integration-test database.db2.version="11.5.6" database.type="db2" />
+		<run-modules-integration-test database.type="db2" database.version="11.5.6" />
 	</target>
 
 	<target name="modules-integration-hypersonic20-jdk8">

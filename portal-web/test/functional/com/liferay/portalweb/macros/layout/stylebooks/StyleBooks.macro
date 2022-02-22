@@ -81,6 +81,10 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+			if (isSet(scope)) {
+				NavItem.click(navItem = "${scope}");
+			}
+
 			LexiconCard.clickCard(card = "${previewItem}");
 
 			SelectFrameTop();

@@ -80,25 +80,27 @@ import javax.portlet.WindowStateException;
 public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(
-		GroupProvider groupProvider,
-		LiferayPortletRequest liferayPortletRequest,
+		GroupProvider groupProvider, RenderRequest renderRequest,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
-		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
+
+		_renderRequest = renderRequest;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
-		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
+		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
 		_namespace = PortalUtil.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -864,6 +866,7 @@ public class LayoutsTreeDisplayContext {
 	private Boolean _pageHierarchySelectedOption;
 	private String _pageTypeSelectedOption;
 	private Boolean _privateLayoutsEnabled;
+	private final RenderRequest _renderRequest;
 	private Long _selectedSiteNavigationMenuItemId;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService

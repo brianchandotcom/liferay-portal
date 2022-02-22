@@ -109,7 +109,7 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 		LayoutsTreeDisplayContext layoutsTreeDisplayContext =
 			new LayoutsTreeDisplayContext(
-				_groupProvider, _portal.getLiferayPortletRequest(renderRequest),
+				_groupProvider, renderRequest,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService);

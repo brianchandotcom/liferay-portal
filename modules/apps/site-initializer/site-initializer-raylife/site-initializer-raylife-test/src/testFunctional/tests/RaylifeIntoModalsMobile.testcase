@@ -26,23 +26,6 @@ definition {
 		}
 	}
 
-    @description = "LPS-146423 - Verify if when selecting 'More Info' in a product, information panel is opened."
-	@priority = "4"
-	test IfPanelFromMoreInfoShowsUpPhone {
-		SetWindowSize(value1 = "360,720");
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-        Click(
-			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
-			productName = "Business Owners Policy");
-
-		AssertElementPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
-
-	}
-
 	@description = "LPS-146424 - Verify if when the 'Dismiss' button is clicked, the information panel for 'More Info' is dismissed."
 	@priority = "3"
 	test IfClickingOnDismissPanelIsClosedPhone {
@@ -56,11 +39,10 @@ definition {
 			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
 			productName = "Business Owners Policy");
 
-        Click(locator1 = "RaylifeMobile#BUTTON_DISMISS_MOBILE");
+		Click(locator1 = "RaylifeMobile#BUTTON_DISMISS_MOBILE");
 
 		AssertElementNotPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
-
-  	}
+	}
 
 	@description = "LPS-146425 - Verify if when the 'Dismiss' button is clicked, the information panel for 'More Info' is dismissed."
 	@priority = "3"
@@ -75,10 +57,25 @@ definition {
 			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
 			productName = "Business Owners Policy");
 
-        Click(locator1 = "RaylifeMobile#BUTTON_DISMISS_MOBILE");
+		Click(locator1 = "RaylifeMobile#BUTTON_DISMISS_MOBILE");
 
 		AssertElementNotPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
+	}
 
+	@description = "LPS-146423 - Verify if when selecting 'More Info' in a product, information panel is opened."
+	@priority = "4"
+	test IfPanelFromMoreInfoShowsUpPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
+			productName = "Business Owners Policy");
+
+		AssertElementPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
 	}
 
 	@description = "LPS-146426 - Verify if when selecting 'More Info' in a product, information panel is opened."
@@ -90,21 +87,11 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
-        Click(
+		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
 			productName = "Business Owners Policy");
 
 		AssertElementPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
-
-  	}
+	}
 
 }
-
-
-
-
-
-
-
-
-

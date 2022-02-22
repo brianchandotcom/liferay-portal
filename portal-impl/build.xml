@@ -903,17 +903,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 	</target>
 
-	<target name="tcpmon">
-		<java
-			classname="org.apache.axis.utils.tcpmon"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Xmx128m" />
-		</java>
-	</target>
-
 	<target name="upgrade-db">
 		<java
 			classname="com.liferay.portal.tools.DBUpgrader"

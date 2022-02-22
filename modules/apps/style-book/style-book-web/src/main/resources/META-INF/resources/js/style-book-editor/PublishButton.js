@@ -104,7 +104,6 @@ export default function PublishButton() {
 						<ClayModal
 							aria-label={Liferay.Language.get('publishing-info')}
 							observer={observerPublishModal}
-							size="lg"
 							status="info"
 						>
 							<ClayModal.Header>

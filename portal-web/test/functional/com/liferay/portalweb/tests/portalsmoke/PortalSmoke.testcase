@@ -61,6 +61,18 @@ definition {
 	}
 
 	@priority = "4"
+	test SmokeWithEmbeddedHypersonic {
+		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property database.hypersonic.embedded = "true";
+		property database.types = "hypersonic";
+		property portal.smoke = "false";
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test SmokeWithJNDI {
 		property app.server.types = "tomcat,wildfly,weblogic,websphere";
 		property database.jndi.enabled = "true";

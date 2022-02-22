@@ -4774,8 +4774,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="@{delete.liferay.home}" arg2="true" />
 						<then>
+							<get-testcase-property property.name="database.hypersonic.embedded" />
+
 							<antcall target="delete-liferay-home">
-								<param name="keep.hypersonicdb" value="true" />
+								<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
 							</antcall>
 						</then>
 					</if>
@@ -11824,8 +11826,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<isset property="skip.rebuild-database" />
 			</not>
 			<then>
+				<get-testcase-property property.name="database.hypersonic.embedded" />
+
 				<antcall target="delete-liferay-home">
-					<param name="keep.hypersonicdb" value="true" />
+					<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
 				</antcall>
 
 				<get-database-property property.name="database.docker.image" />

@@ -313,9 +313,9 @@ const InviteTeamMembersPage = ({
 					))}
 				</ClayForm.Group>
 
-				<div className="mb-1">
+				<div className="mb-4 ml-3 mt-5">
 					<Button
-						className="ml-3 py-2 text-brandy-secondary"
+						className="mr-3 py-2 text-brandy-secondary"
 						displayType="secondary"
 						prependIcon="hr"
 						small
@@ -325,7 +325,7 @@ const InviteTeamMembersPage = ({
 
 					{values?.invites?.length < MAXIMUM_INVITES_COUNT && (
 						<Button
-							className="btn-outline-primary ml-3 py-2 rounded-xs"
+							className="btn-outline-primary cp-btn-add-members py-2 rounded-xs"
 							onClick={() => {
 								setBaseButtonDisabled(false);
 								setFieldValue('invites', [

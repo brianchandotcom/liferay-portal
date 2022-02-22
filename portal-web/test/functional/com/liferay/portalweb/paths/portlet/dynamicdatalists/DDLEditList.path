@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_ADD_DATA_DEFINITION</td>
+	<td>//a[@aria-label='Add Data Definition']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_SELECT</td>
 	<td>//div/select[contains(@id,'workflowDefinition')]</td>
 	<td></td>

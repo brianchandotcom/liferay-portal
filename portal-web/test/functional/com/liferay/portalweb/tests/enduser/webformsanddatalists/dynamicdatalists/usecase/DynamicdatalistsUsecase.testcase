@@ -359,49 +359,60 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66229."
-	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankLinkToPageField {
-		Navigator.openURL();
+		task ("Create a DDL containing a Link to Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			PagesAdmin.addPublicPage(pageName = "Test Page");
 
-		PagesAdmin.addPublicPage(pageName = "DDL Page");
+			Navigator.openURL();
 
-		Navigator.gotoPage(pageName = "DDL Page");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		Portlet.addPG(
-			pageName = "DDL Page",
-			portletName = "Dynamic Data Lists Display");
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
-		DDLList.addViaDDLDisplayPG();
+			DynamicDataMapping.addField(
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page",
+				fieldName = "LinkToPage");
 
-		DDLDataDefinition.addViaDDLDisplayPG();
+			DDLDataDefinition.save();
+		}
 
-		DynamicDataMapping.addField(
-			field = "Link to Page",
-			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+		task ("Add the created DDL to the Test Page") {
+			Navigator.openURL();
 
-		DDLDataDefinition.saveViaDDLDisplayPG();
+			Navigator.gotoPage(pageName = "Test Page");
 
-		DDLDataDefinition.selectViaDDLDisplayPG();
+			Portlet.addPG(
+				pageName = "Test Page",
+				portletName = "Dynamic Data Lists Display");
 
-		DDLList.saveViaDDLDisplayPG();
+			DDLList.addViaDDLDisplayPG();
 
-		Navigator.gotoPage(pageName = "DDL Page");
+			DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
 
-		DDLRecord.addViaDDLDisplayPG();
+			DDLList.saveViaDDLDisplayPG();
+		}
 
-		PortletEntry.publish();
+		task ("Assert that the blank link to page field was added") {
+			Navigator.gotoPage(pageName = "Test Page");
 
-		Navigator.gotoPage(pageName = "DDL Page");
+			Click(locator1 = "DDLEditList#PORTLET_ADD_DATA_DEFINITION");
 
-		DDLRecord.viewViaDDLDisplayTable(
-			ddlRecordFieldData = "",
-			fieldFieldLabel = "Link to Page");
+			PortletEntry.publish();
+
+			Navigator.gotoPage(pageName = "Test Page");
+
+			DDLRecord.viewViaDDLDisplayTable(
+				ddlRecordFieldData = "",
+				fieldFieldLabel = "Link to Page");
+		}
 	}
 
 	@description = "This is a use case for LPS-66229."

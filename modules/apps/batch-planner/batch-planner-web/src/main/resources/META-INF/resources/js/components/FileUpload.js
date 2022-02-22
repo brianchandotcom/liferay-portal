@@ -43,7 +43,7 @@ function FileUpload({csvSeparators, portletNamespace}) {
 	const [fileToBeUploaded, setFileToBeUploaded] = useState(null);
 
 	const inputContainsHeadersId = `${portletNamespace}containsHeaders`;
-	const inputCsvSeparatorId = `${portletNamespace}CsvSeparator`;
+	const inputCsvSeparatorId = `${portletNamespace}csvSeparator`;
 	const inputFileId = `${portletNamespace}importFile`;
 
 	const [parserOptions, setParserOptions] = useState({

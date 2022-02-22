@@ -91,35 +91,35 @@ public class ImportResults {
 		map.put("testrayBuildId", String.valueOf(projectId));
 
 		try {
-			NodeList testcases = document.getElementsByTagName("properties");
+			NodeList propertiesNodeList = document.getElementsByTagName(
+				"properties");
 
-			for (int i = 0; i < testcases.getLength(); i++) {
-				Node testCase = testcases.item(i);
+			for (int i = 0; i < propertiesNodeList.getLength(); i++) {
+				Node propertiesNode = propertiesNodeList.item(i);
 
-				Element element = (Element)testCase;
+				Element element = (Element)propertiesNode;
 
-				NodeList properties = element.getElementsByTagName("property");
+				NodeList propertyNodeList = element.getElementsByTagName(
+					"property");
 
-				for (int property = 0; property < properties.getLength();
-					 property++) {
+				for (int j = 0; j < propertyNodeList.getLength(); j++) {
+					Node propertyNode = propertyNodeList.item(j);
 
-					Node node = properties.item(property);
-
-					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-						!node.getNodeName(
+					if ((propertyNode.getNodeType() == Node.ELEMENT_NODE) &&
+						!propertyNode.getNodeName(
 						).equals(
 							"#text"
 						) &&
-						(node.getAttributes(
+						(propertyNode.getAttributes(
 						).getLength() > 0)) {
 
-						String name = node.getAttributes(
+						String name = propertyNode.getAttributes(
 						).getNamedItem(
 							"name"
 						).getTextContent();
 
 						if (name.equals("testray.build.name")) {
-							String value = node.getAttributes(
+							String value = propertyNode.getAttributes(
 							).getNamedItem(
 								"value"
 							).getTextContent();
@@ -146,19 +146,19 @@ public class ImportResults {
 		map.put("testrayProjectId", String.valueOf(projectId));
 
 		try {
-			NodeList testcases = document.getElementsByTagName("testcase");
+			NodeList testCasesNodeList = document.getElementsByTagName(
+				"testcase");
 
-			for (int i = 0; i < testcases.getLength(); i++) {
-				Node testCase = testcases.item(i);
+			for (int i = 0; i < testCasesNodeList.getLength(); i++) {
+				Node testCaseNode = testCasesNodeList.item(i);
 
-				Element element = (Element)testCase;
+				Element element = (Element)testCaseNode;
 
-				NodeList properties = element.getElementsByTagName("property");
+				NodeList propertyNodeList = element.getElementsByTagName(
+					"property");
 
-				for (int property = 0; property < properties.getLength();
-					 property++) {
-
-					Node node = properties.item(property);
+				for (int j = 0; j < propertyNodeList.getLength(); j++) {
+					Node node = propertyNodeList.item(j);
 
 					if ((node.getNodeType() == Node.ELEMENT_NODE) &&
 						!node.getNodeName(

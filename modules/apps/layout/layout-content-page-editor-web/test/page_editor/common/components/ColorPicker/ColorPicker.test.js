@@ -60,9 +60,6 @@ const TOKEN_VALUES = {
 	},
 };
 
-const ERRORS = {
-	defaultId: {background: {error: 'I am an error', value: 'error'}},
-};
 const FIELD = {label: INPUT_NAME, name: INPUT_NAME};
 
 const renderColorPicker = ({
@@ -73,7 +70,7 @@ const renderColorPicker = ({
 }) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
-			<StyleErrorsContextProvider initialState={ERRORS}>
+			<StyleErrorsContextProvider>
 				<ColorPicker
 					config={CONFIG}
 					editedTokenValues={editedTokenValues}

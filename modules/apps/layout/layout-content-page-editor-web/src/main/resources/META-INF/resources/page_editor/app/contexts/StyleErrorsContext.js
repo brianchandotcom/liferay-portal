@@ -16,7 +16,12 @@ import React, {useCallback, useContext, useState} from 'react';
 
 const DEFAULT_ID = 'defaultId';
 
-const StyleErrorsStateContext = React.createContext({});
+const INITIAL_STATE = {
+	setState: () => {},
+	state: {},
+};
+
+const StyleErrorsStateContext = React.createContext(INITIAL_STATE);
 
 export function StyleErrorsContextProvider({children, initialState = {}}) {
 	const [state, setState] = useState(initialState);

@@ -2261,8 +2261,20 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void archiveConsoleLog() {
-		downloadSampleURL(
-			getArchivePath(), true, getBuildURL(), "/consoleText");
+		String archiveFileContent = getArchiveFileContent("consoleText");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return;
+		}
+
+		try {
+			writeArchiveFile(
+				JenkinsResultsParserUtil.redact(getConsoleText()),
+				getArchivePath() + "/consoleText");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to write file", ioException);
+		}
 	}
 
 	protected void archiveJSON() {

@@ -192,9 +192,7 @@ const DropArea = ({
 			className={classNames(
 				'align-items-center bg-brand-primary-lighten-6 font-weight-normal text-neutral-8 d-flex drop-area flex-wrap justify-content-center position-static rounded-xl text-paragraph',
 				{
-					// eslint-disable-next-line quote-props
-					'hide': !showUpload,
-					'margin-left': files.length > 0,
+					'd-none': !showUpload,
 				}
 			)}
 			ref={dropAreaRef}
@@ -204,7 +202,7 @@ const DropArea = ({
 			}}
 		>
 			<div className="align-items-center d-flex flex-wrap justify-content-center upload-button">
-				<p className="c-px-2">
+				<p className="c-px-2 display-mobile">
 					Drag &amp; drop files or
 					{type !== 'image' && <span>&nbsp;</span>}
 				</p>

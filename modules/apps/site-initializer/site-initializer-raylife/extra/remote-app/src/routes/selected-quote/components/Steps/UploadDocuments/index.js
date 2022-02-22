@@ -162,7 +162,7 @@ const UploadDocuments = () => {
 		<div className="d-flex flex-column flex-wrap upload-container">
 			{sections.map((section, index) => (
 				<section
-					className="c-pl-4 c-pr-0 c-pt-6 upload-section"
+					className="c-pl-lg-4 c-pl-md-4 c-pr-0 c-pt-4 upload-section"
 					key={index}
 				>
 					<header className="c-mb-3 header">
@@ -214,7 +214,7 @@ const UploadDocuments = () => {
 				</section>
 			))}
 
-			<div className="d-flex justify-content-end mt-6">
+			<div className="d-flex justify-content-center justify-content-md-end mt-6">
 				<ClayButton
 					className="font-weight-bolder rounded-sm text-neutral-0 text-paragraph"
 					disabled={loading}

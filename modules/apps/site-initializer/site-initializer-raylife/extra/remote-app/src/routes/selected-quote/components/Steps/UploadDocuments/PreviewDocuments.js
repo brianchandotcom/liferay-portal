@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import ProgressBar from '../../../../../common/components/progress-bar';
+import DropArea from '../../DropArea';
 
 const PreviewBody = ({
 	file,
@@ -25,7 +26,7 @@ const PreviewBody = ({
 	<>
 		{showName && (
 			<span
-				className="c-mt-1 ellipsis text-center text-neutral-7 text-paragraph-sm"
+				className="c-mt-1 ellipsis mb-3 text-center text-neutral-7 text-paragraph-sm"
 				title={file.name}
 			>
 				{file.name}
@@ -50,7 +51,7 @@ const PreviewDocument = ({
 	showName = true,
 	type = 'image',
 }) => (
-	<div className="d-flex flex-column view-file-document view-file-margin-right">
+	<div className="d-flex flex-column mr-1 mr-sm-3 view-file-document">
 		<div
 			className="d-flex div-document flex-column text-center"
 			title={file.name}
@@ -79,20 +80,25 @@ const PreviewDocument = ({
 	</div>
 );
 
-const PreviewDocuments = ({files = [], onRemoveFile, type}) => (
+const PreviewDocuments = ({
+	dropAreaProps,
+	files = [],
+	onRemoveFile,
+	setFiles,
+	setShowBadgeInfo,
+	type,
+}) => (
 	<div className="d-flex flex-wrap view-file">
 		{files.map((file, index) => {
 			if (file.progress < 100) {
 				return (
-					<div className="flex-column" title={file.name}>
-						<div
-							className={classNames(
-								'align-items-center bg-brand-primary-lighten-6 card c-mb-1 d-flex flex-column justify-content-center rounded-xl',
-								{
-									spaced: index < 3,
-								}
-							)}
-						>
+					<div
+						className={classNames('flex-column', {
+							'mr-1 mr-sm-3': index < 3,
+						})}
+						title={file.name}
+					>
+						<div className="align-items-center bg-brand-primary-lighten-6 c-mb-1 card d-flex flex-column justify-content-center rounded-xl">
 							<p className="font-weight-normal text-neutral-8 text-paragraph">
 								Uploading...
 							</p>
@@ -122,6 +128,13 @@ const PreviewDocuments = ({files = [], onRemoveFile, type}) => (
 				/>
 			);
 		})}
+
+		<DropArea
+			dropAreaProps={dropAreaProps}
+			files={files}
+			setFiles={setFiles}
+			setShowBadgeInfo={setShowBadgeInfo}
+		/>
 	</div>
 );
 

@@ -17,7 +17,6 @@ import React, {useState} from 'react';
 
 import {InfoBadge} from '../../../../../common/components/fragments/Badges/Info';
 import {removeDocumentById} from '../../../services/DocumentsAndMedia';
-import DropArea from '../../DropArea';
 import PreviewDocuments from './PreviewDocuments';
 
 const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
@@ -40,35 +39,25 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 
 	return (
 		<>
-			<div className="d-flex upload-file">
-				<PreviewDocuments
-					files={files}
-					onRemoveFile={onRemoveFile}
-					type={dropAreaProps.type}
-				/>
-
-				<DropArea
-					dropAreaProps={dropAreaProps}
-					files={files}
-					setFiles={setFiles}
-					setShowBadgeInfo={setShowBadgeInfo}
-				/>
-			</div>
+			<PreviewDocuments
+				dropAreaProps={dropAreaProps}
+				files={files}
+				onRemoveFile={onRemoveFile}
+				setFiles={setFiles}
+				setShowBadgeInfo={setShowBadgeInfo}
+				type={dropAreaProps.type}
+			/>
 
 			{showBadgeInfo && (
 				<div className="c-mt-3 upload-alert">
 					<InfoBadge>
 						<div className="alert-content align-items-center d-flex justify-content-between w-100">
 							<div className="alert-description font-weight-normal text-paragraph">
-								{dropAreaProps.limitFiles}
-
-								<span>
-									files upload limit reached for {title}.
-								</span>
+								{`${dropAreaProps.limitFiles} files upload limit reached for ${title}.`}
 							</div>
 
 							<div
-								className="align-items-center c-mr-4 close-icon d-flex justify-content-center"
+								className="close-icon mr-4"
 								onClick={() => setShowBadgeInfo(!showBadgeInfo)}
 							>
 								<ClayIcon

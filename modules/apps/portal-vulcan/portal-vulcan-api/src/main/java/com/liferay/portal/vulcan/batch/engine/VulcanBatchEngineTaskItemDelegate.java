@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +42,20 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception;
 
+	public default List<String> getCreateEntityScopes() {
+		return Collections.emptyList();
+	}
+
+	public default List<Field> getEntityFields() {
+		return Collections.emptyList();
+	}
+
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;
+
+	public default List<String> getReadEntityScopes() {
+		return Collections.emptyList();
+	}
 
 	public Page<T> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -1,6 +1,7 @@
 @component-name = "portal-object"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -4195,6 +4196,8 @@ definition {
 	@description = "LPS-135400 - There is an explanation about each Relationship type"
 	@priority = "3"
 	test CanViewExplanationRelationshipTypes {
+		property portal.acceptance = "false";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -5801,6 +5804,8 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObject {
+		property portal.acceptance = "false";
+
 		ObjectAdmin.openObjectAdmin();
 
 		Search.searchCP(searchTerm = "Object X");
@@ -5811,6 +5816,8 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObjectField {
+		property portal.acceptance = "false";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -5839,6 +5846,8 @@ definition {
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
 	@priority = "3"
 	test EmptyStateWhenNoRelationship {
+		property portal.acceptance = "false";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

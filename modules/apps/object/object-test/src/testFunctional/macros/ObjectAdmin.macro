@@ -951,6 +951,14 @@ definition {
 			value1 = "${fieldOption}");
 	}
 
+	macro selectSpecificKebabMenuOption {
+		Click(
+			key_objectLabel = "${objectLabel}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.click(menuItem = "${kebabOption}");
+	}
+
 	macro viewCustomObject {
 		AssertElementPresent(
 			key_name = "${name}",

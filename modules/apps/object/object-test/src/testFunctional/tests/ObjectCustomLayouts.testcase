@@ -23,12 +23,70 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveAnotherLayoutAsDefault {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-147724 CannotSaveAnotherLayoutAsDefault pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout ${letter}",
+				objectName = "CustomObject");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Layout A");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Button.clickSave();
+
+		Refresh();
+
+		WaitForSPARefresh();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Layout B");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 2",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Button.clickSave();
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Error:There can only be one default object layout");
 	}
 
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"

@@ -29,18 +29,28 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration",
-	localization = "content/Language"
+	localization = "content/Language",
+	name = "oauth2-in-assertion-configuration-name"
 )
 public interface OAuth2InAssertionConfiguration {
 
-	@Meta.AD(id = "oauth2.in.assertion.issuer")
+	@Meta.AD(
+		description = "oauth2-in-assertion-issuer-help",
+		id = "oauth2.in.assertion.issuer", name = "oauth2-in-assertion-issuer"
+	)
 	public String issuer();
 
-	@Meta.AD(id = "oauth2.in.assertion.signature.json.web.key.set")
+	@Meta.AD(
+		description = "oauth2-in-assertion-signature-json-web-key-set-help",
+		id = "oauth2.in.assertion.signature.json.web.key.set",
+		name = "oauth2-in-assertion-signature-json-web-key-set"
+	)
 	public String signatureJSONWebKeySet();
 
 	@Meta.AD(
-		deflt = "UUID", id = "oauth2.in.assertion.user.auth.type",
+		deflt = "UUID", description = "oauth2-in-assertion-user-auth-type-help",
+		id = "oauth2.in.assertion.user.auth.type",
+		name = "oauth2-in-assertion-user-auth-type",
 		optionValues = {"emailAddress", "screenName", "userId", "UUID"}
 	)
 	public String userAuthType();

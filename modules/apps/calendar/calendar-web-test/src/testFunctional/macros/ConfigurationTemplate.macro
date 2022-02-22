@@ -83,14 +83,14 @@ definition {
 	macro viewOrderFieldsTable {
 		var rowNumber = "1";
 
-        for (var configurationName : list "${tableOrder}") {
-            AssertElementPresent(
-                key_rowNumber = "${rowNumber}",
-                key_configurationName = "${configurationName}",
+		for (var configurationName : list "${tableOrder}") {
+			AssertElementPresent(
+				key_configurationName = "${configurationName}",
+				key_rowNumber = "${rowNumber}",
 				locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME");
 
-            var rowNumber = MathUtil.sum("${rowNumber}", "1");
-        }
-
+			var rowNumber = ${rowNumber} + 1;
+		}
 	}
+
 }

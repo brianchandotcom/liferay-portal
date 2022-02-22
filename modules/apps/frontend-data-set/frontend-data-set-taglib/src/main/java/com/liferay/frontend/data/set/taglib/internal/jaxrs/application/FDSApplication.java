@@ -16,7 +16,6 @@ package com.liferay.frontend.data.set.taglib.internal.jaxrs.application;
 
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.FDSDataProviderRegistry;
-import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSKeywordsFactory;
 import com.liferay.frontend.data.set.provider.search.FDSKeywordsFactoryRegistry;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -102,20 +101,10 @@ public class FDSApplication extends Application {
 				_fdsDataJSONFactory.create(
 					groupId, tableName,
 					fdsDataProvider.getItems(
-						() -> {
-							FDSKeywords fdsKeywords = fdsKeywordsFactory.create(
-								httpServletRequest);
-
-							return fdsKeywords.getKeywords();
-						},
+						fdsKeywordsFactory.create(httpServletRequest),
 						fdsPagination, httpServletRequest, sort),
 					fdsDataProvider.getItemsCount(
-						() -> {
-							FDSKeywords fdsKeywords = fdsKeywordsFactory.create(
-								httpServletRequest);
-
-							return fdsKeywords.getKeywords();
-						},
+						fdsKeywordsFactory.create(httpServletRequest),
 						httpServletRequest),
 					httpServletRequest),
 				MediaType.APPLICATION_JSON

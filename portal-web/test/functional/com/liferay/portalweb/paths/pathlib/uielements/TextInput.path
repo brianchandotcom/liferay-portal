@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]]//div[contains(@class,'text-danger')][normalize-space()='${key_alertMessage}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANSWER</td>
 	<td>//div[label[contains(.,'Answer')]]/input[@type='password']</td>
 	<td></td>

@@ -191,7 +191,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                   class="c-mb-4 item-vocabularies sidebar-dl sidebar-section "
                 >
                   <h6
-                    class="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase"
+                    class="font-weight-semi-bold sidebar-section-subtitle-sm text-2 text-secondary text-uppercase"
                   >
                     public-categories
                   </h6>
@@ -778,7 +778,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                   class="c-mb-4 item-vocabularies sidebar-dl sidebar-section c-mt-4"
                 >
                   <h6
-                    class="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase"
+                    class="font-weight-semi-bold sidebar-section-subtitle-sm text-2 text-secondary text-uppercase"
                   >
                     internal-categories
                   </h6>

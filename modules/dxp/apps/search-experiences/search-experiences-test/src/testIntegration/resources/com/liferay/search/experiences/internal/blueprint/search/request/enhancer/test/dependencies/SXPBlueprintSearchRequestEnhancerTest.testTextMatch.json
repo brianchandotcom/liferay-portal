@@ -1,0 +1,27 @@
+{
+	"configuration": {
+		"queryConfiguration": {
+			"applyIndexerClauses": false,
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "must",
+							"query": {
+								"match": {
+									"localized_title": {
+										"boost": 2,
+										"operator": "or",
+										"query": "${keywords}"
+									}
+								}
+							}
+						}
+					],
+					"enabled": true
+				}
+			]
+		}
+	}
+}

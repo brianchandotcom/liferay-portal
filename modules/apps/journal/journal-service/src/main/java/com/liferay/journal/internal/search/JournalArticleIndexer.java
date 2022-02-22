@@ -80,6 +80,7 @@ import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.query.QueryHelper;
+import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -507,7 +508,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return null;
+		return modelSummaryContributor.getSummary(document, locale, snippet);
 	}
 
 	@Override
@@ -615,6 +616,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
 	}
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	protected ModelSummaryContributor modelSummaryContributor;
 
 	@Reference
 	protected UIDFactory uidFactory;

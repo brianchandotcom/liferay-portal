@@ -358,6 +358,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140774. The user can preview the effects on default fragments in styles book editor."
+	@priority = "4"
+	test PreviewEffectOnDefaultFragment {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Fragments is selected in the preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Fragments");
+		}
+
+		task ("View the Basic Components set is selected in the preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Basic Components");
+		}
+
+		task ("Select the Navigation Bars from Default fragment set in the preview item selector") {
+			StyleBooks.selectPreviewItem(
+				caption = "Showing 4 of 6 Items",
+				previewItem = "Navigation Bars",
+				scope = "Default");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			for (var text : list "Header Dark,Header Light") {
+				AssertVisible(
+					key_title = "${text}",
+					locator1 = "Header#H3_TITLE");
+			}
+
+			SelectFrameTop();
+		}
+
+		task ("Select the Basic Components in the preview item selector") {
+			StyleBooks.selectPreviewItem(previewItem = "Basic Components");
+		}
+
+		task ("Define the color of Button Primary") {
+			StyleBooks.selectForm(formName = "Buttons");
+
+			StyleBooks.expandSection(sectionName = "Button Primary");
+
+			Type(
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#00FF00");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("View the defined color applied on Button fragments") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			for (var i : list "1,2,3") {
+				AssertCssValue(
+					fragmentName = "button",
+					id = "link",
+					index = "${i}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+					locator2 = "color",
+					value1 = "rgba(0, 255, 0, 1)");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all display page templates."
 	@priority = "5"
 	test PreviewStyleBookOnDisplayPageTemplates {

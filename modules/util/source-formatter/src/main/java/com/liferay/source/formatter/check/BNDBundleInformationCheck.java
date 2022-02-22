@@ -40,24 +40,7 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 		}
 
 		_checkBundleName(fileName, absolutePath, content);
-
-		String bundleVersion = BNDSourceUtil.getDefinitionValue(
-			content, "Bundle-Version");
-
-		if (bundleVersion == null) {
-			addMessage(fileName, "Missing Bundle-Version");
-		}
-		else if (!bundleVersion.matches("^\\d+\\.\\d+\\.\\d+$")) {
-			addMessage(fileName, "Invalid Bundle-Version: " + bundleVersion);
-		}
-		else if (absolutePath.endsWith("-test/bnd.bnd") &&
-				 !bundleVersion.equals("1.0.0")) {
-
-			addMessage(
-				fileName,
-				"'Bundle-Version' for *-test modules should always be " +
-					"'1.0.0', since we do not publish these");
-		}
+		_checkBundleVersion(fileName, absolutePath, content);
 
 		return content;
 	}
@@ -119,6 +102,28 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 		}
 		else {
 			addMessage(fileName, "Missing Bundle-SymbolicName");
+		}
+	}
+
+	private void _checkBundleVersion(
+		String fileName, String absolutePath, String content) {
+
+		String bundleVersion = BNDSourceUtil.getDefinitionValue(
+			content, "Bundle-Version");
+
+		if (bundleVersion == null) {
+			addMessage(fileName, "Missing Bundle-Version");
+		}
+		else if (!bundleVersion.matches("^\\d+\\.\\d+\\.\\d+$")) {
+			addMessage(fileName, "Invalid Bundle-Version: " + bundleVersion);
+		}
+		else if (absolutePath.endsWith("-test/bnd.bnd") &&
+				 !bundleVersion.equals("1.0.0")) {
+
+			addMessage(
+				fileName,
+				"'Bundle-Version' for *-test modules should always be " +
+					"'1.0.0', since we do not publish these");
 		}
 	}
 

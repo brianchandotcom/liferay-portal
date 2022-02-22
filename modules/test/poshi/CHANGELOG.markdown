@@ -1,5 +1,52 @@
 # Poshi Runner Change Log
 
+## 1.0.336
+
+### Documentation
+
+* [POSHI-193](https://issues.liferay.com/browse/POSHI-193) - Create documentation for Poshi quick start guide
+
+### IDE
+
+* [POSHI-229](https://issues.liferay.com/browse/POSHI-229) - Begin migration of methods into PoshiParserUtil
+* [POSHI-235](https://issues.liferay.com/browse/POSHI-235) - Research and prototype creating a basic VSCode plugin config file for Poshi syntax
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+* [LPS-147432](https://issues.liferay.com/browse/LPS-147432) - SF rule: Enforce using PoshiScript instead of PoshiXML
+* [LRCI-2648](https://issues.liferay.com/browse/LRCI-2648) - Shift Testray 1 over to GCP instead of the Testray Mount
+* [LRCI-2776](https://issues.liferay.com/browse/LRCI-2776) - Rename the Testray Import task for Poshi Standalone
+* [LRCI-2801](https://issues.liferay.com/browse/LRCI-2801) - Simplify poshi standalone configuration
+
+### Runner
+
+* [POSHI-255](https://issues.liferay.com/browse/POSHI-255) - Casting failure in com.liferay.poshi.runner.util.HttpRequestUtilTest
+
+### Script
+
+* [POSHI-219](https://issues.liferay.com/browse/POSHI-219) - Add additional poshi script syntax validation
+
+### Standalone
+
+* [LRCI-2670](https://issues.liferay.com/browse/LRCI-2670) - Create a sample Poshi testcase for development
+* [LRCI-2671](https://issues.liferay.com/browse/LRCI-2671) - Implement Gradle tasks that will upload Poshi test results to Testray
+
+### Validation
+
+* [POSHI-145](https://issues.liferay.com/browse/POSHI-145) - *.function and *.macro files cannot share the same name
+* [POSHI-201](https://issues.liferay.com/browse/POSHI-201) - Validation doesn't fail for incorrect Util syntax
+* [POSHI-242](https://issues.liferay.com/browse/POSHI-242) - As a Poshi test writer/analyst, I should be able to see error snippets while running validation
+* [POSHI-33](https://issues.liferay.com/browse/POSHI-33) - Remove "component-name" attribute from Poshi Script validation
+
+### WebDriver
+
+* [POSHI-216](https://issues.liferay.com/browse/POSHI-216) - Make the _getOffsetDate reusable
+* [POSHI-240](https://issues.liferay.com/browse/POSHI-240) - Modify dragAndDrop to support offset
+* [POSHI-241](https://issues.liferay.com/browse/POSHI-241) - Consolidate wrappedWebDriver usages in BaseWebDriverImpl
+* [POSHI-243](https://issues.liferay.com/browse/POSHI-243) - Add method to get current UTC time
+* [POSHI-250](https://issues.liferay.com/browse/POSHI-250) - Change default browser type to Google Chrome
+
 ## 1.0.329
 
 ### Other

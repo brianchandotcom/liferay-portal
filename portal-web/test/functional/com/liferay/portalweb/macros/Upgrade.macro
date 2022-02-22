@@ -2920,6 +2920,22 @@ definition {
 				entryTitle = "Blogs Entry Title With Video");
 		}
 
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		AssertVisible(locator1 = "Blogs#UNSUBSCRIBE_LINK");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoPage(pageName = "Blogs");
 
 		Ratings.viewRateThumb(

@@ -71,17 +71,6 @@ public class JournalArticleInfoItemFormVariationsProvider
 	}
 
 	@Override
-	public String getInfoItemFormVariationKey(JournalArticle journalArticle) {
-		if (journalArticle == null) {
-			return null;
-		}
-
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		return String.valueOf(ddmStructure.getStructureId());
-	}
-
-	@Override
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId) {
 

@@ -16,7 +16,6 @@ package com.liferay.document.library.web.internal.info.item.provider;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -67,19 +66,6 @@ public class FileEntryInfoItemFormVariationsProvider
 			).values(
 				dlFileEntryType.getNameMap()
 			).build());
-	}
-
-	@Override
-	public String getInfoItemFormVariationKey(FileEntry fileEntry) {
-		if ((fileEntry == null) ||
-			!(fileEntry.getModel() instanceof DLFileEntry)) {
-
-			return null;
-		}
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		return String.valueOf(dlFileEntry.getFileEntryTypeId());
 	}
 
 	@Override

@@ -124,7 +124,12 @@ public abstract class BaseBuild implements Build {
 		File archiveDir = new File(getArchiveRootDir(), getArchivePath());
 
 		if (archiveDir.exists()) {
-			archiveDir.delete();
+			if (!JenkinsResultsParserUtil.isCINode()) {
+				archiveDir.delete();
+			}
+		}
+		else {
+			archiveDir.mkdirs();
 		}
 
 		try {
@@ -1988,6 +1993,10 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException(ioException);
 			}
 		}
+
+		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
+			archive(getArchiveName());
+		}
 	}
 
 	public static class BuildDisplayNameComparator
@@ -2241,6 +2250,17 @@ public abstract class BaseBuild implements Build {
 		}
 		else {
 			setBuildURL(url);
+		}
+
+		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			if (topLevelBuild != null) {
+				_archiveRootDir = new File(topLevelBuild.getBuildDirPath());
+			}
+			else {
+				_archiveRootDir = new File(getBuildDirPath());
+			}
 		}
 
 		if (fromArchive || fromCompletedBuild) {
@@ -3916,7 +3936,7 @@ public abstract class BaseBuild implements Build {
 				testrayS3Bucket.getTestrayS3BaseURL(), "/[^\\s?]+).*"));
 	}
 
-	private String _archiveName;
+	private String _archiveName = "archive";
 	private File _archiveRootDir = new File(
 		JenkinsResultsParserUtil.urlDependenciesFile.substring(
 			"file:".length()));

@@ -388,6 +388,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getBuildJSONObject() {
+		String archiveFileContent = getArchiveFileContent("api/json");
+
+		if (JenkinsResultsParserUtil.isJSONObject(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
+		}
+
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
@@ -624,6 +630,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
+		String archiveFileContent = getArchiveFileContent("consoleText");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return archiveFileContent;
+		}
+
 		String buildURL = getBuildURL();
 
 		if (buildURL == null) {
@@ -1374,6 +1386,13 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
+		String archiveFileContent = getArchiveFileContent(
+			"testReport/api/json");
+
+		if (JenkinsResultsParserUtil.isJSONObject(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
+		}
+
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
@@ -2353,6 +2372,22 @@ public abstract class BaseBuild implements Build {
 				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesHttp),
 				")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
 				".*/(?<buildNumber>\\d+)/?"));
+	}
+
+	protected String getArchiveFileContent(String urlSuffix) {
+		File archiveFile = new File(
+			getArchiveRootDir(), getArchivePath() + "/" + urlSuffix);
+
+		if (!archiveFile.exists()) {
+			return null;
+		}
+
+		try {
+			return JenkinsResultsParserUtil.read(archiveFile);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected String getBaseGitRepositoryType() {

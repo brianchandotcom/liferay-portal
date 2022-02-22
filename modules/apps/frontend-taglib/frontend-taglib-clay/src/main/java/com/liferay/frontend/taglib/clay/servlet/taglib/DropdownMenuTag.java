@@ -28,6 +28,15 @@ import javax.servlet.jsp.JspException;
 public class DropdownMenuTag extends ButtonTag {
 
 	@Override
+	public int doEndTag() throws JspException {
+		if (DropdownItemListUtil.isEmpty(_dropdownItems)) {
+			return EVAL_PAGE;
+		}
+
+		return super.doEndTag();
+	}
+
+	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 

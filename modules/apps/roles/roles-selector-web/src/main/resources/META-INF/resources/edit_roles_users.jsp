@@ -17,16 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_roles.jsp-tabs1");
-
-Group group = (Group)request.getAttribute("edit_roles.jsp-group");
-Role role = (Role)request.getAttribute("edit_roles.jsp-role");
-long roleId = (Long)request.getAttribute("edit_roles.jsp-roleId");
-Organization organization = (Organization)request.getAttribute("edit_roles.jsp-organization");
-
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
-
-UserSearch userSearch = new UserSearch(renderRequest, portletURL);
+EditRolesUsersDisplayContext editRolesUsersDisplayContext = new EditRolesUsersDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <aui:input name="addUserIds" type="hidden" />
@@ -35,40 +26,8 @@ UserSearch userSearch = new UserSearch(renderRequest, portletURL);
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
-	rowChecker="<%= (role.getType() == RoleConstants.TYPE_SITE) ? new UserGroupRoleUserChecker(renderResponse, group, role) : new OrganizationRoleUserChecker(renderResponse, organization, role) %>"
-	searchContainer="<%= userSearch %>"
-	var="userSearchContainer"
+	searchContainer="<%= editRolesUsersDisplayContext.getSearchContainer() %>"
 >
-
-	<%
-	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-	LinkedHashMap<String, Object> userParams = LinkedHashMapBuilder.<String, Object>put(
-		"inherit", Boolean.TRUE
-	).put(
-		"usersGroups", Long.valueOf(group.getGroupId())
-	).build();
-
-	if (tabs1.equals("current")) {
-		userParams.put("userGroupRole", new Long[] {Long.valueOf(group.getGroupId()), Long.valueOf(roleId)});
-	}
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		long companyId = company.getCompanyId();
-
-		if (searchTerms.isAdvancedSearch()) {
-			userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator()));
-		}
-		else {
-			userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams));
-		}
-		%>
-
-	</liferay-ui:search-container-results>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.User"
 		escapedModel="<%= true %>"

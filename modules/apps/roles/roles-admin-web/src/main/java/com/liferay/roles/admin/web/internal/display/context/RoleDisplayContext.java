@@ -14,12 +14,18 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Permission;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -27,15 +33,23 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
+import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +74,83 @@ public class RoleDisplayContext {
 		_currentRoleTypeContributor =
 			RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
 				httpServletRequest);
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getActionLabel(String resourceName, String actionId) {
+		String actionLabel = null;
+
+		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+			PanelCategoryHelper panelCategoryHelper =
+				(PanelCategoryHelper)_httpServletRequest.getAttribute(
+					ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+			PersonalMenuEntryHelper personalMenuEntryHelper =
+				(PersonalMenuEntryHelper)_httpServletRequest.getAttribute(
+					ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER);
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				_themeDisplay.getCompanyId(), resourceName);
+
+			if (panelCategoryHelper.containsPortlet(
+					portlet.getPortletId(),
+					PanelCategoryKeys.SITE_ADMINISTRATION)) {
+
+				actionLabel = LanguageUtil.get(
+					_httpServletRequest, "access-in-site-administration");
+			}
+			else if (panelCategoryHelper.containsPortlet(
+						portlet.getPortletId(), PanelCategoryKeys.USER)) {
+
+				actionLabel = LanguageUtil.get(
+					_httpServletRequest, "access-in-my-account");
+			}
+			else if (personalMenuEntryHelper.hasPersonalMenuEntry(
+						portlet.getPortletId())) {
+
+				actionLabel = LanguageUtil.get(
+					_httpServletRequest, "access-in-personal-menu");
+			}
+		}
+
+		if (actionId.equals("ADD_STRUCTURE") &&
+			resourceName.equals("com.liferay.document.library")) {
+
+			actionLabel = LanguageUtil.get(
+				_httpServletRequest, "add-metadata-set");
+		}
+
+		if (actionLabel == null) {
+			actionLabel = ResourceActionsUtil.getAction(
+				_httpServletRequest, actionId);
+		}
+
+		return actionLabel;
+	}
+
+	public String getAssigneesMessage(Role role) throws Exception {
+		if (isAutomaticallyAssigned(role)) {
+			return LanguageUtil.get(
+				_httpServletRequest, "this-role-is-automatically-assigned");
+		}
+
+		int count = getAssigneesTotal(role.getRoleId());
+
+		if (count == 1) {
+			return LanguageUtil.get(_httpServletRequest, "one-assignee");
+		}
+
+		return LanguageUtil.format(_httpServletRequest, "x-assignees", count);
+	}
+
+	public int getAssigneesTotal(long roleId) throws Exception {
+		int segmentsEntryRolesCountByRoleId =
+			SegmentsEntryRoleLocalServiceUtil.
+				getSegmentsEntryRolesCountByRoleId(roleId);
+
+		return RoleLocalServiceUtil.getAssigneesTotal(roleId) +
+			segmentsEntryRolesCountByRoleId;
 	}
 
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {
@@ -90,6 +181,15 @@ public class RoleDisplayContext {
 		}
 
 		return "define-permissions";
+	}
+
+	public StringBundler getResourceHtmlId(String resource) {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("resource_");
+		sb.append(StringUtil.replace(resource, '.', '_'));
+
+		return sb;
 	}
 
 	public List<NavigationItem> getRoleAssignmentsNavigationItems(
@@ -214,6 +314,46 @@ public class RoleDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isShowScope(
+		Role role, String currentModelResource, String currentPortletResource) {
+
+		boolean showScope = true;
+
+		if (currentPortletResource.equals(PortletKeys.PORTAL)) {
+			showScope = false;
+		}
+		else if (!isAllowGroupScope()) {
+			showScope = false;
+		}
+		else if (Validator.isNotNull(currentPortletResource)) {
+			Portlet currentPortlet = PortletLocalServiceUtil.getPortletById(
+				role.getCompanyId(), currentPortletResource);
+
+			if (currentPortlet != null) {
+				PanelCategoryHelper panelCategoryHelper =
+					(PanelCategoryHelper)_httpServletRequest.getAttribute(
+						ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+				if (panelCategoryHelper.hasPanelApp(
+						currentPortlet.getPortletId()) &&
+					!panelCategoryHelper.containsPortlet(
+						currentPortlet.getPortletId(),
+						PanelCategoryKeys.SITE_ADMINISTRATION)) {
+
+					showScope = false;
+				}
+			}
+		}
+
+		if (Validator.isNotNull(currentModelResource) &&
+			currentModelResource.equals(Group.class.getName())) {
+
+			showScope = true;
+		}
+
+		return showScope;
 	}
 
 	public boolean isValidPermission(Role role, Permission permission) {
@@ -367,5 +507,6 @@ public class RoleDisplayContext {
 	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

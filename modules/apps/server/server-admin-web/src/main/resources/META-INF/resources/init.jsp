@@ -49,7 +49,6 @@ page import="com.liferay.portal.kernel.scripting.ScriptingException" %><%@
 page import="com.liferay.portal.kernel.scripting.ScriptingUtil" %><%@
 page import="com.liferay.portal.kernel.service.*" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
-page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -66,11 +65,11 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
-page import="com.liferay.portal.util.PropsUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ShutdownUtil" %><%@
 page import="com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ServerDisplayContext" %><%@
+page import="com.liferay.server.admin.web.internal.display.context.ViewPortalPropertiesDisplayContext" %><%@
+page import="com.liferay.server.admin.web.internal.display.context.ViewSystemPropertiesDisplayContext" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.text.NumberFormat" %>
@@ -84,8 +83,7 @@ page import="java.util.Objects" %><%@
 page import="java.util.Properties" %><%@
 page import="java.util.TreeMap" %>
 
-<%@ page import="javax.portlet.PortletPreferences" %><%@
-page import="javax.portlet.PortletURL" %><%@
+<%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
 <%@ page import="org.apache.logging.log4j.Level" %>

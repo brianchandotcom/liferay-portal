@@ -36,7 +36,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 			</h6>
 
 			<h6 class="text-default">
-				<span><%= _getAssigneesMessage(request, role, roleDisplayContext) %></span>
+				<span><%= roleDisplayContext.getAssigneesMessage(role) %></span>
 			</h6>
 		</liferay-ui:search-container-column-text>
 
@@ -71,7 +71,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 			cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
 			href="<%= rowURL %>"
 			name="number-of-assignees"
-			value='<%= roleDisplayContext.isAutomaticallyAssigned(role) ? LanguageUtil.get(request, "not-available") : String.valueOf(_getAssigneesTotal(role.getRoleId())) %>'
+			value='<%= roleDisplayContext.isAutomaticallyAssigned(role) ? LanguageUtil.get(request, "not-available") : String.valueOf(roleDisplayContext.getAssigneesTotal(role.getRoleId())) %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

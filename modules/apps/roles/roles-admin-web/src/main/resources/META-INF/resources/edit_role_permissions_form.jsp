@@ -105,7 +105,7 @@ if (Validator.isNotNull(portletResource)) {
 						String curModelResourceName = ResourceActionsUtil.getModelResource(request, curModelResource);
 					%>
 
-						<h5 class="sheet-tertiary-title" id="<%= _getResourceHtmlId(curModelResource) %>"><%= curModelResourceName %></h5>
+						<h5 class="sheet-tertiary-title" id="<%= roleDisplayContext.getResourceHtmlId(curModelResource) %>"><%= curModelResourceName %></h5>
 
 						<%
 						request.setAttribute("edit_role_permissions.jsp-curModelResource", curModelResource);
@@ -198,7 +198,7 @@ if (Validator.isNotNull(portletResource)) {
 
 						relatedPortletResources.add(curPortlet.getPortletId());
 
-						row.addText(PortalUtil.getPortletLongTitle(curPortlet, application, locale) + ": " + _getActionLabel(request, themeDisplay, resource, actionId));
+						row.addText(PortalUtil.getPortletLongTitle(curPortlet, application, locale) + ": " + roleDisplayContext.getActionLabel(resource, actionId));
 
 						row.addJSP("/edit_role_permissions_resource_scope.jsp", application, request, response);
 

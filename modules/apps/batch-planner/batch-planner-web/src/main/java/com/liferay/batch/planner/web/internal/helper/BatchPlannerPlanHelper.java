@@ -104,6 +104,9 @@ public class BatchPlannerPlanHelper {
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
 			_getCheckboxValue(portletRequest, "containsHeaders"));
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
+			batchPlannerPlan.getBatchPlannerPlanId(), "csvSeparator",
+			ParamUtil.getString(portletRequest, "csvSeparator"));
+		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "headlessEndpoint",
 			ParamUtil.getString(portletRequest, "headlessEndpoint"));
 		_batchPlannerPolicyService.addBatchPlannerPolicy(

@@ -17,7 +17,7 @@ package com.liferay.batch.planner.internal.batch.engine.broker;
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
-import com.liferay.batch.planner.internal.jaxrs.uri.EmptyUriInfo;
+import com.liferay.batch.planner.internal.jaxrs.uri.BatchPlannerUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerMappingModel;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -145,7 +145,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_exportTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
 		_exportTaskResource.setContextUriInfo(
-			new EmptyUriInfo(batchPlannerPlan.getTaskItemDelegateName()));
+			new BatchPlannerUriInfo(
+				null, batchPlannerPlan.getTaskItemDelegateName()));
 		_exportTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 
@@ -176,8 +177,14 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
 
+		BatchPlannerPolicy batchPlannerPolicy =
+			batchPlannerPlan.getBatchPlannerPolicy("csvSeparator");
+
 		_importTaskResource.setContextUriInfo(
-			new EmptyUriInfo(batchPlannerPlan.getTaskItemDelegateName()));
+			new BatchPlannerUriInfo(
+				batchPlannerPolicy.getValue(),
+				batchPlannerPlan.getTaskItemDelegateName()));
+
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 

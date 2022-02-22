@@ -27,10 +27,12 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author Igor Beslic
  */
-public class EmptyUriInfo implements UriInfo {
+public class BatchPlannerUriInfo implements UriInfo {
 
-	public EmptyUriInfo(String taskItemDelegateName) {
-		_taskItemDelegateName = taskItemDelegateName;
+	public BatchPlannerUriInfo(String delimiter, String taskItemDelegateName) {
+		_pathParameters.putSingle("taskItemDelegateName", taskItemDelegateName);
+
+		_queryParameters.putSingle("delimiter", delimiter);
 	}
 
 	@Override
@@ -80,11 +82,7 @@ public class EmptyUriInfo implements UriInfo {
 
 	@Override
 	public MultivaluedMap<String, String> getPathParameters() {
-		return new MultivaluedHashMap<String, String>() {
-			{
-				putSingle("taskItemDelegateName", _taskItemDelegateName);
-			}
-		};
+		return _pathParameters;
 	}
 
 	@Override
@@ -104,7 +102,7 @@ public class EmptyUriInfo implements UriInfo {
 
 	@Override
 	public MultivaluedMap<String, String> getQueryParameters() {
-		return new MultivaluedHashMap<>();
+		return _queryParameters;
 	}
 
 	@Override
@@ -132,6 +130,9 @@ public class EmptyUriInfo implements UriInfo {
 		return null;
 	}
 
-	private final String _taskItemDelegateName;
+	private final MultivaluedHashMap<String, String> _pathParameters =
+		new MultivaluedHashMap<>();
+	private final MultivaluedHashMap<String, String> _queryParameters =
+		new MultivaluedHashMap<>();
 
 }

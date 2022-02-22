@@ -32,12 +32,14 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -122,12 +124,22 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			List<String> successMessages = new ArrayList<>();
 			String fileName = uploadPortletRequest.getFileName("file");
 
-			_processUploadedFile(
-				actionRequest, uploadPortletRequest,
-				translationRequestHelper.getGroupId(),
-				translationRequestHelper.getModelClassName(),
-				translationRequestHelper.getModelClassPK(), fileName,
-				successMessages, failureMessages, themeDisplay.getLocale());
+			if (_ffBulkTranslationConfiguration.enabled()) {
+				_processUploadedFiles(
+					actionRequest, uploadPortletRequest,
+					translationRequestHelper.getGroupId(),
+					translationRequestHelper.getModelClassName(),
+					translationRequestHelper.getModelClassPK(), successMessages,
+					failureMessages, themeDisplay.getLocale());
+			}
+			else {
+				_processUploadedFile(
+					actionRequest, uploadPortletRequest,
+					translationRequestHelper.getGroupId(),
+					translationRequestHelper.getModelClassName(),
+					translationRequestHelper.getModelClassPK(), fileName,
+					successMessages, failureMessages, themeDisplay.getLocale());
+			}
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
@@ -333,6 +345,61 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				_processXLIFFFile(
 					actionRequest, groupId, className, classPK, fileName,
 					successMessages, failureMessages, inputStream, locale);
+			}
+		}
+	}
+
+	private void _processUploadedFiles(
+			ActionRequest actionRequest,
+			UploadPortletRequest uploadPortletRequest, long groupId,
+			String className, long classPK, List<String> successMessages,
+			Map<String, String> failureMessages, Locale locale)
+		throws IOException, PortalException {
+
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadPortletRequest.getMultipartParameterMap();
+
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
+			for (FileItem fileItem : entry.getValue()) {
+				if (Objects.equals(
+						MimeTypesUtil.getContentType(fileItem.getFileName()),
+						ContentTypes.APPLICATION_ZIP)) {
+
+					try (InputStream inputStream1 = fileItem.getInputStream()) {
+						ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+							inputStream1);
+
+						try {
+							for (String zipReaderEntry :
+									zipReader.getEntries()) {
+
+								try (InputStream inputStream2 =
+										zipReader.getEntryAsInputStream(
+											zipReaderEntry)) {
+
+									_processXLIFFFile(
+										actionRequest, groupId, className,
+										classPK, zipReaderEntry,
+										successMessages, failureMessages,
+										inputStream2, locale);
+								}
+							}
+						}
+						finally {
+							zipReader.close();
+						}
+					}
+				}
+				else {
+					try (InputStream inputStream = fileItem.getInputStream()) {
+						_processXLIFFFile(
+							actionRequest, groupId, className, classPK,
+							fileItem.getFileName(), successMessages,
+							failureMessages, inputStream, locale);
+					}
+				}
 			}
 		}
 	}

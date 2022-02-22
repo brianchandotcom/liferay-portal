@@ -36,6 +36,12 @@ public class BatchPlannerPlanImpl extends BatchPlannerPlanBaseImpl {
 	}
 
 	@Override
+	public BatchPlannerPolicy fetchBatchPlannerPolicy(String name) {
+		return BatchPlannerPolicyLocalServiceUtil.fetchBatchPlannerPolicy(
+			getBatchPlannerPlanId(), name);
+	}
+
+	@Override
 	public BatchPlannerLog getBatchPlannerLog() throws PortalException {
 		return BatchPlannerLogLocalServiceUtil.
 			getBatchPlannerPlanBatchPlannerLog(getBatchPlannerPlanId());

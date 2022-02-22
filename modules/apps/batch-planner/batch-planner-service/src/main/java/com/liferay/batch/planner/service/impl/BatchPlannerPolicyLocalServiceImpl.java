@@ -81,6 +81,14 @@ public class BatchPlannerPolicyLocalServiceImpl
 	}
 
 	@Override
+	public BatchPlannerPolicy fetchBatchPlannerPolicy(
+		long batchPlannerPlanId, String name) {
+
+		return batchPlannerPolicyPersistence.fetchByBPPI_N(
+			batchPlannerPlanId, name);
+	}
+
+	@Override
 	public List<BatchPlannerPolicy> getBatchPlannerPolicies(
 		long batchPlannerPlanId) {
 

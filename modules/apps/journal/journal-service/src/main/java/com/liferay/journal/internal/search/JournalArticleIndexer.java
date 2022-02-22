@@ -689,7 +689,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addLocalizedFields(
-		BooleanQuery searchQuery, String fieldName, String value,
+		BooleanQuery booleanQuery, String fieldName, String value,
 		SearchContext searchContext) {
 
 		String[] localizedFieldNames =
@@ -697,12 +697,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				new String[] {fieldName}, searchContext);
 
 		for (String localizedFieldName : localizedFieldNames) {
-			_addTerm(searchQuery, localizedFieldName, value);
+			_addTerm(booleanQuery, localizedFieldName, value);
 		}
 	}
 
 	private void _addLocalizedQuery(
-		BooleanQuery searchQuery, BooleanQuery localizedQuery,
+		BooleanQuery booleanQuery, BooleanQuery localizedQuery,
 		SearchContext searchContext) {
 
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
@@ -712,7 +712,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		try {
-			searchQuery.add(localizedQuery, booleanClauseOccur);
+			booleanQuery.add(localizedQuery, booleanClauseOccur);
 		}
 		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
@@ -722,7 +722,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addSearchLocalizedTerm(
-		BooleanQuery searchQuery, SearchContext searchContext,
+		BooleanQuery booleanQuery, SearchContext searchContext,
 		String fieldName) {
 
 		if (Validator.isBlank(fieldName)) {
@@ -746,10 +746,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			_addLocalizedFields(
 				localizedQuery, fieldName, value, searchContext);
 
-			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
+			_addLocalizedQuery(booleanQuery, localizedQuery, searchContext);
 		}
 		else {
-			_addLocalizedFields(searchQuery, fieldName, value, searchContext);
+			_addLocalizedFields(booleanQuery, fieldName, value, searchContext);
 		}
 	}
 

@@ -2261,9 +2261,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void archiveConsoleLog() {
-		String archiveFileContent = getArchiveFileContent("consoleText");
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				getArchiveFileContent("consoleText"))) {
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
 			return;
 		}
 
@@ -2278,9 +2278,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void archiveJSON() {
-		downloadSampleURL(getArchivePath(), true, getBuildURL(), "api/json");
-		downloadSampleURL(
-			getArchivePath(), false, getBuildURL(), "testReport/api/json");
+		downloadSampleURL(true, "api/json");
+		downloadSampleURL(false, "testReport/api/json");
 	}
 
 	protected void checkForReinvocation(String consoleText) {
@@ -2301,10 +2300,14 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void downloadSampleURL(
-		String path, boolean required, String url, String urlSuffix) {
+	protected void downloadSampleURL(boolean required, String urlSuffix) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				getArchiveFileContent(urlSuffix))) {
 
-		String urlString = url + urlSuffix;
+			return;
+		}
+
+		String urlString = getBuildURL() + urlSuffix;
 
 		if (urlString.endsWith("json")) {
 			urlString += "?pretty";
@@ -2329,7 +2332,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		try {
-			writeArchiveFile(content, path + "/" + urlSuffix);
+			writeArchiveFile(content, getArchivePath() + "/" + urlSuffix);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException("Unable to write file", ioException);

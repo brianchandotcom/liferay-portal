@@ -54,19 +54,7 @@ public class ImportResults {
 
 	public static void main(String[] args) {
 		try {
-			long groupId = 0L;
-
-			for (String arg : args) {
-				if (arg.startsWith("--groupId")) {
-					groupId = Long.parseLong(arg.substring(10));
-				}
-			}
-
-			if (groupId == 0) {
-				throw new Exception("groupId was not defined.");
-			}
-
-			ImportResults importResults = new ImportResults(groupId);
+			ImportResults importResults = new ImportResults();
 
 			importResults.readFiles("");
 		}
@@ -75,14 +63,12 @@ public class ImportResults {
 		}
 	}
 
-	public ImportResults(long groupId) throws Exception {
+	public ImportResults() throws Exception {
 		_storage = getStorage();
 
 		_documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
-
-		_groupId = groupId;
 	}
 
 	public void addTestrayBuild(int projectId, Document document) {
@@ -128,7 +114,7 @@ public class ImportResults {
 
 							HttpClient.post(
 								PropsValues.TESTRAY_BASE_URL +
-									"testraybuilds/scopes/" + _groupId,
+									"testraybuilds",
 								new JSONObject(map));
 						}
 					}
@@ -189,8 +175,7 @@ public class ImportResults {
 				}
 
 				HttpClient.post(
-					PropsValues.TESTRAY_BASE_URL + "testraycases/scopes/" +
-						_groupId,
+					PropsValues.TESTRAY_BASE_URL + "testraycases",
 					new JSONObject(map));
 			}
 		}
@@ -243,8 +228,7 @@ public class ImportResults {
 		}
 
 		JSONObject responseJSONObject = HttpClient.get(
-			PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
-				_groupId);
+			PropsValues.TESTRAY_BASE_URL + "testrayprojects");
 
 		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
 
@@ -269,8 +253,7 @@ public class ImportResults {
 
 		if ((projectId == -1) && !map.isEmpty()) {
 			responseJSONObject = HttpClient.post(
-				PropsValues.TESTRAY_BASE_URL + "testrayprojects/scopes/" +
-					_groupId,
+				PropsValues.TESTRAY_BASE_URL + "testrayprojects",
 				new JSONObject(map));
 
 			return responseJSONObject.getInt("id");
@@ -376,7 +359,6 @@ public class ImportResults {
 
 	private final DocumentBuilder _documentBuilder;
 	private final DocumentBuilderFactory _documentBuilderFactory;
-	private final Long _groupId;
 	private final Storage _storage;
 
 }

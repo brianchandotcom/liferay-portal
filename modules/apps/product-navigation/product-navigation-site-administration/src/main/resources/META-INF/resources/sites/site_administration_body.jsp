@@ -115,23 +115,6 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 </c:if>
 
 <c:if test="<%= !group.isDepot() && !group.isCompany() %>">
-
-	<%
-	PortletURL portletURL = PortletURLBuilder.create(
-		PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, RenderRequest.RENDER_PHASE)
-	).setMVCPath(
-		"/portlet/pages_tree.jsp"
-	).setRedirect(
-		ParamUtil.getString(request, "redirect", themeDisplay.getURLCurrent())
-	).setBackURL(
-		ParamUtil.getString(request, "p_l_back_url", themeDisplay.getURLCurrent())
-	).setParameter(
-		"selPpid", portletDisplay.getId()
-	).setWindowState(
-		LiferayWindowState.EXCLUSIVE
-	).buildPortletURL();
-	%>
-
 	<aui:script sandbox="<%= true %>">
 		var pagesTreeToggle = document.getElementById(
 			'<portlet:namespace />pagesTreeSidenavToggleId'
@@ -144,7 +127,9 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
 				'open'
 			).then(() => {
-				Liferay.Util.fetch('<%= portletURL.toString() %>')
+				Liferay.Util.fetch(
+					'<%= siteAdministrationPanelCategoryDisplayContext.getPageTreeURL() %>'
+				)
 					.then((response) => {
 						if (!response.ok) {
 							throw new Error(

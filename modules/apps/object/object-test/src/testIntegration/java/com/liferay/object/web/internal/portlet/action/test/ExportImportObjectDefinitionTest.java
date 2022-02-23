@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.configuration.activator.FFObjectViewSortColumnConfigurationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -79,20 +80,23 @@ public class ExportImportObjectDefinitionTest {
 			_createMockLiferayResourceRequest(objectDefinition.getId()),
 			mockLiferayResourceResponse);
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
+		if (FFObjectViewSortColumnConfigurationUtil.enabled()) {
+			ByteArrayOutputStream byteArrayOutputStream =
+				(ByteArrayOutputStream)
+					mockLiferayResourceResponse.getPortletOutputStream();
 
-		Class<?> clazz = getClass();
+			Class<?> clazz = getClass();
 
-		String json = StringUtil.read(
-			clazz.getResourceAsStream("dependencies/object_definition.json"));
+			String json = StringUtil.read(
+				clazz.getResourceAsStream(
+					"dependencies/object_definition.json"));
 
-		Assert.assertTrue(
-			JSONUtil.equals(
-				JSONFactoryUtil.createJSONObject(json),
-				JSONFactoryUtil.createJSONObject(
-					byteArrayOutputStream.toString())));
+			Assert.assertTrue(
+				JSONUtil.equals(
+					JSONFactoryUtil.createJSONObject(json),
+					JSONFactoryUtil.createJSONObject(
+						byteArrayOutputStream.toString())));
+		}
 
 		_objectDefinitionResource.deleteObjectDefinition(
 			objectDefinition.getId());

@@ -691,6 +691,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 
+			_addCommerceProductSpecification(StringUtil.replaceLast(resourcePath, ".json", ".products.specifications.json"), serviceContext);
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					_addCPInstanceSubscriptions(
@@ -865,7 +867,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCommerceProductSpecification(ServiceContext serviceContext)
+	private void _addCommerceProductSpecification(String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		ProductSpecificationResource.Builder
@@ -878,9 +880,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		String json = _read(
-			"/site-initializer/commerce-catalogs" +
-				"/catalog.products.specifications.json");
+		String json = _read(resourcePath);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -942,7 +942,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
 
-		_addCommerceProductSpecification(serviceContext);
 
 		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues,

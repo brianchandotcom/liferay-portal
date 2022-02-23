@@ -40,11 +40,11 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith(".xml")) {
-			return _checkEchoMessageExist(content);
+		if (!fileName.endsWith(".xml")) {
+			return content;
 		}
 
-		return content;
+		return _checkEchoMessageExist(content);
 	}
 
 	private String _checkEchoMessageExist(String content) {

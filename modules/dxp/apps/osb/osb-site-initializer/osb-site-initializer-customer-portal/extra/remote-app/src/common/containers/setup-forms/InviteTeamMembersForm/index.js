@@ -180,7 +180,8 @@ const InviteTeamMembersPage = ({
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
-			} else {
+			}
+			else {
 				setAccountRolesOptions((previousAccountRoles) =>
 					previousAccountRoles.map((previousAccountRoles) => ({
 						...previousAccountRoles,

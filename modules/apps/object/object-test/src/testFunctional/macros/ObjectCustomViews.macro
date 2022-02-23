@@ -1,28 +1,30 @@
 definition {
 
-    macro addObjectViewViaUI {
+	macro addObjectViewViaUI {
 		LexiconEntry.gotoAdd();
 
 		Type(
 			locator1 = "ObjectCustomViews#ADD_VIEW_NAME",
 			value1 = "${viewName}");
-		
+
 		Button.clickSave();
 
 		WaitForPageLoad();
 	}
 
-    macro assertObjectView {
+	macro assertObjectView {
 		var key_viewLabel = "${viewLabel}";
 
 		AssertElementPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
 	}
 
-    macro goToViewsTab {
-		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
+	macro editName {
+		Type(
+			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
+			value1 = "${name}");
 	}
 
-    macro goToViewsDetails {
+	macro goToViewsDetails {
 		Click(
 			key_label = "${label}",
 			locator1 = "ObjectCustomViews#SELECT_OBJECT_VIEWS");
@@ -30,9 +32,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
-    macro editName {
-		Type(
-			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
-			value1 = "${name}");
+	macro goToViewsTab {
+		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
+
 }

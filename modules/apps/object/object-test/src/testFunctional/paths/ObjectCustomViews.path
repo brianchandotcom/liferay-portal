@@ -10,27 +10,27 @@
 </thead>
 
 <tbody>
-    <tr>
+	<tr>
 		<td>ADD_VIEW_NAME</td>
 		<td>//input[contains(@id,'listObjectCustomViewName')]</td>
 		<td></td>
 	</tr>
-    <tr>
+	<tr>
 		<td>OBJECT_VIEW_LABEL</td>
 		<td>//div[(@class = 'dnd-td') and contains (.,'${key_viewLabel}')]</td>
 		<td></td>
 	</tr>
-    <tr>
+	<tr>
 		<td>OBJECT_VIEWS_TAB</td>
 		<td>//a[contains(text(),'Views')]</td>
 		<td></td>
 	</tr>
-    <tr>
+	<tr>
 		<td>SELECT_OBJECT_VIEWS</td>
 		<td>//a[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
-    <tr>
+	<tr>
 		<td>OBJECT_VIEWS_NAME</td>
 		<td>//label[contains(text(),'Name')]/..//input[contains(@class,'form-control')]</td>
 		<td></td>

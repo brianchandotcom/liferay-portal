@@ -71,8 +71,6 @@ definition {
 		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
 
 		ObjectCustomViews.assertObjectView(viewLabel = "Custom Views");
-
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View by unselecting it"
@@ -169,7 +167,7 @@ definition {
 			labelName = "Custom Object 171622",
 			objectName = "CustomObject171622",
 			pluralLabelName = "Custom Objects 171622");
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 171622");
@@ -187,7 +185,6 @@ definition {
 		Refresh();
 
 		ObjectCustomViews.assertObjectView(viewLabel = "New Custom Views");
-
 	}
 
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"

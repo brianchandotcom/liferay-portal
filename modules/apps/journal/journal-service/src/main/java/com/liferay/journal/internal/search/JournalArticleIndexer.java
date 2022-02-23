@@ -64,6 +64,7 @@ import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.query.QueryHelper;
+import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.io.Serializable;
@@ -324,7 +325,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	protected Document doGetDocument(JournalArticle journalArticle)
 		throws Exception {
 
-		return null;
+		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
+
+		_modelDocumentContributor.contribute(document, journalArticle);
+
+		return document;
 	}
 
 	@Override
@@ -713,6 +718,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelDocumentContributor<JournalArticle> _modelDocumentContributor;
 
 	@Reference
 	private Portal _portal;

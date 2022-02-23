@@ -287,6 +287,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146967. Collections are not created correctly for extranet site initializer"
+	@priority = "4"
+	test CollectionsAreNotCreatedCorrectly {
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Team Extranet",
+				itemSubtype = "Entry",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Create a New Collection Page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection Test",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Select the Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List",
+				selectedName = "Dynamic Collection Test");
+		}
+
+		task ("Preview the Page and Assert the list of Blog Entries") {
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var title : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with marketing") {
+				AssertElementPresent(
+					key_title = "${title}",
+					locator1 = "TeamExtranet#COLLECTION_DISPLAY_LIST");
+			}
+		}
+
+		task ("Edit the Dynamic Collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-team-extranet");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Member",
+				itemType = "Web Content Article");
+		}
+
+		task ("Edit the Collection Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Team Extranet");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List",
+				selectedName = "Dynamic Collection Test");
+		}
+
+		task ("Preview the Page and Assert the list of Members") {
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var title : list "Jerome Bell,Jane Cooper,Esther Howard,Kristin Watson,Jacob Jones") {
+				AssertElementPresent(
+					key_title = "${title}",
+					locator1 = "TeamExtranet#COLLECTION_DISPLAY_LIST");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-144166. Verify the Home page on Desktop Size"
 	@priority = "4"
 	test HomePageOnDesktopSize {

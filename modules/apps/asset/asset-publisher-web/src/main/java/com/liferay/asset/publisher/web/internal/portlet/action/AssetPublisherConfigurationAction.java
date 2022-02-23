@@ -243,7 +243,8 @@ public class AssetPublisherConfigurationAction
 
 				if (Validator.isNull(selectionStyle)) {
 					selectionStyle =
-						AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC;
+						AssetPublisherSelectionStyleConstants.
+							DEFAULT_SELECTION_STYLE;
 				}
 
 				if (selectionStyle.equals(
@@ -869,7 +870,7 @@ public class AssetPublisherConfigurationAction
 		if (Validator.isNull(selectionStyle)) {
 			setPreference(
 				actionRequest, "selectionStyle",
-				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+				AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
 		}
 	}
 

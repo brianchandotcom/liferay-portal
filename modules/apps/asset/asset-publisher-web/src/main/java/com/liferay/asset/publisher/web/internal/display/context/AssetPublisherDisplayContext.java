@@ -1179,7 +1179,7 @@ public class AssetPublisherDisplayContext {
 
 		_selectionStyle = GetterUtil.getString(
 			_portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
 
 		return _selectionStyle;
 	}

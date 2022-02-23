@@ -65,7 +65,7 @@ public abstract class BaseConfigurationFormNavigatorEntry
 
 		return GetterUtil.getString(
 			portletSetup.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
 	}
 
 	protected boolean isAssetListSelection() {

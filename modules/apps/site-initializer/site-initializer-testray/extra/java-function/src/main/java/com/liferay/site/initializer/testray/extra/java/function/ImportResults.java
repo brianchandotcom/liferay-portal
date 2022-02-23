@@ -72,7 +72,7 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 	}
 
-	public void addTestrayBuild(int projectId, Document document) {
+	public void addTestrayBuild(long projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayBuildId", String.valueOf(projectId));
@@ -129,7 +129,7 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestrayCase(int projectId, Document document) {
+	public void addTestrayCase(long projectId, Document document) {
 		Map<String, String> map = new HashMap<>();
 
 		map.put("testrayProjectId", String.valueOf(projectId));
@@ -189,7 +189,7 @@ public class ImportResults {
 		}
 	}
 
-	public int addTestrayProject(Document document) throws Exception {
+	public long addTestrayProject(Document document) throws Exception {
 		Map<String, String> map = new HashMap<>();
 
 		Element element = document.getDocumentElement();
@@ -245,7 +245,7 @@ public class ImportResults {
 		if (!projectsJSONArray.isEmpty()) {
 			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(0);
 
-			return projectJSONObject.getInt("id");
+			return projectJSONObject.getLong("id");
 		}
 
 		responseJSONObject = HttpUtil.invoke(
@@ -254,7 +254,7 @@ public class ImportResults {
 			).toString(),
 			"testrayprojects", null, null, HttpInvoker.HttpMethod.POST);
 
-		return responseJSONObject.getInt("id");
+		return responseJSONObject.getLong("id");
 	}
 
 	public Storage getStorage() throws Exception {
@@ -345,7 +345,7 @@ public class ImportResults {
 		for (File file : files) {
 			Document document = _documentBuilder.parse(file);
 
-			int projectId = addTestrayProject(document);
+			long projectId = addTestrayProject(document);
 
 			addTestrayBuild(projectId, document);
 			addTestrayCase(projectId, document);

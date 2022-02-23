@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -63,12 +64,11 @@ public class ObjectDefinitionServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
-			TestPropsValues.getCompanyId());
+		_adminUser = TestPropsValues.getUser();
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		_user = TestPropsValues.getUser();
+		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -81,7 +81,7 @@ public class ObjectDefinitionServiceTest {
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 		try {
-			_testAddCustomObjectDefinition(_defaultUser);
+			_testAddCustomObjectDefinition(_user);
 
 			Assert.fail();
 		}
@@ -90,17 +90,17 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have ADD_OBJECT_DEFINITION permission for"));
 		}
 
-		_testAddCustomObjectDefinition(_user);
+		_testAddCustomObjectDefinition(_adminUser);
 	}
 
 	@Test
 	public void testDeleteObjectDefinition() throws Exception {
 		try {
-			_testDeleteObjectDefinition(_user, _defaultUser);
+			_testDeleteObjectDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -109,18 +109,18 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteObjectDefinition(_defaultUser, _defaultUser);
+		_testDeleteObjectDefinition(_adminUser, _adminUser);
 		_testDeleteObjectDefinition(_user, _user);
 	}
 
 	@Test
 	public void testGetObjectDefinition() throws Exception {
 		try {
-			_testGetObjectDefinition(_user, _defaultUser);
+			_testGetObjectDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -129,18 +129,18 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have VIEW permission for"));
 		}
 
-		_testGetObjectDefinition(_defaultUser, _defaultUser);
+		_testGetObjectDefinition(_adminUser, _adminUser);
 		_testGetObjectDefinition(_user, _user);
 	}
 
 	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
 		try {
-			_testPublishCustomObjectDefinition(_defaultUser);
+			_testPublishCustomObjectDefinition(_user);
 
 			Assert.fail();
 		}
@@ -149,17 +149,17 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have PUBLISH_OBJECT_DEFINITION permission for"));
 		}
 
-		_testPublishCustomObjectDefinition(_user);
+		_testPublishCustomObjectDefinition(_adminUser);
 	}
 
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
 		try {
-			_testUpdateCustomObjectDefinition(_user, _defaultUser);
+			_testUpdateCustomObjectDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -168,18 +168,18 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
-		_testUpdateCustomObjectDefinition(_defaultUser, _defaultUser);
+		_testUpdateCustomObjectDefinition(_adminUser, _adminUser);
 		_testUpdateCustomObjectDefinition(_user, _user);
 	}
 
 	@Test
 	public void testUpdateTitleObjectFieldId() throws Exception {
 		try {
-			_testUpdateTitleObjectFieldId(_user, _defaultUser);
+			_testUpdateTitleObjectFieldId(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -188,11 +188,11 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
-		_testUpdateTitleObjectFieldId(_defaultUser, _defaultUser);
+		_testUpdateTitleObjectFieldId(_adminUser, _adminUser);
 		_testUpdateTitleObjectFieldId(_user, _user);
 	}
 
@@ -419,7 +419,7 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _adminUser;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

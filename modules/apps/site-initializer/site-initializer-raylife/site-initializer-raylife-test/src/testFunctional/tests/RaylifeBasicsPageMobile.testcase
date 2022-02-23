@@ -1,0 +1,327 @@
+@component-name = "portal-solutions"
+
+definition {
+
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Raylife";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Raylife.createRaylifeSite(siteName = "Raylife");
+
+    }
+    tearDown {
+
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        Raylife.tearDownCP();
+
+        if ("${testPortalInstance}" == "true") {
+
+            PortalInstances.tearDownCP();
+        }
+        else {
+
+            User.logoutPG();
+        }
+    }
+    @description = "LPS-146535 - Verify if Continue Button is only enabled when all required fields have been filled in 'Your Name'. (Smartphone)"
+    @priority = "4"
+    test CanContinueWithBasicsPageFilledPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+    @description = "LPS-146557 - Verify if Continue Button is only enabled when has a valid email in 'Business Email'. Smartphone)"
+    @priority = "4"
+    test CanContinueWithBusinessEmailFilledPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "LPS-146558 - Verify if Continue Button is only enabled when has a valid phone number in 'Phone'.(Smartphone)"
+    @priority = "4"
+    test CanContinueWithPhoneEmailFilledPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.phone",
+            value = "(000) 000-0000");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "LPS-146561 - Verify if Continue Button is only enabled when all required fields have been filled in 'Physical Address'. (Smartphone)"
+    @priority = "4"
+    test CanContinueWithPhysicalAddressFilledPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.phone",
+            value = "(000) 000-0000");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.location.address",
+            value = "Address");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.location.city",
+            value = "City");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.location.zip",
+            value = "12345");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "LPS-146562 - Verify if Continue Button is only enabled when all required fields have been filled in 'Physical Address'. (Tablet)"
+    @priority = "5"
+    test CanContinueWithPhysicalAddressFilledTablet {
+
+        SetWindowSize(value1 = "800,1024");
+
+        ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+
+    }
+
+    @description = "LPS-146560 - Verify if the Continue button is enabled without a business website inserted in 'Business Website'. (Smartphone)"
+    @priority = "4"
+    test ContinueEnableWithoutWebsiteInsertedPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.phone",
+            value = "(000) 000-0000");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "LPS-146559 - Verify if Previous button works from 'Phone'. (Smartphone)"
+    @priority = "4"
+    test IfPreviousButtonOfPhoneWorksPhone {
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        AssertElementPresent(
+            locator1 = "RaylifeMobile#MOBILE_TITLE",
+            title = "Business Email");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "Verify if Previous button works from 'Physical Address' page. (Smartphone)"
+    @priority = "5"
+    test IfPreviousButtonWorksFromPhysicalAddressPhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.firstName",
+            value = "FirstName");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.lastName",
+            value = "LastName");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test@liferay.com");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.phone",
+            value = "(000) 000-0000");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        AssertElementPresent(
+            locator1 = "RaylifeMobile#MOBILE_TITLE",
+            title = "Business Website");
+
+        Raylife.dismissAlert();
+    }
+
+    @description = "LPS-146556 - Verify if Previous button works from 'Your Name'. (Smartphone)"
+    test PreviousButtonOfYourNamePhone {
+
+        SetWindowSize(value1 = "360,720");
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        AssertElementPresent(
+            label = "Pet Stores",
+            locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+            
+        Raylife.dismissAlert();
+    }
+}

@@ -27,7 +27,6 @@ import {
 	getTestraySuite,
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
-import {Liferay} from '../../../services/liferay/liferay';
 
 const Suite = () => {
 	const {testraySuiteId} = useParams();
@@ -113,9 +112,7 @@ const Suite = () => {
 							testrayCaseId?.toString(),
 					}}
 					transformData={(data) => data?.c?.testrayCases}
-					variables={{
-						scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-					}}
+					variables={{}}
 				/>
 			</Container>
 		</LoadingWrapper>

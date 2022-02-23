@@ -17,7 +17,6 @@ import ClayIcon from '@clayui/icon';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestrayRequirements} from '../../../graphql/queries';
-import {Liferay} from '../../../services/liferay/liferay';
 
 const Requirements = () => (
 	<Container title="Requirements">
@@ -58,7 +57,7 @@ const Requirements = () => (
 					testrayRequirementId?.toString(),
 			}}
 			transformData={(data) => data?.c?.testrayRequirements}
-			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			variables={{}}
 		/>
 	</Container>
 );

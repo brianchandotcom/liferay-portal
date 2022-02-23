@@ -31,14 +31,12 @@ export const getTestrayProjects = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$scopeKey: String
 	) {
 		c {
 			testrayProjects(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
-				scopeKey: $scopeKey
 			) {
 				items {
 					description

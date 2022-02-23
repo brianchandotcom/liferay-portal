@@ -18,7 +18,6 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import {getTestrayBuilds} from '../../../graphql/queries';
-import {Liferay} from '../../../services/liferay/liferay';
 import {DATA_COLORS} from '../../../util/constants';
 import {getRandomMaximumValue} from '../../../util/mock';
 
@@ -90,7 +89,7 @@ const Routine = () => (
 				navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
 			}}
 			transformData={(data) => data?.c?.testrayBuilds}
-			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			variables={{}}
 		/>
 	</Container>
 );

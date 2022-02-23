@@ -21,7 +21,6 @@ import ListView from '../../../components/ListView/ListView';
 import {LoadingWrapper} from '../../../components/Loading';
 import QATable from '../../../components/Table/QATable';
 import {getTestrayCases, getTestrayRequirement} from '../../../graphql/queries';
-import {Liferay} from '../../../services/liferay/liferay';
 
 const Requirement = () => {
 	const {requirementId} = useParams();
@@ -92,9 +91,7 @@ const Requirement = () => {
 						],
 					}}
 					transformData={(data) => data?.c?.testrayCases}
-					variables={{
-						scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-					}}
+					variables={{}}
 				/>
 			</Container>
 		</LoadingWrapper>

@@ -16,7 +16,6 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import {getTestrayRoutines} from '../../../graphql/queries';
-import {Liferay} from '../../../services/liferay/liferay';
 import {progress} from '../../../util/mock';
 
 const Routines = () => {
@@ -45,7 +44,7 @@ const Routines = () => {
 						testrayRoutineId?.toString(),
 				}}
 				transformData={(data) => data?.c?.testrayRoutines}
-				variables={{scopeKey: Liferay.ThemeDisplay.getSiteGroupId()}}
+				variables={{}}
 			/>
 		</Container>
 	);

@@ -115,16 +115,6 @@ definition {
 
 		RaylifeContactInfoMobile.gotoContactInfoByEmployeesMobile();
 
-		Click(
-			locator1 = "RaylifeMobile#SELECT_BUTTON",
-			option = "Yes",
-			title = "premises");
-
-		Click(
-			locator1 = "RaylifeMobile#SELECT_BUTTON",
-			option = "Yes",
-			title = "slides");
-
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		AssertElementPresent(
@@ -231,16 +221,6 @@ definition {
 			label = "property.stories",
 			value = "3");
 
-		Click(
-			locator1 = "RaylifeMobile#SELECT_BUTTON",
-			option = "Yes",
-			title = "premises?");
-
-		Click(
-			locator1 = "RaylifeMobile#SELECT_BUTTON",
-			option = "Yes",
-			title = "slides");
-
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		RaylifeProperty.typePropertyInfoFields(
@@ -262,8 +242,19 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(
-			field = "primary location",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "primary");
+
+		Click(
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "premises");
+
+		Click(
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "diving");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

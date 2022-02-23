@@ -159,6 +159,12 @@ components:
                         The number of comments this blog post has received.
                     readOnly: true
                     type: integer
+                priority:
+                    # @review
+                    description:
+                        The blog post's priority.
+                    format: double
+                    type: number
                 relatedContents:
                     # @review
                     description:

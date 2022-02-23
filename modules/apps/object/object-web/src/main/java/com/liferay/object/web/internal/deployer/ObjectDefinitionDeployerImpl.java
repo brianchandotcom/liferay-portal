@@ -63,6 +63,9 @@ import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortl
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
+import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttachmentMVCActionCommand;
+import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadFileEntryHandler;
+import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadResponseHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -76,6 +79,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.upload.UploadHandler;
 
 import java.util.List;
 
@@ -265,6 +269,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"/object_entries/edit_object_entry_related_model"
 				).build()),
 			_bundleContext.registerService(
+				MVCActionCommand.class,
+				new UploadAttachmentMVCActionCommand(
+					_attachmentUploadFileEntryHandler,
+					_attachmentUploadResponseHandler, _uploadHandler),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"mvc.command.name", "/object_entries/upload_attachment"
+				).build()),
+			_bundleContext.registerService(
 				MVCRenderCommand.class,
 				new EditObjectEntryMVCRenderCommand(
 					_objectEntryDisplayContextFactory, _portal),
@@ -328,6 +342,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AttachmentUploadFileEntryHandler _attachmentUploadFileEntryHandler;
+
+	@Reference
+	private AttachmentUploadResponseHandler _attachmentUploadResponseHandler;
 
 	private BundleContext _bundleContext;
 
@@ -394,6 +414,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private TemplateInfoItemCapability _templatePageInfoItemCapability;
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 	@Reference
 	private UserLocalService _userLocalService;

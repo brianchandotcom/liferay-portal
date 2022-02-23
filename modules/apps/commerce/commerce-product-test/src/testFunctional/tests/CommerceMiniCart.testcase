@@ -1017,13 +1017,10 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		Click(
-			key_productName = "Bundled Product",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
-
-		Click(
-			key_productName = "Bundled Product",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_BY_PRODUCT");
+		FrontStore.addToCartFromProductDetails(
+			optionNamesAndValues = "Color:Black",
+			productName = "Bundled Product",
+			productSku = "BLACKSKU");
 
 		CommerceNavigator.gotoMiniCart();
 

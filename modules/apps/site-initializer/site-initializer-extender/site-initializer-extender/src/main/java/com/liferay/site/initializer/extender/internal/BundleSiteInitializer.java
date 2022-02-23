@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -167,15 +168,15 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 
-import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.math.BigDecimal;
+
 import java.net.URL;
 import java.net.URLConnection;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -188,6 +189,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Brian Wing Shun Chan
@@ -859,6 +865,60 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addCommerceProductSpecification(ServiceContext serviceContext)
+		throws Exception {
+
+		ProductSpecificationResource.Builder
+			productSpecificationResourceBuilder =
+				_commerceReferencesHolder.productSpecificationResourceFactory.
+					create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String json = _read(
+			"/site-initializer/commerce-catalogs" +
+				"/catalog.products.specifications.json");
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		_commerceReferencesHolder.cpSpecificationOptionsImporter.
+			importCPSpecificationOptions(
+				jsonArray, serviceContext.getScopeGroupId(),
+				serviceContext.getUserId());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						jsonObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			if (cpDefinition == null) {
+				continue;
+			}
+
+			ProductSpecification productSpecification =
+				new ProductSpecification() {
+					{
+						productId = cpDefinition.getCPDefinitionId();
+						specificationKey = jsonObject.getString("key");
+						value = JSONUtil.toStringMap(
+							jsonObject.getJSONObject(
+								"productSpecificationValue"));
+					}
+				};
+
+			productSpecificationResource.postProductIdProductSpecification(
+				cpDefinition.getCPDefinitionId(), productSpecification);
+		}
+	}
+
 	private void _addCPDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
@@ -887,50 +947,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
-	}
-
-	private void _addCommerceProductSpecification(ServiceContext serviceContext)
-		throws Exception {
-
-		ProductSpecificationResource.Builder productSpecificationResourceBuilder =
-			_commerceReferencesHolder.productSpecificationResourceFactory.create();
-
-		ProductSpecificationResource productSpecificationResource =
-			productSpecificationResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		String json = _read("/site-initializer/commerce-catalogs/catalog.products.specifications.json");
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		_commerceReferencesHolder.cpSpecificationOptionsImporter.importCPSpecificationOptions(
-			jsonArray, serviceContext.getScopeGroupId(), serviceContext.getUserId());
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			CPDefinition cpDefinition =
-				_commerceReferencesHolder.cpDefinitionLocalService.
-					fetchCPDefinitionByCProductExternalReferenceCode(
-						jsonObject.getString(
-							"cpDefinitionExternalReferenceCode"),
-						serviceContext.getCompanyId());
-
-			if (cpDefinition == null){
-				continue;
-			}
-
-			ProductSpecification productSpecification = new ProductSpecification() {
-				{
-					productId = cpDefinition.getCPDefinitionId();
-					specificationKey = jsonObject.getString("key");
-					value = JSONUtil.toStringMap(jsonObject.getJSONObject("productSpecificationValue"));
-				}
-			};
-
-			productSpecificationResource.postProductIdProductSpecification(cpDefinition.getCPDefinitionId(),productSpecification);
-		}
 	}
 
 	private void _addCPDefinitions(

@@ -88,6 +88,7 @@ public class CommerceReferencesHolder {
 	public ProductOptionResource.Factory productOptionResourceFactory;
 
 	@Reference
-	public ProductSpecificationResource.Factory productSpecificationResourceFactory;
+	public ProductSpecificationResource.Factory
+		productSpecificationResourceFactory;
 
 }

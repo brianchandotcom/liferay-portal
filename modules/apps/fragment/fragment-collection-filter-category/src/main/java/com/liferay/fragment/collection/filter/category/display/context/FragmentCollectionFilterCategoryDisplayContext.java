@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -230,6 +232,10 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 				sourceObject.toString());
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			_sourceJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
@@ -243,6 +249,9 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private boolean _isSingleSelection() {
 		return GetterUtil.getBoolean(_getFieldValue("singleSelection"));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentCollectionFilterCategoryDisplayContext.class);
 
 	private List<AssetCategory> _assetCategories;
 	private Long _assetCategoryTreeNodeId;

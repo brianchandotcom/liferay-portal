@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -86,6 +88,10 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 				jsonObject, resourceBundle);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return StringPool.BLANK;
 		}
 	}
@@ -298,6 +304,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 		printWriter.write(styles);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MenuDisplayFragmentRenderer.class);
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

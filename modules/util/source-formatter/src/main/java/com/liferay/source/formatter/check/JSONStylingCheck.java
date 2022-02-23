@@ -19,6 +19,8 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -49,8 +51,15 @@ public class JSONStylingCheck extends BaseFileCheck {
 			return JSONUtil.toString(new JSONObjectImpl(content));
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return content;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSONStylingCheck.class);
 
 }

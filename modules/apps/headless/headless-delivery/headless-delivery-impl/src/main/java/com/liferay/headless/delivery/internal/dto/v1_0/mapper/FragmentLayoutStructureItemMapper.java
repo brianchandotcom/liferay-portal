@@ -23,6 +23,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,6 +66,10 @@ public class FragmentLayoutStructureItemMapper
 				fragmentEntryLink.getEditableValues());
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return null;
 		}
 
@@ -109,6 +115,9 @@ public class FragmentLayoutStructureItemMapper
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentLayoutStructureItemMapper.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

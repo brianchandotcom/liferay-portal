@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -101,9 +103,16 @@ public class DDMStructureIndexTypeUpgradeProcess extends UpgradeProcess {
 			return definitionJSONObject.toString();
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return definition;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureIndexTypeUpgradeProcess.class);
 
 	private final JSONFactory _jsonFactory;
 

@@ -488,6 +488,10 @@ public class FragmentEntryConfigurationParserImpl
 				return "var(--" + frontendTokenMapping.getValue() + ")";
 			}
 			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+
 				return fieldValue;
 			}
 		}

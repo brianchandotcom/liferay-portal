@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -170,6 +172,10 @@ public class DDMFormField implements Serializable {
 						jsonArray.get(0), _DATA_SOURCE_TYPE_MANUAL);
 				}
 				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+
 					return dataSourceType;
 				}
 			}
@@ -516,6 +522,8 @@ public class DDMFormField implements Serializable {
 	}
 
 	private static final String _DATA_SOURCE_TYPE_MANUAL = "manual";
+
+	private static final Log _log = LogFactoryUtil.getLog(DDMFormField.class);
 
 	private DDMForm _ddmForm;
 	private final List<DDMFormFieldRule> _ddmFormFieldRules;

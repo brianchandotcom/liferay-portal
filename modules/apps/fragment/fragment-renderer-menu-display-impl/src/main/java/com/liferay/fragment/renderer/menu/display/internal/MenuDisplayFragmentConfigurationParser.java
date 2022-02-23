@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -62,6 +64,10 @@ public class MenuDisplayFragmentConfigurationParser {
 			return JSONFactoryUtil.createJSONObject(value);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return JSONFactoryUtil.createJSONObject();
 		}
 	}
@@ -107,6 +113,9 @@ public class MenuDisplayFragmentConfigurationParser {
 			_fragmentEntryConfigurationParser.getFieldValue(
 				configuration, editableValues, "sublevels"));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MenuDisplayFragmentConfigurationParser.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

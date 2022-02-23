@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -86,9 +88,16 @@ public class GetCollectionFiltersMVCResourceCommand
 			return JSONFactoryUtil.createJSONObject(configuration);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return JSONFactoryUtil.createJSONObject();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetCollectionFiltersMVCResourceCommand.class);
 
 	@Reference
 	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;

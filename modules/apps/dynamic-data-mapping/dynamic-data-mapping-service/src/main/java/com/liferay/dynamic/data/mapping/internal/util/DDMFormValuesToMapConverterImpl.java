@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -189,8 +191,15 @@ public class DDMFormValuesToMapConverterImpl
 					localizedValue.getString(locale)));
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return Collections.emptyList();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormValuesToMapConverterImpl.class);
 
 }

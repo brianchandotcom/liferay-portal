@@ -64,6 +64,10 @@ public class FragmentCollectionFilterCategory
 				JSONFactoryUtil.createJSONObject(json), resourceBundle);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return StringPool.BLANK;
 		}
 	}

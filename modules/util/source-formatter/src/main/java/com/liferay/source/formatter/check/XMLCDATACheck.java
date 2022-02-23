@@ -19,6 +19,8 @@ import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -106,6 +108,10 @@ public class XMLCDATACheck extends BaseFileCheck {
 			return new JSONObjectImpl(s);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return null;
 		}
 	}
@@ -125,6 +131,8 @@ public class XMLCDATACheck extends BaseFileCheck {
 
 		return sb.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(XMLCDATACheck.class);
 
 	private static final Pattern _cdataPattern1 = Pattern.compile(
 		"(\n(\t*)<([\\w-]+)( .+)?>)<\\!\\[CDATA\\[(.*?)\\]\\]>(</\\3>\n)");

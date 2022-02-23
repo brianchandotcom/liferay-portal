@@ -26,6 +26,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -176,9 +178,16 @@ public class LayoutDDMFormFieldTemplateContextContributor
 			return jsonObject.toJSONString();
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			return StringPool.BLANK;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutDDMFormFieldTemplateContextContributor.class);
 
 	@Reference
 	private ItemSelector _itemSelector;

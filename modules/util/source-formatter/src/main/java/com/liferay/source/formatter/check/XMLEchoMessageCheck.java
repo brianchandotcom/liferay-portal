@@ -93,6 +93,6 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _echoMessagePattern = Pattern.compile(
-		"<echo .*?message=.*?/>");
+		"<echo (.(?!(/>|</)))*?message=.*?/>");
 
 }

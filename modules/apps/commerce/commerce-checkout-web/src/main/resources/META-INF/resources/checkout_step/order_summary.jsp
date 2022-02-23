@@ -496,6 +496,22 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 			</c:if>
 
 			<%
+			String deliveryTermEntryName = orderSummaryCheckoutStepDisplayContext.getDeliveryTermEntryName(locale);
+			%>
+
+			<c:if test="<%= Validator.isNotNull(deliveryTermEntryName) %>">
+				<div class="panel-body payment-method">
+					<h5>
+						<liferay-ui:message key="delivery-terms" />
+					</h5>
+
+					<div class="shipping-description">
+						<%= HtmlUtil.escape(deliveryTermEntryName) %>
+					</div>
+				</div>
+			</c:if>
+
+			<%
 			String paymentTermEntryName = orderSummaryCheckoutStepDisplayContext.getPaymentTermEntryName(locale);
 			%>
 

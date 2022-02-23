@@ -12,15 +12,15 @@
 import QuickLinksPanel from '../../containers/QuickLinksPanel';
 import SideMenu from '../../containers/SideMenu';
 
-const LayoutSkeleton = ({children}) => {
+const LayoutSkeleton = ({children, hasQuickLinksPanel, hasSideMenu}) => {
 	return (
 		<div className="d-flex position-relative w-100">
-			<SideMenu.Skeleton />
+			{hasSideMenu && <SideMenu.Skeleton />}
 
 			<div className="d-flex flex-fill pt-4">
 				<div className="w-100">{children}</div>
 
-				<QuickLinksPanel.Skeleton />
+				{hasQuickLinksPanel && <QuickLinksPanel.Skeleton />}
 			</div>
 		</div>
 	);

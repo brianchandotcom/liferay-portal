@@ -12,8 +12,9 @@
 import ClayAlert from '@clayui/alert';
 
 import {useMemo, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
-import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants';
+import {AUTO_CLOSE_ALERT_TIME, PAGE_TYPES} from '../../../../utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
@@ -21,6 +22,8 @@ import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
+
+const dxpNewRedirectLink = PAGE_TYPES.dxp_new.split('_')[1];
 
 const DXPActivationKeysTableHeader = ({
 	accountKey,
@@ -31,6 +34,8 @@ const DXPActivationKeysTableHeader = ({
 	sessionId,
 	setActivationKeys,
 }) => {
+	const navigate = useNavigate();
+
 	const [
 		activationKeysDownloadStatus,
 		setActivationKeysDownloadStatus,
@@ -77,11 +82,13 @@ const DXPActivationKeysTableHeader = ({
 		);
 	};
 
+	const handleRedirectPage = () => navigate(dxpNewRedirectLink);
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		accountKey,
 		licenseKeyDownloadURL,
 		sessionId,
-		handleAlertStatus
+		handleAlertStatus,
+		handleRedirectPage
 	);
 
 	const activationKeysDownloadItems = getActivationKeysDownloadItems(

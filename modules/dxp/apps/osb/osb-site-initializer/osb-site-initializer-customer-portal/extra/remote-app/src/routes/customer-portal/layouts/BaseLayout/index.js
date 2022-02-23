@@ -31,26 +31,46 @@ const PAGE_SKELETON_LAYOUT = {
 
 const Layout = () => {
 	const location = useLocation();
+	const [, ...currentPath] = location.pathname.split('/').filter(Boolean);
 
 	const [
 		{project, sessionId, subscriptionGroups, userAccount},
 	] = useCustomerPortal();
 
 	const getCurrentPage = useCallback(() => {
-		const [, ...currentPath] = location.pathname.split('/').filter(Boolean);
-
 		return currentPath.length
 			? currentPath.slice(-1)[0]
 			: PAGE_TYPES.overview;
-	}, [location]);
+	}, [currentPath]);
+
+	const getCurrentProduct = () => {
+		const activationKey = 'activation';
+
+		const isProduct = !!currentPath.find((path) => path === activationKey);
+
+		if (isProduct) {
+			const [, ...productType] = currentPath;
+
+			return productType.join('_');
+		}
+
+		return null;
+	};
 
 	const hasProjectContact = getCurrentPage() === PAGE_TYPES.overview;
 
-	const hasQuickLinksPanel = getCurrentPage() !== PAGE_TYPES.teamMembers;
+	const hasQuickLinksPanel =
+		getCurrentPage() !== PAGE_TYPES.teamMembers &&
+		getCurrentProduct() !== PAGE_TYPES.dxp_new;
+
+	const hasSideMenu = getCurrentProduct() !== PAGE_TYPES.dxp_new;
 
 	if (!project || !sessionId || !subscriptionGroups || !userAccount) {
 		return (
-			<LayoutSkeleton>
+			<LayoutSkeleton
+				hasQuickLinksPanel={hasQuickLinksPanel}
+				hasSideMenu={hasSideMenu}
+			>
 				{PAGE_SKELETON_LAYOUT[getCurrentPage()] ||
 					PAGE_SKELETON_LAYOUT.overview}
 			</LayoutSkeleton>
@@ -59,10 +79,12 @@ const Layout = () => {
 
 	return (
 		<div className="d-flex position-relative w-100">
-			<SideMenu
-				getCurrentPage={getCurrentPage}
-				subscriptionGroups={subscriptionGroups}
-			/>
+			{hasSideMenu && (
+				<SideMenu
+					getCurrentPage={getCurrentPage}
+					subscriptionGroups={subscriptionGroups}
+				/>
+			)}
 
 			<div className="d-flex flex-fill pt-4">
 				<div className="w-100">

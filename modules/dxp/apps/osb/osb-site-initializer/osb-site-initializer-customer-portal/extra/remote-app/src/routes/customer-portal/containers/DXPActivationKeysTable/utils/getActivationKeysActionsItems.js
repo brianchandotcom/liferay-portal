@@ -16,9 +16,20 @@ export function getActivationKeysActionsItems(
 	accountKey,
 	licenseKeyDownloadURL,
 	sessionId,
-	handleAlertStatus
+	handleAlertStatus,
+	handleRedirectPage
 ) {
 	return [
+		{
+			icon: (
+				<ClayIcon
+					className="mr-1 rounded text-neutral-4"
+					symbol="plus"
+				/>
+			),
+			label: 'Generate New',
+			onClick: handleRedirectPage,
+		},
 		{
 			icon: (
 				<ClayIcon className="mr-1 text-neutral-4" symbol="download" />

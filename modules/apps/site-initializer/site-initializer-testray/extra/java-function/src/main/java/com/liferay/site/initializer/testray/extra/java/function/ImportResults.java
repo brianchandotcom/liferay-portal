@@ -232,7 +232,7 @@ public class ImportResults {
 			}
 		}
 
-		Map<String, String> parameters = new HashMap();
+		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("filter", "name eq '" + projectName + "'");
 

@@ -26,7 +26,6 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -57,42 +56,35 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 			return content;
 		}
 
-		try {
-			Document document = SourceUtil.readXML(content);
+		Document document = SourceUtil.readXML(content);
 
-			List<Node> echoNodes = document.selectNodes("//*[name() = 'echo']");
+		List<Node> echoNodes = document.selectNodes("//*[name() = 'echo']");
 
-			for (Node echoNode : echoNodes) {
-				Element echoElement = (Element)echoNode;
+		for (Node echoNode : echoNodes) {
+			Element echoElement = (Element)echoNode;
 
-				Attribute messageAttribute = echoElement.attribute("message");
+			Attribute messageAttribute = echoElement.attribute("message");
 
-				if (messageAttribute == null) {
+			if (messageAttribute == null) {
+				continue;
+			}
+
+			for (String matchedTag : matchedTags) {
+				Document documentElement = DocumentHelper.parseText(matchedTag);
+
+				Element rootElement = documentElement.getRootElement();
+
+				if (!Objects.equals(echoElement.asXML(), rootElement.asXML())) {
 					continue;
 				}
 
-				for (String matchedTag : matchedTags) {
-					Document documentElement = DocumentHelper.parseText(
-						matchedTag);
+				echoElement.setText(messageAttribute.getText());
 
-					Element rootElement = documentElement.getRootElement();
+				echoElement.remove(messageAttribute);
 
-					if (!Objects.equals(
-							echoElement.asXML(), rootElement.asXML())) {
-
-						continue;
-					}
-
-					echoElement.setText(messageAttribute.getText());
-
-					echoElement.remove(messageAttribute);
-
-					content = StringUtil.replace(
-						content, matchedTag, echoElement.asXML());
-				}
+				content = StringUtil.replace(
+					content, matchedTag, echoElement.asXML());
 			}
-		}
-		catch (DocumentException documentException) {
 		}
 
 		return content;

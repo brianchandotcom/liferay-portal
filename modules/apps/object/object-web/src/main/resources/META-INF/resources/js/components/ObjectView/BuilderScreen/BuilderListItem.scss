@@ -10,7 +10,19 @@
 	}
 
 	&-object-custom-view-builder-item--canDrop {
-		border: 2px solid #80acff;
-		padding-top: 20px;
+		box-shadow: 0 0 0 0.125rem #80acff;
+		margin-bottom: 5px;
+		margin-top: 5px;
+		transition: box-shadow 0.2s ease-in-out;
+	}
+
+	.object-builder-list-item-sort-order {
+		left: 336px;
+		position: absolute;
+		top: 23px;
+	}
+
+	.lfr-object__object-custom-view-builder-item-action-menu {
+		display: contents;
 	}
 }

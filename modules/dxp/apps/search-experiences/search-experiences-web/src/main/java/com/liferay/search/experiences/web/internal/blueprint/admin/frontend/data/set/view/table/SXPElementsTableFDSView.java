@@ -50,6 +50,8 @@ public class SXPElementsTableFDSView extends BaseTableFDSView {
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
 			"description", "description");
 
+		fdsTableSchemaBuilder.addFDSTableSchemaField("id", "id");
+
 		fdsTableSchemaBuilder.addFDSTableSchemaField("userName", "author");
 
 		FDSTableSchemaField createDateFDSTableSchemaField =

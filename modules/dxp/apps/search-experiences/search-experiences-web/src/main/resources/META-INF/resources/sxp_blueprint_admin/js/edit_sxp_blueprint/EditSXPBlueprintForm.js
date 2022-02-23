@@ -49,7 +49,7 @@ import {
 	validateNumberRange,
 	validateRequired,
 } from '../utils/validation';
-import AddSXPElementSidebar from './add_sxp_element_sidebar';
+import AddSXPElementSidebar from './add_sxp_element_sidebar/index';
 import ClauseContributorsSidebar from './clause_contributors_sidebar/index';
 import ConfigurationTab from './configuration_tab/index';
 import PreviewSidebar from './preview_sidebar/index';

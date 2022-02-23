@@ -12,7 +12,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import ClauseContributorsSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_sidebar';
+import ClauseContributorsSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_sidebar/index';
 const Toasts = require('../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
 import {filterAndSortClassNames} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {mockClassNames} from '../../mocks/data';

@@ -19,11 +19,21 @@ const Layout = ({
 	footerProps,
 	headerProps,
 	headerSkeleton,
+	layoutType = 'onboarding',
 }) => (
-	<div className="border d-flex flex-column mx-auto onboarding rounded-lg shadow-lg">
+	<div
+		className={classNames(
+			'border d-flex flex-column mx-auto rounded-lg shadow-lg',
+			layoutType
+		)}
+	>
 		{headerProps ? <Header {...headerProps} /> : headerSkeleton}
 
-		<main className={classNames('flex-grow-1', 'overflow-auto', className)}>
+		<main
+			className={classNames('flex-grow-1', className, {
+				'overflow-auto': layoutType === 'onboarding',
+			})}
+		>
 			{children}
 		</main>
 

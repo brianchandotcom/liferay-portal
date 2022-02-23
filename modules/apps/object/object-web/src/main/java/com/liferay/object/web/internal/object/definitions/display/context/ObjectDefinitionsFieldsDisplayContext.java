@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
-import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
@@ -27,12 +26,17 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -168,15 +172,26 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return objectFieldBusinessTypeMaps;
 	}
 
-	public Map<String, Object> getObjectFieldProperties(
-		ObjectField objectField) {
-
-		ObjectFieldBusinessType objectFieldBusinessType =
-			_objectFieldBusinessTypeServicesTracker.getObjectFieldBusinessType(
-				objectField.getBusinessType());
-
-		return objectFieldBusinessType.getProperties(
-			objectField, _createObjectFieldRenderingContext());
+	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {
+		return JSONUtil.put(
+			"businessType", objectField.getBusinessType()
+		).put(
+			"DBType", objectField.getDBType()
+		).put(
+			"id", objectField.getObjectFieldId()
+		).put(
+			"indexed", objectField.isIndexed()
+		).put(
+			"label", objectField.getLabelMap()
+		).put(
+			"name", objectField.getName()
+		).put(
+			"objectFieldSettings", _getObjectFieldSettingsJSONArray(objectField)
+		).put(
+			"relationshipType", objectField.getRelationshipType()
+		).put(
+			"required", objectField.isRequired()
+		);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -195,13 +210,23 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
-	private ObjectFieldRenderingContext _createObjectFieldRenderingContext() {
-		ObjectFieldRenderingContext objectFieldRenderingContext =
-			new ObjectFieldRenderingContext();
+	private JSONArray _getObjectFieldSettingsJSONArray(
+		ObjectField objectField) {
 
-		objectFieldRenderingContext.setLocale(_objectRequestHelper.getLocale());
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		return objectFieldRenderingContext;
+		ListUtil.isNotEmptyForEach(
+			objectField.getObjectFieldSettings(),
+			objectFieldSetting -> jsonArray.put(
+				JSONUtil.put(
+					"name", objectFieldSetting.getName()
+				).put(
+					"required", objectFieldSetting.isRequired()
+				).put(
+					"value", objectFieldSetting.getValue()
+				)));
+
+		return jsonArray;
 	}
 
 	private final FFBusinessTypeAttachmentConfiguration

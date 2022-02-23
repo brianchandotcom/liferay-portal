@@ -185,6 +185,19 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField getObjectField(long objectFieldId)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		objectField.setObjectFieldSettings(
+			_objectFieldSettingPersistence.findByObjectFieldId(objectFieldId));
+
+		return objectField;
+	}
+
+	@Override
 	public ObjectField getObjectField(long objectDefinitionId, String name)
 		throws PortalException {
 

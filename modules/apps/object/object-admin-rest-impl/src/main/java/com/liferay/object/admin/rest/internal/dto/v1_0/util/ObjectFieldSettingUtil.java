@@ -31,8 +31,6 @@ public class ObjectFieldSettingUtil {
 			serviceBuilderObjectFieldSetting =
 				objectFieldSettingLocalService.createObjectFieldSetting(0L);
 
-		serviceBuilderObjectFieldSetting.setObjectFieldId(
-			objectFieldSetting.getObjectFieldId());
 		serviceBuilderObjectFieldSetting.setName(objectFieldSetting.getName());
 		serviceBuilderObjectFieldSetting.setRequired(
 			objectFieldSetting.getRequired());

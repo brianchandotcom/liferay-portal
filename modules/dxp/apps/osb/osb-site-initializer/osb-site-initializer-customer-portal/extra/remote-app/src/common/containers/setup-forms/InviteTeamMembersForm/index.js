@@ -11,7 +11,7 @@
 
 import {useMutation} from '@apollo/client';
 import ClayForm from '@clayui/form';
-import {Formik} from 'formik';
+import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
 import {Badge, Button} from '../../../components';
@@ -258,19 +258,6 @@ const InviteTeamMembersPage = ({
 		}
 	};
 
-	const handleRemoveTeamMember = () => {
-		const removeLastTeamMember = values.invites?.splice(-1);
-
-		setFieldValue(removeLastTeamMember);
-
-		if (
-			removeLastTeamMember[0].role.name === 'Administrator' ||
-			removeLastTeamMember[0].role.name === 'Requestor'
-		) {
-			setAvailableAdminsRoles((previousAdmins) => previousAdmins + 1);
-		}
-	};
-
 	useEffect(() => {
 		if (availableAdminsRoles > 0) {
 			setAccountRolesOptions((previousAccountRoles) =>
@@ -315,96 +302,121 @@ const InviteTeamMembersPage = ({
 				</Badge>
 			)}
 
-			<div className="invites-form overflow-auto px-3">
-				<div className="px-3">
-					<label>Project Name</label>
+			<FieldArray
+				name="invites"
+				render={({pop, push}) => (
+					<>
+						<div className="invites-form overflow-auto px-3">
+							<div className="px-3">
+								<label>Project Name</label>
 
-					<p className="invites-project-name text-neutral-6 text-paragraph-lg">
-						<strong>{project.name}</strong>
-					</p>
-				</div>
+								<p className="invites-project-name text-neutral-6 text-paragraph-lg">
+									<strong>{project.name}</strong>
+								</p>
+							</div>
 
-				<ClayForm.Group className="m-0">
-					{values?.invites?.map((invite, index) => (
-						<TeamMemberInputs
-							disableError={hasInitialError}
-							id={index}
-							invite={invite}
-							key={index}
-							options={accountRolesOptions}
-							placeholderEmail={`username@${
-								project?.code?.toLowerCase() || 'example'
-							}.com`}
-							selectOnChange={(roleId) =>
-								setFieldValue(
-									`invites[${index}].role`,
-									accountRoles?.find(({id}) => id === +roleId)
-								)
-							}
-						/>
-					))}
-				</ClayForm.Group>
+							<ClayForm.Group className="m-0">
+								{values?.invites?.map((invite, index) => (
+									<TeamMemberInputs
+										disableError={hasInitialError}
+										id={index}
+										invite={invite}
+										key={index}
+										options={accountRolesOptions}
+										placeholderEmail={`username@${
+											project?.code?.toLowerCase() ||
+											'example'
+										}.com`}
+										selectOnChange={(roleId) =>
+											setFieldValue(
+												`invites[${index}].role`,
+												accountRoles?.find(
+													({id}) => id === +roleId
+												)
+											)
+										}
+									/>
+								))}
+							</ClayForm.Group>
 
-				<div className="ml-3 my-4">
-					{values?.invites?.length > 1 && (
-						<Button
-							className="mr-3 py-2 text-brandy-secondary"
-							displayType="secondary"
-							onClick={handleRemoveTeamMember}
-							prependIcon="hr"
-							small
-						>
-							Remove this Member
-						</Button>
-					)}
+							<div className="ml-3 my-4">
+								{values?.invites?.length > 1 && (
+									<Button
+										className="mr-3 py-2 text-brandy-secondary"
+										displayType="secondary"
+										onClick={() => {
+											const removedItem = pop();
 
-					{values?.invites?.length < MAXIMUM_INVITES_COUNT && (
-						<Button
-							className="btn-outline-primary cp-btn-add-members py-2 rounded-xs"
-							onClick={() => {
-								setBaseButtonDisabled(false);
-								setFieldValue('invites', [
-									...values?.invites,
-									getInitialInvite(accountMemberRole),
-								]);
-							}}
-							prependIcon="plus"
-							small
-						>
-							Add More Members
-						</Button>
-					)}
-				</div>
-			</div>
+											if (
+												removedItem.role.name ===
+													'Administrator' ||
+												removedItem.role.name ===
+													'Requestor'
+											) {
+												setAvailableAdminsRoles(
+													(previousAdmins) =>
+														previousAdmins + 1
+												);
+											}
+										}}
+										prependIcon="hr"
+										small
+									>
+										Remove this Member
+									</Button>
+								)}
 
-			<div className="invites-helper px-3">
-				<div className="mx-3 pt-3">
-					<h5 className="text-neutral-7">
-						{`${
-							projectHasSLAGoldPlatinum
-								? ROLE_TYPES.requestor.name
-								: ROLE_TYPES.admin.name
-						}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
-					</h5>
+								{values?.invites?.length <
+									MAXIMUM_INVITES_COUNT && (
+									<Button
+										className="btn-outline-primary cp-btn-add-members py-2 rounded-xs"
+										onClick={() => {
+											setBaseButtonDisabled(false);
+											push(
+												getInitialInvite(
+													accountMemberRole
+												)
+											);
+										}}
+										prependIcon="plus"
+										small
+									>
+										Add More Members
+									</Button>
+								)}
+							</div>
+						</div>
+						<div className="invites-helper px-3">
+							<div className="mx-3 pt-3">
+								<h5 className="text-neutral-7">
+									{`${
+										projectHasSLAGoldPlatinum
+											? ROLE_TYPES.requestor.name
+											: ROLE_TYPES.admin.name
+									}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
+								</h5>
 
-					<p className="mb-0 text-neutral-7 text-paragraph-sm">
-						{`Only ${maxRequestors} member${
-							maxRequestors > 1 ? 's' : ''
-						} per project (including yourself) have
-						 role permissions (Admins & Requestors) to open Support
-						 tickets. `}
+								<p className="mb-0 text-neutral-7 text-paragraph-sm">
+									{`Only ${maxRequestors} member${
+										maxRequestors > 1 ? 's' : ''
+									} per project (including yourself) have
+								 role permissions (Admins & Requestors) to open Support
+								 tickets. `}
 
-						<a
-							className="font-weight-bold text-neutral-9"
-							href={supportLink}
-							rel="noreferrer"
-							target="_blank"
-						>
-							Learn more about Customer Portal roles
-						</a>
-					</p>
-				</div>
-			</div>
+									<a
+										className="font-weight-bold text-neutral-9"
+										href={supportLink}
+										rel="noreferrer"
+										target="_blank"
+									>
+										Learn more about Customer Portal roles
+									</a>
+								</p>
+							</div>
+						</div>
+					</>
+				)}
+			/>
 		</Layout>
 	);
 };

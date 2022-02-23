@@ -25,12 +25,15 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
@@ -41,8 +44,11 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -60,14 +66,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.checkout.step.name=" + PaymentTermCommerceCheckoutStep.NAME,
+		"commerce.checkout.step.name=" + DeliveryTermCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=50"
 	},
 	service = CommerceCheckoutStep.class
 )
-public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
+public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
-	public static final String NAME = "payment-terms";
+	public static final String NAME = "delivery-terms";
 
 	@Override
 	public String getName() {
@@ -96,8 +102,8 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
 		return _commerceCheckoutStepHttpHelper.
-			isActivePaymentTermCommerceCheckoutStep(
-				commerceOrder,
+			isActiveDeliveryTermCommerceCheckoutStep(
+				httpServletRequest, commerceOrder,
 				LanguageUtil.getLanguageId(httpServletRequest.getLocale()),
 				commerceOrderCheckoutConfiguration.
 					viewPaymentTermCheckoutStepEnabled());
@@ -111,12 +117,12 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		String commercePaymentTermId = ParamUtil.getString(
-			actionRequest, "commercePaymentTermId");
+		String commerceDeliveryTermId = ParamUtil.getString(
+			actionRequest, "commerceDeliveryTermId");
 
 		commerceOrder = _commerceOrderLocalService.updateTermsAndConditions(
-			commerceOrder.getCommerceOrderId(), 0,
-			Long.valueOf(commercePaymentTermId),
+			commerceOrder.getCommerceOrderId(),
+			Long.valueOf(commerceDeliveryTermId), 0,
 			LanguageUtil.getLanguageId(actionRequest.getLocale()));
 
 		actionRequest.setAttribute(
@@ -140,31 +146,63 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		CommerceTermEntry commerceTermEntry =
 			_commerceTermEntryLocalService.fetchCommerceTermEntry(
-				accountEntry.getDefaultPaymentCTermEntryId());
+				accountEntry.getDefaultDeliveryCTermEntryId());
 
 		if ((commerceTermEntry != null) && commerceTermEntry.isActive()) {
 			CommerceOrder commerceOrder =
 				(CommerceOrder)httpServletRequest.getAttribute(
 					CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-				_commercePaymentMethodGroupRelLocalService.
-					getCommercePaymentMethodGroupRel(
-						commerceOrder.getGroupId(),
-						commerceOrder.getCommercePaymentMethodKey());
+			CommerceShippingMethod commerceShippingMethod =
+				_commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceOrder.getCommerceShippingMethodId());
 
-			List<CommerceTermEntry> paymentCommerceTermEntries =
-				_commerceTermEntryLocalService.getPaymentCommerceTermEntries(
-					commerceOrder.getCompanyId(),
-					commerceOrder.getCommerceOrderTypeId(),
-					commercePaymentMethodGroupRel.
-						getCommercePaymentMethodGroupRelId());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (paymentCommerceTermEntries.contains(commerceTermEntry)) {
+			List<CommerceTermEntry> deliveryCommerceTermEntries =
+				Collections.emptyList();
+
+			CommerceShippingEngine commerceShippingEngine =
+				_commerceShippingEngineRegistry.getCommerceShippingEngine(
+					commerceShippingMethod.getEngineKey());
+
+			List<CommerceShippingOption> commerceShippingOptions =
+				commerceShippingEngine.getCommerceShippingOptions(
+					commerceContext, commerceOrder, themeDisplay.getLocale());
+
+			String shippingOptionName = commerceOrder.getShippingOptionName();
+
+			for (CommerceShippingOption commerceShippingOption :
+					commerceShippingOptions) {
+
+				if (shippingOptionName.equals(
+						commerceShippingOption.getName())) {
+
+					CommerceShippingFixedOption commerceShippingFixedOption =
+						_commerceShippingFixedOptionLocalService.
+							fetchCommerceShippingFixedOption(
+								commerceOrder.getCompanyId(),
+								commerceShippingOption.getName());
+
+					if (commerceShippingFixedOption != null) {
+						deliveryCommerceTermEntries =
+							_commerceTermEntryLocalService.
+								getDeliveryCommerceTermEntries(
+									commerceOrder.getCompanyId(),
+									commerceOrder.getCommerceOrderTypeId(),
+									commerceShippingFixedOption.
+										getCommerceShippingFixedOptionId());
+					}
+				}
+			}
+
+			if (deliveryCommerceTermEntries.contains(commerceTermEntry)) {
 				commerceOrder =
 					_commerceOrderLocalService.updateTermsAndConditions(
-						commerceOrder.getCommerceOrderId(), 0,
-						accountEntry.getDefaultPaymentCTermEntryId(),
+						commerceOrder.getCommerceOrderId(),
+						accountEntry.getDefaultDeliveryCTermEntryId(), 0,
 						LanguageUtil.getLanguageId(
 							httpServletRequest.getLocale()));
 
@@ -188,7 +226,7 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/checkout_step/payment_term.jsp");
+			"/checkout_step/delivery_term.jsp");
 	}
 
 	@Reference

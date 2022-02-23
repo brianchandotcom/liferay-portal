@@ -25,7 +25,12 @@ public class PropsValues {
 	public static final String TESTRAY_BUCKET_NAME = PropsUtil.get(
 		"testray.bucket.name");
 
+	public static final String TESTRAY_PASSWORD = PropsUtil.get(
+		"testray.password");
+
 	public static final String TESTRAY_URL_API_KEY = PropsUtil.get(
 		"testray.url.api.key");
+
+	public static final String TESTRAY_USER = PropsUtil.get("testray.user");
 
 }

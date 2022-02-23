@@ -19,7 +19,6 @@ import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
 import {getTestrayCases} from '../../../../graphql/queries';
-import {Liferay} from '../../../../services/liferay/liferay';
 import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => (
@@ -89,7 +88,7 @@ const Build = () => (
 				navigateTo: (item) => `case-result/${item.testrayCaseId}`,
 			}}
 			transformData={(data) => data?.c?.testrayCases}
-			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+			variables={{}}
 		/>
 	</Container>
 );

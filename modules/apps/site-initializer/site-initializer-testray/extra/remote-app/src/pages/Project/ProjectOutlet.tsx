@@ -25,7 +25,6 @@ import {
 	getTestrayProjects,
 } from '../../graphql/queries/testrayProject';
 import useHeader from '../../hooks/useHeader';
-import {Liferay} from '../../services/liferay/liferay';
 
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();
@@ -43,7 +42,6 @@ const ProjectOutlet = () => {
 	>(getTestrayProjects, {
 		variables: {
 			pageSize: 100,
-			scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 		},
 	});
 

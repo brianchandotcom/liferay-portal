@@ -439,6 +439,11 @@ public class ObjectFieldWrapper
 		return model.getObjectFieldId();
 	}
 
+	@Override
+	public java.util.List<ObjectFieldSetting> getObjectFieldSettings() {
+		return model.getObjectFieldSettings();
+	}
+
 	/**
 	 * Returns the primary key of this object field.
 	 *
@@ -771,6 +776,13 @@ public class ObjectFieldWrapper
 	@Override
 	public void setObjectFieldId(long objectFieldId) {
 		model.setObjectFieldId(objectFieldId);
+	}
+
+	@Override
+	public void setObjectFieldSettings(
+		java.util.List<ObjectFieldSetting> objectFieldSettings) {
+
+		model.setObjectFieldSettings(objectFieldSettings);
 	}
 
 	/**

@@ -24,11 +24,9 @@
 			"required": false,
 			"type": "String"
 		}
-	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
+	],	
 	"pluralLabel": {
 		"en_US": "Testray Product Versions"
 	},
-	"scope": "site"
+	"scope": "company"
 }

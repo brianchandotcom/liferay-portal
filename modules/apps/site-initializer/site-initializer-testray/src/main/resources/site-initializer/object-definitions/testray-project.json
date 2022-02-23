@@ -25,11 +25,9 @@
 			"required": false,
 			"type": "String"
 		}
-	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
+	],	
 	"pluralLabel": {
 		"en_US": "Testray Projects"
 	},
-	"scope": "site"
+	"scope": "company"
 }

@@ -118,7 +118,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		segmentsExperienceId = _getCurrentSegmentsExperienceId(
-			classNameId, classPK, httpServletRequest, groupId);
+			classNameId, classPK, groupId, httpServletRequest);
 
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
@@ -233,8 +233,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	}
 
 	private long _getCurrentSegmentsExperienceId(
-		long classNameId, long classPK, HttpServletRequest httpServletRequest,
-		long groupId) {
+		long classNameId, long classPK, long groupId,
+		HttpServletRequest httpServletRequest) {
 
 		Optional<Cookie> cookieOptional = _getCookieOptional(
 			httpServletRequest);

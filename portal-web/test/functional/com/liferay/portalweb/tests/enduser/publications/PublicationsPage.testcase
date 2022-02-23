@@ -219,21 +219,24 @@ definition {
 			publicationName = "Publication Name 1");
 
 		PublicationsChanges.discardChanges(
+			changeCategory = "Content Page Name",
+			changeTitle = "Content Page Name",
+			conflictingChanges = "true",
+			entryTitle = "Content Page Name");
+
+		PublicationsChanges.discardChanges(
 			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			conflictingChanges = "true",
 			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
 		PublicationsChanges.discardChanges(
-			changeCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
-			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
+			changeCategory = "Content Page Name",
+			changeTitle = "Content Page Name",
 			conflictingChanges = "true",
-			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
+			entryTitle = "Content Page Name");
 
-		// Workaround LPS-124618
-
-		//AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
-
+		Publications.publishPublication(publicationName = "Publication Name 1");
 	}
 
 	@priority = "5"

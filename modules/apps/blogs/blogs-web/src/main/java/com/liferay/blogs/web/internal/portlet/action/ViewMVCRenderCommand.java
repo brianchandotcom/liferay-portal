@@ -20,6 +20,7 @@ import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
@@ -60,8 +61,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT,
 			new BlogEntriesDisplayContext(
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse),
+				renderRequest, renderResponse, _htmlParser, _portal,
 				_trashHelper));
 
 		return "/blogs_admin/view.jsp";
@@ -75,6 +75,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return portletDisplay.getPortletName();
 	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Portal _portal;

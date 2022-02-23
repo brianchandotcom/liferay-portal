@@ -75,7 +75,9 @@ definition {
 				customTitle = "${customTitle}");
 		}
 
-		Button.click(button = "Save");
+		if (isSet(sitePageType) || isSet(inheritChanges) || isSet(openGraph)) {
+			Button.click(button = "Save");
+		}
 	}
 
 	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."

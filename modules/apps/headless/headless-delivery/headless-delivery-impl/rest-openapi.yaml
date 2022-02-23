@@ -4339,6 +4339,12 @@ components:
                         The number of comments the structured content has received.
                     readOnly: true
                     type: integer
+                priority:
+                    # @review
+                    description:
+                        The structured content's priority.
+                    format: double
+                    type: number
                 relatedContents:
                     # @review
                     description:

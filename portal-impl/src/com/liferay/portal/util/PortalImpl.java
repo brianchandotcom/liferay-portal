@@ -8420,12 +8420,12 @@ public class PortalImpl implements Portal {
 			}
 		}
 
+		String portalDomain = themeDisplay.getPortalDomain();
+
+		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+			layoutSet);
+
 		if (useGroupVirtualHostname) {
-			TreeMap<String, String> virtualHostnames = getVirtualHostnames(
-				layoutSet);
-
-			String portalDomain = themeDisplay.getPortalDomain();
-
 			if (!virtualHostnames.isEmpty() &&
 				(canonicalURL ||
 				 !virtualHostnames.containsKey(defaultVirtualHostName))) {
@@ -8547,7 +8547,10 @@ public class PortalImpl implements Portal {
 		}
 		else if (!StringUtil.equals(
 					group.getGroupKey(),
-					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) ||
+				 (!StringUtil.equalsIgnoreCase(
+					 portalDomain, defaultVirtualHostName) &&
+				  !_containsHostname(virtualHostnames, portalDomain))) {
 
 			sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 			sb.append(group.getFriendlyURL());

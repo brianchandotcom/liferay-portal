@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
@@ -50,6 +51,10 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			matchedTags.add(matcher.group());
+		}
+
+		if (ListUtil.isEmpty(matchedTags)) {
+			return content;
 		}
 
 		try {

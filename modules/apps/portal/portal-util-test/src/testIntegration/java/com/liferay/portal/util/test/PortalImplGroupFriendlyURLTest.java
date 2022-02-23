@@ -38,7 +38,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 import org.junit.AfterClass;
@@ -144,16 +143,15 @@ public class PortalImplGroupFriendlyURLTest {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		Map<String, String> virtualHostnames = TreeMapBuilder.put(
+		TreeMap<String, String> virtualHostnames = TreeMapBuilder.put(
 			layoutHostname, StringPool.BLANK
 		).build();
 
 		_virtualHostLocalService.updateVirtualHosts(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
-			(TreeMap<String, String>)virtualHostnames);
+			virtualHostnames);
 
-		layoutSet.setVirtualHostnames(
-			(TreeMap<String, String>)virtualHostnames);
+		layoutSet.setVirtualHostnames(virtualHostnames);
 
 		layout.setLayoutSet(layoutSet);
 	}

@@ -364,6 +364,14 @@ public class CommerceTermEntryLocalServiceUtil {
 		return getService().getCTermEntryLocalizations(commerceTermEntryId);
 	}
 
+	public static List<CommerceTermEntry> getDeliveryCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId) {
+
+		return getService().getDeliveryCommerceTermEntries(
+			companyId, commerceOrderTypeId, commerceShippingOptionId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

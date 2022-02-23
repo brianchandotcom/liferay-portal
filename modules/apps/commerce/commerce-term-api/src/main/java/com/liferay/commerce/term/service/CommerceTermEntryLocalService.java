@@ -316,6 +316,11 @@ public interface CommerceTermEntryLocalService
 		long commerceTermEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntry> getDeliveryCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

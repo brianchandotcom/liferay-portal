@@ -17,46 +17,90 @@ package com.liferay.site.initializer.testray.extra.java.function.http;
 import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
 
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.json.JSONObject;
+
 /**
  * @author José Abelenda
  */
 public class HttpUtil {
 
-	public static void get(String objectName, long groupId) throws Exception {
-		System.out.println("objectName: " + objectName);
+	public static JSONObject post(
+			String body, String objectName, Map<String, String> headers,
+			Map<String, String> parameters)
+		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-		httpInvoker.path(PropsValues.TESTRAY_BASE_URL + objectName + "/scopes/"+ groupId);
-
-		System.out.println("path: " + PropsValues.TESTRAY_BASE_URL + objectName + "/scopes/"+ groupId);
-
-			// httpInvoker.path("objectDefinitionId", objectDefinitionId);
-
-			httpInvoker.userNameAndPassword(
-				"test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-		
-		// System.out.println("response:" + httpResponse);
+		HttpInvoker.HttpResponse httpResponse = postHttpResponse(
+			body, objectName, headers, parameters);
 
 		String content = httpResponse.getContent();
 
-		// System.out.println("content:" + content);
-
 		if ((httpResponse.getStatusCode() / 100) != 2) {
-			System.out.println(
+			_logger.log(
+				Level.WARNING,
 				"Unable to process HTTP response content: " + content);
-
-			System.out.println(
+			_logger.log(
+				Level.WARNING,
 				"HTTP response message: " + httpResponse.getMessage());
+			_logger.log(
+				Level.WARNING,
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			System.out.println(
-				"HTTP response status code: " +
-					httpResponse.getStatusCode());
-
+			throw new Exception();
 		}
 
+		_logger.fine("HTTP response content: " + content);
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return new JSONObject(content);
+		}
+		catch (Exception exception) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				exception);
+
+			throw exception;
+		}
 	}
+
+	public static HttpInvoker.HttpResponse postHttpResponse(
+			String body, String objectName, Map<String, String> headers,
+			Map<String, String> parameters)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(body, "application/json");
+
+		if (headers != null) {
+			for (Map.Entry<String, String> entry : headers.entrySet()) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+		}
+
+		if (parameters != null) {
+			for (Map.Entry<String, String> entry : parameters.entrySet()) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+		}
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(PropsValues.TESTRAY_BASE_URL + objectName);
+
+		httpInvoker.userNameAndPassword(
+			PropsValues.TESTRAY_USER + ":" + PropsValues.TESTRAY_PASSWORD);
+
+		return httpInvoker.invoke();
+	}
+
+	private static final Logger _logger = Logger.getLogger(
+		HttpUtil.class.getName());
+
 }

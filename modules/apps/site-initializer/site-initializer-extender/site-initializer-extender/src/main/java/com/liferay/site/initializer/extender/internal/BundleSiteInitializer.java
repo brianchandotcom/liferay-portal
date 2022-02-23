@@ -15,7 +15,6 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -57,9 +56,11 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResou
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -166,15 +167,15 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
+import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.math.BigDecimal;
-
 import java.net.URL;
 import java.net.URLConnection;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -187,11 +188,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Brian Wing Shun Chan
@@ -653,6 +649,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				resourcePath.endsWith(".products.json") ||
 				resourcePath.endsWith(
 					".products.subscriptions.properties.json") ||
+				resourcePath.endsWith(".products.specifications.json") ||
 				!resourcePath.endsWith(".json")) {
 
 				continue;
@@ -884,9 +881,56 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addCommerceCatalogs(
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
+
+		_addCommerceProductSpecification(serviceContext);
+
 		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+	}
+
+	private void _addCommerceProductSpecification(ServiceContext serviceContext)
+		throws Exception {
+
+		ProductSpecificationResource.Builder productSpecificationResourceBuilder =
+			_commerceReferencesHolder.productSpecificationResourceFactory.create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String json = _read("/site-initializer/commerce-catalogs/catalog.products.specifications.json");
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		_commerceReferencesHolder.cpSpecificationOptionsImporter.importCPSpecificationOptions(
+			jsonArray, serviceContext.getScopeGroupId(), serviceContext.getUserId());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						jsonObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			if (cpDefinition == null){
+				continue;
+			}
+
+			ProductSpecification productSpecification = new ProductSpecification() {
+				{
+					productId = cpDefinition.getCPDefinitionId();
+					specificationKey = jsonObject.getString("key");
+					value = JSONUtil.toStringMap(jsonObject.getJSONObject("productSpecificationValue"));
+				}
+			};
+
+			productSpecificationResource.postProductIdProductSpecification(cpDefinition.getCPDefinitionId(),productSpecification);
+		}
 	}
 
 	private void _addCPDefinitions(

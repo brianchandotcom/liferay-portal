@@ -20,9 +20,7 @@
 	if (window.Analytics) {
 		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
 	}
-</script>
 
-<script>
 	const pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	function sendAnalyticsEvent(anchor) {

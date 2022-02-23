@@ -1017,6 +1017,10 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
+		Click(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
 		FrontStore.addToCartFromProductDetails(
 			optionNamesAndValues = "Color:Black",
 			productName = "Bundled Product",

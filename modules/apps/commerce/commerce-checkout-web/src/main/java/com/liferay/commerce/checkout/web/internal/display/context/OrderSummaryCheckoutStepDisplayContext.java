@@ -183,6 +183,18 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceOrderItem.getCPInstanceId());
 	}
 
+	public String getDeliveryTermEntryName(Locale locale) {
+		CommerceTermEntry commerceTermEntry =
+			_commerceTermEntryLocalService.fetchCommerceTermEntry(
+				_commerceOrder.getDeliveryCommerceTermEntryId());
+
+		if (commerceTermEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale));
+	}
+
 	public List<KeyValuePair> getKeyValuePairs(
 			long cpDefinitionId, String json, Locale locale)
 		throws PortalException {

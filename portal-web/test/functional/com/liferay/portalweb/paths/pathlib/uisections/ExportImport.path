@@ -116,6 +116,11 @@
 </tr>
 <!--UPDATE_DATA-->
 <tr>
+	<td>UPDATE_DATA_COPY_AS_NEW_RADIO</td>
+	<td>//div[contains(@class, radio)]//label[contains(., 'Copy as New')]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO</td>
 	<td>//div[contains(@class, radio)]//label[contains(., 'Mirror with overwriting')]/input</td>
 	<td></td>

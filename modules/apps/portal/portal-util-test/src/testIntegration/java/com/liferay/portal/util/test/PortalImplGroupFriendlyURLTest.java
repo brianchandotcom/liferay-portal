@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -130,6 +131,17 @@ public class PortalImplGroupFriendlyURLTest {
 			_company.getVirtualHostname(), StringPool.BLANK, _group,
 			defaultSiteLayout);
 
+		_updateLayoutSetVirtualHostname(
+			defaultSiteLayout, _PUBLIC_LAYOUT_HOSTNAME);
+
+		_testGroupFriendlyURL(
+			_company.getVirtualHostname(), StringPool.BLANK, _group,
+			defaultSiteLayout);
+
+		_testGroupFriendlyURL(
+			_PUBLIC_LAYOUT_HOSTNAME, StringPool.BLANK, _group,
+			defaultSiteLayout);
+
 		User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		Group group = GroupTestUtil.addGroup(
@@ -142,6 +154,15 @@ public class PortalImplGroupFriendlyURLTest {
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				group.getFriendlyURL(),
 			group, nondefaultSiteLayout);
+
+		String hostName =
+			RandomTestUtil.randomString(6) + StringPool.PERIOD +
+				RandomTestUtil.randomString(3);
+
+		_updateLayoutSetVirtualHostname(nondefaultSiteLayout, hostName);
+
+		_testGroupFriendlyURL(
+			hostName, StringPool.BLANK, group, nondefaultSiteLayout);
 	}
 
 	private void _testGroupFriendlyURL(

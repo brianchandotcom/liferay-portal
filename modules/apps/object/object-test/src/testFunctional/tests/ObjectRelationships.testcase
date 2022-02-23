@@ -182,12 +182,25 @@ definition {
 	}
 
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSelectRelationshipFieldForObjectEntryTitle {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147735",
+			objectName = "CustomObject147735",
+			pluralLabelName = "Custom Objects 147735");
 
-		// TODO LPS-147735 CannotSelectRelationshipFieldForObjectEntryTitle pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject147735",
+			objectName_2 = "CustomObject147735",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147735");
+
+		ObjectAdmin.viewOptionTitleField(optionNameNotPresent = "Relationship");
 	}
 
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"

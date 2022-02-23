@@ -1006,6 +1006,20 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
+	macro viewOptionTitleField {
+		if (isSet(optionNamePresent)) {
+			AssertElementPresent(
+				key_optionName = "${optionNamePresent}",
+				locator1 = "ObjectAdmin#VIEW_OPTION_TITLE_FIELD");
+		}
+
+		if (isSet(optionNameNotPresent)) {
+			AssertElementNotPresent(
+				key_optionName = "${optionNameNotPresent}",
+				locator1 = "ObjectAdmin#VIEW_OPTION_TITLE_FIELD");
+		}
+	}
+
 	macro viewRequiredAlert {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",

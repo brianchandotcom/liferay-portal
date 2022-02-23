@@ -585,6 +585,11 @@
 		<td>//input[@disabled][contains(@class,'form-control ddm-field-text') and contains(@value,'${key_fieldValue}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_OPTION_TITLE_FIELD</td>
+		<td>//*[contains(@id,'titleObjectFieldId')]//option[contains(text(),'${key_optionName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

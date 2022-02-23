@@ -444,6 +444,12 @@ public abstract class BaseCheck extends AbstractCheck {
 	protected List<DetailAST> getMethodCalls(
 		DetailAST detailAST, String className, String methodName) {
 
+		return getMethodCalls(detailAST, className, new String[] {methodName});
+	}
+
+	protected List<DetailAST> getMethodCalls(
+		DetailAST detailAST, String className, String[] methodNames) {
+
 		List<DetailAST> list = new ArrayList<>();
 
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
@@ -468,7 +474,7 @@ public abstract class BaseCheck extends AbstractCheck {
 
 			if (((className == null) ||
 				 methodCallClassName.equals(className)) &&
-				methodCallMethodName.equals(methodName)) {
+				ArrayUtil.contains(methodNames, methodCallMethodName)) {
 
 				list.add(methodCallDetailAST);
 			}

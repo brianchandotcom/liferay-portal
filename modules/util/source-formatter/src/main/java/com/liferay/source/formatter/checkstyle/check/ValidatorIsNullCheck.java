@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -34,15 +35,8 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkMethod(detailAST, "Validator", "isNotNull");
-		_checkMethod(detailAST, "Validator", "isNull");
-	}
-
-	private void _checkMethod(
-		DetailAST detailAST, String className, String methodName) {
-
 		List<DetailAST> methodCallDetailASTList = getMethodCalls(
-			detailAST, className, methodName);
+			detailAST, "Validator", new String[] {"isNotNull", "isNull"});
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
@@ -56,7 +50,9 @@ public class ValidatorIsNullCheck extends BaseCheck {
 			if (childDetailAST.getType() == TokenTypes.NUM_INT) {
 				log(
 					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,
-					StringBundler.concat(className, ".", methodName, "(long)"));
+					StringBundler.concat(
+						"Validator.", getMethodName(methodCallDetailAST),
+						"(long)"));
 
 				continue;
 			}
@@ -80,21 +76,21 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 				log(
 					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,
-					StringBundler.concat(className, ".", methodName, "(long)"));
+					StringBundler.concat(
+						"Validator.", getMethodName(methodCallDetailAST),
+						"(long)"));
 
 				continue;
 			}
 
 			String typeName = getTypeName(typeDetailAST, true);
 
-			if (Validator.isNotNull(typeName) && !typeName.equals("Long") &&
-				!typeName.equals("Object") &&
-				!typeName.equals("Serializable") &&
-				!typeName.equals("String")) {
+			if (Validator.isNotNull(typeName) &&
+				!ArrayUtil.contains(_RESERVED_TYPE_NAMES, typeName)) {
 
 				log(
 					methodCallDetailAST, _MSG_RESERVED_METHOD,
-					StringBundler.concat(className, ".", methodName));
+					"Validator." + getMethodName(methodCallDetailAST));
 			}
 		}
 	}
@@ -102,5 +98,9 @@ public class ValidatorIsNullCheck extends BaseCheck {
 	private static final String _MSG_INVALID_METHOD_NAME = "method.invalidName";
 
 	private static final String _MSG_RESERVED_METHOD = "method.reserved";
+
+	private static final String[] _RESERVED_TYPE_NAMES = {
+		"Long", "Object", "Serializable", "String"
+	};
 
 }

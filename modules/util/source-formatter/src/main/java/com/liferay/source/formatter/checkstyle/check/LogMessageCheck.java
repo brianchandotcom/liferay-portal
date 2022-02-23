@@ -31,18 +31,8 @@ public class LogMessageCheck extends BaseMessageCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkMethod(detailAST, "_log", "debug");
-		_checkMethod(detailAST, "_log", "error");
-		_checkMethod(detailAST, "_log", "info");
-		_checkMethod(detailAST, "_log", "trace");
-		_checkMethod(detailAST, "_log", "warn");
-	}
-
-	private void _checkMethod(
-		DetailAST detailAST, String variableName, String methodName) {
-
 		List<DetailAST> methodCallDetailASTList = getMethodCalls(
-			detailAST, variableName, methodName);
+			detailAST, "_log", _LOG_METHOD_NAMES);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
@@ -58,5 +48,9 @@ public class LogMessageCheck extends BaseMessageCheck {
 			}
 		}
 	}
+
+	private static final String[] _LOG_METHOD_NAMES = {
+		"debug", "error", "info", "trace", "warn"
+	};
 
 }

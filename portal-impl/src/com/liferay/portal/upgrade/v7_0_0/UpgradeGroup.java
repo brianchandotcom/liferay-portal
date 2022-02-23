@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -128,8 +129,8 @@ public class UpgradeGroup extends UpgradeProcess {
 							name);
 
 					String nameXML = LocalizationUtil.updateLocalization(
-						localizedValuesMap.getValues(), "", "name",
-						defaultLanguageId);
+						localizedValuesMap.getValues(), StringPool.BLANK,
+						"name", defaultLanguageId);
 
 					preparedStatement2.setString(1, nameXML);
 

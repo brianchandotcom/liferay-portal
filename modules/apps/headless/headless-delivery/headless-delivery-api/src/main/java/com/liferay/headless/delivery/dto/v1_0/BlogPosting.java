@@ -597,6 +597,34 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
+	@Schema(description = "The blog post's priority.")
+	public Double getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Double priority) {
+		this.priority = priority;
+	}
+
+	@JsonIgnore
+	public void setPriority(
+		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+
+		try {
+			priority = priorityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The blog post's priority.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double priority;
+
 	@Schema(description = "A list of related contents to this blog post.")
 	@Valid
 	public RelatedContent[] getRelatedContents() {
@@ -1073,6 +1101,16 @@ public class BlogPosting implements Serializable {
 			sb.append("\"numberOfComments\": ");
 
 			sb.append(numberOfComments);
+		}
+
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(priority);
 		}
 
 		if (relatedContents != null) {

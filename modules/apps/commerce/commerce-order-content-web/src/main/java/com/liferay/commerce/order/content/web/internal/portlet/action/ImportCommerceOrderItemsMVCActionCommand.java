@@ -122,6 +122,10 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					catch (NoSuchCPInstanceException
 								noSuchCPInstanceException) {
 
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+
 						notImportedRowsCount++;
 					}
 				}
@@ -183,6 +187,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			"commerceOrderId", commerceOrderId
 		).buildString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImportCommerceOrderItemsMVCActionCommand.class);
 
 	@Reference
 	private CommerceOrderImporterTypeRegistry

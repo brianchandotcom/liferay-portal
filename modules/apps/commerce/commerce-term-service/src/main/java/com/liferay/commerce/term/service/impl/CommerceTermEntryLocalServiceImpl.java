@@ -16,6 +16,8 @@ package com.liferay.commerce.term.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifierTable;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifierTable;
+import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.exception.CommerceTermEntryDisplayDateException;
 import com.liferay.commerce.term.exception.CommerceTermEntryExpirationDateException;
 import com.liferay.commerce.term.exception.CommerceTermEntryNameException;
@@ -73,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -247,21 +250,71 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceTermEntry> getDeliveryCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId) {
+
+		List<CommerceTermEntry> commerceTermEntries = new LinkedList<>();
+
+		commerceTermEntries.addAll(
+			dslQuery(
+				_getDeliveryTermsEntryGroupByStep(
+					companyId,
+					(commerceOrderTypeId > 0) ? commerceOrderTypeId : null,
+					commerceShippingOptionId,
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceTermEntryTable.INSTANCE)
+				).orderBy(
+					CommerceTermEntryTable.INSTANCE.priority.descending()
+				)));
+
+		if ((commerceOrderTypeId > 0) && commerceTermEntries.isEmpty()) {
+			commerceTermEntries.addAll(
+				dslQuery(
+					_getDeliveryTermsEntryGroupByStep(
+						companyId, null, commerceShippingOptionId,
+						DSLQueryFactoryUtil.selectDistinct(
+							CommerceTermEntryTable.INSTANCE)
+					).orderBy(
+						CommerceTermEntryTable.INSTANCE.priority.descending()
+					)));
+		}
+
+		return commerceTermEntries;
+	}
+
+	@Override
 	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
 		long companyId, long commerceOrderTypeId,
 		long commercePaymentMethodGroupRelId) {
 
-		return dslQuery(
-			_getGroupByStep(
-				companyId,
-				(commerceOrderTypeId > 0) ? commerceOrderTypeId : null,
-				commercePaymentMethodGroupRelId,
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceTermEntryTable.INSTANCE),
-				"payment-terms"
-			).orderBy(
-				CommerceTermEntryTable.INSTANCE.priority.descending()
-			));
+		List<CommerceTermEntry> commerceTermEntries = new LinkedList<>();
+
+		commerceTermEntries.addAll(
+			dslQuery(
+				_getPaymentTermsEntryGroupByStep(
+					companyId,
+					(commerceOrderTypeId > 0) ? commerceOrderTypeId : null,
+					commercePaymentMethodGroupRelId,
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceTermEntryTable.INSTANCE)
+				).orderBy(
+					CommerceTermEntryTable.INSTANCE.priority.descending()
+				)));
+
+		if ((commerceOrderTypeId > 0) && commerceTermEntries.isEmpty()) {
+			commerceTermEntries.addAll(
+				dslQuery(
+					_getPaymentTermsEntryGroupByStep(
+						companyId, null, commercePaymentMethodGroupRelId,
+						DSLQueryFactoryUtil.selectDistinct(
+							CommerceTermEntryTable.INSTANCE)
+					).orderBy(
+						CommerceTermEntryTable.INSTANCE.priority.descending()
+					)));
+		}
+
+		return commerceTermEntries;
 	}
 
 	@Override
@@ -641,9 +694,74 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 	}
 
-	private GroupByStep _getGroupByStep(
+	private GroupByStep _getDeliveryTermsEntryGroupByStep(
 		Long companyId, Long commerceOrderTypeId,
-		Long commercePaymentMethodGroupRelId, FromStep fromStep, String type) {
+		Long commerceShippingFixedOptionId, FromStep fromStep) {
+
+		CommerceTermEntryRelTable commerceOrderTypeCommerceTermEntryRel =
+			CommerceTermEntryRelTable.INSTANCE.as(
+				"commerceOrderTypeCommerceTermEntryRel");
+
+		Column<CommerceTermEntryRelTable, Long>
+			commerceTermEntryRelTableClassNameIdColumn =
+				commerceOrderTypeCommerceTermEntryRel.classNameId;
+
+		Column<CommerceShippingFixedOptionQualifierTable, Long>
+			commerceShippingFixedOptionQualifierTableClassNameIdColumn =
+				CommerceShippingFixedOptionQualifierTable.INSTANCE.classNameId;
+
+		JoinStep joinStep = fromStep.from(
+			CommerceTermEntryTable.INSTANCE
+		).innerJoinON(
+			CommerceShippingFixedOptionQualifierTable.INSTANCE,
+			commerceShippingFixedOptionQualifierTableClassNameIdColumn.eq(
+				classNameLocalService.getClassNameId(
+					CommerceTermEntry.class.getName())
+			).and(
+				CommerceShippingFixedOptionQualifierTable.INSTANCE.classPK.eq(
+					CommerceTermEntryTable.INSTANCE.commerceTermEntryId)
+			)
+		).leftJoinOn(
+			commerceOrderTypeCommerceTermEntryRel,
+			commerceTermEntryRelTableClassNameIdColumn.eq(
+				classNameLocalService.getClassNameId(
+					CommerceOrderType.class.getName())
+			).and(
+				commerceOrderTypeCommerceTermEntryRel.commerceTermEntryId.eq(
+					CommerceTermEntryTable.INSTANCE.commerceTermEntryId)
+			)
+		);
+
+		return joinStep.where(
+			CommerceShippingFixedOptionQualifierTable.INSTANCE.
+				commerceShippingFixedOptionId.eq(
+					commerceShippingFixedOptionId
+				).and(
+					() -> {
+						if (commerceOrderTypeId != null) {
+							return commerceOrderTypeCommerceTermEntryRel.
+								classPK.eq(commerceOrderTypeId);
+						}
+
+						return commerceOrderTypeCommerceTermEntryRel.
+							commerceTermEntryId.isNull();
+					}
+				).and(
+					CommerceTermEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					CommerceTermEntryTable.INSTANCE.companyId.eq(companyId)
+				).and(
+					CommerceTermEntryTable.INSTANCE.active.eq(true)
+				).and(
+					CommerceTermEntryTable.INSTANCE.type.eq(
+						CommerceTermEntryConstants.TYPE_DELIVERY_TERMS)
+				));
+	}
+
+	private GroupByStep _getPaymentTermsEntryGroupByStep(
+		Long companyId, Long commerceOrderTypeId,
+		Long commercePaymentMethodGroupRelId, FromStep fromStep) {
 
 		CommerceTermEntryRelTable commerceOrderTypeCommerceTermEntryRel =
 			CommerceTermEntryRelTable.INSTANCE.as(
@@ -702,7 +820,8 @@ public class CommerceTermEntryLocalServiceImpl
 				).and(
 					CommerceTermEntryTable.INSTANCE.active.eq(true)
 				).and(
-					CommerceTermEntryTable.INSTANCE.type.eq(type)
+					CommerceTermEntryTable.INSTANCE.type.eq(
+						CommerceTermEntryConstants.TYPE_PAYMENT_TERMS)
 				));
 	}
 

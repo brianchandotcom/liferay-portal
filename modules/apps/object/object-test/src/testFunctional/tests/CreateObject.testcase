@@ -445,7 +445,7 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
 	@priority = "5"
 	test CanAddRelationOnRelationshipField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141652",
@@ -1353,7 +1353,7 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
 	@priority = "5"
 	test CanDeleteRelationOnRelationshipTab {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141661",
@@ -2675,7 +2675,7 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
 	@priority = "5"
 	test CanRelateManyOtherEntriesBothObjects {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -4600,6 +4600,8 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnRelationshipTab {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141620",
 			objectName = "CustomObject141620",
@@ -5321,6 +5323,8 @@ definition {
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
 	@priority = "4"
 	test ChoosingAlreadyRelatedEntryWillKeepOnBothEntries {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
@@ -7398,6 +7402,8 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
 	@priority = "4"
 	test PreventDeletionManyToManyWontAllowDelete {
+		property portal.upstream = "quarantine";
+
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject}",
@@ -7606,7 +7612,7 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"
 	@priority = "5"
 	test PreventDeletionOneToManyWontAllowDelete {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8202,6 +8208,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the child object is inactivated (One to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedOneToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",

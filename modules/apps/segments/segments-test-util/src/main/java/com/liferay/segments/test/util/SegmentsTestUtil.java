@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.criteria.Criteria;
@@ -141,7 +142,8 @@ public class SegmentsTestUtil {
 
 		return SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK,
-			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
+			RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true), serviceContext);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(

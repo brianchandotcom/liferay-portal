@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -67,6 +68,7 @@ public class LayoutModelListenerTest {
 		_segmentsExperienceLocalService.addSegmentsExperience(
 			SegmentsEntryConstants.ID_DEFAULT, _classNameId, layout.getPlid(),
 			RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutLocalService.deleteLayout(layout);

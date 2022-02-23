@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.model.SegmentsEntry;
@@ -78,7 +79,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				segmentsEntry.getSegmentsEntryId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true,
+				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		long[] segmentsExperienceIds =
@@ -147,7 +148,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				segmentsEntry.getSegmentsEntryId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true,
+				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		long[] segmentsExperienceIds =

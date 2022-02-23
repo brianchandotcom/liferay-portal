@@ -60,6 +60,7 @@ public class SegmentsExperienceStagedModelRepository
 			segmentsExperience.getClassNameId(),
 			segmentsExperience.getClassPK(), segmentsExperience.getNameMap(),
 			segmentsExperience.getPriority(), segmentsExperience.isActive(),
+			segmentsExperience.getTypeSettingsUnicodeProperties(),
 			serviceContext);
 	}
 

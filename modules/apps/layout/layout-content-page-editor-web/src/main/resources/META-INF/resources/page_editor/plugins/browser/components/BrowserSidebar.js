@@ -28,7 +28,6 @@ import PageStructureSidebar from './page-structure/components/PageStructureSideb
 
 const TABS = [
 	{
-		className: 'page-editor__page-structure__content',
 		component: <PageStructureSidebar />,
 		label: Liferay.Language.get('page-elements'),
 	},
@@ -85,7 +84,7 @@ export default function BrowserSidebar({title}) {
 				{TABS.map((tab, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}
-						className={tab.className}
+						className="h-100"
 						id={getTabPanelId(index)}
 						key={index}
 					>

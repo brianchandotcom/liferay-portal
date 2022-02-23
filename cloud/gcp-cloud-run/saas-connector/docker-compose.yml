@@ -1,0 +1,90 @@
+version: '3.8'
+services:
+  liferay-dxp-provisioning:
+    image: "liferay/dxp:7.4.13.nightly-d2.0.15-20220207220533"
+    container_name: liferay_dxp_provisioning
+    depends_on:
+      - database
+    environment:
+      - JAVA_VERSION=zulu11
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=com.mysql.cj.jdbc.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=toor
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=root
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mysql://database:3306/provisioning?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true
+      - LIFERAY_JVM_OPTS=-server -Xms2g -Xmx3g -XX:NewSize=1g -XX:MaxNewSize=1g -XX:ParallelGCThreads=6 -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=512m -XX:SurvivorRatio=6 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -XX:InitialCodeCacheSize=64m -XX:ReservedCodeCacheSize=96m -Duser.country=US -Duser.language=en -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/dumps -Xlog:gc*,gc+ref=debug,gc+heap=debug,gc+age=trace:file=gc-%p-%t.log:tags,uptime,time,level:filecount=10,filesize=50m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    ports:
+      - "8081:8080"
+      - "8001:8001"
+    volumes:
+      - ./docker/provision/liferay/provisioning-site:/mnt/liferay
+      - provisioning-data:/opt/liferay/data
+    deploy:
+      resources:
+        limits:
+          memory: 6g
+
+  liferay-online:
+    image: "liferay/dxp:7.4.13.nightly-d2.0.15-20220207220533"
+    container_name: liferay_online
+    depends_on:
+      - database
+    environment:
+      - JAVA_VERSION=zulu11
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=org.mariadb.jdbc.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=toor
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=root
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mysql://database:3306/liferayonline?serverTimezone=GMT&useSSL=false
+      - LIFERAY_JVM_OPTS=-server -Xms2g -Xmx3g -XX:NewSize=1g -XX:MaxNewSize=1g -XX:ParallelGCThreads=6 -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=512m -XX:SurvivorRatio=6 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -XX:InitialCodeCacheSize=64m -XX:ReservedCodeCacheSize=96m -Duser.country=US -Duser.language=en -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/dumps -Xlog:gc*,gc+ref=debug,gc+heap=debug,gc+age=trace:file=gc-%p-%t.log:tags,uptime,time,level:filecount=10,filesize=50m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8002,suspend=n
+    ports:
+      - "8082:8080"
+      - "8002:8002"
+    volumes:
+      - ./docker/provision/liferay/liferay-online:/mnt/liferay
+      - lol-data:/opt/liferay/data
+    deploy:
+      resources:
+        limits:
+          memory: 6g
+
+  saas-connector:
+    build: .
+    image: "saas-connector:latest"
+    container_name: saas_connector
+    depends_on:
+      - liferay-dxp-provisioning
+      - liferay-online
+    environment:
+      - BASIC_AUTH_USER=test
+      - BASIC_AUTH_PASSWORD=password
+      - JAVA_OPTS=-server -Xms512m -Xmx512m -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -Duser.country=US -Duser.language=en -agentlib:jdwp=transport=dt_socket,server=y,address=*:8008,suspend=n
+    ports:
+      - "8888:8880"
+      - "8008:8008"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+  database:
+    image: "mysql/mysql-server:5.7"
+    container_name: mysql_server_5_7
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_ROOT_HOST=%
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --character-set-filesystem=utf8mb4
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=toor
+    ports:
+      - "3396:3306"
+    volumes:
+      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+      - mysql-db:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+volumes:
+  mysql-db:
+  provisioning-data:
+  lol-data:

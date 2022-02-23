@@ -56,6 +56,7 @@ import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.ArrayList;
@@ -128,6 +129,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
+
+		_modelPreFilterContributor.contribute(
+			contextBooleanFilter, null, searchContext);
 	}
 
 	@Override
@@ -573,6 +577,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelDocumentContributor<JournalArticle> _modelDocumentContributor;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelPreFilterContributor _modelPreFilterContributor;
 
 	@Reference
 	private Portal _portal;

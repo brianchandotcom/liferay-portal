@@ -123,6 +123,8 @@ export function SelectLayoutTree({
 			value: item.payload,
 		};
 
+		setSelectionChange(new Set([item.id]));
+
 		if (followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = item.url;
 		}

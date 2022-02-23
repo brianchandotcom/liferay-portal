@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -65,6 +67,11 @@ public class PortalImplGroupFriendlyURLTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_originalVirtualHostDefaultSiteName =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
+				GroupConstants.GUEST);
+
 		_company = CompanyTestUtil.addCompany();
 
 		_group = _groupLocalService.fetchGroup(
@@ -87,6 +94,10 @@ public class PortalImplGroupFriendlyURLTest {
 
 	@AfterClass
 	public static void tearDownClass() throws PortalException {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
+			_originalVirtualHostDefaultSiteName);
+
 		_companyLocalService.deleteCompany(_company);
 	}
 
@@ -278,6 +289,8 @@ public class PortalImplGroupFriendlyURLTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
+
+	private static String _originalVirtualHostDefaultSiteName;
 
 	@Inject
 	private static VirtualHostLocalService _virtualHostLocalService;

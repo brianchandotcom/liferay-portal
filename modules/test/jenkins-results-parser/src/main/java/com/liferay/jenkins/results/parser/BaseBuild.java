@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
-import com.liferay.jenkins.results.parser.testray.TestrayS3Bucket;
 
 import java.io.File;
 import java.io.IOException;
@@ -3921,7 +3920,10 @@ public abstract class BaseBuild implements Build {
 			"\\d+)/?"));
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		"\\[beanshell\\] Uploaded (?<url>https://testray.liferay.com/[^\\s]+)");
-	private static final Pattern _testrayS3ObjectURLPattern;
+	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"\\[beanshell\\] Created S3 Object (?<url>",
+			"https://storage.cloud.google.com/[^\\s?]+).*"));
 
 	static {
 		Properties properties = null;
@@ -3936,13 +3938,6 @@ public abstract class BaseBuild implements Build {
 
 		_NAME_JENKINS_REPORT_TIME_ZONE = properties.getProperty(
 			"jenkins.report.time.zone");
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
-		_testrayS3ObjectURLPattern = Pattern.compile(
-			JenkinsResultsParserUtil.combine(
-				"\\[beanshell\\] Created S3 Object (?<url>",
-				testrayS3Bucket.getTestrayS3BaseURL(), "/[^\\s?]+).*"));
 	}
 
 	private String _archiveName;

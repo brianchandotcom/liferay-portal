@@ -161,12 +161,32 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to update a View"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdateView {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147757 CanUpdateView pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 171622",
+			objectName = "CustomObject171622",
+			pluralLabelName = "Custom Objects 171622");
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 171622");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.editName(name = "New Custom Views");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomViews.assertObjectView(viewLabel = "New Custom Views");
 
 	}
 

@@ -21,4 +21,18 @@ definition {
     macro goToViewsTab {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
+
+    macro goToViewsDetails {
+		Click(
+			key_label = "${label}",
+			locator1 = "ObjectCustomViews#SELECT_OBJECT_VIEWS");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+	}
+
+    macro editName {
+		Type(
+			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
+			value1 = "${name}");
+	}
 }

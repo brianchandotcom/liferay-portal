@@ -25,6 +25,16 @@
 		<td>//a[contains(text(),'Views')]</td>
 		<td></td>
 	</tr>
+    <tr>
+		<td>SELECT_OBJECT_VIEWS</td>
+		<td>//a[contains(text(),'${key_label}')]</td>
+		<td></td>
+	</tr>
+    <tr>
+		<td>OBJECT_VIEWS_NAME</td>
+		<td>//label[contains(text(),'Name')]/..//input[contains(@class,'form-control')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

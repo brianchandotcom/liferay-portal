@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -147,6 +148,10 @@ public class PortalImplGroupFriendlyURLTest {
 			layoutHostname, StringPool.BLANK
 		).build();
 
+		_virtualHostLocalService.updateVirtualHosts(
+			_company.getCompanyId(), layoutSet.getLayoutSetId(),
+			(TreeMap<String, String>)virtualHostnames);
+
 		layoutSet.setVirtualHostnames(
 			(TreeMap<String, String>)virtualHostnames);
 
@@ -192,6 +197,9 @@ public class PortalImplGroupFriendlyURLTest {
 
 	private static Layout _privateLayout;
 	private static Layout _publicLayout;
+
+	@Inject
+	private static VirtualHostLocalService _virtualHostLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -84,11 +84,9 @@
 			"required": false,
 			"type": "Date"
 		}
-	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
+	],	
 	"pluralLabel": {
 		"en_US": "Testray Sub Tasks"
 	},
-	"scope": "site"
+	"scope": "company"
 }

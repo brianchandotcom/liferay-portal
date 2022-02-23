@@ -35,10 +35,8 @@
 			"type": "Long"
 		}
 	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "Testray Assignments"
 	},
-	"scope": "site"
+	"scope": "company"
 }

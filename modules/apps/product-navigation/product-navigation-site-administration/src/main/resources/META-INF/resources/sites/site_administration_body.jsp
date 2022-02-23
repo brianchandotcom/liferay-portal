@@ -122,7 +122,9 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 	).setMVCPath(
 		"/portlet/pages_tree.jsp"
 	).setRedirect(
-		themeDisplay.getURLCurrent()
+		ParamUtil.getString(request, "redirect", themeDisplay.getURLCurrent())
+	).setBackURL(
+		ParamUtil.getString(request, "p_l_back_url", themeDisplay.getURLCurrent())
 	).setParameter(
 		"selPpid", portletDisplay.getId()
 	).setWindowState(

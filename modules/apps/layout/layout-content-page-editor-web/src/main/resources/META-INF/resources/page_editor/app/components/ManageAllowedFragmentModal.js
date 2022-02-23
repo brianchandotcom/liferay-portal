@@ -69,7 +69,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 				{Liferay.Language.get('allowed-fragments')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body className="p-0">
 				<p className="m-4 small text-secondary">
 					{Liferay.Language.get(
 						'specify-which-fragments-a-page-author-is-allowed-to-use-within-the-drop-zone-when-creating-a-page-from-this-master'

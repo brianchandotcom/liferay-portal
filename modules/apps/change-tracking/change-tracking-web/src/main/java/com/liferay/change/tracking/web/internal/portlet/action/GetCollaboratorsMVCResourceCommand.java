@@ -207,11 +207,9 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"roleLabel",
 					_language.get(
-						httpServletRequest,
-						PublicationRoleConstants.getNameLabel(role.getName()))
+						httpServletRequest, _getNameLabel(role.getName()))
 				).put(
-					"roleValue",
-					PublicationRoleConstants.getNameRole(role.getName())
+					"roleValue", _getNameRole(role.getName())
 				).put(
 					"userId", user.getUserId()
 				));
@@ -219,6 +217,34 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
+	}
+
+	private String _getNameLabel(String name) {
+		if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
+			return PublicationRoleConstants.LABEL_EDITOR;
+		}
+		else if (name.equals(PublicationRoleConstants.NAME_INVITER)) {
+			return PublicationRoleConstants.LABEL_INVITER;
+		}
+		else if (name.equals(PublicationRoleConstants.NAME_PUBLISHER)) {
+			return PublicationRoleConstants.LABEL_PUBLISHER;
+		}
+
+		return PublicationRoleConstants.LABEL_VIEWER;
+	}
+
+	private int _getNameRole(String name) {
+		if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
+			return PublicationRoleConstants.ROLE_EDITOR;
+		}
+		else if (name.equals(PublicationRoleConstants.NAME_INVITER)) {
+			return PublicationRoleConstants.ROLE_INVITER;
+		}
+		else if (name.equals(PublicationRoleConstants.NAME_PUBLISHER)) {
+			return PublicationRoleConstants.ROLE_PUBLISHER;
+		}
+
+		return PublicationRoleConstants.ROLE_VIEWER;
 	}
 
 	@Reference

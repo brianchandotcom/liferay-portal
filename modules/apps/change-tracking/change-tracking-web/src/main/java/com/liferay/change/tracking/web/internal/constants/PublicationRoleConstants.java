@@ -69,48 +69,6 @@ public class PublicationRoleConstants {
 		return new String[] {ActionKeys.VIEW};
 	}
 
-	public static String getNameLabel(String name) {
-		if (name.equals(NAME_EDITOR)) {
-			return LABEL_EDITOR;
-		}
-		else if (name.equals(NAME_INVITER)) {
-			return LABEL_INVITER;
-		}
-		else if (name.equals(NAME_PUBLISHER)) {
-			return LABEL_PUBLISHER;
-		}
-
-		return LABEL_VIEWER;
-	}
-
-	public static int getNameRole(String name) {
-		if (name.equals(NAME_EDITOR)) {
-			return ROLE_EDITOR;
-		}
-		else if (name.equals(NAME_INVITER)) {
-			return ROLE_INVITER;
-		}
-		else if (name.equals(NAME_PUBLISHER)) {
-			return ROLE_PUBLISHER;
-		}
-
-		return ROLE_VIEWER;
-	}
-
-	public static String getRoleLabel(int role) {
-		if (role == ROLE_EDITOR) {
-			return LABEL_EDITOR;
-		}
-		else if (role == ROLE_INVITER) {
-			return LABEL_INVITER;
-		}
-		else if (role == ROLE_PUBLISHER) {
-			return LABEL_PUBLISHER;
-		}
-
-		return LABEL_VIEWER;
-	}
-
 	public static String getRoleName(int role) {
 		if (role == ROLE_EDITOR) {
 			return NAME_EDITOR;

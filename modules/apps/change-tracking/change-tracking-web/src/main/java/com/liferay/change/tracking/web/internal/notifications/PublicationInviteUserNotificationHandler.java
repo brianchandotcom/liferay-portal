@@ -110,8 +110,7 @@ public class PublicationInviteUserNotificationHandler
 			new Object[] {
 				userName, ctCollection.getName(),
 				_language.get(
-					serviceContext.getLocale(),
-					PublicationRoleConstants.getRoleLabel(roleValue))
+					serviceContext.getLocale(), _getRoleLabel(roleValue))
 			},
 			false);
 	}
@@ -143,6 +142,20 @@ public class PublicationInviteUserNotificationHandler
 		).setParameter(
 			"ctCollectionId", ctCollectionId
 		).buildString();
+	}
+
+	private String _getRoleLabel(int role) {
+		if (role == PublicationRoleConstants.ROLE_EDITOR) {
+			return PublicationRoleConstants.LABEL_EDITOR;
+		}
+		else if (role == PublicationRoleConstants.ROLE_INVITER) {
+			return PublicationRoleConstants.LABEL_INVITER;
+		}
+		else if (role == PublicationRoleConstants.ROLE_PUBLISHER) {
+			return PublicationRoleConstants.LABEL_PUBLISHER;
+		}
+
+		return PublicationRoleConstants.LABEL_VIEWER;
 	}
 
 	@Reference

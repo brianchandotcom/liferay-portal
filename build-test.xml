@@ -4780,7 +4780,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<equals arg1="@{testable.portal.started.marker.file}" arg2="" />
 						</not>
 						<then>
-							<echo file="@{testable.portal.started.marker.file}" message="1" />
+							<echo file="@{testable.portal.started.marker.file}">1</echo>
 						</then>
 					</if>
 
@@ -8462,7 +8462,7 @@ virtualHostname="localhost"
 			replace="&lt;system-err&gt;&lt;\/system-err&gt;"
 		/>
 
-		<echo message="A report with all the test results can be found at test-results/html/index.html." />
+		<echo>A report with all the test results can be found at test-results/html/index.html.</echo>
 	</target>
 
 	<target name="move-file">
@@ -8477,10 +8477,10 @@ virtualHostname="localhost"
 					tofile="${tofile}"
 				/>
 
-				<echo message="Moved file ${file} to ${tofile}." />
+				<echo>Moved file ${file} to ${tofile}.</echo>
 			</then>
 			<else>
-				<echo message="File ${file} does not exist." />
+				<echo>File ${file} does not exist.</echo>
 			</else>
 		</if>
 	</target>
@@ -9661,7 +9661,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			]]>
 		</beanshell>
 
-		<echo append="true" file="${test.ext.properties.file}" message="${test.case.property.content}" />
+		<echo append="true" file="${test.ext.properties.file}">${test.case.property.content}</echo>
 
 		<if>
 			<isset property="test.case.required.property.names" />

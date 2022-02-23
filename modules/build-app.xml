@@ -35,7 +35,7 @@
 	</target>
 
 	<target depends="get-app-names" name="build-app-all">
-		<echo message="Apps that will be included in this run: ${app.names}." />
+		<echo>Apps that will be included in this run: ${app.names}.</echo>
 
 		<for list="${app.names}" param="app.name">
 			<sequential>
@@ -961,9 +961,9 @@
 	</target>
 
 	<target depends="get-app-change-log,get-app-version,get-artifact-versions-previous-release" if="app.ticket.list" name="update-app-marketplace-version" unless="${build.app.from.changelog}">
-		<echo message="app.version.previous.release = ${app.version.previous.release}" />
+		<echo>app.version.previous.release = ${app.version.previous.release}</echo>
 
-		<echo message="app.version = ${app.version}" />
+		<echo>app.version = ${app.version}</echo>
 
 		<replaceregexp
 			byline="true"
@@ -977,19 +977,19 @@
 	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id,release-tool-dependencies" if="app.ticket.list" name="write-app-change-log" unless="${build.app.from.changelog}">
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${app.change.log.header}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${double.space}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.artifacts}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${app.artifacts}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${double.space}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${app.change.log}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${double.space}</echo>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog">${app.git.id}</echo>
 	</target>
 
 	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties" unless="module.dirs.null">
@@ -997,47 +997,47 @@
 			<format pattern="yyMMddHHmmssSSS" property="remote.app.id" />
 		</tstamp>
 
-		<echo file="${lpkg.dir}/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
+		<echo file="${lpkg.dir}/liferay-marketplace.properties">bundles=${lpkg.artifacts.list}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="category=${title}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">category=${title}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="context-names=" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">context-names=</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="description=${title}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">description=${title}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="remote-app-id=${remote.app.id}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">remote-app-id=${remote.app.id}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
 		<if>
 			<equals arg1="${hot.deploy.test}" arg2="true" />
 			<then>
-				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=false" />
+				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">restart-required=false</echo>
 			</then>
 			<else>
-				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=${Liferay-Releng-Restart-Required}" />
+				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">restart-required=${Liferay-Releng-Restart-Required}</echo>
 			</else>
 		</if>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="title=${title}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">title=${title}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">${line.separator}</echo>
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="version=1.0" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties">version=1.0</echo>
 	</target>
 
 	<target depends="dist-module-artifacts,get-app-change-log,zip-app-sources-init" if="zip.app.sources" name="zip-app-sources">

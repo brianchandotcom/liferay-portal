@@ -16,7 +16,7 @@
 				<arg line="patching-tool${file.suffix.bat} @{patching.tool.command.args}" />
 			</exec>
 
-			<echo message="${patching.tool.content.out}" />
+			<echo>${patching.tool.content.out}</echo>
 
 			<if>
 				<contains string="${patching.tool.content.out}" substring="The command has failed." />
@@ -24,7 +24,7 @@
 					<fail message="Patching Tool failed with the arguments: @{patching.tool.command.args}." />
 				</then>
 				<else>
-					<echo message="Patching Tool succeeded with the arguments: @{patching.tool.command.args}." />
+					<echo>Patching Tool succeeded with the arguments: @{patching.tool.command.args}.</echo>
 				</else>
 			</if>
 		</sequential>

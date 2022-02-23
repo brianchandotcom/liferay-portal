@@ -929,7 +929,7 @@ information.
 									<equals arg1="${gradle.executable.task}" arg2="" />
 								</not>
 								<then>
-									<echo message="Executing Gradle task: ${gradle.executable.task}" />
+									<echo>Executing Gradle task: ${gradle.executable.task}</echo>
 								</then>
 							</if>
 
@@ -962,7 +962,7 @@ information.
 
 									<propertycopy from="${redirector.error.property}" name="task.error" />
 
-									<echo message="${task.error}" />
+									<echo>${task.error}</echo>
 								</then>
 							</if>
 
@@ -1018,7 +1018,7 @@ information.
 
 											<propertycopy from="${redirector.output.property}" name="task.output" />
 
-											<echo message="${task.output}" />
+											<echo>${task.output}</echo>
 										</then>
 										<elseif>
 											<and>
@@ -1032,7 +1032,7 @@ information.
 												<if>
 													<contains string="${task.output}" substring="Publishing build scan" />
 													<then>
-														<echo message="${task.output}" />
+														<echo>${task.output}</echo>
 													</then>
 												</if>
 											</then>
@@ -1063,7 +1063,7 @@ information.
 
 					<property name="gradle.execute.silent" value="false" />
 
-					<echo message="Stopping all running Gradle Daemon processes." />
+					<echo>Stopping all running Gradle Daemon processes.</echo>
 
 					<gradle-execute dir="." forcedcacheenabled="false" setupbinariescache="false" task="">
 						<arg value="--stop" />
@@ -1316,7 +1316,7 @@ information.
 				<format pattern="MMMM d, yyyy 'at' hh:mm aa" property="current.time" />
 			</tstamp>
 
-			<echo message="${current.time}" />
+			<echo>${current.time}</echo>
 		</sequential>
 	</macrodef>
 
@@ -1566,7 +1566,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 				</filterchain>
 			</loadproperties>
 
-			<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}-SNAPSHOT" />
+			<echo append="true" file="@{file}">${line.separator}${processed.artifact.name}=${Bundle-Version}-SNAPSHOT</echo>
 		</sequential>
 	</macrodef>
 

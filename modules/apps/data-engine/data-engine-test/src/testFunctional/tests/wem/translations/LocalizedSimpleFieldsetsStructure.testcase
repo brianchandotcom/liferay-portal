@@ -1171,6 +1171,8 @@ definition {
 			key_fieldFieldLabel = "Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(

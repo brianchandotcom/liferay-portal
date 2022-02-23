@@ -50,7 +50,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [statusBar, setStatusBar] = useState({});
 
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
-	const [totalCount, setTotalCount] = useState(5);
+	const [totalCount, setTotalCount] = useState(0);
 	const [activationKeysChecked, setActivationKeysChecked] = useState([]);
 
 	const [filterStatusBar, setFilterStatusBar] = useState('all');
@@ -136,7 +136,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 						: Boolean
 			);
 
-			setTotalCount(activationKeysFilterData?.length || 5);
+			setTotalCount(activationKeysFilterData?.length || 0);
 
 			const activationKeysFilterByPage = activationKeysFilterData?.slice(
 				itemsPerPage * activePage - itemsPerPage,

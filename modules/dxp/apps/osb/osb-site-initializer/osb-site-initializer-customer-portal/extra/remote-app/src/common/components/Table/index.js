@@ -42,6 +42,7 @@ const Table = ({
 
 	useEffect(() => {
 		if (
+			rows?.length &&
 			hasCheckbox &&
 			rows.every((row) => checkboxesChecked.includes(row.id))
 		) {

@@ -13,11 +13,18 @@
  */
 
 import React from 'react';
-import {TObjectViewColumn} from './types';
-import './ViewBuilderListItem.scss';
-interface Iprops {
-	index: number;
-	objectViewColumn: TObjectViewColumn;
+interface IProps extends React.HTMLAttributes<HTMLElement> {
+	editingObjectFieldName: string;
+	header: string;
+	isEditingSort: boolean;
+	observer: any;
+	onClose: () => void;
 }
-declare const ViewBuilderListItem: React.FC<Iprops>;
-export default ViewBuilderListItem;
+export declare function ModalAddDefaultSortColumn({
+	editingObjectFieldName,
+	header,
+	isEditingSort,
+	observer,
+	onClose,
+}: IProps): JSX.Element;
+export {};

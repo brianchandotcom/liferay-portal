@@ -11,9 +11,9 @@
 
 import classNames from 'classnames';
 
-const Header = ({greetings, helper, title}) => {
+const Header = ({greetings, headerClass, helper, title}) => {
 	return (
-		<header className="p-4">
+		<header className={classNames('p-4', headerClass)}>
 			{greetings && (
 				<h6 className="mb-1 text-brand-primary text-small-caps">
 					{greetings}

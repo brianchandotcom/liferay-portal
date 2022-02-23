@@ -29,6 +29,8 @@ import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -180,6 +182,10 @@ public class DLFolderItemSelectorView
 			return _dlAppService.getFolder(folderId);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return null;
 		}
 	}
@@ -189,6 +195,10 @@ public class DLFolderItemSelectorView
 			return _groupService.getGroup(groupId);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return null;
 		}
 	}
@@ -204,6 +214,10 @@ public class DLFolderItemSelectorView
 				DepotEntry::getGroupId);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return Collections.emptyList();
 		}
 	}
@@ -228,6 +242,9 @@ public class DLFolderItemSelectorView
 
 		return itemSelectorCriterion.isShowGroupSelector();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderItemSelectorView.class);
 
 	private static final List<String> _portletIds = Arrays.asList(
 		DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, DLPortletKeys.DOCUMENT_LIBRARY);

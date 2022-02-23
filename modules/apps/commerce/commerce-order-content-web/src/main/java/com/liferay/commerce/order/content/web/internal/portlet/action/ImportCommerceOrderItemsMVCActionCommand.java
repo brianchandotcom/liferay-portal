@@ -29,6 +29,8 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -117,10 +119,18 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					catch (CommerceOrderValidatorException
 								commerceOrderValidatorException) {
 
+						if (_log.isDebugEnabled()) {
+							_log.debug(commerceOrderValidatorException);
+						}
+
 						notImportedRowsCount++;
 					}
 					catch (NoSuchCPInstanceException
 								noSuchCPInstanceException) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchCPInstanceException);
+						}
 
 						notImportedRowsCount++;
 					}
@@ -183,6 +193,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			"commerceOrderId", commerceOrderId
 		).buildString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImportCommerceOrderItemsMVCActionCommand.class);
 
 	@Reference
 	private CommerceOrderImporterTypeRegistry

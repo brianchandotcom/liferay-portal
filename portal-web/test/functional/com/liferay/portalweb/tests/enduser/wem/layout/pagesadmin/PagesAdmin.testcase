@@ -976,18 +976,19 @@ definition {
 	@priority = "5"
 	test SearchPages {
 		task ("Add two pages to root and add one child page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Page One");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Page Two");
+			PagesAdmin.addPublicPage(pageName = "Page One");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Page Three",
-				parentLayoutName = "Page One");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPublicPage(pageName = "Page Two");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addChildPage(
+				childPageName = "Page Three",
+				parentPageName = "Page One");
 		}
 
 		task ("Navigate to pages administration") {

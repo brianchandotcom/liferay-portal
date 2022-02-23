@@ -102,24 +102,6 @@ public class AssetVocabularyLocalServiceUtil {
 			userId, groupId, title, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addVocabulary(String, long, long, String, String, Map, Map, String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public static AssetVocabulary addVocabulary(
-			long userId, long groupId, String name, String title,
-			Map<java.util.Locale, String> titleMap,
-			Map<java.util.Locale, String> descriptionMap, String settings,
-			int visibilityType,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addVocabulary(
-			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			visibilityType, serviceContext);
-	}
-
 	public static AssetVocabulary addVocabulary(
 			long userId, long groupId, String name, String title,
 			Map<java.util.Locale, String> titleMap,

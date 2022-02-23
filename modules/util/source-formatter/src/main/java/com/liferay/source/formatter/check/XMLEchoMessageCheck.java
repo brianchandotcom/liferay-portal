@@ -44,10 +44,6 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _checkEchoMessageExist(content);
-	}
-
-	private String _checkEchoMessageExist(String content) {
 		Matcher matcher = _echoMessagePattern.matcher(content);
 
 		List<String> matchedTags = new ArrayList<>();

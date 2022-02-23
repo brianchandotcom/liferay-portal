@@ -41,6 +41,12 @@ public interface CommerceOrderCheckoutConfiguration {
 	public boolean guestCheckoutEnabled();
 
 	@Meta.AD(
+		deflt = "false", name = "view-delivery-term-checkout-step-enabled",
+		required = false
+	)
+	public boolean viewDeliveryTermCheckoutStepEnabled();
+
+	@Meta.AD(
 		deflt = "false", name = "view-payment-term-checkout-step-enabled",
 		required = false
 	)

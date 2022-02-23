@@ -20,7 +20,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-import com.liferay.site.initializer.testray.extra.java.function.http.HttpClient;
+import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.site.initializer.testray.extra.java.function.http.HttpUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
@@ -113,9 +113,12 @@ public class ImportResults {
 
 							map.put("name", value);
 
-							HttpClient.post(
-								PropsValues.TESTRAY_BASE_URL + "testraybuilds",
-								new JSONObject(map));
+							HttpUtil.invoke(
+								new JSONObject(
+									map
+								).toString(),
+								"testraybuilds", null, null,
+								HttpInvoker.HttpMethod.POST);
 						}
 					}
 				}
@@ -174,9 +177,11 @@ public class ImportResults {
 					}
 				}
 
-				HttpClient.post(
-					PropsValues.TESTRAY_BASE_URL + "testraycases",
-					new JSONObject(map));
+				HttpUtil.invoke(
+					new JSONObject(
+						map
+					).toString(),
+					"testraycases", null, null, HttpInvoker.HttpMethod.POST);
 			}
 		}
 		catch (Exception exception) {
@@ -227,41 +232,29 @@ public class ImportResults {
 			}
 		}
 
-		JSONObject responseJSONObject = HttpClient.get(
-			PropsValues.TESTRAY_BASE_URL + "testrayprojects");
+		Map<String, String> parameters = new HashMap();
+
+		parameters.put("filter", "name eq '" + projectName + "'");
+
+		JSONObject responseJSONObject = HttpUtil.invoke(
+			null, "testrayprojects", null, parameters,
+			HttpInvoker.HttpMethod.GET);
 
 		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
 
-		int projectId = -1;
+		if (!projectsJSONArray.isEmpty()) {
+			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(0);
 
-		//TODO use filter
-
-		for (int i = 0; i < projectsJSONArray.length(); i++) {
-			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
-
-			if (projectJSONObject.getString(
-					"name"
-				).equals(
-					projectName
-				)) {
-
-				projectId = projectJSONObject.getInt("id");
-
-				break;
-			}
+			return projectJSONObject.getInt("id");
 		}
 
-		if ((projectId == -1) && !map.isEmpty()) {
-			responseJSONObject = HttpUtil.post(
-				new JSONObject(
-					map
-				).toString(),
-				"testrayprojects", null, null);
+		responseJSONObject = HttpUtil.invoke(
+			new JSONObject(
+				map
+			).toString(),
+			"testrayprojects", null, null, HttpInvoker.HttpMethod.POST);
 
-			return responseJSONObject.getInt("id");
-		}
-
-		return projectId;
+		return responseJSONObject.getInt("id");
 	}
 
 	public Storage getStorage() throws Exception {

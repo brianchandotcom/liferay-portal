@@ -339,6 +339,10 @@ public class LayoutsTreeDisplayContext {
 				RenderRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/portlet/product_menu.jsp"
+		).setRedirect(
+			_getRedirect()
+		).setBackURL(
+			_getBackURL()
 		).setWindowState(
 			LiferayWindowState.EXCLUSIVE
 		).buildString();

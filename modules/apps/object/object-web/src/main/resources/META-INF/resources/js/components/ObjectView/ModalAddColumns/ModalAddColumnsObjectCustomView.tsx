@@ -19,10 +19,11 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import React, {FormEvent, useContext, useEffect, useState} from 'react';
 
-import {ManagementToolbarSearch} from './ManagementToolbarSearch/ManagementToolbarSearch';
-import ViewContext, {TYPES} from './context';
+import {ManagementToolbarSearch} from '../ManagementToolbarSearch/ManagementToolbarSearch';
+import ViewContext, {TYPES} from '../context';
 
 import './ModalAddColumnsObjectCustomView.scss';
+import {TObjectField, TObjectViewColumn} from '../types';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	observer: any;
 	onClose: () => void;
@@ -34,8 +35,12 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 	observer,
 	onClose,
 }) => {
-	const [{objectFields}, dispatch] = useContext(ViewContext);
+	const [{objectFields, objectView}, dispatch] = useContext(ViewContext);
 
+	const {objectViewColumns} = objectView;
+	const [checkedItems, setCheckedItems] = useState<TObjectViewColumn[]>(
+		objectViewColumns
+	);
 	const [filteredItems, setFilteredItems] = useState(objectFields);
 	const [fieldsChecked, setFieldsChecked] = useState(false);
 	const [allFieldsChecked, setAllFieldsChecked] = useState(false);
@@ -66,6 +71,8 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 	}, [query]);
 
 	const handleAllFieldsChecked = (checked: boolean) => {
+		setCheckedItems([]);
+
 		const setSelection = (checked: boolean) => {
 			if (allFieldsChecked) {
 				return false;
@@ -83,24 +90,61 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 			}
 		};
 
-		setFilteredItems(
-			filteredItems.map((field) => {
-				return {
-					...field,
-					checked: setSelection(checked),
-				};
-			})
-		);
+		const newFiltredItems = filteredItems.map((field) => {
+			return {
+				...field,
+				checked: setSelection(checked),
+			};
+		});
+
+		setFilteredItems(newFiltredItems);
+
+		checked === true
+			? setCheckedItems(
+					newFiltredItems.map((filteredItem, index) => {
+						return {
+							isDefaultSort: false,
+							label: filteredItem.label[defaultLanguageId],
+							objectFieldName: filteredItem.name,
+							priority: index,
+						};
+					})
+			  )
+			: setCheckedItems([]);
 	};
 
 	const toggleFieldCheckbox = (name: String) => {
-		const newfiltredItems = filteredItems.map((field) => {
-			return field.name === name
-				? {
-						...field,
-						checked: !field.checked,
-				  }
-				: field;
+		const newfiltredItems: TObjectField[] = [];
+
+		filteredItems.map((field, index) => {
+			if (field.name === name) {
+				newfiltredItems.push({
+					...field,
+					checked: !field.checked,
+				});
+
+				if (!field.checked === true) {
+					setCheckedItems([
+						...checkedItems,
+						{
+							isDefaultSort: false,
+							label: field.label[defaultLanguageId],
+							objectFieldName: field.name,
+							priority: index,
+						},
+					]);
+				}
+				else {
+					const newCheckedItems = checkedItems.filter(
+						(checkedItem) =>
+							field.name !== checkedItem.objectFieldName
+					);
+					setCheckedItems(newCheckedItems);
+				}
+			}
+			else {
+				newfiltredItems.push(field);
+			}
 		});
 
 		setFilteredItems(newfiltredItems);
@@ -111,6 +155,7 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 
 		dispatch({
 			payload: {
+				checkedItems,
 				filteredItems,
 			},
 			type: TYPES.ADD_OBJECT_VIEW_COLUMN,
@@ -143,7 +188,11 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 										!allFieldsChecked && fieldsChecked
 									}
 									onChange={({target}) =>
-										handleAllFieldsChecked(target.checked)
+										!allFieldsChecked && fieldsChecked
+											? handleAllFieldsChecked(true)
+											: handleAllFieldsChecked(
+													target.checked
+											  )
 									}
 								/>
 							</ClayManagementToolbar.Item>

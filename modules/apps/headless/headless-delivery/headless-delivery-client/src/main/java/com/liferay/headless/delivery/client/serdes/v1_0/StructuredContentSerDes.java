@@ -364,6 +364,16 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getNumberOfComments());
 		}
 
+		if (structuredContent.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(structuredContent.getPriority());
+		}
+
 		if (structuredContent.getRelatedContents() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -731,6 +741,14 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getNumberOfComments()));
 		}
 
+		if (structuredContent.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put(
+				"priority", String.valueOf(structuredContent.getPriority()));
+		}
+
 		if (structuredContent.getRelatedContents() == null) {
 			map.put("relatedContents", null);
 		}
@@ -977,6 +995,12 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setPriority(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {

@@ -458,6 +458,27 @@ public class StructuredContent implements Cloneable, Serializable {
 
 	protected Integer numberOfComments;
 
+	public Double getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Double priority) {
+		this.priority = priority;
+	}
+
+	public void setPriority(
+		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+
+		try {
+			priority = priorityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double priority;
+
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}

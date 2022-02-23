@@ -15,6 +15,8 @@ import {PAGE_TYPES} from '../../../utils/constants';
 import Overview from '../Overview';
 import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
+import ProductsMiddlewareOutlet from './Outlets/ProductsMiddlewareOutlet';
+import NewProductOutlet from './Outlets/useNewProductOutlet';
 import ProductsOutlet from './Outlets/useProductsOutlet';
 
 const ProjectRoutes = () => {
@@ -25,7 +27,14 @@ const ProjectRoutes = () => {
 					<Route element={<Overview />} index />
 
 					<Route element={<ActivationOutlet />} path="activation">
-						<Route element={<ProductsOutlet />} path=":productId" />
+						<Route
+							element={<ProductsMiddlewareOutlet />}
+							path=":productId"
+						>
+							<Route element={<ProductsOutlet />} index />
+
+							<Route element={<NewProductOutlet />} path="new" />
+						</Route>
 					</Route>
 
 					<Route

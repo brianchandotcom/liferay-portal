@@ -10,21 +10,24 @@
  */
 
 import {useOutletContext, useParams} from 'react-router-dom';
+import GenerateNewDXPKey from '../../../../containers/GenerateNewDXPKey/pages/GenerateNewDXPKey';
+import {PAGE_TYPES} from '../../../../utils/constants';
 
-const ProductsOutlet = () => {
+const NewProductOutlet = () => {
 	const {productId} = useParams();
-	const {
-		activationComponents,
-		hasAccessToCurrentProduct,
-	} = useOutletContext();
+	const {hasAccessToCurrentProduct} = useOutletContext();
 
-	const currentProduct = activationComponents[productId];
+	const newActivationComponents = {
+		[PAGE_TYPES.dxp_new]: <GenerateNewDXPKey />,
+	};
+
+	const currentProduct = newActivationComponents[`${productId}_new`];
 
 	if (!currentProduct || !hasAccessToCurrentProduct) {
-		return <h3>Page not found</h3>;
+		return <h3>Page not found2</h3>;
 	}
 
 	return currentProduct;
 };
 
-export default ProductsOutlet;
+export default NewProductOutlet;

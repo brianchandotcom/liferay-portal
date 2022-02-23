@@ -21,7 +21,6 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.petra.http.invoker.HttpInvoker;
-import com.liferay.site.initializer.testray.extra.java.function.http.HttpClient;
 import com.liferay.site.initializer.testray.extra.java.function.http.HttpUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
@@ -114,9 +113,12 @@ public class ImportResults {
 
 							map.put("name", value);
 
-							HttpClient.post(
-								PropsValues.TESTRAY_BASE_URL + "testraybuilds",
-								new JSONObject(map));
+							HttpUtil.invoke(
+								new JSONObject(
+									map
+								).toString(),
+								"testraybuilds", null, null,
+								HttpInvoker.HttpMethod.POST);
 						}
 					}
 				}
@@ -175,9 +177,11 @@ public class ImportResults {
 					}
 				}
 
-				HttpClient.post(
-					PropsValues.TESTRAY_BASE_URL + "testraycases",
-					new JSONObject(map));
+				HttpUtil.invoke(
+					new JSONObject(
+						map
+					).toString(),
+					"testraycases", null, null, HttpInvoker.HttpMethod.POST);
 			}
 		}
 		catch (Exception exception) {

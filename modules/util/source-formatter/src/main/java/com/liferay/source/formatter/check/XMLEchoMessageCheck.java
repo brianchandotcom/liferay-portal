@@ -93,8 +93,6 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _echoMessagePattern = Pattern.compile(
-		"<echo\\s+((file|output|append|level|encoding|force)=\"([^><]+)\")*" +
-			"\\s*(message=\"([^><]+)\")\\s*((file|output|append|level|" +
-				"encoding|force)=\"([^><]+)\")*\\s*/>");
+		"<echo .*?message=.*?/>");
 
 }

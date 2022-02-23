@@ -162,6 +162,10 @@ definition {
 	@description = "This is a test for LPS-122682. It checks that a repository can be remote published in depot."
 	@priority = "4"
 	test CanRemotePublishRepositoryInDepot {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "SharepointREST#CanRemotePublishRepositoryInDepot";
 
 		User.logoutPG();

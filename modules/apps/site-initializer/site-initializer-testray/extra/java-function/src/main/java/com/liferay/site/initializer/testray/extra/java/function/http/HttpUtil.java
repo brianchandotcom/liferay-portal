@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.testray.extra.java.function.http;
 
+import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
 
 /**

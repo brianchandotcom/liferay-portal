@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -80,7 +81,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			commerceShippingMethodId);
 		commerceShippingFixedOption.setAmount(amount);
 		commerceShippingFixedOption.setDescriptionMap(descriptionMap);
-		commerceShippingFixedOption.setKey(_getKey(nameMap));
+		commerceShippingFixedOption.setKey(
+			_getKey(user.getCompanyId(), nameMap));
 		commerceShippingFixedOption.setNameMap(nameMap);
 		commerceShippingFixedOption.setPriority(priority);
 
@@ -244,7 +246,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		commerceShippingFixedOption.setPriority(priority);
 
 		if (Validator.isNull(commerceShippingFixedOption.getKey())) {
-			commerceShippingFixedOption.setKey(_getKey(nameMap));
+			commerceShippingFixedOption.setKey(
+				_getKey(commerceShippingFixedOption.getCompanyId(), nameMap));
 		}
 
 		return commerceShippingFixedOptionPersistence.update(
@@ -317,7 +320,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		return commerceShippingFixedOptions;
 	}
 
-	private String _getKey(Map<Locale, String> nameMap) {
+	private String _getKey(long companyId, Map<Locale, String> nameMap) {
 		String key = FriendlyURLNormalizerUtil.normalize(
 			nameMap.get(LocaleThreadLocal.getDefaultLocale()));
 
@@ -331,6 +334,14 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			).findFirst();
 
 			key = FriendlyURLNormalizerUtil.normalize(firstOptional.get());
+		}
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			commerceShippingFixedOptionLocalService.
+				fetchCommerceShippingFixedOption(companyId, key);
+
+		if (commerceShippingFixedOption != null) {
+			key = key + StringUtil.randomString(5);
 		}
 
 		return key;

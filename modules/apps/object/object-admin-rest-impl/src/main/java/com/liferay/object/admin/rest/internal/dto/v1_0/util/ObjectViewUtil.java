@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -49,6 +50,10 @@ public class ObjectViewUtil {
 					serviceBuilderObjectView.getObjectViewColumns(),
 					ObjectViewUtil::_toObjectViewColumn,
 					ObjectViewColumn.class);
+				objectViewSortColumns = TransformUtil.transformToArray(
+					serviceBuilderObjectView.getObjectViewSortColumns(),
+					ObjectViewUtil::_toObjectViewSortColumn,
+					ObjectViewSortColumn.class);
 			}
 		};
 
@@ -71,6 +76,27 @@ public class ObjectViewUtil {
 				objectFieldName =
 					serviceBuilderObjectViewColumn.getObjectFieldName();
 				priority = serviceBuilderObjectViewColumn.getPriority();
+			}
+		};
+	}
+
+	private static ObjectViewSortColumn _toObjectViewSortColumn(
+		com.liferay.object.model.ObjectViewSortColumn
+			serviceBuilderObjectViewSortColumn) {
+
+		if (serviceBuilderObjectViewSortColumn == null) {
+			return null;
+		}
+
+		return new ObjectViewSortColumn() {
+			{
+				id =
+					serviceBuilderObjectViewSortColumn.
+						getObjectViewSortColumnId();
+				objectFieldName =
+					serviceBuilderObjectViewSortColumn.getObjectFieldName();
+				priority = serviceBuilderObjectViewSortColumn.getPriority();
+				sortOrder = serviceBuilderObjectViewSortColumn.getSortOrder();
 			}
 		};
 	}

@@ -208,7 +208,9 @@
 				return;
 			}
 
-			var currentColumnId = Util.getColumnId(container.attr('id'));
+			var containerId = container.attr('id');
+
+			var currentColumnId = containerId.replace(/layout-column_/, '');
 
 			var portletPosition = 0;
 

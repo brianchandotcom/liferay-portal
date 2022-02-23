@@ -285,7 +285,12 @@ AUI.add(
 			},
 
 			saveIndex(portletNode, columnNode) {
-				var currentColumnId = Util.getColumnId(columnNode.get('id'));
+				var columnNodeId = columnNode.get('id');
+
+				var currentColumnId = columnNodeId.replace(
+					/layout-column_/,
+					''
+				);
 				var portletId = Util.getPortletId(portletNode.get('id'));
 				var position = Layout.findIndex(portletNode);
 

@@ -420,6 +420,9 @@
 			return result;
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		getColumnId(str) {
 			var columnId = str.replace(/layout-column_/, '');
 

@@ -251,7 +251,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-59565."
-	@ignore = "true"
 	@priority = "3"
 	test AddRecordNested {
 		Navigator.openURL();
@@ -301,15 +300,6 @@ definition {
 			fieldName = "Integer");
 
 		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
-
-		DDLRecord.viewViaDDLDisplayPG(
-			ddlListName = "DDL List",
-			ddlRecordFieldData = "Text",
-			ddlRecordNestedFieldData = "123",
-			fieldFieldLabel = "Text",
-			nestedFieldFieldLabel = "Integer");
 	}
 
 	@ignore = "true"

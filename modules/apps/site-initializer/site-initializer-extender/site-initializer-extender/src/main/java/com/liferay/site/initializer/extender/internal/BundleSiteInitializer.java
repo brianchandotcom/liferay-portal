@@ -691,7 +691,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 
-			_addCommerceProductSpecification(StringUtil.replaceLast(resourcePath, ".json", ".products.specifications.json"), serviceContext);
+			_addCommerceProductSpecification(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".products.specifications.json"),
+				serviceContext);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -867,7 +870,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCommerceProductSpecification(String resourcePath, ServiceContext serviceContext)
+	private void _addCommerceProductSpecification(
+			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		ProductSpecificationResource.Builder
@@ -941,7 +945,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addCommerceCatalogs(
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
-
 
 		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues,

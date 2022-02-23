@@ -7,11 +7,11 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-        task ("Create a new workspace") {
-		    ACUtils.launchAC(
-                workspaceName = "New AC Workspace",
-                emailList = "acworkspace@liferay.com");
-        }
+		task ("Create a new workspace") {
+			ACUtils.launchAC(
+				emailList = "acworkspace@liferay.com",
+				workspaceName = "New AC Workspace");
+		}
 
 		task ("Set up instance") {
 			TestCase.setUpPortalInstance();
@@ -31,43 +31,43 @@ definition {
 	@description = "Feature ID: LRAC-8720 | Automation ID: LRAC-10622 | Test Summary: Modal is displayed on first access to a new workspace"
 	@priority = "5"
 	test ModalDisplayedWhenFirstAccessToWorkspace {
-        var versionList = "DXP 7.3 Fix Pack 1,DXP 7.2 Fix Pack 11,DXP 7.1 Fix Pack 22,DXP 7.0 Fix Pack 98";
+		var versionList = "DXP 7.3 Fix Pack 1,DXP 7.2 Fix Pack 11,DXP 7.1 Fix Pack 22,DXP 7.0 Fix Pack 98";
 
-        task ("Check the first screen of the onboarding modal") {
+		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-        task ("Navigate to next page") {
-            Button.clickNext();	
-        }
+		task ("Navigate to next page") {
+			Button.clickNext();
+		}
 
-        task ("Check the onboarding connection modal information") {
+		task ("Check the onboarding connection modal information") {
 			task ("Check if the modal title and the copy token button are present") {
 				ACUtils.viewGenericText(textValueList = "Connect Your DXP Analytics");
 
-            	AssertElementPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
+				AssertElementPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
 			}
 
 			task ("Check the question mark message") {
-            	MouseOver(locator1 = "Icon#TOOLTIP");
+				MouseOver(locator1 = "Icon#TOOLTIP");
 
-            	ACUtils.viewGenericText(textValueList = "DXP Fix Pack Requirements,Minimum Fix Pack Version Required for Full Functionality");
+				ACUtils.viewGenericText(textValueList = "DXP Fix Pack Requirements,Minimum Fix Pack Version Required for Full Functionality");
 			}
 
 			task ("Check fix pack versions") {
-            	for (var key_version : list "${versionList}") {
-                	AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
-            	}
+				for (var key_version : list "${versionList}") {
+					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
+				}
 			}
 
 			task ("Check skip button") {
-            	AssertElementPresent(
-                	key_buttonName = "Skip",
-                	locator1 = "ACUtils#GENERIC_BUTTON");
+				AssertElementPresent(
+					key_buttonName = "Skip",
+					locator1 = "ACUtils#GENERIC_BUTTON");
 			}
 		}
 
-        task ("Click on 'click here' and check if a new tab with connection documentation appears") {
+		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
 			Click(
 				key_textValue = "Click here",
 				locator1 = "ACUtils#GENERIC_TEXT");
@@ -77,61 +77,61 @@ definition {
 			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 		}
 
-        task ("Switch to the AC tab") {
+		task ("Switch to the AC tab") {
 			SelectWindow(locator1 = "title=No Properties Available - Analytics Cloud");
 		}
 
-        task ("Copy the token from AC") {
+		task ("Copy the token from AC") {
 			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
-        task ("Go to DXP and connect the DXP to AC") {
-            ACUtils.launchDXP();
+		task ("Go to DXP and connect the DXP to AC") {
+			ACUtils.launchDXP();
 
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
-        task ("Disconnect the DXP from the AC and go to the AC create a new data source") {
-            ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		task ("Disconnect the DXP from the AC and go to the AC create a new data source") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
 			ACUtils.launchAC(workspaceName = "New AC Workspace");
 
-            ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Check the onboarding connection modal information") {
 			task ("Check if the modal title and the copy token button are present") {
 				ACUtils.viewGenericText(textValueList = "Connect Your DXP Analytics");
 
-            	AssertElementPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
+				AssertElementPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
 			}
 
 			task ("Check the question mark message") {
-            	MouseOver(locator1 = "Icon#TOOLTIP");
+				MouseOver(locator1 = "Icon#TOOLTIP");
 
-            	ACUtils.viewGenericText(textValueList = "DXP Fix Pack Requirements,Minimum Fix Pack Version Required for Full Functionality");
+				ACUtils.viewGenericText(textValueList = "DXP Fix Pack Requirements,Minimum Fix Pack Version Required for Full Functionality");
 			}
 
 			task ("Check fix pack versions") {
-            	for (var key_version : list "${versionList}") {
-                	AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
-            	}
+				for (var key_version : list "${versionList}") {
+					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
+				}
 			}
 
 			task ("Check cancel button") {
-            	AssertElementPresent(
-                	key_buttonName = "Cancel",
-                	locator1 = "ACUtils#GENERIC_BUTTON");
+				AssertElementPresent(
+					key_buttonName = "Cancel",
+					locator1 = "ACUtils#GENERIC_BUTTON");
 			}
 
 			task ("Check skip button is not present") {
-            	AssertElementNotPresent(
-                	key_buttonName = "Skip",
-                	locator1 = "ACUtils#GENERIC_BUTTON");
+				AssertElementNotPresent(
+					key_buttonName = "Skip",
+					locator1 = "ACUtils#GENERIC_BUTTON");
 			}
 		}
 
-        task ("Click on 'click here' and check if a new tab with connection documentation appears") {
+		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
 			Click(
 				key_textValue = "Click here",
 				locator1 = "ACUtils#GENERIC_TEXT");

@@ -662,11 +662,10 @@ definition {
 
 			if (isSet(emailList)) {
 				ACWorkspace.createWorkspace(
-					workspaceName = "${workspaceName}",
-					emailList = "${emailList}");
+					emailList = "${emailList}",
+					workspaceName = "${workspaceName}");
 			}
 		}
-		
 	}
 
 	macro launchDXP {

@@ -51,20 +51,6 @@ definition {
 		}
 	}
 
-	macro openWorkspace {
-		if (isSet(workspaceName)) {
-			var key_workspaceName = "${workspaceName}";
-
-			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
-		}
-
-		if (!(isSet(workspaceName))) {
-			Click(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE");
-		}
-
-		ACUtils.dismissOnboardingModal();
-	}
-
 	macro createWorkspace {
 		ACUtils.clickAnyButton(button = "Start Free Trial");
 
@@ -85,6 +71,20 @@ definition {
 		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
 		Button.clickSubmitButton();
+	}
+
+	macro openWorkspace {
+		if (isSet(workspaceName)) {
+			var key_workspaceName = "${workspaceName}";
+
+			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
+		}
+
+		if (!(isSet(workspaceName))) {
+			Click(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE");
+		}
+
+		ACUtils.dismissOnboardingModal();
 	}
 
 	macro signOut {

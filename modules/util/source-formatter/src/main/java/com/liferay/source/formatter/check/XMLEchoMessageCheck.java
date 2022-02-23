@@ -68,24 +68,25 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 
 					Attribute attribute = element.attribute("message");
 
-					if (attribute != null) {
-						for (String matchedTag : matchedTags) {
-							Document documentElement = DocumentHelper.parseText(
-								matchedTag);
+					if (attribute == null) {
+						continue;
+					}
 
-							Element rootElement =
-								documentElement.getRootElement();
+					for (String matchedTag : matchedTags) {
+						Document documentElement = DocumentHelper.parseText(
+							matchedTag);
 
-							if (Objects.equals(
-									element.asXML(), rootElement.asXML())) {
+						Element rootElement = documentElement.getRootElement();
 
-								element.setText(attribute.getText());
+						if (Objects.equals(
+								element.asXML(), rootElement.asXML())) {
 
-								element.remove(attribute);
+							element.setText(attribute.getText());
 
-								content = StringUtil.replace(
-									content, matchedTag, element.asXML());
-							}
+							element.remove(attribute);
+
+							content = StringUtil.replace(
+								content, matchedTag, element.asXML());
 						}
 					}
 				}

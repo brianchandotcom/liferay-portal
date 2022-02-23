@@ -711,14 +711,25 @@ definition {
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9013
 
-		task ("Connect DXP to AC") {
-			ACUtils.addSiteAndPage();
-
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 		}
 
-		task ("Go to page and get data") {
-			ACUtils.navigateToSitePage(
+		task ("Connect DXP to AC and extract the data source name") {
+			ACUtils.addSiteAndPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			var dataSourceName = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+		}
+
+		task ("Visit the page with the new user and get data") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -727,10 +738,10 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		task ("Go to AC and assert and switch property") {
+		task ("Go to AC and switch property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to Pages tab in Sites") {
@@ -739,7 +750,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Pages");
 		}
 
-		task ("Set time filter use 24 hours") {
+		task ("Set time filter to 24 hours") {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
@@ -747,8 +758,8 @@ definition {
 
 		// Couldn't assert the list due to missing data.
 
-		task ("Assert that the page list is beeing showed") {
-			ACUtils.assertItemsName(itemList = "AC Page");
+		task ("Assert that the page is shown in the list") {
+			ACUtils.assertItemsName(itemList = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}
 

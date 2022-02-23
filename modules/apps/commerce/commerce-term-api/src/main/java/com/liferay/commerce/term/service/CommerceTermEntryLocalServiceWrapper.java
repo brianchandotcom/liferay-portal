@@ -418,6 +418,16 @@ public class CommerceTermEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntry>
+		getDeliveryCommerceTermEntries(
+			long companyId, long commerceOrderTypeId,
+			long commerceShippingOptionId) {
+
+		return _commerceTermEntryLocalService.getDeliveryCommerceTermEntries(
+			companyId, commerceOrderTypeId, commerceShippingOptionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

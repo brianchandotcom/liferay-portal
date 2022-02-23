@@ -58,6 +58,16 @@ definition {
 		}
 	}
 
+	macro _copyAsNew {
+		ScrollWebElementIntoView(
+			key_panel = "Update Data",
+			locator1 = "Panel#PANEL");
+
+		Panel.expandPanel(panel = "Update Data");
+
+		Click(locator1 = "ExportImport#UPDATE_DATA_COPY_AS_NEW_RADIO");
+	}
+
 	macro _export {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
@@ -142,6 +152,10 @@ definition {
 
 		if (isSet(checkContentNameList)) {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
+		}
+
+		if ("${copyAsNew}" == "true") {
+			LAR._copyAsNew();
 		}
 
 		if ("${contentDeletion}" == "true") {
@@ -238,6 +252,10 @@ definition {
 				value1 = "Continue");
 
 			Pause(locator1 = "5000");
+
+			if ("${copyAsNew}" == "true") {
+				LAR._copyAsNew();
+			}
 
 			if ("${mirrorWithOverwriting}" == "true") {
 				LAR._mirrorWithOverwriting();
@@ -567,6 +585,7 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
+			copyAsNew = "${copyAsNew}",
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
@@ -605,6 +624,7 @@ definition {
 
 		if (!(isSet(importValidationMissingItem) || isSet(importFail))) {
 			LAR._importSite(
+				copyAsNew = "${copyAsNew}",
 				checkContentNameList = "${checkContentNameList}",
 				contentDeletion = "${contentDeletion}",
 				contentName = "${contentName}",
@@ -623,6 +643,7 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
+			copyAsNew = "${copyAsNew}",
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",

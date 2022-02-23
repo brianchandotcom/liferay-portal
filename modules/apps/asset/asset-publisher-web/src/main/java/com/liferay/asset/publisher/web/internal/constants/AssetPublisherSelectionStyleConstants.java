@@ -19,6 +19,9 @@ package com.liferay.asset.publisher.web.internal.constants;
  */
 public class AssetPublisherSelectionStyleConstants {
 
+	public static final String DEFAULT_SELECTION_STYLE =
+		AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST;
+
 	public static final String TYPE_ASSET_LIST = "asset-list";
 
 	public static final String TYPE_ASSET_LIST_PROVIDER = "asset-list-provider";

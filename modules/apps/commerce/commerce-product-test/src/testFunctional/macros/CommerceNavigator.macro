@@ -41,10 +41,11 @@ definition {
 	}
 
 	macro gotoFrontStoreProductPage {
+		var baseURL = PropsUtil.get("portal.url");
 		var productName = StringUtil.replace("${productName}", " ", "-");
 		var productName = StringUtil.lowerCase("${productName}");
 
-		Navigator.openSpecificURL(url = "localhost:8080/web/guest/p/${productName}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/p/${productName}");
 	}
 
 	macro gotoMiniCart {

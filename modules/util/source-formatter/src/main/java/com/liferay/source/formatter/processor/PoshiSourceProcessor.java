@@ -151,10 +151,10 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			populationDir = SourceFormatterUtil.getFile(
 				sourceFormatterArgs.getBaseDirName(), ".git",
 				sourceFormatterArgs.getMaxDirLevel());
-		}
 
-		if (populationDir == null) {
-			return;
+			if (populationDir == null) {
+				return;
+			}
 		}
 
 		Files.walkFileTree(

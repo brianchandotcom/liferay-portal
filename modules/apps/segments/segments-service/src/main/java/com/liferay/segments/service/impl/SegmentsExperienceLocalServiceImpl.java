@@ -64,18 +64,6 @@ public class SegmentsExperienceLocalServiceImpl
 	public SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
-			new UnicodeProperties(true), serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -93,18 +81,6 @@ public class SegmentsExperienceLocalServiceImpl
 		return addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK, nameMap, lowestPriority - 1,
 			active, typeSettingsUnicodeProperties, serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, priority, active,
-			new UnicodeProperties(true), serviceContext);
 	}
 
 	@Override

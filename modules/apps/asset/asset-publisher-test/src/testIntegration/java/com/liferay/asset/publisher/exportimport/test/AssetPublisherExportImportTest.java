@@ -1141,6 +1141,8 @@ public class AssetPublisherExportImportTest
 					"assetEntryXml", getAssetEntriesXmls(assetEntries)
 				).put(
 					"scopeIds", scopeIds
+				).put(
+					"selectionStyle", new String[] {"dynamic"}
 				).build());
 
 		String[] importedScopeIds = importedPortletPreferences.getValues(

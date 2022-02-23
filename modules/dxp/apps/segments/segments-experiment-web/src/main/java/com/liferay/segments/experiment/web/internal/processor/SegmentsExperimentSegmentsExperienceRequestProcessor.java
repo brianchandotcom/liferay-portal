@@ -246,12 +246,12 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		Cookie cookie = cookieOptional.get();
 
 		return _getSegmentsExperienceId(
-			classNameId, classPK, groupId, cookie.getValue());
+			groupId, cookie.getValue(), classNameId, classPK);
 	}
 
 	private long _getSegmentsExperienceId(
-		long classNameId, long classPK, long groupId,
-		String segmentsExperienceKey) {
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK) {
 
 		if (Objects.equals(
 				segmentsExperienceKey,
@@ -336,8 +336,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			httpServletRequest, "segmentsExperienceKey");
 
 		return _getSegmentsExperienceId(
-			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey);
+			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey,
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid());
 	}
 
 	private String _getSelectedSegmentsExperimentKey(

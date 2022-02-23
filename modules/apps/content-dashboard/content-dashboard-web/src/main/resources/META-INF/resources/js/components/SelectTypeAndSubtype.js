@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ClayTreeFilter from './TreeFilter/ClayTreeFilter/ClayTreeFilter';
+import {nodeTreeArrayMapper as clayTreeNodeArrayMapper} from './TreeFilter/ClayTreeFilter/clayTreeUtils';
 import FrontendTreeFilter from './TreeFilter/FrontendTreeFilter/TreeFilter';
 import {nodeTreeArrayMapper} from './TreeFilter/FrontendTreeFilter/treeUtils';
 
@@ -24,19 +25,17 @@ const SelectTypeAndSubtype = ({
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
-	const nodes = nodeTreeArrayMapper({
-		childrenPropertyKey: 'itemSubtypes',
-		namePropertyKey: 'label',
-		nodeArray: contentDashboardItemTypes,
-	});
-
-	return window.Liferay.__FF__.enableClayTreeView ? (
+	return Liferay?.__FF__?.enableClayTreeView ? (
 		<ClayTreeFilter
 			childrenPropertyKey="itemSubtypes"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['className', 'classPK']}
 			namePropertyKey="label"
-			nodes={nodes}
+			nodes={clayTreeNodeArrayMapper({
+				childrenPropertyKey: 'itemSubtypes',
+				namePropertyKey: 'label',
+				nodeArray: contentDashboardItemTypes,
+			})}
 			portletNamespace={portletNamespace}
 		/>
 	) : (
@@ -49,7 +48,11 @@ const SelectTypeAndSubtype = ({
 				'entryClassName',
 			]}
 			namePropertyKey="label"
-			nodes={nodes}
+			nodes={nodeTreeArrayMapper({
+				childrenPropertyKey: 'itemSubtypes',
+				namePropertyKey: 'label',
+				nodeArray: contentDashboardItemTypes,
+			})}
 			portletNamespace={portletNamespace}
 		/>
 	);

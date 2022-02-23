@@ -47,14 +47,8 @@ export function nodeTreeArrayMapper({
 						nodeArray: node[childrenPropertyKey],
 				  })
 				: null,
-			expanded: !!(!index && hasChildren) || false,
 			id: _getNodeId({index, node}),
-			name: hasChildren
-				? handleNodeName({
-						childrenPropertyKey,
-						node,
-				  })
-				: node[namePropertyKey],
+			name: node[namePropertyKey] || node.label,
 		};
 	});
 }
@@ -107,7 +101,7 @@ export function filterNodes({
 		return [];
 	}
 
-	filteredNodes[0].expanded = true;
+	/* filteredNodes[0].expanded = true; */
 
 	return filteredNodes;
 }
@@ -137,11 +131,6 @@ const handleNodeFiltering = ({
 					query,
 				}),
 			];
-
-			node.name = handleNodeName({
-				childrenPropertyKey,
-				node,
-			});
 		}
 
 		const cleanNodeName = node.name

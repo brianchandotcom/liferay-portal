@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ClayTreeFilter from './TreeFilter/ClayTreeFilter/ClayTreeFilter';
+import {nodeTreeArrayMapper as clayTreeNodeArrayMapper} from './TreeFilter/ClayTreeFilter/clayTreeUtils';
 import FrontendTreeFilter from './TreeFilter/FrontendTreeFilter/TreeFilter';
 import {nodeTreeArrayMapper} from './TreeFilter/FrontendTreeFilter/treeUtils';
 
@@ -24,19 +25,17 @@ const SelectFileExtension = ({
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
-	const nodes = nodeTreeArrayMapper({
-		childrenPropertyKey: 'fileExtensions',
-		namePropertyKey: 'fileExtension',
-		nodeArray: fileExtensionGroups,
-	});
-
-	return window.Liferay.__FF__.enableClayTreeView ? (
+	return Liferay?.__FF__?.enableClayTreeView ? (
 		<ClayTreeFilter
 			childrenPropertyKey="fileExtensions"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['id']}
 			namePropertyKey="fileExtension"
-			nodes={nodes}
+			nodes={clayTreeNodeArrayMapper({
+				childrenPropertyKey: 'fileExtensions',
+				namePropertyKey: 'fileExtension',
+				nodeArray: fileExtensionGroups,
+			})}
 			portletNamespace={portletNamespace}
 		/>
 	) : (
@@ -45,7 +44,11 @@ const SelectFileExtension = ({
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['id']}
 			namePropertyKey="fileExtension"
-			nodes={nodes}
+			nodes={nodeTreeArrayMapper({
+				childrenPropertyKey: 'fileExtensions',
+				namePropertyKey: 'fileExtension',
+				nodeArray: fileExtensionGroups,
+			})}
 			portletNamespace={portletNamespace}
 		/>
 	);

@@ -154,7 +154,6 @@ definition {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
 		}
 
-
 		if ("${contentDeletion}" == "true") {
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#DELETE_PORTLET_DATA");
 		}

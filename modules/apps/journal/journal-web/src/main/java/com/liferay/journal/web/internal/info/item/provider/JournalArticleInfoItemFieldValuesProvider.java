@@ -35,6 +35,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -42,9 +43,12 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -52,6 +56,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -164,9 +169,28 @@ public class JournalArticleInfoItemFieldValuesProvider
 			JournalArticle journalArticle, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
-			themeDisplay);
+		String friendlyURL =
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(), themeDisplay);
+
+		if (Validator.isNull(friendlyURL) &&
+			Validator.isNotNull(journalArticle.getLayoutUuid())) {
+
+			Layout layout = journalArticle.getLayout();
+
+			String groupFriendlyURL = _portal.getGroupFriendlyURL(
+				_layoutSetLocalService.getLayoutSet(
+					journalArticle.getGroupId(), layout.isPrivateLayout()),
+				themeDisplay, false, false);
+
+			friendlyURL = StringBundler.concat(
+				groupFriendlyURL,
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+				journalArticle.getUrlTitle(themeDisplay.getLocale()));
+		}
+
+		return friendlyURL;
 	}
 
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {
@@ -434,6 +458,12 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

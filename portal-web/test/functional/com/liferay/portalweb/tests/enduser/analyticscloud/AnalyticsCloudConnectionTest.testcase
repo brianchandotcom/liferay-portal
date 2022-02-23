@@ -703,15 +703,11 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
-	@ignore = "true"
 	@priority = "5"
 	test ViewPageAddedByDXPDataSource {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-9013
-
-		task("Add a new user") {
+		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
 				userFirstName = "ac",
@@ -755,8 +751,6 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 		}
-
-		// Couldn't assert the list due to missing data.
 
 		task ("Assert that the page is shown in the list") {
 			ACUtils.assertItemsName(itemList = "AC Page - Site Name - ${dataSourceName}");

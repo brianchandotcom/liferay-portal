@@ -63,35 +63,32 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 			List<Node> echoNodes = document.selectNodes("//*[name() = 'echo']");
 
 			for (Node echoNode : echoNodes) {
-				if (echoNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element echoElement = (Element)echoNode;
+				Element echoElement = (Element)echoNode;
 
-					Attribute messageAttribute = echoElement.attribute(
-						"message");
+				Attribute messageAttribute = echoElement.attribute("message");
 
-					if (messageAttribute == null) {
+				if (messageAttribute == null) {
+					continue;
+				}
+
+				for (String matchedTag : matchedTags) {
+					Document documentElement = DocumentHelper.parseText(
+						matchedTag);
+
+					Element rootElement = documentElement.getRootElement();
+
+					if (!Objects.equals(
+							echoElement.asXML(), rootElement.asXML())) {
+
 						continue;
 					}
 
-					for (String matchedTag : matchedTags) {
-						Document documentElement = DocumentHelper.parseText(
-							matchedTag);
+					echoElement.setText(messageAttribute.getText());
 
-						Element rootElement = documentElement.getRootElement();
+					echoElement.remove(messageAttribute);
 
-						if (!Objects.equals(
-								echoElement.asXML(), rootElement.asXML())) {
-
-							continue;
-						}
-
-						echoElement.setText(messageAttribute.getText());
-
-						echoElement.remove(messageAttribute);
-
-						content = StringUtil.replace(
-							content, matchedTag, echoElement.asXML());
-					}
+					content = StringUtil.replace(
+						content, matchedTag, echoElement.asXML());
 				}
 			}
 		}

@@ -5363,6 +5363,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/commons-lang3.jar</file-name>
+				<version>3.12.0</version>
+				<project-name>Commons Lang</project-name>
+				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/dtddoc.jar</file-name>
 				<version>1.1.0</version>
 				<project-name>DTDDoc</project-name>
@@ -6439,18 +6451,6 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 						<copyright-notice>Copyright (c) 2001-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/commons-lang3.jar</file-name>
-				<version>3.12.0</version>
-				<project-name>Commons Lang</project-name>
-				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

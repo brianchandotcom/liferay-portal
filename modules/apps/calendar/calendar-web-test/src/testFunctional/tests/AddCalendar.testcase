@@ -333,13 +333,13 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Display Settings");
 
-		PortalSettings.configureTimeZone(timeZone = "(UTC -02:00) Brasilia Summer Time");
+		PortalSettings.configureTimeZone(timeZone = "(UTC -02:00) Fernando de Noronha Time");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddMyCalendars();
 
-		Calendar.viewSelectedTimeZone(timeZone = "(UTC -02:00) Brasilia Summer Time");
+		Calendar.viewSelectedTimeZone(timeZone = "(UTC -02:00) Fernando de Noronha Time");
 	}
 
 	@description = "LRQA-71360 - Verify that the name field is required"

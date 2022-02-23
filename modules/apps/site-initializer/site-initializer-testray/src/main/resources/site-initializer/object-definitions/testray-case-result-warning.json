@@ -25,10 +25,8 @@
 			"type": "String"
 		}
 	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "Testray Cases Results Wartings"
 	},
-	"scope": "site"
+	"scope": "company"
 }

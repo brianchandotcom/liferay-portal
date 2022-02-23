@@ -18,7 +18,6 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import QATable from '../../../components/Table/QATable';
 import {getTestrayCases} from '../../../graphql/queries/testrayCase';
-import {Liferay} from '../../../services/liferay/liferay';
 
 const Case = () => {
 	const {testrayCase}: any = useOutletContext();
@@ -80,9 +79,7 @@ const Case = () => {
 						],
 					}}
 					transformData={(data) => data?.c?.testrayCases}
-					variables={{
-						scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-					}}
+					variables={{}}
 				/>
 			</Container>
 		</>

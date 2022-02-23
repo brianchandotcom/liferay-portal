@@ -17,7 +17,6 @@ import ListView from '../../components/ListView/ListView';
 import {initialState} from '../../context/HeaderContext';
 import {getTestrayProjects} from '../../graphql/queries';
 import useHeader from '../../hooks/useHeader';
-import {Liferay} from '../../services/liferay/liferay';
 
 const Home = () => {
 	useHeader({useHeading: initialState.heading});
@@ -39,7 +38,7 @@ const Home = () => {
 						`/project/${item.testrayProjectId}/routines`,
 				}}
 				transformData={(data) => data?.c?.testrayProjects}
-				variables={{scopeKey: Liferay.ThemeDisplay.getSiteGroupId()}}
+				variables={{}}
 			/>
 		</Container>
 	);

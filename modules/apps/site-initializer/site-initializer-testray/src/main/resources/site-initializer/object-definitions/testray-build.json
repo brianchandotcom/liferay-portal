@@ -125,10 +125,8 @@
 			"type": "Integer"
 		}
 	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "Testray Builds"
 	},
-	"scope": "site"
+	"scope": "company"
 }

@@ -34,11 +34,9 @@
 			"required": false,
 			"type": "Boolean"
 		}
-	],
-	"panelAppOrder": "100",
-	"panelCategoryKey": "site_administration.content",
+	],	
 	"pluralLabel": {
 		"en_US": "Testray Routines"
 	},
-	"scope": "site"
+	"scope": "company"
 }

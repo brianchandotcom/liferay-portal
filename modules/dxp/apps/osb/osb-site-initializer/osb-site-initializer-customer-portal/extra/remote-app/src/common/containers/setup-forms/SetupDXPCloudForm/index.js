@@ -11,7 +11,7 @@
 
 import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
-import {Formik} from 'formik';
+import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../apolloClient';
 import {
@@ -26,6 +26,9 @@ import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
+
+const MAXIMUM_SETUP_ADMIN_COUNT = 20;
+const INITIAL_SETUP_ADMIN_COUNT = 1;
 
 const SetupDXPCloudPage = ({
 	errors,
@@ -70,6 +73,7 @@ const SetupDXPCloudPage = ({
 				);
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
@@ -158,79 +162,107 @@ const SetupDXPCloudPage = ({
 				title: 'Set up DXP Cloud',
 			}}
 		>
-			<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-				<div className="mr-4 pr-2">
-					<label>Project Name</label>
+			<FieldArray
+				name="dxp.admins"
+				render={({pop, push}) => (
+					<>
+						<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
+							<div className="mr-4 pr-2">
+								<label>Project Name</label>
 
-					<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
-						<strong>
-							{project.name.length > 71
-								? project.name.substring(0, 71) + '...'
-								: project.name}
-						</strong>
-					</p>
-				</div>
+								<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
+									<strong>
+										{project.name.length > 71
+											? project.name.substring(0, 71) +
+											  '...'
+											: project.name}
+									</strong>
+								</p>
+							</div>
 
-				<div className="flex-fill">
-					<label>Liferay DXP Version</label>
+							<div className="flex-fill">
+								<label>Liferay DXP Version</label>
 
-					<p className="text-neutral-6 text-paragraph-lg">
-						<strong>{project.dxpVersion}</strong>
-					</p>
-				</div>
-			</div>
+								<p className="text-neutral-6 text-paragraph-lg">
+									<strong>{project.dxpVersion}</strong>
+								</p>
+							</div>
+						</div>
+						<ClayForm.Group className="mb-0">
+							<ClayForm.Group className="mb-0 pb-1">
+								<Input
+									groupStyle="pb-1"
+									helper="Lowercase letters and numbers only. The Project ID cannot be changed."
+									label="Project ID"
+									name="dxp.projectId"
+									required
+									type="text"
+									validations={[
+										(value) => isLowercaseAndNumbers(value),
+									]}
+								/>
 
-			<ClayForm.Group className="mb-0">
-				<ClayForm.Group className="mb-0 pb-1">
-					<Input
-						groupStyle="pb-1"
-						helper="Lowercase letters and numbers only. The Project ID cannot be changed."
-						label="Project ID"
-						name="dxp.projectId"
-						required
-						type="text"
-						validations={[(value) => isLowercaseAndNumbers(value)]}
-					/>
+								<Select
+									groupStyle="mb-0"
+									label="Primary Data Center Region"
+									name="dxp.dataCenterRegion"
+									options={dXPCDataCenterRegions}
+									required
+								/>
 
-					<Select
-						groupStyle="mb-0"
-						label="Primary Data Center Region"
-						name="dxp.dataCenterRegion"
-						options={dXPCDataCenterRegions}
-						required
-					/>
+								{!!hasDisasterRecovery && (
+									<Select
+										groupStyle="mb-0 pt-2"
+										label="Disaster Recovery Data Center Region"
+										name="dxp.disasterDataCenterRegion"
+										options={dXPCDataCenterRegions}
+										required
+									/>
+								)}
+							</ClayForm.Group>
 
-					{!!hasDisasterRecovery && (
-						<Select
-							groupStyle="mb-0 pt-2"
-							label="Disaster Recovery Data Center Region"
-							name="dxp.disasterDataCenterRegion"
-							options={dXPCDataCenterRegions}
-							required
-						/>
-					)}
-				</ClayForm.Group>
+							{values.dxp.admins.map((admin, index) => (
+								<AdminInputs
+									admin={admin}
+									id={index}
+									in
+									key={index}
+								/>
+							))}
+						</ClayForm.Group>
 
-				{values.dxp.admins.map((admin, index) => (
-					<AdminInputs admin={admin} id={index} key={index} />
-				))}
-			</ClayForm.Group>
+						{values?.dxp?.admins?.length >
+							INITIAL_SETUP_ADMIN_COUNT && (
+							<Button
+								className="ml-3 my-2 text-brandy-secondary"
+								displayType="secondary"
+								onClick={() => pop()}
+								prependIcon="hr"
+								small
+							>
+								Remove this Admin
+							</Button>
+						)}
 
-			<Button
-				borderless
-				className="ml-3 my-2 text-brand-primary"
-				onClick={() => {
-					setFieldValue('dxp.admins', [
-						...values.dxp.admins,
-						getInitialDXPAdmin(),
-					]);
-					setBaseButtonDisabled(true);
-				}}
-				prependIcon="plus"
-				small
-			>
-				Add Another Admin
-			</Button>
+						{values?.dxp?.admins?.length <
+							MAXIMUM_SETUP_ADMIN_COUNT && (
+							<Button
+								className="btn-outline-primary cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
+								onClick={() => {
+									push(
+										getInitialDXPAdmin(values?.dxp?.admins)
+									);
+									setBaseButtonDisabled(true);
+								}}
+								prependIcon="plus"
+								small
+							>
+								Add Another Admin
+							</Button>
+						)}
+					</>
+				)}
+			/>
 		</Layout>
 	);
 };

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,14 +46,15 @@ import javax.portlet.RenderResponse;
 public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	public BlogsEntryVerticalCard(
-		BlogsEntry blogsEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker,
-		TrashHelper trashHelper, String blogsEntryURL,
+		BlogsEntry blogsEntry, HtmlParser htmlParser,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		RowChecker rowChecker, TrashHelper trashHelper, String blogsEntryURL,
 		PermissionChecker permissionChecker, ResourceBundle resourceBundle) {
 
 		super(blogsEntry, renderRequest, rowChecker);
 
 		_blogsEntry = blogsEntry;
+		_htmlParser = htmlParser;
 		_renderResponse = renderResponse;
 		_trashHelper = trashHelper;
 		_blogsEntryURL = blogsEntryURL;
@@ -137,7 +139,7 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getTitle() {
-		return HtmlUtil.extractText(
+		return _htmlParser.extractText(
 			BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry));
 	}
 
@@ -148,6 +150,7 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	private final BlogsEntry _blogsEntry;
 	private final String _blogsEntryURL;
+	private final HtmlParser _htmlParser;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
 	private final ResourceBundle _resourceBundle;

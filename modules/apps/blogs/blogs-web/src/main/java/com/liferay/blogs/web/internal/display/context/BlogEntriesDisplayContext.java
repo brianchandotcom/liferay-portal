@@ -20,9 +20,11 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
+import com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryVerticalCard;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,8 +49,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,11 +64,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,16 +81,21 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogEntriesDisplayContext {
 
 	public BlogEntriesDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		TrashHelper trashHelper) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HtmlParser htmlParser, Portal portal, TrashHelper trashHelper) {
 
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+		_htmlParser = htmlParser;
+		_portal = portal;
 		_trashHelper = trashHelper;
 
+		_liferayPortletRequest = portal.getLiferayPortletRequest(renderRequest);
+		_liferayPortletResponse = portal.getLiferayPortletResponse(
+			renderResponse);
+
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
+			_liferayPortletRequest);
 
 		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
@@ -103,6 +115,20 @@ public class BlogEntriesDisplayContext {
 		}
 
 		return Collections.emptyList();
+	}
+
+	public BlogsEntryVerticalCard getBlogsEntryVerticalCard(
+		BlogsEntry blogsEntry, RowChecker rowChecker, String rowURL,
+		ResourceBundle resourceBundle) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return new BlogsEntryVerticalCard(
+			blogsEntry, _htmlParser, _renderRequest, _renderResponse,
+			rowChecker, _trashHelper, rowURL,
+			themeDisplay.getPermissionChecker(), resourceBundle);
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
@@ -346,12 +372,16 @@ public class BlogEntriesDisplayContext {
 		BlogEntriesDisplayContext.class);
 
 	private String _displayStyle;
+	private final HtmlParser _htmlParser;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
+	private final Portal _portal;
 	private final PortalPreferences _portalPreferences;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final TrashHelper _trashHelper;
 
 }

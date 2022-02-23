@@ -154,12 +154,13 @@ definition {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
 		}
 
-		if ("${copyAsNew}" == "true") {
-			LAR._copyAsNew();
-		}
 
 		if ("${contentDeletion}" == "true") {
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#DELETE_PORTLET_DATA");
+		}
+
+		if ("${copyAsNew}" == "true") {
+			LAR._copyAsNew();
 		}
 
 		if ("${mirrorWithOverwriting}" == "true") {
@@ -624,10 +625,10 @@ definition {
 
 		if (!(isSet(importValidationMissingItem) || isSet(importFail))) {
 			LAR._importSite(
-				copyAsNew = "${copyAsNew}",
 				checkContentNameList = "${checkContentNameList}",
 				contentDeletion = "${contentDeletion}",
 				contentName = "${contentName}",
+				copyAsNew = "${copyAsNew}",
 				importPermissions = "${importPermissions}",
 				larFileName = "${larFileName}",
 				privateLayout = "${privateLayout}");

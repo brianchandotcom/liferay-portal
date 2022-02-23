@@ -58,6 +58,7 @@ definition {
 			CKEditor.addSourceContent(content = '''
 <p>Test: <a href="/web/test-site-name/test-site-name">Link</a></p>
 ''');
+
 			PortletEntry.publish();
 		}
 

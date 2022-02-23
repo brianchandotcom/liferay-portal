@@ -45,14 +45,12 @@ export const getTestrayTeams = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$scopeKey: String
 	) {
 		c {
 			testrayTeams(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
-				scopeKey: $scopeKey
 			) {
 				items {
 					...TestrayTeamFragment

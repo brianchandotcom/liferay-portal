@@ -15,7 +15,6 @@
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
 import {getTestrayCaseTypes} from '../../../../../graphql/queries/testrayCaseType';
-import {Liferay} from '../../../../../services/liferay/liferay';
 
 const CaseType = () => {
 	return (
@@ -43,7 +42,7 @@ const CaseType = () => {
 					],
 				}}
 				transformData={(data) => data?.c?.testrayCaseTypes}
-				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+				variables={{}}
 			/>
 		</Container>
 	);

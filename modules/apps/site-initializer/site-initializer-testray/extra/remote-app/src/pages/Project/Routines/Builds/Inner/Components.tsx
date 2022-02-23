@@ -15,7 +15,6 @@
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
 import {getTestrayComponents} from '../../../../../graphql/queries/testrayComponent';
-import {Liferay} from '../../../../../services/liferay/liferay';
 
 const Component = () => {
 	return (
@@ -43,7 +42,7 @@ const Component = () => {
 					],
 				}}
 				transformData={(data) => data?.c?.testrayComponents}
-				variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
+				variables={{}}
 			/>
 		</Container>
 	);

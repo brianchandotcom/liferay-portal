@@ -20,14 +20,17 @@ package com.liferay.commerce.order.content.web.internal.model;
 public class Order {
 
 	public Order(
-		long orderId, String accountName, String date, String author,
-		String orderStatus, String status, String amount) {
+		String externalReferenceCode, long orderId, String accountName,
+		String date, String author, String orderStatus,
+		String purchaseOrderNumber, String status, String amount) {
 
+		_externalReferenceCode = externalReferenceCode;
 		_orderId = orderId;
 		_accountName = accountName;
 		_date = date;
 		_author = author;
 		_orderStatus = orderStatus;
+		_purchaseOrderNumber = purchaseOrderNumber;
 		_status = status;
 		_amount = amount;
 
@@ -50,12 +53,20 @@ public class Order {
 		return _date;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public long getOrderId() {
 		return _orderId;
 	}
 
 	public String getOrderStatus() {
 		return _orderStatus;
+	}
+
+	public String getPurchaseOrderNumber() {
+		return _purchaseOrderNumber;
 	}
 
 	public String getStatus() {
@@ -70,8 +81,10 @@ public class Order {
 	private final String _amount;
 	private final String _author;
 	private final String _date;
+	private final String _externalReferenceCode;
 	private final long _orderId;
 	private final String _orderStatus;
+	private final String _purchaseOrderNumber;
 	private final String _status;
 	private final String _title;
 

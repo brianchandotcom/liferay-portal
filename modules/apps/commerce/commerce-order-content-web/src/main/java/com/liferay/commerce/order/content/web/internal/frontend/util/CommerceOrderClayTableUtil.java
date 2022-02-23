@@ -193,10 +193,13 @@ public class CommerceOrderClayTableUtil {
 
 			orders.add(
 				new Order(
+					commerceOrder.getExternalReferenceCode(),
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountName(),
 					dateFormat.format(orderDate), commerceOrder.getUserName(),
-					commerceOrderStatusLabel, workflowStatusLabel, amount));
+					commerceOrderStatusLabel,
+					commerceOrder.getPurchaseOrderNumber(), workflowStatusLabel,
+					amount));
 		}
 
 		return orders;

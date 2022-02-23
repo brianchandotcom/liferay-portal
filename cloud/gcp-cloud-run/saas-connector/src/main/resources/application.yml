@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: saas-connector
+  data:
+    rest:
+      basePath: /api
+  security:
+    user:
+      name: ${BASIC_AUTH_USER}
+      password: ${BASIC_AUTH_PASSWORD}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+    org.hibernate:
+      type: INFO
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /
+      exposure:
+        include: "health, info, metrics"
+
+server:
+  port: 8880

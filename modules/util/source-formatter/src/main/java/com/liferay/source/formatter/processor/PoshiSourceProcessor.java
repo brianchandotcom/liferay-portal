@@ -24,6 +24,7 @@ import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -142,8 +143,22 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
+		File populationDir = getPortalDir();
+
+		if (populationDir == null) {
+			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+			populationDir = SourceFormatterUtil.getFile(
+				sourceFormatterArgs.getBaseDirName(), ".git",
+				sourceFormatterArgs.getMaxDirLevel());
+		}
+
+		if (populationDir == null) {
+			return;
+		}
+
 		Files.walkFileTree(
-			getPortalDir().toPath(),
+			populationDir.toPath(),
 			new SimpleFileVisitor<Path>() {
 
 				@Override

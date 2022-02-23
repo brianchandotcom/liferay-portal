@@ -1,7 +1,7 @@
 dependencies {
 	compile project("${apiPath}")
 
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"

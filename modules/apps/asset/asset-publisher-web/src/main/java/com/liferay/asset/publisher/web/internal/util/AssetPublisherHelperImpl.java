@@ -325,7 +325,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConstants.TYPE_MANUAL);
+			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
 
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
@@ -333,7 +333,10 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
-		if (selectionStyle.equals("asset-list") && (assetListEntry != null)) {
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST) &&
+			(assetListEntry != null)) {
+
 			long[] segmentsEntryIds = _getSegmentsEntryIds(portletRequest);
 
 			String acClientUserId = GetterUtil.getString(
@@ -675,7 +678,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				"anyAssetType", Boolean.TRUE.toString()));
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle",
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
 
 		if (anyAssetType ||
 			selectionStyle.equals(

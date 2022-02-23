@@ -3000,48 +3000,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _associateUserAccounts(
-			JSONObject accountBriefsJSONObject, String emailAddress,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (!accountBriefsJSONObject.has("roleBriefs")) {
-			return;
-		}
-
-		AccountRoleResource.Builder builder =
-			_accountRoleResourceFactory.create();
-
-		AccountRoleResource accountRoleResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
-			"roleBriefs");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			Role role = _roleLocalService.fetchRole(
-				serviceContext.getCompanyId(), jsonArray.getString(i));
-
-			if (role == null) {
-				continue;
-			}
-
-			AccountRole accountRole =
-				_accountRoleLocalService.fetchAccountRoleByRoleId(
-					role.getRoleId());
-
-			if (accountRole == null) {
-				continue;
-			}
-
-			accountRoleResource.
-				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-					accountBriefsJSONObject.getString("externalReferenceCode"),
-					accountRole.getAccountRoleId(), emailAddress);
-		}
-	}
-	
 	private void _addWorkflows(ServiceContext serviceContext) throws Exception {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/workflows");
@@ -3134,6 +3092,48 @@ public class BundleSiteInitializer implements SiteInitializer {
 							workflowDefinition.getName(), "@",
 							workflowDefinition.getVersion()));
 			}
+		}
+	}
+
+	private void _associateUserAccounts(
+			JSONObject accountBriefsJSONObject, String emailAddress,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (!accountBriefsJSONObject.has("roleBriefs")) {
+			return;
+		}
+
+		AccountRoleResource.Builder builder =
+			_accountRoleResourceFactory.create();
+
+		AccountRoleResource accountRoleResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
+			"roleBriefs");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), jsonArray.getString(i));
+
+			if (role == null) {
+				continue;
+			}
+
+			AccountRole accountRole =
+				_accountRoleLocalService.fetchAccountRoleByRoleId(
+					role.getRoleId());
+
+			if (accountRole == null) {
+				continue;
+			}
+
+			accountRoleResource.
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+					accountBriefsJSONObject.getString("externalReferenceCode"),
+					accountRole.getAccountRoleId(), emailAddress);
 		}
 	}
 

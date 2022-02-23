@@ -10,6 +10,11 @@
 </thead>
 
 <tbody>
+<tr>
+	<td>COLLECTION_DISPLAY_LIST</td>
+	<td>//*[contains(@class,'asset-summary') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT-->
 <tr>
 	<td>FRAGMENT_HEADER</td>
@@ -29,7 +34,6 @@
 <tr>
 	<td>TITLE_LINK</td>
 	<td>//h3[contains(.,'${key_entryTitle}')]//a</td>
-	<td></td>
 </tr>
 </tbody>
 </table>

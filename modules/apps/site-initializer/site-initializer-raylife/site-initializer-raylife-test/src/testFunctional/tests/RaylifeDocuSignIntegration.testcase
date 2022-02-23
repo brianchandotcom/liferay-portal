@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that after payment by PayPal, an email from Docusign is sent with the signature document"
+	@description = "LPS-144501 - Verify that after payment by PayPal, an email from Docusign is sent with the signature document"
 	@priority = "5"
 	test CanViewSentEmail {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -78,7 +78,7 @@ definition {
 		DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");
 	}
 
-	@description = "Check if the email address of the envelope is the same as the one on the form"
+	@description = "LPS-144505 - Check if the email address of the envelope is the same as the one on the form"
 	@priority = "3"
 	test EmailOnTheEnvelopeEqualOnTheForm {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -118,7 +118,7 @@ definition {
 		DigitalSignature.deleteEnvelope(envelopeName = "Raylife Insurance");
 	}
 
-	@description = "Check that the first name on the envelope is the same as on the form"
+	@description = "LPS-144503 - Check that the first name on the envelope is the same as on the form"
 	@priority = "3"
 	test FirstNameOnEnvelopeSameAsForm {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -154,7 +154,7 @@ definition {
 			value = "FirstName");
 	}
 
-	@description = "Check that the last name on the envelope is the same as on the form"
+	@description = "LPS-144504 - Check that the last name on the envelope is the same as on the form"
 	@priority = "3"
 	test LastNameOnEnvelopeSameAsForm {
 		RaylifePaymentMethod.enablePayPalPayment();

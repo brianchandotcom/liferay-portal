@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
+	@description = "LPS-146214 - Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
 	@priority = "5"
 	test IfContinueFromPropertyGoToLoadingPageTablet {
 		ApplicationsMenu.gotoSite(site = "Raylife");

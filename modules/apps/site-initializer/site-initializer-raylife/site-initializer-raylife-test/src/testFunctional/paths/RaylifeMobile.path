@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>BUTTON_NO_FEIN_PHONE</td>
-	<td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'Yes')]</td>
+	<td>//h2[contains(., '${field}')]/parent::div//button[contains(text(), 'No')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,6 +33,16 @@
 <tr>
 	<td>OPTIONS_MENU_LINK</td>
 	<td>//div[contains(@class, 'show-menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_MORE_INFO_INFORMATION</td>
+	<td>//p[contains(text(), '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON</td>
+	<td>//h6[contains(text(), '${title}')]//..//..//button[contains(., '${option}')]</td>
 	<td></td>
 </tr>
 </tbody>

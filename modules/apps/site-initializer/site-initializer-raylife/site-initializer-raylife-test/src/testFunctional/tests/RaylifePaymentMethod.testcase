@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Check if I am redirected to the payment confirmation page, after successful payment by PayPal"
+	@description = "LPS-144582 - Check if I am redirected to the payment confirmation page, after successful payment by PayPal"
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -58,7 +58,7 @@ definition {
 		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
 	}
 
-	@description = "Check if the payment method is not selected by default"
+	@description = "LPS-144583 - Check if the payment method is not selected by default"
 	@priority = "3"
 	test CanViewPaymentMethodNotSelected {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -84,7 +84,7 @@ definition {
 		AssertElementNotPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_DISABLED");
 	}
 
-	@description = "Check if the Raylife terms and conditions option is unchecked by default"
+	@description = "LPS-144580 - Check if the Raylife terms and conditions option is unchecked by default"
 	@priority = "3"
 	test CheckRaylifeTermsAndConditionsNotSelected {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -112,7 +112,7 @@ definition {
 		AssertElementPresent(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_DISABLED");
 	}
 
-	@description = "Check if user can select the option to pay in installments"
+	@description = "LPS-144579 - Check if user can select the option to pay in installments"
 	@priority = "3"
 	test CheckSelectInstallmentPayment {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -146,7 +146,7 @@ definition {
 			value = "payments");
 	}
 
-	@description = "Check if the Pay Now button is enabled when selecting Raylife terms and conditions"
+	@description = "LPS-144581 - Check if the Pay Now button is enabled when selecting Raylife terms and conditions"
 	@priority = "4"
 	test IsPayNowButtonEnabled {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -176,7 +176,7 @@ definition {
 		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
-	@description = "Check if after you finish uploading the documents the payment section is expanded"
+	@description = "LPS-144577 - Check if after you finish uploading the documents the payment section is expanded"
 	@priority = "4"
 	test ViewExtendedPaymentSection {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -202,7 +202,7 @@ definition {
 		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD");
 	}
 
-	@description = "Verify that when selecting the PayPal payment method, the payment collection options are displayed"
+	@description = "LPS-144578 - Verify that when selecting the PayPal payment method, the payment collection options are displayed"
 	@priority = "4"
 	test ViewPaymentCollectionOptions {
 		RaylifePaymentMethod.enablePayPalPayment();

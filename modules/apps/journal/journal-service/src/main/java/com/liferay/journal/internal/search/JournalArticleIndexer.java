@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -47,12 +48,15 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
+import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -122,6 +126,34 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		_modelPreFilterContributor.contribute(
 			contextBooleanFilter, null, searchContext);
+	}
+
+	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+
+		_keywordQueryContributor.contribute(
+			searchContext.getKeywords(), searchQuery,
+			new KeywordQueryContributorHelper() {
+
+				@Override
+				public String getClassName() {
+					return null;
+				}
+
+				@Override
+				public Stream<String> getSearchClassNamesStream() {
+					return null;
+				}
+
+				@Override
+				public SearchContext getSearchContext() {
+					return searchContext;
+				}
+
+			});
 	}
 
 	@Override
@@ -439,6 +471,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private KeywordQueryContributor _keywordQueryContributor;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"

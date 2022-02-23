@@ -778,6 +778,7 @@
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an `Exception` is swallowed without being processed." />
 			<message key="exception.unprocessed" value="Unprocessed exception ''{0}'', see LPS-36174" />
+			<message key="missing.debug.log.json.exception" value="Missing debug logging for ''JSONException''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UnusedMethodCheck">
 			<property name="allowedMethodNames" value="readObject,writeObject" />

@@ -185,6 +185,17 @@ const InviteTeamMembersPage = ({
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
+<<<<<<< HEAD
+=======
+			}
+			else {
+				setAccountRolesOptions((previousAccountRoles) =>
+					previousAccountRoles.map((previousAccountRoles) => ({
+						...previousAccountRoles,
+						disabled: false,
+					}))
+				);
+>>>>>>> d0ae6c3 (LPS-147808 SF)
 			}
 			setAvailableAdminsRoles(remainingAdmins);
 		}
@@ -203,7 +214,8 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		} else if (touched['invites']?.some((field) => field?.email)) {
+		}
+		else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -258,7 +270,8 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		} else {
+		}
+		else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

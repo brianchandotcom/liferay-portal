@@ -41,11 +41,12 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
 
+		_enclosingCharacter = (String)parameters.getOrDefault(
+			"enclosingCharacter", null);
+
 		_inputStream = inputStream;
 
-		_delimiterRegex = _getDelimiterRegex(
-			_getEnclosingCharacter(parameters));
-		_enclosingCharacter = _getEnclosingCharacter(parameters);
+		_delimiterRegex = _getDelimiterRegex(_enclosingCharacter);
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
@@ -114,19 +115,6 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 		return StringBundler.concat(
 			enclosingCharacter, escapedDelimiter, enclosingCharacter);
-	}
-
-	private String _getEnclosingCharacter(
-		Map<String, Serializable> parameters) {
-
-		String enclosingCharacter = (String)parameters.getOrDefault(
-			"enclosingCharacter", null);
-
-		if (Validator.isNull(enclosingCharacter)) {
-			return null;
-		}
-
-		return enclosingCharacter;
 	}
 
 	private String _trimEnclosingCharacter(String line) {

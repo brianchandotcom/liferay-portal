@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,10 +42,10 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> detailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.ANNOTATION);
+		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
+			detailAST, "Component");
 
-		if (detailASTList.isEmpty()) {
+		if (annotationDetailAST == null) {
 			return;
 		}
 
@@ -59,9 +60,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		for (DetailAST curDetailAST : detailASTList) {
-			_checkComponentAnnotation(curDetailAST);
-		}
+		_checkComponentAnnotation(annotationDetailAST);
 	}
 
 	private void _checkComponentAnnotation(DetailAST detailAST) {

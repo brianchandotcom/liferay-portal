@@ -91,27 +91,6 @@ public class BatchPlannerPlanHelper {
 		return batchPlannerPlan;
 	}
 
-	public BatchPlannerPlan addFromTemplate(
-			long userId, long batchPlannerPlanId, String externalURL,
-			String name)
-		throws PortalException {
-
-		User user = _userLocalService.fetchUser(userId);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		try {
-			return _addFromTemplate(batchPlannerPlanId, externalURL, name);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
-	}
-
 	public BatchPlannerPlan addImportBatchPlannerPlan(
 			PortletRequest portletRequest, String importFileURI)
 		throws PortalException {
@@ -164,6 +143,27 @@ public class BatchPlannerPlanHelper {
 		return batchPlannerPlan;
 	}
 
+	public BatchPlannerPlan copyBatchPlannerPlan(
+			long userId, long batchPlannerPlanId, String externalURL,
+			String name)
+		throws PortalException {
+
+		User user = _userLocalService.fetchUser(userId);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		try {
+			return _copyBatchPlannerPlan(batchPlannerPlanId, externalURL, name);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
 	public BatchPlannerPlan updateExportBatchPlannerPlan(
 			PortletRequest portletRequest)
 		throws PortalException {
@@ -180,7 +180,7 @@ public class BatchPlannerPlanHelper {
 			portletRequest, _getImportBatchPlannerMappings(portletRequest));
 	}
 
-	private BatchPlannerPlan _addFromTemplate(
+	private BatchPlannerPlan _copyBatchPlannerPlan(
 			long batchPlannerPlanId, String externalURL, String name)
 		throws PortalException {
 

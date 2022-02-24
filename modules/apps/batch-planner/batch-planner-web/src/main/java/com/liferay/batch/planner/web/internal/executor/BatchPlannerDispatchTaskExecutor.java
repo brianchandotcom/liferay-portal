@@ -69,7 +69,7 @@ public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				"external-file-url");
 
 		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanHelper.addFromTemplate(
+			_batchPlannerPlanHelper.copyBatchPlannerPlan(
 				dispatchTrigger.getUserId(), batchPlannerPlanId,
 				externalFileURL,
 				StringBundler.concat(

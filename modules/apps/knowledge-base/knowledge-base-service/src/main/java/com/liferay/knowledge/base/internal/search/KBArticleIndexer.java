@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -132,7 +132,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		Document document = getBaseModelDocument(CLASS_NAME, kbArticle);
 
 		document.addText(
-			Field.CONTENT, HtmlUtil.extractText(kbArticle.getContent()));
+			Field.CONTENT, _htmlParser.extractText(kbArticle.getContent()));
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addKeyword(Field.FOLDER_ID, kbArticle.getKbFolderId());
 		document.addText(Field.TITLE, kbArticle.getTitle());
@@ -298,6 +298,9 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleIndexer.class);
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"

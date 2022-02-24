@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -198,7 +198,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			syndEntry.setPublishedDate(
 				new Date(socialActivitySet.getCreateDate()));
 			syndEntry.setTitle(
-				HtmlUtil.extractText(socialActivityFeedEntry.getTitle()));
+				_htmlParser.extractText(socialActivityFeedEntry.getTitle()));
 			syndEntry.setUri(socialActivityFeedEntry.getLink());
 
 			syndEntries.add(syndEntry);
@@ -241,6 +241,9 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	}
 
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Portal _portal;

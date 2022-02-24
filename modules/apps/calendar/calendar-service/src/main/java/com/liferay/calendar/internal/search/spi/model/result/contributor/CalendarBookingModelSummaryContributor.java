@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -80,7 +80,7 @@ public class CalendarBookingModelSummaryContributor
 				defaultLocale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
 		}
 
-		description = HtmlUtil.extractText(description);
+		description = _htmlParser.extractText(description);
 
 		Summary summary = new Summary(snippetLocale, title, description);
 
@@ -91,5 +91,8 @@ public class CalendarBookingModelSummaryContributor
 
 	@Reference
 	protected SummaryHelper summaryHelper;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

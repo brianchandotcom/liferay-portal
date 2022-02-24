@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -293,7 +293,7 @@ public class MBMessageIndexerIndexedFieldsTest {
 			content = BBCodeTranslatorUtil.getHTML(content);
 		}
 
-		return HtmlUtil.extractText(content);
+		return _htmlParser.extractText(content);
 	}
 
 	@Inject
@@ -303,6 +303,9 @@ public class MBMessageIndexerIndexedFieldsTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
+
+	@Inject
+	private HtmlParser _htmlParser;
 
 	@DeleteAfterTestRun
 	private List<MBCategory> _mbCategories;

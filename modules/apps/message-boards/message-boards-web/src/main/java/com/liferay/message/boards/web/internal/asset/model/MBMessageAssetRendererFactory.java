@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.HtmlParser;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -66,7 +67,7 @@ public class MBMessageAssetRendererFactory
 		MBMessageAssetRenderer mbMessageAssetRenderer =
 			new MBMessageAssetRenderer(
 				_mbMessageLocalService.getMessage(classPK),
-				_messageModelResourcePermission);
+				_messageModelResourcePermission, _htmlParser);
 
 		mbMessageAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
 			_assetDisplayPageFriendlyURLProvider);
@@ -133,6 +134,9 @@ public class MBMessageAssetRendererFactory
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	private MBMessageLocalService _mbMessageLocalService;
 

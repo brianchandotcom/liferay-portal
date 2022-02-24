@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -227,7 +227,7 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 			map.put(
 				"content_" + LocaleUtil.toLanguageId(locale),
-				HtmlUtil.extractText(blogsEntry.getContent()));
+				_htmlParser.extractText(blogsEntry.getContent()));
 		}
 	}
 
@@ -282,6 +282,9 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
+
+	@Inject
+	private HtmlParser _htmlParser;
 
 	private IndexedFieldsFixture _indexedFieldsFixture;
 

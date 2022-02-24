@@ -60,10 +60,6 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		_checkComponentAnnotation(annotationDetailAST);
-	}
-
-	private void _checkComponentAnnotation(DetailAST annotationDetailAST) {
 		DetailAST propertyAnnotationMemberValuePairDetailAST =
 			getAnnotationMemberValuePairDetailAST(
 				annotationDetailAST, "property");
@@ -73,7 +69,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		}
 
 		List<DetailAST> propertyAnnotationExprList = getAllChildTokens(
-			propertyAnnotationMemberValuePairDetailAST, false, TokenTypes.EXPR);
+			propertyAnnotationMemberValuePairDetailAST, true, TokenTypes.EXPR);
 
 		if (propertyAnnotationExprList == null) {
 			return;

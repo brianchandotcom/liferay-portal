@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -181,8 +180,6 @@ definition {
 	@description = "LPS-143122 - Verify that by default the widget button is disabled"
 	@priority = "3"
 	test WidgetButtonDisabledByDefault {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153256",
 			objectName = "CustomObject153256",

@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -181,8 +180,6 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Name field blank"
 	@priority = "3"
 	test CannotLeaveActionNameBlank {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -206,8 +203,6 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
 	@priority = "3"
 	test CannotLeaveActionThenBlank {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -229,8 +224,6 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
 	@priority = "3"
 	test CannotLeaveActionWhenBlank {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -253,8 +246,6 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
 	@priority = "3"
 	test CannotLeaveURLBlank {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

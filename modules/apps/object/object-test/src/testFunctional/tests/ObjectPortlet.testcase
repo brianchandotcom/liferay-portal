@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -750,8 +749,6 @@ definition {
 	@description = "LPS-135393 - Verify that is possible to change what columns to be displayed on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test CanChangeColumnsToBeDisplayed {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1580,8 +1577,6 @@ definition {
 	@description = "LPS-135393 - Verify that is possible to order the auto-generated table by an entry on the Custom Object Portlet"
 	@priority = "3"
 	test CanOrderTable {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1657,8 +1652,6 @@ definition {
 	@description = "LPS-135393 - Verify that is possible to search for a field on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test CanSearchForFieldOnDropdownToSelectColumns {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2346,8 +2339,6 @@ definition {
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test EmptyStateDisplayedForSearch {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2378,8 +2369,6 @@ definition {
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test EmptyStateDisplayedForSearchOnDropdownToSelectColumns {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2519,8 +2508,6 @@ definition {
 	@description = "LPS-135393 - Verify the table is updated when changing a page on the Custom Object Portlet"
 	@priority = "3"
 	test TableUpdatedWhenChangingPage {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2563,8 +2550,6 @@ definition {
 	@description = "LPS-135393 - Verify the table is updated when changing the pagination number on the Custom Object Portlet"
 	@priority = "3"
 	test TableUpdatedWhenChangingPaginationNumber {
-		property portal.acceptance = "false";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

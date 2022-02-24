@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -730,7 +729,6 @@ definition {
 	test RolePermissionsOverlapSingleObjectEntryPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
-		property portal.acceptance = "false";
 
 		// TODO LPS-147747 RolePermissionsOverlapSingleObjectEntryPermissions pending implementation
 

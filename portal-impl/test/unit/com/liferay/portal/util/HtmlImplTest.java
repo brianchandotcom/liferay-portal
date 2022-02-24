@@ -234,25 +234,6 @@ public class HtmlImplTest {
 	}
 
 	@Test
-	public void testExtraction() {
-		Assert.assertEquals(
-			"whitespace removal",
-			_htmlImpl.extractText("   whitespace \n   <br/> removal   "));
-		Assert.assertEquals(
-			"script removal",
-			_htmlImpl.extractText(
-				"script <script>   test   </script> removal"));
-		Assert.assertEquals(
-			"HTML attribute removal",
-			_htmlImpl.extractText(
-				"<h1>HTML</h1> <i>attribute</i> <strong>removal</strong>"));
-		Assert.assertEquals(
-			"onclick removal",
-			_htmlImpl.extractText(
-				"<div onclick=\"honk()\">onclick removal</div>"));
-	}
-
-	@Test
 	public void testGetAUICompatibleId() {
 		Assert.assertNull(_htmlImpl.getAUICompatibleId(null));
 		Assert.assertEquals(

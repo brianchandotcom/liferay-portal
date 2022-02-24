@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionMetaTitleExceptionExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionMetaTitleExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

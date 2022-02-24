@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.TermTypeExceptionExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.TermTypeExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

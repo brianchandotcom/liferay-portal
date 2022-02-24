@@ -36,4 +36,18 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
+	macro deleteObjectCustomViewViaUI {
+		Click(
+			key_objectCustomViewLabel = "${viewLabel}",
+			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
+	macro assertObjectViewNotPresent {
+		var key_viewLabel = "${viewLabel}";
+
+		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
+	}
+
 }

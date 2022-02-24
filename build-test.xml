@@ -9255,6 +9255,57 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 	</target>
 
+	<target name="prepare-portal-test-digital-signature-properties">
+		<if>
+			<isset property="digital.signature.account.base.uri" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.account.base.uri=${digital.signature.account.base.uri}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.api.accountId" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.api.accountId=${digital.signature.api.accountId}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.api.username" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.api.username=${digital.signature.api.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.integration.key" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.integration.key=${digital.signature.integration.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.rsa.private.key" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
+				</echo>
+			</then>
+		</if>
+
+		<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+			digital.signature.site.settings.strategy=always-inherit
+		</echo>
+	</target>
+
 	<target name="prepare-portlet-ext-properties">
 		<for list="${test.case.available.property.names}" param="test.case.available.property.name">
 			<sequential>

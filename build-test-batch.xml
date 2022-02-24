@@ -2874,6 +2874,10 @@ log.sanitizer.enabled=false</echo>
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
 
+							<antcall target="prepare-portal-test-digital-signature-properties" />
+
+							<ant dir="portal-test" inheritAll="false" target="deploy" />
+
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
 
 							<get-test-batch-app-server-start-executable-arg-line />

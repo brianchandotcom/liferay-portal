@@ -32,6 +32,8 @@ import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
+import java.util.function.Function;
+
 import org.hibernate.engine.SessionFactoryImplementor;
 
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
@@ -101,8 +103,7 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 
 		Session session = _sessionFactoryImpl.openSession();
 
-		return (Session)ProxyUtil.newProxyInstance(
-			Session.class.getClassLoader(), new Class<?>[] {Session.class},
+		return _sessionProxyProviderFunction.apply(
 			new SessionInvocationHandler(session));
 	}
 
@@ -189,6 +190,10 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifySessionFactoryWrapper.class);
+
+	private static final Function<InvocationHandler, Session>
+		_sessionProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Session.class);
 
 	private final SessionFactoryImpl _sessionFactoryImpl;
 

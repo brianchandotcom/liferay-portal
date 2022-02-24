@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Policy Declaration Page is reached by the get a quote form"
+	@description = "LPS-144591 - Verify that the Policy Declaration Page is reached by the get a quote form"
 	@priority = "5"
 	test CanReachPolicyDeclarationPageByTheForm {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -54,7 +54,7 @@ definition {
 		AssertElementPresent(locator1 = "RaylifePolicyDeclaration#CONGRATS_PAGE_POLICY_DECLARATION");
 	}
 
-	@description = "Verify if the policy number is generated"
+	@description = "LPS-144592 - Verify if the policy number is generated"
 	@priority = "5"
 	test IsPolicyNumberGenerated {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -84,7 +84,7 @@ definition {
 			policy = "Policy");
 	}
 
-	@description = "Verify if the product is the same as the one chosen at the beginning of the form"
+	@description = "LPS-144593 - Verify if the product is the same as the one chosen at the beginning of the form"
 	@priority = "5"
 	test IsProductTheSameAsTheForm {
 		RaylifePaymentMethod.enablePayPalPayment();

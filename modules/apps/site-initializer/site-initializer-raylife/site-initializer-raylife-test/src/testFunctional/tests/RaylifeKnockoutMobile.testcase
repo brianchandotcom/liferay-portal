@@ -1,0 +1,264 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-146140 - Verify if the message 'We need to ask you for more information about your employees.' is present. (Tablet)"
+	@priority = "2"
+	test IfAboutYourBusinessMessageIsPresentInBusinessTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.gotoContactInfoByBusiness();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(
+			locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+			value = "We need to ask you for more information about your business.");
+	}
+
+	@description = "LPS-146147 - Verify if the message 'We need to ask you for more information about your employees.' is present. (Tablet)"
+	@priority = "3"
+	test IfAboutYourBusinessMessageIsPresentInPropertyTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFieldsResidential();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(
+			field = "Are there swimming pool(s) on the premises?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(
+			field = "Are there diving boards or slides?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(
+			locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+			value = "We need to ask you for more information about your business location.");
+	}
+
+	@description = "LPS-146142 - Verify if the message 'We need to ask you for more information about your Employees.' is present. (Smartphone)"
+	@priority = "3"
+	test IfAboutYourEmployeesMessageIsPresentPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfoMobile.gotoContactInfoByEmployeesMobile();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(
+			locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+			value = "about your employees.");
+	}
+
+	@description = "LPS-146132 - Verify if Application ID was generated after the user saved their Contact Info. (Smartphone)"
+	@priority = "4"
+	test IfContactInfoWasGeneratedInBusinessPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfoMobile.gotoContactInfoByBusinessMobile();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#APPLICATION_ID");
+	}
+
+	@description = "LPS-146143 - Verify if Application ID was generated after the user saved their Contact Info. (Tablet)"
+	@priority = "5"
+	test IfContactInfoWasGeneratedInEmployeesTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.gotoContactInfoByEmployees();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#APPLICATION_ID");
+	}
+
+	@description = "LPS-146144 - Verify if Application ID was generated after the user saved their Contact Info. (Smartphone)"
+	@priority = "5"
+	test IfContactInfoWasGeneratedInPropertyPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "800 ft²");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.yearBuilding",
+			value = "2015");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "primary");
+
+		Click(
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "premises");
+
+		Click(
+			locator1 = "RaylifeMobile#SELECT_BUTTON",
+			option = "Yes",
+			title = "diving");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#APPLICATION_ID");
+	}
+
+} 

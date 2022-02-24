@@ -19,7 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +43,7 @@ public class MessageModelDocumentContributor
 		ExpandoBridge expandoBridge = message.getExpandoBridge();
 
 		document.addText(
-			Field.CONTENT, HtmlUtil.extractText(message.getBody()));
+			Field.CONTENT, _htmlParser.extractText(message.getBody()));
 		document.addKeyword(Field.FOLDER_ID, message.getFolderId());
 		document.addText(Field.TITLE, message.getSubject());
 
@@ -55,5 +55,8 @@ public class MessageModelDocumentContributor
 
 	@Reference
 	private ExpandoBridgeIndexer _expandoBridgeIndexer;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,7 +111,7 @@ public class CommerceNotificationDataSetDataProvider
 						_getCommerceNotificationTemplateType(
 							commerceNotificationQueueEntry)),
 					commerceNotificationQueueEntry.getSubject(),
-					HtmlUtil.extractText(
+					_htmlParser.extractText(
 						commerceNotificationQueueEntry.getBody()),
 					_getNotificationPanelURL(
 						commerceNotificationQueueEntry.
@@ -236,6 +236,9 @@ public class CommerceNotificationDataSetDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Portal _portal;

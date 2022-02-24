@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -874,11 +875,11 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			String value = null;
 
 			if (rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-				value = HtmlUtil.extractText(kbArticle.getDescription());
+				value = _htmlParser.extractText(kbArticle.getDescription());
 
 				if (Validator.isNull(value)) {
 					value = StringUtil.shorten(
-						HtmlUtil.extractText(kbArticle.getContent()), 200);
+						_htmlParser.extractText(kbArticle.getContent()), 200);
 				}
 			}
 			else if (rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
@@ -1040,6 +1041,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		target = "(resource.name=" + KBConstants.RESOURCE_NAME_DISPLAY + ")"
 	)
 	private PortletResourcePermission _displayPortletResourcePermission;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"

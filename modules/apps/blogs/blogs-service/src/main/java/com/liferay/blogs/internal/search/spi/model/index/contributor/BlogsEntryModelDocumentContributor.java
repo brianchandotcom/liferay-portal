@@ -18,7 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -26,6 +26,7 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luan Maoski
@@ -42,7 +43,7 @@ public class BlogsEntryModelDocumentContributor
 	public void contribute(Document document, BlogsEntry blogsEntry) {
 		document.addText(Field.CAPTION, blogsEntry.getCoverImageCaption());
 
-		String content = HtmlUtil.extractText(blogsEntry.getContent());
+		String content = _htmlParser.extractText(blogsEntry.getContent());
 
 		document.addText(Field.CONTENT, content);
 
@@ -66,5 +67,8 @@ public class BlogsEntryModelDocumentContributor
 				blogsEntry.getTitle());
 		}
 	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

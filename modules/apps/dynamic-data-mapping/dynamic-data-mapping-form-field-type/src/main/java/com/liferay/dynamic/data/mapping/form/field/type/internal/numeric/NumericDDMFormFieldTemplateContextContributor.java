@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -96,7 +97,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 		).put(
 			"value",
 			() -> {
-				String value = HtmlUtil.extractText(
+				String value = _htmlParser.extractText(
 					ddmFormFieldRenderingContext.getValue());
 
 				if (Objects.equals(value, "NaN")) {
@@ -131,5 +132,8 @@ public class NumericDDMFormFieldTemplateContextContributor
 
 		return value;
 	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,7 +85,7 @@ public class KaleoFormsAdminDisplayContext {
 	public KaleoFormsAdminDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDLRecordLocalService ddlRecordLocalService,
-		DDMDisplayRegistry ddmDisplayRegistry,
+		DDMDisplayRegistry ddmDisplayRegistry, HtmlParser htmlParser,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
 		StorageEngine storageEngine) {
@@ -93,6 +94,7 @@ public class KaleoFormsAdminDisplayContext {
 		_renderResponse = renderResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_htmlParser = htmlParser;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
@@ -221,7 +223,8 @@ public class KaleoFormsAdminDisplayContext {
 		throws PortalException {
 
 		return new KaleoFormsViewRecordsDisplayContext(
-			_renderRequest, _renderResponse, _ddlRecordLocalService);
+			_renderRequest, _renderResponse, _ddlRecordLocalService,
+			_htmlParser);
 	}
 
 	public long getKaleoProcessId() {
@@ -622,6 +625,7 @@ public class KaleoFormsAdminDisplayContext {
 
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final HtmlParser _htmlParser;
 	private final HttpServletRequest _httpServletRequest;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;

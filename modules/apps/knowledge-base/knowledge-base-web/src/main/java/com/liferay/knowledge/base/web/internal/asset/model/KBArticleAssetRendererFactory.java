@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -87,7 +88,7 @@ public class KBArticleAssetRendererFactory
 		}
 
 		KBArticleAssetRenderer kbArticleAssetRenderer =
-			new KBArticleAssetRenderer(kbArticle);
+			new KBArticleAssetRenderer(kbArticle, _htmlParser);
 
 		kbArticleAssetRenderer.setAssetRendererType(type);
 		kbArticleAssetRenderer.setServletContext(_servletContext);
@@ -185,6 +186,9 @@ public class KBArticleAssetRendererFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleAssetRendererFactory.class);
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	private KBArticleLocalService _kbArticleLocalService;
 

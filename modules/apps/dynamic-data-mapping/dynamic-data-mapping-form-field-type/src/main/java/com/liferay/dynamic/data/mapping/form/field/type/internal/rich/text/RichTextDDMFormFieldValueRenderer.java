@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlParser;
 
 import java.util.Locale;
 
@@ -48,10 +48,11 @@ public class RichTextDDMFormFieldValueRenderer
 			return StringPool.BLANK;
 		}
 
-		return GetterUtil.getString(_html.extractText(value.getString(locale)));
+		return GetterUtil.getString(
+			_htmlParser.extractText(value.getString(locale)));
 	}
 
 	@Reference
-	private Html _html;
+	private HtmlParser _htmlParser;
 
 }

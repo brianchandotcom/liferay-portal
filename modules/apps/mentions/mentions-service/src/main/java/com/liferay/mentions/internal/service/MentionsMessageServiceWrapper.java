@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,7 +78,7 @@ public class MentionsMessageServiceWrapper
 		String title = message.getSubject();
 
 		if (message.isDiscussion()) {
-			title = StringUtil.shorten(HtmlUtil.extractText(content), 100);
+			title = StringUtil.shorten(_htmlParser.extractText(content), 100);
 		}
 
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
@@ -142,6 +142,9 @@ public class MentionsMessageServiceWrapper
 	}
 
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Http _http;

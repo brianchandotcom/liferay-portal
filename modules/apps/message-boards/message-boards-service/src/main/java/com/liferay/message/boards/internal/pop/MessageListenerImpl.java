@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -235,15 +236,17 @@ public class MessageListenerImpl implements MessageListener {
 
 			if (parentMessage == null) {
 				_mbMessageService.addMessage(
-					groupId, categoryId, subject, mbMailMessage.getBody(),
+					groupId, categoryId, subject,
+					mbMailMessage.getBody(_htmlParser),
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 					0.0, true, serviceContext);
 			}
 			else {
 				_mbMessageService.addMessage(
 					parentMessage.getMessageId(), subject,
-					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
-					inputStreamOVPs, false, 0.0, true, serviceContext);
+					mbMailMessage.getBody(_htmlParser),
+					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
+					0.0, true, serviceContext);
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -366,6 +369,9 @@ public class MessageListenerImpl implements MessageListener {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

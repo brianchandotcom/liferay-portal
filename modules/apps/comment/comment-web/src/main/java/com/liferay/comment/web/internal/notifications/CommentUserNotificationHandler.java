@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -86,7 +87,7 @@ public class CommentUserNotificationHandler
 
 	@Override
 	protected String getBodyContent(JSONObject jsonObject) {
-		return HtmlUtil.extractText(super.getBodyContent(jsonObject));
+		return _htmlParser.extractText(super.getBodyContent(jsonObject));
 	}
 
 	@Override
@@ -171,6 +172,9 @@ public class CommentUserNotificationHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommentUserNotificationHandler.class);
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -281,7 +282,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		return new WikiPageAssetRenderer(
-			page, _wikiEngineRenderer, _trashHelper);
+			page, _wikiEngineRenderer, _htmlParser, _trashHelper);
 	}
 
 	@Override
@@ -472,6 +473,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageTrashHandler.class);
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Portal _portal;

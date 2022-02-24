@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HtmlParser;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -74,7 +75,7 @@ public class CommentAssetRendererFactory
 		WorkflowableComment workflowableComment = (WorkflowableComment)comment;
 
 		CommentAssetRenderer commentAssetRenderer = new CommentAssetRenderer(
-			workflowableComment, this);
+			workflowableComment, this, _htmlParser);
 
 		commentAssetRenderer.setAssetRendererType(type);
 		commentAssetRenderer.setServletContext(_servletContext);
@@ -136,6 +137,9 @@ public class CommentAssetRendererFactory
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.comment.web)")
 	private ServletContext _servletContext;

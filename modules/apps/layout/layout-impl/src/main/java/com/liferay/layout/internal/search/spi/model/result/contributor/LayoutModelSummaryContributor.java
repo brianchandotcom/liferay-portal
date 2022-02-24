@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,7 +63,7 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 		content = StringUtil.replace(
 			content, _HIGHLIGHT_TAGS, _ESCAPE_SAFE_HIGHLIGHTS);
 
-		content = _html.extractText(content);
+		content = _htmlParser.extractText(content);
 
 		content = StringUtil.replace(
 			content, _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHT_TAGS);
@@ -103,6 +103,6 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 	};
 
 	@Reference
-	private Html _html;
+	private HtmlParser _htmlParser;
 
 }

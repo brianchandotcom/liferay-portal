@@ -1,10 +1,10 @@
 $custom-checkbox-indicator-icon-checked: clay-icon(check-small, #fff);
 
-$custom-control-indicator-bg: var(--color-action-primary-inverted);
+$custom-control-indicator-bg: var(--custom-control-background-color);
 $custom-control-indicator-border-color: var(--custom-control-border-color);
 $custom-control-indicator-border-width: 0.0625rem; // 1px
 
-$custom-control-indicator-active-bg: var(--color-action-primary-inverted);
+$custom-control-indicator-active-bg: var(--custom-control-background-color);
 $custom-control-indicator-active-border-color: $custom-control-indicator-border-color;
 
 $custom-control-indicator-hover-box-shadow: 0 0 0 1rem
@@ -12,7 +12,7 @@ $custom-control-indicator-hover-box-shadow: 0 0 0 1rem
 
 $custom-control-indicator-focus-border-color: $form-input-focus-color;
 
-$custom-control-indicator-disabled-bg: var(--color-action-primary-inverted);
+$custom-control-indicator-disabled-bg: var(--custom-control-background-color);
 $custom-control-indicator-disabled-border-color: var(
 	--custom-control-disabled-border-color
 );

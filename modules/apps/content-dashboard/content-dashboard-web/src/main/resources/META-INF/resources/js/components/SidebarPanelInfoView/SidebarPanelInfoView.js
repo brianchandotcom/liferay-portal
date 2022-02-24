@@ -154,7 +154,10 @@ const SidebarPanelInfoView = ({
 							{Liferay.Language.get('description')}
 						</h5>
 
-						<div className="text-secondary" dangerouslySetInnerHTML={{__html: description}} />
+						<div
+							className="text-secondary"
+							dangerouslySetInnerHTML={{__html: description}}
+						/>
 					</div>
 				)}
 

@@ -73,7 +73,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		}
 
 		List<DetailAST> propertyAnnotationExprList = getAllChildTokens(
-			propertyAnnotationMemberValuePairDetailAST, true, TokenTypes.EXPR);
+			propertyAnnotationMemberValuePairDetailAST, false, TokenTypes.EXPR);
 
 		if (propertyAnnotationExprList == null) {
 			return;

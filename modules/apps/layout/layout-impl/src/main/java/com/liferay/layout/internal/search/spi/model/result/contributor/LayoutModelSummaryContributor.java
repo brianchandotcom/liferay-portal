@@ -80,7 +80,14 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 			HighlightUtil.HIGHLIGHT_TAG_OPEN,
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 
-		Summary summary = new Summary(locale, name, content);
+		Summary summary = null;
+
+		if (Validator.isBlank(snippet)) {
+			summary = new Summary(locale, name, content);
+		}
+		else {
+			summary = new Summary(locale, name, snippet);
+		}
 
 		summary.setMaxContentLength(200);
 

@@ -5556,6 +5556,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 
+			<var name="expiration.leeway" value="2" />
+
 			<if>
 				<equals arg1="@{dxp.license.file}" arg2="dxp-license-virtual-cluster.xml" />
 				<then>
@@ -5564,52 +5566,43 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						todir="${liferay.home}/deploy"
 					/>
 				</then>
+				<elseif>
+					<equals arg1="@{dxp.license.file}" arg2="portal-dxp-license-custom-expiration-48-hours.xml" />
+					<then>
+						<copy
+							file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/license/dependencies/@{dxp.license.file}"
+							todir="${liferay.home}/deploy"
+						/>
+						<beanshell>
+							<![CDATA[
+								import java.time.ZoneId;
+								import java.time.ZonedDateTime;
+								import java.time.format.DateTimeFormatter;
+
+								DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
+
+								ZoneId GMT = ZoneId.of("GMT");
+
+								ZonedDateTime now = ZonedDateTime.now(GMT);
+
+								//License expiration leeway
+								ZonedDateTime expiration = now.minusDays(2);
+
+								//License expiration delay
+								expiration = expiration.plusMinutes(5);
+
+								System.out.println(dateTimeFormatter.format(expiration));
+								project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+							]]>
+						</beanshell>
+					</then>
+				</elseif>
 				<else>
 					<copy
 						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
 						todir="${liferay.home}/deploy"
 					/>
 				</else>
-			</if>
-
-			<if>
-				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />
-				<then>
-					<copy
-						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
-						todir="${liferay.home}/data/license"
-					/>
-				</then>
-			</if>
-
-			<var name="expiration.leeway" value="2" />
-
-			<if>
-				<equals arg1="@{dxp.license.file}" arg2="portal-dxp-license-custom-expiration-48-hours.xml" />
-				<then>
-					<beanshell>
-						<![CDATA[
-							import java.time.ZoneId;
-							import java.time.ZonedDateTime;
-							import java.time.format.DateTimeFormatter;
-
-							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
-
-							ZoneId GMT = ZoneId.of("GMT");
-
-							ZonedDateTime now = ZonedDateTime.now(GMT);
-
-							//License expiration leeway
-							ZonedDateTime expiration = now.minusDays(2);
-
-							//License expiration delay
-							expiration = expiration.plusMinutes(5);
-
-							System.out.println(dateTimeFormatter.format(expiration));
-							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
-						]]>
-					</beanshell>
-				</then>
 			</if>
 
 			<replace
@@ -5623,6 +5616,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				token="${expirationdate}"
 				value="${expiration.date}"
 			/>
+
+			<if>
+				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />
+				<then>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+						todir="${liferay.home}/data/license"
+					/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

@@ -631,24 +631,6 @@ public class DLFolderLocalServiceWrapper
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFolders(long, long, boolean, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<DLFolder> getFolders(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator) {
-
-		return _dlFolderLocalService.getFolders(
-			groupId, parentFolderId, status, includeMountfolders, start, end,
-			orderByComparator);
-	}
-
 	@Override
 	public java.util.List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,
@@ -701,20 +683,6 @@ public class DLFolderLocalServiceWrapper
 
 		return _dlFolderLocalService.getFoldersCount(
 			groupId, parentFolderId, includeMountfolders, status);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersCount(long, long, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getFoldersCount(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders) {
-
-		return _dlFolderLocalService.getFoldersCount(
-			groupId, parentFolderId, status, includeMountfolders);
 	}
 
 	@Override

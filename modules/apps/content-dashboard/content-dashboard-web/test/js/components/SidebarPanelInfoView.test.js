@@ -73,7 +73,7 @@ describe('SidebarPanelInfoView', () => {
 	it('renders sidebar panel with proper dates for a basic web content', () => {
 		const {getByText} = render(_getSidebarComponent(mockedProps));
 
-		expect(getByText('display-date')).toBeInTheDocument();
+		expect(getByText('Display Date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 10:53 AM')).toBeInTheDocument();
 
 		expect(getByText('creation-date')).toBeInTheDocument();
@@ -82,10 +82,10 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('modified-date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 10:50 AM')).toBeInTheDocument();
 
-		expect(getByText('expiration-date')).toBeInTheDocument();
+		expect(getByText('Expiration Date')).toBeInTheDocument();
 		expect(getByText('Jul 28, 2020, 10:00 AM')).toBeInTheDocument();
 
-		expect(getByText('review-date')).toBeInTheDocument();
+		expect(getByText('Review Date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 2:14 PM')).toBeInTheDocument();
 	});
 
@@ -233,7 +233,7 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('Basic Document')).toBeInTheDocument();
 		expect(getByText('Mocked description')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
-		expect(getByText('size')).toBeInTheDocument();
+		expect(getByText('Size')).toBeInTheDocument();
 
 		expect(
 			queryByText('languages-translated-into')

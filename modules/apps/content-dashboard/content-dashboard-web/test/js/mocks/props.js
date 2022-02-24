@@ -13,24 +13,27 @@
  */
 
 export const mockedProps = {
-	classPK: 38070,
+	classPK: '38070',
 	createDate: '2020-07-27T10:50:55.19',
-	data: {
+	languageTag: 'en',
+	modifiedDate: '2020-07-27T10:56:56.027',
+	specificFields: {
 		'display-date': {
 			title: 'Display Date',
+			type: 'Date',
 			value: '2020-07-27T10:53:00',
 		},
 		'expiration-date': {
 			title: 'Expiration Date',
+			type: 'Date',
 			value: '2020-07-28T10:00:00',
 		},
 		'review-date': {
 			title: 'Review Date',
+			type: 'Date',
 			value: '2020-07-27T14:14:30',
 		},
 	},
-	languageTag: 'en',
-	modifiedDate: '2020-07-27T10:56:56.027',
 	subType: 'Basic Web Content',
 	tags: ['tag1', 'tag2'],
 	title: 'Basic Web Content Title',
@@ -244,47 +247,86 @@ export const mockedUser = {
 
 export const mockedImageDocumentProps = {
 	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
-	specificFields: {
-		description: 'Mocked description',
+	clipboard: {
+		name: 'demo.jpg',
+		url: 'mocked/view/url/in/portal',
+	},
+	description: 'Mocked description',
+	preview: {
 		downloadURL: 'mocked/download/url/demo.jpg&download=true',
-		extension: 'jpg',
-		fileName: 'demo.jpg',
-		previewImageURL: 'mocked/preview/url/demo.jpg',
-		previewURL: 'mocked/vuew/url/',
-		size: '200 KB',
-		viewURL: 'mocked/view/url/in/portal',
+		imageURL: 'mocked/preview/url/demo.jpg',
+		url: 'mocked/vuew/url/',
+	},
+	specificFields: {
+		extension: {
+			title: 'Extension',
+			type: 'string',
+			value: 'jpg',
+		},
+		size: {
+			title: 'Size',
+			type: 'string',
+			value: '200 KB',
+		},
 	},
 	subType: 'Basic Document',
 	type: 'Document',
+	viewURLs: [],
 };
 
 export const mockedVideoShortcutDocumentProps = {
 	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
+	clipboard: {
+		name: 'Mocked filename',
+		url: 'mocked/view/url/in/portal',
+	},
+	description: 'Mocked description',
+	preview: {
+		imageURL: 'mocked/preview/url/demo.jpg',
+		url: 'mocked/vuew/url/',
+	},
 	specificFields: {
-		description: 'Mocked description',
-		downloadURL: 'mocked/download/url/demo.jpg&download=true',
-		extension: '',
-		fileName: 'Mocked filename',
-		previewImageURL: 'mocked/preview/url/demo.jpg',
-		size: '0 B',
-		viewURL: 'mocked/view/url/in/portal',
+		extension: {
+			title: 'Extension',
+			type: 'string',
+			value: '',
+		},
+		size: {
+			title: 'Size',
+			type: 'string',
+			value: '0 B',
+		},
 	},
 	subType: 'External Video Shortcut',
 	type: 'Document',
+	viewURLs: [],
 };
 
 export const mockedFileDocumentProps = {
 	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
-	specificFields: {
-		description: 'Mocked description',
+	clipboard: {
+		name: 'script.sh',
+		url: 'mocked/view/url/in/portal',
+	},
+	description: 'Mocked description',
+	preview: {
 		downloadURL: 'mocked/download/url/demo.jpg&download=true',
-		extension: 'sh',
-		fileName: 'script.sh',
-		previewImageURL: '',
-		previewURL: 'mocked/download/url/demo.jpg&download=true',
-		size: '9 KB',
-		viewURL: 'mocked/view/url/in/portal',
+		imageURL: '',
+		url: 'mocked/vuew/url/',
+	},
+	specificFields: {
+		extension: {
+			title: 'Extension',
+			type: 'string',
+			value: 'sh',
+		},
+		size: {
+			title: 'Size',
+			type: 'string',
+			value: '9 KB',
+		},
 	},
 	subType: 'Basic Document',
 	type: 'Document',
+	viewURLs: [],
 };

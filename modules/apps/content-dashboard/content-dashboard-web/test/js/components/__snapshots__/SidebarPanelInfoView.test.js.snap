@@ -1007,88 +1007,92 @@ exports[`SidebarPanelInfoView renders 1`] = `
                 class="panel-body"
               >
                 <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
+                  class="sidebar-section"
                 >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    display-date
-                  </h5>
-                  <p
-                    class="text-secondary"
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      Display Date
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      Jul 27, 2020, 10:53 AM
+                    </p>
+                  </div>
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    Jul 27, 2020, 10:53 AM
-                  </p>
-                </div>
-                <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
-                >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      Expiration Date
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      Jul 28, 2020, 10:00 AM
+                    </p>
+                  </div>
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    creation-date
-                  </h5>
-                  <p
-                    class="text-secondary"
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      Review Date
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      Jul 27, 2020, 2:14 PM
+                    </p>
+                  </div>
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    Jul 27, 2020, 10:50 AM
-                  </p>
-                </div>
-                <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
-                >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      creation-date
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      Jul 27, 2020, 10:50 AM
+                    </p>
+                  </div>
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    modified-date
-                  </h5>
-                  <p
-                    class="text-secondary"
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      modified-date
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      Jul 27, 2020, 10:56 AM
+                    </p>
+                  </div>
+                  <div
+                    class="c-mb-4 sidebar-dl sidebar-section"
                   >
-                    Jul 27, 2020, 10:56 AM
-                  </p>
-                </div>
-                <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
-                >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
-                  >
-                    expiration-date
-                  </h5>
-                  <p
-                    class="text-secondary"
-                  >
-                    Jul 28, 2020, 10:00 AM
-                  </p>
-                </div>
-                <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
-                >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
-                  >
-                    review-date
-                  </h5>
-                  <p
-                    class="text-secondary"
-                  >
-                    Jul 27, 2020, 2:14 PM
-                  </p>
-                </div>
-                <div
-                  class="c-mb-4 sidebar-dl sidebar-section"
-                >
-                  <h5
-                    class="c-mb-1 font-weight-semi-bold"
-                  >
-                    id
-                  </h5>
-                  <p
-                    class="text-secondary"
-                  >
-                    38070
-                  </p>
+                    <h5
+                      class="c-mb-1 font-weight-semi-bold"
+                    >
+                      id
+                    </h5>
+                    <p
+                      class="text-secondary"
+                    >
+                      38070
+                    </p>
+                  </div>
                 </div>
                 <div
                   class="c-mb-4 sidebar-dl sidebar-section"

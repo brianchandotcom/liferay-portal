@@ -123,6 +123,7 @@ import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.net.URL;
 
@@ -138,6 +139,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
@@ -1857,8 +1859,7 @@ public class HookHotDeployListener
 
 		if (strutsActionObject instanceof StrutsAction) {
 			StrutsAction strutsAction =
-				(StrutsAction)ProxyUtil.newProxyInstance(
-					portletClassLoader, new Class<?>[] {StrutsAction.class},
+				_strutsActionProxyProviderFunction.apply(
 					new ClassLoaderBeanHandler(
 						strutsActionObject, portletClassLoader));
 
@@ -2281,6 +2282,10 @@ public class HookHotDeployListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
+
+	private static final Function<InvocationHandler, StrutsAction>
+		_strutsActionProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			StrutsAction.class);
 
 	private final Map<String, DLFileEntryProcessorContainer>
 		_dlFileEntryProcessorContainerMap = new HashMap<>();

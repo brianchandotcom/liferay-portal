@@ -63,18 +63,10 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		_checkComponentAnnotation(annotationDetailAST);
 	}
 
-	private void _checkComponentAnnotation(DetailAST detailAST) {
-		DetailAST annotationDetailAST = detailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if ((annotationDetailAST == null) ||
-			!StringUtil.equals(annotationDetailAST.getText(), "Component")) {
-
-			return;
-		}
-
+	private void _checkComponentAnnotation(DetailAST annotationDetailAST) {
 		DetailAST annotationMemberValuePairPropertyDetailAST =
-			getAnnotationMemberValuePairDetailAST(detailAST, "property");
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "property");
 
 		if (annotationMemberValuePairPropertyDetailAST == null) {
 			return;
@@ -97,7 +89,8 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 					expressionKeyValue, "\"osgi.jaxrs.name")) {
 
 				DetailAST annotationMemberValuePairServiceDetailAST =
-					getAnnotationMemberValuePairDetailAST(detailAST, "service");
+					getAnnotationMemberValuePairDetailAST(
+						annotationDetailAST, "service");
 
 				List<DetailAST> serviceAnnotationMemberExprList =
 					getAllChildTokens(

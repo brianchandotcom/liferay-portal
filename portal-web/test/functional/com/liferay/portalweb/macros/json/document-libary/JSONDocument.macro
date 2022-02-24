@@ -149,17 +149,7 @@ definition {
 		}
 
 		if (isSet(reviewDate)) {
-			var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
-			var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
-			var displayDateDay = DateUtil.getCurrentDate();
-			var displayDateYear = DateUtil.getCurrentYear();
-			var displayDateMonth = DateUtil.getCurrentMonth();
-
-			if (isSet(increaseMinutes)) {
-				var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
-			}
-
-			var reviewDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay} ${displayDateHour}:${displayDateMinute}";
+			var reviewDate = DateUtil.getDateOffsetByMinutes("${increaseMinutes}", "yyyy-MM-dd HH:mm");
 
 			echo("## * reviewDate: ${reviewDate}");
 		}

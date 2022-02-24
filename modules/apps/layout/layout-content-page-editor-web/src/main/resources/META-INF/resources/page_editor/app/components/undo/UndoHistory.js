@@ -66,7 +66,10 @@ export default function UndoHistory() {
 				alignmentPosition={Align.BottomRight}
 				className="ml-2"
 				menuElementAttrs={{
-					className: 'cadmin page-editor__undo-history',
+					className: 'page-editor__undo-history',
+					containerProps: {
+						className: 'cadmin',
+					},
 				}}
 				onActiveChange={setActive}
 				trigger={

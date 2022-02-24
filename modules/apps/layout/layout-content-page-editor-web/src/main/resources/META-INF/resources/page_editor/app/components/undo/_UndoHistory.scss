@@ -1,38 +1,42 @@
 @import 'atlas-variables';
 
-.page-editor__undo-history {
-	&.dropdown-menu {
-		max-height: 320px;
-		max-width: 280px;
-		width: 280px;
-	}
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__undo-history {
+			&.dropdown-menu {
+				max-height: 320px;
+				max-width: 280px;
+				width: 280px;
+			}
 
-	.dropdown-item {
-		text-overflow: ellipsis;
-		white-space: nowrap;
+			.dropdown-item {
+				text-overflow: ellipsis;
+				white-space: nowrap;
 
-		span {
-			color: $secondary-l1;
-			font-size: 0.75rem;
-			margin-left: 1em;
-		}
-	}
+				span {
+					color: $secondary-l1;
+					font-size: 0.75rem;
+					margin-left: 1em;
+				}
+			}
 
-	&__overlay {
-		height: 100vh;
-		left: 0;
-		position: fixed;
-		top: 0;
-		width: 100vw;
-		z-index: $undoHistoryOverlayZIndex;
+			&__overlay {
+				height: 100vh;
+				left: 0;
+				position: fixed;
+				top: 0;
+				width: 100vw;
+				z-index: $undoHistoryOverlayZIndex;
 
-		body.has-control-menu & {
-			height: calc(100vh - #{$controlMenuHeight});
-			top: $controlMenuHeight;
+				body.has-control-menu & {
+					height: calc(100vh - #{$controlMenuHeight});
+					top: $controlMenuHeight;
 
-			@include media-breakpoint-up(xl) {
-				height: calc(100vh - #{$desktopControlMenuHeight});
-				top: $desktopControlMenuHeight;
+					@include media-breakpoint-up(xl) {
+						height: calc(100vh - #{$desktopControlMenuHeight});
+						top: $desktopControlMenuHeight;
+					}
+				}
 			}
 		}
 	}

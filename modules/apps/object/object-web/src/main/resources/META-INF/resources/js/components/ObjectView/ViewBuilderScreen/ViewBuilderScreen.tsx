@@ -15,16 +15,16 @@
 import {useModal} from '@clayui/modal';
 import React, {useContext, useState} from 'react';
 
+import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
 import ModalAddColumnsObjectCustomView from '../ModalAddColumns/ModalAddColumnsObjectCustomView';
 import ViewContext from '../context';
 
-import './ViewBuilderScreen.scss';
-import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
-
 const ViewBuilderScreen: React.FC<{}> = () => {
-	const [{objectView}] = useContext(ViewContext);
-
-	const {objectViewColumns} = objectView;
+	const [
+		{
+			objectView: {objectViewColumns},
+		},
+	] = useContext(ViewContext);
 
 	const [visibleModal, setVisibleModal] = useState(false);
 
@@ -43,7 +43,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 					title: Liferay.Language.get('no-columns-added-yet'),
 				}}
 				objectColumns={objectViewColumns ?? []}
-				setVisibleModal={setVisibleModal}
+				onVisibleModal={setVisibleModal}
 				title={Liferay.Language.get('columns')}
 			/>
 

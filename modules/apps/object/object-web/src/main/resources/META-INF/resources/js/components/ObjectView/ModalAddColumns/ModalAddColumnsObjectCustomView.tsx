@@ -35,9 +35,14 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 	observer,
 	onClose,
 }) => {
-	const [{objectFields, objectView}, dispatch] = useContext(ViewContext);
+	const [
+		{
+			objectFields,
+			objectView: {objectViewColumns},
+		},
+		dispatch,
+	] = useContext(ViewContext);
 
-	const {objectViewColumns} = objectView;
 	const [checkedItems, setCheckedItems] = useState<TObjectViewColumn[]>(
 		objectViewColumns
 	);
@@ -99,31 +104,34 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 
 		setFilteredItems(newFiltredItems);
 
-		checked === true
-			? setCheckedItems(
-					newFiltredItems.map((filteredItem, index) => {
-						return {
-							isDefaultSort: false,
-							label: filteredItem.label[defaultLanguageId],
-							objectFieldName: filteredItem.name,
-							priority: index,
-						};
-					})
-			  )
-			: setCheckedItems([]);
+		if (checked === true) {
+			setCheckedItems(
+				newFiltredItems.map((filteredItem, index) => {
+					return {
+						isDefaultSort: false,
+						label: filteredItem.label[defaultLanguageId],
+						objectFieldName: filteredItem.name,
+						priority: index,
+					};
+				})
+			);
+		}
+		else {
+			setCheckedItems([]);
+		}
 	};
 
-	const toggleFieldCheckbox = (name: String) => {
-		const newfiltredItems: TObjectField[] = [];
+	const toggleFieldCheckbox = (name: string) => {
+		const newfilteredItems: TObjectField[] = [];
 
 		filteredItems.map((field, index) => {
 			if (field.name === name) {
-				newfiltredItems.push({
+				newfilteredItems.push({
 					...field,
 					checked: !field.checked,
 				});
 
-				if (!field.checked === true) {
+				if (!field.checked) {
 					setCheckedItems([
 						...checkedItems,
 						{
@@ -143,11 +151,11 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 				}
 			}
 			else {
-				newfiltredItems.push(field);
+				newfilteredItems.push(field);
 			}
 		});
 
-		setFilteredItems(newfiltredItems);
+		setFilteredItems(newfilteredItems);
 	};
 
 	const onSubmit = (event: FormEvent) => {
@@ -187,13 +195,19 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 									indeterminate={
 										!allFieldsChecked && fieldsChecked
 									}
-									onChange={({target}) =>
-										!allFieldsChecked && fieldsChecked
-											? handleAllFieldsChecked(true)
-											: handleAllFieldsChecked(
-													target.checked
-											  )
-									}
+									onChange={({target}) => {
+										if (
+											!allFieldsChecked &&
+											fieldsChecked
+										) {
+											handleAllFieldsChecked(true);
+										}
+										else {
+											handleAllFieldsChecked(
+												target.checked
+											);
+										}
+									}}
 								/>
 							</ClayManagementToolbar.Item>
 						</ClayManagementToolbar.ItemList>

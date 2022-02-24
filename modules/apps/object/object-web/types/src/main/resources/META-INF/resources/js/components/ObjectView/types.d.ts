@@ -36,7 +36,7 @@ export declare type TObjectViewColumn = {
 	priority?: number;
 };
 export declare type TObjectViewSortColumn = {
-	label?: string;
+	label: string;
 	objectFieldName: string;
 	priority?: number;
 	sortOrder?: string;

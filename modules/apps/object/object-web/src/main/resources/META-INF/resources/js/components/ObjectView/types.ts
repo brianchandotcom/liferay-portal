@@ -40,7 +40,7 @@ export type TObjectViewColumn = {
 };
 
 export type TObjectViewSortColumn = {
-	label?: string;
+	label: string;
 	objectFieldName: string;
 	priority?: number;
 	sortOrder?: string;

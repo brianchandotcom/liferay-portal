@@ -19,9 +19,9 @@ interface Iprops {
 	isDefaultSort?: boolean;
 	label?: string;
 	objectFieldName: string;
-	setEditingObjectFieldName?: (objectFieldName: string) => void;
-	setIsEditingSort?: (boolean: boolean) => void;
-	setVisibleModal?: (boolean: boolean) => void;
+	onEditingObjectFieldName?: (objectFieldName: string) => void;
+	onEditingSort?: (boolean: boolean) => void;
+	onVisibleModal?: (boolean: boolean) => void;
 	sortOrder?: string;
 }
 declare const BuilderListItem: React.FC<Iprops>;

@@ -28,25 +28,35 @@ interface Iprops {
 	isDefaultSort?: boolean;
 	label?: string;
 	objectFieldName: string;
-	setEditingObjectFieldName?: (objectFieldName: string) => void;
-	setIsEditingSort?: (boolean: boolean) => void;
-	setVisibleModal?: (boolean: boolean) => void;
+	onEditingObjectFieldName?: (objectFieldName: string) => void;
+	onEditingSort?: (boolean: boolean) => void;
+	onVisibleModal?: (boolean: boolean) => void;
 	sortOrder?: string;
 }
+
+type TItemHover = {
+	index: number;
+	type: string;
+};
+
+type TDraggedOffset = {
+	x: number;
+	y: number;
+} | null;
 
 const BuilderListItem: React.FC<Iprops> = ({
 	index,
 	isDefaultSort,
 	label,
 	objectFieldName,
-	setEditingObjectFieldName,
-	setIsEditingSort,
-	setVisibleModal,
+	onEditingObjectFieldName,
+	onEditingSort,
+	onVisibleModal,
 	sortOrder,
 }) => {
 	const [, dispatch] = useContext(ViewContext);
 
-	const ref = useRef() as React.MutableRefObject<HTMLLIElement>;
+	const ref = useRef<HTMLLIElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
 		collect: (monitor) => ({
@@ -58,14 +68,15 @@ const BuilderListItem: React.FC<Iprops> = ({
 		},
 	});
 
-	const [{canDrop}, dropRef] = useDrop({
+	const [, dropRef] = useDrop({
 		accept: 'FIELD',
-		collect: (monitor) => ({
-			canDrop: monitor.canDrop() && monitor.isOver(),
-		}),
-		hover(item: any, monitor) {
+		hover(item: TItemHover, monitor) {
+			if (!ref.current) {
+				return;
+			}
+
 			const draggedIndex = item.index;
-			const targetIndex: any = index;
+			const targetIndex = index;
 
 			if (draggedIndex === targetIndex) {
 				return;
@@ -74,122 +85,121 @@ const BuilderListItem: React.FC<Iprops> = ({
 			const targetSize = ref.current.getBoundingClientRect();
 			const targetCenter = (targetSize.bottom - targetSize.top) / 2;
 
-			const draggedOffset: any = monitor.getClientOffset();
-			const draggedTop = draggedOffset?.y - targetSize.top;
+			const draggedOffset: TDraggedOffset = monitor.getClientOffset();
 
-			if (draggedIndex < targetIndex && draggedTop < targetCenter) {
+			if (!draggedOffset) {
 				return;
 			}
 
-			if (draggedIndex > targetIndex && draggedTop > targetCenter) {
+			const draggedTop = draggedOffset.y - targetSize.top;
+
+			if (
+				(draggedIndex < targetIndex && draggedTop < targetCenter) ||
+				(draggedIndex > targetIndex && draggedTop > targetCenter)
+			) {
 				return;
 			}
 
-			isDefaultSort
-				? dispatch({
-						payload: {draggedIndex, targetIndex},
-						type: TYPES.CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER,
-				  })
-				: dispatch({
-						payload: {draggedIndex, targetIndex},
-						type: TYPES.CHANGE_OBJECT_VIEW_COLUMN_ORDER,
-				  });
+			dispatch({
+				payload: {draggedIndex, targetIndex},
+				type: isDefaultSort
+					? TYPES.CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER
+					: TYPES.CHANGE_OBJECT_VIEW_COLUMN_ORDER,
+			});
 
 			item.index = targetIndex;
 		},
 	});
 
 	const handleDeleteColumn = (
-		objectFieldName?: string,
+		objectFieldName: string,
 		isDefaultSort?: boolean
 	) => {
-		isDefaultSort
-			? dispatch({
-					payload: {objectFieldName},
-					type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
-			  })
-			: (dispatch({
-					payload: {objectFieldName},
-					type: TYPES.DELETE_OBJECT_VIEW_COLUMN,
-			  }),
-			  dispatch({
-					payload: {objectFieldName},
-					type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
-			  }));
+		if (isDefaultSort) {
+			dispatch({
+				payload: {objectFieldName},
+				type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
+			});
+		}
+		else {
+			dispatch({
+				payload: {objectFieldName},
+				type: TYPES.DELETE_OBJECT_VIEW_COLUMN,
+			});
+
+			dispatch({
+				payload: {objectFieldName},
+				type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
+			});
+		}
 	};
 
 	dragRef(dropRef(ref));
 
 	const handleEnableEditModal = (objectFieldName: string) => {
-		setEditingObjectFieldName && setEditingObjectFieldName(objectFieldName);
-		setIsEditingSort && setIsEditingSort(true);
-		setVisibleModal && setVisibleModal(true);
+		onEditingObjectFieldName && onEditingObjectFieldName(objectFieldName);
+		onEditingSort && onEditingSort(true);
+		onVisibleModal && onVisibleModal(true);
 	};
 
 	return (
-		<>
-			<ClayList.Item
-				className={classNames(
-					'lfr-object__object-custom-view-builder-item',
-					{
-						'lfr-object__object-custom-view-builder-item-object-custom-view-builder-item--canDrop': canDrop,
-						'lfr-object__object-custom-view-builder-item-object-custom-view-builder-item--dragging': isDragging,
-					}
-				)}
-				flex
-				ref={ref}
-			>
-				<ClayList.ItemField>
-					<ClayButtonWithIcon displayType={null} symbol="drag" />
-				</ClayList.ItemField>
+		<ClayList.Item
+			className={classNames(
+				'lfr-object__object-custom-view-builder-item',
+				{
+					'lfr-object__object-custom-view-builder-item--dragging': isDragging,
+				}
+			)}
+			flex
+			ref={ref}
+		>
+			<ClayList.ItemField>
+				<ClayButtonWithIcon displayType={null} symbol="drag" />
+			</ClayList.ItemField>
 
-				<ClayList.ItemField expand>
-					<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
-				</ClayList.ItemField>
+			<ClayList.ItemField expand>
+				<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
+			</ClayList.ItemField>
 
+			{isDefaultSort && (
+				<ClayList.ItemField
+					className="lfr-object__object-builder-list-item-sort-order"
+					expand
+				>
+					<ClayList.ItemText>
+						{sortOrder === 'asc'
+							? Liferay.Language.get('ascending')
+							: Liferay.Language.get('descending')}
+					</ClayList.ItemText>
+				</ClayList.ItemField>
+			)}
+
+			<ClayList.ItemField className="lfr-object__object-custom-view-builder-item-action-menu">
 				{isDefaultSort && (
-					<ClayList.ItemField
-						className="object-builder-list-item-sort-order"
-						expand
-					>
-						<ClayList.ItemText>
-							{sortOrder === 'asc'
-								? Liferay.Language.get('ascending')
-								: Liferay.Language.get('descending')}
-						</ClayList.ItemText>
-					</ClayList.ItemField>
-				)}
-
-				<ClayList.ItemField className="lfr-object__object-custom-view-builder-item-action-menu">
-					{isDefaultSort && (
-						<ClayTooltipProvider>
-							<ClayList.QuickActionMenu.Item
-								data-tooltip-align="bottom"
-								onClick={() =>
-									handleEnableEditModal(objectFieldName)
-								}
-								symbol="pencil"
-								title="Edit"
-							/>
-						</ClayTooltipProvider>
-					)}
-
 					<ClayTooltipProvider>
 						<ClayList.QuickActionMenu.Item
 							data-tooltip-align="bottom"
 							onClick={() =>
-								handleDeleteColumn(
-									objectFieldName,
-									isDefaultSort
-								)
+								handleEnableEditModal(objectFieldName)
 							}
-							symbol="times"
-							title="Delete"
+							symbol="pencil"
+							title={Liferay.Language.get('Edit')}
 						/>
 					</ClayTooltipProvider>
-				</ClayList.ItemField>
-			</ClayList.Item>
-		</>
+				)}
+
+				<ClayTooltipProvider>
+					<ClayList.QuickActionMenu.Item
+						data-tooltip-align="bottom"
+						onClick={() =>
+							handleDeleteColumn(objectFieldName, isDefaultSort)
+						}
+						symbol="times"
+						title={Liferay.Language.get('Delete')}
+					/>
+				</ClayTooltipProvider>
+			</ClayList.ItemField>
+		</ClayList.Item>
 	);
 };
 

@@ -16,7 +16,7 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {ReactNode, useRef, useState} from 'react';
 
 import './CustomSelect.scss';
 import ErrorFeedback from '../ErrorFeedback';
@@ -95,10 +95,12 @@ export default function CustomSelect<T extends IItem = IItem>({
 }
 
 interface IItem {
-	description: string;
+	description?: string;
 	label: string;
+	value?: string;
 }
 interface IProps<T extends IItem = IItem> {
+	children?: ReactNode;
 	className?: string;
 	disabled?: boolean;
 	error?: string;

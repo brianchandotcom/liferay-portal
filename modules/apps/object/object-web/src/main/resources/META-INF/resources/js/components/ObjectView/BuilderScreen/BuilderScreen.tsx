@@ -35,9 +35,9 @@ interface IProps {
 	};
 	isDefaultSort?: boolean;
 	objectColumns: TObjectViewSortColumn[];
-	setEditingObjectFieldName?: (objectFieldName: string) => void;
-	setIsEditingSort?: (boolean: boolean) => void;
-	setVisibleModal: (boolean: boolean) => void;
+	onEditingObjectFieldName?: (objectFieldName: string) => void;
+	onEditingSort?: (boolean: boolean) => void;
+	onVisibleModal: (boolean: boolean) => void;
 	title: string;
 }
 
@@ -45,9 +45,9 @@ export function BuilderScreen({
 	emptyState,
 	isDefaultSort,
 	objectColumns,
-	setEditingObjectFieldName,
-	setIsEditingSort,
-	setVisibleModal,
+	onEditingObjectFieldName,
+	onEditingSort,
+	onVisibleModal,
 	title,
 }: IProps) {
 	const [query, setQuery] = useState('');
@@ -57,8 +57,9 @@ export function BuilderScreen({
 		setFilteredItems(objectColumns);
 	}, [objectColumns]);
 
-	const newFiltredItems = filteredItems.filter((objectColumns: any) =>
-		objectColumns.label.toLowerCase().includes(query.toLowerCase())
+	const newFilteredItems = filteredItems.filter(
+		(objectColumns: TObjectViewSortColumn) =>
+			objectColumns.label.toLowerCase().includes(query.toLowerCase())
 	);
 
 	return (
@@ -76,7 +77,7 @@ export function BuilderScreen({
 						<ClayManagementToolbar.Item>
 							<ClayButtonWithIcon
 								className="nav-btn nav-btn-monospaced"
-								onClick={() => setVisibleModal(true)}
+								onClick={() => onVisibleModal(true)}
 								symbol="plus"
 							/>
 						</ClayManagementToolbar.Item>
@@ -86,8 +87,8 @@ export function BuilderScreen({
 				{objectColumns?.length > 0 ? (
 					<ClayList>
 						{query ? (
-							newFiltredItems.length > 0 ? (
-								newFiltredItems.map((viewColumn, index) => (
+							newFilteredItems.length > 0 ? (
+								newFilteredItems.map((viewColumn, index) => (
 									<React.Fragment
 										key={viewColumn.objectFieldName}
 									>
@@ -151,7 +152,7 @@ export function BuilderScreen({
 									</React.Fragment>
 								))
 							) : (
-								<div className="lfr-object__object-custom-view-builder-empty-space">
+								<div className="object-builder-screen-empty-state">
 									<ClayEmptyState
 										description={Liferay.Language.get(
 											'sorry,-no-results-were-found'
@@ -201,15 +202,11 @@ export function BuilderScreen({
 												objectFieldName={
 													viewColumn.objectFieldName
 												}
-												setEditingObjectFieldName={
-													setEditingObjectFieldName
+												onEditingObjectFieldName={
+													onEditingObjectFieldName
 												}
-												setIsEditingSort={
-													setIsEditingSort
-												}
-												setVisibleModal={
-													setVisibleModal
-												}
+												onEditingSort={onEditingSort}
+												onVisibleModal={onVisibleModal}
 												sortOrder={viewColumn.sortOrder}
 											/>
 										</DndProvider>
@@ -219,14 +216,14 @@ export function BuilderScreen({
 						)}
 					</ClayList>
 				) : (
-					<div className="lfr-object__object-custom-view-builder-empty-space">
+					<div className="object-builder-screen-empty-state">
 						<ClayEmptyState
 							description={emptyState.description}
 							title={emptyState.title}
 						>
 							<ClayButton
 								displayType="secondary"
-								onClick={() => setVisibleModal(true)}
+								onClick={() => onVisibleModal(true)}
 							>
 								{emptyState.buttonText}
 							</ClayButton>

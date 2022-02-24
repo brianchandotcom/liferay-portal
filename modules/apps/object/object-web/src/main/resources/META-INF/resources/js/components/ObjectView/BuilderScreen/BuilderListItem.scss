@@ -1,28 +1,25 @@
-.lfr-object__object-custom-view-builder-item {
-	&-object-custom-view-builder-item--dragging {
-		background: transparent;
-		background-color: #f7f8f9;
-		border-radius: 0;
-		box-shadow: none;
-		cursor: grabbing;
-		opacity: 0.5;
-		padding-top: 20px;
+.lfr-object {
+	&__object-custom-view-builder-item {
+		&--dragging {
+			background: transparent;
+			background-color: #f7f8f9;
+			border-radius: 0;
+			box-shadow: 0 0 0 0.125rem #80acff;
+			cursor: grabbing;
+			margin-bottom: 5px;
+			margin-top: 5px;
+			opacity: 0.5;
+			padding-top: 20px;
+		}
 	}
 
-	&-object-custom-view-builder-item--canDrop {
-		box-shadow: 0 0 0 0.125rem #80acff;
-		margin-bottom: 5px;
-		margin-top: 5px;
-		transition: box-shadow 0.2s ease-in-out;
+	&__object-custom-view-builder-item-action-menu {
+		display: contents;
 	}
 
-	.object-builder-list-item-sort-order {
+	&__object-builder-list-item-sort-order {
 		left: 336px;
 		position: absolute;
 		top: 23px;
-	}
-
-	.lfr-object__object-custom-view-builder-item-action-menu {
-		display: contents;
 	}
 }

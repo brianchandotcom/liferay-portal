@@ -21,9 +21,11 @@ import {ModalAddDefaultSortColumn} from '../ModalAddDefaultSortColumn/ModalAddDe
 import ViewContext from '../context';
 
 export function DefaultSortScreen() {
-	const [{objectView}] = useContext(ViewContext);
-
-	const {objectViewSortColumns} = objectView;
+	const [
+		{
+			objectView: {objectViewSortColumns},
+		},
+	] = useContext(ViewContext);
 
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [isEditingSort, setIsEditingSort] = useState(false);
@@ -58,9 +60,9 @@ export function DefaultSortScreen() {
 				}}
 				isDefaultSort
 				objectColumns={objectViewSortColumns ?? []}
-				setEditingObjectFieldName={setEditingObjectFieldName}
-				setIsEditingSort={setIsEditingSort}
-				setVisibleModal={setVisibleModal}
+				onEditingObjectFieldName={setEditingObjectFieldName}
+				onEditingSort={setIsEditingSort}
+				onVisibleModal={setVisibleModal}
 				title={Liferay.Language.get('default-sort')}
 			/>
 

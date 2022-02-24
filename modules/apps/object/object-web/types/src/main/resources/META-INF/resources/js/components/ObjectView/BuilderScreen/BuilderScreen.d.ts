@@ -24,18 +24,18 @@ interface IProps {
 	};
 	isDefaultSort?: boolean;
 	objectColumns: TObjectViewSortColumn[];
-	setEditingObjectFieldName?: (objectFieldName: string) => void;
-	setIsEditingSort?: (boolean: boolean) => void;
-	setVisibleModal: (boolean: boolean) => void;
+	onEditingObjectFieldName?: (objectFieldName: string) => void;
+	onEditingSort?: (boolean: boolean) => void;
+	onVisibleModal: (boolean: boolean) => void;
 	title: string;
 }
 export declare function BuilderScreen({
 	emptyState,
 	isDefaultSort,
 	objectColumns,
-	setEditingObjectFieldName,
-	setIsEditingSort,
-	setVisibleModal,
+	onEditingObjectFieldName,
+	onEditingSort,
+	onVisibleModal,
 	title,
 }: IProps): JSX.Element;
 export {};

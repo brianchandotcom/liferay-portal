@@ -13,6 +13,5 @@
  */
 
 import React from 'react';
-import './ViewBuilderScreen.scss';
 declare const ViewBuilderScreen: React.FC<{}>;
 export default ViewBuilderScreen;

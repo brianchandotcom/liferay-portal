@@ -1,14 +1,23 @@
-.object-builder-screen-name {
-	padding-left: 50px !important;
-}
+.object-builder-screen {
+	&-name {
+		padding-left: 50px !important;
+	}
 
-.object-builder-screen-sorting {
-	left: 330px;
-	position: absolute;
-}
+	&-sorting {
+		left: 330px;
+		position: absolute;
+	}
 
-.object-builder-screen-sort-order {
-	left: 336px;
-	position: absolute;
-	top: 23px;
+	&-sort-order {
+		left: 336px;
+		position: absolute;
+		top: 23px;
+	}
+
+	&-empty-state {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		text-align: center;
+	}
 }

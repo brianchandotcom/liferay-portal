@@ -440,4 +440,27 @@ definition {
 		AssertAccessible();
 	}
 
+	@description = "This test covers LPS-147716. It checks that the javascript in the user name will not be executed when viewing an announcement on page."
+	@priority = "3"
+	test XSSIsNotExecutedWhenViewingAnnouncementUser {
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
+
+		AnnouncementsEntry.addPG(
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = '''<script>alert('hello!')</script>''',
+			entryURL = "http://www.liferay.com");
+
+		AssertAlertNotPresent();
+	}
+
 }

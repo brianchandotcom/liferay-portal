@@ -950,4 +950,23 @@ definition {
 		AssertAccessible();
 	}
 
+	@description = "This test checks that the javascript in the user name will not be executed when viewing a thread on page."
+	@priority = "3"
+	test XSSIsNotExecutedWhenViewingThreadUser {
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		AssertAlertNotPresent();
+	}
+
 }

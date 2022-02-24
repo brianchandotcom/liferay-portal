@@ -238,4 +238,23 @@ definition {
 		AssertAccessible();
 	}
 
+	@description = "This test checks that the javascript in the user name will not be executed when viewing a document on page."
+	@priority = "3"
+	test XSSIsNotExecutedWhenViewingDMUser {
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt");
+
+		AssertAlertNotPresent();
+	}
+
 }

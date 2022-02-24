@@ -73,6 +73,7 @@ const InviteTeamMembersPage = ({
 	const [isLoadingUserInvitation, setIsLoadingUserInvitation] = useState(
 		false
 	);
+	const [showEmptyEmailError, setshowEmptyEmailError] = useState(false);
 
 	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 	const projectHasSLAGoldPlatinum =
@@ -201,8 +202,8 @@ const InviteTeamMembersPage = ({
 
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+			setshowEmptyEmailError(false);
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -257,14 +258,26 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
 				invites: [{email: true}],
 			});
 		}
+	};
+
+	const handleAddTeamMember = () => {
+		const emptyEmailAddress = values?.invites?.some(({email}) => !email);
+
+		if (emptyEmailAddress) {
+			setshowEmptyEmailError(true);
+
+			return false;
+		}
+		setshowEmptyEmailError(false);
+
+		return true;
 	};
 
 	useEffect(() => {
@@ -349,6 +362,14 @@ const InviteTeamMembersPage = ({
 								))}
 							</ClayForm.Group>
 
+							{showEmptyEmailError && (
+								<Badge>
+									<span className="pl-1">
+										Please enter your email address.
+									</span>
+								</Badge>
+							)}
+
 							<div className="ml-3 my-4">
 								{values?.invites?.length > 1 && (
 									<Button
@@ -382,11 +403,14 @@ const InviteTeamMembersPage = ({
 										className="btn-outline-primary cp-btn-add-members py-2 rounded-xs"
 										onClick={() => {
 											setBaseButtonDisabled(false);
-											push(
-												getInitialInvite(
-													accountMemberRole
-												)
-											);
+
+											if (handleAddTeamMember()) {
+												push(
+													getInitialInvite(
+														accountMemberRole
+													)
+												);
+											}
 										}}
 										prependIcon="plus"
 										small

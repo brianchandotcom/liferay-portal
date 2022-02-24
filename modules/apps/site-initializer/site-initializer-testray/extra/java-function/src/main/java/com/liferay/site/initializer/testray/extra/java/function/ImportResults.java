@@ -164,13 +164,13 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
-						if (name.equals("testray.testcase.priority")) {
-							String value = node.getAttributes(
-							).getNamedItem(
-								"value"
-							).getTextContent();
-
-							map.put("priority", value);
+						if (name.equals("testray.main.component.name")) {
+							nodeComponent = propertyNodeList.item(j);
+						}
+						else if (name.equals("testray.team.name")) {
+							teamId = getTestrayTeam(projectId, node);
+							addTestrayComponent(
+								projectId, teamId, nodeComponent);
 						}
 						else if (name.equals("testray.testcase.name")) {
 							String value = node.getAttributes(
@@ -181,13 +181,13 @@ public class ImportResults {
 							map.put("name", value);
 							map.put("stepsType", name);
 						}
-						else if (name.equals("testray.team.name")) {
-							teamId = getTestrayTeam(projectId, node);
-							addTestrayComponent(
-								projectId, teamId, nodeComponent);
-						}
-						else if (name.equals("testray.main.component.name")) {
-							nodeComponent = propertyNodeList.item(j);
+						else if (name.equals("testray.testcase.priority")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
+							map.put("priority", value);
 						}
 					}
 				}

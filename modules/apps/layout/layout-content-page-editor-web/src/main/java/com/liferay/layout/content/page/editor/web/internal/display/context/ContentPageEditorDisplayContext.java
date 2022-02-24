@@ -683,6 +683,14 @@ public class ContentPageEditorDisplayContext {
 		return getSidebarPanels(_getLayoutType());
 	}
 
+	public boolean isContentLayout() {
+		if (_getLayoutType() == -1) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isConversionDraft() {
 		if (_getLayoutType() == LayoutConverterTypeConstants.TYPE_CONVERSION) {
 			return true;

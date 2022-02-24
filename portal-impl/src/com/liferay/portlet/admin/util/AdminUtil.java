@@ -58,26 +58,6 @@ public class AdminUtil {
 		return password;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateUser(
-	 *             ActionRequest, long, String, String, String, String, String,
-	 *             String, String, String, String, String, String)}
-	 */
-	@Deprecated
-	public static User updateUser(
-			ActionRequest actionRequest, long userId, String screenName,
-			String emailAddress, long facebookId, String openId,
-			String languageId, String timeZoneId, String greeting,
-			String comments, String smsSn, String facebookSn, String jabberSn,
-			String skypeSn, String twitterSn)
-		throws PortalException {
-
-		return updateUser(
-			PortalUtil.getHttpServletRequest(actionRequest), userId, screenName,
-			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
-			comments, smsSn, facebookSn, jabberSn, skypeSn, twitterSn);
-	}
-
 	public static User updateUser(
 			ActionRequest actionRequest, long userId, String screenName,
 			String emailAddress, String languageId, String timeZoneId,

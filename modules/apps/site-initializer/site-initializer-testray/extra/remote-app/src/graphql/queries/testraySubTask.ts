@@ -14,56 +14,35 @@
 
 import {gql} from '@apollo/client';
 
-import {TestrayProject} from './testrayProject';
-import {TestrayRoutine} from './testrayRoutine';
-
-export type TestrayBuild = {
-	dateCreated: string;
-	description: string;
+export type TestraySubTask = {
 	dueStatus: number;
-	gitHash: string;
 	name: string;
-	promoted: boolean;
-	testrayProject?: TestrayProject;
-	testrayRoutine?: TestrayRoutine;
+	score: number;
 };
 
-export const getTestrayBuilds = gql`
-	query getTestrayBuilds(
+export const getTestraySubTasks = gql`
+	query getTestraySubTasks(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
+		$scopeKey: String
 	) {
 		c {
-			testrayBuilds(filter: $filter, page: $page, pageSize: $pageSize) {
+			testraySubTasks(
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				scopeKey: $scopeKey
+			) {
 				items {
-					dateCreated
-					description
 					dueStatus
-					gitHash
 					name
-					promoted
-					testrayBuildId
+					score
 				}
 				lastPage
 				page
 				pageSize
 				totalCount
-			}
-		}
-	}
-`;
-
-export const getTestrayBuild = gql`
-	query getTestrayBuild($testrayBuildId: Long!) {
-		c {
-			testrayBuild(testrayBuildId: $testrayBuildId) {
-				dateCreated
-				description
-				dueStatus
-				gitHash
-				name
-				promoted
 			}
 		}
 	}

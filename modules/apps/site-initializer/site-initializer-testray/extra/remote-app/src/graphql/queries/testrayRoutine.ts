@@ -14,6 +14,11 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayRoutine = {
+	name: String;
+	testrayRoutineId: String;
+};
+
 export const getTestrayRoutines = gql`
 	query getTestrayRoutines(
 		$filter: String

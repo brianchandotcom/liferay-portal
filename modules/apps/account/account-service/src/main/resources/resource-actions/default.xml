@@ -49,6 +49,7 @@
 		<permissions>
 			<supports>
 				<action-key>ASSIGN_USERS</action-key>
+				<action-key>DEFINE_PERMISSIONS</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 			</supports>

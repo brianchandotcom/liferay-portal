@@ -59,7 +59,7 @@ public class AccountForecastSerDes {
 		sb.append("{");
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (accountForecast.getAccount() != null) {
 			if (sb.length() > 1) {
@@ -160,7 +160,7 @@ public class AccountForecastSerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (accountForecast.getAccount() == null) {
 			map.put("account", null);

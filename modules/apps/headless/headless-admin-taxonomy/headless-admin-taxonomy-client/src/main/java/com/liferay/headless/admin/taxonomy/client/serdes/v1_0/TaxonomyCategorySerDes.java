@@ -61,7 +61,7 @@ public class TaxonomyCategorySerDes {
 		sb.append("{");
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (taxonomyCategory.getActions() != null) {
 			if (sb.length() > 1) {
@@ -341,7 +341,7 @@ public class TaxonomyCategorySerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (taxonomyCategory.getActions() == null) {
 			map.put("actions", null);

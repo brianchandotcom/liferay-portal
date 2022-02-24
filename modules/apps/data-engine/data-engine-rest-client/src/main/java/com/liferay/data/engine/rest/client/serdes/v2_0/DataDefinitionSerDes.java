@@ -62,7 +62,7 @@ public class DataDefinitionSerDes {
 		sb.append("{");
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (dataDefinition.getAvailableLanguageIds() != null) {
 			if (sb.length() > 1) {
@@ -302,7 +302,7 @@ public class DataDefinitionSerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (dataDefinition.getAvailableLanguageIds() == null) {
 			map.put("availableLanguageIds", null);

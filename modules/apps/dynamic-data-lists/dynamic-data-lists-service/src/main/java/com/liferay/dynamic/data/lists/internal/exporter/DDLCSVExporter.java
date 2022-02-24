@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.time.format.DateTimeFormatter;
@@ -102,7 +103,8 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				recordVersion.getDDMStorageId());
 
 			Map<String, DDMFormFieldRenderedValue> values = getRenderedValues(
-				recordSet.getScope(), ddmFormFields.values(), ddmFormValues);
+				recordSet.getScope(), ddmFormFields.values(), ddmFormValues,
+				_htmlParser);
 
 			for (Map.Entry<String, DDMFormField> entry :
 					ddmFormFields.entrySet()) {
@@ -207,6 +209,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldValueRendererRegistry
 		_ddmFormFieldValueRendererRegistry;
+
+	@Reference
+	private HtmlParser _htmlParser;
+
 	private StorageEngine _storageEngine;
 
 }

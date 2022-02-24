@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -97,8 +98,11 @@ public class JournalArticleAssetRenderer
 		return article.getResourcePrimKey();
 	}
 
-	public JournalArticleAssetRenderer(JournalArticle article) {
+	public JournalArticleAssetRenderer(
+		JournalArticle article, HtmlParser htmlParser) {
+
 		_article = article;
+		_htmlParser = htmlParser;
 	}
 
 	public JournalArticle getArticle() {
@@ -210,7 +214,7 @@ public class JournalArticleAssetRenderer
 		String summary = _article.getDescription(getLocale(portletRequest));
 
 		if (Validator.isNotNull(summary)) {
-			return HtmlUtil.render(HtmlUtil.stripHtml(summary));
+			return _htmlParser.render(HtmlUtil.stripHtml(summary));
 		}
 
 		return summary;
@@ -635,6 +639,7 @@ public class JournalArticleAssetRenderer
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+	private final HtmlParser _htmlParser;
 	private JournalContent _journalContent;
 	private JournalConverter _journalConverter;
 	private JournalServiceConfiguration _journalServiceConfiguration;

@@ -40,10 +40,15 @@ const TreeFilter = ({
 	nodes,
 	portletNamespace,
 }) => {
+	const [treeItems, setTreeItems] = useState(nodes);
+	const initialItemsRef = useRef(treeItems);
+
 	const [filterQuery, setFilterQuery] = useState('');
 	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
-	const [expandedKeys, setExpandedKeys] = useState([]);
+	const [expandedKeys, setExpandedKeys] = useState(
+		new Set([treeItems[0].id])
+	);
 
 	const selectedNodesRef = useRef(null);
 	const refItemsCount = selectedNodesRef.current?.length || 0;
@@ -68,21 +73,6 @@ const TreeFilter = ({
 	const [selectedKeys, setSelectedKeys] = useState(
 		new Set(initialSelectedNodeIds)
 	);
-
-	const getComputedNodes = () => {
-		if (!filterQuery || filterQuery.length < SEARCH_QUERY_MIN_LENGHT) {
-			return nodes;
-		}
-
-		return filterNodes({
-			childrenPropertyKey,
-			namePropertyKey,
-			nodes: JSON.parse(JSON.stringify(nodes)),
-			query: filterQuery.toLowerCase(),
-		});
-	};
-
-	const [treeItems, setTreeItems] = useState(getComputedNodes());
 
 	const handleSelectionChange = useCallback(
 		(selectedNodes) => {
@@ -155,12 +145,26 @@ const TreeFilter = ({
 		searchInputElementRef.current.value = '';
 	};
 
-	const handleTreeItemsChange = () => {
-		setTreeItems(getComputedNodes());
-	};
+	const handleTreeItemsChange = useCallback(() => {
+		if (!filterQuery || filterQuery.length < SEARCH_QUERY_MIN_LENGHT) {
+			setTreeItems(initialItemsRef.current);
+
+			return;
+		}
+
+		setTreeItems(
+			filterNodes({
+				childrenPropertyKey,
+				namePropertyKey,
+				nodes: JSON.parse(JSON.stringify(nodes)),
+				query: filterQuery.toLowerCase(),
+			})
+		);
+	}, [childrenPropertyKey, filterQuery, namePropertyKey, nodes]);
 
 	useEffect(() => {
 		handleSelectionChange(selectedKeys);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -171,11 +175,11 @@ const TreeFilter = ({
 
 	useEffect(() => {
 		handleTreeItemsChange();
-	}, [filterQuery]);
+	}, [filterQuery, handleTreeItemsChange]);
 
 	useEffect(() => {
-		setExpandedKeys(treeItems[0].id);
-	}, [treeItems.length]);
+		setExpandedKeys(new Set([treeItems[0].id]));
+	}, [treeItems]);
 
 	return (
 		<div className="tree-filter">
@@ -237,7 +241,7 @@ const TreeFilter = ({
 					>
 						{treeItems.length ? (
 							<ClayTreeView
-								expandedKeys={new Set(expandedKeys)}
+								expandedKeys={expandedKeys}
 								items={treeItems}
 								onItemsChange={handleTreeItemsChange}
 								onSelectionChange={handleSelectionChange}

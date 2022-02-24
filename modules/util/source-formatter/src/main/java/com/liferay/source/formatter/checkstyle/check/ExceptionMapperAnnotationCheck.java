@@ -55,7 +55,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		if (Objects.isNull(fullyQualifiedExceptionMapperName) ||
 			!StringUtil.equals(
 				fullyQualifiedExceptionMapperName,
-				_OSGI_EXCEPTION_MAPPER_QUALIFIED_PACKAGE_NAME)) {
+				"javax.ws.rs.ext.ExceptionMapper")) {
 
 			return;
 		}
@@ -68,15 +68,13 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			TokenTypes.IDENT);
 
 		if ((annotationDetailAST == null) ||
-			!StringUtil.equals(
-				annotationDetailAST.getText(), _COMPONENT_ANNOTATION_NAME)) {
+			!StringUtil.equals(annotationDetailAST.getText(), "Component")) {
 
 			return;
 		}
 
 		DetailAST annotationMemberValuePairPropertyDetailAST =
-			getAnnotationMemberValuePairDetailAST(
-				detailAST, _COMPONENT_ANNOTATION_PROPERTY_KEY_NAME);
+			getAnnotationMemberValuePairDetailAST(detailAST, "property");
 
 		if (annotationMemberValuePairPropertyDetailAST == null) {
 			return;
@@ -96,11 +94,10 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			String expressionKeyValue = expressionDetailAST.getText();
 
 			if (StringUtil.startsWith(
-					expressionKeyValue, _OSGI_JAXRS_NAME_VALUE)) {
+					expressionKeyValue, "\"osgi.jaxrs.name")) {
 
 				DetailAST annotationMemberValuePairServiceDetailAST =
-					getAnnotationMemberValuePairDetailAST(
-						detailAST, _COMPONENT_ANNOTATION_SERVICE_KEY_NAME);
+					getAnnotationMemberValuePairDetailAST(detailAST, "service");
 
 				List<DetailAST> serviceAnnotationMemberExprList =
 					getAllChildTokens(
@@ -129,7 +126,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 
 						log(
 							expressPropertyDetailAST,
-							_MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER,
+							"osgi.jaxrs.name.missed.excepionmaaper",
 							serviceIdentName);
 
 						return;
@@ -138,22 +135,6 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			}
 		}
 	}
-
-	private static final String _COMPONENT_ANNOTATION_NAME = "Component";
-
-	private static final String _COMPONENT_ANNOTATION_PROPERTY_KEY_NAME =
-		"property";
-
-	private static final String _COMPONENT_ANNOTATION_SERVICE_KEY_NAME =
-		"service";
-
-	private static final String _MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER =
-		"osgi.jaxrs.name.missed.excepionmaaper";
-
-	private static final String _OSGI_EXCEPTION_MAPPER_QUALIFIED_PACKAGE_NAME =
-		"javax.ws.rs.ext.ExceptionMapper";
-
-	private static final String _OSGI_JAXRS_NAME_VALUE = "\"osgi.jaxrs.name";
 
 	private static final String _OSGI_SERVICE_NAME = "ExceptionMapper";
 

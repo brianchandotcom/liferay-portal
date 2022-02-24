@@ -1,0 +1,46 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfiguration.config:com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration.config";
+	property osgi.module.configurations = "enableDesignImprovements=&quot;true&quot;:showDesignImprovements=&quot;true&quot;";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Management Toolbar";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-147839. Assert the view button displays a double caret icon"
+	@priority = "5"
+	test ViewButtonCanRenderDoubleCaret {
+		task ("Open a section with the management toolbar") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+		}
+
+		task ("Assert the view button also has a double caret icon") {
+			AssertElementPresent(
+				key_text = "list",
+				locator1 = "ManagementBar#VIEW_BUTTON");
+
+			AssertElementPresent(
+				key_text = "caret-double",
+				locator1 = "ManagementBar#VIEW_BUTTON");
+		}
+	}
+
+}

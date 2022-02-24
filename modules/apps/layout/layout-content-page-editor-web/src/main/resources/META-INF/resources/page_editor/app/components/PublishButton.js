@@ -43,29 +43,23 @@ export default function PublishButton({
 					disabled={config.pending || !canPublish}
 					displayType="primary"
 					onClick={
-						config.tokenReuseEnabled && hasStyleErrors
+						hasStyleErrors
 							? () => setOpenStyleErrorsModal(true)
 							: handleSubmit
 					}
 					small
-					type={
-						config.tokenReuseEnabled && hasStyleErrors
-							? 'button'
-							: 'submit'
-					}
+					type={hasStyleErrors ? 'button' : 'submit'}
 				>
 					{label}
 				</ClayButton>
 			</form>
 
-			{config.tokenReuseEnabled &&
-				openStyleErrorsModal &&
-				hasStyleErrors && (
-					<StyleErrorsModal
-						onCloseModal={() => setOpenStyleErrorsModal(false)}
-						onSubmit={handleSubmit}
-					/>
-				)}
+			{openStyleErrorsModal && hasStyleErrors && (
+				<StyleErrorsModal
+					onCloseModal={() => setOpenStyleErrorsModal(false)}
+					onSubmit={handleSubmit}
+				/>
+			)}
 		</>
 	);
 }

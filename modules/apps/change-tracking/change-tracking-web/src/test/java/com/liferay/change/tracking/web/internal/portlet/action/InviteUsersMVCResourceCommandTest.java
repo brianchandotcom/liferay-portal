@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.constants;
+package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -27,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Samuel Trong Tran
  */
-public class PublicationRoleConstantsTest {
+public class InviteUsersMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
@@ -36,9 +38,8 @@ public class PublicationRoleConstantsTest {
 
 	@Test
 	public void testEditorRoleModelResourceActions() {
-		String[] modelResourceActions =
-			PublicationRoleConstants.getModelResourceActions(
-				PublicationRoleConstants.ROLE_EDITOR);
+		String[] modelResourceActions = _getModelResourceActions(
+			PublicationRoleConstants.ROLE_EDITOR);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
@@ -52,9 +53,8 @@ public class PublicationRoleConstantsTest {
 
 	@Test
 	public void testInviterRoleModelResourceActions() {
-		String[] modelResourceActions =
-			PublicationRoleConstants.getModelResourceActions(
-				PublicationRoleConstants.ROLE_INVITER);
+		String[] modelResourceActions = _getModelResourceActions(
+			PublicationRoleConstants.ROLE_INVITER);
 
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
@@ -68,9 +68,8 @@ public class PublicationRoleConstantsTest {
 
 	@Test
 	public void testPublisherRoleModelResourceActions() {
-		String[] modelResourceActions =
-			PublicationRoleConstants.getModelResourceActions(
-				PublicationRoleConstants.ROLE_PUBLISHER);
+		String[] modelResourceActions = _getModelResourceActions(
+			PublicationRoleConstants.ROLE_PUBLISHER);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
@@ -84,9 +83,8 @@ public class PublicationRoleConstantsTest {
 
 	@Test
 	public void testViewerRoleModelResourceActions() {
-		String[] modelResourceActions =
-			PublicationRoleConstants.getModelResourceActions(
-				PublicationRoleConstants.ROLE_VIEWER);
+		String[] modelResourceActions = _getModelResourceActions(
+			PublicationRoleConstants.ROLE_VIEWER);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
@@ -96,6 +94,12 @@ public class PublicationRoleConstantsTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
+	}
+
+	private String[] _getModelResourceActions(int role) {
+		return ReflectionTestUtil.invoke(
+			new InviteUsersMVCResourceCommand(), "_getModelResourceActions",
+			new Class<?>[] {int.class}, role);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -217,6 +218,25 @@ public class InviteUsersMVCResourceCommand
 					httpServletRequest, "users-were-invited-successfully")));
 	}
 
+	private String[] _getModelResourceActions(int role) {
+		if (role == PublicationRoleConstants.ROLE_EDITOR) {
+			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
+		}
+		else if (role == PublicationRoleConstants.ROLE_INVITER) {
+			return new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
+				CTActionKeys.PUBLISH
+			};
+		}
+		else if (role == PublicationRoleConstants.ROLE_PUBLISHER) {
+			return new String[] {
+				ActionKeys.UPDATE, ActionKeys.VIEW, CTActionKeys.PUBLISH
+			};
+		}
+
+		return new String[] {ActionKeys.VIEW};
+	}
+
 	private Role _getRole(int roleValue, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -230,10 +250,7 @@ public class InviteUsersMVCResourceCommand
 				themeDisplay.getDefaultUserId(), null, 0, name, null, null,
 				RoleConstants.TYPE_PUBLICATIONS, null, null);
 
-			for (String actionId :
-					PublicationRoleConstants.getModelResourceActions(
-						roleValue)) {
-
+			for (String actionId : _getModelResourceActions(roleValue)) {
 				_resourcePermissionLocalService.addResourcePermission(
 					themeDisplay.getCompanyId(), CTCollection.class.getName(),
 					ResourceConstants.SCOPE_GROUP_TEMPLATE,

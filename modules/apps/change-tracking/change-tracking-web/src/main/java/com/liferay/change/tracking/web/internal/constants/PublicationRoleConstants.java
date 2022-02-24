@@ -14,9 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.constants;
 
-import com.liferay.change.tracking.constants.CTActionKeys;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-
 /**
  * @author Samuel Trong Tran
  */
@@ -49,25 +46,6 @@ public class PublicationRoleConstants {
 	public static final int ROLE_PUBLISHER = 3;
 
 	public static final int ROLE_VIEWER = 0;
-
-	public static String[] getModelResourceActions(int role) {
-		if (role == ROLE_EDITOR) {
-			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
-		}
-		else if (role == ROLE_INVITER) {
-			return new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
-				CTActionKeys.PUBLISH
-			};
-		}
-		else if (role == ROLE_PUBLISHER) {
-			return new String[] {
-				ActionKeys.UPDATE, ActionKeys.VIEW, CTActionKeys.PUBLISH
-			};
-		}
-
-		return new String[] {ActionKeys.VIEW};
-	}
 
 	public static String getRoleName(int role) {
 		if (role == ROLE_EDITOR) {

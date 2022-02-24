@@ -95,7 +95,7 @@ const PreviewModal = ({observer}) => {
 		>
 			<ClayModal.Header>
 				<div className="d-flex flex-grow-1 justify-content-between page-editor__theme-adapter-buttons responsive-mode">
-					<ul className="navbar-nav page-editor__preview-modal__part">
+					<ul className="justify-content-start navbar-nav page-editor__preview-modal__part">
 						{availableSegmentsExperiences && (
 							<li className="mr-2 nav-item">
 								<div className="align-middle d-inline-flex">
@@ -159,7 +159,7 @@ const PreviewModal = ({observer}) => {
 						/>
 					</div>
 
-					<div className="page-editor__preview-modal__part">
+					<div className="justify-content-end page-editor__preview-modal__part pr-3">
 						{config.layoutType === LAYOUT_TYPES.display ? (
 							<DisplayPagePreviewItemSelector />
 						) : null}

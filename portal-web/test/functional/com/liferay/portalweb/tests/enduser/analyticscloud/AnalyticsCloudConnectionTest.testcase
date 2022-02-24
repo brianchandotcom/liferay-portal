@@ -705,8 +705,6 @@ definition {
 	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
 	@priority = "5"
 	test ViewPageAddedByDXPDataSource {
-		property portal.upstream = "quarantine";
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",

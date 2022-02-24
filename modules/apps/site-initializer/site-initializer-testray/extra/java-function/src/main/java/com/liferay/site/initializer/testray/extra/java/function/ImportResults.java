@@ -138,8 +138,7 @@ public class ImportResults {
 			map.put("testrayProjectId", String.valueOf(projectId));
 			
 			String componentName = null;
-			long componentId = -1;
-			long teamId = -1;
+			
 			NodeList testCasesNodeList = document.getElementsByTagName(
 				"testcase");
 
@@ -167,6 +166,8 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
+						String value = null;
+
 						if (name.equals("testray.main.component.name")) {
 							componentName = node.getAttributes(
 							).getNamedItem(
@@ -174,19 +175,19 @@ public class ImportResults {
 							).getTextContent();
 						}
 						else if (name.equals("testray.team.name")) {
-							String value = node.getAttributes(
+							value = node.getAttributes(
 							).getNamedItem(
 								"value"
 							).getTextContent();
-							teamId = fetchOrAddTestrayTeam(projectId, value);
 							
-							componentId = fetchOrAddTestrayComponent(
+							long teamId = fetchOrAddTestrayTeam(projectId, value);
+							long componentId = fetchOrAddTestrayComponent(
 								projectId, teamId, componentName);
 
 							map.put("testrayComponentId", String.valueOf(componentId));
 						}
 						else if (name.equals("testray.testcase.name")) {
-							String value = node.getAttributes(
+							value = node.getAttributes(
 							).getNamedItem(
 								"value"
 							).getTextContent();
@@ -196,7 +197,7 @@ public class ImportResults {
 							map.put("stepsType", name);
 						}
 						else if (name.equals("testray.testcase.priority")) {
-							String value = node.getAttributes(
+							value = node.getAttributes(
 							).getNamedItem(
 								"value"
 							).getTextContent();
@@ -217,34 +218,36 @@ public class ImportResults {
 		}
 	}
 
-	public long fetchOrAddTestrayComponent(long projectId, long teamId, String componentName)
-		throws Exception {
+	public long fetchOrAddTestrayComponent(long projectId, long teamId,
+		String componentName) throws Exception {
 
-       Map<String, String> parameters = new HashMap<>();
- 
-       parameters.put("filter", "name eq '" + componentName + "'");
- 
-       JSONObject responseJSONObject = HttpUtil.invoke(
-           null, "testraycomponents", null, parameters, HttpInvoker.HttpMethod.GET);
- 
-       JSONArray componentsJSONArray = responseJSONObject.getJSONArray("items");
- 
-       if (!componentsJSONArray.isEmpty()) {
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put("filter", "name eq '" + componentName + "'");
+
+		JSONObject responseJSONObject = HttpUtil.invoke(
+			null, "testraycomponents", null, parameters,
+			HttpInvoker.HttpMethod.GET);
+
+		JSONArray componentsJSONArray = responseJSONObject.getJSONArray("items");
+
+		if (!componentsJSONArray.isEmpty()) {
 			JSONObject componentJSONObject = componentsJSONArray.getJSONObject(0);
 
 			return componentJSONObject.getLong("id");
-       }
-	    Map<String, String> body = new HashMap<>();
+		}
 
-        body.put("name", componentName);
+		Map<String, String> body = new HashMap<>();
+
+		body.put("name", componentName);
 		body.put("testrayProjectId", String.valueOf(projectId));
 		body.put("testrayTeamId", String.valueOf(teamId));
 
-       responseJSONObject = HttpUtil.invoke(
-           new JSONObject(
-               body
-           ).toString(),
-           "testraycomponents", null, null, HttpInvoker.HttpMethod.POST);
+		responseJSONObject = HttpUtil.invoke(
+			new JSONObject(
+				body
+			).toString(),
+			"testraycomponents", null, null, HttpInvoker.HttpMethod.POST);
 
 	   	return responseJSONObject.getLong("id");
 	}

@@ -47,7 +47,7 @@ public class FrontendJSReactWebJSImportmapsContributor
 			_importmapsJSONObject.put(
 				moduleName,
 				StringBundler.concat(
-					contextPath, "/__liferay__/amd2esm/", moduleName, ".js"));
+					contextPath, "/__liferay__/exports/", moduleName, ".js"));
 		}
 	}
 

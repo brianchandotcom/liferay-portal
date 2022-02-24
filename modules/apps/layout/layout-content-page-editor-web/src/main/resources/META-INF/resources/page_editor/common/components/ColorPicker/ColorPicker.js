@@ -43,7 +43,6 @@ const debouncedOnValueSelect = debounce(
 );
 
 export function ColorPicker({
-	config,
 	editedTokenValues,
 	field,
 	onValueSelect,
@@ -239,7 +238,6 @@ export function ColorPicker({
 						<DropdownColorPicker
 							active={activeDropdownColorPicker}
 							colors={colors}
-							config={config}
 							label={tokenLabel}
 							onSetActive={setActiveDropdownColorPicker}
 							onValueChange={({label, name, value}) =>
@@ -404,7 +402,6 @@ export function ColorPicker({
 								<DropdownColorPicker
 									active={activeDropdownColorPicker}
 									colors={colors}
-									config={config}
 									onSetActive={setActiveDropdownColorPicker}
 									onValueChange={({label, name, value}) => {
 										onSetValue(value, label, name);

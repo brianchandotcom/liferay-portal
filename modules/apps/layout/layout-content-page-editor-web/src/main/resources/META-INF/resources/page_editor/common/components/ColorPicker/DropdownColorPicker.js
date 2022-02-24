@@ -31,7 +31,6 @@ import SearchForm from '../../../common/components/SearchForm';
 export function DropdownColorPicker({
 	active,
 	colors,
-	config,
 	label = null,
 	onValueChange = () => {},
 	onSetActive,
@@ -158,7 +157,6 @@ export function DropdownColorPicker({
 				{active ? (
 					<Wrapper
 						colors={filteredColors}
-						config={config}
 						dropdownContainerRef={dropdownContainerRef}
 						onKeyDown={handleKeyDownWrapper}
 						onSetActive={onSetActive}
@@ -174,7 +172,6 @@ export function DropdownColorPicker({
 
 const Wrapper = ({
 	colors,
-	config,
 	dropdownContainerRef,
 	onKeyDown,
 	onSetActive,
@@ -222,7 +219,6 @@ const Wrapper = ({
 												key={name}
 											>
 												<Splotch
-													config={config}
 													disabled={disabled}
 													onClick={() => {
 														onValueChange({

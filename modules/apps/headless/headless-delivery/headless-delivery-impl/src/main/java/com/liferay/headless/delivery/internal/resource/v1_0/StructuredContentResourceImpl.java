@@ -118,6 +118,7 @@ import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -458,8 +459,9 @@ public class StructuredContentResourceImpl
 					LocaleUtil.toW3cLanguageId(
 						contextAcceptLanguage.getPreferredLanguageId()),
 					" because it is only available in the following languages ",
-					LocaleUtil.toW3cLanguageIds(
-						journalArticle.getAvailableLanguageIds())));
+					Arrays.toString(
+						LocaleUtil.toW3cLanguageIds(
+							journalArticle.getAvailableLanguageIds()))));
 		}
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();

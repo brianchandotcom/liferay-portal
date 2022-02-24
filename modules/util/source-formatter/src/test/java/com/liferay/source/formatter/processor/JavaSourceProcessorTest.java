@@ -524,7 +524,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"The value of 'osgi.jaxrs.name' should end with " +
 					"'ExceptionMapper'"
 			},
-			new Integer[] {33});
+			new Integer[] {30});
 	}
 
 	@Test

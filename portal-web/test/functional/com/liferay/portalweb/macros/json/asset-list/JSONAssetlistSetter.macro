@@ -43,8 +43,6 @@ definition {
 
 		ListUtil.add("${list}", "com.liferay.calendar.model.CalendarBooking");
 
-		ListUtil.add("${list}", "com.liferay.commerce.model.CommerceOrder");
-
 		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFileEntry");
 
 		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFolder");
@@ -80,25 +78,37 @@ definition {
 			fileEntryTypeName = "Google Drive Shortcut",
 			groupId = "${globalGroupId}");
 
+		var externalVideoShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+			fileEntryTypeName = "External Video Shortcut",
+			groupId = "${globalGroupId}");
+
 		var basicDocumentClassTypeId = "0";
 
 		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
 
 		if ("${classTypeIdsDLFileEntry}" == "") {
-			if ("${googleDriveShortcutClassTypeId}" != "") {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
+			var classTypeIdsDLFileEntry = "${basicDocumentClassTypeId}";
+
+			if ("${externalVideoShortcutClassTypeId}" != "") {
+				var classTypeIdsDLFileEntry = "${classTypeIdsDLFileEntry},${externalVideoShortcutClassTypeId}";
 			}
-			else {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId}''';
+
+			if ("${googleDriveShortcutClassTypeId}" != "") {
+				var classTypeIdsDLFileEntry = "${classTypeIdsDLFileEntry},${googleDriveShortcutClassTypeId}";
 			}
 		}
 		else {
+			var temp = "${basicDocumentClassTypeId}";
+
+			if ("${externalVideoShortcutClassTypeId}" != "") {
+				var temp = "${temp},${externalVideoShortcutClassTypeId}";
+			}
+
 			if ("${googleDriveShortcutClassTypeId}" != "") {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDLFileEntry}''';
+				var temp = "${temp},${googleDriveShortcutClassTypeId}";
 			}
-			else {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${classTypeIdsDLFileEntry}''';
-			}
+
+			var classTypeIdsDLFileEntry = "${temp},${classTypeIdsDLFileEntry}";
 		}
 
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");

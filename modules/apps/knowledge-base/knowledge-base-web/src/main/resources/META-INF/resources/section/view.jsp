@@ -94,7 +94,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 									<%= HtmlUtil.escape(kbArticle.getDescription()) %>
 								</c:when>
 								<c:when test='<%= kbArticleDisplayStyle.equals("abstract") %>'>
-									<%= StringUtil.shorten(HtmlUtil.extractText(kbArticle.getContent()), 500) %>
+									<%= StringUtil.shorten(HtmlParserUtil.extractText(kbArticle.getContent()), 500) %>
 								</c:when>
 							</c:choose>
 						</div>

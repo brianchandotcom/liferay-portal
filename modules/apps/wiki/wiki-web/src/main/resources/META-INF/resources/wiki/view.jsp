@@ -500,7 +500,7 @@ PortletURLBuilder.create(
 								}
 								%>
 
-								<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childPageFormattedContent), 200) %></p>
+								<p class="text-default"><%= StringUtil.shorten(HtmlParserUtil.extractText(childPageFormattedContent), 200) %></p>
 							</li>
 
 						<%

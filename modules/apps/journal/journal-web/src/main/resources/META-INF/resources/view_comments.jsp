@@ -44,7 +44,7 @@
 					colspan="<%= 2 %>"
 				>
 					<h6 class="text-default">
-						<%= HtmlUtil.extractText(content) %>
+						<%= HtmlParserUtil.extractText(content) %>
 					</h6>
 
 					<h6 class="text-default">
@@ -71,7 +71,7 @@
 				<liferay-ui:search-container-column-text
 					name="message"
 					truncate="<%= true %>"
-					value="<%= HtmlUtil.extractText(content) %>"
+					value="<%= HtmlParserUtil.extractText(content) %>"
 				/>
 
 				<liferay-ui:search-container-column-date

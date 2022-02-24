@@ -27,6 +27,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -409,6 +410,15 @@ public class ObjectFieldLocalServiceImpl
 
 		_objectLayoutColumnPersistence.removeByObjectFieldId(
 			objectField.getObjectFieldId());
+
+		List<ObjectView> objectViews =
+			_objectViewPersistence.findByObjectDefinitionId(
+				objectField.getObjectDefinitionId());
+
+		for (ObjectView objectView : objectViews) {
+			_objectViewColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+		}
 
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),

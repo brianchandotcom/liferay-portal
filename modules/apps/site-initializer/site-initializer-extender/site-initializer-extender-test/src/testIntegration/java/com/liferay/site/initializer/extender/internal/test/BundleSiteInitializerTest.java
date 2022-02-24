@@ -117,19 +117,24 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+
+import java.io.InputStream;
+
+import java.math.BigDecimal;
+
+import java.util.List;
+
+import javax.servlet.ServletContext;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-
-import javax.servlet.ServletContext;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -236,40 +241,6 @@ public class BundleSiteInitializerTest {
 
 			bundle.uninstall();
 		}
-	}
-
-	private void _assertCommerceSpecificationsProducts(ServiceContext serviceContext)
-		throws Exception {
-
-		CPSpecificationOption cpSpecificationOption =
-		_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-		serviceContext.getCompanyId(), "test-1");
-
-		Assert.assertNotNull(cpSpecificationOption);
-
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService
-				.fetchCPDefinitionByCProductExternalReferenceCode(
-					"TEST001",
-					serviceContext.getCompanyId());
-
-		Assert.assertNotNull(cpDefinition);
-
-		ProductSpecificationResource.Builder
-			productSpecificationResourceBuilder =
-			_productSpecificationResourceFactory.create();
-
-		ProductSpecificationResource productSpecificationResource =
-			productSpecificationResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		Page<ProductSpecification> productSpecificationPage =
-		productSpecificationResource.getProductIdProductSpecificationsPage(cpDefinition.getCProductId(), Pagination.of(1, 10));
-		ProductSpecification productSpecification = productSpecificationPage.fetchFirstItem();
-
-		Assert.assertNotNull(productSpecification);
-		Assert.assertEquals("test-1", productSpecification.getSpecificationKey());
 	}
 
 	private void _assertAccounts(ServiceContext serviceContext)
@@ -478,6 +449,44 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Notification Template",
 			commerceNotificationTemplate.getName());
+	}
+
+	private void _assertCommerceSpecificationsProducts(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(), "test-1");
+
+		Assert.assertNotNull(cpSpecificationOption);
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST001", serviceContext.getCompanyId());
+
+		Assert.assertNotNull(cpDefinition);
+
+		ProductSpecificationResource.Builder
+			productSpecificationResourceBuilder =
+				_productSpecificationResourceFactory.create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<ProductSpecification> productSpecificationPage =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				cpDefinition.getCProductId(), Pagination.of(1, 10));
+
+		ProductSpecification productSpecification =
+			productSpecificationPage.fetchFirstItem();
+
+		Assert.assertNotNull(productSpecification);
+		Assert.assertEquals(
+			"test-1", productSpecification.getSpecificationKey());
 	}
 
 	private void _assertCPDefinition(Group group) throws Exception {
@@ -1160,7 +1169,8 @@ public class BundleSiteInitializerTest {
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Inject
-	private CPSpecificationOptionLocalService _cpSpecificationOptionLocalService;
+	private CPSpecificationOptionLocalService
+		_cpSpecificationOptionLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

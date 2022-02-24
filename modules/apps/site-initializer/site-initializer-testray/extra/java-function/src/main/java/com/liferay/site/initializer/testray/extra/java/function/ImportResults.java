@@ -170,7 +170,12 @@ public class ImportResults {
 							nodeComponent = propertyNodeList.item(j);
 						}
 						else if (name.equals("testray.team.name")) {
-							teamId = fetchOrAddTestrayTeam(projectId, node);
+							String teamName = node.getAttributes(
+								).getNamedItem(
+									"value"
+								).getTextContent();
+
+							teamId = fetchOrAddTestrayTeam(projectId, teamName);
 							
 							addTestrayComponent(
 								projectId, teamId, nodeComponent);
@@ -321,28 +326,7 @@ public class ImportResults {
 		).getService();
 	}
 
-	public long fetchOrAddTestrayTeam(long projectId, Node node) throws Exception {
-		Map<String, String> map = new HashMap<>();
-		long teamId = -1;
-		String teamName = null;
-
-		String name = node.getAttributes(
-		).getNamedItem(
-			"name"
-		).getTextContent();
-
-		if (name.equals("testray.team.name")) {
-			map.put("testrayProjectId", String.valueOf(projectId));
-
-			String value = node.getAttributes(
-			).getNamedItem(
-				"value"
-			).getTextContent();
-
-			teamName = value;
-			map.put("name", value);
-		}
-
+	public long fetchOrAddTestrayTeam(long projectId, String teamName) throws Exception {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("filter", "name eq '" + teamName + "'");
@@ -358,9 +342,13 @@ public class ImportResults {
 			return teamJSONObject.getLong("id");
 		}
 
+		Map<String, String> body = new HashMap<>();
+
+		body.put("name", teamName);
+
 		responseJSONObject = HttpUtil.invoke(
 			new JSONObject(
-				map
+				body
 			).toString(),
 			"testrayteams", null, null, HttpInvoker.HttpMethod.POST);
 

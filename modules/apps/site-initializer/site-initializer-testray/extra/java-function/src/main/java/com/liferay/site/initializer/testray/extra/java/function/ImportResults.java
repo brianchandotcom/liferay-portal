@@ -182,6 +182,8 @@ public class ImportResults {
 						}
 						else if (name.equals("testray.testcase.name")) {
 							map.put("name", value);
+
+							//TODO figure out what it means
 							map.put("stepsType", name);
 						}
 						else if (name.equals("testray.testcase.priority")) {

@@ -397,17 +397,11 @@ html#{$cadmin-selector} {
 
 	.widget-mode-card {
 		.card-page-item {
-			max-width: 20rem;
+			max-width: 40rem;
+			min-width: 20rem;
 			padding-left: $grid-gutter-width / 2;
 			padding-right: $grid-gutter-width / 2;
-			width: 100%;
-
-			@include media-breakpoint-up(lg) {
-				max-width: 26rem;
-			}
-			@include media-breakpoint-up(xl) {
-				max-width: 33.25rem;
-			}
+			width: 50%;
 		}
 	}
 

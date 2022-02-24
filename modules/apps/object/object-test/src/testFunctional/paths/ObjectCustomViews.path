@@ -45,16 +45,16 @@
 		<td>//input[contains(@class,'custom-control-input')]</td>
 		<td></td>
 	</tr>
-    <tr>
+	<tr>
 		<td>VIEW_BUILDER_TAB</td>
 		<td>//button[contains(text(), 'View Builder')]</td>
 		<td></td>
 	</tr>
-    <tr>
-        <td>CHECKBOX_COLUMN_OPTION</td>
-        <td>//label[contains(.,'${key_columnOption}')]/input[@type='checkbox']</td>
-        <td></td>
-    </tr>
+	<tr>
+		<td>CHECKBOX_COLUMN_OPTION</td>
+		<td>//label[contains(.,'${key_columnOption}')]/input[@type='checkbox']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

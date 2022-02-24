@@ -117,7 +117,6 @@ definition {
 		ObjectCustomViews.deleteObjectCustomViewViaUI(viewLabel = "Custom Views");
 
 		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "Custom Views");
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to drag the columns"
@@ -142,7 +141,6 @@ definition {
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"
 	@priority = "4"
 	test CannotSaveAnotherViewAsDefault {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 171624",
 			objectName = "CustomObject171624",
@@ -157,19 +155,18 @@ definition {
 		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views A");
 
 		ObjectCustomViews.addColumnsViaUI(
-			viewLabel = "Custom Views A",
-			columnOption = "Workflow Status");
+			columnOption = "Workflow Status",
+			viewLabel = "Custom Views A");
 
 		Refresh();
 
 		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views B");
 
 		ObjectCustomViews.addColumnsViaUI(
-			viewLabel = "Custom Views B",
-			columnOption = "Author");
+			columnOption = "Author",
+			viewLabel = "Custom Views B");
 
 		Alert.viewErrorMessage(errorMessage = "There can only be one default object view");
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"

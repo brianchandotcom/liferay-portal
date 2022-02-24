@@ -1,5 +1,25 @@
 definition {
 
+	macro addColumnsViaUI {
+		ObjectCustomViews.goToViewsDetails(label = "${viewLabel}");
+
+		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#CUSTOM_VIEW_BOOLEAN_CHECKBOX");
+
+		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "${columnOption}",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		Button.clickSave();
+	}
+
 	macro addObjectViewViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -16,6 +36,20 @@ definition {
 		var key_viewLabel = "${viewLabel}";
 
 		AssertElementPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
+	}
+
+	macro assertObjectViewNotPresent {
+		var key_viewLabel = "${viewLabel}";
+
+		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
+	}
+
+	macro deleteObjectCustomViewViaUI {
+		Click(
+			key_objectCustomViewLabel = "${viewLabel}",
+			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
 	macro editName {
@@ -35,40 +69,5 @@ definition {
 	macro goToViewsTab {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
-
-	macro deleteObjectCustomViewViaUI {
-		Click(
-			key_objectCustomViewLabel = "${viewLabel}",
-			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-	}
-
-	macro assertObjectViewNotPresent {
-		var key_viewLabel = "${viewLabel}";
-
-		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
-	}
-
-	macro addColumnsViaUI {
-
-        ObjectCustomViews.goToViewsDetails(label = "${viewLabel}");
-
-        Click.clickAtNotVisible(locator1 = "ObjectCustomViews#CUSTOM_VIEW_BOOLEAN_CHECKBOX");
-
-        Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
-
-        LexiconEntry.gotoAdd();
-
-        Click.clickAtNotVisible(
-            key_columnOption = "${columnOption}",
-            locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-        Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
-
-        Button.clickSave();
-    }
 
 }

@@ -945,7 +945,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addCommerceCatalogs(
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
-
 		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext);

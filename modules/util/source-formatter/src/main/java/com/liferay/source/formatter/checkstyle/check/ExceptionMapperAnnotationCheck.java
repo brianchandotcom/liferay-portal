@@ -93,7 +93,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER =
-		"osgi.jaxrs.name.missed.excepionmaaper";
+		"osgi.jaxrs.name.missed.exceptionmapper";
 
 	private static final String _OSGI_SERVICE_NAME = "ExceptionMapper";
 

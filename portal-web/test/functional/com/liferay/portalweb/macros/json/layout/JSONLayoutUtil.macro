@@ -101,6 +101,9 @@ definition {
 		else if ("${widgetName}" == "JS Clay Sample") {
 			var portletId = "com_liferay_frontend_js_clay_sample_web_internal_portlet_FrontendJSClaySampleWebPortlet";
 		}
+		else if ("${widgetName}" == "JS Components Sample") {
+			var portletId = "com_liferay_frontend_js_components_sample_web_portlet_FrontendJSComponentsSampleWebPortlet";
+		}
 		else if ("${widgetName}" == "Knowledge Base Article") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 		}

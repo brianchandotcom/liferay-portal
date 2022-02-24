@@ -418,23 +418,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getFolders(long, long, boolean, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<DLFolder> getFolders(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
-
-		return getFolders(
-			groupId, parentFolderId, includeMountfolders, status, start, end,
-			orderByComparator);
-	}
-
 	@Override
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,

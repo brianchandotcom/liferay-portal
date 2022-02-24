@@ -270,14 +270,9 @@ const InviteTeamMembersPage = ({
 	const handleAddTeamMember = () => {
 		const emptyEmailAddress = values?.invites?.some(({email}) => !email);
 
-		if (emptyEmailAddress) {
-			setshowEmptyEmailError(true);
+		setshowEmptyEmailError(emptyEmailAddress);
 
-			return false;
-		}
-		setshowEmptyEmailError(false);
-
-		return true;
+		return !emptyEmailAddress;
 	};
 
 	useEffect(() => {

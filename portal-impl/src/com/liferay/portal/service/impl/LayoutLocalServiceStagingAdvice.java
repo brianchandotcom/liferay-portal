@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -65,6 +64,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -498,9 +498,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					proxiedLayouts.remove(layout);
 				}
 
-				proxiedLayout = ProxyUtil.newProxyInstance(
-					PortalClassLoaderUtil.getClassLoader(),
-					new Class<?>[] {Layout.class, ModelWrapper.class},
+				proxiedLayout = _proxyProviderFunction.apply(
 					new LayoutStagingHandler(layout));
 
 				proxiedLayouts.put(layout, proxiedLayout);
@@ -509,9 +507,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			}
 		}
 
-		Object proxiedLayout = ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {Layout.class, ModelWrapper.class},
+		Object proxiedLayout = _proxyProviderFunction.apply(
 			new LayoutStagingHandler(layout));
 
 		ProxiedLayoutsThreadLocal.setProxiedLayouts(
@@ -655,6 +651,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			Arrays.asList(
 				"create", "createLayout", "deleteLayout", "getLayouts",
 				"updateLayout", "updateLookAndFeel", "updateName"));
+	private static final Function<InvocationHandler, Layout>
+		_proxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Layout.class, ModelWrapper.class);
 
 	private BeanFactory _beanFactory;
 

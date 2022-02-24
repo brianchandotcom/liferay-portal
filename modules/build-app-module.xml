@@ -404,25 +404,17 @@
 	</target>
 
 	<target description="Get the version of the current module that was present in the previous release of this app." name="get-artifact-version-previous-release" unless="${app.first.version}">
+		<property file="${releng.module.dir}/liferay-releng.changelog" />
+
 		<loadfile
 			property="artifact.version.previous.release"
 		>
-			<propertyresource name="artifact.versions.previous.release" />
+			<propertyresource name="artifact.url" />
 
 			<filterchain>
 				<tokenfilter delimOutput="">
-					<stringtokenizer delims="," />
-
-					<containsstring contains="${Bundle-SymbolicName}" />
-
-					<deletecharacters chars="," />
-
-					<replacestring from="${Bundle-SymbolicName}-" to="" />
-
-					<replacestring from=".jar" to="" />
+					<replaceregex pattern=".*-(\d[\d.]*\d?)\.[jw]ar" replace="\1" />
 				</tokenfilter>
-
-				<striplinebreaks />
 			</filterchain>
 		</loadfile>
 

@@ -14,15 +14,11 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Simon Jiang
@@ -49,17 +45,6 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		String fullyQualifiedExceptionMapperName = getFullyQualifiedTypeName(
-			_OSGI_SERVICE_NAME, detailAST, true);
-
-		if (Objects.isNull(fullyQualifiedExceptionMapperName) ||
-			!StringUtil.equals(
-				fullyQualifiedExceptionMapperName,
-				"javax.ws.rs.ext.ExceptionMapper")) {
-
-			return;
-		}
-
 		DetailAST propertyAnnotationMemberValuePairDetailAST =
 			getAnnotationMemberValuePairDetailAST(
 				annotationDetailAST, "property");
@@ -68,62 +53,47 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> propertyAnnotationExprList = getAllChildTokens(
-			propertyAnnotationMemberValuePairDetailAST, true, TokenTypes.EXPR);
+		DetailAST annotationArrayInitDetailAST =
+			propertyAnnotationMemberValuePairDetailAST.findFirstToken(
+				TokenTypes.ANNOTATION_ARRAY_INIT);
 
-		if (propertyAnnotationExprList == null) {
+		if (annotationArrayInitDetailAST == null) {
 			return;
 		}
 
-		for (DetailAST expressPropertyDetailAST : propertyAnnotationExprList) {
-			FullIdent expressionDetailAST = FullIdent.createFullIdentBelow(
-				expressPropertyDetailAST);
+		String osgiJaxrsName = _getOSGiJaxrsName(annotationArrayInitDetailAST);
 
-			String expressionKeyValue = expressionDetailAST.getText();
-
-			if (StringUtil.startsWith(
-					expressionKeyValue, "\"osgi.jaxrs.name")) {
-
-				DetailAST annotationMemberValuePairServiceDetailAST =
-					getAnnotationMemberValuePairDetailAST(
-						annotationDetailAST, "service");
-
-				List<DetailAST> serviceAnnotationMemberExprList =
-					getAllChildTokens(
-						annotationMemberValuePairServiceDetailAST, true,
-						TokenTypes.EXPR);
-
-				if ((serviceAnnotationMemberExprList == null) ||
-					(serviceAnnotationMemberExprList.size() > 1)) {
-
-					return;
-				}
-
-				DetailAST expressSeviceDetailAST =
-					serviceAnnotationMemberExprList.get(0);
-
-				List<DetailAST> childIdenTokenDetailASTs = getAllChildTokens(
-					expressSeviceDetailAST, true, TokenTypes.IDENT);
-
-				for (DetailAST childIdentDetailAST : childIdenTokenDetailASTs) {
-					String serviceIdentName = childIdentDetailAST.getText();
-
-					if (StringUtil.equals(
-							serviceIdentName, _OSGI_SERVICE_NAME) &&
-						!StringUtil.endsWith(
-							expressionKeyValue, serviceIdentName + "\"")) {
-
-						log(
-							expressPropertyDetailAST,
-							"osgi.jaxrs.name.missed.excepionmaaper",
-							serviceIdentName);
-
-						return;
-					}
-				}
-			}
+		if (!osgiJaxrsName.endsWith(_OSGI_SERVICE_NAME)) {
+			log(
+				annotationArrayInitDetailAST,
+				_MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER,
+				_OSGI_SERVICE_NAME);
 		}
 	}
+
+	private String _getOSGiJaxrsName(DetailAST annotationArrayInitDetailAST) {
+		List<DetailAST> expressionDetailASTList = getAllChildTokens(
+			annotationArrayInitDetailAST, false, TokenTypes.EXPR);
+
+		for (DetailAST expressionDetailAST : expressionDetailASTList) {
+			DetailAST firstChildDetailAST = expressionDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+				continue;
+			}
+
+			String value = firstChildDetailAST.getText();
+
+			if (value.startsWith("\"osgi.jaxrs.name=")) {
+				return value.substring(17, value.length() - 1);
+			}
+		}
+
+		return null;
+	}
+
+	private static final String _MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER =
+		"osgi.jaxrs.name.missed.excepionmaaper";
 
 	private static final String _OSGI_SERVICE_NAME = "ExceptionMapper";
 

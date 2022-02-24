@@ -11,6 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		//Raylife.createRaylifeSite(siteName = "Raylife");
+
 	}
 
 	tearDown {
@@ -26,6 +27,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-146773 - Verify that 'property' is appearing in the navigation bar"
+	@priority = "5"
+	test CanViewPropertyPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#PROPERTY_PRESENT_MOBILE");
+
+		Raylife.dismissAlert();
+	}
+
 	@description = "LPS-146769 - Verify if when users complete a section, that completed section will be indicated with a check mark in Basics"
 	@priority = "4"
 	test SectionIsCompletedPhone {
@@ -37,9 +64,35 @@ definition {
 
 		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        AssertElementPresent(
+		AssertElementPresent(
 			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
 			section = "Basics");
+
+		Raylife.dismissAlert();
+	}
+
+	@description = "LPS-146775 - Verify if when users complete a section, that completed section will be indicated with a check mark in Employees"
+	@priority = "4"
+	test SectionIsCompletedTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		AssertElementPresent(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Employees");
 
 		Raylife.dismissAlert();
 	}
@@ -68,61 +121,9 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-    @description = "LPS-146773 - Verify that 'property' is appearing in the navigation bar"
-	@priority = "5"
-	test CanViewPropertyPhone {
-		SetWindowSize(value1 = "360,720");
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		AssertElementPresent(locator1 = "RaylifeMobile#PROPERTY_PRESENT_MOBILE");
-
-		Raylife.dismissAlert();
-	}
-
-	@description = "LPS-146775 - Verify if when users complete a section, that completed section will be indicated with a check mark in Employees"
+	@description = "LPS-146778 - Check if users are viewing an incomplete section in Property"
 	@priority = "4"
-	test SectionIsCompletedTablet {
-		SetWindowSize(value1 = "800,1024");
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeAllBusinessInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeEmployees.typeAllEmployeesInfoFields();
-
-		AssertElementPresent(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Employees"); 
-
-		Raylife.dismissAlert();
-	}
-
-    @description = "LPS-146778 - Check if users are viewing an incomplete section in Property"
-	@priority = "4"
-	test SectionIsIncompleteTablet  {
+	test SectionIsIncompleteTablet {
 		SetWindowSize(value1 = "800,1024");
 
 		ApplicationsMenu.gotoSite(site = "Raylife");

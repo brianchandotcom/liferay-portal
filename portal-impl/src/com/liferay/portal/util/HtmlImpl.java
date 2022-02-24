@@ -27,11 +27,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.htmlparser.jericho.Source;
-
 /**
  * Provides the implementation of the HTML utility interface for escaping,
- * rendering, replacing, and stripping HTML text. This class uses XSS
+ * replacing, and stripping HTML text. This class uses XSS
  * recommendations from <a
  * href="http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself">http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself</a>
  * when escaping HTML text.
@@ -501,30 +499,6 @@ public class HtmlImpl implements Html {
 			StringPool.QUOTE, xPathAttribute, StringPool.QUOTE);
 	}
 
-	/**
-	 * Extracts the raw text from the HTML input, compressing its whitespace and
-	 * removing all attributes, scripts, and styles.
-	 *
-	 * <p>
-	 * For example, raw text returned by this method can be stored in a search
-	 * index.
-	 * </p>
-	 *
-	 * @param  html the HTML text
-	 * @return the raw text from the HTML input, or <code>null</code> if the
-	 *         HTML input is <code>null</code>
-	 */
-	@Override
-	public String extractText(String html) {
-		if (html == null) {
-			return null;
-		}
-
-		Source source = new Source(html);
-
-		return String.valueOf(source.getTextExtractor());
-	}
-
 	@Override
 	public String fromInputSafe(String text) {
 		return StringUtil.replace(
@@ -580,33 +554,6 @@ public class HtmlImpl implements Html {
 		}
 
 		return sb.toString();
-	}
-
-	/**
-	 * Renders the HTML content into text. This provides a human readable
-	 * version of the content that is modeled on the way Mozilla
-	 * Thunderbird&reg; and other email clients provide an automatic conversion
-	 * of HTML content to text in their alternative MIME encoding of emails.
-	 *
-	 * <p>
-	 * Using the default settings, the output complies with the
-	 * <code>Text/Plain; Format=Flowed (DelSp=No)</code> protocol described in
-	 * <a href="http://tools.ietf.org/html/rfc3676">RFC-3676</a>.
-	 * </p>
-	 *
-	 * @param  html the HTML text
-	 * @return the rendered HTML text, or <code>null</code> if the HTML text is
-	 *         <code>null</code>
-	 */
-	@Override
-	public String render(String html) {
-		if (html == null) {
-			return null;
-		}
-
-		Source source = new Source(html);
-
-		return String.valueOf(source.getRenderer());
 	}
 
 	/**

@@ -311,6 +311,24 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		Map<String, ObjectField> objectFieldsMap = _toObjectFieldsMap(
 			objectFields);
 
+		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
+			ddmFormFieldValues.stream();
+
+		ddmFormFieldValues = ddmFormFieldValuesStream.filter(
+			ddmFormFieldValue -> {
+				DDMFormField ddmFormField = ddmFormFieldsMap.get(
+					ddmFormFieldValue.getName());
+
+				if (ddmFormField.isTransient()) {
+					return false;
+				}
+
+				return true;
+			}
+		).collect(
+			Collectors.toList()
+		);
+
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			if (StringUtil.equals(
 					ddmFormFieldValue.getType(),

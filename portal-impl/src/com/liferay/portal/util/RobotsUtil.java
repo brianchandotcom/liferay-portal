@@ -33,33 +33,6 @@ import java.util.TreeMap;
  */
 public class RobotsUtil {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getDefaultRobots() {
-		return getDefaultRobots(
-			null, false, PortalUtil.getPortalServerPort(false));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getDefaultRobots(
-		String virtualHostname, boolean secure, int port) {
-
-		if (Validator.isNotNull(virtualHostname)) {
-			return ContentUtil.get(
-				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
-		}
-
-		return ContentUtil.get(
-			RobotsUtil.class.getClassLoader(),
-			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
-	}
-
 	public static String getRobots(LayoutSet layoutSet, boolean secure)
 		throws PortalException {
 

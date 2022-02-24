@@ -1810,8 +1810,6 @@ definition {
 			groupName = "Guest",
 			title = "apple apple apple");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONSegmentsentry.addSegment(
 			fieldName = "First Name",
 			groupName = "Guest",

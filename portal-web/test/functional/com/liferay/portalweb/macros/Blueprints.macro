@@ -173,7 +173,7 @@ definition {
 
 		if (isSet(attributesKey)) {
 			Click.javaScriptClick(
-				key_title = "Attributes",
+				key_title = "Search Context Attributes",
 				locator1 = "Button#ANY_TITLE");
 
 			Type(

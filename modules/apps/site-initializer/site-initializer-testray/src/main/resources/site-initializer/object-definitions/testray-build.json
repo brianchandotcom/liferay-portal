@@ -8,46 +8,6 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Template Testray Build Id"
-			},
-			"name": "templateTestrayBuildId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Routine Id"
-			},
-			"name": "testrayRoutineId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Product Version Id"
-			},
-			"name": "testrayProductVersionId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Project Id"
-			},
-			"name": "testrayProjectId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",

@@ -58,7 +58,7 @@ dependencies {
 	compileInclude group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.11.790"
 	compileInclude group: "com.amazonaws", name: "aws-java-sdk-kms", version: "1.11.790"
 	compileInclude group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.11.790"
-	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.12.1"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.12.6"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-core", version: "2.9.0"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-kms", version: "2.9.0"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-s3", version: "2.9.0"

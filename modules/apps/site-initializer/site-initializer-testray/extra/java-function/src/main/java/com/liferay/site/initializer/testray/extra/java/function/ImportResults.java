@@ -137,7 +137,8 @@ public class ImportResults {
 
 			map.put("testrayProjectId", String.valueOf(projectId));
 			
-			Node nodeComponent = null;
+			String componentName = null;
+			long componentId = -1;
 			long teamId = -1;
 			NodeList testCasesNodeList = document.getElementsByTagName(
 				"testcase");
@@ -166,27 +167,39 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
-						String value = node.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
 						if (name.equals("testray.main.component.name")) {
-							nodeComponent = propertyNodeList.item(j);
+							componentName = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
 						}
 						else if (name.equals("testray.team.name")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
 							teamId = fetchOrAddTestrayTeam(projectId, value);
 							
-							addTestrayComponent(
-								projectId, teamId, nodeComponent);
+							componentId = fetchOrAddTestrayComponent(
+								projectId, teamId, componentName);
+
+							map.put("testrayComponentId", String.valueOf(componentId));
 						}
 						else if (name.equals("testray.testcase.name")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
 							map.put("name", value);
 
 							//TODO figure out what it means
 							map.put("stepsType", name);
 						}
 						else if (name.equals("testray.testcase.priority")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
 							map.put("priority", value);
 						}
 					}
@@ -204,34 +217,36 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestrayComponent(long projectId, long teamId, Node node)
+	public long fetchOrAddTestrayComponent(long projectId, long teamId, String componentName)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
+       Map<String, String> parameters = new HashMap<>();
+ 
+       parameters.put("filter", "name eq '" + componentName + "'");
+ 
+       JSONObject responseJSONObject = HttpUtil.invoke(
+           null, "testraycomponents", null, parameters, HttpInvoker.HttpMethod.GET);
+ 
+       JSONArray componentsJSONArray = responseJSONObject.getJSONArray("items");
+ 
+       if (!componentsJSONArray.isEmpty()) {
+			JSONObject componentJSONObject = componentsJSONArray.getJSONObject(0);
 
-		map.put("testrayProjectId", String.valueOf(projectId));
+			return componentJSONObject.getLong("id");
+       }
+	    Map<String, String> body = new HashMap<>();
 
-		map.put("testrayTeamId", String.valueOf(teamId));
+        body.put("name", componentName);
+		body.put("testrayProjectId", String.valueOf(projectId));
+		body.put("testrayTeamId", String.valueOf(teamId));
 
-		String name = node.getAttributes(
-		).getNamedItem(
-			"name"
-		).getTextContent();
+       responseJSONObject = HttpUtil.invoke(
+           new JSONObject(
+               body
+           ).toString(),
+           "testraycomponents", null, null, HttpInvoker.HttpMethod.POST);
 
-		if (name.equals("testray.main.component.name")) {
-			String value = node.getAttributes(
-			).getNamedItem(
-				"value"
-			).getTextContent();
-
-			map.put("name", value);
-		}
-
-		HttpUtil.invoke(
-			new JSONObject(
-				map
-			).toString(),
-			"testraycomponents", null, null, HttpInvoker.HttpMethod.POST);
+	   	return responseJSONObject.getLong("id");
 	}
 
 	public long addTestrayProject(Document document) throws Exception {
@@ -337,6 +352,7 @@ public class ImportResults {
 		Map<String, String> body = new HashMap<>();
 
 		body.put("name", teamName);
+		body.put("testrayProjectId", String.valueOf(projectId));
 
 		responseJSONObject = HttpUtil.invoke(
 			new JSONObject(

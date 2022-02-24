@@ -40,7 +40,7 @@ export enum TEST_STATUS {
 	'Untested' = 0,
 }
 
-export const TEST_STATUS_LABEL = {
+export const TEST_STATUS_LABEL: any = {
 	0: 'Untested',
 	1: 'In Progress',
 	2: 'Passed',
@@ -55,7 +55,7 @@ export const USER_DROPDOWN = [
 		items: [
 			{
 				icon: 'user',
-				label: 'Manage Accounts',
+				label: 'Manage Account',
 				path: '/manage/user',
 			},
 			{
@@ -70,5 +70,19 @@ export const USER_DROPDOWN = [
 
 const getStatusLabel = (status: number): string =>
 	(TEST_STATUS_LABEL as any)[status];
+
+export enum SUB_TASK_STATUS {
+	'OPEN' = 0,
+	'IN_ANALYSIS' = 1,
+	'COMPLETE' = 2,
+	'MERGED' = 3,
+}
+
+export const SUBTASK_STATUS: any = {
+	0: {color: 'label-inverse-light', label: 'OPEN'},
+	1: {color: 'label-inverse-warning', label: 'IN ANALYSIS'},
+	2: {color: 'label-inverse-primary', label: 'COMPLETE'},
+	3: {color: 'label-inverse-light', label: 'MERGED'},
+};
 
 export {getStatusLabel};

@@ -54,11 +54,11 @@ if ((commerceOrderType != null) && (commerceOrderType.getExpirationDate() != nul
 					</div>
 
 					<div class="col-auto">
-						<aui:input label='<%= HtmlUtil.escape("order") %>' name="displayOrder" value="<%= String.valueOf(commerceOrderType.getDisplayOrder()) %>" />
+						<aui:input label="display-order" name="displayOrder" value="<%= String.valueOf(commerceOrderType.getDisplayOrder()) %>" />
 					</div>
 
 					<div class="col-auto">
-						<aui:input label='<%= HtmlUtil.escape("active") %>' name="active" type="toggle-switch" value="<%= commerceOrderType.isActive() %>" />
+						<aui:input label="active" name="active" type="toggle-switch" value="<%= commerceOrderType.isActive() %>" />
 					</div>
 				</div>
 

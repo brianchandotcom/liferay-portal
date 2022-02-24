@@ -65,8 +65,7 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 
 		if (!osgiJaxrsName.endsWith(_OSGI_SERVICE_NAME)) {
 			log(
-				annotationArrayInitDetailAST,
-				_MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER,
+				annotationArrayInitDetailAST, _MSG_INCORRECT_OSGI_JAXRS_MAME,
 				_OSGI_SERVICE_NAME);
 		}
 	}
@@ -92,8 +91,8 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		return null;
 	}
 
-	private static final String _MSG_OSGI_JAXRS_MAME_MISSED_EXCEPTIONMAPPER =
-		"osgi.jaxrs.name.missed.exceptionmapper";
+	private static final String _MSG_INCORRECT_OSGI_JAXRS_MAME =
+		"osgi.jaxrs.name.incorrect";
 
 	private static final String _OSGI_SERVICE_NAME = "ExceptionMapper";
 

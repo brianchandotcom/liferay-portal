@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/localized-input": "3.45.0"
 	},
 	"name": "@liferay/object-web",
 	"private": true,

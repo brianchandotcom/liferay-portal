@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/toolbar": "3.45.0"
 	},
 	"name": "portal-search-admin-web",
 	"scripts": {

@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/core": "3.46.0"
 	},
 	"name": "product-navigation-control-menu-web",
 	"scripts": {

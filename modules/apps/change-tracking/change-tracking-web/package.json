@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/toolbar": "3.45.0",
 		"moment": "^2.22.2",
 		"react-transition-group": "4.4.1"
 	},

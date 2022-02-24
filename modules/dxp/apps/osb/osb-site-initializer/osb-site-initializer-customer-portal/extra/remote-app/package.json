@@ -18,7 +18,6 @@
 	},
 	"dependencies": {
 		"@apollo/client": "^3.4.17",
-		"@clayui/core": "3.45.1",
 		"dompurify": "^2.3.4",
 		"graphql": "^16.0.1",
 		"react": "^17.0.2",

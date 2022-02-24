@@ -418,23 +418,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getFolders(long, long, boolean, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<DLFolder> getFolders(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
-
-		return getFolders(
-			groupId, parentFolderId, includeMountfolders, status, start, end,
-			orderByComparator);
-	}
-
 	@Override
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,
@@ -495,20 +478,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		return dlFolderPersistence.countByG_M_P_H_S(
 			groupId, false, parentFolderId, false, status);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getFoldersCount(long, long, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getFoldersCount(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders) {
-
-		return getFoldersCount(
-			groupId, parentFolderId, includeMountfolders, status);
 	}
 
 	@Override

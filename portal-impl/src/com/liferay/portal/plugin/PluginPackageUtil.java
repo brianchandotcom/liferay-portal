@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.plugin.Screenshot;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -636,7 +636,7 @@ public class PluginPackageUtil {
 	}
 
 	private String _readText(String text) {
-		return HtmlUtil.extractText(GetterUtil.getString(text));
+		return HtmlParserUtil.extractText(GetterUtil.getString(text));
 	}
 
 	private void _registerInstalledPluginPackage(PluginPackage pluginPackage)

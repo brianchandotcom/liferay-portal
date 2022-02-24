@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -39,6 +38,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -141,9 +141,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 	}
 
 	private Object _clone() {
-		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {Layout.class},
+		return _layoutProxyProviderFunction.apply(
 			new LayoutStagingHandler(
 				(Layout)_layout.clone(),
 				(LayoutRevision)_layoutRevision.clone()));
@@ -262,9 +260,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 	private LayoutType _getLayoutType() {
 		return LayoutTypePortletFactoryUtil.create(
-			(Layout)ProxyUtil.newProxyInstance(
-				PortalClassLoaderUtil.getClassLoader(),
-				new Class<?>[] {Layout.class},
+			_layoutProxyProviderFunction.apply(
 				new LayoutStagingHandler(_layout, _layoutRevision)));
 	}
 
@@ -283,9 +279,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 	}
 
 	private Object _toEscapedModel() {
-		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {Layout.class},
+		return _layoutProxyProviderFunction.apply(
 			new LayoutStagingHandler(
 				_layout.toEscapedModel(), _layoutRevision.toEscapedModel()));
 	}
@@ -293,6 +287,9 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagingHandler.class);
 
+	private static final Function<InvocationHandler, Layout>
+		_layoutProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Layout.class);
 	private static final Set<String> _layoutRevisionMethodNames = new HashSet<>(
 		Arrays.asList(
 			"getColorScheme", "getColorSchemeId", "getCss", "getCssText",

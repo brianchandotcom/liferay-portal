@@ -77,30 +77,19 @@
 // Ghost
 
 .btn-ghost {
-	&.btn-style-primary,
-	&.btn-style-secondary,
-	&.btn-style-neutral {
-		&.btn-inverted {
-			--btn-default-background-color: transparent;
-		}
-	}
+	--btn-default-background-color: transparent;
 
 	&.btn-style-primary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: var(--color-action-primary-inverted);
 			--btn-active-border-color: var(--color-action-primary-active);
 			--btn-active-color: var(--color-action-primary-active);
-			--btn-default-background-color: var(
-				--color-action-primary-inverted
-			);
 			--btn-default-border-color: var(--color-action-primary-default);
 			--btn-default-color: var(--color-action-primary-default);
-			--btn-disabled-background-color: var(
-				--color-action-primary-inverted
-			);
 			--btn-disabled-border-color: var(--color-action-primary-disabled);
 			--btn-disabled-color: var(--color-action-primary-disabled);
-			--btn-hover-background-color: var(--color-action-primary-inverted);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-primary-hover);
 			--btn-hover-color: var(--color-action-primary-hover);
 		}
@@ -123,23 +112,14 @@
 
 	&.btn-style-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: var(
-				--color-action-secondary-inverted
-			);
 			--btn-active-border-color: var(--color-action-secondary-active);
 			--btn-active-color: var(--color-action-secondary-active);
-			--btn-default-background-color: var(
-				--color-action-secondary-inverted
-			);
 			--btn-default-border-color: var(--color-action-secondary-default);
 			--btn-default-color: var(--color-action-secondary-default);
-			--btn-disabled-background-color: var(
-				--color-action-secondary-inverted
-			);
 			--btn-disabled-border-color: var(--color-action-secondary-disabled);
 			--btn-disabled-color: var(--color-action-secondary-disabled);
 			--btn-hover-background-color: var(
-				--color-action-secondary-inverted
+				--color-action-secondary-inverted-hover
 			);
 			--btn-hover-border-color: var(--color-action-secondary-hover);
 			--btn-hover-color: var(--color-action-secondary-hover);
@@ -165,20 +145,15 @@
 
 	&.btn-style-neutral {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: var(--color-action-neutral-inverted);
 			--btn-active-border-color: var(--color-action-neutral-active);
 			--btn-active-color: var(--color-action-neutral-active);
-			--btn-default-background-color: var(
-				--color-action-neutral-inverted
-			);
 			--btn-default-border-color: var(--color-action-neutral-default);
 			--btn-default-color: var(--color-action-neutral-default);
-			--btn-disabled-background-color: var(
-				--color-action-neutral-inverted
-			);
 			--btn-disabled-border-color: var(--color-action-neutral-disabled);
 			--btn-disabled-color: var(--color-action-neutral-disabled);
-			--btn-hover-background-color: var(--color-action-neutral-inverted);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-neutral-hover);
 			--btn-hover-color: var(--color-action-neutral-hover);
 		}

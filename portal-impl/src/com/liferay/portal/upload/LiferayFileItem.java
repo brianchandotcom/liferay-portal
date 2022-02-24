@@ -152,40 +152,6 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		return headers;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public long getItemSize() {
-		long size = getSize();
-
-		String contentType = getContentType();
-
-		if (contentType != null) {
-			byte[] bytes = contentType.getBytes();
-
-			size += bytes.length;
-		}
-
-		String fieldName = getFieldName();
-
-		if (fieldName != null) {
-			byte[] bytes = fieldName.getBytes();
-
-			size += bytes.length;
-		}
-
-		String fileName = getFileName();
-
-		if (fileName != null) {
-			byte[] bytes = fileName.getBytes();
-
-			size += bytes.length;
-		}
-
-		return size;
-	}
-
 	@Override
 	public int getSizeThreshold() {
 		return _sizeThreshold;

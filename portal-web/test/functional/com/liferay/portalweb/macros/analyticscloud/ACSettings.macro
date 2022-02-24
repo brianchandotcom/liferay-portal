@@ -232,10 +232,10 @@ definition {
 
 	@summary = "Assert data source status"
 	macro assertDataSourceStatus {
-		AssertTextEquals(
-			key_dataSourceStatus = "${status}",
-			locator1 = "ACSettings#DATA_SOURCE_STATUS",
-			value1 = "${status}");
+		var key_dataSourceStatus = "${status}";
+		var key_sectionStatus = "${section}";
+
+		AssertElementPresent(locator1 = "ACSettings#DATA_SOURCE_STATUS");
 	}
 
 	@summary = "Asserts the individuals usage value \  @param individualUsageValue"

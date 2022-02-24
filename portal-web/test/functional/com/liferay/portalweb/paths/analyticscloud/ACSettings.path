@@ -149,7 +149,7 @@
 </tr>
 <tr>
 	<td>DATA_SOURCE_STATUS</td>
-	<td>//div[contains(@class,'data-source-status-root')]//span[text()='${key_dataSourceStatus}']</td>
+	<td>//*[contains(text(),'${key_sectionStatus}')]/../..//*[text()='${key_dataSourceStatus}']</td>
 	<td></td>
 </tr>
 <tr>

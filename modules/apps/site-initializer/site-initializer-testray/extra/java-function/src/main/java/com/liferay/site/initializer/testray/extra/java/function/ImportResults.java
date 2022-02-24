@@ -133,11 +133,11 @@ public class ImportResults {
 		throws Exception {
 
 		try {
+			String componentName = null;
+			
 			Map<String, String> map = new HashMap<>();
 
 			map.put("testrayProjectId", String.valueOf(projectId));
-			
-			String componentName = null;
 			
 			NodeList testCasesNodeList = document.getElementsByTagName(
 				"testcase");

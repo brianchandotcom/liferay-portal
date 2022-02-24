@@ -112,7 +112,6 @@ public class ImportResults {
 							).getTextContent();
 
 							map.put("name", value);
-
 							HttpUtil.invoke(
 								new JSONObject(
 									map
@@ -129,9 +128,12 @@ public class ImportResults {
 		}
 	}
 
-	public void addTestrayCase(long projectId, Document document) {
-		Map<String, String> map = new HashMap<>();
+	public void addTestrayCase(long projectId, Document document)
+		throws Exception {
 
+		Map<String, String> map = new HashMap<>();
+		Node nodeComponent = null;
+		long teamId = -1;
 		map.put("testrayProjectId", String.valueOf(projectId));
 
 		try {
@@ -162,17 +164,30 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
-						String value = node.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
 						if (name.equals("testray.testcase.priority")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
 							map.put("priority", value);
 						}
 						else if (name.equals("testray.testcase.name")) {
+							String value = node.getAttributes(
+							).getNamedItem(
+								"value"
+							).getTextContent();
+
 							map.put("name", value);
 							map.put("stepsType", name);
+						}
+						else if (name.equals("testray.team.name")) {
+							teamId = getTestrayTeam(projectId, node);
+							addTestrayComponent(
+								projectId, teamId, nodeComponent);
+						}
+						else if (name.equals("testray.main.component.name")) {
+							nodeComponent = propertyNodeList.item(j);
 						}
 					}
 				}
@@ -187,6 +202,36 @@ public class ImportResults {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+
+	public void addTestrayComponent(long projectId, long teamId, Node node)
+		throws Exception {
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("testrayProjectId", String.valueOf(projectId));
+
+		map.put("testrayTeamId", String.valueOf(teamId));
+
+		String name = node.getAttributes(
+		).getNamedItem(
+			"name"
+		).getTextContent();
+
+		if (name.equals("testray.main.component.name")) {
+			String value = node.getAttributes(
+			).getNamedItem(
+				"value"
+			).getTextContent();
+
+			map.put("name", value);
+		}
+
+		HttpUtil.invoke(
+			new JSONObject(
+				map
+			).toString(),
+			"testraycomponents", null, null, HttpInvoker.HttpMethod.POST);
 	}
 
 	public long addTestrayProject(Document document) throws Exception {
@@ -271,6 +316,52 @@ public class ImportResults {
 			credentials
 		).build(
 		).getService();
+	}
+
+	public long getTestrayTeam(long projectId, Node node) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		long teamId = -1;
+		String teamName = null;
+
+		String name = node.getAttributes(
+		).getNamedItem(
+			"name"
+		).getTextContent();
+
+		if (name.equals("testray.team.name")) {
+			map.put("testrayProjectId", String.valueOf(projectId));
+
+			String value = node.getAttributes(
+			).getNamedItem(
+				"value"
+			).getTextContent();
+
+			teamName = value;
+			map.put("name", value);
+		}
+
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put("filter", "name eq '" + teamName + "'");
+
+		JSONObject responseJSONObject = HttpUtil.invoke(
+			null, "testrayteams", null, parameters, HttpInvoker.HttpMethod.GET);
+
+		JSONArray teamsJSONArray = responseJSONObject.getJSONArray("items");
+
+		if (!teamsJSONArray.isEmpty()) {
+			JSONObject teamJSONObject = teamsJSONArray.getJSONObject(0);
+
+			return teamJSONObject.getLong("id");
+		}
+
+		responseJSONObject = HttpUtil.invoke(
+			new JSONObject(
+				map
+			).toString(),
+			"testrayteams", null, null, HttpInvoker.HttpMethod.POST);
+
+		return responseJSONObject.getLong("id");
 	}
 
 	public void readFiles(String folderName) throws Exception {

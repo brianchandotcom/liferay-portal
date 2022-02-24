@@ -691,7 +691,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 
-			_addCommerceProductSpecification(
+			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".products.specifications.json"),
 				serviceContext);
@@ -870,7 +870,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCommerceProductSpecification(
+	private void _addCommerceProductSpecifications(
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 

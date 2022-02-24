@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
@@ -37,7 +37,7 @@ const acceptedExtensions = IMPORT_FILE_FORMATS.map(
 	(format) => `.${format}`
 ).join(', ');
 
-function FileUpload({csvSeparators, portletNamespace}) {
+function FileUpload({portletNamespace}) {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
 	const [fileToBeUploaded, setFileToBeUploaded] = useState(null);
@@ -152,7 +152,7 @@ function FileUpload({csvSeparators, portletNamespace}) {
 							{Liferay.Language.get('csv-separator')}
 						</label>
 
-						<ClaySelect
+						<ClayInput
 							id={inputCsvSeparatorId}
 							name={inputCsvSeparatorId}
 							onChange={({target}) =>
@@ -162,24 +162,12 @@ function FileUpload({csvSeparators, portletNamespace}) {
 								})
 							}
 							value={parserOptions.csvSeparator}
-						>
-							{csvSeparators.map((separator) => (
-								<ClaySelect.Option
-									key={separator}
-									label={separator}
-									value={separator}
-								/>
-							))}
-						</ClaySelect>
+						/>
 					</ClayForm.Group>
 				</>
 			)}
 		</>
 	);
 }
-
-FileUpload.defaultProps = {
-	csvSeparators: [',', ';', ':'],
-};
 
 export default FileUpload;

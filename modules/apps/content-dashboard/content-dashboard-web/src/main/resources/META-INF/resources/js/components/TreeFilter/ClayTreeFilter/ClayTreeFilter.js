@@ -46,9 +46,9 @@ const TreeFilter = ({
 	const [filterQuery, setFilterQuery] = useState('');
 	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
-	const [expandedKeys, setExpandedKeys] = useState(
-		new Set([treeItems[0].id])
-	);
+	const expanded = treeItems.length ? [treeItems[0].id] : [];
+
+	const [expandedKeys, setExpandedKeys] = useState(new Set(expanded));
 
 	const selectedNodesRef = useRef(null);
 	const refItemsCount = selectedNodesRef.current?.length || 0;
@@ -243,6 +243,7 @@ const TreeFilter = ({
 							<ClayTreeView
 								expandedKeys={expandedKeys}
 								items={treeItems}
+								onExpandedChange={setExpandedKeys}
 								onItemsChange={handleTreeItemsChange}
 								onSelectionChange={handleSelectionChange}
 								selectedKeys={selectedKeys}

@@ -121,6 +121,34 @@ public class AssetTagNamesMultiLanguageSearchTest {
 	}
 
 	@Test
+	public void testDifferentLocale() throws Exception {
+		Locale indexLocale = LocaleUtil.US;
+		Locale queryLocale = LocaleUtil.JAPAN;
+		String title = "title should not match";
+		String tag = "searchtag";
+
+		Group group = _userSearchFixture.addGroup(
+			new GroupBlueprint() {
+				{
+					setDefaultLocale(indexLocale);
+				}
+			});
+
+		_fileEntrySearchFixture.addFileEntry(
+			new FileEntryBlueprint() {
+				{
+					setAssetTagNames(new String[] {tag});
+					setFileName(title);
+					setGroupId(group.getGroupId());
+					setTitle(title);
+					setUserId(getAdminUserId(group));
+				}
+			});
+
+		assertSearch(tag, queryLocale);
+	}
+
+	@Test
 	public void testEnglishTags() throws Exception {
 		Locale locale = LocaleUtil.US;
 		String title = "title should not match";

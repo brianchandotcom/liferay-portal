@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.util.Map;
 
 /**
- * Provides utility methods for escaping, rendering, replacing, and stripping
+ * Provides utility methods for escaping, replacing, and stripping
  * HTML text. This class uses XSS recommendations from <a
  * href="http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself">http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself</a>
  * when escaping HTML text.
@@ -114,23 +114,6 @@ public class HtmlUtil {
 		return _html.escapeXPathAttribute(xPathAttribute);
 	}
 
-	/**
-	 * Extracts the raw text from the HTML input, compressing its whitespace and
-	 * removing all attributes, scripts, and styles.
-	 *
-	 * <p>
-	 * For example, raw text returned by this method can be stored in a search
-	 * index.
-	 * </p>
-	 *
-	 * @param  html the HTML text
-	 * @return the raw text from the HTML input, or <code>null</code> if the
-	 *         HTML input is <code>null</code>
-	 */
-	public static String extractText(String html) {
-		return _html.extractText(html);
-	}
-
 	public static String fromInputSafe(String text) {
 		return _html.fromInputSafe(text);
 	}
@@ -141,26 +124,6 @@ public class HtmlUtil {
 
 	public static Html getHtml() {
 		return _html;
-	}
-
-	/**
-	 * Renders the HTML content into text. This provides a human readable
-	 * version of the segment content that is modeled on the way Mozilla
-	 * Thunderbird&reg; and other email clients provide an automatic conversion
-	 * of HTML content to text in their alternative MIME encoding of emails.
-	 *
-	 * <p>
-	 * Using the default settings, the output complies with the
-	 * <code>Text/Plain; Format=Flowed (DelSp=No)</code> protocol described in
-	 * <a href="http://tools.ietf.org/html/rfc3676">RFC-3676</a>.
-	 * </p>
-	 *
-	 * @param  html the HTML text
-	 * @return the rendered HTML text, or <code>null</code> if the HTML text is
-	 *         <code>null</code>
-	 */
-	public static String render(String html) {
-		return _html.render(html);
 	}
 
 	/**

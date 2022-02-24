@@ -44,13 +44,9 @@ public interface Html {
 
 	public String escapeXPathAttribute(String xPathAttribute);
 
-	public String extractText(String html);
-
 	public String fromInputSafe(String text);
 
 	public String getAUICompatibleId(String text);
-
-	public String render(String html);
 
 	public String replaceNewLine(String html);
 

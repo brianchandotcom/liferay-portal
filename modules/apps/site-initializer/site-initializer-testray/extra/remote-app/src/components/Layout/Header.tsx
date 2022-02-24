@@ -24,35 +24,52 @@ import DropDown from '../DropDown';
 
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
+type BreadCrumbTriggerProps = {
+	displayCarret?: boolean;
+};
+
 const Header = () => {
 	const [{dropdown, heading, tabs}] = useContext(HeaderContext);
 	const navigate = useNavigate();
+
+	const BreadCrumbTrigger: React.FC<BreadCrumbTriggerProps> = ({
+		displayCarret,
+	}) => (
+		<div className="align-items-end d-flex" title={heading[0]?.title}>
+			<ClayIcon
+				className="dropdown-poll-icon mr-2"
+				color="darkblue"
+				fontSize={22}
+				symbol="polls"
+			/>
+
+			{displayCarret && (
+				<ClayIcon
+					className={classNames('dropdown-arrow-icon')}
+					color="darkblue"
+					symbol="caret-bottom"
+				/>
+			)}
+		</div>
+	);
 
 	return (
 		<div className="d-flex flex-column header-container pt-4">
 			<div className="d-flex">
 				<div className="align-items-center d-flex justify-content-center mx-3">
-					<DropDown
-						items={dropdown}
-						position={Align.BottomLeft}
-						trigger={
-							<div className="align-items-end d-flex">
-								<a>
-									<ClayIcon
-										className="dropdown-poll-icon mr-2"
-										symbol="polls"
-									/>
-
-									<ClayIcon
-										className={classNames(
-											'dropdown-arrow-icon'
-										)}
-										symbol="caret-bottom"
-									/>
-								</a>
-							</div>
-						}
-					/>
+					{dropdown.length ? (
+						<DropDown
+							items={dropdown}
+							position={Align.BottomLeft}
+							trigger={
+								<div>
+									<BreadCrumbTrigger displayCarret />
+								</div>
+							}
+						/>
+					) : (
+						<BreadCrumbTrigger />
+					)}
 				</div>
 
 				<div className="d-flex flex-column">

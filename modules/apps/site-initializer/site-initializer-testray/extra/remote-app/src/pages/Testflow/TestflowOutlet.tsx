@@ -24,6 +24,7 @@ const TestflowOutlet = () => {
 
 	const {setHeading, setTabs} = useHeader({
 		shouldUpdate: currentPathIsActive || archivedPathIsActive,
+		useDropdown: [],
 		useHeading: [{category: 'TASK', title: 'Testflow'}],
 		useTabs: [
 			{

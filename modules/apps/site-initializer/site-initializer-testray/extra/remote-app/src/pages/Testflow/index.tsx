@@ -15,68 +15,104 @@
 
 import {AvatarGroup} from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
+import ListView from '../../components/ListView/ListView';
 import ProgressBar from '../../components/ProgressBar/';
 import StatusBadge from '../../components/StatusBadge';
-import Table from '../../components/Table';
-import {routines} from '../../util/mock';
+import {getTestrayTasks} from '../../graphql/queries/testrayTask';
+import {Liferay} from '../../services/liferay/liferay';
+import {TEST_STATUS_LABEL} from '../../util/constants';
 
 const TestFlow = () => (
 	<Container title="Tasks">
-		<Table
-			columns={[
-				{
-					clickable: true,
-					key: 'status',
-					render: (status: string) => (
-						<StatusBadge type="failed">{status}</StatusBadge>
-					),
-					value: 'Status',
-				},
-				{
-					clickable: true,
-					key: 'startDate',
-					value: 'Start Date',
-				},
-				{clickable: true, key: 'task', value: 'Task'},
-				{
-					clickable: true,
-					key: 'projectName',
-					value: 'Project Name',
-				},
-				{
-					clickable: true,
-					key: 'routineName',
-					value: 'Routine Name',
-				},
-				{clickable: true, key: 'buildName', value: 'Build Name'},
-				{
-					key: 'score',
-					render: ({incomplete, other, self}: any) => {
-						const total = self + other + incomplete;
-						const passed = self + other;
-
-						return `${passed} / ${total}, ${Math.ceil(
-							(passed * 100) / total
-						)}%`;
+		<ListView
+			query={getTestrayTasks}
+			tableProps={{
+				columns: [
+					{
+						clickable: true,
+						key: 'dueStatus',
+						render: (status: number) => (
+							<StatusBadge type="failed">
+								{TEST_STATUS_LABEL[status]}
+							</StatusBadge>
+						),
+						value: 'Status',
 					},
-					value: 'Score',
-				},
-				{
-					key: 'score',
-					render: (score: any) => <ProgressBar items={score} />,
-					size: 'sm',
-					value: 'Progress',
-				},
-				{
-					key: 'assigned',
-					render: (assigned: any) => (
-						<AvatarGroup assignedUsers={assigned} groupSize={3} />
-					),
-					value: 'Assigned',
-				},
-			]}
-			items={routines}
-			navigateTo={(item) => `/testflow/${item.id}`}
+					{
+						clickable: true,
+						key: 'dueDate',
+						render: (_, testrayTask) =>
+							testrayTask?.testrayBuild?.dueDate,
+						value: 'Start Date',
+					},
+					{clickable: true, key: 'name', size: 'sm', value: 'Task'},
+					{
+						clickable: true,
+						key: 'projectName',
+						render: (_, testrayTask) => {
+							return testrayTask?.testrayBuild?.testrayProject
+								?.name;
+						},
+						value: 'Project Name',
+					},
+					{
+						clickable: true,
+						key: 'routineName',
+						render: (_, testrayTask) => {
+							return testrayTask?.testrayBuild?.testrayRoutine
+								?.name;
+						},
+						value: 'Routine Name',
+					},
+					{
+						clickable: true,
+						key: 'buildName',
+						render: (_, testrayTask) => {
+							return testrayTask?.testrayBuild?.name;
+						},
+						value: 'Build Name',
+					},
+					{
+						key: 'score',
+						render: (score: any) => {
+							if (!score) {
+								return;
+							}
+
+							const {incomplete, other, self} = score || {};
+
+							const total = self + other + incomplete;
+							const passed = self + other;
+
+							return `${passed} / ${total}, ${Math.ceil(
+								(passed * 100) / total
+							)}%`;
+						},
+						value: 'Score',
+					},
+					{
+						key: 'score',
+						render: (score: any) =>
+							score && <ProgressBar items={score} />,
+						size: 'sm',
+						value: 'Progress',
+					},
+					{
+						key: 'assigned',
+						render: (assigned: any) =>
+							assigned && (
+								<AvatarGroup
+									assignedUsers={assigned}
+									groupSize={3}
+								/>
+							),
+						value: 'Assigned',
+					},
+				],
+				navigateTo: (item) => `/testflow/${item.id}`,
+			}}
+			transformData={(data) => data?.testrayTasks || {}}
+			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
 		/>
 	</Container>
 );

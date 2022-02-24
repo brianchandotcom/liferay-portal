@@ -33,7 +33,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({children, type}) => (
 		className={classNames(
 			'label',
 			'text-uppercase',
-			statusBarClassNames[type]
+			statusBarClassNames[type] || type
 		)}
 	>
 		{children}

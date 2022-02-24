@@ -746,22 +746,6 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Attempts to authenticate the user using JAAS credentials, without using
-	 * the AuthPipeline.
-	 *
-	 * @param userId the primary key of the user
-	 * @param encPassword the encrypted password
-	 * @return <code>true</code> if authentication is successful;
-	 <code>false</code> otherwise
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean authenticateForJAAS(long userId, String encPassword) {
-		return _userLocalService.authenticateForJAAS(userId, encPassword);
-	}
-
-	/**
 	 * Checks if the user is currently locked out based on the password policy,
 	 * and performs maintenance on the user's lockout and failed login data.
 	 *

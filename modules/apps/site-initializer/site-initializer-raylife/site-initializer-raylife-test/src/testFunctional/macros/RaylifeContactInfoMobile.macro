@@ -110,4 +110,4 @@ definition {
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 	}
 
-} 
+}

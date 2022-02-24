@@ -261,4 +261,4 @@ definition {
 		AssertElementPresent(locator1 = "Raylife#APPLICATION_ID");
 	}
 
-} 
+}

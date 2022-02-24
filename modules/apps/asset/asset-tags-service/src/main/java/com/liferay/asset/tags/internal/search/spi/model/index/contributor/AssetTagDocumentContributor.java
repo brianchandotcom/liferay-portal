@@ -16,7 +16,7 @@ package com.liferay.asset.tags.internal.search.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Organization;
@@ -91,11 +91,12 @@ public class AssetTagDocumentContributor
 
 		Localization localization = _getLocalization();
 
-		document.addText(
-			localization.getLocalizedName(
-				Field.ASSET_TAG_NAMES,
-				LocaleUtil.toLanguageId(_getSiteDefaultLocale(groupId))),
-			_getNames(assetTags));
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			document.addText(
+				localization.getLocalizedName(
+					Field.ASSET_TAG_NAMES, LocaleUtil.toLanguageId(locale)),
+				_getNames(assetTags));
+		}
 	}
 
 	private void _contributeAssetTagNamesRaw(
@@ -145,15 +146,6 @@ public class AssetTagDocumentContributor
 		).toArray(
 			String[]::new
 		);
-	}
-
-	private Locale _getSiteDefaultLocale(long groupId) {
-		try {
-			return portal.getSiteDefaultLocale(groupId);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	private Long[] _getTagIds(List<AssetTag> assetTags) {

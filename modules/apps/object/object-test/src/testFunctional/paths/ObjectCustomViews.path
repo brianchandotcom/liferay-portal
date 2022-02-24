@@ -40,6 +40,21 @@
 		<td>//a[contains(text(),'${key_objectCustomViewLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CUSTOM_VIEW_BOOLEAN_CHECKBOX</td>
+		<td>//input[contains(@class,'custom-control-input')]</td>
+		<td></td>
+	</tr>
+    <tr>
+		<td>VIEW_BUILDER_TAB</td>
+		<td>//button[contains(text(), 'View Builder')]</td>
+		<td></td>
+	</tr>
+    <tr>
+        <td>CHECKBOX_COLUMN_OPTION</td>
+        <td>//label[contains(.,'${key_columnOption}')]/input[@type='checkbox']</td>
+        <td></td>
+    </tr>
 </tbody>
 </table>
 </body>

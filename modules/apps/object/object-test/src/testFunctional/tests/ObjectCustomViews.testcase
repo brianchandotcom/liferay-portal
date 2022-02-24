@@ -140,11 +140,35 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveAnotherViewAsDefault {
 
-		// TODO LPS-147759 CannotSaveAnotherViewAsDefault pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 171624",
+			objectName = "CustomObject171624",
+			pluralLabelName = "Custom Objects 171624");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 171624");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views A");
+
+		ObjectCustomViews.addColumnsViaUI(
+			viewLabel = "Custom Views A",
+			columnOption = "Workflow Status");
+
+		Refresh();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views B");
+
+		ObjectCustomViews.addColumnsViaUI(
+			viewLabel = "Custom Views B",
+			columnOption = "Author");
+
+		Alert.viewErrorMessage(errorMessage = "There can only be one default object view");
 
 	}
 

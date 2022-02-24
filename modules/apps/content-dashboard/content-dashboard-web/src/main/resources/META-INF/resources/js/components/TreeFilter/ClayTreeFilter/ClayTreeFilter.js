@@ -178,7 +178,7 @@ const TreeFilter = ({
 	}, [filterQuery, handleTreeItemsChange]);
 
 	useEffect(() => {
-		setExpandedKeys(new Set([treeItems[0].id]));
+		setExpandedKeys(new Set([treeItems[0]?.id]));
 	}, [treeItems]);
 
 	return (

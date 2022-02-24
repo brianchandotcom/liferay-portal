@@ -1031,16 +1031,13 @@ definition {
 		FrontStore.viewMiniCartItem(
 			cartItemName = "Bundled Product",
 			cartItemOption = "black",
+			cartItemPriceValue = "$ 70.00",
 			cartItemQuantity = "1",
 			cartItemSku = "BLACKSKU");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",
 			value1 = "1 × U-Joint");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
-			value1 = "70.00");
 
 		AssertElementPresent(
 			key_cartItemSku = "BLACKSKU",

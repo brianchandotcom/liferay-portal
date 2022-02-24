@@ -704,7 +704,11 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private boolean _isDownloadChromeDriver(Properties poshiProperties) {
 		String browserType = poshiProperties.getProperty("browser.type");
 
-		if (Validator.isNull(browserType) || !browserType.equals("chrome")) {
+		if (Validator.isNull(browserType)) {
+			return true;
+		}
+
+		if (!browserType.equals("chrome")) {
 			return false;
 		}
 

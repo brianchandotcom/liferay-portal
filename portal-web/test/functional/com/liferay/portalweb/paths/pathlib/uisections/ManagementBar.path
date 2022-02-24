@@ -75,6 +75,11 @@
 	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_BUTTON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[(@title="Show View Options")][*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

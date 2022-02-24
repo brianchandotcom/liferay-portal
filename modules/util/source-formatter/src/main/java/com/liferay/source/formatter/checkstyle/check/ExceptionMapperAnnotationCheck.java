@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
@@ -71,6 +73,10 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		}
 
 		String osgiJaxrsName = _getOSGiJaxrsName(annotationArrayInitDetailAST);
+
+		if (Validator.isNull(osgiJaxrsName)) {
+			return;
+		}
 
 		if (!osgiJaxrsName.endsWith(_OSGI_SERVICE_NAME)) {
 			log(

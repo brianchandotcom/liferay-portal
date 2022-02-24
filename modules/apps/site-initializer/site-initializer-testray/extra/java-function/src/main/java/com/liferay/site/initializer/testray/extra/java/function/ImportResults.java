@@ -112,6 +112,7 @@ public class ImportResults {
 							).getTextContent();
 
 							map.put("name", value);
+
 							HttpUtil.invoke(
 								new JSONObject(
 									map
@@ -131,12 +132,13 @@ public class ImportResults {
 	public void addTestrayCase(long projectId, Document document)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-		Node nodeComponent = null;
-		long teamId = -1;
-		map.put("testrayProjectId", String.valueOf(projectId));
-
 		try {
+			Map<String, String> map = new HashMap<>();
+
+			map.put("testrayProjectId", String.valueOf(projectId));
+			
+			Node nodeComponent = null;
+			long teamId = -1;
 			NodeList testCasesNodeList = document.getElementsByTagName(
 				"testcase");
 
@@ -168,7 +170,8 @@ public class ImportResults {
 							nodeComponent = propertyNodeList.item(j);
 						}
 						else if (name.equals("testray.team.name")) {
-							teamId = getTestrayTeam(projectId, node);
+							teamId = fetchOrAddTestrayTeam(projectId, node);
+							
 							addTestrayComponent(
 								projectId, teamId, nodeComponent);
 						}
@@ -318,7 +321,7 @@ public class ImportResults {
 		).getService();
 	}
 
-	public long getTestrayTeam(long projectId, Node node) throws Exception {
+	public long fetchOrAddTestrayTeam(long projectId, Node node) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		long teamId = -1;
 		String teamName = null;

@@ -17,6 +17,7 @@ import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Sidebar from '../Sidebar';
@@ -277,6 +278,30 @@ const SidebarPanelInfoView = ({
 			</Sidebar.Body>
 		</>
 	);
+};
+
+SidebarPanelInfoView.defaultProps = {
+	description: '',
+	languageTag: 'en-US',
+	propTypes: [],
+	vocabularies: {},
+};
+
+SidebarPanelInfoView.propTypes = {
+	classPK: PropTypes.string.isRequired,
+	clipboard: PropTypes.object,
+	createDate: PropTypes.string.isRequired,
+	description: PropTypes.string,
+	modifiedDate: PropTypes.string.isRequired,
+	preview: PropTypes.object,
+	specificFields: PropTypes.object.isRequired,
+	subType: PropTypes.string.isRequired,
+	tags: PropTypes.array,
+	title: PropTypes.string.isRequired,
+	user: PropTypes.object.isRequired,
+	versions: PropTypes.array.isRequired,
+	viewURLs: PropTypes.array.isRequired,
+	vocabularies: PropTypes.object,
 };
 
 export default SidebarPanelInfoView;

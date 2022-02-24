@@ -67,7 +67,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 								<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
 							</c:when>
 							<c:otherwise>
-								<%= HtmlUtil.escape(StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200)) %>
+								<%= HtmlUtil.escape(StringUtil.shorten(HtmlParserUtil.extractText(childrenKBArticle.getContent()), 200)) %>
 							</c:otherwise>
 						</c:choose>
 					</p>

@@ -29,7 +29,7 @@ public class DropdownMenuTag extends ButtonTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_isEmpty) {
+		if (_empty) {
 			return EVAL_PAGE;
 		}
 
@@ -40,9 +40,9 @@ public class DropdownMenuTag extends ButtonTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		_isEmpty = DropdownItemListUtil.isEmpty(_dropdownItems);
+		_empty = DropdownItemListUtil.isEmpty(_dropdownItems);
 
-		if (_isEmpty) {
+		if (_empty) {
 			return SKIP_BODY;
 		}
 
@@ -63,6 +63,7 @@ public class DropdownMenuTag extends ButtonTag {
 
 		_buttonType = null;
 		_dropdownItems = null;
+		_empty = null;
 	}
 
 	@Override
@@ -85,6 +86,6 @@ public class DropdownMenuTag extends ButtonTag {
 
 	private String _buttonType;
 	private List<DropdownItem> _dropdownItems;
-	private Boolean _isEmpty;
+	private Boolean _empty;
 
 }

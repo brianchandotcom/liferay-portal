@@ -23,6 +23,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-147844. Assert the tooltip message is displayed when hovered over the view button"
+	@priority = "3"
+	test ViewButtonCanDisplayTooltip {
+		task ("Open a section with the management toolbar") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+		}
+
+		task ("Hover over the view button") {
+			MouseOver(
+				key_text = "caret-double",
+				locator1 = "ManagementBar#VIEW_BUTTON");
+		}
+
+		task ("Assert tooltip message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Show View Options");
+		}
+	}
+
 	@description = "LPS-147839. Assert the view button displays a double caret icon"
 	@priority = "5"
 	test ViewButtonCanRenderDoubleCaret {

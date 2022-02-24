@@ -32,6 +32,15 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		List<String> importNames = getImportNames(detailAST);
+
+		if (!importNames.contains("javax.ws.rs.ext.ExceptionMapper") ||
+			!importNames.contains(
+				"org.osgi.service.component.annotations.Component")) {
+
+			return;
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST != null) {

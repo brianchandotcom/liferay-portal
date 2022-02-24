@@ -166,35 +166,25 @@ public class ImportResults {
 							"name"
 						).getTextContent();
 
+						String value = node.getAttributes(
+						).getNamedItem(
+							"value"
+						).getTextContent();
+
 						if (name.equals("testray.main.component.name")) {
 							nodeComponent = propertyNodeList.item(j);
 						}
 						else if (name.equals("testray.team.name")) {
-							String teamName = node.getAttributes(
-								).getNamedItem(
-									"value"
-								).getTextContent();
-
-							teamId = fetchOrAddTestrayTeam(projectId, teamName);
+							teamId = fetchOrAddTestrayTeam(projectId, value);
 							
 							addTestrayComponent(
 								projectId, teamId, nodeComponent);
 						}
 						else if (name.equals("testray.testcase.name")) {
-							String value = node.getAttributes(
-							).getNamedItem(
-								"value"
-							).getTextContent();
-
 							map.put("name", value);
 							map.put("stepsType", name);
 						}
 						else if (name.equals("testray.testcase.priority")) {
-							String value = node.getAttributes(
-							).getNamedItem(
-								"value"
-							).getTextContent();
-
 							map.put("priority", value);
 						}
 					}

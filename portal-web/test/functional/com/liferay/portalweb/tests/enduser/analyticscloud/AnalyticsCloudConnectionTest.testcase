@@ -174,10 +174,32 @@ definition {
 	test AssertLiferayDataSourceStatus {
 		property portal.release = "true";
 
-		task ("Connect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var list1 = ListUtil.newListFromString("Current Status,Synced Sites,Synced Contacts");
+		var statusSyncSite = ListUtil.newListFromString("Active,Configured,Unconfigured");
+		var statusSyncContact = ListUtil.newListFromString("Active,Configured,Configured");
+		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");
+		var size = ListUtil.size("${list1}");
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		task ("Connect DXP to AC, create a property and sync site") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.assertSuccessfulConnection();
+
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.createCombinedProperties();
+
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(locator1 = "ACDXPSettings#SITE_NAME");
+
+			var siteName = selenium.getText("ACDXPSettings#SITE_NAME");
+
+			ACDXPSettings.getAssignedPropertyName(siteName = "${siteName}");
+
+			var dataSource = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
 		}
 
 		task ("Launch AC, go to settings and data source and click in the data source searched") {
@@ -193,13 +215,75 @@ definition {
 		}
 
 		task ("Assert the data source status") {
-			ACSettings.assertDataSourceStatus(status = "Active");
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var section = ListUtil.get("${list1}", "${i}");
+				var status = ListUtil.get("${statusSyncSite}", "${i}");
+
+				ACSettings.assertDataSourceStatus(
+					section = "${section}",
+					status = "${status}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+		}
+
+		task ("Launch DXP and sync contact") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncContactData();
+		}
+
+		task ("Launch AC, go to settings and data source and click in the data source searched") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("Assert the data source status") {
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var section = ListUtil.get("${list1}", "${i}");
+				var status = ListUtil.get("${statusSyncContact}", "${i}");
+
+				ACSettings.assertDataSourceStatus(
+					section = "${section}",
+					status = "${status}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
 		}
 
 		task ("Disconnect data source and assert the data source status") {
 			ACSettings.disconnectDataSource();
 
-			ACSettings.assertDataSourceStatus(status = "Disconnected");
+			var i = "0";
+
+			while ("${i}" != "${size}") {
+				var section = ListUtil.get("${list1}", "${i}");
+				var status = ListUtil.get("${statusDisconnect}", "${i}");
+
+				ACSettings.assertDataSourceStatus(
+					section = "${section}",
+					status = "${status}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
 		}
 	}
 

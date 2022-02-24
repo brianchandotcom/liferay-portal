@@ -45,7 +45,7 @@ public class PendingCommerceOrderClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("orderId", "order-id");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"externalReferenceCode", "ERC");
+			"purchaseOrderNumber", "purchase-order-number");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"accountName", "account");

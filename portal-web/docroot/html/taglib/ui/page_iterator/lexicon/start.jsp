@@ -126,7 +126,16 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<ul class="pagination">
 			<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
-				<a class="page-link" href="<%= (cur > 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= ((cur > 1) && forcePost) ? _getOnClick(namespace, curParam, cur -1) : "" %>">
+
+				<%
+				if (cur > 1) {
+				%>
+
+					<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>">
+				<%}
+				else { %>
+					<a class="page-link">
+				<%} %>
 					<liferay-ui:icon
 						icon='<%= PortalUtil.isRightToLeft(request) ? "angle-right" : "angle-left" %>'
 						markupView="lexicon"
@@ -329,7 +338,16 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</c:choose>
 
 			<li class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
-				<a class="page-link" href="<%= (cur < pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= ((cur < pages) && forcePost) ? _getOnClick(namespace, curParam, cur + 1) : "" %>">
+
+				<%
+				if (cur < pages) {
+				%>
+
+					<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>">
+				<%}
+				else { %>
+					<a class="page-link">
+				<%} %>
 					<liferay-ui:icon
 						icon='<%= PortalUtil.isRightToLeft(request) ? "angle-left" : "angle-right" %>'
 						markupView="lexicon"

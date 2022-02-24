@@ -46,37 +46,6 @@ import net.htmlparser.jericho.Source;
 public class HtmlImpl implements Html {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #escapeAttribute(String)}
-	 */
-	@Deprecated
-	public static final int ESCAPE_MODE_ATTRIBUTE = 1;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeCSS(String)}
-	 */
-	@Deprecated
-	public static final int ESCAPE_MODE_CSS = 2;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeJS(String)}
-	 */
-	@Deprecated
-	public static final int ESCAPE_MODE_JS = 3;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escape(String)}
-	 */
-	@Deprecated
-	public static final int ESCAPE_MODE_TEXT = 4;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeURL(String)}
-	 */
-	@Deprecated
-	public static final int ESCAPE_MODE_URL = 5;
-
-	/**
 	 * Generates a string with the data-* attributes generated from the keys and
 	 * values of a map. For example, a map containing
 	 * <code>{key1=value1;key2=value2}</code> is returned as the string
@@ -197,56 +166,6 @@ public class HtmlImpl implements Html {
 		}
 
 		return sb.toString();
-	}
-
-	/**
-	 * Escapes the input text as a hexadecimal value, based on the mode (type).
-	 * The encoding types include: {@link #ESCAPE_MODE_ATTRIBUTE}, {@link
-	 * #ESCAPE_MODE_CSS}, {@link #ESCAPE_MODE_JS}, {@link #ESCAPE_MODE_TEXT},
-	 * and {@link #ESCAPE_MODE_URL}.
-	 *
-	 * <p>
-	 * Note that <code>escape(text, ESCAPE_MODE_TEXT)</code> returns the same as
-	 * <code>escape(text)</code>.
-	 * </p>
-	 *
-	 * @param      text the text to escape
-	 * @param      mode the encoding type
-	 * @return     the escaped hexadecimal value of the input text, based on the
-	 *             mode, or <code>null</code> if the text is <code>null</code>
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #escapeAttribute(String)}, {@link #escapeCSS(String)}, {@link
-	 *             #escapeJS(String)}, {@link #escape(String)}, {@link
-	 *             #escapeURL(String)}
-	 */
-	@Deprecated
-	@Override
-	public String escape(String text, int mode) {
-		if (text == null) {
-			return null;
-		}
-
-		if (text.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		if (mode == ESCAPE_MODE_ATTRIBUTE) {
-			return escapeAttribute(text);
-		}
-
-		if (mode == ESCAPE_MODE_JS) {
-			return escapeJS(text);
-		}
-
-		if (mode == ESCAPE_MODE_CSS) {
-			return escapeCSS(text);
-		}
-
-		if (mode == ESCAPE_MODE_URL) {
-			return escapeURL(text);
-		}
-
-		return escape(text);
 	}
 
 	/**

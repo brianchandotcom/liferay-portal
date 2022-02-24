@@ -28,15 +28,6 @@ public interface Html {
 
 	public String escape(String text);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #escapeAttribute(String)}, {@link #escapeCSS(String)}, {@link
-	 *             #escapeJS(String)}, {@link #escape(String)}, {@link
-	 *             #escapeURL(String)}
-	 */
-	@Deprecated
-	public String escape(String text, int mode);
-
 	public String escapeAttribute(String attribute);
 
 	public String escapeCSS(String css);

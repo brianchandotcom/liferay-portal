@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.util;
 
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DBProcess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -55,18 +54,6 @@ public class ParallelUpgradeSchemaUtil {
 		finally {
 			executorService.shutdown();
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #execute(DBProcess, String...)}
-	 */
-	@Deprecated
-	public static void execute(String... sqlFileNames) throws Exception {
-		execute(
-			new BaseDBProcess() {
-			},
-			sqlFileNames);
 	}
 
 	private static volatile PortalExecutorManager _portalExecutorManager =

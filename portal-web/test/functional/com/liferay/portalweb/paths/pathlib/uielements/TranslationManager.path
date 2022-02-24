@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>TranslationManager</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TranslationManager</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SELECT_TRANSLATION_LANGUAGE_MENU</td>
+	<td>//div[h3='${key_title}']//button[contains(@title,'select-translation-language')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TRANSLATION_LANGUAGE_AUI_TAG_ADMINMENU</td>
+	<td>//button[contains(@id,'aui_2d_2Menu')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TRANSLATION_LANGUAGE_MENU_ITEM_INDEX</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//li[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_TRANSLATIONS</td>
+	<td>//button[contains(@class,'dropdown-item')]//div[contains(@class,'autofit-section')and text()='Manage Translations']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUI_TAG_INPUT_TEXT_FIELD</td>
+	<td>//div[contains(@class,'col') and h3='${key_title}']//input[contains(@class,'language-value field')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUI_TAG_BELOW_INPUT_TEXT_FIELD</td>
+	<td>//div[contains(@class,'col') and h3='${key_title}']//div[contains(@class,'form-group')]//div[contains(@class,'form-text')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

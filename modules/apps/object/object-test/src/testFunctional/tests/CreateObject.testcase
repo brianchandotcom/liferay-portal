@@ -5979,7 +5979,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
-			fieldLabelName = "Integer",
+			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
 			isRequired = "false",
@@ -5991,9 +5991,9 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Integer");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		CreateObject.editType(fieldType = "String");
+		CreateObject.editType(fieldType = "Text");
 
 		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Keyword");
 

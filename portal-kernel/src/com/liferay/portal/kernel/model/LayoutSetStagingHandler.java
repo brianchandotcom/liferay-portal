@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -33,6 +32,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Julio Camarero
@@ -40,6 +40,12 @@ import java.util.Set;
  */
 public class LayoutSetStagingHandler
 	implements InvocationHandler, Serializable {
+
+	public static LayoutSet newProxyInstance(
+		InvocationHandler invocationHandler) {
+
+		return _proxyProviderFunction.apply(invocationHandler);
+	}
 
 	public LayoutSetStagingHandler(LayoutSet layoutSet) {
 		_layoutSet = layoutSet;
@@ -117,9 +123,7 @@ public class LayoutSetStagingHandler
 	}
 
 	private Object _clone() {
-		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {LayoutSet.class, ModelWrapper.class},
+		return newProxyInstance(
 			new LayoutSetStagingHandler((LayoutSet)_layoutSet.clone()));
 	}
 
@@ -153,9 +157,7 @@ public class LayoutSetStagingHandler
 	}
 
 	private Object _toEscapedModel() {
-		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {LayoutSet.class, ModelWrapper.class},
+		return newProxyInstance(
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 
@@ -174,6 +176,9 @@ public class LayoutSetStagingHandler
 				"setCss", "setLayoutSetPrototypeLinkEnabled",
 				"setLayoutSetPrototypeUuid", "setLogoId", "setSettings",
 				"setSettingsProperties", "setThemeId"));
+	private static final Function<InvocationHandler, LayoutSet>
+		_proxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			LayoutSet.class, ModelWrapper.class);
 
 	private final LayoutSet _layoutSet;
 	private LayoutSetBranch _layoutSetBranch;

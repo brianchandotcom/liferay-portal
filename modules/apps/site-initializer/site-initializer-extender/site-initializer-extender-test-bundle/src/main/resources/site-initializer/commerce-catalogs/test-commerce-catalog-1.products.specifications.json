@@ -1,0 +1,12 @@
+[
+	{
+		"description": "",
+		"facetable": false,
+		"key": "test-1",
+		"title": "Test",
+		"cpDefinitionExternalReferenceCode": "TEST001",
+		"productSpecificationValue": {
+			"en_US": "1"
+		}
+	}
+]
